@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#62F8CA</color>
+    <color name="transparent">#00000000</color>
+    <color name="translucent_mask">#50000000</color>
+    <color name="white">#ffffff</color>
+    <color name="white_dark">#f2f1f4</color>
+    <color name="black">#000000</color>
+    <color name="sliding_list_item_delete_bg">#FF9EA7</color>
+    <color name="caption_color">#454545</color>
+    <color name="gray_235">#454545</color>
+    <color name="color_local_stork">#5FFFC1</color>
+    <color name="color_local">#425FFFC1</color>
 </resources>

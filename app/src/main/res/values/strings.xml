@@ -1,3 +1,38 @@
 <resources>
-    <string name="app_name">expo_android</string>
+    <string name="app_name">EXPO 2019</string>
+    <string name="click_again_to_exit">Click again to exit</string>
+    <string name="same_month">%d-%d %d:%d</string>
+    <string name="yesterday">%d:%d yesterday</string>
+    <string name="today">%d:%d today</string>
+    <string name="within_one_hours">%d minutes age</string>
+    <string name="a_moment_age">a moment age</string>
+    <string name="no_network_connection">No network connection</string>
+    <string name="delete">delete</string>
+    <string name="guide_join_now">Start to use</string>
+    <string name="guide1">趣味导游小伙伴光团</string>
+    <string name="guide2">非凡的AR体验</string>
+    <string name="input_phone">请输入手机号</string>
+    <string name="input_identifying_code">请输入验证码</string>
+    <string name="there_is_no_user_protocol">暂无用户协议</string>
+    <string name="user_protocol">用户协议</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="ukey_error">用户数据错误，请重新登录</string>
+    <string name="unlogin">请先登录</string>
+    <string name="data_unexistsd">数据已删除</string>
+    <string name="req_json_error">参数错误</string>
+    <string name="input_correct_phone">请输入正确的手机号</string>
+    <string name="relogin">请重新登录</string>
+    <string name="no_req_code">请先请求验证码</string>
+    <string name="no_reg">该账号未注册</string>
+    <string name="id_not_exist">数据已删除</string>
+    <string name="invalid_code">验证码已失效</string>
+    <string name="server_error">服务端错误</string>
+    <string name="code_error">验证码错误</string>
+    <string name="code_times_limit">今日请求次数已达上限</string>
+    <string name="account_unable">账号已锁定</string>
+
+    <string name="cancel_the_login">已取消</string>
+    <string name="authorization_failure">授权失败</string>
+    <string name="authorization_success">授权成功</string>
 </resources>

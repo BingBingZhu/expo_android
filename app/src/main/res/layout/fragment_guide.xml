@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/guide_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/guide_join_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dms_190"
+        android:background="@drawable/shape_stroke_green"
+        android:paddingLeft="@dimen/dms_50"
+        android:paddingTop="@dimen/dms_24"
+        android:paddingRight="@dimen/dms_50"
+        android:paddingBottom="@dimen/dms_24"
+        android:text="@string/guide_join_now"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_32" />
+
+    <LinearLayout
+        android:id="@+id/guide_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dms_100"
+        android:gravity="center"
+        android:orientation="horizontal" />
+</RelativeLayout>
