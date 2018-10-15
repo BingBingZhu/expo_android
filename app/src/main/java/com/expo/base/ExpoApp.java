@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 
 import com.expo.base.utils.LogUtils;
 import com.expo.db.DBUtil;
-import com.expo.entity.ScenicSpot;
 import com.expo.entity.User;
 import com.expo.map.LocationManager;
 import com.expo.utils.Constants;

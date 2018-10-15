@@ -6,7 +6,6 @@ import com.expo.entity.DataType;
 import com.expo.entity.DownloadInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
-import com.expo.entity.ScenicSpot;
 import com.expo.entity.Subject;
 import com.expo.entity.User;
 
@@ -22,6 +21,7 @@ public interface Constants {
         public static final String KEY_SUBJECT_UPDATE_TIME = "key_subject_update_time";
         public static final String KEY_ENCYCLOPEDIAS_UPDATE_TIME = "key_wiki_update_time";
         public static final String KEY_GUIDE_SHOWN = "key_guide_shown";
+        public static final String KEY_SHOW_SELECT_LANGUAGE = "key_app_first_use";
     }
 
     /**
@@ -31,6 +31,12 @@ public interface Constants {
         public static final String EXTRA_TITLE = "extra_title";
         public static final String EXTRA_URL = "extra_url";
         public static final String EXTRA_LOGIN_STATE = "extra_login_state";
+        public static final String EXTRA_ID = "extra_id";
+        public static final String EXTRA_TAB_ID = "extra_tab_id";
+        public static final String EXTRA_SPOT_ID = "extra_spot_id";
+        public static final String EXTRAS = "extras";
+        public static final String EXTRA_LONGITUDE = "extra_longitude";
+        public static final String EXTRA_LATITUDE = "extra_latitude";
     }
 
     /**
@@ -61,7 +67,7 @@ public interface Constants {
         public static final String UNZIP_PATH = BASE_FILE_PATH + "unzip/";
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{ActualScene.class, CommonInfo.class, DataType.class, DownloadInfo.class,
-                Encyclopedias.class, Message.class, ScenicSpot.class, Subject.class, User.class};
+                Encyclopedias.class, Message.class, Subject.class, User.class};
     }
 
     /**

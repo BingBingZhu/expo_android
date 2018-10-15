@@ -19,7 +19,6 @@ import com.amap.api.maps.model.UrlTileProvider;
 import com.expo.R;
 import com.expo.base.BaseApplication;
 import com.expo.base.ExpoApp;
-import com.expo.entity.ScenicSpot;
 import com.expo.network.Http;
 import com.expo.widget.ImageViewPlus;
 

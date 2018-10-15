@@ -38,66 +38,69 @@ public class LogUtils {
      */
     private static void writeLog(String tag, String message, Throwable t) {
         StringBuilder sb = new StringBuilder();
-        sb.append(DateFormat.format("yy-MM-dd HH:mm:ss", System.currentTimeMillis()));
-        sb.append(" ");
-        sb.append(String.valueOf(Process.myPid()));
-        sb.append("/");
-        sb.append(tag);
-        sb.append(":");
+        sb.append( DateFormat.format( "yy-MM-dd HH:mm:ss", System.currentTimeMillis() ) );
+        sb.append( " " );
+        sb.append( String.valueOf( Process.myPid() ) );
+        sb.append( "/" );
+        sb.append( tag );
+        sb.append( ":" );
         if (message != null) {
-            sb.append(message);
-            sb.append("\n");
+            sb.append( message );
+            sb.append( "\n" );
         }
         if (t != null) {
             StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            t.printStackTrace(pw);
+            PrintWriter pw = new PrintWriter( sw );
+            t.printStackTrace( pw );
             pw.flush();
-            sb.append(sw.toString());
+            sb.append( sw.toString() );
             try {
                 sw.close();
             } catch (IOException e) {
             }
             pw.close();
         }
-        String fileName = DateFormat.format("yyMMdd", System.currentTimeMillis()) + ".log";
-        if (!logPath.endsWith("/"))
+        String fileName = DateFormat.format( "yyMMdd", System.currentTimeMillis() ) + ".log";
+        if (!logPath.endsWith( "/" ))
             logPath += "/";
-        File logFile = FileUtils.createFile(Environment.getExternalStorageDirectory().getPath() + File.separator + logPath + fileName);
-        FileUtils.write(logFile, sb.toString());
+        File logFile = FileUtils.createFile( Environment.getExternalStorageDirectory().getPath() + File.separator + logPath + fileName );
+        FileUtils.write( logFile, sb.toString() );
     }
 
     public static void e(String tag, String message) {
-        e(tag, message, null);
+        e( tag, message, null );
     }
 
     public static void e(String tag, Throwable t) {
-        e(tag, "", t);
+        e( tag, "", t );
     }
 
     public static void e(String tag, String message, Throwable t) {
         if (DEBUG) {
-            Log.e(tag, message, t);
+            Log.e( tag, message, t );
         }
         if (WRITE_LOG_TO_FILE) {
-            writeLog(tag, message, t);
+            try {
+                writeLog( tag, message, t );
+            } catch (Exception e) {
+            }
         }
     }
 
     public static void d(String tag, String message) {
-        d(tag, message, null);
+        d( tag, message, null );
     }
 
     public static void d(String tag, Throwable t) {
-        d(tag, "", t);
+        d( tag, "", t );
     }
 
     public static void d(String tag, String message, Throwable t) {
         if (DEBUG) {
-            Log.d(tag, message, t);
+            Log.d( tag, message, t );
         }
         if (WRITE_LOG_TO_FILE) {
-            writeLog(tag, message, t);
+            writeLog( tag, message, t );
         }
     }
 }

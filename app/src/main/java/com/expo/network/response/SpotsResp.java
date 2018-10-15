@@ -1,7 +1,6 @@
 package com.expo.network.response;
 
 import com.expo.entity.ActualScene;
-import com.expo.entity.ScenicSpot;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

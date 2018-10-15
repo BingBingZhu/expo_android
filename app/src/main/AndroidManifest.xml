@@ -56,11 +56,29 @@
             android:name=".module.login.LoginActivity"
             android:theme="@style/LoginTheme" />
 
-        <activity android:name=".main.MainActivity" />
+        <activity android:name=".module.main.MainActivity" />
 
         <activity
-            android:name=".module.webview.WebActivity"
-            android:screenOrientation="portrait" />
+            android:name=".module.webview.WebActivity"/>
+
+        <activity android:name=".module.mine.AboutActivity" />
+        <activity android:name=".module.mine.FeedbackActivity" />
+        <activity android:name=".module.mine.SettingActivity" />
+        <activity android:name=".module.distinguish.EncyclopediaSearchActivity" />
+        <activity android:name=".module.distinguish.DistinguishActivity" />
+        <activity android:name=".module.freewifi.FreeWiFiActivity" />
+        <activity android:name=".module.heart.MessageKindActivity" />
+        <activity android:name=".module.heart.MessagesActivity" />
+        <activity android:name=".module.login.BindPhoneActivity" />
+        <activity android:name=".module.login.NationalSmsCodeActivity" />
+        <activity android:name=".module.map.NavigationActivity" />
+        <activity android:name=".module.map.ParkMapActivity" />
+        <activity android:name=".module.routes.RouteDetailActivity" />
+        <activity android:name=".module.routes.RoutesActivity" />
+        <activity android:name=".module.service.LocationDescribeActivity" />
+        <activity android:name=".module.service.SeekHelpActivity" />
+        <activity android:name=".module.service.ShootActivity" />
+        <activity android:name=".module.service.TouristServiceActivity" />
 
         <!--心跳连接服务-->
         <service android:name=".module.heart.HeartBeatService" />

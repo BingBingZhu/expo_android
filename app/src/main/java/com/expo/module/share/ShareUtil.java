@@ -23,10 +23,9 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 
-/**
- * Created by LS on 2018/3/26.
+/*
+ * 分享工具类，提供分享面板的显示和分享操作
  */
-
 public class ShareUtil {
 
     private Activity mActivity;

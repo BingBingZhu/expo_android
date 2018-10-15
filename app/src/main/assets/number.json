@@ -1,1092 +1,1310 @@
 [
   {
-    "name": "加拿大",
-    "name_en": "Canada",
-    "code": "+1"
+    "zh": "加拿大",
+    "en": "Canada",
+    "code": "+1",
+    "py": "jia"
   },
   {
-    "name": "美国",
-    "name_en": "United States",
-    "code": "+1"
+    "zh": "美国",
+    "en": "United States",
+    "code": "+1",
+    "py": "mei"
   },
   {
-    "name": "哈萨克",
-    "name_en": "Kazakhstan",
-    "code": "+7"
+    "zh": "哈萨克",
+    "en": "Kazakhstan",
+    "code": "+7",
+    "py": "ha"
   },
   {
-    "name": "俄罗斯",
-    "name_en": "Russian Federation",
-    "code": "+7"
+    "zh": "俄罗斯",
+    "en": "Russian Federation",
+    "code": "+7",
+    "py": "e"
   },
   {
-    "name": "埃及",
-    "name_en": "Egypt",
-    "code": "+20"
+    "zh": "埃及",
+    "en": "Egypt",
+    "code": "+20",
+    "py": "ai"
   },
   {
-    "name": "南非",
-    "name_en": "South Africa",
-    "code": "+27"
+    "zh": "南非",
+    "en": "South Africa",
+    "code": "+27",
+    "py": "nan"
   },
   {
-    "name": "希腊",
-    "name_en": "Greece",
-    "code": "+30"
+    "zh": "希腊",
+    "en": "Greece",
+    "code": "+30",
+    "py": "xi"
   },
   {
-    "name": "荷兰",
-    "name_en": "Netherlands",
-    "code": "+31"
+    "zh": "荷兰",
+    "en": "Netherlands",
+    "code": "+31",
+    "py": "he"
   },
   {
-    "name": "比利时",
-    "name_en": "Belgium",
-    "code": "+32"
+    "zh": "比利时",
+    "en": "Belgium",
+    "code": "+32",
+    "py": "bi"
   },
   {
-    "name": "法国",
-    "name_en": "France",
-    "code": "+33"
+    "zh": "法国",
+    "en": "France",
+    "code": "+33",
+    "py": "fa"
   },
   {
-    "name": "西班牙",
-    "name_en": "Spain",
-    "code": "+34"
+    "zh": "西班牙",
+    "en": "Spain",
+    "code": "+34",
+    "py": "xi"
   },
   {
-    "name": "匈牙利",
-    "name_en": "Hungary",
-    "code": "+36"
+    "zh": "匈牙利",
+    "en": "Hungary",
+    "code": "+36",
+    "py": "xiong"
   },
   {
-    "name": "意大利",
-    "name_en": "Italy",
-    "code": "+39"
+    "zh": "意大利",
+    "en": "Italy",
+    "code": "+39",
+    "py": "yi"
   },
   {
-    "name": "罗马尼亚",
-    "name_en": "Romania",
-    "code": "+40"
+    "zh": "罗马尼亚",
+    "en": "Romania",
+    "code": "+40",
+    "py": "luo"
   },
   {
-    "name": "瑞士",
-    "name_en": "Switzerland",
-    "code": "+41"
+    "zh": "瑞士",
+    "en": "Switzerland",
+    "code": "+41",
+    "py": "rui"
   },
   {
-    "name": "奥地利",
-    "name_en": "Austria",
-    "code": "+43"
+    "zh": "奥地利",
+    "en": "Austria",
+    "code": "+43",
+    "py": "ao"
   },
   {
-    "name": "英国",
-    "name_en": "United Kingdom",
-    "code": "+44"
+    "zh": "英国",
+    "en": "United Kingdom",
+    "code": "+44",
+    "py": "ying"
   },
   {
-    "name": "丹麦",
-    "name_en": "Denmark",
-    "code": "+45"
+    "zh": "丹麦",
+    "en": "Denmark",
+    "code": "+45",
+    "py": "dan"
   },
   {
-    "name": "瑞典",
-    "name_en": "Sweden",
-    "code": "+46"
+    "zh": "瑞典",
+    "en": "Sweden",
+    "code": "+46",
+    "py": "rui"
   },
   {
-    "name": "挪威",
-    "name_en": "Norway",
-    "code": "+47"
+    "zh": "挪威",
+    "en": "Norway",
+    "code": "+47",
+    "py": "nuo"
   },
   {
-    "name": "波兰",
-    "name_en": "Poland",
-    "code": "+48"
+    "zh": "波兰",
+    "en": "Poland",
+    "code": "+48",
+    "py": "bo"
   },
   {
-    "name": "德国",
-    "name_en": "Germany",
-    "code": "+49"
+    "zh": "德国",
+    "en": "Germany",
+    "code": "+49",
+    "py": "de"
   },
   {
-    "name": "秘鲁",
-    "name_en": "Peru",
-    "code": "+51"
+    "zh": "秘鲁",
+    "en": "Peru",
+    "code": "+51",
+    "py": "mi"
   },
   {
-    "name": "墨西哥",
-    "name_en": "Mexico",
-    "code": "+52"
+    "zh": "墨西哥",
+    "en": "Mexico",
+    "code": "+52",
+    "py": "me"
   },
   {
-    "name": "古巴",
-    "name_en": "Cuba",
-    "code": "+53"
+    "zh": "古巴",
+    "en": "Cuba",
+    "code": "+53",
+    "py": "gu"
   },
   {
-    "name": "阿根廷",
-    "name_en": "Argentina",
-    "code": "+54"
+    "zh": "阿根廷",
+    "en": "Argentina",
+    "code": "+54",
+    "py": "a"
   },
   {
-    "name": "巴西",
-    "name_en": "Brazil",
-    "code": "+55"
+    "zh": "巴西",
+    "en": "Brazil",
+    "code": "+55",
+    "py": "ba"
   },
   {
-    "name": "智利",
-    "name_en": "Chile",
-    "code": "+56"
+    "zh": "智利",
+    "en": "Chile",
+    "code": "+56",
+    "py": "zhi"
   },
   {
-    "name": "哥伦比亚",
-    "name_en": "Colombia",
-    "code": "+57"
+    "zh": "哥伦比亚",
+    "en": "Colombia",
+    "code": "+57",
+    "py": "ge"
   },
   {
-    "name": "委内瑞拉",
-    "name_en": "Venezuela, Bolivarian Republic of",
-    "code": "+58"
+    "zh": "委内瑞拉",
+    "en": "Venezuela, Bolivarian Republic of",
+    "code": "+58",
+    "py": "wei"
   },
   {
-    "name": "马来西亚",
-    "name_en": "Malaysia",
-    "code": "+60"
+    "zh": "马来西亚",
+    "en": "Malaysia",
+    "code": "+60",
+    "py": "ma"
   },
   {
-    "name": "澳洲",
-    "name_en": "Australia",
-    "code": "+61"
+    "zh": "澳洲",
+    "en": "Australia",
+    "code": "+61",
+    "py": "ou"
   },
   {
-    "name": "印度尼西亚",
-    "name_en": "Indonesia",
-    "code": "+62"
+    "zh": "印度尼西亚",
+    "en": "Indonesia",
+    "code": "+62",
+    "py": "yin"
   },
   {
-    "name": "菲律宾",
-    "name_en": "Philippines",
-    "code": "+63"
+    "zh": "菲律宾",
+    "en": "Philippines",
+    "code": "+63",
+    "py": "fei"
   },
   {
-    "name": "新西兰",
-    "name_en": "New Zealand",
-    "code": "+64"
+    "zh": "新西兰",
+    "en": "New Zealand",
+    "code": "+64",
+    "py": "xin"
   },
   {
-    "name": "新加坡",
-    "name_en": "Singapore",
-    "code": "+65"
+    "zh": "新加坡",
+    "en": "Singapore",
+    "code": "+65",
+    "py": "xin"
   },
   {
-    "name": "泰国",
-    "name_en": "Thailand",
-    "code": "+66"
+    "zh": "泰国",
+    "en": "Thailand",
+    "code": "+66",
+    "py": "tai"
   },
   {
-    "name": "日本",
-    "name_en": "Japan",
-    "code": "+81"
+    "zh": "日本",
+    "en": "Japan",
+    "code": "+81",
+    "py": "ri"
   },
   {
-    "name": "韩国",
-    "name_en": "Korea, Republic of",
-    "code": "+82"
+    "zh": "韩国",
+    "en": "Korea, Republic of",
+    "code": "+82",
+    "py": "han"
   },
   {
-    "name": "越南",
-    "name_en": "Vietnam",
-    "code": "+84"
+    "zh": "越南",
+    "en": "Vietnam",
+    "code": "+84",
+    "py": "yue"
   },
   {
-    "name": "中国",
-    "name_en": "China",
+    "zh": "中国",
+    "en": "China",
     "code": "+86",
-    "exp": "^1(3|4|5|6|7|8|9)\\d{9}$"
+    "py": "zhong"
   },
   {
-    "name": "土耳其",
-    "name_en": "Turkey",
-    "code": "+90"
+    "zh": "土耳其",
+    "en": "Turkey",
+    "code": "+90",
+    "py": "tu"
   },
   {
-    "name": "印度",
-    "name_en": "India",
-    "code": "+91"
+    "zh": "印度",
+    "en": "India",
+    "code": "+91",
+    "py": "yin"
   },
   {
-    "name": "巴基斯坦",
-    "name_en": "Pakistan",
-    "code": "+92"
+    "zh": "巴基斯坦",
+    "en": "Pakistan",
+    "code": "+92",
+    "py": "ba"
   },
   {
-    "name": "阿富汗",
-    "name_en": "Afghanistan",
-    "code": "+93"
+    "zh": "阿富汗",
+    "en": "Afghanistan",
+    "code": "+93",
+    "py": "a"
   },
   {
-    "name": "斯里兰卡",
-    "name_en": "Sri Lanka",
-    "code": "+94"
+    "zh": "斯里兰卡",
+    "en": "Sri Lanka",
+    "code": "+94",
+    "py": "si"
   },
   {
-    "name": "缅甸",
-    "name_en": "Myanmar",
-    "code": "+95"
+    "zh": "缅甸",
+    "en": "Myanmar",
+    "code": "+95",
+    "py": "mian"
   },
   {
-    "name": "伊朗",
-    "name_en": "Iran, Islamic Republic of",
-    "code": "+98"
+    "zh": "伊朗",
+    "en": "Iran, Islamic Republic of",
+    "code": "+98",
+    "py": "yi"
   },
   {
-    "name": "南苏丹",
-    "name_en": "South Sudan",
-    "code": "+211"
+    "zh": "南苏丹",
+    "en": "South Sudan",
+    "code": "+211",
+    "py": "nan"
   },
   {
-    "name": "摩洛哥",
-    "name_en": "Morocco",
-    "code": "+212"
+    "zh": "摩洛哥",
+    "en": "Morocco",
+    "code": "+212",
+    "py": "mo"
   },
   {
-    "name": "阿尔及利亚",
-    "name_en": "Algeria",
-    "code": "+213"
+    "zh": "阿尔及利亚",
+    "en": "Algeria",
+    "code": "+213",
+    "py": "a"
   },
   {
-    "name": "突尼斯",
-    "name_en": "Tunisia",
-    "code": "+216"
+    "zh": "突尼斯",
+    "en": "Tunisia",
+    "code": "+216",
+    "py": "tu"
   },
   {
-    "name": "利比亚",
-    "name_en": "Libya",
-    "code": "+218"
+    "zh": "利比亚",
+    "en": "Libya",
+    "code": "+218",
+    "py": "bi"
   },
   {
-    "name": "冈比亚",
-    "name_en": "Gambia",
-    "code": "+220"
+    "zh": "冈比亚",
+    "en": "Gambia",
+    "code": "+220",
+    "py": "gang"
   },
   {
-    "name": "塞内加尔",
-    "name_en": "Senegal",
-    "code": "+221"
+    "zh": "塞内加尔",
+    "en": "Senegal",
+    "code": "+221",
+    "py": "sai"
   },
   {
-    "name": "毛里塔尼亚",
-    "name_en": "Mauritania",
-    "code": "+222"
+    "zh": "毛里塔尼亚",
+    "en": "Mauritania",
+    "code": "+222",
+    "py": "mao"
   },
   {
-    "name": "马里共和国",
-    "name_en": "Mali",
-    "code": "+223"
+    "zh": "马里共和国",
+    "en": "Mali",
+    "code": "+223",
+    "py": "ma"
   },
   {
-    "name": "几内亚",
-    "name_en": "Guinea",
-    "code": "+224"
+    "zh": "几内亚",
+    "en": "Guinea",
+    "code": "+224",
+    "py": "ji"
   },
   {
-    "name": "科特迪瓦",
-    "name_en": "Côte d'Ivoire",
-    "code": "+225"
+    "zh": "科特迪瓦",
+    "en": "Côte d'Ivoire",
+    "code": "+225",
+    "py": "ke"
   },
   {
-    "name": "布基纳法索",
-    "name_en": "Burkina Faso",
-    "code": "+226"
+    "zh": "布基纳法索",
+    "en": "Burkina Faso",
+    "code": "+226",
+    "py": "bu"
   },
   {
-    "name": "尼日",
-    "name_en": "Niger",
-    "code": "+227"
+    "zh": "尼日",
+    "en": "Niger",
+    "code": "+227",
+    "py": "ni"
   },
   {
-    "name": "多哥",
-    "name_en": "Togo",
-    "code": "+228"
+    "zh": "多哥",
+    "en": "Togo",
+    "code": "+228",
+    "py": "duo"
   },
   {
-    "name": "贝宁",
-    "name_en": "Benin",
-    "code": "+229"
+    "zh": "贝宁",
+    "en": "Benin",
+    "code": "+229",
+    "py": "bei"
   },
   {
-    "name": "毛里求斯",
-    "name_en": "Mauritius",
-    "code": "+230"
+    "zh": "毛里求斯",
+    "en": "Mauritius",
+    "code": "+230",
+    "py": "mao"
   },
   {
-    "name": "利比里亚",
-    "name_en": "Liberia",
-    "code": "+231"
+    "zh": "利比里亚",
+    "en": "Liberia",
+    "code": "+231",
+    "py": "li"
   },
   {
-    "name": "狮子山共和国",
-    "name_en": "Sierra Leone",
-    "code": "+232"
+    "zh": "狮子山共和国",
+    "en": "Sierra Leone",
+    "code": "+232",
+    "py": "shi"
   },
   {
-    "name": "加纳",
-    "name_en": "Ghana",
-    "code": "+233"
+    "zh": "加纳",
+    "en": "Ghana",
+    "code": "+233",
+    "py": "jia"
   },
   {
-    "name": "尼日利亚",
-    "name_en": "Nigeria",
-    "code": "+234"
+    "zh": "尼日利亚",
+    "en": "Nigeria",
+    "code": "+234",
+    "py": "ni"
   },
   {
-    "name": "查德",
-    "name_en": "Chad",
-    "code": "+235"
+    "zh": "查德",
+    "en": "Chad",
+    "code": "+235",
+    "py": "cha"
   },
   {
-    "name": "中非共和国",
-    "name_en": "Central African Republic",
-    "code": "+236"
+    "zh": "中非共和国",
+    "en": "Central African Republic",
+    "code": "+236",
+    "py": "zhong"
   },
   {
-    "name": "喀麦隆",
-    "name_en": "Cameroon",
-    "code": "+237"
+    "zh": "喀麦隆",
+    "en": "Cameroon",
+    "code": "+237",
+    "py": "ka"
   },
   {
-    "name": "佛得角",
-    "name_en": "Cape Verde",
-    "code": "+238"
+    "zh": "佛得角",
+    "en": "Cape Verde",
+    "code": "+238",
+    "py": "fuo"
   },
   {
-    "name": "圣多美普林西比",
-    "name_en": "Sao Tome and Principe",
-    "code": "+239"
+    "zh": "圣多美普林西比",
+    "en": "Sao Tome and Principe",
+    "code": "+239",
+    "py": "sheng"
   },
   {
-    "name": "赤道几内亚",
-    "name_en": "Equatorial Guinea",
-    "code": "+240"
+    "zh": "赤道几内亚",
+    "en": "Equatorial Guinea",
+    "code": "+240",
+    "py": "chi"
   },
   {
-    "name": "加蓬",
-    "name_en": "Gabon",
-    "code": "+241"
+    "zh": "加蓬",
+    "en": "Gabon",
+    "code": "+241",
+    "py": "jia"
   },
   {
-    "name": "刚果共和国",
-    "name_en": "Congo",
-    "code": "+242"
+    "zh": "刚果共和国",
+    "en": "Congo",
+    "code": "+242",
+    "py": "gang"
   },
   {
-    "name": "刚果民主共和国",
-    "name_en": "Congo, the Democratic Republic of the	243"
+    "zh": "刚果民主共和国",
+    "en": "Congo, the Democratic Republic of the",
+    "code": "243",
+    "py": "gang"
   },
   {
-    "name": "安哥拉",
-    "name_en": "Angola",
-    "code": "+244"
+    "zh": "安哥拉",
+    "en": "Angola",
+    "code": "+244",
+    "py": "an"
   },
   {
-    "name": "几内亚比绍",
-    "name_en": "Guinea",
-    "code": "+245"
+    "zh": "几内亚比绍",
+    "en": "Guinea",
+    "code": "+245",
+    "py": "ji"
   },
   {
-    "name": "阿森松岛",
-    "name_en": "Ascension island",
-    "code": "+247"
+    "zh": "阿森松岛",
+    "en": "Ascension island",
+    "code": "+247",
+    "py": "a"
   },
   {
-    "name": "塞舌尔",
-    "name_en": "Seychelles",
-    "code": "+248"
+    "zh": "塞舌尔",
+    "en": "Seychelles",
+    "code": "+248",
+    "py": "sai"
   },
   {
-    "name": "苏丹",
-    "name_en": "Sudan",
-    "code": "+249"
+    "zh": "苏丹",
+    "en": "Sudan",
+    "code": "+249",
+    "py": "su"
   },
   {
-    "name": "卢旺达",
-    "name_en": "Rwanda",
-    "code": "+250"
+    "zh": "卢旺达",
+    "en": "Rwanda",
+    "code": "+250",
+    "py": "lu"
   },
   {
-    "name": "埃塞俄比亚",
-    "name_en": "Ethiopia",
-    "code": "+251"
+    "zh": "埃塞俄比亚",
+    "en": "Ethiopia",
+    "code": "+251",
+    "py": "ai"
   },
   {
-    "name": "索马里",
-    "name_en": "Somalia",
-    "code": "+252"
+    "zh": "索马里",
+    "en": "Somalia",
+    "code": "+252",
+    "py": "suo"
   },
   {
-    "name": "吉布提",
-    "name_en": "Djibouti",
-    "code": "+253"
+    "zh": "吉布提",
+    "en": "Djibouti",
+    "code": "+253",
+    "py": "ji"
   },
   {
-    "name": "肯尼亚",
-    "name_en": "Kenya",
-    "code": "+254"
+    "zh": "肯尼亚",
+    "en": "Kenya",
+    "code": "+254",
+    "py": "ken"
   },
   {
-    "name": "坦桑尼亚",
-    "name_en": "Tanzania, United Republic of",
-    "code": "+255"
+    "zh": "坦桑尼亚",
+    "en": "Tanzania, United Republic of",
+    "code": "+255",
+    "py": "tan"
   },
   {
-    "name": "乌干达",
-    "name_en": "Uganda",
-    "code": "+256"
+    "zh": "乌干达",
+    "en": "Uganda",
+    "code": "+256",
+    "py": "wu"
   },
   {
-    "name": "布隆迪",
-    "name_en": "Burundi",
-    "code": "+257"
+    "zh": "布隆迪",
+    "en": "Burundi",
+    "code": "+257",
+    "py": "bu"
   },
   {
-    "name": "莫桑比克",
-    "name_en": "Mozambique",
-    "code": "+258"
+    "zh": "莫桑比克",
+    "en": "Mozambique",
+    "code": "+258",
+    "py": "mo"
   },
   {
-    "name": "赞比亚",
-    "name_en": "Zambia",
-    "code": "+260"
+    "zh": "赞比亚",
+    "en": "Zambia",
+    "code": "+260",
+    "py": "zan"
   },
   {
-    "name": "马达加斯加",
-    "name_en": "Madagascar",
-    "code": "+261"
+    "zh": "马达加斯加",
+    "en": "Madagascar",
+    "code": "+261",
+    "py": "ma"
   },
   {
-    "name": "留尼汪",
-    "name_en": "Réunion",
-    "code": "+262"
+    "zh": "留尼汪",
+    "en": "Réunion",
+    "code": "+262",
+    "py": "liu"
   },
   {
-    "name": "津巴布韦",
-    "name_en": "Republic of Zimbabwe",
-    "code": "+263"
+    "zh": "津巴布韦",
+    "en": "Republic of Zimbabwe",
+    "code": "+263",
+    "py": "jin"
   },
   {
-    "name": "纳米比亚",
-    "name_en": "Namibia",
-    "code": "+264"
+    "zh": "纳米比亚",
+    "en": "Namibia",
+    "code": "+264",
+    "py": "na"
   },
   {
-    "name": "马拉维",
-    "name_en": "Malawi",
-    "code": "+265"
+    "zh": "马拉维",
+    "en": "Malawi",
+    "code": "+265",
+    "py": "ma"
   },
   {
-    "name": "莱索托",
-    "name_en": "Lesotho",
-    "code": "+266"
+    "zh": "莱索托",
+    "en": "Lesotho",
+    "code": "+266",
+    "py": "lai"
   },
   {
-    "name": "博茨瓦纳",
-    "name_en": "Botswana",
-    "code": "+267"
+    "zh": "博茨瓦纳",
+    "en": "Botswana",
+    "code": "+267",
+    "py": "bo"
   },
   {
-    "name": "斯威士兰",
-    "name_en": "Swaziland",
-    "code": "+268"
+    "zh": "斯威士兰",
+    "en": "Swaziland",
+    "code": "+268",
+    "py": "si"
   },
   {
-    "name": "科摩罗",
-    "name_en": "Comoros",
-    "code": "+269"
+    "zh": "科摩罗",
+    "en": "Comoros",
+    "code": "+269",
+    "py": "ke"
   },
   {
-    "name": "马约特",
-    "name_en": "Mayotte",
-    "code": "+269"
+    "zh": "马约特",
+    "en": "Mayotte",
+    "code": "+269",
+    "py": "ma"
   },
   {
-    "name": "阿鲁巴",
-    "name_en": "Aruba",
-    "code": "+297"
+    "zh": "阿鲁巴",
+    "en": "Aruba",
+    "code": "+297",
+    "py": "a"
   },
   {
-    "name": "法罗群岛",
-    "name_en": "Faroe Islands",
-    "code": "+298"
+    "zh": "法罗群岛",
+    "en": "Faroe Islands",
+    "code": "+298",
+    "py": "fa"
   },
   {
-    "name": "格陵兰",
-    "name_en": "Greenland",
-    "code": "+299"
+    "zh": "格陵兰",
+    "en": "Greenland",
+    "code": "+299",
+    "py": "ge"
   },
   {
-    "name": "直布罗陀",
-    "name_en": "Gibraltar",
-    "code": "+350"
+    "zh": "直布罗陀",
+    "en": "Gibraltar",
+    "code": "+350",
+    "py": "zhi"
   },
   {
-    "name": "葡萄牙",
-    "name_en": "Portugal",
-    "code": "+351"
+    "zh": "葡萄牙",
+    "en": "Portugal",
+    "code": "+351",
+    "py": "pu"
   },
   {
-    "name": "卢森堡",
-    "name_en": "Luxembourg",
-    "code": "+352"
+    "zh": "卢森堡",
+    "en": "Luxembourg",
+    "code": "+352",
+    "py": "lu"
   },
   {
-    "name": "马其顿",
-    "name_en": "Macedonia, the former Yugoslav Republic of",
-    "code": "+389"
+    "zh": "马其顿",
+    "en": "Macedonia, the former Yugoslav Republic of",
+    "code": "+389",
+    "py": "ma"
   },
   {
-    "name": "爱尔兰",
-    "name_en": "Ireland",
-    "code": "+353"
+    "zh": "爱尔兰",
+    "en": "Ireland",
+    "code": "+353",
+    "py": "ai"
   },
   {
-    "name": "冰岛",
-    "name_en": "Iceland",
-    "code": "+354"
+    "zh": "冰岛",
+    "en": "Iceland",
+    "code": "+354",
+    "py": "bing"
   },
   {
-    "name": "阿尔巴尼亚",
-    "name_en": "Albania",
-    "code": "+355"
+    "zh": "阿尔巴尼亚",
+    "en": "Albania",
+    "code": "+355",
+    "py": "a"
   },
   {
-    "name": "马耳他",
-    "name_en": "Malta",
-    "code": "+356"
+    "zh": "马耳他",
+    "en": "Malta",
+    "code": "+356",
+    "py": "ma"
   },
   {
-    "name": "塞浦路斯",
-    "name_en": "Cyprus",
-    "code": "+357"
+    "zh": "塞浦路斯",
+    "en": "Cyprus",
+    "code": "+357",
+    "py": "sai"
   },
   {
-    "name": "芬兰",
-    "name_en": "Finland",
-    "code": "+358"
+    "zh": "芬兰",
+    "en": "Finland",
+    "code": "+358",
+    "py": "fen"
   },
   {
-    "name": "保加利亚",
-    "name_en": "Bulgaria",
-    "code": "+359"
+    "zh": "保加利亚",
+    "en": "Bulgaria",
+    "code": "+359",
+    "py": "bao"
   },
   {
-    "name": "立陶宛",
-    "name_en": "Lithuania",
-    "code": "+370"
+    "zh": "立陶宛",
+    "en": "Lithuania",
+    "code": "+370",
+    "py": "li"
   },
   {
-    "name": "拉脱维亚",
-    "name_en": "Latvia",
-    "code": "+371"
+    "zh": "拉脱维亚",
+    "en": "Latvia",
+    "code": "+371",
+    "py": "la"
   },
   {
-    "name": "爱沙尼亚",
-    "name_en": "Estonia",
-    "code": "+372"
+    "zh": "爱沙尼亚",
+    "en": "Estonia",
+    "code": "+372",
+    "py": "ai"
   },
   {
-    "name": "摩尔多瓦",
-    "name_en": "Moldova, Republic of",
-    "code": "+373"
+    "zh": "摩尔多瓦",
+    "en": "Moldova, Republic of",
+    "code": "+373",
+    "py": "mo"
   },
   {
-    "name": "亚美尼亚",
-    "name_en": "Armenia",
-    "code": "+374"
+    "zh": "亚美尼亚",
+    "en": "Armenia",
+    "code": "+374",
+    "py": "ya"
   },
   {
-    "name": "白俄罗斯",
-    "name_en": "Belarus",
-    "code": "+375"
+    "zh": "白俄罗斯",
+    "en": "Belarus",
+    "code": "+375",
+    "py": "bai"
   },
   {
-    "name": "安道尔",
-    "name_en": "Andorra",
-    "code": "+376"
+    "zh": "安道尔",
+    "en": "Andorra",
+    "code": "+376",
+    "py": "an"
   },
   {
-    "name": "摩纳哥",
-    "name_en": "Monaco",
-    "code": "+377"
+    "zh": "摩纳哥",
+    "en": "Monaco",
+    "code": "+377",
+    "py": "mo"
   },
   {
-    "name": "圣马力诺",
-    "name_en": "San Marino",
-    "code": "+378"
+    "zh": "圣马力诺",
+    "en": "San Marino",
+    "code": "+378",
+    "py": "sheng"
   },
   {
-    "name": "乌克兰",
-    "name_en": "Ukraine",
-    "code": "+380"
+    "zh": "乌克兰",
+    "en": "Ukraine",
+    "code": "+380",
+    "py": "wu"
   },
   {
-    "name": "塞尔维亚",
-    "name_en": "Serbia",
-    "code": "+381"
+    "zh": "塞尔维亚",
+    "en": "Serbia",
+    "code": "+381",
+    "py": "sai"
   },
   {
-    "name": "黑山共和国",
-    "name_en": "Montenegro",
-    "code": "+382"
+    "zh": "黑山共和国",
+    "en": "Montenegro",
+    "code": "+382",
+    "py": "hei"
   },
   {
-    "name": "克罗地亚",
-    "name_en": "Croatia",
-    "code": "+385"
+    "zh": "克罗地亚",
+    "en": "Croatia",
+    "code": "+385",
+    "py": "ke"
   },
   {
-    "name": "斯洛文尼亚",
-    "name_en": "Slovenia",
-    "code": "+386"
+    "zh": "斯洛文尼亚",
+    "en": "Slovenia",
+    "code": "+386",
+    "py": "si"
   },
   {
-    "name": "波斯尼亚与赫塞哥维纳",
-    "name_en": "Bosnia and Herzegovina",
-    "code": "+387"
+    "zh": "波斯尼亚与赫塞哥维纳",
+    "en": "Bosnia and Herzegovina",
+    "code": "+387",
+    "py": "bo"
   },
   {
-    "name": "捷克",
-    "name_en": "Czech Republic",
-    "code": "+420"
+    "zh": "捷克",
+    "en": "Czech Republic",
+    "code": "+420",
+    "py": "jie"
   },
   {
-    "name": "斯洛伐克",
-    "name_en": "Slovakia",
-    "code": "+421"
+    "zh": "斯洛伐克",
+    "en": "Slovakia",
+    "code": "+421",
+    "py": "si"
   },
   {
-    "name": "列支敦士登",
-    "name_en": "Liechtenstein",
-    "code": "+423"
+    "zh": "列支敦士登",
+    "en": "Liechtenstein",
+    "code": "+423",
+    "py": "lie"
   },
   {
-    "name": "伯利兹",
-    "name_en": "Belize",
-    "code": "+501"
+    "zh": "伯利兹",
+    "en": "Belize",
+    "code": "+501",
+    "py": "bo"
   },
   {
-    "name": "危地马拉",
-    "name_en": "Guatemala",
-    "code": "+502"
+    "zh": "危地马拉",
+    "en": "Guatemala",
+    "code": "+502",
+    "py": "wei"
   },
   {
-    "name": "萨尔瓦多",
-    "name_en": "El Salvador",
-    "code": "+503"
+    "zh": "萨尔瓦多",
+    "en": "El Salvador",
+    "code": "+503",
+    "py": "sa"
   },
   {
-    "name": "洪都拉斯",
-    "name_en": "Honduras",
-    "code": "+504"
+    "zh": "洪都拉斯",
+    "en": "Honduras",
+    "code": "+504",
+    "py": "hang"
   },
   {
-    "name": "尼加拉瓜",
-    "name_en": "Nicaragua",
-    "code": "+505"
+    "zh": "尼加拉瓜",
+    "en": "Nicaragua",
+    "code": "+505",
+    "py": "ni"
   },
   {
-    "name": "哥斯达黎加",
-    "name_en": "Costa Rica",
-    "code": "+506"
+    "zh": "哥斯达黎加",
+    "en": "Costa Rica",
+    "code": "+506",
+    "py": "ge"
   },
   {
-    "name": "巴拿马",
-    "name_en": "Panama",
-    "code": "+507"
+    "zh": "巴拿马",
+    "en": "Panama",
+    "code": "+507",
+    "py": "ba"
   },
   {
-    "name": "圣皮耶与密克隆群岛",
-    "name_en": "Saint Pierre and Miquelon",
-    "code": "+508"
+    "zh": "圣皮耶与密克隆群岛",
+    "en": "Saint Pierre and Miquelon",
+    "code": "+508",
+    "py": "sheng"
   },
   {
-    "name": "海地",
-    "name_en": "Haiti",
-    "code": "+509"
+    "zh": "海地",
+    "en": "Haiti",
+    "code": "+509",
+    "py": "hai"
   },
   {
-    "name": "瓜德罗普岛",
-    "name_en": "Guadeloupe",
-    "code": "+590"
+    "zh": "瓜德罗普岛",
+    "en": "Guadeloupe",
+    "code": "+590",
+    "py": "gua"
   },
   {
-    "name": "圣马丁岛",
-    "name_en": "Sint Maarten(Dutch)",
-    "code": "+590"
+    "zh": "圣马丁岛",
+    "en": "Sint Maarten(Dutch)",
+    "code": "+590",
+    "py": "sheng"
   },
   {
-    "name": "玻利维亚",
-    "name_en": "Bolivia, Plurinational",
-    "code": "+591"
+    "zh": "玻利维亚",
+    "en": "Bolivia, Plurinational",
+    "code": "+591",
+    "py": "bo"
   },
   {
-    "name": "圭亚那",
-    "name_en": "Guyana",
-    "code": "+592"
+    "zh": "圭亚那",
+    "en": "Guyana",
+    "code": "+592",
+    "py": "gui"
   },
   {
-    "name": "厄瓜多尔",
-    "name_en": "Ecuador",
-    "code": "+593"
+    "zh": "厄瓜多尔",
+    "en": "Ecuador",
+    "code": "+593",
+    "py": "e"
   },
   {
-    "name": "法属圭亚那",
-    "name_en": "French Guiana",
-    "code": "+594"
+    "zh": "法属圭亚那",
+    "en": "French Guiana",
+    "code": "+594",
+    "py": "fa"
   },
   {
-    "name": "巴拉圭",
-    "name_en": "Paraguay",
-    "code": "+595"
+    "zh": "巴拉圭",
+    "en": "Paraguay",
+    "code": "+595",
+    "py": "ba"
   },
   {
-    "name": "马提尼克",
-    "name_en": "Martinique",
-    "code": "+596"
+    "zh": "马提尼克",
+    "en": "Martinique",
+    "code": "+596",
+    "py": "ma"
   },
   {
-    "name": "苏里南",
-    "name_en": "Suriname",
-    "code": "+597"
+    "zh": "苏里南",
+    "en": "Surizh",
+    "code": "+597",
+    "py": "su"
   },
   {
-    "name": "乌拉圭",
-    "name_en": "Uruguay",
-    "code": "+598"
+    "zh": "乌拉圭",
+    "en": "Uruguay",
+    "code": "+598",
+    "py": "wu"
   },
   {
-    "name": "博内尔岛圣尤斯特歇斯和",
-    "name_en": "Bonaire Sint Eustat",
-    "code": "+599"
+    "zh": "博内尔岛圣尤斯特歇斯和",
+    "en": "Bonaire Sint Eustat",
+    "code": "+599",
+    "py": "bo"
   },
   {
-    "name": "库拉索",
-    "name_en": "Curacao",
-    "code": "+599"
+    "zh": "库拉索",
+    "en": "Curacao",
+    "code": "+599",
+    "py": "ku"
   },
   {
-    "name": "东帝汶",
-    "name_en": "Timor",
-    "code": "+670"
+    "zh": "东帝汶",
+    "en": "Timor",
+    "code": "+670",
+    "py": "dong"
   },
   {
-    "name": "文莱",
-    "name_en": "Brunei Darussalam",
-    "code": "+673"
+    "zh": "文莱",
+    "en": "Brunei Darussalam",
+    "code": "+673",
+    "py": "wen"
   },
   {
-    "name": "巴布亚新几内亚",
-    "name_en": "Papua New Guinea",
-    "code": "+675"
+    "zh": "巴布亚新几内亚",
+    "en": "Papua New Guinea",
+    "code": "+675",
+    "py": "ba"
   },
   {
-    "name": "东加",
-    "name_en": "Tonga",
-    "code": "+676"
+    "zh": "东加",
+    "en": "Tonga",
+    "code": "+676",
+    "py": "jia"
   },
   {
-    "name": "所罗门群岛",
-    "name_en": "Solomon Islands",
-    "code": "+677"
+    "zh": "所罗门群岛",
+    "en": "Solomon Islands",
+    "code": "+677",
+    "py": "suo"
   },
   {
-    "name": "瓦努阿图",
-    "name_en": "Vanuatu",
-    "code": "+678"
+    "zh": "瓦努阿图",
+    "en": "Vanuatu",
+    "code": "+678",
+    "py": "wa"
   },
   {
-    "name": "斐济",
-    "name_en": "Fiji",
-    "code": "+679"
+    "zh": "斐济",
+    "en": "Fiji",
+    "code": "+679",
+    "py": "fei"
   },
   {
-    "name": "帕劳",
-    "name_en": "Palau",
-    "code": "+680"
+    "zh": "帕劳",
+    "en": "Palau",
+    "code": "+680",
+    "py": "pa"
   },
   {
-    "name": "库克群岛",
-    "name_en": "Cook Islands",
-    "code": "+682"
+    "zh": "库克群岛",
+    "en": "Cook Islands",
+    "code": "+682",
+    "py": "ku"
   },
   {
-    "name": "萨摩亚",
-    "name_en": "Samoa",
-    "code": "+685"
+    "zh": "萨摩亚",
+    "en": "Samoa",
+    "code": "+685",
+    "py": "sa"
   },
   {
-    "name": "基里巴斯",
-    "name_en": "Kiribati",
-    "code": "+686"
+    "zh": "基里巴斯",
+    "en": "Kiribati",
+    "code": "+686",
+    "py": "ji"
   },
   {
-    "name": "新喀里多尼亚",
-    "name_en": "New Caledonia",
-    "code": "+687"
+    "zh": "新喀里多尼亚",
+    "en": "New Caledonia",
+    "code": "+687",
+    "py": "xin"
   },
   {
-    "name": "法属波利尼西亚",
-    "name_en": "French Polynesia",
-    "code": "+689"
+    "zh": "法属波利尼西亚",
+    "en": "French Polynesia",
+    "code": "+689",
+    "py": "fa"
   },
   {
-    "name": "香港",
-    "name_en": "Hong Kong",
-    "code": "+852"
+    "zh": "香港",
+    "en": "Hong Kong",
+    "code": "+852",
+    "py": "xiang"
   },
   {
-    "name": "澳门",
-    "name_en": "Macao",
-    "code": "+853"
+    "zh": "澳门",
+    "en": "Macao",
+    "code": "+853",
+    "py": "ao"
   },
   {
-    "name": "柬埔寨",
-    "name_en": "Cambodia",
-    "code": "+855"
+    "zh": "柬埔寨",
+    "en": "Cambodia",
+    "code": "+855",
+    "py": "jian"
   },
   {
-    "name": "老挝",
-    "name_en": "Lao People's Democratic Republic",
-    "code": "+856"
+    "zh": "老挝",
+    "en": "Lao People's Democratic Republic",
+    "code": "+856",
+    "py": "lao"
   },
   {
-    "name": "孟加拉国",
-    "name_en": "Bangladesh",
-    "code": "+880"
+    "zh": "孟加拉国",
+    "en": "Bangladesh",
+    "code": "+880",
+    "py": "meng"
   },
   {
-    "name": "台湾",
-    "name_en": "Taiwan, Province of China",
-    "code": "+886"
+    "zh": "台湾",
+    "en": "Taiwan, Province of China",
+    "code": "+886",
+    "py": "tai"
   },
   {
-    "name": "巴勒斯坦",
-    "name_en": "Palestine, State of",
-    "code": "+930"
+    "zh": "巴勒斯坦",
+    "en": "Palestine, State of",
+    "code": "+930",
+    "py": "ba"
   },
   {
-    "name": "马尔代夫",
-    "name_en": "Maldives",
-    "code": "+960"
+    "zh": "马尔代夫",
+    "en": "Maldives",
+    "code": "+960",
+    "py": "ma"
   },
   {
-    "name": "黎巴嫩",
-    "name_en": "Lebanon",
-    "code": "+961"
+    "zh": "黎巴嫩",
+    "en": "Lebanon",
+    "code": "+961",
+    "py": "li"
   },
   {
-    "name": "约旦",
-    "name_en": "Jordan",
-    "code": "+962"
+    "zh": "约旦",
+    "en": "Jordan",
+    "code": "+962",
+    "py": "yue"
   },
   {
-    "name": "叙利亚",
-    "name_en": "Syrian Arab Republic",
-    "code": "+963"
+    "zh": "叙利亚",
+    "en": "Syrian Arab Republic",
+    "code": "+963",
+    "py": "xu"
   },
   {
-    "name": "伊拉克",
-    "name_en": "Iraq",
-    "code": "+964"
+    "zh": "伊拉克",
+    "en": "Iraq",
+    "code": "+964",
+    "py": "yi"
   },
   {
-    "name": "科威特",
-    "name_en": "Kuwait",
-    "code": "+965"
+    "zh": "科威特",
+    "en": "Kuwait",
+    "code": "+965",
+    "py": "ke"
   },
   {
-    "name": "沙特阿拉伯",
-    "name_en": "Saudi Arabia",
-    "code": "+966"
+    "zh": "沙特阿拉伯",
+    "en": "Saudi Arabia",
+    "code": "+966",
+    "py": "sha"
   },
   {
-    "name": "也门",
-    "name_en": "Yemen",
-    "code": "+967"
+    "zh": "也门",
+    "en": "Yemen",
+    "code": "+967",
+    "py": "ye"
   },
   {
-    "name": "阿曼",
-    "name_en": "Oman",
-    "code": "+968"
+    "zh": "阿曼",
+    "en": "Oman",
+    "code": "+968",
+    "py": "a"
   },
   {
-    "name": "阿拉伯联合酋长国",
-    "name_en": "United Arab Emirates",
-    "code": "+971"
+    "zh": "阿拉伯联合酋长国",
+    "en": "United Arab Emirates",
+    "code": "+971",
+    "py": "a"
   },
   {
-    "name": "以色列",
-    "name_en": "Israel",
-    "code": "+972"
+    "zh": "以色列",
+    "en": "Israel",
+    "code": "+972",
+    "py": "yi"
   },
   {
-    "name": "巴林",
-    "name_en": "Bahrain",
-    "code": "+973"
+    "zh": "巴林",
+    "en": "Bahrain",
+    "code": "+973",
+    "py": "ba"
   },
   {
-    "name": "卡达",
-    "name_en": "Qatar",
-    "code": "+974"
+    "zh": "卡达",
+    "en": "Qatar",
+    "code": "+974",
+    "py": "ka"
   },
   {
-    "name": "不丹",
-    "name_en": "Bhutan",
-    "code": "+975"
+    "zh": "不丹",
+    "en": "Bhutan",
+    "code": "+975",
+    "py": "bu"
   },
   {
-    "name": "蒙古国",
-    "name_en": "Mongolia",
-    "code": "+976"
+    "zh": "蒙古国",
+    "en": "Mongolia",
+    "code": "+976",
+    "py": "meng"
   },
   {
-    "name": "尼泊尔",
-    "name_en": "Nepal",
-    "code": "+977"
+    "zh": "尼泊尔",
+    "en": "Nepal",
+    "code": "+977",
+    "py": "ni"
   },
   {
-    "name": "塔吉克",
-    "name_en": "Tajikistan",
-    "code": "+992"
+    "zh": "塔吉克",
+    "en": "Tajikistan",
+    "code": "+992",
+    "py": "ta"
   },
   {
-    "name": "土库曼",
-    "name_en": "Turkmenistan",
-    "code": "+993"
+    "zh": "土库曼",
+    "en": "Turkmenistan",
+    "code": "+993",
+    "py": "tu"
   },
   {
-    "name": "阿塞拜疆",
-    "name_en": "Azerbaijan",
-    "code": "+994"
+    "zh": "阿塞拜疆",
+    "en": "Azerbaijan",
+    "code": "+994",
+    "py": "a"
   },
   {
-    "name": "乔治亚",
-    "name_en": "Georgia",
-    "code": "+995"
+    "zh": "乔治亚",
+    "en": "Georgia",
+    "code": "+995",
+    "py": "qiao"
   },
   {
-    "name": "吉尔吉斯",
-    "name_en": "Kyrgyzstan",
-    "code": "+996"
+    "zh": "吉尔吉斯",
+    "en": "Kyrgyzstan",
+    "code": "+996",
+    "py": "ji"
   },
   {
-    "name": "乌兹别克",
-    "name_en": "Uzbekistan",
-    "code": "+998"
+    "zh": "乌兹别克",
+    "en": "Uzbekistan",
+    "code": "+998",
+    "py": "wu"
   },
   {
-    "name": "巴哈马",
-    "name_en": "Bahamas",
-    "code": "+1242"
+    "zh": "巴哈马",
+    "en": "Bahamas",
+    "code": "+1242",
+    "py": "ba"
   },
   {
-    "name": "巴巴多斯",
-    "name_en": "Barbados",
-    "code": "+1246"
+    "zh": "巴巴多斯",
+    "en": "Barbados",
+    "code": "+1246",
+    "py": "ba"
   },
   {
-    "name": "安圭拉",
-    "name_en": "Anguilla",
-    "code": "+1264"
+    "zh": "安圭拉",
+    "en": "Anguilla",
+    "code": "+1264",
+    "py": "an"
   },
   {
-    "name": "安提瓜和巴布达",
-    "name_en": "Antigua and Barbuda",
-    "code": "+1268"
+    "zh": "安提瓜和巴布达",
+    "en": "Antigua and Barbuda",
+    "code": "+1268",
+    "py": "an"
   },
   {
-    "name": "英属维尔京群岛",
-    "name_en": "Virgin Islands, U.S.",
-    "code": "+1284"
+    "zh": "英属维尔京群岛",
+    "en": "Virgin Islands, U.S.",
+    "code": "+1284",
+    "py": "ying"
   },
   {
-    "name": "美属维尔京群岛",
-    "name_en": "United States Virgin Islands",
-    "code": "+1340"
+    "zh": "美属维尔京群岛",
+    "en": "United States Virgin Islands",
+    "code": "+1340",
+    "py": "mei"
   },
   {
-    "name": "开曼群岛",
-    "name_en": "Cayman Islands",
-    "code": "+1345"
+    "zh": "开曼群岛",
+    "en": "Cayman Islands",
+    "code": "+1345",
+    "py": "kai"
   },
   {
-    "name": "百慕大",
-    "name_en": "Bermuda",
-    "code": "+1441"
+    "zh": "百慕大",
+    "en": "Bermuda",
+    "code": "+1441",
+    "py": "bai"
   },
   {
-    "name": "格林纳达",
-    "name_en": "Grenada",
-    "code": "+1473"
+    "zh": "格林纳达",
+    "en": "Grenada",
+    "code": "+1473",
+    "py": "ge"
   },
   {
-    "name": "土克凯可群岛",
-    "name_en": "Turks and Caicos Islands",
-    "code": "+1649"
+    "zh": "土克凯可群岛",
+    "en": "Turks and Caicos Islands",
+    "code": "+1649",
+    "py": "tu"
   },
   {
-    "name": "蒙塞拉特岛",
-    "name_en": "Montserrat",
-    "code": "+1664"
+    "zh": "蒙塞拉特岛",
+    "en": "Montserrat",
+    "code": "+1664",
+    "py": "meng"
   },
   {
-    "name": "关岛",
-    "name_en": "Guam",
-    "code": "+1671"
+    "zh": "关岛",
+    "en": "Guam",
+    "code": "+1671",
+    "py": "guan"
   },
   {
-    "name": "美属萨摩亚",
-    "name_en": "American Samoa",
-    "code": "+1684"
+    "zh": "美属萨摩亚",
+    "en": "American Samoa",
+    "code": "+1684",
+    "py": "mei"
   },
   {
-    "name": "圣卢西亚",
-    "name_en": "Saint Lucia",
-    "code": "+1758"
+    "zh": "圣卢西亚",
+    "en": "Saint Lucia",
+    "code": "+1758",
+    "py": "sheng"
   },
   {
-    "name": "多米尼克",
-    "name_en": "Dominica",
-    "code": "+1767"
+    "zh": "多米尼克",
+    "en": "Dominica",
+    "code": "+1767",
+    "py": "duo"
   },
   {
-    "name": "圣文森及格林纳丁",
-    "name_en": "Saint Vincent and the Grenadines",
-    "code": "+1784"
+    "zh": "圣文森及格林纳丁",
+    "en": "Saint Vincent and the Grenadines",
+    "code": "+1784",
+    "py": "sheng"
   },
   {
-    "name": "波多黎各",
-    "name_en": "Puerto Rico",
-    "code": "+1787"
+    "zh": "波多黎各",
+    "en": "Puerto Rico",
+    "code": "+1787",
+    "py": "bo"
   },
   {
-    "name": "多米尼加共和国",
-    "name_en": "Dominican Republic",
-    "code": "+1809"
+    "zh": "多米尼加共和国",
+    "en": "Dominican Republic",
+    "code": "+1809",
+    "py": "duo"
   },
   {
-    "name": "特立尼达和多巴哥",
-    "name_en": "Trinidad and Tobago",
-    "code": "+1868"
+    "zh": "特立尼达和多巴哥",
+    "en": "Trinidad and Tobago",
+    "code": "+1868",
+    "py": "te"
   },
   {
-    "name": "圣克里斯多福与尼维斯",
-    "name_en": "Saint Kitts and Nevis",
-    "code": "+1869"
+    "zh": "圣克里斯多福与尼维斯",
+    "en": "Saint Kitts and Nevis",
+    "code": "+1869",
+    "py": "sheng"
   },
   {
-    "name": "牙买加",
-    "name_en": "Jamaica",
-    "code": "+1876"
+    "zh": "牙买加",
+    "en": "Jamaica",
+    "code": "+1876",
+    "py": "ya"
   }
 ]
