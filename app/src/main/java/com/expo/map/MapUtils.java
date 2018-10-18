@@ -19,6 +19,7 @@ import com.amap.api.maps.model.UrlTileProvider;
 import com.expo.R;
 import com.expo.base.BaseApplication;
 import com.expo.base.ExpoApp;
+import com.expo.entity.ActualScene;
 import com.expo.network.Http;
 import com.expo.widget.ImageViewPlus;
 
@@ -75,7 +76,7 @@ public class MapUtils {
      *
      * @param scenicSpot
      */
-    public void setMapCamera(ScenicSpot scenicSpot) {
+    public void setMapCamera(ActualScene scenicSpot) {
         map.moveCamera( CameraUpdateFactory.newLatLngBounds( getBoundsBuilder( scenicSpot ), 120 ) );
     }
 
@@ -84,11 +85,11 @@ public class MapUtils {
      *
      * @param scenicSpot 园区
      */
-    public void setLimits(ScenicSpot scenicSpot) {
+    public void setLimits(ActualScene scenicSpot) {
         map.setMapStatusLimits( getBoundsBuilder( scenicSpot ) );
     }
 
-    private LatLngBounds getBoundsBuilder(ScenicSpot scenicSpot) {
+    private LatLngBounds getBoundsBuilder(ActualScene scenicSpot) {
         ArrayList<double[]> electronicFenceList = scenicSpot.getElectronicFenceList();
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
         for (double[] lngLat : electronicFenceList) {

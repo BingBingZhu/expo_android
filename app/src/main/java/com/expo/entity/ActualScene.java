@@ -3,9 +3,13 @@ package com.expo.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.expo.network.Http;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.ArrayList;
 
 @DatabaseTable(tableName = "actual_scene")
 public class ActualScene implements Parcelable {
@@ -124,5 +128,10 @@ public class ActualScene implements Parcelable {
             dest.writeInt( isRecommended );
         }
         dest.writeString( recommendedIdx );
+    }
+
+    public ArrayList<double[]> getElectronicFenceList() {
+        return Http.getGsonInstance().fromJson( electronicFenceList, new TypeToken<double[]>() {
+        }.getType() );
     }
 }
