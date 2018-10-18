@@ -22,6 +22,7 @@ public interface Constants {
         public static final String KEY_SUBJECT_UPDATE_TIME = "key_subject_update_time";
         public static final String KEY_ENCYCLOPEDIAS_UPDATE_TIME = "key_wiki_update_time";
         public static final String KEY_GUIDE_SHOWN = "key_guide_shown";
+        public static final String KEY_LANGUAGE_CHOOSE= "key_language_choose";
     }
 
     /**

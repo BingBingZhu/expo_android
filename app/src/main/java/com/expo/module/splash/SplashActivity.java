@@ -1,5 +1,6 @@
 package com.expo.module.splash;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -12,6 +13,7 @@ import com.expo.contract.SplashContract;
 import com.expo.entity.User;
 import com.expo.main.MainActivity;
 import com.expo.module.guide.GuideFragment;
+import com.expo.module.language.LanguageActivity;
 import com.expo.module.login.LoginActivity;
 import com.expo.utils.Constants;
 
@@ -27,8 +29,8 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setDoubleTapToExit( false );
-        mHandler.postDelayed( this::next, 3000 );
+        setDoubleTapToExit(false);
+        mHandler.postDelayed(this::next, 3000);
         mPresenter.loadInitData();
     }
 
@@ -40,16 +42,18 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
     @Override
     public void next() {
         if (mPrepared) {
-            String shownVer = PrefsHelper.getString( Constants.Prefs.KEY_GUIDE_SHOWN, null );
-            if (!BuildConfig.VERSION_NAME.equals( shownVer )) {
+            String shownVer = PrefsHelper.getString(Constants.Prefs.KEY_GUIDE_SHOWN, null);
+            if (!BuildConfig.VERSION_NAME.equals(shownVer)) {
                 showGuideView();
+            } else if (PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null) == null || true) {
+                startActivity(new Intent(this, LanguageActivity.class));
             } else {
                 User user = mPresenter.loadUser();
                 if (user == null) {
-                    LoginActivity.startActivity( this );
+                    LoginActivity.startActivity(this);
                 } else {
-                    ExpoApp.getApplication().setUser( user );
-                    MainActivity.startActivity( this );
+                    ExpoApp.getApplication().setUser(user);
+                    MainActivity.startActivity(this);
                 }
                 finish();
             }
@@ -61,8 +65,8 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
     private void showGuideView() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .setCustomAnimations( R.anim.slide_in_right, R.anim.slide_in_right )
-                .add( R.id.splash_root, new GuideFragment(), null )
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_right)
+                .add(R.id.splash_root, new GuideFragment(), null)
                 .commit();
     }
 }

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.expo">
 
+    <uses-sdk tools:overrideLibrary="com.geejoe.drawabletextview"/>
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -57,6 +59,18 @@
             android:theme="@style/LoginTheme" />
 
         <activity android:name=".main.MainActivity" />
+
+        <activity android:name=".module.language.LanguageActivity" />
+
+        <activity android:name=".module.bind.BindActivity" />
+
+        <activity
+            android:name=".module.eara.PickActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.sahooz.library.PickActivity"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".module.webview.WebActivity"

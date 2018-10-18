@@ -11,6 +11,8 @@
     <color name="sliding_list_item_delete_bg">#FF9EA7</color>
     <color name="caption_color">#454545</color>
     <color name="gray_235">#454545</color>
+    <color name="gray_99">#999999</color>
+    <color name="gray_cc">#CCCCCC</color>
     <color name="color_local_stork">#5FFFC1</color>
     <color name="color_local">#425FFFC1</color>
 </resources>

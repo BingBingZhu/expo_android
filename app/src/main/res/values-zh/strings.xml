@@ -31,8 +31,14 @@
     <string name="code_error">验证码错误</string>
     <string name="code_times_limit">今日请求次数已达上限</string>
     <string name="account_unable">账号已锁定</string>
+    <string name="bind_phone_need_sms">绑定手机号码需要通过短信验证</string>
+    <string name="login">立即登录</string>
+    <string name="next_step">下一步</string>
 
     <string name="cancel_the_login">已取消</string>
     <string name="authorization_failure">授权失败</string>
     <string name="authorization_success">授权成功</string>
+
+    <string name="title_bind_ac">绑定手机</string>
+    <string name="title_pick_ac">地区</string>
 </resources>

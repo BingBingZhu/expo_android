@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".module.language.LanguageActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_180" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dms_40">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_navbar_back_black" />
+
+            <TextView
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="登录"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_32" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/dms_40">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请选择语言 Select language"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_32" />
+
+        <RelativeLayout
+            android:id="@+id/language_cn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_80"
+            android:layout_marginTop="@dimen/dms_40"
+            android:background="@drawable/bg_white_99_r5_w1"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="@dimen/dms_40"
+                android:layout_height="@dimen/dms_40"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:src="@drawable/selector_radio" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="中文"
+                android:textColor="@color/selector_99_5fffc1"
+                android:textIsSelectable="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/language_en"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_80"
+            android:layout_marginTop="@dimen/dms_40"
+            android:background="@drawable/bg_white_99_r5_w1"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="@dimen/dms_40"
+                android:layout_height="@dimen/dms_40"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:src="@drawable/selector_radio" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="English"
+                android:textColor="@color/selector_99_5fffc1" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/language_create_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_80"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dms_40"
+            android:background="@drawable/selector_5fffc1_425fffc1_r5"
+            android:gravity="center"
+            android:text="创建账号"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_34" />
+
+    </LinearLayout>
+
+</LinearLayout>
