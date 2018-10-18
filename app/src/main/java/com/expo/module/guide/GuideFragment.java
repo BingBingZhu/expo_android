@@ -20,13 +20,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/*
+ * 引导页
+ */
 public class GuideFragment extends BaseFragment {
 
     @BindView(R.id.guide_vp)
     ViewPager mGuidePages;
     @BindView(R.id.guide_indicator)
     LinearLayout mIndicators;
-    private CircleTabPagerAdapter mGuidePagerAdapter;
+    private IndicatorPagerAdapter mGuidePagerAdapter;
     private int[] guidesImages = new int[]{R.drawable.guide1, R.drawable.guide2};
     private int[] guidesTitles = new int[]{R.string.guide1, R.string.guide2};
 
@@ -46,7 +49,7 @@ public class GuideFragment extends BaseFragment {
             title.setText( guidesTitles[i] );
             views.add( view );
         }
-        mGuidePagerAdapter = new CircleTabPagerAdapter( mIndicators, mGuidePages, R.drawable.guide_indicator_point );
+        mGuidePagerAdapter = new IndicatorPagerAdapter( mIndicators, mGuidePages, R.drawable.guide_indicator_point );
         mGuidePagerAdapter.setPages( views );
         mGuidePagerAdapter.notifyDataSetChanged();
     }

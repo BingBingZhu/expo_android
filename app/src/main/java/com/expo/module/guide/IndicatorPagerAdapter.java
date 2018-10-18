@@ -15,20 +15,26 @@ import java.util.List;
 
 /**
  * Created by Zhange Zhao on 2017/10/13.
- * 广告带有圆点指示器的ViewPager的适配器
+ * 广告带有指示器的ViewPager的适配器
  */
 
-public class CircleTabPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
-    private int mLastPager;                                                                //上一页的下标
-    private LinearLayout mTabContainer;                                                             //圆点指示器的盛放容器
+public class IndicatorPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
+    //上一页的下标
+    private int mLastPager;
+    //指示器的盛放容器
+    private LinearLayout mTabContainer;
     private ViewPager mAdPager;
     private List<View> mPages = new ArrayList<>();
-    private int mTabRes;                                                                        //圆点的图片资源
-    private boolean mAutoChangePage;                                                                //是否自动翻页
-    private long mTime;                                                                          //自动翻页间隔时间
-    private boolean mAutoChanging;                                                                  //是否已经在自动改变页面
+    //指示器的图片资源
+    private int mTabRes;
+    //是否自动翻页
+    private boolean mAutoChangePage;
+    //自动翻页间隔时间
+    private long mTime;
+    //是否已经在自动改变页面
+    private boolean mAutoChanging;
 
-    public CircleTabPagerAdapter(LinearLayout tabContainer, ViewPager pager, @DrawableRes int tabRes) {
+    public IndicatorPagerAdapter(LinearLayout tabContainer, ViewPager pager, @DrawableRes int tabRes) {
         this.mTabContainer = tabContainer;
         this.mAdPager = pager;
         this.mAdPager.setAdapter( this );

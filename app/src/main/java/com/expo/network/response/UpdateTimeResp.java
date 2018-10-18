@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName;
 public class UpdateTimeResp extends BaseResponse {
     @SerializedName(value = "UpdateTime")
     public String updateTime;
-    @SerializedName(value = "gCacheUpdateTimePark")
-    public String scenicSpot;
     @SerializedName(value = "gCacheUpdateTimeRouter")
     public String router;
     @SerializedName(value = "gCacheUpdateTimeTourist")

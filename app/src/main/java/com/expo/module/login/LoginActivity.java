@@ -20,16 +20,13 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.LoginContract;
-import com.expo.main.MainActivity;
+import com.expo.module.main.MainActivity;
 import com.expo.module.webview.WebActivity;
 import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 import com.expo.widget.AppBarView;
-import com.sahooz.library.Country;
-import com.sahooz.library.PhoneNumberLibUtil;
-import com.sahooz.library.PickActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,35 +37,36 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
 
+/*
+ * 登录页
+ */
 public class LoginActivity extends BaseActivity<LoginContract.Presenter> implements View.OnClickListener, LoginContract.View {
 
     @BindView(R.id.login_back)
-    AppBarView title;
+    AppBarView mTitleView;
     @BindView(R.id.login_gt_img)
-    ImageView imgGT;
+    ImageView mGtView;
     @BindView(R.id.login_phone_number_et)
-    EditText etPhoneNum;
-    @BindView(R.id.login_phone_number_code)
-    TextView tvPhoneCode;
+    EditText mEtPhoneView;
     @BindView(R.id.login_ver_code_et)
-    EditText etVerCode;
+    EditText mEtCodeView;
     @BindView(R.id.login_get_ver_code)
-    TextView tvGetCode;
+    TextView mGetCodeView;
     @BindView(R.id.login_login_btn)
-    Button btnLogin;
+    Button mLoginView;
     @BindView(R.id.login_protocol_tv)
-    TextView tvProtocol;    // 服务协议
+    TextView mProtocolView;    // 服务协议
     @BindView(R.id.login_wechat)
-    ImageView imgWechat;
+    ImageView mWechatView;
     @BindView(R.id.login_qq)
-    ImageView imgQQ;
+    ImageView mQQView;
     @BindView(R.id.login_microblog)
-    ImageView imgMicroblog;     // 微博登录
+    ImageView mSinaView;     // 微博登录
 
-
-    private boolean getCodeEnable = true;  // 是否允许获取验证码按钮可用
-    private TimeCount timeCount;    //验证码获取计时器
-    private int code;    //手机号区域码
+    private int mDuration = 0;
+    private int mSurplusDuration;
+    private boolean mGetCodeEnable = true;  // 是否允许获取验证码按钮可用
+    private TimeCount mTimeCount;    //验证码获取计时器
 
     @Override
     protected int getContentView() {
@@ -78,24 +76,23 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         //不具有返回上级页面功能时可双击返回键退出
-        setDoubleTapToExit(true);
-        tvGetCode.setEnabled(false);
-        btnLogin.setEnabled(false);
-        setBackVisibility(false);
-        etPhoneNum.addTextChangedListener(textWatcher);
-        etVerCode.addTextChangedListener(textWatcher);
-        title.setOnClickListener(this);
-        tvPhoneCode.setOnClickListener(this);
-        tvGetCode.setOnClickListener(this);
-        btnLogin.setOnClickListener(this);
-        imgWechat.setOnClickListener(this);
-        imgQQ.setOnClickListener(this);
-        imgMicroblog.setOnClickListener(this);
-        tvProtocol.setOnClickListener(this);
+        setDoubleTapToExit( true );
+        mGetCodeView.setEnabled( false );
+        mLoginView.setEnabled( false );
+        setBackVisibility( false );
+        mEtPhoneView.addTextChangedListener( mTextWatcher );
+        mEtCodeView.addTextChangedListener( mTextWatcher );
+        mTitleView.setOnClickListener( this );
+        mGetCodeView.setOnClickListener( this );
+        mLoginView.setOnClickListener( this );
+        mWechatView.setOnClickListener( this );
+        mQQView.setOnClickListener( this );
+        mSinaView.setOnClickListener( this );
+        mProtocolView.setOnClickListener( this );
     }
 
     private void setBackVisibility(boolean mHomeAsBack) {
-        title.setVisibility(mHomeAsBack ? View.VISIBLE : View.GONE);
+        mTitleView.setVisibility( mHomeAsBack ? View.VISIBLE : View.GONE );
     }
 
     @Override
@@ -103,7 +100,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         return true;
     }
 
-    private TextWatcher textWatcher = new TextWatcher() {
+    private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -111,25 +108,25 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (etPhoneNum.isFocused()) {     //手机号输入框获取焦点
-                imgGT.setImageResource(R.drawable.ico_tuan_open);
+            if (mEtPhoneView.isFocused()) {     //手机号输入框获取焦点
+                mGtView.setImageResource( R.drawable.ico_tuan_open );
                 if (s.length() != 11) {
-                    tvGetCode.setEnabled(false);
+                    mGetCodeView.setEnabled( false );
                     return;
                 }
-                if (s.toString().matches(Constants.Exps.PHONE)) {
-                    if (getCodeEnable)
-                        tvGetCode.setEnabled(true);
+                if (s.toString().matches( Constants.Exps.PHONE )) {
+                    if (mGetCodeEnable)
+                        mGetCodeView.setEnabled( true );
                 } else {
-                    tvGetCode.setEnabled(false);
-                    ToastHelper.showShort("请输入正确的手机号");
+                    mGetCodeView.setEnabled( false );
+                    ToastHelper.showShort( "请输入正确的手机号" );
                 }
             } else {      //验证码输入框获取焦点
-                imgGT.setImageResource(R.drawable.ico_tuan_close);
+                mGtView.setImageResource( R.drawable.ico_tuan_close );
                 if (s.length() != 4) {       //长度非4位进行错误处理
-                    btnLogin.setEnabled(false);
+                    mLoginView.setEnabled( false );
                 } else {
-                    btnLogin.setEnabled(true);
+                    mLoginView.setEnabled( true );
                 }
             }
         }
@@ -149,25 +146,10 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         context.startActivity(in);
     }
 
-    @Override
-    protected void onResume() {
-        inspectPermission();
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Country.destroy();
-        super.onDestroy();
-    }
-
     @OnClick(R.id.title_back)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login_phone_number_code:
-                startActivityForResult(new Intent(getApplicationContext(), PickActivity.class), 111);
-                break;
             case R.id.title_back:
                 finish();
                 break;
@@ -177,16 +159,16 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 //                    ToastHelper.showShort(R.string.input_correct_phone);
 //                    return;
 //                }
-                mPresenter.getCode(etPhoneNum.getText().toString().trim());
-                duration += 60;
-                surplusDuration = duration;
-                timeCount = new TimeCount((duration + 1) * 1000, 1000);
-                timeCount.start();
+                mPresenter.getCode( mEtPhoneView.getText().toString().trim() );
+                mDuration += 60;
+                mSurplusDuration = mDuration;
+                mTimeCount = new TimeCount( (mDuration + 1) * 1000, 1000 );
+                mTimeCount.start();
                 break;
             case R.id.login_login_btn:
                 // 使用验证码登录
-                mPresenter.verifyCodeLogin(etPhoneNum.getText().toString().trim(),
-                        etVerCode.getText().toString().trim());
+                mPresenter.verifyCodeLogin( mEtPhoneView.getText().toString().trim(),
+                        mEtCodeView.getText().toString().trim() );
                 break;
             case R.id.login_wechat:
                 // 第三方微信登录
@@ -223,9 +205,9 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
      */
     @Override
     public void returnRequestVerifyCodeResult(String code) {
-        etVerCode.requestFocus();
-        etVerCode.setText("");
-        etVerCode.append(code);
+        mEtCodeView.requestFocus();
+        mEtCodeView.setText( "" );
+        mEtCodeView.append( code );
     }
 
     /**
@@ -244,22 +226,9 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 111 && resultCode == RESULT_OK) {
-            Country country = Country.fromJson(data.getStringExtra("country"));
-            tvPhoneCode.setText("+" + country.code);
-            code = country.code;
-        }
-    }
-
-    @Override
     public void showShort(int resId) {
         ToastHelper.showShort(resId);
     }
-
-    private int duration = 0;
-    private int surplusDuration;
 
     class TimeCount extends CountDownTimer {
         public TimeCount(long millisInFuture, long countDownInterval) {
@@ -268,26 +237,27 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
         @Override
         public void onFinish() {// 计时完毕时触发
-            getCodeEnable = true;
-            tvGetCode.setEnabled(true);
-            tvGetCode.setText("获取验证码");
+            mGetCodeEnable = true;
+            mGetCodeView.setEnabled( true );
+            mGetCodeView.setText( "获取验证码" );
         }
 
         @Override
         public void onTick(long millisUntilFinished) {// 计时过程显示
-            if (surplusDuration > 0) {
-                surplusDuration--;
+            if (mSurplusDuration > 0) {
+                mSurplusDuration--;
             }
-            tvGetCode.setText(surplusDuration + "秒");
-            getCodeEnable = false;
-            tvGetCode.setEnabled(false);
+            mGetCodeView.setText( mSurplusDuration + "秒" );
+            mGetCodeEnable = false;
+            mGetCodeView.setEnabled( false );
         }
     }
 
-    private List<String> permissionList;
-
-    private void inspectPermission() {
-        permissionList = new ArrayList<>();
+    /*
+     * 检查权限并弹框提示获取权限
+     */
+    private void checkPermission() {
+        List<String> permissionList = new ArrayList<>();
         List<String> perNameList = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {

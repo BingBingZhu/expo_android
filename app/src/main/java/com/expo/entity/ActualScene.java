@@ -8,28 +8,83 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "actual_scene")
-public class ActualScene extends Scene {
-    @DatabaseField(columnName = "is_lined_ar")
-    @SerializedName("islinedar")
-    private String isLinedAr;
-    @DatabaseField(columnName = "ar_link_url")
-    @SerializedName("arlinkurl")
-    private String arLinkUrl;
+public class ActualScene implements Parcelable {
+    @DatabaseField(columnName = "_id", id = true)
+    @SerializedName("id")
+    private Long id;
+    @DatabaseField(columnName = "caption")
+    @SerializedName("caption")
+    private String caption;
+    @DatabaseField(columnName = "type")
+    @SerializedName("type")
+    private String type;
+    @DatabaseField(columnName = "remark")
+    @SerializedName("remark")
+    private String remark;
+    @DatabaseField(columnName = "is_enable")
+    @SerializedName("isenable")
+    private int isEnable;
+    @DatabaseField(columnName = "pic_url")
+    @SerializedName("picurl")
+    private String picUrl;
+    @DatabaseField(columnName = "link_h5_url")
+    @SerializedName("linkh5url")
+    private String linkH5Url;
+    @DatabaseField(columnName = "create_time")
+    @SerializedName("createtime")
+    private String createTime;
+    @DatabaseField(columnName = "update_time")
+    @SerializedName("updatetime")
+    private String updateTime;
+    @DatabaseField(columnName = "lng")
+    @SerializedName("lon")
+    private String lng;
+    @DatabaseField(columnName = "lat")
+    @SerializedName("lat")
+    private String lat;
+    @DatabaseField(columnName = "electronic_fence_list")
+    @SerializedName("electronicfencelist")
+    private String electronicFenceList;
+    @DatabaseField(columnName = "is_recommended")
+    @SerializedName("isrecommended")
+    private Integer isRecommended;
+    @DatabaseField(columnName = "recommended_idx")
+    @SerializedName("recommendedidx")
+    private String recommendedIdx;
 
 
     public ActualScene() {
     }
 
     protected ActualScene(Parcel in) {
-        super(in);
-        isLinedAr = in.readString();
-        arLinkUrl = in.readString();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        caption = in.readString();
+        type = in.readString();
+        remark = in.readString();
+        isEnable = in.readInt();
+        picUrl = in.readString();
+        linkH5Url = in.readString();
+        createTime = in.readString();
+        updateTime = in.readString();
+        lng = in.readString();
+        lat = in.readString();
+        electronicFenceList = in.readString();
+        if (in.readByte() == 0) {
+            isRecommended = null;
+        } else {
+            isRecommended = in.readInt();
+        }
+        recommendedIdx = in.readString();
     }
 
-    public static final Parcelable.Creator<ActualScene> CREATOR = new Parcelable.Creator<ActualScene>() {
+    public static final Creator<ActualScene> CREATOR = new Creator<ActualScene>() {
         @Override
         public ActualScene createFromParcel(Parcel in) {
-            return new ActualScene(in);
+            return new ActualScene( in );
         }
 
         @Override
@@ -39,25 +94,35 @@ public class ActualScene extends Scene {
     };
 
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(isLinedAr);
-        dest.writeString(arLinkUrl);
-    }
-
-    public String getIsLinedAr() {
-        return isLinedAr;
-    }
-
-    public void setIsLinedAr(String isLinedAr) {
-        this.isLinedAr = isLinedAr;
-    }
-
-    public String getArLinkUrl() {
-        return arLinkUrl;
-    }
-
-    public void setArLinkUrl(String arLinkUrl) {
-        this.arLinkUrl = arLinkUrl;
+        if (id == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeLong( id );
+        }
+        dest.writeString( caption );
+        dest.writeString( type );
+        dest.writeString( remark );
+        dest.writeInt( isEnable );
+        dest.writeString( picUrl );
+        dest.writeString( linkH5Url );
+        dest.writeString( createTime );
+        dest.writeString( updateTime );
+        dest.writeString( lng );
+        dest.writeString( lat );
+        dest.writeString( electronicFenceList );
+        if (isRecommended == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( isRecommended );
+        }
+        dest.writeString( recommendedIdx );
     }
 }

@@ -9,7 +9,6 @@ import com.expo.entity.ActualScene;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.Encyclopedias;
-import com.expo.entity.ScenicSpot;
 import com.expo.entity.Subject;
 import com.expo.entity.User;
 import com.expo.network.Http;
@@ -60,12 +59,6 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                     updateTime = PrefsHelper.getString( Constants.Prefs.KEY_COMMON_INFO_UPDATE_TIME, null );
                     if (!rsp.commoninformation.equals( updateTime )) {
                         loadCommonInfo( emptyBody );
-                    }
-                }
-                if (!TextUtils.isEmpty( rsp.scenicSpot )) {
-                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_SCENIC_SPOT_UPDATE_TIME, null );
-                    if (!rsp.scenicSpot.equals( updateTime )) {
-                        requestSpot( Constants.URL.SCENIC_SPOTS, emptyBody, Constants.Prefs.KEY_SCENIC_SPOT_UPDATE_TIME, ScenicSpot.class );
                     }
                 }
                 if (!TextUtils.isEmpty( rsp.actualScene )) {
@@ -257,8 +250,6 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 mDao.clear( clz );
                 if (clz == ActualScene.class) {
                     mDao.saveOrUpdateAll( rsp.actualScenes );
-                } else if (clz == ScenicSpot.class) {
-                    mDao.saveOrUpdateAll( rsp.scenicSpots );
                 }
             }
 

@@ -49,23 +49,6 @@
                     android:src="@drawable/ico_login_phone"
                     android:visibility="gone" />
 
-                <com.hedan.textdrawablelibrary.TextViewDrawable
-                    android:id="@+id/login_phone_number_code"
-                    android:layout_width="@dimen/dms_90"
-                    android:layout_height="@dimen/dms_90"
-                    android:layout_marginLeft="@dimen/dms_20"
-                    android:drawableRight="@drawable/flag_af"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    app:drawableRightHeight="@dimen/dms_20"
-                    app:drawableRightWidth="@dimen/dms_20" />
-
-                <TextView
-                    style="@style/LineVertical"
-                    android:layout_height="@dimen/dms_50"
-                    android:layout_marginLeft="@dimen/dms_10"
-                    android:visibility="gone" />
-
                 <EditText
                     android:id="@+id/login_phone_number_et"
                     android:layout_width="match_parent"

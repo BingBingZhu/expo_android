@@ -1,0 +1,78 @@
+package com.expo.module.main;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTabHost;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TabHost;
+import android.widget.TextView;
+
+import com.expo.R;
+import com.expo.base.BaseActivity;
+
+import butterknife.BindView;
+
+/*
+ * 主页
+ */
+public class MainActivity extends BaseActivity {
+
+    @BindView(R.id.tab_host)
+    FragmentTabHost mTabHostView;
+
+    private String[] tabTags = {"home", "panorama", "encyclopedias", "mine"};
+    private String[] tabTitles = {"首页", "全景", "百科", "我的"};
+    private int mImages[] = {
+            R.drawable.selector_tab_home,
+            R.drawable.selector_tab_panorama,
+            R.drawable.selector_tab_encyclopedia,
+            R.drawable.selector_tab_mine};
+    private Class[] fragments = new Class[]{
+            HomeFragment.class,
+            PanoramaFragment.class,
+            EncyclopediaFragment.class,
+            MineFragment.class};
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void onInitView(Bundle savedInstanceState) {
+        mTabHostView.setup( this, getSupportFragmentManager(), R.id.container );
+        mTabHostView.getTabWidget().setDividerDrawable( null ); // 去掉分割线
+        for (int i = 0; i < tabTags.length; i++) {
+            TabHost.TabSpec tabSpec = mTabHostView.newTabSpec( tabTags[i] ).setIndicator( getView( i ) );
+            mTabHostView.addTab( tabSpec, fragments[i], null );
+        }
+        mTabHostView.setOnTabChangedListener( mTabChangeListener );
+    }
+
+    private TabHost.OnTabChangeListener mTabChangeListener = tabId -> {
+
+    };
+
+    @Override
+    protected boolean hasPresenter() {
+        return false;
+    }
+
+
+    // 获得tab视图
+    private View getView(int index) {
+        View view = getLayoutInflater().inflate( R.layout.layout_tab, null );
+        ImageView tabImage = view.findViewById( R.id.tab_img );
+        TextView tbaTv = view.findViewById( R.id.tab_tv );
+        tabImage.setImageResource( mImages[index] );
+        tbaTv.setText( tabTitles[index] );
+        return view;
+    }
+
+    public static void startActivity(Context context) {
+        Intent in = new Intent( context, MainActivity.class );
+        context.startActivity( in );
+    }
+}

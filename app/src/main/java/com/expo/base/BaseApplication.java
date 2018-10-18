@@ -122,12 +122,12 @@ public class BaseApplication extends MultiDexApplication {
      */
     protected void onExit() {
         mCanExit = false;
-        mApp = null;
     }
 
     @Override
     public void onTerminate() {
         onExit();
+        mApp = null;
         super.onTerminate();
     }
 }
