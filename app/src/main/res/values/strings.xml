@@ -43,4 +43,5 @@
 
     <string name="title_bind_ac">绑定手机</string>
     <string name="title_pick_ac">region</string>
+    <string name="title_message_kind_ac">消息中心</string>
 </resources>

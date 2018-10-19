@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
 import com.expo.base.utils.StatusBarUtils;
 

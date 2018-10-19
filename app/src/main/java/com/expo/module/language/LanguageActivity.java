@@ -22,12 +22,12 @@ import butterknife.OnClick;
 public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
     @BindView(R.id.language_cn)
-    RelativeLayout language_cn;
+    View mLanguageCn;
     @BindView(R.id.language_en)
-    RelativeLayout language_en;
+    View mLanguageEn;
 
-    Locale locale = null;
-    String language = null;
+    Locale mLocale = null;
+    String mLanguage = null;
 
     @Override
     protected int getContentView() {
@@ -36,14 +36,14 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        language = PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null);
+        mLanguage = PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null);
         hideTitle();
-        if (language == null) {
+        if (mLanguage == null) {
 
-        } else if (LanguageUtil.LANGUAGE_CN.endsWith(language)) {
-            language_cn.performClick();
-        } else if (LanguageUtil.LANGUAGE_EN.endsWith(language)) {
-            language_en.performClick();
+        } else if (LanguageUtil.LANGUAGE_CN.endsWith(mLanguage)) {
+            mLanguageCn.performClick();
+        } else if (LanguageUtil.LANGUAGE_EN.endsWith(mLanguage)) {
+            mLanguageEn.performClick();
         }
     }
 
@@ -54,17 +54,17 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
     @OnClick({R.id.language_cn, R.id.language_en})
     public void selectLanague(View view) {
-        language_cn.setSelected(false);
-        language_en.setSelected(false);
+        mLanguageCn.setSelected(false);
+        mLanguageEn.setSelected(false);
         view.setSelected(true);
         switch (view.getId()) {
             case R.id.language_cn:
-                locale = Locale.CHINA;
-                language = LanguageUtil.LANGUAGE_CN;
+                mLocale = Locale.CHINA;
+                mLanguage = LanguageUtil.LANGUAGE_CN;
                 break;
             case R.id.language_en:
-                locale = Locale.ENGLISH;
-                language = LanguageUtil.LANGUAGE_EN;
+                mLocale = Locale.ENGLISH;
+                mLanguage = LanguageUtil.LANGUAGE_EN;
                 break;
 
         }
@@ -82,12 +82,12 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
     @OnClick(R.id.language_create_btn)
     public void createLanguage() {
-        if (locale == null) {
+        if (mLocale == null) {
             return;
         }
-        LanguageUtil.changeAppLanguage(this, locale);
+        LanguageUtil.changeAppLanguage(this, mLocale);
 
-        PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, language);
+        PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, mLanguage);
 
 //        Intent intent = new Intent(this, LoginActivity.class);
         Intent intent = new Intent(this, BindActivity.class);

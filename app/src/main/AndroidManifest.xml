@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.expo">
 
-    <uses-sdk tools:overrideLibrary="com.geejoe.drawabletextview"/>
+    <uses-sdk tools:overrideLibrary="com.geejoe.drawabletextview" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -64,16 +64,15 @@
 
         <activity android:name=".module.bind.BindActivity" />
 
-        <activity
-            android:name=".module.eara.PickActivity"
-            android:windowSoftInputMode="adjustPan" />
+        <!--<activity-->
+            <!--android:name=".module.eara.PickActivity"-->
+            <!--android:windowSoftInputMode="adjustPan" />-->
 
         <activity
             android:name="com.sahooz.library.PickActivity"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity
-            android:name=".module.webview.WebActivity"/>
+        <activity android:name=".module.webview.WebActivity" />
 
         <activity android:name=".module.mine.AboutActivity" />
         <activity android:name=".module.mine.FeedbackActivity" />
@@ -84,7 +83,9 @@
         <activity android:name=".module.heart.MessageKindActivity" />
         <activity android:name=".module.heart.MessagesActivity" />
         <activity android:name=".module.login.BindPhoneActivity" />
-        <activity android:name=".module.login.NationalSmsCodeActivity" />
+        <activity
+            android:name=".module.login.NationalSmsCodeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".module.map.NavigationActivity" />
         <activity android:name=".module.map.ParkMapActivity" />
         <activity android:name=".module.routes.RouteDetailActivity" />

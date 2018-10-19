@@ -20,22 +20,18 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.BindPhoneContract;
 import com.expo.main.MainActivity;
-import com.expo.module.eara.PickActivity;
+import com.expo.module.login.NationalSmsCodeActivity;
 import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
-import com.expo.widget.AppBarView;
 import com.sahooz.library.Country;
 import com.sahooz.library.PhoneNumberLibUtil;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class BindActivity extends BaseActivity<BindPhoneContract.Presenter> implements View.OnClickListener, BindPhoneContract.View {
 
-//    @BindView(R.id.login_back)
-//    AppBarView mTitle;
     @BindView(R.id.login_phone_number_et)
     EditText mEtPhoneNum;
     @BindView(R.id.login_phone_number_code)
@@ -66,7 +62,6 @@ public class BindActivity extends BaseActivity<BindPhoneContract.Presenter> impl
         setDoubleTapToExit(true);
         mEtPhoneNum.addTextChangedListener(textWatcher);
         etVerCode.addTextChangedListener(textWatcher);
-//        mTitle.setOnClickListener(this);
         mTVPhoneCode.setOnClickListener(this);
         mTVGetCode.setOnClickListener(this);
         mBtnLogin.setOnClickListener(this);
@@ -131,11 +126,8 @@ public class BindActivity extends BaseActivity<BindPhoneContract.Presenter> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_phone_number_code:
-                startActivityForResult(new Intent(getApplicationContext(), PickActivity.class), 111);
+                startActivityForResult(new Intent(getApplicationContext(), NationalSmsCodeActivity.class), 111);
                 break;
-//            case R.id.title_back:
-//                finish();
-//                break;
             case R.id.login_get_ver_code:
                 if (StringUtils.isEmpty(mEtPhoneNum.getText().toString())) {
                     ToastHelper.showShort(R.string.input_correct_phone);

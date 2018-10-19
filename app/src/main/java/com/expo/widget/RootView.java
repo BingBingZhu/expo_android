@@ -62,7 +62,9 @@ public class RootView extends LinearLayoutCompat {
                 });
                 ((AppBarView) mTitle).setBackgroundResource(R.color.colorAccent);
                 ((AppBarView) mTitle).setTitleColor(mActivity.getResources().getColor(R.color.white));
-                ((AppBarView) mTitle).setTitleSize(TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px(24));
+                ((AppBarView) mTitle).setTitleSize(TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px(22));
+                ((AppBarView) mTitle).setBackImageResource(R.drawable.icon_navbar_back_black);
+                ((AppBarView) mTitle).onFinishInflate();
             }
             ((AppBarView) mTitle).setTitle(title);
 
