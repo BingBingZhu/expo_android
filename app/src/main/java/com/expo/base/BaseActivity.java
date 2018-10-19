@@ -131,15 +131,17 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     }
 
     /**
-     * @param styleId 标题样式 0为默认 白字 12sp
-     * @param title
+     * 需要设置setTitle调用，如果不调用，则没有titleView
+     *
+     * @param layoutId 标题样式 0为默认 绿底 白字 12sp，1 为白底 黑字 12sp，其他为自定义View
+     * @param stringId layoutId为0或者1 有效
      */
-    public void setTitle(int styleId, int stringId) {
-        mRootView.setTitle(styleId, getResources().getString(stringId));
+    public void setTitle(int layoutId, int stringId) {
+        mRootView.setTitle(layoutId, getResources().getString(stringId));
     }
 
-    public void setTitle(int styleId, String title) {
-        mRootView.setTitle(styleId, title);
+    public void setTitle(int layoutId, String title) {
+        mRootView.setTitle(layoutId, title);
     }
 
     /**
@@ -147,10 +149,6 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      */
     public View getTitleView() {
         return mRootView.getTitle();
-    }
-
-    public void hideTitle() {
-        getTitleView().setVisibility(View.GONE);
     }
 
     public void showEmptyView() {

@@ -37,7 +37,6 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mLanguage = PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null);
-        hideTitle();
         if (mLanguage == null) {
 
         } else if (LanguageUtil.LANGUAGE_CN.endsWith(mLanguage)) {

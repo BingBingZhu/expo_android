@@ -34,7 +34,6 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setDoubleTapToExit(false);
-        hideTitle();
         mHandler.postDelayed(this::next, 3000);
         mPresenter.loadInitData();
     }

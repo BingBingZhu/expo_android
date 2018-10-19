@@ -44,33 +44,59 @@ public class RootView extends LinearLayoutCompat {
         setLayoutParams(new LinearLayoutCompat.LayoutParams(-1, -1));
         setOrientation(LinearLayoutCompat.VERTICAL);
 
-        setTitle(0, "");
-
         initEmptyView();
         initBodyView();
 
-        addView(mTitle, new LinearLayoutCompat.LayoutParams(-1, -2));
         addView(mBodyView, new LinearLayoutCompat.LayoutParams(-1, -1));
     }
 
+    private void addTitleView() {
+        if (mTitle == null)
+            return;
+        if (getChildCount() > 1)
+            return;
+        if (getChildCount() == 1 && getChildCount() != 0 || getChildAt(0) != mTitle)
+            addView(mTitle, 0, new LinearLayoutCompat.LayoutParams(-1, -2));
+    }
+
     public void setTitle(int layoutId, String title) {
-        if (layoutId == 0) {
+        if (layoutId == 0 || layoutId == 1) {
             if (mTitle == null) {
                 mTitle = new AppBarView(mActivity);
                 ((AppBarView) mTitle).setOnClickListener(v -> {
                     mActivity.finish();
                 });
-                ((AppBarView) mTitle).setBackgroundResource(R.color.colorAccent);
-                ((AppBarView) mTitle).setTitleColor(mActivity.getResources().getColor(R.color.white));
-                ((AppBarView) mTitle).setTitleSize(TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px(22));
-                ((AppBarView) mTitle).setBackImageResource(R.drawable.icon_navbar_back_black);
-                ((AppBarView) mTitle).onFinishInflate();
+            }
+            if (layoutId == 0) {
+                addTitleView();
+                setGreenTitle();
+            } else {
+                addTitleView();
+                setWhiteTitle();
             }
             ((AppBarView) mTitle).setTitle(title);
-
         } else {
             mTitle = LayoutInflater.from(mActivity).inflate(layoutId, null);
+            addTitleView();
         }
+    }
+
+    public void setGreenTitle() {
+        if (mTitle == null) return;
+        mTitle.setBackgroundResource(R.color.colorAccent);
+        ((AppBarView) mTitle).setTitleColor(mActivity.getResources().getColor(R.color.white));
+        ((AppBarView) mTitle).setTitleSize(TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px(22));
+        ((AppBarView) mTitle).setBackImageResource(R.drawable.icon_navbar_back_black);
+        ((AppBarView) mTitle).onFinishInflate();
+    }
+
+    public void setWhiteTitle() {
+        if (mTitle == null) return;
+        mTitle.setBackgroundResource(R.color.white);
+        ((AppBarView) mTitle).setTitleColor(mActivity.getResources().getColor(R.color.black));
+        ((AppBarView) mTitle).setTitleSize(TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px(22));
+        ((AppBarView) mTitle).setBackImageResource(R.drawable.icon_navbar_back_black);
+        ((AppBarView) mTitle).onFinishInflate();
     }
 
     public void initBodyView() {
