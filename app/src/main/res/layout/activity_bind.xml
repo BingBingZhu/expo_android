@@ -11,10 +11,10 @@
     android:orientation="vertical"
     tools:context=".module.bind.BindActivity">
 
-    <com.expo.widget.AppBarView
-        android:id="@+id/login_back"
-        style="@style/TitleTextWhite12"
-        app:title="@string/title_bind_ac" />
+    <!--<com.expo.widget.AppBarView-->
+        <!--android:id="@+id/login_back"-->
+        <!--style="@style/TitleTextWhite12"-->
+        <!--app:title="@string/title_bind_ac" />-->
 
     <TextView
         style="@style/TextSizeBlack16"

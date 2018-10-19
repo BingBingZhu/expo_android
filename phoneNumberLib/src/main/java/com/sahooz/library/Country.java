@@ -22,13 +22,14 @@ import java.util.ArrayList;
 public class Country implements PyEntity {
     private static final String TAG = Country.class.getSimpleName();
     public int code;
-    public String name, locale, pinyin;
+    public String name, locale, py;
     public int flag;
     private static ArrayList<Country> countries = null;
 
-    public Country(int code, String name, String locale, int flag) {
+    public Country(int code, String name, String locale, String py, int flag) {
         this.code = code;
         this.name = name;
+        this.py = py;
         this.flag = flag;
         this.locale = locale;
     }
@@ -59,11 +60,18 @@ public class Country implements PyEntity {
                 JSONObject jo = ja.getJSONObject(i);
                 int flag = 0;
                 String locale = jo.optString("locale");
+                String py;
                 if (!TextUtils.isEmpty(locale)) {
                     flag = ctx.getResources().getIdentifier("flag_" + locale.toLowerCase(), "drawable", ctx.getPackageName());
                 }
+
+                if (TextUtils.equals(key, "zh")) {
+                    py = jo.getString("py");
+                } else {
+                    py = jo.getString(key);
+                }
                 int code = Integer.valueOf(jo.getString("code").substring(1, jo.getString("code").length()));
-                countries.add(new Country(code, jo.getString(key), locale, flag));
+                countries.add(new Country(code, jo.getString(key), locale, py, flag));
             }
 
             Log.i(TAG, countries.toString());
@@ -81,7 +89,7 @@ public class Country implements PyEntity {
         if (TextUtils.isEmpty(json)) return null;
         try {
             JSONObject jo = new JSONObject(json);
-            return new Country(jo.optInt("code"), jo.optString("name"), jo.optString("locale"), jo.optInt("flag"));
+            return new Country(jo.optInt("code"), jo.optString("name"), jo.optString("locale"), "", jo.optInt("flag"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -102,8 +110,8 @@ public class Country implements PyEntity {
 //                : "TW".equalsIgnoreCase(country) ? "tw"
 //                : "HK".equalsIgnoreCase(country) ? "tw"
 //                : "en";
-        return "CN".equalsIgnoreCase(country) ? "name"
-                : "name_en";
+        return "CN".equalsIgnoreCase(country) ? "zh"
+                : "en";
     }
 
     private static boolean inChina(Context ctx) {
@@ -117,10 +125,7 @@ public class Country implements PyEntity {
 
     @NonNull
     @Override
-    public String getPinyin() {
-        if (pinyin == null) {
-            pinyin = PinyinUtil.getPingYin(name);
-        }
-        return pinyin;
+    public String getPy() {
+        return py;
     }
 }

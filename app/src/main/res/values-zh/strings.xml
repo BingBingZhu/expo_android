@@ -16,6 +16,7 @@
     <string name="there_is_no_user_protocol">暂无用户协议</string>
     <string name="user_protocol">用户协议</string>
     <string name="cancel">取消</string>
+    <string name="ok">确认</string>
 
     <string name="ukey_error">用户数据错误，请重新登录</string>
     <string name="unlogin">请先登录</string>
@@ -34,11 +35,12 @@
     <string name="bind_phone_need_sms">绑定手机号码需要通过短信验证</string>
     <string name="login">立即登录</string>
     <string name="next_step">下一步</string>
+    <string name="send_sms_to_phone_number">我们将发送验证码到这个手机号码\n%s</string>
 
     <string name="cancel_the_login">已取消</string>
     <string name="authorization_failure">授权失败</string>
     <string name="authorization_success">授权成功</string>
 
-    <string name="title_bind_ac">绑定手机</string>
+    <string name="title_bind_ac">绑定手机号</string>
     <string name="title_pick_ac">地区</string>
 </resources>

@@ -6,4 +6,15 @@ public class BindPhonePresenterImpl extends BindPhoneContract.Presenter {
     public BindPhonePresenterImpl(BindPhoneContract.View view) {
         super( view );
     }
+
+    @Override
+    public void getCode() {
+
+    }
+
+    @Override
+    public void bindPhone() {
+
+    }
+
 }

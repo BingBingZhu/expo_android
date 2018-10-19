@@ -7,5 +7,5 @@ import android.support.annotation.NonNull;
  */
 
 public interface PyEntity {
-    @NonNull String getPinyin();
+    @NonNull String getPy();
 }

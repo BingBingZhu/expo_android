@@ -3,7 +3,6 @@ package com.expo.module.eara;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.contract.LoginContract;
+import com.expo.widget.AppBarView;
 import com.sahooz.library.Country;
 import com.sahooz.library.LetterHolder;
 import com.sahooz.library.PyAdapter;
@@ -38,10 +38,14 @@ public class PickActivity extends BaseActivity<LoginContract.Presenter> {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        RecyclerView rvPick = (RecyclerView) findViewById(com.sahooz.library.R.id.rv_pick);
-        SideBar side = (SideBar) findViewById(com.sahooz.library.R.id.side);
-        EditText etSearch = (EditText) findViewById(com.sahooz.library.R.id.et_search);
-        TextView tvLetter = (TextView) findViewById(com.sahooz.library.R.id.tv_letter);
+        AppBarView mTitleView = (AppBarView) findViewById(R.id.login_back);
+        RecyclerView rvPick = (RecyclerView) findViewById(R.id.rv_pick);
+        SideBar side = (SideBar) findViewById(R.id.side);
+        EditText etSearch = (EditText) findViewById(R.id.et_search);
+        TextView tvLetter = (TextView) findViewById(R.id.tv_letter);
+
+        setDoubleTapToExit(false);
+
         allCountries.clear();
         allCountries.addAll(Country.getAll(this, null));
         selectedCountries.clear();
@@ -105,12 +109,12 @@ public class PickActivity extends BaseActivity<LoginContract.Presenter> {
 
         @Override
         public RecyclerView.ViewHolder onCreateLetterHolder(ViewGroup parent, int viewType) {
-            return new LetterHolder(getLayoutInflater().inflate(com.sahooz.library.R.layout.item_letter, parent, false));
+            return new LetterHolder(getLayoutInflater().inflate(R.layout.item_letter, parent, false));
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateHolder(ViewGroup parent, int viewType) {
-            return new VH(getLayoutInflater().inflate(com.sahooz.library.R.layout.item_country_large_padding, parent, false));
+            return new VH(getLayoutInflater().inflate(R.layout.item_country_large_padding, parent, false));
         }
 
         @Override

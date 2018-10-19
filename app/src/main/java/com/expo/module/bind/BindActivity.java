@@ -1,11 +1,13 @@
 package com.expo.module.bind;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +18,7 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
-import com.expo.contract.LoginContract;
+import com.expo.contract.BindPhoneContract;
 import com.expo.main.MainActivity;
 import com.expo.module.eara.PickActivity;
 import com.expo.network.response.VerifyCodeLoginResp;
@@ -30,24 +32,26 @@ import com.sahooz.library.PhoneNumberLibUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class BindActivity extends BaseActivity<LoginContract.Presenter> implements View.OnClickListener, LoginContract.View {
+public class BindActivity extends BaseActivity<BindPhoneContract.Presenter> implements View.OnClickListener, BindPhoneContract.View {
 
-    @BindView(R.id.login_back)
-    AppBarView title;
+//    @BindView(R.id.login_back)
+//    AppBarView mTitle;
     @BindView(R.id.login_phone_number_et)
-    EditText etPhoneNum;
+    EditText mEtPhoneNum;
     @BindView(R.id.login_phone_number_code)
-    TextView tvPhoneCode;
+    TextView mTVPhoneCode;
     @BindView(R.id.login_ver_code_et)
     EditText etVerCode;
     @BindView(R.id.login_get_ver_code)
-    TextView tvGetCode;
+    TextView mTVGetCode;
     @BindView(R.id.login_login_btn)
-    Button btnLogin;
+    Button mBtnLogin;
 
     private boolean getCodeEnable = true;  // 是否允许获取验证码按钮可用
     private TimeCount timeCount;    //验证码获取计时器
-    private int code = 86;    //手机号区域码
+    private int mCode = 86;    //手机号区域码
+
+    AlertDialog mAlertDialog;
 
     @Override
     protected int getContentView() {
@@ -57,15 +61,15 @@ public class BindActivity extends BaseActivity<LoginContract.Presenter> implemen
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         //不具有返回上级页面功能时可双击返回键退出
+        setTitle(0, R.string.title_bind_ac);
+
         setDoubleTapToExit(true);
-        tvGetCode.setEnabled(false);
-        btnLogin.setEnabled(false);
-        etPhoneNum.addTextChangedListener(textWatcher);
+        mEtPhoneNum.addTextChangedListener(textWatcher);
         etVerCode.addTextChangedListener(textWatcher);
-        title.setOnClickListener(this);
-        tvPhoneCode.setOnClickListener(this);
-        tvGetCode.setOnClickListener(this);
-        btnLogin.setOnClickListener(this);
+//        mTitle.setOnClickListener(this);
+        mTVPhoneCode.setOnClickListener(this);
+        mTVGetCode.setOnClickListener(this);
+        mBtnLogin.setOnClickListener(this);
     }
 
     @Override
@@ -81,23 +85,23 @@ public class BindActivity extends BaseActivity<LoginContract.Presenter> implemen
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (etPhoneNum.isFocused()) {     //手机号输入框获取焦点
+            if (mEtPhoneNum.isFocused()) {     //手机号输入框获取焦点
                 if (s.length() != 11) {
-                    tvGetCode.setEnabled(false);
+                    mTVGetCode.setEnabled(false);
                     return;
                 }
                 if (s.toString().matches(Constants.Exps.PHONE)) {
                     if (getCodeEnable)
-                        tvGetCode.setEnabled(true);
+                        mTVGetCode.setEnabled(true);
                 } else {
-                    tvGetCode.setEnabled(false);
+                    mTVGetCode.setEnabled(false);
                     ToastHelper.showShort("请输入正确的手机号");
                 }
             } else {      //验证码输入框获取焦点
                 if (s.length() != 4) {       //长度非4位进行错误处理
-                    btnLogin.setEnabled(false);
+                    mBtnLogin.setEnabled(false);
                 } else {
-                    btnLogin.setEnabled(true);
+                    mBtnLogin.setEnabled(true);
                 }
             }
         }
@@ -123,35 +127,46 @@ public class BindActivity extends BaseActivity<LoginContract.Presenter> implemen
         super.onDestroy();
     }
 
-    @OnClick(R.id.title_back)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_phone_number_code:
                 startActivityForResult(new Intent(getApplicationContext(), PickActivity.class), 111);
                 break;
-            case R.id.title_back:
-                finish();
-                break;
+//            case R.id.title_back:
+//                finish();
+//                break;
             case R.id.login_get_ver_code:
-                if (StringUtils.isEmpty(etPhoneNum.getText().toString())) {
-                    ToastHelper.showShort(R.string.input_correct_phone);
-                }
-//                验证手机号
-                if (!PhoneNumberLibUtil.checkPhoneNumber(this, code, Long.valueOf(etPhoneNum.getText().toString()))) {
+                if (StringUtils.isEmpty(mEtPhoneNum.getText().toString())) {
                     ToastHelper.showShort(R.string.input_correct_phone);
                     return;
                 }
-                mPresenter.getCode(etPhoneNum.getText().toString().trim());
+//                验证手机号
+                if (!PhoneNumberLibUtil.checkPhoneNumber(this, mCode, Long.valueOf(mEtPhoneNum.getText().toString()))) {
+                    ToastHelper.showShort(R.string.input_correct_phone);
+                    return;
+                }
+                confirmPhoneNumber();
+                break;
+            case R.id.dialog_bind_phone_cancle:
+            case R.id.dialog_bind_phone_hide:
+                if (mAlertDialog != null) {
+                    mAlertDialog.dismiss();
+                }
+                break;
+            case R.id.dialog_bind_phone_ok:
+                mPresenter.getCode();
                 duration += 60;
                 surplusDuration = duration;
                 timeCount = new TimeCount((duration + 1) * 1000, 1000);
                 timeCount.start();
+                if (mAlertDialog != null) {
+                    mAlertDialog.dismiss();
+                }
                 break;
             case R.id.login_login_btn:
                 // 使用验证码登录
-                mPresenter.verifyCodeLogin(etPhoneNum.getText().toString().trim(),
-                        etVerCode.getText().toString().trim());
+                mPresenter.bindPhone();
                 break;
         }
     }
@@ -161,7 +176,6 @@ public class BindActivity extends BaseActivity<LoginContract.Presenter> implemen
      *
      * @param code
      */
-    @Override
     public void returnRequestVerifyCodeResult(String code) {
         etVerCode.requestFocus();
         etVerCode.setText("");
@@ -173,7 +187,6 @@ public class BindActivity extends BaseActivity<LoginContract.Presenter> implemen
      *
      * @param rsp
      */
-    @Override
     public void verifyCodeLogin(VerifyCodeLoginResp rsp) {
         Intent intent = new Intent();
         intent.putExtra(Constants.EXTRAS.EXTRA_LOGIN_STATE, true);
@@ -183,9 +196,34 @@ public class BindActivity extends BaseActivity<LoginContract.Presenter> implemen
         finish();
     }
 
-    @Override
     public void toUserProtocol(String url) {
 
+    }
+
+    public void confirmPhoneNumber() {
+        if (mAlertDialog == null) {
+            mAlertDialog = new AlertDialog.Builder(this, R.style.TransparentDialog).create();
+        }
+        mAlertDialog.show();
+        mAlertDialog.setContentView(getDialogView());
+    }
+
+    View mDialogView;
+
+    public View getDialogView() {
+        if (mDialogView == null) {
+            synchronized (this) {
+                if (mDialogView == null) {
+                    mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_bind_phone, null);
+                    mDialogView.findViewById(R.id.dialog_bind_phone_cancle).setOnClickListener(this);
+                    mDialogView.findViewById(R.id.dialog_bind_phone_hide).setOnClickListener(this);
+                    mDialogView.findViewById(R.id.dialog_bind_phone_ok).setOnClickListener(this);
+                }
+            }
+        }
+        ((TextView) mDialogView.findViewById(R.id.dialog_bind_phone_text)).setText(getResources().getString(R.string.send_sms_to_phone_number,
+                mTVPhoneCode.getText().toString() + " " + mEtPhoneNum.getText().toString()));
+        return mDialogView;
     }
 
     @Override
@@ -193,12 +231,11 @@ public class BindActivity extends BaseActivity<LoginContract.Presenter> implemen
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 111 && resultCode == RESULT_OK) {
             Country country = Country.fromJson(data.getStringExtra("country"));
-            tvPhoneCode.setText("+" + country.code);
-            code = country.code;
+            mTVPhoneCode.setText("+" + country.code);
+            mCode = country.code;
         }
     }
 
-    @Override
     public void showShort(int resId) {
         ToastHelper.showShort(resId);
     }
@@ -214,8 +251,8 @@ public class BindActivity extends BaseActivity<LoginContract.Presenter> implemen
         @Override
         public void onFinish() {// 计时完毕时触发
             getCodeEnable = true;
-            tvGetCode.setEnabled(true);
-            tvGetCode.setText("获取验证码");
+            mTVGetCode.setEnabled(true);
+            mTVGetCode.setText("获取验证码");
         }
 
         @Override
@@ -223,9 +260,9 @@ public class BindActivity extends BaseActivity<LoginContract.Presenter> implemen
             if (surplusDuration > 0) {
                 surplusDuration--;
             }
-            tvGetCode.setText(surplusDuration + "秒");
+            mTVGetCode.setText(surplusDuration + "秒");
             getCodeEnable = false;
-            tvGetCode.setEnabled(false);
+            mTVGetCode.setEnabled(false);
         }
     }
 

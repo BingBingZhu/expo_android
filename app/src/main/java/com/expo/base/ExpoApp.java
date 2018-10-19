@@ -14,7 +14,6 @@ import com.tencent.smtt.sdk.QbSdk;
 public class ExpoApp extends BaseApplication {
 
     private User mUser;
-    private ScenicSpot mScenicSpot;
     private boolean debug;
     public Bitmap userHandBitmap;
 
@@ -60,17 +59,6 @@ public class ExpoApp extends BaseApplication {
 
     public void setUserHandBitmap(Bitmap bitmap) {
         this.userHandBitmap = bitmap;
-    }
-
-    public ScenicSpot getScenicSpot() {
-        //临时模拟数据
-        mScenicSpot = new ScenicSpot();
-        mScenicSpot.setId( 8l );
-        return mScenicSpot;
-    }
-
-    public void setScenicSpot(ScenicSpot scenicSpot) {
-        this.mScenicSpot = scenicSpot;
     }
 
     public static ExpoApp getApplication() {

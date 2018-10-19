@@ -7,12 +7,15 @@ public interface BindPhoneContract {
     abstract class Presenter extends IPresenter<View> {
 
         public Presenter(View view) {
-            super( view );
+            super(view);
         }
+
+        public abstract void getCode();
+
+        public abstract void bindPhone();
 
     }
 
     interface View extends IView {
-
     }
 }

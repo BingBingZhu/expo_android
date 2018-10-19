@@ -25,6 +25,10 @@
         <item name="android:windowExitAnimation">@anim/abc_slide_out_bottom</item>
     </style>
 
+    <style name="TransparentDialog">
+        <item name="android:windowBackground">@color/translucent_mask</item><!--背景透明-->
+    </style>
+
     <style name="LineHorizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2dp</item>

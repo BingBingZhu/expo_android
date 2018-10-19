@@ -37,6 +37,7 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         language = PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null);
+        hideTitle();
         if (language == null) {
 
         } else if (LanguageUtil.LANGUAGE_CN.endsWith(language)) {
@@ -88,8 +89,8 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
         PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, language);
 
-        Intent intent = new Intent(this, LoginActivity.class);
-//        Intent intent = new Intent(this, BindActivity.class);
+//        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, BindActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

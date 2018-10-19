@@ -13,6 +13,8 @@ import com.expo.R;
 import com.expo.base.utils.ActivityHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.PresenterFactory;
+import com.expo.widget.AppBarView;
+import com.expo.widget.RootView;
 
 import butterknife.ButterKnife;
 
@@ -29,26 +31,35 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     private View mLoadingMaskView;
     protected P mPresenter;
 
+    RootView mRootView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
+        super.onCreate(savedInstanceState);
         // 设置view中可以使用Vector图片资源
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled( true );
-        StatusBarUtils.setStatusBarFullTransparent( this );
-        StatusBarUtils.setStatusBarLight( this, true );
-        setContentView( getContentView() );
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        StatusBarUtils.setStatusBarFullTransparent(this);
+        StatusBarUtils.setStatusBarLight(this, true);
+        initRootView();
+        setContentView(mRootView);
         // Activity退出管理类添加开启的Activity
-        ActivityHelper.add( this );
-        ButterKnife.bind( this );
+        ActivityHelper.add(this);
+        ButterKnife.bind(this);
         if (hasPresenter())
-            mPresenter = (P) PresenterFactory.getPresenter( this );
-        onInitView( savedInstanceState );
+            mPresenter = (P) PresenterFactory.getPresenter(this);
+        onInitView(savedInstanceState);
     }
+
+    private void initRootView() {
+        mRootView = new RootView(this);
+        mRootView.setNormalView(getContentView());
+    }
+
 
     @Override
     protected void onDestroy() {
         // Activity销毁时移除此Activity
-        ActivityHelper.remove( this );
+        ActivityHelper.remove(this);
         super.onDestroy();
     }
 
@@ -88,10 +99,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     public void showLoadingView() {
         if (mLoadingMaskView == null) {
-            mLoadingMaskView = getLayoutInflater().inflate( R.layout.layout_progress, null );
+            mLoadingMaskView = getLayoutInflater().inflate(R.layout.layout_progress, null);
         }
         if (mLoadingMaskView.getParent() == null) {
-            ((ViewGroup) getWindow().getDecorView()).addView( mLoadingMaskView );
+            ((ViewGroup) getWindow().getDecorView()).addView(mLoadingMaskView);
         }
     }
 
@@ -101,7 +112,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     public void hideLoadingView() {
         if (mLoadingMaskView != null && mLoadingMaskView.getParent() != null) {
-            ((ViewGroup) mLoadingMaskView.getParent()).removeView( mLoadingMaskView );
+            ((ViewGroup) mLoadingMaskView.getParent()).removeView(mLoadingMaskView);
         }
     }
 
@@ -111,11 +122,43 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             BaseApplication.getApplication().appExit();
             return true;
         }
-        return super.onKeyDown( keyCode, event );
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
     public Context getContext() {
         return this;
     }
+
+    /**
+     * @param styleId 标题样式 0为默认 白字 12sp
+     * @param title
+     */
+    public void setTitle(int styleId, int stringId) {
+        mRootView.setTitle(styleId, getResources().getString(stringId));
+    }
+
+    public void setTitle(int styleId, String title) {
+        mRootView.setTitle(styleId, title);
+    }
+
+    /**
+     * 获取头部titleView
+     */
+    public View getTitleView() {
+        return mRootView.getTitle();
+    }
+
+    public void hideTitle() {
+        getTitleView().setVisibility(View.GONE);
+    }
+
+    public void showEmptyView() {
+        mRootView.showEmpty();
+    }
+
+    public void hideEmptyView() {
+        mRootView.showNormal();
+    }
+
 }
