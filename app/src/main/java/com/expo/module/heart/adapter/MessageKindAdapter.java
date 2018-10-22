@@ -9,17 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.expo.R;
-import com.expo.domain.MessageKindBean;
+import com.expo.entity.MessageKindBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
-public class MessagekindAdapter extends RecyclerView.Adapter<MessagekindAdapter.ViewHolder> {
+public class MessageKindAdapter extends RecyclerView.Adapter<MessageKindAdapter.ViewHolder> {
 
     Context mContext;
     public List<MessageKindBean> mData;
 
-    public MessagekindAdapter(Context context) {
+    public MessageKindAdapter(Context context) {
         mContext = context;
     }
 

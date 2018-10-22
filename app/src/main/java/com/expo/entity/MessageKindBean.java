@@ -1,4 +1,4 @@
-package com.expo.domain;
+package com.expo.entity;
 
 public class MessageKindBean {
 

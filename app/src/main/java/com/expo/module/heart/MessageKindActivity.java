@@ -13,8 +13,8 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MessageKindContract;
-import com.expo.domain.MessageKindBean;
-import com.expo.module.heart.adapter.MessagekindAdapter;
+import com.expo.entity.MessageKindBean;
+import com.expo.module.heart.adapter.MessageKindAdapter;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -37,7 +37,7 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
     @BindView(R.id.swipe_menu_recycler_view)
     SwipeMenuRecyclerView mSwipeMenuRecyclerView;
 
-    MessagekindAdapter mAdapter;
+    MessageKindAdapter mAdapter;
 
     @Override
     protected int getContentView() {
@@ -94,7 +94,7 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
         list.add(bean3);
         list.add(bean4);
         list.add(bean5);
-        mAdapter = new MessagekindAdapter(this);
+        mAdapter = new MessageKindAdapter(this);
         mAdapter.setData(list);
         mSwipeMenuRecyclerView.setAdapter(mAdapter);
     }
