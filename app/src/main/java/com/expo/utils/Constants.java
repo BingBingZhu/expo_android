@@ -8,6 +8,7 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
 import com.expo.entity.Subject;
 import com.expo.entity.User;
+import com.squareup.picasso.RequestCreator;
 
 public interface Constants {
     /**
@@ -88,4 +89,13 @@ public interface Constants {
         public static final String LOGIN_CHANGE_OF_STATE_ACTION = "login_change_of_state_action";
         public static final String ACTION_RECEIVE_MESSAGE = "action_receive_message";
     }
+
+    /**
+     * startActivityForResult 的RequestCode
+     */
+    class RequestCode {
+
+        public static final int REQUEST111 = 11;
+    }
+
 }

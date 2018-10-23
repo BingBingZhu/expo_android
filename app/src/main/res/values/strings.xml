@@ -17,6 +17,7 @@
     <string name="user_protocol">用户协议</string>
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
+    <string name="submit">submit</string>
 
     <string name="ukey_error">用户数据错误，请重新登录</string>
     <string name="unlogin">请先登录</string>
@@ -36,6 +37,29 @@
     <string name="login">login</string>
     <string name="next_step">next</string>
     <string name="send_sms_to_phone_number">我们将发送验证码到这个手机号码\n%s</string>
+    <string name="kindly_reminder">温馨提示</string>
+    <string name="kindly_reminder_info">请在下方填入患者的年龄、症状、病史等情况和影像。信息描述的准确能够帮助救助人员进行施救。如遇昏厥、出血过多等严重情况请拨打120急救电话。</string>
+    <string name="situation_describe">情况描述\t最多输入300字</string>
+    <string name="navigation">导航</string>
+    <string name="location">所在位置</string>
+    <string name="save">保存</string>
+
+    <string name="tourist_service_phone">游客服务热线：400-818-6666</string>
+    <string name="item_tourist_service_text_0">医疗救助</string>
+    <string name="item_tourist_service_text_1">人员走失</string>
+    <string name="item_tourist_service_text_2">寻物启事</string>
+    <string name="item_tourist_service_text_3">无障碍服务</string>
+    <string name="item_tourist_service_text_4">问询咨询</string>
+    <string name="item_tourist_service_text_5">治安举报</string>
+    <string name="item_tourist_service_text_6">购票指南</string>
+    <string name="item_tourist_service_text_7">游客须知</string>
+    <string name="item_tourist_service_text_8">场馆预约</string>
+
+    <string name="location_describe_radio1">当前位置</string>
+    <string name="location_describe_radio2">餐厅</string>
+    <string name="location_describe_radio3">中国馆前门</string>
+    <string name="location_describe_radio4">世园会</string>
+    <string name="location_describe">位置描述</string>
 
     <string name="cancel_the_login">已取消</string>
     <string name="authorization_failure">授权失败</string>
@@ -44,4 +68,5 @@
     <string name="title_bind_ac">绑定手机</string>
     <string name="title_pick_ac">region</string>
     <string name="title_message_kind_ac">消息中心</string>
+    <string name="title_location_describe_ac">所在位置</string>
 </resources>

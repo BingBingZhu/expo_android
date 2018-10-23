@@ -15,7 +15,17 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dms_180" />
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_language" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dms_40"
+            android:scaleType="fitXY"
+            android:src="@drawable/language_logo" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -72,7 +82,7 @@
                 android:layout_height="@dimen/dms_40"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dms_30"
-                android:src="@drawable/selector_radio" />
+                android:src="@drawable/selector_radio_language" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,7 +108,7 @@
                 android:layout_height="@dimen/dms_40"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dms_30"
-                android:src="@drawable/selector_radio" />
+                android:src="@drawable/selector_radio_language" />
 
             <TextView
                 android:layout_width="wrap_content"

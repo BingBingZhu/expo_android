@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/dms_30"
+    android:orientation="vertical"
+    android:padding="@dimen/dms_40">
 
-</FrameLayout>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.expo.widget.MyRadioButton
+            android:id="@+id/location_describe_radio0"
+            style="@style/location_radio_style"
+            android:text="@string/location_describe_radio1" />
+
+        <com.expo.widget.MyRadioButton
+            android:id="@+id/location_describe_radio1"
+            style="@style/location_radio_style"
+            android:text="@string/location_describe_radio2" />
+
+        <com.expo.widget.MyRadioButton
+            android:id="@+id/location_describe_radio2"
+            style="@style/location_radio_style"
+            android:text="@string/location_describe_radio3" />
+
+        <com.expo.widget.MyRadioButton
+            android:id="@+id/location_describe_radio3"
+            style="@style/location_radio_style"
+            android:text="@string/location_describe_radio4" />
+    </RadioGroup>
+
+    <com.hedan.textdrawablelibrary.TextViewDrawable
+        style="@style/TextSizeBlack16"
+        android:layout_height="@dimen/dms_80"
+        android:drawableLeft="@drawable/location_edit"
+        android:drawablePadding="@dimen/dms_30"
+        android:gravity="center_vertical"
+        android:text="@string/location_describe"
+        android:textColor="@color/gray_4c"
+        app:drawableLeftHeight="@dimen/dms_30"
+        app:drawableLeftWidth="@dimen/dms_30" />
+
+    <EditText
+        android:id="@+id/location_describe_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_30"
+        android:background="@drawable/bg_white_62f8ca_r5_w1"
+        android:lines="4" />
+
+    <TextView
+        style="@style/TextSizeWhite16"
+        android:layout_width="@dimen/dms_180"
+        android:layout_height="@dimen/dms_80"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dms_40"
+        android:background="@drawable/bg_5fffc1_r5"
+        android:gravity="center"
+        android:text="@string/save" />
+
+
+</LinearLayout>

@@ -76,23 +76,23 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         //不具有返回上级页面功能时可双击返回键退出
-        setDoubleTapToExit( true );
-        mGetCodeView.setEnabled( false );
-        mLoginView.setEnabled( false );
-        setBackVisibility( false );
-        mEtPhoneView.addTextChangedListener( mTextWatcher );
-        mEtCodeView.addTextChangedListener( mTextWatcher );
-        mTitleView.setOnClickListener( this );
-        mGetCodeView.setOnClickListener( this );
-        mLoginView.setOnClickListener( this );
-        mWechatView.setOnClickListener( this );
-        mQQView.setOnClickListener( this );
-        mSinaView.setOnClickListener( this );
-        mProtocolView.setOnClickListener( this );
+        setDoubleTapToExit(true);
+        mGetCodeView.setEnabled(false);
+        mLoginView.setEnabled(false);
+        setBackVisibility(false);
+        mEtPhoneView.addTextChangedListener(mTextWatcher);
+        mEtCodeView.addTextChangedListener(mTextWatcher);
+        mTitleView.setOnClickListener(this);
+        mGetCodeView.setOnClickListener(this);
+        mLoginView.setOnClickListener(this);
+        mWechatView.setOnClickListener(this);
+        mQQView.setOnClickListener(this);
+        mSinaView.setOnClickListener(this);
+        mProtocolView.setOnClickListener(this);
     }
 
     private void setBackVisibility(boolean mHomeAsBack) {
-        mTitleView.setVisibility( mHomeAsBack ? View.VISIBLE : View.GONE );
+        mTitleView.setVisibility(mHomeAsBack ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -109,24 +109,24 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (mEtPhoneView.isFocused()) {     //手机号输入框获取焦点
-                mGtView.setImageResource( R.drawable.ico_tuan_open );
+                mGtView.setImageResource(R.drawable.ico_tuan_open);
                 if (s.length() != 11) {
-                    mGetCodeView.setEnabled( false );
+                    mGetCodeView.setEnabled(false);
                     return;
                 }
-                if (s.toString().matches( Constants.Exps.PHONE )) {
+                if (s.toString().matches(Constants.Exps.PHONE)) {
                     if (mGetCodeEnable)
-                        mGetCodeView.setEnabled( true );
+                        mGetCodeView.setEnabled(true);
                 } else {
-                    mGetCodeView.setEnabled( false );
-                    ToastHelper.showShort( "请输入正确的手机号" );
+                    mGetCodeView.setEnabled(false);
+                    ToastHelper.showShort("请输入正确的手机号");
                 }
             } else {      //验证码输入框获取焦点
-                mGtView.setImageResource( R.drawable.ico_tuan_close );
+                mGtView.setImageResource(R.drawable.ico_tuan_close);
                 if (s.length() != 4) {       //长度非4位进行错误处理
-                    mLoginView.setEnabled( false );
+                    mLoginView.setEnabled(false);
                 } else {
-                    mLoginView.setEnabled( true );
+                    mLoginView.setEnabled(true);
                 }
             }
         }
@@ -159,16 +159,16 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 //                    ToastHelper.showShort(R.string.input_correct_phone);
 //                    return;
 //                }
-                mPresenter.getCode( mEtPhoneView.getText().toString().trim() );
+                mPresenter.getCode(mEtPhoneView.getText().toString().trim());
                 mDuration += 60;
                 mSurplusDuration = mDuration;
-                mTimeCount = new TimeCount( (mDuration + 1) * 1000, 1000 );
+                mTimeCount = new TimeCount((mDuration + 1) * 1000, 1000);
                 mTimeCount.start();
                 break;
             case R.id.login_login_btn:
                 // 使用验证码登录
-                mPresenter.verifyCodeLogin( mEtPhoneView.getText().toString().trim(),
-                        mEtCodeView.getText().toString().trim() );
+                mPresenter.verifyCodeLogin(mEtPhoneView.getText().toString().trim(),
+                        mEtCodeView.getText().toString().trim());
                 break;
             case R.id.login_wechat:
                 // 第三方微信登录
@@ -206,8 +206,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @Override
     public void returnRequestVerifyCodeResult(String code) {
         mEtCodeView.requestFocus();
-        mEtCodeView.setText( "" );
-        mEtCodeView.append( code );
+        mEtCodeView.setText("");
+        mEtCodeView.append(code);
     }
 
     /**
@@ -238,8 +238,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         @Override
         public void onFinish() {// 计时完毕时触发
             mGetCodeEnable = true;
-            mGetCodeView.setEnabled( true );
-            mGetCodeView.setText( "获取验证码" );
+            mGetCodeView.setEnabled(true);
+            mGetCodeView.setText("获取验证码");
         }
 
         @Override
@@ -247,9 +247,9 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
             if (mSurplusDuration > 0) {
                 mSurplusDuration--;
             }
-            mGetCodeView.setText( mSurplusDuration + "秒" );
+            mGetCodeView.setText(mSurplusDuration + "秒");
             mGetCodeEnable = false;
-            mGetCodeView.setEnabled( false );
+            mGetCodeView.setEnabled(false);
         }
     }
 
@@ -259,6 +259,11 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     private void checkPermission() {
         List<String> permissionList = new ArrayList<>();
         List<String> perNameList = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            perNameList.add("读取权限");
+        }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);

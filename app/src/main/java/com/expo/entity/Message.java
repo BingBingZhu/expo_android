@@ -44,7 +44,7 @@ public class Message implements Parcelable {
     private String params;
     @DatabaseField(columnName = "type")
     @SerializedName("type")
-    private String type;//类别   1 系统手动发送的消息  2 活动消息  3 命令消息（由系统主动产生）
+    private String type;//类别   1 系统手动发送的消息  2 活动消息  3 命令消息（由系统主动产生）（消息类型 图标）
     @DatabaseField(columnName = "uid")
     @SerializedName("uid")
     private String uid;
