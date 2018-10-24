@@ -173,6 +173,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
             case R.id.login_login_btn:
                 // 使用验证码登录
                 mPresenter.verifyCodeLogin(mEtPhoneView.getText().toString().trim(),
+                        mTvPhoneCode.getText().toString(),
                         mEtCodeView.getText().toString().trim());
                 break;
             case R.id.login_wechat:
@@ -227,10 +228,9 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     /**
      * 返回验证码登录结果
      *
-     * @param rsp
      */
     @Override
-    public void verifyCodeLogin(VerifyCodeLoginResp rsp) {
+    public void verifyCodeLogin() {
         Intent intent = new Intent();
         intent.putExtra(Constants.EXTRAS.EXTRA_LOGIN_STATE, true);
         LocalBroadcastUtil.sendBroadcast(LoginActivity.this, intent, Constants.Action.LOGIN_CHANGE_OF_STATE_ACTION);

@@ -38,6 +38,16 @@ public interface DataServer {
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<UpdateTimeResp> checkUpdateTime(@Path("path") String path, @Body RequestBody requestBody);
 
+    /**
+     * 检查指定数据的更新时间
+     *
+     * @param requestBody 上传参数
+     * @return rxjava主题对象
+     */
+    @POST("Terminal/UserlogAppRun")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> userlogAppRun(@Body RequestBody requestBody);
+
 
     /**
      * 通过手机号获取验证码

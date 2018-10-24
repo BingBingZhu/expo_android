@@ -47,7 +47,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
     private boolean getCodeEnable = true;  // 是否允许获取验证码按钮可用
     private TimeCount timeCount;    //验证码获取计时器
     private int mCode = 86;    //手机号区域码
-    private int mPlatform;
+    private String mPlatform;
 
     AlertDialog mAlertDialog;
 
@@ -67,6 +67,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
         mTvPhoneCode.setOnClickListener(this);
         mTvGetCode.setOnClickListener(this);
         mBtnLogin.setOnClickListener(this);
+        mPlatform = getIntent().getStringExtra(Constants.EXTRAS.EXTRAS);
     }
 
     @Override
@@ -152,7 +153,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
                 break;
             case R.id.login_login_btn:
                 // 使用验证码登录
-                mPresenter.requestThirdLogin(mEtPhoneNum.getText().toString(), mTvPhoneCode.getText().toString());
+                mPresenter.requestThirdLogin(mEtPhoneNum.getText().toString(), mTvPhoneCode.getText().toString(), mEtVerCode.getText().toString(), mPlatform);
                 break;
         }
     }

@@ -15,7 +15,7 @@ public interface BindPhoneContract {
 
         public abstract void getCode(String mobile);
 
-        public abstract void requestThirdLogin(String mobile, String verifyCode);
+        public abstract void requestThirdLogin(String mobile, String countryCode, String verifyCode, String platform);
 
     }
 

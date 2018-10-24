@@ -46,9 +46,10 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
     }
 
     @Override
-    public void verifyCodeLogin(String mobile, String verifyCode) {
+    public void verifyCodeLogin(String mobile, String countryCode, String verifyCode) {
         Map<String, Object> params = Http.getBaseParams();
         params.put("Mobile", mobile);
+        params.put("countrycode", countryCode);
         params.put("VerifyCode", verifyCode);
         RequestBody requestBody = Http.buildRequestBody(params);
         Observable<VerifyCodeLoginResp> verifyCodeLoginObservable = Http.getServer().verifyCodeLogin(requestBody);
@@ -56,7 +57,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
             @Override
             protected void onResponse(VerifyCodeLoginResp rsp) {
                 setAppUserInfo(rsp);
-                mView.verifyCodeLogin(rsp);
+                mView.verifyCodeLogin();
             }
         }, verifyCodeLoginObservable);
     }
@@ -157,46 +158,30 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
                 if (rsp.state == 0)//未注册过
                     mView.toBindPhone(platform);
                 else if (rsp.state == 1)//已注册过
-                    doThreeLogined(platform);
+                    doThreeLogined(rsp.uid, rsp.ukey);
             }
         }, verifyCodeLoginObservable);
     }
 
-    private void doThreeLogined(String platform) {
-        Platform mPlatform = ShareSDK.getPlatform(platform);
-        String gender = "";
-        if (platform == null) {
-            return;
-        }
-        gender = mPlatform.getDb().getUserGender();
-        if (gender.equals("m")) {
-            gender = "男";
-        } else {
-            gender = "女";
-        }
-        String thirdtype = "0";
-        if (platform.equals("Wechat")) {
-            thirdtype = "1";
-        } else if (platform.equals("QQ")) {
-            thirdtype = "2";
-        } else {
-            thirdtype = "3";
-        }
+    private void doThreeLogined(String uid, String ukey) {
         // 网络请求登录操作
         Map<String, Object> params = Http.getBaseParams();
-        params.put("caption", mPlatform.getDb().getUserName());
-        params.put("pic", mPlatform.getDb().getUserIcon());
-        params.put("sex", gender);
-        params.put("thirdid", mPlatform.getDb().getUserId());
-//        mShareParams.put("thirdtype", ShareSDK.getPlatform(mPlatform.getDevinfo(Wechat.NAME)).getSortId());
-        params.put("thirdtype", thirdtype);
+        params.put("Type", "1");
+        params.put("Uid", uid);
+        params.put("Ukey", ukey);
         RequestBody requestBody = Http.buildRequestBody(params);
-        Observable<VerifyCodeLoginResp> verifyCodeLoginObservable = Http.getServer().requestThirdLogin(requestBody);
-        Http.request(new ResponseCallback<VerifyCodeLoginResp>() {
+        Observable<User> verifyCodeLoginObservable = Http.getServer().loadUserInfo(requestBody);
+        Http.request(new ResponseCallback<User>() {
             @Override
-            protected void onResponse(VerifyCodeLoginResp rsp) {
-                setAppUserInfo(rsp);
-                mView.verifyCodeLogin(rsp);
+            protected void onResponse(User rsp) {
+//                setAppUserInfo(rsp);
+//                mView.verifyCodeLogin(rsp);
+                rsp.setUid(uid);
+                rsp.setUkey(ukey);
+                ExpoApp.getApplication().setUser(rsp);
+                mDao.clear(User.class);
+                mDao.saveOrUpdate(rsp);
+                mView.verifyCodeLogin();
             }
         }, verifyCodeLoginObservable);
     }

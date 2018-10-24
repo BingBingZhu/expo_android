@@ -46,7 +46,7 @@ public interface Constants {
      */
     class URL {
         //IP
-        public static final String IP = "39.107.112.17";
+        public static final String IP = "39.105.120.171";
         //自己服务器基本请求用到的URL
         public static final String BASE_URL = "http://" + IP + ":8080/Api/";
         //自己服务器文件资源请求用到的URL

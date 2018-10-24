@@ -19,6 +19,7 @@ import com.expo.module.main.MainActivity;
 import com.expo.module.guide.GuideFragment;
 import com.expo.module.guide.LanguageFragment;
 import com.expo.module.login.LoginActivity;
+import com.expo.module.mine.UserInfoActivity;
 import com.expo.utils.Constants;
 
 public class SplashActivity extends BaseActivity<SplashContract.Presenter> implements SplashContract.View {
@@ -45,6 +46,9 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
 
     @Override
     public void next() {
+        if (false) {//直接去往某个界面，调试开发用的
+            UserInfoActivity.startActivity(this);
+        }
         if (mPrepared) {
             String shownVer = PrefsHelper.getString(Constants.Prefs.KEY_GUIDE_SHOWN, null);
             boolean showSelectLanguage = PrefsHelper.getBoolean(Constants.Prefs.KEY_SHOW_SELECT_LANGUAGE, true);
@@ -61,6 +65,7 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
                 } else {
                     ExpoApp.getApplication().setUser(user);
                     MainActivity.startActivity(this);
+                    mPresenter.appRun(user.getUid(), user.getUkey());
                 }
                 finish();
             }
