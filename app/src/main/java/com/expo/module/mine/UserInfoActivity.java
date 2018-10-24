@@ -20,6 +20,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        setTitle(0, R.string.title_user_info_ac);
 
     }
 

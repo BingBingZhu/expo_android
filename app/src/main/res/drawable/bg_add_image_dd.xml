@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="@dimen/dms_4"
+                android:color="#DDDDDD"
+                android:dashWidth="@dimen/dms_10"
+                android:dashGap="@dimen/dms_4" />
+        </shape>
+    </item>
+    <item
+        android:left="@dimen/dms_20"
+        android:right="@dimen/dms_20">
+        <shape android:shape="line">
+            <stroke
+                android:width="@dimen/dms_4"
+                android:color="#DDDDDD" />
+        </shape>
+    </item>
+
+    <item
+        android:left="@dimen/dms_20"
+        android:right="@dimen/dms_20">
+        <rotate android:fromDegrees="90">
+
+            <shape android:shape="line">
+                <stroke
+                    android:width="@dimen/dms_4"
+                    android:color="#DDDDDD" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

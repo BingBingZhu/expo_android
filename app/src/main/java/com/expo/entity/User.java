@@ -4,13 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.expo.network.response.BaseResponse;
 import com.expo.utils.Constants;
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "user")
-public class User implements Parcelable {
+public class User extends BaseResponse implements Parcelable {
     @DatabaseField(columnName = "uid", id = true)
     @SerializedName("Uid")
     private String uid;

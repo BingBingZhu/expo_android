@@ -1,6 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dms_30">
 
-</FrameLayout>
+    <com.hedan.textdrawablelibrary.TextViewDrawable
+        android:id="@+id/seek_help_text1"
+        style="@style/TextSizeBlack16"
+        android:drawableLeft="@drawable/reminder"
+        android:drawablePadding="@dimen/dms_10"
+        android:text="@string/kindly_reminder"
+        android:textColor="@color/gray_33" />
+
+    <TextView
+        android:id="@+id/seek_help_text2"
+        style="@style/TextSizeBlack12"
+        android:layout_width="match_parent"
+        android:layout_below="@id/seek_help_text1"
+        android:layout_marginTop="@dimen/dms_30"
+        android:text="@string/kindly_reminder_info"
+        android:textColor="@color/gray_99" />
+
+    <EditText
+        android:id="@+id/seek_help_text3"
+        style="@style/TextSizeBlack12"
+        android:layout_width="match_parent"
+        android:layout_below="@id/seek_help_text2"
+        android:layout_marginTop="@dimen/dms_50"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="@string/situation_describe"
+        android:lines="4"
+        android:maxLength="300"
+        android:paddingTop="@dimen/dms_10"
+        android:paddingBottom="@dimen/dms_10"
+        android:textColor="@color/gray_99"
+        android:textColorHint="@color/gray_99" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/seek_help_image_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seek_help_text3"
+        android:layout_marginTop="@dimen/dms_60" />
+
+    <com.hedan.textdrawablelibrary.TextViewDrawable
+        android:id="@+id/seek_help_text4"
+        style="@style/TextSizeBlack16"
+        android:layout_width="match_parent"
+        android:layout_below="@id/seek_help_image_selector"
+        android:layout_marginTop="@dimen/dms_40"
+        android:drawableLeft="@drawable/location"
+        android:drawableRight="@drawable/arrow_right"
+        android:drawablePadding="@dimen/dms_10"
+        android:text="@string/location"
+        android:textColor="@color/gray_33" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seek_help_text4"
+        android:layout_marginTop="@dimen/dms_80">
+
+        <TextView
+            android:id="@+id/seek_help_submit"
+            style="@style/TextSizeWhite14"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dms_80"
+            android:layout_weight="1"
+            android:background="@drawable/bg_02cd9b_r5"
+            android:gravity="center"
+            android:text="@string/submit" />
+
+        <RelativeLayout
+            android:id="@+id/seek_help_navigation"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dms_80"
+            android:layout_marginLeft="@dimen/dms_100"
+            android:layout_weight="1"
+            android:background="@drawable/bg_02cd9b_r5">
+
+            <TextView
+                android:id="@+id/seek_help_text5"
+                style="@style/TextSizeWhite14"
+                android:layout_height="@dimen/dms_80"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/navigation" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dms_20"
+                android:layout_toLeftOf="@id/seek_help_text5"
+                android:src="@drawable/navigation" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/seek_help_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dms_40"
+        android:layout_marginBottom="@dimen/dms_80"
+        android:src="@drawable/seek_phone" />
+</RelativeLayout>

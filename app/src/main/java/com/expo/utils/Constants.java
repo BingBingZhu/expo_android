@@ -8,6 +8,7 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
 import com.expo.entity.Subject;
 import com.expo.entity.User;
+import com.squareup.picasso.RequestCreator;
 
 public interface Constants {
     /**
@@ -45,7 +46,7 @@ public interface Constants {
      */
     class URL {
         //IP
-        public static final String IP = "39.107.112.17";
+        public static final String IP = "39.105.120.171";
         //自己服务器基本请求用到的URL
         public static final String BASE_URL = "http://" + IP + ":8080/Api/";
         //自己服务器文件资源请求用到的URL
@@ -88,4 +89,13 @@ public interface Constants {
         public static final String LOGIN_CHANGE_OF_STATE_ACTION = "login_change_of_state_action";
         public static final String ACTION_RECEIVE_MESSAGE = "action_receive_message";
     }
+
+    /**
+     * startActivityForResult 的RequestCode
+     */
+    class RequestCode {
+
+        public static final int REQUEST111 = 11;
+    }
+
 }

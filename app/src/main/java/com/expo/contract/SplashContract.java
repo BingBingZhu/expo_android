@@ -14,6 +14,8 @@ public interface SplashContract {
         public abstract void loadInitData();
 
         public abstract User loadUser();
+
+        public abstract void appRun(String uId, String uKey);
     }
 
     interface View extends IView {

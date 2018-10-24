@@ -5,6 +5,7 @@
 
     <uses-sdk tools:overrideLibrary="com.geejoe.drawabletextview" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -62,11 +63,7 @@
 
         <activity android:name=".module.language.LanguageActivity" />
 
-        <activity android:name=".module.bind.BindActivity" />
-
-        <!--<activity-->
-            <!--android:name=".module.eara.PickActivity"-->
-            <!--android:windowSoftInputMode="adjustPan" />-->
+        <!--<activity android:name=".module.bind.BindActivity" />-->
 
         <activity
             android:name="com.sahooz.library.PickActivity"
@@ -91,9 +88,25 @@
         <activity android:name=".module.routes.RouteDetailActivity" />
         <activity android:name=".module.routes.RoutesActivity" />
         <activity android:name=".module.service.LocationDescribeActivity" />
-        <activity android:name=".module.service.SeekHelpActivity" />
+        <activity android:name=".module.mine.UserInfoActivity" />
+        <activity
+            android:name=".module.service.SeekHelpActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".module.service.ShootActivity" />
         <activity android:name=".module.service.TouristServiceActivity" />
+        <activity
+            android:name="com.donkingliang.imageselector.ImageSelectorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name="com.donkingliang.imageselector.PreviewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name="com.donkingliang.imageselector.ClipImageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
 
         <!--心跳连接服务-->
         <service android:name=".module.heart.HeartBeatService" />

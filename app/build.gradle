@@ -139,6 +139,13 @@ dependencies {
     implementation 'com.blankj:utilcode:1.21.0'
     //左拉显示删除按钮的recyclerView
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+    //图片选择器
+    implementation 'com.github.donkingliang:ImageSelector:1.6.7'
+    //图片加载工具
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    //原先图片控件
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

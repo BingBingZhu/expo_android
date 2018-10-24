@@ -76,6 +76,10 @@ public class MainActivity extends BaseActivity {
 
     public static void startActivity(Context context) {
         Intent in = new Intent( context, MainActivity.class );
+        if (PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null) != null) {
+            LanguageUtil.changeAppLanguage(context, PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null));
+            in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
         context.startActivity( in );
     }
 

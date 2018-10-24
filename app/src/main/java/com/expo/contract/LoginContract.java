@@ -13,9 +13,9 @@ public interface LoginContract {
             super( view );
         }
 
-        public abstract void getCode(String mobile);
+        public abstract void getCode(String mobile, String countryCeod, String guestId);
 
-        public abstract void verifyCodeLogin(String mobile, String verifyCode);
+        public abstract void verifyCodeLogin(String mobile, String countryCode, String verifyCode);
 
         public abstract void threeLogin(String name);
 
@@ -33,9 +33,15 @@ public interface LoginContract {
         /**
          * 使用手机号、验证码的方式登录结果
          *
-         * @param rsp 请求结果及用户信息
          */
-        void verifyCodeLogin(VerifyCodeLoginResp rsp);
+        void verifyCodeLogin();
+
+        /**
+         * 使用验证第三方openid是否已注册
+         *
+         * @param platform 第三方登录的信息
+         */
+        void toBindPhone(String platform);
 
         /**
          * 跳转用户协议页面

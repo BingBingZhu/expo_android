@@ -2,6 +2,7 @@ package com.expo.module.main;
 
 import android.os.Bundle;
 
+import com.expo.R;
 import com.expo.base.BaseFragment;
 import com.expo.contract.EncyclopediasContract;
 
@@ -11,7 +12,7 @@ import com.expo.contract.EncyclopediasContract;
 public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Presenter> implements EncyclopediasContract.View {
     @Override
     public int getContentView() {
-        return 0;
+        return R.layout.fragment_encyclopedia;
     }
 
     @Override
