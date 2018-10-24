@@ -55,6 +55,18 @@
     <string name="item_tourist_service_text_7">游客须知</string>
     <string name="item_tourist_service_text_8">场馆预约</string>
 
+    <string name="mine_edit_info">查看并编辑个人资料</string>
+    <string name="item_mine_bespeak">我的预约</string>
+    <string name="item_mine_comment_report">评价与反馈</string>
+    <string name="item_mine_message">我的消息</string>
+    <string name="item_mine_about">关于</string>
+    <string name="item_mine_setting">设置</string>
+
+    <string name="item_user_img">修改头像</string>
+    <string name="item_user_name">昵称</string>
+    <string name="item_user_sex">性别</string>
+    <string name="item_user_age">年龄</string>
+
     <string name="location_describe_radio1">当前位置</string>
     <string name="location_describe_radio2">餐厅</string>
     <string name="location_describe_radio3">中国馆前门</string>
@@ -69,4 +81,5 @@
     <string name="title_pick_ac">地区</string>
     <string name="title_message_kind_ac">消息中心</string>
     <string name="title_location_describe_ac">所在位置</string>
+    <string name="title_user_info_ac">所在位置</string>
 </resources>

@@ -3,13 +3,12 @@ package com.expo.module.language;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.LoginContract;
-import com.expo.module.bind.BindActivity;
+import com.expo.module.login.BindPhoneActivity;
 import com.expo.module.login.LoginActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -87,11 +86,7 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
         LanguageUtil.changeAppLanguage(this, mLocale);
 
         PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, mLanguage);
-
-//        Intent intent = new Intent(this, LoginActivity.class);
-        Intent intent = new Intent(this, BindActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        LoginActivity.startActivity(this);
     }
 
 }

@@ -45,7 +45,7 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
     @BindView(R.id.tv_letter)
     TextView mTvLetter;
 
-    private NationalSmsCode mNationalSmsCode;
+//    private NationalSmsCode mNationalSmsCode;
     private ArrayList<Country> mSelectedCountries = new ArrayList<>();
     private ArrayList<Country> mAllCountries = new ArrayList<>();
 
@@ -57,8 +57,9 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mNationalSmsCode = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
+//        mNationalSmsCode = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
 
+        setTitle(0, R.string.title_pick_ac);
         setDoubleTapToExit(false);
 
         mAllCountries.clear();
@@ -134,21 +135,21 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
     /*
      * 设置返回的结果
      */
-    private void setResult(@Nullable NationalSmsCode code) {
-        if (code != null || !code.equals(mNationalSmsCode)) {
-            Intent extra = new Intent();
-            extra.putExtra(Constants.EXTRAS.EXTRAS, code);
-            setResult(RESULT_OK, extra);
-        } else {
-            setResult(RESULT_CANCELED);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        setResult(null);
-    }
+//    private void setResult(@Nullable NationalSmsCode code) {
+//        if (code != null || !code.equals(mNationalSmsCode)) {
+//            Intent extra = new Intent();
+//            extra.putExtra(Constants.EXTRAS.EXTRAS, code);
+//            setResult(RESULT_OK, extra);
+//        } else {
+//            setResult(RESULT_CANCELED);
+//        }
+//    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        setResult(null);
+//    }
 
     class CAdapter extends PyAdapter<RecyclerView.ViewHolder> {
 

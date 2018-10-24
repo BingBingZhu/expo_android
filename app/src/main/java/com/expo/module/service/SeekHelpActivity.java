@@ -78,7 +78,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     private void initRecyclerView() {
         mAdapter = new SeekHelpAdapter(this);
-        mRecycler.setLayoutManager(new GridLayoutManager(this, 3));
+        mRecycler.setLayoutManager(new GridLayoutManager(this, 4));
         mRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_10)));
         mRecycler.setAdapter(mAdapter);
 

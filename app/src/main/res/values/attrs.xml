@@ -48,4 +48,10 @@
         <attr name="drawableBottom" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="MyUserInfoView">
+        <attr name="textColor" format="dimension" />
+        <attr name="textSize" format="dimension" />
+        <attr name="text" format="string" />
+    </declare-styleable>
+
 </resources>

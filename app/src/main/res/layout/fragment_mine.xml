@@ -1,6 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_mine"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-</FrameLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/mine_img"
+        android:layout_width="@dimen/dms_170"
+        android:layout_height="@dimen/dms_170"
+        android:layout_marginTop="@dimen/dms_40" />
+
+    <TextView
+        android:id="@+id/mine_name"
+        style="@style/TextSizeWhite18"
+        android:layout_height="@dimen/dms_60"
+        android:layout_marginTop="@dimen/dms_40"
+        android:textSize="@dimen/font_22" />
+
+    <TextView
+        android:id="@+id/mine_edit_info"
+        style="@style/TextSizeWhite18"
+        android:layout_height="@dimen/dms_50"
+        android:text="@string/mine_edit_info"
+        android:layout_marginTop="@dimen/dms_40" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dms_100"
+        android:background="@drawable/bg_white_top_r20"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dms_40"
+        android:paddingBottom="@dimen/dms_40">
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/item_mine_bespeak"
+            style="@style/item_mine_entry"
+            android:drawableLeft="@drawable/select"
+            android:text="@string/item_mine_bespeak" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/item_mine_comment_report"
+            style="@style/item_mine_entry"
+            android:drawableLeft="@drawable/select"
+            android:text="@string/item_mine_comment_report" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/item_mine_message"
+            style="@style/item_mine_entry"
+            android:drawableLeft="@drawable/remind"
+            android:text="@string/item_mine_message" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/item_mine_about"
+            style="@style/item_mine_entry"
+            android:drawableLeft="@drawable/alert"
+            android:text="@string/item_mine_about" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/item_mine_setting"
+            style="@style/item_mine_entry"
+            android:drawableLeft="@drawable/setting"
+            android:text="@string/item_mine_setting" />
+    </LinearLayout>
+
+</LinearLayout>

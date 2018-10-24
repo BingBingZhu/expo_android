@@ -47,7 +47,7 @@ public class SeekHelpAdapter extends RecyclerView.Adapter<SeekHelpAdapter.ViewHo
             if (clickListener != null)
                 clickListener.itemClick(v, position, 0);
         });
-        if (mImages == null || position == getItemCount() - 1 && mImages.size() < 3) {
+        if (position == getItemCount() - 1) {
             holder.mImageClose.setVisibility(View.GONE);
             holder.mImage.setImageResource(R.drawable.bg_add_image_dd);
         } else {
@@ -63,7 +63,7 @@ public class SeekHelpAdapter extends RecyclerView.Adapter<SeekHelpAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mImages == null ? 1 : Math.min(mImages.size() + 1, 3);
+        return mImages == null ? 1 : mImages.size() + 1;
     }
 
     public void refresh(ArrayList<String> images) {

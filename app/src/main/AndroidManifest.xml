@@ -63,7 +63,7 @@
 
         <activity android:name=".module.language.LanguageActivity" />
 
-        <activity android:name=".module.bind.BindActivity" />
+        <!--<activity android:name=".module.bind.BindActivity" />-->
 
         <activity
             android:name="com.sahooz.library.PickActivity"
@@ -88,6 +88,7 @@
         <activity android:name=".module.routes.RouteDetailActivity" />
         <activity android:name=".module.routes.RoutesActivity" />
         <activity android:name=".module.service.LocationDescribeActivity" />
+        <activity android:name=".module.mine.UserInfoActivity" />
         <activity
             android:name=".module.service.SeekHelpActivity"
             android:windowSoftInputMode="adjustPan" />

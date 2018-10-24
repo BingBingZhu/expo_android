@@ -16,15 +16,12 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.BindPhoneContract;
 import com.expo.entity.User;
-import com.expo.module.bind.BindActivity;
 import com.expo.module.main.MainActivity;
 import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.utils.Constants;
-import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 import com.sahooz.library.Country;
 import com.sahooz.library.PhoneNumberLibUtil;
@@ -39,17 +36,18 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
     @BindView(R.id.login_phone_number_et)
     EditText mEtPhoneNum;
     @BindView(R.id.login_phone_number_code)
-    TextView mTVPhoneCode;
+    TextView mTvPhoneCode;
     @BindView(R.id.login_ver_code_et)
-    EditText etVerCode;
+    EditText mEtVerCode;
     @BindView(R.id.login_get_ver_code)
-    TextView mTVGetCode;
+    TextView mTvGetCode;
     @BindView(R.id.login_login_btn)
     Button mBtnLogin;
 
     private boolean getCodeEnable = true;  // 是否允许获取验证码按钮可用
     private TimeCount timeCount;    //验证码获取计时器
     private int mCode = 86;    //手机号区域码
+    private int mPlatform;
 
     AlertDialog mAlertDialog;
 
@@ -65,9 +63,9 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
 
         setDoubleTapToExit(true);
         mEtPhoneNum.addTextChangedListener(textWatcher);
-        etVerCode.addTextChangedListener(textWatcher);
-        mTVPhoneCode.setOnClickListener(this);
-        mTVGetCode.setOnClickListener(this);
+        mEtVerCode.addTextChangedListener(textWatcher);
+        mTvPhoneCode.setOnClickListener(this);
+        mTvGetCode.setOnClickListener(this);
         mBtnLogin.setOnClickListener(this);
     }
 
@@ -86,14 +84,14 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (mEtPhoneNum.isFocused()) {     //手机号输入框获取焦点
                 if (s.length() != 11) {
-                    mTVGetCode.setEnabled(false);
+                    mTvGetCode.setEnabled(false);
                     return;
                 }
                 if (s.toString().matches(Constants.Exps.PHONE)) {
                     if (getCodeEnable)
-                        mTVGetCode.setEnabled(true);
+                        mTvGetCode.setEnabled(true);
                 } else {
-                    mTVGetCode.setEnabled(false);
+                    mTvGetCode.setEnabled(false);
                     ToastHelper.showShort("请输入正确的手机号");
                 }
             } else {      //验证码输入框获取焦点
@@ -143,7 +141,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
                 }
                 break;
             case R.id.dialog_bind_phone_ok:
-                mPresenter.getCode();
+                mPresenter.getCode(mEtPhoneNum.getText().toString());
                 duration += 60;
                 surplusDuration = duration;
                 timeCount = new TimeCount((duration + 1) * 1000, 1000);
@@ -154,7 +152,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
                 break;
             case R.id.login_login_btn:
                 // 使用验证码登录
-                mPresenter.bindPhone();
+                mPresenter.requestThirdLogin(mEtPhoneNum.getText().toString(), mTvPhoneCode.getText().toString());
                 break;
         }
     }
@@ -165,9 +163,9 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
      * @param code
      */
     public void returnRequestVerifyCodeResult(String code) {
-        etVerCode.requestFocus();
-        etVerCode.setText("");
-        etVerCode.append(code);
+        mEtVerCode.requestFocus();
+        mEtVerCode.setText("");
+        mEtVerCode.append(code);
     }
 
     /**
@@ -210,7 +208,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
             }
         }
         ((TextView) mDialogView.findViewById(R.id.dialog_bind_phone_text)).setText(getResources().getString(R.string.send_sms_to_phone_number,
-                mTVPhoneCode.getText().toString() + " " + mEtPhoneNum.getText().toString()));
+                mTvPhoneCode.getText().toString() + " " + mEtPhoneNum.getText().toString()));
         return mDialogView;
     }
 
@@ -219,7 +217,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 111 && resultCode == RESULT_OK) {
             Country country = Country.fromJson(data.getStringExtra("country"));
-            mTVPhoneCode.setText("+" + country.code);
+            mTvPhoneCode.setText("+" + country.code);
             mCode = country.code;
         }
     }
@@ -239,8 +237,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
         @Override
         public void onFinish() {// 计时完毕时触发
             getCodeEnable = true;
-            mTVGetCode.setEnabled(true);
-            mTVGetCode.setText("获取验证码");
+            mTvGetCode.setEnabled(true);
+            mTvGetCode.setText("获取验证码");
         }
 
         @Override
@@ -248,9 +246,9 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
             if (surplusDuration > 0) {
                 surplusDuration--;
             }
-            mTVGetCode.setText(surplusDuration + "秒");
+            mTvGetCode.setText(surplusDuration + "秒");
             getCodeEnable = false;
-            mTVGetCode.setEnabled(false);
+            mTvGetCode.setEnabled(false);
         }
     }
 
@@ -259,11 +257,11 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
      * 启动第三方登录绑定手机号操作页
      *
      * @param context
-     * @param user    第三方登录获得的可用用户信息
+     * @param platform 第三方登录获得的可用用户信息
      */
-    public static void startActivity(Context context, User user) {
+    public static void startActivity(Context context, String platform) {
         Intent in = new Intent(context, BindPhoneActivity.class);
-        in.putExtra(Constants.EXTRAS.EXTRAS, user);
+        in.putExtra(Constants.EXTRAS.EXTRAS, platform);
         context.startActivity(in);
     }
 }

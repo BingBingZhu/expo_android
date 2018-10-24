@@ -50,10 +50,10 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
             boolean showSelectLanguage = PrefsHelper.getBoolean(Constants.Prefs.KEY_SHOW_SELECT_LANGUAGE, true);
             if (!BuildConfig.VERSION_NAME.equals(shownVer)) {//检查当前版本是否首次使用
                 showFragment(new GuideFragment());
-            } else if (PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null) == null || true) {
+            } else if (PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null) == null) {
                 startActivity(new Intent(this, LanguageActivity.class));
-            } else if (showSelectLanguage) {//检查是否需要显示语言选择
-                showFragment(new LanguageFragment());
+//            } else if (showSelectLanguage) {//检查是否需要显示语言选择
+//                showFragment(new LanguageFragment());
             } else {//检查是否需要登录
                 User user = mPresenter.loadUser();
                 if (user == null) {

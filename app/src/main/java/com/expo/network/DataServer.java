@@ -3,6 +3,7 @@ package com.expo.network;
 import com.expo.entity.User;
 import com.expo.network.response.AllTypeResp;
 import com.expo.network.response.BaseResponse;
+import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.SpotsResp;
@@ -57,6 +58,26 @@ public interface DataServer {
     @POST("Terminal/VerifyCodeLogin")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<VerifyCodeLoginResp> verifyCodeLogin(@Body RequestBody requestBody);
+
+    /**
+     * 检查第三方openid是否已注册过
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/CheckThirdIdRegisterState")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<CheckThirdIdRegisterStateResp> checkThirdIdRegisterState(@Body RequestBody requestBody);
+
+    /**
+     * 第三方登录
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/RequestThirdLogin")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<VerifyCodeLoginResp> requestThirdLogin(@Body RequestBody requestBody);
 
     /**
      * 获取景点数据
