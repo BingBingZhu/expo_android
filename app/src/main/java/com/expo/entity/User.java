@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.expo.base.ExpoApp;
+import com.expo.db.dao.BaseDao;
 import com.expo.network.response.BaseResponse;
 import com.expo.utils.Constants;
 import com.google.gson.annotations.SerializedName;
@@ -62,7 +64,7 @@ public class User extends BaseResponse implements Parcelable {
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel in) {
-            return new User( in );
+            return new User(in);
         }
 
         @Override
@@ -78,16 +80,16 @@ public class User extends BaseResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString( uid );
-        dest.writeString( ukey );
-        dest.writeString( birthDay );
-        dest.writeString( nick );
-        dest.writeString( favoriteCount );
-        dest.writeString( mobile );
-        dest.writeString( score );
-        dest.writeString( sex );
-        dest.writeString( city );
-        dest.writeString( photoUrl );
+        dest.writeString(uid);
+        dest.writeString(ukey);
+        dest.writeString(birthDay);
+        dest.writeString(nick);
+        dest.writeString(favoriteCount);
+        dest.writeString(mobile);
+        dest.writeString(score);
+        dest.writeString(sex);
+        dest.writeString(city);
+        dest.writeString(photoUrl);
     }
 
     public String getUid() {
@@ -143,9 +145,9 @@ public class User extends BaseResponse implements Parcelable {
     }
 
     public int getIntScore() {
-        if (TextUtils.isEmpty( score ) || !score.matches( Constants.Exps.NUMBER ))
+        if (TextUtils.isEmpty(score) || !score.matches(Constants.Exps.NUMBER))
             return 0;
-        return Integer.parseInt( score );
+        return Integer.parseInt(score);
     }
 
     public void setScore(String score) {
@@ -174,5 +176,16 @@ public class User extends BaseResponse implements Parcelable {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public void saveOnDb(BaseDao mDao) {
+        ExpoApp.getApplication().setUser(this);
+        mDao.clear(User.class);
+        mDao.saveOrUpdate(this);
+    }
+
+    public void deleteOnDb(BaseDao mDao) {
+        ExpoApp.getApplication().setUser(null);
+        mDao.clear(User.class);
     }
 }

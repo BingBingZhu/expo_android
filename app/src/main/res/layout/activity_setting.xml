@@ -1,5 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
+        android:orientation="vertical">
+
+        <com.expo.widget.MySettingView
+            android:id="@+id/setting_language"
+            style="@style/item_setting"
+            android:layout_marginTop="@dimen/dms_40"
+            app:textLeft="@string/item_setting_language" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <com.expo.widget.MySettingView
+            android:id="@+id/setting_cache"
+            style="@style/item_setting"
+            app:textLeft="@string/item_setting_cache" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <com.expo.widget.MySettingView
+            android:id="@+id/setting_update"
+            style="@style/item_setting"
+            app:textLeft="@string/item_setting_update" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <com.expo.widget.MySettingView
+            android:id="@+id/setting_guide"
+            style="@style/item_setting"
+            app:textLeft="@string/item_setting_guide" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <com.expo.widget.MySettingView
+            android:id="@+id/setting_policy"
+            style="@style/item_setting"
+            app:textLeft="@string/item_setting_policy" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/logout"
+        style="@style/TextSizeWhite14"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_90"
+        android:layout_alignParentBottom="true"
+        android:background="@color/green_02cd9b"
+        android:gravity="center"
+        android:padding="@dimen/dms_20"
+        android:text="@string/logout" />
+
+</RelativeLayout>

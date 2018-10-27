@@ -43,9 +43,9 @@ public class BindPhonePresenterImpl extends BindPhoneContract.Presenter {
         }
         gender = mPlatform.getDb().getUserGender();
         if (gender.equals("m")) {
-            gender = "男";
+            gender = "0";
         } else {
-            gender = "女";
+            gender = "1";
         }
         String thirdtype = "0";
         if (platform.equals("Wechat")) {
@@ -88,9 +88,7 @@ public class BindPhonePresenterImpl extends BindPhoneContract.Presenter {
         user.setMobile(rsp.getMobile());
         user.setPhotoUrl(rsp.getPhotoUrl());
         user.setSex(rsp.getSex());
-        ExpoApp.getApplication().setUser(user);
-        mDao.clear(User.class);
-        mDao.saveOrUpdate(user);
+        user.saveOnDb(mDao);
     }
 
 }

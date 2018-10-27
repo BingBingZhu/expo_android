@@ -10,9 +10,13 @@ public interface FeedbackContract {
             super( view );
         }
 
+        public abstract void submit(String opter, String email, String content);
+
     }
 
     interface View extends IView {
+
+        void submitComplete(String string);
 
     }
 }

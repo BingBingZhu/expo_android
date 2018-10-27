@@ -44,4 +44,15 @@ public class ActivityHelper {
         }
         activities = null;
     }
+
+    /**
+     * 关闭所有活动退出程序
+     */
+    public synchronized static void reCreateAll(Activity activity) {
+        if (activities == null) return;
+        for (int i = 0; i < activities.size(); i++) {
+            if (activities.get(i) != activity)
+                activities.get(i).recreate();
+        }
+    }
 }

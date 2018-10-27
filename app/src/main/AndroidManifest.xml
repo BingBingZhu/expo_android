@@ -71,8 +71,11 @@
 
         <activity android:name=".module.webview.WebActivity" />
 
+        <activity android:name=".module.mine.UserInfoActivity" />
         <activity android:name=".module.mine.AboutActivity" />
-        <activity android:name=".module.mine.FeedbackActivity" />
+        <activity
+            android:name=".module.mine.FeedbackActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".module.mine.SettingActivity" />
         <activity android:name=".module.distinguish.EncyclopediaSearchActivity" />
         <activity android:name=".module.distinguish.DistinguishActivity" />
@@ -88,7 +91,6 @@
         <activity android:name=".module.routes.RouteDetailActivity" />
         <activity android:name=".module.routes.RoutesActivity" />
         <activity android:name=".module.service.LocationDescribeActivity" />
-        <activity android:name=".module.mine.UserInfoActivity" />
         <activity
             android:name=".module.service.SeekHelpActivity"
             android:windowSoftInputMode="adjustPan" />

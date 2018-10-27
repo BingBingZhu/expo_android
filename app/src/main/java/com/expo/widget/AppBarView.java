@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public class AppBarView extends FrameLayout {
 
     private ImageView mBackView;
     private TextView mTitleView;
+    private View mRightView;
     private OnClickListener mClickListener;
     private boolean mShowBackButton;
     private Drawable mBackImage;
@@ -109,6 +111,13 @@ public class AppBarView extends FrameLayout {
     }
 
 
+    public void setTitle(int resId) {
+        mTitle = getContext().getResources().getString(resId);
+        if (mTitleView != null) {
+            mTitleView.setText(mTitle);
+        }
+    }
+
     public void setTitle(String title) {
         mTitle = title;
         if (mTitleView != null) {
@@ -136,5 +145,16 @@ public class AppBarView extends FrameLayout {
         if (this.mBackView != null) {
             this.mBackView.setImageDrawable(mBackImage);
         }
+    }
+
+    public void setRightView(View view) {
+        mRightView = view;
+        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
+        addView(mRightView, lp);
+    }
+
+    public View getRightView() {
+        return mRightView;
     }
 }

@@ -1,5 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextSize15"
+            android:layout_marginTop="@dimen/dms_40"
+            android:text="@string/item_mine_comment_report"
+            android:textColor="@color/gray_32" />
+
+        <TextView
+            style="@style/TextSizeBlack12"
+            android:layout_marginTop="@dimen/dms_20"
+            android:text="@string/feed_back_tips"
+            android:textColor="@color/gray_99" />
+
+        <TextView
+            style="@style/TextSize15"
+            android:layout_marginTop="@dimen/dms_40"
+            android:text="Email"
+            android:textColor="@color/gray_32" />
+
+        <EditText
+            android:id="@+id/feed_back_email"
+            style="@style/TextSizeBlack14"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_80"
+            android:layout_marginTop="@dimen/dms_20"
+            android:background="@drawable/bg_frame_32_r2_w1px"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:padding="@dimen/dms_10"
+            android:singleLine="true"
+            android:textColor="@color/gray_32" />
+
+        <TextView
+            style="@style/TextSize15"
+            android:layout_marginTop="@dimen/dms_40"
+            android:text="@string/comment_content"
+            android:textColor="@color/gray_32" />
+
+        <EditText
+            android:id="@+id/feed_back_comment"
+            style="@style/TextSizeBlack14"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="@dimen/dms_20"
+            android:background="@drawable/bg_frame_32_r2_w1px"
+            android:gravity="top|left"
+            android:maxEms="300"
+            android:padding="@dimen/dms_10"
+            android:textColor="@color/gray_32" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/submit"
+        style="@style/TextSizeWhite14"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_90"
+        android:layout_alignParentBottom="true"
+        android:background="@color/green_02cd9b"
+        android:gravity="center"
+        android:padding="@dimen/dms_20"
+        android:text="@string/submit" />
+</RelativeLayout>

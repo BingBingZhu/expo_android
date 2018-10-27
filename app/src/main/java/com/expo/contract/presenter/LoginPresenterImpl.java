@@ -31,6 +31,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
 
     @Override
     public void getCode(String mobile, String countryCode, String guestId) {
+        mView.showLoadingView();
         Map<String, Object> params = Http.getBaseParams();
         params.put("Mobile", mobile);
         params.put("countrycode", countryCode);
@@ -41,6 +42,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
             @Override
             protected void onResponse(VerificationCodeResp rsp) {
                 mView.returnRequestVerifyCodeResult(rsp.verificationCode);
+                mView.hideLoadingView();
             }
         }, observable);
     }
@@ -178,9 +180,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
 //                mView.verifyCodeLogin(rsp);
                 rsp.setUid(uid);
                 rsp.setUkey(ukey);
-                ExpoApp.getApplication().setUser(rsp);
-                mDao.clear(User.class);
-                mDao.saveOrUpdate(rsp);
+                rsp.saveOnDb(mDao);
                 mView.verifyCodeLogin();
             }
         }, verifyCodeLoginObservable);
@@ -205,9 +205,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
         user.setMobile(rsp.getMobile());
         user.setPhotoUrl(rsp.getPhotoUrl());
         user.setSex(rsp.getSex());
-        ExpoApp.getApplication().setUser(user);
-        mDao.clear(User.class);
-        mDao.saveOrUpdate(user);
+        user.saveOnDb(mDao);
     }
 
 }

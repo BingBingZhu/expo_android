@@ -1,9 +1,13 @@
 package com.expo.module.language;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
@@ -20,6 +24,10 @@ import butterknife.OnClick;
 
 public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
+    @BindView(R.id.language_create_btn)
+    TextView mTvCreate;
+    @BindView(R.id.languane_login)
+    TextView mTvLogin;
     @BindView(R.id.language_cn)
     View mLanguageCn;
     @BindView(R.id.language_en)
@@ -38,9 +46,9 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
         mLanguage = PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null);
         if (mLanguage == null) {
             mLanguageCn.performClick();
-        } else if (LanguageUtil.LANGUAGE_CN.endsWith(mLanguage)) {
+        } else if (StringUtils.equals(LanguageUtil.LANGUAGE_CN, mLanguage)) {
             mLanguageCn.performClick();
-        } else if (LanguageUtil.LANGUAGE_EN.endsWith(mLanguage)) {
+        } else if (StringUtils.equals(LanguageUtil.LANGUAGE_EN, mLanguage)) {
             mLanguageEn.performClick();
         }
     }
@@ -59,23 +67,23 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
             case R.id.language_cn:
                 mLocale = Locale.CHINA;
                 mLanguage = LanguageUtil.LANGUAGE_CN;
+                mTvCreate.setText("创建账号");
+                mTvLogin.setText("登录");
                 break;
             case R.id.language_en:
                 mLocale = Locale.ENGLISH;
                 mLanguage = LanguageUtil.LANGUAGE_EN;
+                mTvCreate.setText("Create Account");
+                mTvLogin.setText("Login");
                 break;
 
         }
     }
 
-    @OnClick(R.id.back)
-    public void back(View view) {
-        finish();
-    }
-
-    @OnClick(R.id.login)
+    @OnClick(R.id.languane_login)
     public void login(View view) {
-        startActivity(new Intent(this, LoginActivity.class));
+        LoginActivity.startActivity(this);
+        finish();
     }
 
     @OnClick(R.id.language_create_btn)
@@ -87,6 +95,7 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
         PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, mLanguage);
         LoginActivity.startActivity(this);
+        finish();
     }
 
 }

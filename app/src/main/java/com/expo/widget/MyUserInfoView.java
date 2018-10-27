@@ -4,16 +4,18 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.expo.R;
 
-public class MyUserInfoView extends RelativeLayout {
+public class MyUserInfoView extends FrameLayout {
 
     TextView mTvText;
+    View mRightView;
 
     public MyUserInfoView(Context context) {
         this(context, null);
@@ -31,9 +33,9 @@ public class MyUserInfoView extends RelativeLayout {
     private void initView(AttributeSet attrs) {
         if (mTvText == null) initTextView();
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CameraButton);
-            mTvText.setTextColor(a.getColor(R.styleable.MyUserInfoView_textColor, Color.BLACK));
-            mTvText.setTextSize(a.getDimension(R.styleable.MyUserInfoView_textColor, 18));
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.MyUserInfoView);
+            mTvText.setTextColor(a.getColor(R.styleable.MyUserInfoView_textColor, Color.RED));
+            mTvText.setTextSize(TypedValue.COMPLEX_UNIT_PX, a.getDimension(R.styleable.MyUserInfoView_textSize, 18));
             mTvText.setText(a.getString(R.styleable.MyUserInfoView_text));
             a.recycle();
         }
@@ -41,20 +43,28 @@ public class MyUserInfoView extends RelativeLayout {
 
     private void initTextView() {
         mTvText = new TextView(getContext());
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(-2, -2);
-        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(-2, -2);
+        layoutParams.gravity = Gravity.CENTER_VERTICAL;
 
         mTvText.setLayoutParams(layoutParams);
-        mTvText.setGravity(Gravity.CENTER_VERTICAL);
         addView(mTvText);
     }
 
-    public void addRightTextView(View view) {
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(-2, -2);
-        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+    public void addRightView(View view, int width, int height) {
+        mRightView = view;
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
+        layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.dms_10);
+        layoutParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
 
-        view.setLayoutParams(layoutParams);
-        addView(view);
+        mRightView.setLayoutParams(layoutParams);
+        addView(mRightView);
+    }
+
+    public void addRightView(View view) {
+        addRightView(view, -2, -2);
+    }
+
+    public View getRightView() {
+        return mRightView;
     }
 }

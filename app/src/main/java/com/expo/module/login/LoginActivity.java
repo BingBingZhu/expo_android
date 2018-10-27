@@ -143,15 +143,11 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         context.startActivity(in);
     }
 
-    @OnClick(R.id.title_back)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_phone_number_code:
                 startActivityForResult(new Intent(getApplicationContext(), NationalSmsCodeActivity.class), 111);
-                break;
-            case R.id.title_back:
-                finish();
                 break;
             case R.id.login_get_ver_code:
 //                验证手机号
@@ -227,7 +223,6 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
     /**
      * 返回验证码登录结果
-     *
      */
     @Override
     public void verifyCodeLogin() {

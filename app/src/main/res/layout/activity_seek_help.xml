@@ -10,7 +10,7 @@
         android:drawableLeft="@drawable/reminder"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/kindly_reminder"
-        android:textColor="@color/gray_33" />
+        android:textColor="@color/gray_32" />
 
     <TextView
         android:id="@+id/seek_help_text2"
@@ -54,7 +54,7 @@
         android:drawableRight="@drawable/arrow_right"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/location"
-        android:textColor="@color/gray_33" />
+        android:textColor="@color/gray_32" />
 
     <LinearLayout
         android:layout_width="match_parent"

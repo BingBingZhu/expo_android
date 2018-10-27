@@ -11,6 +11,7 @@
     <dimen name="font_36">18sp</dimen>
     <dimen name="font_40">20sp</dimen>
     <dimen name="font_44">22sp</dimen>
+    <dimen name="font_48">24sp</dimen>
 
     <!--尺寸-->
     <dimen name="dms_4">2dp</dimen>

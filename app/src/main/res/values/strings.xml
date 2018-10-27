@@ -18,6 +18,8 @@
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
     <string name="submit">submit</string>
+    <string name="language">English</string>
+    <string name="language_select">请选择语言</string>
 
     <string name="ukey_error">用户数据错误，请重新登录</string>
     <string name="unlogin">请先登录</string>
@@ -35,6 +37,7 @@
     <string name="account_unable">账号已锁定</string>
     <string name="bind_phone_need_sms">绑定手机号码需要通过短信验证</string>
     <string name="login">login</string>
+    <string name="logout">logout</string>
     <string name="next_step">next</string>
     <string name="send_sms_to_phone_number">我们将发送验证码到这个手机号码\n%s</string>
     <string name="kindly_reminder">温馨提示</string>
@@ -43,6 +46,16 @@
     <string name="navigation">导航</string>
     <string name="location">所在位置</string>
     <string name="save">保存</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="save_user_info_success">您的信息已经保存成功</string>
+    <string name="wrong_email">您的邮箱格式不正确，请重新输入</string>
+    <string name="latest_app_version">当前为最新版本</string>
+
+    <string name="main_home">Home</string>
+    <string name="main_panorama">Pano</string>
+    <string name="main_encyclopedias">Ency</string>
+    <string name="main_mine">Mine</string>
 
     <string name="tourist_service_phone">游客服务热线：400-818-6666</string>
     <string name="item_tourist_service_text_0">医疗救助</string>
@@ -62,10 +75,19 @@
     <string name="item_mine_about">关于</string>
     <string name="item_mine_setting">设置</string>
 
+    <string name="feed_back_tips">衷心的感谢您对我们的信任和支持。为了不断提高我们的服务质量,完善 我们的工作,为了给您提供更加优质的服务，欢迎您提出合理的评介与意见！</string>
+    <string name="comment_content">评价内容</string>
+
     <string name="item_user_img">修改头像</string>
     <string name="item_user_name">昵称</string>
     <string name="item_user_sex">性别</string>
     <string name="item_user_age">年龄</string>
+
+    <string name="item_setting_language">Language Setting</string>
+    <string name="item_setting_cache">清除缓存</string>
+    <string name="item_setting_update">检查更新</string>
+    <string name="item_setting_guide">用户指南</string>
+    <string name="item_setting_policy">法律条款与政策</string>
 
     <string name="location_describe_radio1">当前位置</string>
     <string name="location_describe_radio2">餐厅</string>
@@ -81,5 +103,11 @@
     <string name="title_pick_ac">region</string>
     <string name="title_message_kind_ac">消息中心</string>
     <string name="title_location_describe_ac">所在位置</string>
-    <string name="title_user_info_ac">所在位置</string>
+    <string name="title_user_info_ac">用户资料</string>
+    <string name="title_setting_ac">Setting</string>
+    <string name="title_feed_back_ac">评价与反馈</string>
+
+    <string name="check_string_empty_email">邮箱不能为空</string>
+    <string name="check_string_empty_content">内容不能为空</string>
+
 </resources>

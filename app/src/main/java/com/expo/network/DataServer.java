@@ -19,7 +19,9 @@ import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 /**
@@ -68,6 +70,16 @@ public interface DataServer {
     @POST("Terminal/VerifyCodeLogin")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<VerifyCodeLoginResp> verifyCodeLogin(@Body RequestBody requestBody);
+
+    /**
+     * 用户登出
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/Userlogout")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> userlogout(@Body RequestBody requestBody);
 
     /**
      * 检查第三方openid是否已注册过
@@ -148,8 +160,12 @@ public interface DataServer {
      * @param requestBody
      * @return
      */
+    @Headers({
+            "Accept: */*",
+    })
+    @Multipart
     @POST("Resources/UploadResource")
-    Observable<UploadRsp> uploadFile(@Body RequestBody requestBody);
+    Observable<UploadRsp> uploadFile(@Part("file\"; filename=\"image.png\"") RequestBody requestBody);
 
 
     /**

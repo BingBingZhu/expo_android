@@ -27,30 +27,16 @@
             android:scaleType="fitXY"
             android:src="@drawable/language_logo" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/languane_login"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dms_40">
-
-            <ImageView
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:clickable="false"
-                android:src="@drawable/icon_navbar_back_black" />
-
-            <TextView
-                android:id="@+id/login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:clickable="false"
-                android:text="登录"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_32" />
-        </RelativeLayout>
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/dms_40"
+            android:clickable="false"
+            android:text="登录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_32" />
     </RelativeLayout>
 
     <LinearLayout

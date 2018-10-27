@@ -4,5 +4,5 @@
     <item android:drawable="@drawable/radio_select_location" android:state_selected="true" />
     <item android:drawable="@drawable/radio_select_location" android:state_focused="true" />
     <item android:drawable="@drawable/radio_select_location" android:state_checked="true" />
-    <item android:drawable="@drawable/bg_frame_33_r90_w1px" />
+    <item android:drawable="@drawable/bg_frame_32_r90_w1px" />
 </selector>

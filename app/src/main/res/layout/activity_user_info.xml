@@ -1,15 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dms_30"
-    android:paddingRight="@dimen/dms_30"
-    android:layout_height="match_parent">
-    
+    android:paddingRight="@dimen/dms_30">
+
     <com.expo.widget.MyUserInfoView
         android:id="@+id/user_img"
-        app:text="@string/item_mine_setting"
-        style="@style/item_user_info"/>
+        style="@style/item_user_info"
+        android:layout_marginTop="@dimen/dms_40"
+        app:text="@string/item_user_img" />
+
+    <TextView
+        style="@style/LineHorizontal"
+        android:background="@color/white_e6" />
+
+    <com.expo.widget.MyUserInfoView
+        android:id="@+id/user_name"
+        style="@style/item_user_info"
+        app:text="@string/item_user_name" />
+
+    <TextView
+        style="@style/LineHorizontal"
+        android:background="@color/white_e6" />
+
+    <com.expo.widget.MyUserInfoView
+        android:id="@+id/user_sex"
+        style="@style/item_user_info"
+        app:text="@string/item_user_sex" />
+
+    <TextView
+        style="@style/LineHorizontal"
+        android:background="@color/white_e6" />
+
+    <com.expo.widget.MyUserInfoView
+        android:id="@+id/user_age"
+        style="@style/item_user_info"
+        app:text="@string/item_user_age" />
+
+    <TextView
+        style="@style/LineHorizontal"
+        android:background="@color/white_e6" />
 
 </LinearLayout>

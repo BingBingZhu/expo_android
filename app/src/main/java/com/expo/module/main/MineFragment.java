@@ -9,7 +9,11 @@ import com.expo.R;
 import com.expo.base.BaseFragment;
 import com.expo.contract.MineContract;
 import com.expo.entity.User;
+import com.expo.module.heart.MessageKindActivity;
+import com.expo.module.mine.FeedbackActivity;
+import com.expo.module.mine.SettingActivity;
 import com.expo.module.mine.UserInfoActivity;
+import com.expo.widget.MySettingView;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -60,10 +64,12 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
 
     @OnClick(R.id.item_mine_comment_report)
     public void clickComment(View view) {
+        FeedbackActivity.startActivity(getContext());
     }
 
     @OnClick(R.id.item_mine_message)
     public void clickMessage(View view) {
+        MessageKindActivity.startActivity(getContext());
     }
 
     @OnClick(R.id.item_mine_about)
@@ -72,5 +78,6 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
 
     @OnClick(R.id.item_mine_setting)
     public void clickSetting(View view) {
+        SettingActivity.startActivity(getContext());
     }
 }
