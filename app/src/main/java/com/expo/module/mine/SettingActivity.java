@@ -3,6 +3,7 @@ package com.expo.module.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import com.expo.widget.MySettingView;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Locale;
 
@@ -207,4 +210,5 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
         }
         mDialogUpdate.show();
     }
+
 }

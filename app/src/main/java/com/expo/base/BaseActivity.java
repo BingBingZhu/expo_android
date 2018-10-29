@@ -2,6 +2,7 @@ package com.expo.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -15,6 +16,10 @@ import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.PresenterFactory;
 import com.expo.widget.AppBarView;
 import com.expo.widget.RootView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 

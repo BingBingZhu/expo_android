@@ -18,6 +18,8 @@ import com.expo.base.utils.StatusBarUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 
 /*

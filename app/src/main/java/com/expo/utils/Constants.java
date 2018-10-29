@@ -107,4 +107,11 @@ public interface Constants {
         public static final String TYPE_YEAR = "yyyy";
     }
 
+    /**
+     * EventBus 的Id
+     */
+    class EventBusMessageId {
+        public static final int EVENTBUS_ID_FRESH_USER = 1;
+    }
+
 }

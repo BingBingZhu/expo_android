@@ -24,6 +24,7 @@ import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.BaseEventMessage;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.UserInfoContract;
 import com.expo.entity.User;
@@ -33,6 +34,8 @@ import com.expo.utils.PickerViewUtils;
 import com.expo.widget.AppBarView;
 import com.expo.widget.MyUserInfoView;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -212,5 +215,6 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     @Override
     public void saveUserInfo() {
         ToastHelper.showShort(R.string.save_user_info_success);
+        EventBus.getDefault().post(new BaseEventMessage(Constants.EventBusMessageId.EVENTBUS_ID_FRESH_USER, null));
     }
 }

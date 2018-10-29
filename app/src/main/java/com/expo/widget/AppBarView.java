@@ -151,6 +151,7 @@ public class AppBarView extends FrameLayout {
         mRightView = view;
         LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
+        lp.rightMargin = (int) getContext().getResources().getDimension(R.dimen.dms_30);
         addView(mRightView, lp);
     }
 
