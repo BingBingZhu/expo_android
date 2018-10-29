@@ -110,4 +110,6 @@
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
 
+    <string name="toast_feed_back_success">感谢你的反馈</string>
+
 </resources>

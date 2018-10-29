@@ -53,7 +53,9 @@ public class FeedbackActivity extends BaseActivity<FeedbackContract.Presenter> i
 
     @Override
     public void submitComplete(String string) {
-        if (!StringUtils.isEmpty(string))
-            ToastHelper.showShort(string);
+//        if (!StringUtils.isEmpty(string))
+//            ToastHelper.showShort(string);
+        ToastHelper.showShort(R.string.toast_feed_back_success);
+        finish();
     }
 }
