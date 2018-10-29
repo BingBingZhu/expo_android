@@ -130,6 +130,7 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:1.10.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
     //高德
     implementation 'com.amap.api:navi-3dmap:6.3.0_3dmap6.4.1'
     implementation 'com.amap.api:location:4.2.0'

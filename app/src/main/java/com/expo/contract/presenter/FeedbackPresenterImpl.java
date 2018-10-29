@@ -23,7 +23,7 @@ public class FeedbackPresenterImpl extends FeedbackContract.Presenter {
     public void submit(String opter, String email, String content) {
         if (CheckUtils.isEmtpy(email, R.string.check_string_empty_email, true)) return;
         if (!CheckUtils.isEmail(email, true)) return;
-        if (!CheckUtils.isEmtpy(content, R.string.check_string_empty_content, true)) return;
+        if (CheckUtils.isEmtpy(content, R.string.check_string_empty_content, true)) return;
 
         mView.showLoadingView();
         Map<String, Object> params = Http.getBaseParams();

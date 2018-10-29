@@ -28,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_90"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dms_30"
         android:orientation="horizontal">
 
         <TextView

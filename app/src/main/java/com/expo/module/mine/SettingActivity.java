@@ -17,6 +17,7 @@ import com.expo.base.utils.ActivityHelper;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SettingContract;
+import com.expo.contract.presenter.SettingPresenterImpl;
 import com.expo.module.login.LoginActivity;
 import com.expo.network.response.VersionInfoResp;
 import com.expo.utils.Constants;
@@ -162,7 +163,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_update)
     public void clickUpdate(MySettingView view) {
-
+        mPresenter.checkUpdate();
     }
 
     @OnClick(R.id.setting_guide)

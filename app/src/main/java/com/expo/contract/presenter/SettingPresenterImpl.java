@@ -33,6 +33,7 @@ public class SettingPresenterImpl extends SettingContract.Presenter {
         Http.request(new ResponseCallback<VersionInfoResp>() {
             @Override
             protected void onResponse(VersionInfoResp rsp) {
+                mView.hideLoadingView();
                 mView.appUpdate(rsp);
             }
         }, observable);
