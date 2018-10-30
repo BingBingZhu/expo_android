@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -12,8 +13,9 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.BaseAdapterItemClickListener;
 import com.expo.contract.MessagesContract;
 import com.expo.db.QueryParams;
-import com.expo.module.heart.message.MessageInterface;
+import com.expo.module.heart.adapter.MessageAdapter;
 import com.expo.utils.Constants;
+import com.expo.widget.decorations.SpaceDecoration;
 
 import butterknife.BindView;
 
@@ -25,7 +27,14 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter> i
     @BindView(R.id.recycler)
     RecyclerView mRvRecycler;
 
-    MessageInterface mAdaptor;
+    MessageAdapter mAdapter;
+
+    BaseAdapterItemClickListener mListener = new BaseAdapterItemClickListener() {
+        @Override
+        public void itemClick(View view, int position, Object o) {
+
+        }
+    };
 
     @Override
     protected int getContentView() {
@@ -34,8 +43,20 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter> i
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mPresenter.setAdaptor(0);
-        mAdaptor.setData(mPresenter.getData(0, new QueryParams()));
+        setTitle(0, getIntent().getIntExtra(Constants.EXTRAS.EXTRA_TITLE, 0));
+        int layoutId = getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0);
+
+        mRvRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new MessageAdapter(this);
+        if (layoutId == R.layout.item_message_appointment) {
+            mRvRecycler.setBackgroundResource(R.color.colorAccent);
+        }
+        mRvRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_40)));
+        mAdapter.setLayoutId(layoutId);
+        mAdapter.setListener(mListener);
+        mRvRecycler.setAdapter(mAdapter);
+        mAdapter.setData(mPresenter.getData(0, new QueryParams()));
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -55,11 +76,4 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter> i
         context.startActivity(in);
     }
 
-    @Override
-    public void setAdaptor(MessageInterface mi) {
-        mAdaptor = mi;
-
-        setTitle(0, mAdaptor.getTitle());
-        mAdaptor.setAdapter(this, mRvRecycler);
-    }
 }

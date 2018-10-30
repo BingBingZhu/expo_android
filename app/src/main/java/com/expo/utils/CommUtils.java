@@ -11,4 +11,10 @@ public class CommUtils {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    public static void hideView(View... view) {
+        for (int i = 0; i < view.length; i++)
+            if (view[i] != null)
+                view[i].setVisibility(View.GONE);
+    }
 }

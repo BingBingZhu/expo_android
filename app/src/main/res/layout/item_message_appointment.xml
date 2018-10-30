@@ -7,29 +7,27 @@
     android:padding="@dimen/dms_30">
 
     <TextView
-        android:id="@+id/message_appointment_result"
+        android:id="@+id/message_name"
         style="@style/TextSize15"
-        android:background="@drawable/bg_ca_r5"
         android:textColor="@color/gray_32" />
 
     <TextView
-        android:id="@+id/message_appointment_time"
+        android:id="@+id/message_time"
         style="@style/TextSize15"
         android:layout_alignParentRight="true"
-        android:background="@drawable/bg_ca_r5"
         android:textColor="@color/gray_32" />
 
     <TextView
-        android:id="@+id/message_appointment_content"
+        android:id="@+id/message_content"
         style="@style/TextSizeWhite14"
-        android:layout_below="@id/message_appointment_result"
+        android:layout_below="@id/message_name"
         android:layout_marginTop="@dimen/dms_40"
         android:textColor="@color/gray_99" />
 
     <TextView
-        android:id="@+id/message_appointment_info"
+        android:id="@+id/message_more"
         style="@style/TextSizeWhite14"
-        android:layout_below="@id/message_appointment_content"
+        android:layout_below="@id/message_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dms_20"
         android:background="@drawable/bg_frame_white_00cb99_r2_w2px"

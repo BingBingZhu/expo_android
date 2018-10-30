@@ -13,8 +13,10 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MessageKindContract;
+import com.expo.entity.Message;
 import com.expo.entity.MessageKindBean;
 import com.expo.module.heart.adapter.MessageKindAdapter;
+import com.expo.utils.Constants;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -102,7 +104,25 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
     //列表点击
     @Override
     public void onItemClick(View itemView, int position) {
+        int layoutId = 0;
+        int title = 0;
+        switch (position % 3) {
+            case 0:
+                title = R.string.title_message_system_ac;
+                layoutId = R.layout.item_message_system;
+                break;
+            case 1:
+                title = R.string.title_message_tourist_ac;
+                layoutId = R.layout.item_message_tourist;
+                break;
+            case 2:
+                title = R.string.title_message_appointment_ac;
+                layoutId = R.layout.item_message_appointment;
+                break;
+        }
         Intent intent = new Intent(this, MessagesActivity.class);
+        intent.putExtra(Constants.EXTRAS.EXTRAS, layoutId);
+        intent.putExtra(Constants.EXTRAS.EXTRA_TITLE, title);
         startActivity(intent);
     }
 
