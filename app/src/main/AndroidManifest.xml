@@ -106,6 +106,12 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity
             android:name="com.donkingliang.imageselector.ClipImageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
@@ -117,7 +123,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileProvider"
+            android:authorities="com.expo.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

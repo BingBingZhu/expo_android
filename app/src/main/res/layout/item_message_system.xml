@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dms_20">
+
+    <ImageView
+        android:layout_width="@dimen/dms_90"
+        android:layout_height="@dimen/dms_90"
+        android:layout_centerVertical="true"
+        android:src="@drawable/message_system" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_110"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/message_system_name"
+            style="@style/TextSize15"
+            android:textColor="@color/gray_32" />
+
+        <TextView
+            android:id="@+id/message_system_time"
+            style="@style/TextSize14"
+            android:textColor="@color/gray_99" />
+
+        <TextView
+            android:id="@+id/message_system_info"
+            style="@style/TextSize14"
+            android:lines="2"
+            android:textColor="@color/gray_99" />
+    </LinearLayout>
+</RelativeLayout>

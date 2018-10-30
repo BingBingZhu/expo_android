@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
 import com.expo.base.utils.StatusBarUtils;
 
@@ -149,9 +148,9 @@ public class AppBarView extends FrameLayout {
 
     public void setRightView(View view) {
         mRightView = view;
-        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         lp.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
-        lp.rightMargin = (int) getContext().getResources().getDimension(R.dimen.dms_30);
+        view.setPadding((int) getContext().getResources().getDimension(R.dimen.dms_30), 0, (int) getContext().getResources().getDimension(R.dimen.dms_30), 0);
         addView(mRightView, lp);
     }
 

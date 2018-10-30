@@ -131,6 +131,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.zhy:base-rvadapter:3.0.3'
     //高德
     implementation 'com.amap.api:navi-3dmap:6.3.0_3dmap6.4.1'
     implementation 'com.amap.api:location:4.2.0'
@@ -146,6 +147,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     //原先图片控件
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.yalantis:ucrop:2.2.2'
+
     //日期选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
     //dialog

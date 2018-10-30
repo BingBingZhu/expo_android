@@ -15,11 +15,13 @@
     <color name="gray_90">#909090</color>
     <color name="gray_99">#999999</color>
     <color name="gray_32">#323232</color>
+    <color name="gray_ca">#CACACA</color>
     <color name="gray_cc">#CCCCCC</color>
     <color name="gray_4c">#4C4C4C</color>
     <color name="color_local_stork">#5FFFC1</color>
     <color name="color_local">#425FFFC1</color>
     <color name="green_02cd9b">#02CD9B</color>
+    <color name="green_00cb99">#00CB99</color>
     <color name="white_e6">#E6E6E6</color>
     <color name="white_ea">#EAEAEA</color>
 </resources>

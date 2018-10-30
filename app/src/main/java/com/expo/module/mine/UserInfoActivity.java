@@ -2,8 +2,10 @@ package com.expo.module.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,11 +22,13 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.UriUtils;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
+import com.expo.base.utils.ImageUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.UserInfoContract;
 import com.expo.entity.User;
@@ -33,10 +37,14 @@ import com.expo.utils.Constants;
 import com.expo.utils.PickerViewUtils;
 import com.expo.widget.AppBarView;
 import com.expo.widget.MyUserInfoView;
+import com.facebook.common.util.UriUtil;
 import com.squareup.picasso.Picasso;
+import com.yalantis.ucrop.UCrop;
+import com.yalantis.ucrop.UCropActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,7 +90,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, R.string.title_user_info_ac);
 
-        initTitleRightView();
+        initTitleRightTextView();
         initCircleView();
         initUserNameView();
         initUserAgeView();
@@ -106,7 +114,19 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         context.startActivity(in);
     }
 
-    public void initTitleRightView() {
+    public void initTitleRightTextView() {
+        TextView textView = new TextView(this);
+        textView.setTextAppearance(this, R.style.TextSizeWhite14);
+        textView.setText(R.string.save);
+        textView.setGravity(Gravity.CENTER);
+        ((AppBarView) getTitleView()).setRightView(textView);
+        textView.setOnClickListener(v -> {
+            mUser.setNick(((TextView) mUserName.getRightView()).getText().toString());
+            mPresenter.saveUserInfo(mChangeImg, mUser);
+        });
+    }
+
+    public void initTitleRightImageView() {//原UI设计
         ImageView img = new ImageView(this);
         img.setImageResource(R.drawable.user_info_edit_save);
         ((AppBarView) getTitleView()).setRightView(img);
@@ -182,11 +202,32 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         if (resultCode == RESULT_OK) {
             if (mImageList == null) mImageList = new ArrayList<>();
             if (requestCode == Constants.RequestCode.REQUEST111 && data != null) {
-                mImageList.clear();
-                mImageList.addAll(data.getStringArrayListExtra(
-                        ImageSelectorUtils.SELECT_RESULT));
-                mUser.setPhotoUrl(mImageList.get(0));
+                UCrop.Options options = new UCrop.Options();
+                //设置裁剪图片可操作的手势
+                options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL);
+                //设置隐藏底部容器，默认显示
+                options.setHideBottomControls(true);
+                //设置toolbar颜色
+                options.setToolbarColor(ActivityCompat.getColor(this, R.color.colorAccent));
+                //设置状态栏颜色
+                options.setStatusBarColor(ActivityCompat.getColor(this, R.color.colorAccent));
+                options.setCircleDimmedLayer(true);
+                options.setShowCropFrame(false);
+                options.setCropGridColumnCount(0);
+                options.setCropGridRowCount(0);
+                UCrop.of(UriUtil.getUriForFile(new File(data.getStringArrayListExtra(
+                        ImageSelectorUtils.SELECT_RESULT).get(0))), UriUtil.getUriForFile(new File(data.getStringArrayListExtra(
+                        ImageSelectorUtils.SELECT_RESULT).get(0))))
+                        .withAspectRatio(1, 1)
+                        .withMaxResultSize(400, 400)
+                        .withOptions(options)
+                        .start(this);
+            } else if (requestCode == UCrop.REQUEST_CROP) {
+                Uri resultUri = UCrop.getOutput(data);
                 mChangeImg = true;
+                mImageList.clear();
+                mImageList.add(UriUtils.uri2File(resultUri, "").getPath());
+                mUser.setPhotoUrl(mImageList.get(0));
                 Picasso.with(this).load("file://" + mImageList.get(0)).into((CircleImageView) mUserImg.getRightView());
             }
         }

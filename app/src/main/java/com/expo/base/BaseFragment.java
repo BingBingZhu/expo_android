@@ -30,12 +30,14 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mContentView == null) {
             mContentView = inflater.inflate(getContentView(), null);
-            mContentView.setPadding(
-                    mContentView.getPaddingLeft(),
-                    mContentView.getPaddingTop() + StatusBarUtils.getStatusBarHeight(getContext()),
-                    mContentView.getPaddingRight(),
-                    mContentView.getPaddingBottom()
-            );
+
+            if (isNeedPaddingTop())
+                mContentView.setPadding(
+                        mContentView.getPaddingLeft(),
+                        mContentView.getPaddingTop() + StatusBarUtils.getStatusBarHeight(getContext()),
+                        mContentView.getPaddingRight(),
+                        mContentView.getPaddingBottom()
+                );
             ButterKnife.bind(this, mContentView);
             if (hasPresenter())
                 mPresenter = (P) PresenterFactory.getPresenter(this);
@@ -46,8 +48,8 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         return mContentView;
     }
 
-    public void setTopPadding() {
-        mContentView.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
+    public boolean isNeedPaddingTop() {
+        return true;
     }
 
     public abstract int getContentView();

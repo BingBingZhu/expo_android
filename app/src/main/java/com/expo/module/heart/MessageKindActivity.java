@@ -102,7 +102,8 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
     //列表点击
     @Override
     public void onItemClick(View itemView, int position) {
-        ToastHelper.showShort("你点击了" + position);
+        Intent intent = new Intent(this, MessagesActivity.class);
+        startActivity(intent);
     }
 
     //创建侧边栏

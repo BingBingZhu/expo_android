@@ -111,7 +111,7 @@ public interface Constants {
      * EventBus 的Id
      */
     class EventBusMessageId {
-        public static final int EVENTBUS_ID_FRESH_USER = 1;
+        public static final int EVENTBUS_ID_FRESH_USER = 1;//user反生变化
     }
 
 }
