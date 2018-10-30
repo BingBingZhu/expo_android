@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dms_30">
 
     <ImageView
         android:id="@+id/message_img"
@@ -24,11 +25,13 @@
         <TextView
             android:id="@+id/message_time"
             style="@style/TextSize14"
+            android:layout_marginTop="@dimen/dms_10"
             android:textColor="@color/gray_99" />
 
         <TextView
             android:id="@+id/message_content"
             style="@style/TextSize14"
+            android:layout_marginTop="@dimen/dms_30"
             android:lines="2"
             android:textColor="@color/gray_99" />
     </LinearLayout>

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dms_30"
     android:background="@drawable/bg_white_r5"
     android:orientation="vertical"
     android:padding="@dimen/dms_30">
@@ -21,7 +22,7 @@
         android:id="@+id/message_content"
         style="@style/TextSizeWhite14"
         android:layout_below="@id/message_name"
-        android:layout_marginTop="@dimen/dms_40"
+        android:layout_marginTop="@dimen/dms_30"
         android:textColor="@color/gray_99" />
 
     <TextView

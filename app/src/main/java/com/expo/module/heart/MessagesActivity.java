@@ -51,7 +51,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter> i
         if (layoutId == R.layout.item_message_appointment) {
             mRvRecycler.setBackgroundResource(R.color.colorAccent);
         }
-        mRvRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_40)));
+        mRvRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_20)));
         mAdapter.setLayoutId(layoutId);
         mAdapter.setListener(mListener);
         mRvRecycler.setAdapter(mAdapter);

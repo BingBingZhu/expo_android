@@ -7,7 +7,8 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/dms_30"
+        android:paddingLeft="@dimen/dms_30"
+        android:paddingRight="@dimen/dms_30"
         android:scrollbars="none" />
 
 </FrameLayout>
