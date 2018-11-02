@@ -64,8 +64,8 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
                     LoginActivity.startActivity(this);
                 } else {
                     ExpoApp.getApplication().setUser(user);
-//                    MainActivity.startActivity(this);
-                    RoutesActivity.startActivity(this);
+                    MainActivity.startActivity(this);
+//                    RoutesActivity.startActivity(this);
 //                    CameraActivity.startActivity(this);
                     mPresenter.appRun(user.getUid(), user.getUkey());
                 }
