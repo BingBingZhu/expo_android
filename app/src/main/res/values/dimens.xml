@@ -38,4 +38,14 @@
     <dimen name="dms_190">95dp</dimen>
 
     <dimen name="dms_minus_44">-22dp</dimen>
+    <dimen name="dms_28">14dp</dimen>
+    <dimen name="dms_200">100dp</dimen>
+    <dimen name="dms_2">1dp</dimen>
+    <dimen name="dms_32">16dp</dimen>
+    <dimen name="font_26">13sp</dimen>
+    <dimen name="dms_12">6dp</dimen>
+    <dimen name="dms_120">60dp</dimen>
+    <dimen name="dms_14">7dp</dimen>
+    <dimen name="dms_26">13dp</dimen>
+    <dimen name="dms_70">35dp</dimen>
 </resources>

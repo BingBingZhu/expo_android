@@ -6,6 +6,7 @@
         <attr name="menuSrc" format="reference" />
         <attr name="title" format="string" />
         <attr name="titleColor" format="color" />
+        <attr name="titleBgColor" format="color" />
         <attr name="showBack" format="boolean" />
         <attr name="showMenu" format="boolean" />
     </declare-styleable>
@@ -56,6 +57,16 @@
 
     <declare-styleable name="MySettingView">
         <attr name="textLeft" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ViewfinderView">
+        <attr name="strokeWidth" />
+        <attr name="isSquare" format="boolean" />
+        <attr name="strokeMarginRatio" format="float" />
+        <attr name="strokeColor" />
+        <attr name="strokeLength" format="dimension" />
+        <attr name="outsideColor" format="color" />
+        <attr name="scanLine" format="reference" />
     </declare-styleable>
 
 </resources>

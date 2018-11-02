@@ -36,6 +36,9 @@ public class Encyclopedias implements Parcelable {
     @DatabaseField(columnName = "enable")
     @SerializedName("isenable")
     private Integer enable;
+    @DatabaseField(columnName = "recommend")
+    @SerializedName("isrecommended")
+    private Integer recommend;
     @DatabaseField(columnName = "link_h5_url")
     @SerializedName("linkh5url")
     private String linkH5Url;
@@ -270,5 +273,13 @@ public class Encyclopedias implements Parcelable {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public Integer getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(Integer recommend) {
+        this.recommend = recommend;
     }
 }

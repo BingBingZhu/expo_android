@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="15dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_distinguish_result_img"
+        android:layout_width="@dimen/dms_140"
+        android:layout_height="@dimen/dms_140"
+        android:layout_marginRight="15dp"
+        app:actualImageScaleType="centerCrop"
+        app:roundedCornerRadius="@dimen/dms_8" />
+    <!--app:placeholderImage="@drawable/no_image"-->
+
+    <TextView
+        android:id="@+id/tv_distinguish_result_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/sdv_distinguish_result_img"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/gray_66"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_distinguish_result_latin_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_distinguish_result_name"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/tv_distinguish_result_name"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/gray_66"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_distinguish_result_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_distinguish_result_name"
+        android:layout_toRightOf="@id/sdv_distinguish_result_img"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/gray_99"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_distinguish_result_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/sdv_distinguish_result_img"
+        android:layout_toRightOf="@id/sdv_distinguish_result_img"
+        android:textColor="@color/gray_99"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/iv_distinguish_result_close"
+        android:layout_width="@dimen/dms_140"
+        android:layout_height="@dimen/dms_140"
+        android:layout_below="@id/sdv_distinguish_result_img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp" />
+    <!--android:src="@drawable/icon_distinguish_close"-->
+</RelativeLayout>

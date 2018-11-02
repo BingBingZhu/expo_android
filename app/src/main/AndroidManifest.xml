@@ -20,6 +20,20 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="com.casvd.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission android:name="com.casvd.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED" />
+    <uses-permission android:name="com.casvd.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
+
     <application
         android:name=".base.ExpoApp"
         android:allowBackup="true"
@@ -77,7 +91,7 @@
             android:name=".module.mine.FeedbackActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".module.mine.SettingActivity" />
-        <activity android:name=".module.distinguish.EncyclopediaSearchActivity" />
+        <activity android:name=".module.main.encyclopedia.EncyclopediaSearchActivity" />
         <activity android:name=".module.distinguish.DistinguishActivity" />
         <activity android:name=".module.freewifi.FreeWiFiActivity" />
         <activity android:name=".module.heart.MessageKindActivity" />

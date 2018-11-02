@@ -134,4 +134,112 @@ public class ActualScene implements Parcelable {
         return Http.getGsonInstance().fromJson( electronicFenceList, new TypeToken<double[]>() {
         }.getType() );
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public int getIsEnable() {
+        return isEnable;
+    }
+
+    public void setIsEnable(int isEnable) {
+        this.isEnable = isEnable;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public String getLinkH5Url() {
+        return linkH5Url;
+    }
+
+    public void setLinkH5Url(String linkH5Url) {
+        this.linkH5Url = linkH5Url;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public void setElectronicFenceList(String electronicFenceList) {
+        this.electronicFenceList = electronicFenceList;
+    }
+
+    public Integer getIsRecommended() {
+        return isRecommended;
+    }
+
+    public void setIsRecommended(Integer isRecommended) {
+        this.isRecommended = isRecommended;
+    }
+
+    public String getRecommendedIdx() {
+        return recommendedIdx;
+    }
+
+    public void setRecommendedIdx(String recommendedIdx) {
+        this.recommendedIdx = recommendedIdx;
+    }
 }

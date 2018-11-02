@@ -1,23 +1,31 @@
 package com.expo.base.utils;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Environment;
 import android.text.TextUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 
 import io.reactivex.annotations.NonNull;
+
+import static com.expo.utils.Constants.Config.CROP_SAVE_PATH;
 
 public class FileUtils {
     private static final String TAG = "FileUtils";
 
     public static File createFile(String path) {
-        if (TextUtils.isEmpty( path ))
-            throw new IllegalArgumentException( "The path of file can not be empty." );
+        if (TextUtils.isEmpty(path))
+            throw new IllegalArgumentException("The path of file can not be empty.");
         try {
-            File target = new File( path );
+            File target = new File(path);
             if (!target.exists()) {
                 if (!target.getParentFile().exists()) {
                     target.getParentFile().mkdirs();
@@ -34,15 +42,49 @@ public class FileUtils {
         return null;
     }
 
+    /**
+     * 创建文件
+     *
+     * @param type
+     * @param videoPath
+     * @return
+     */
+    public static File createFile(String type, String videoPath) {
+        String fileName = type;
+        if ("video".equals(type)) {
+            fileName += System.currentTimeMillis() + ".mp4";
+        } else if ("image".equals(type)) {
+            fileName += System.currentTimeMillis() + ".jpg";
+        } else {
+            fileName += System.currentTimeMillis();
+        }
+
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), videoPath);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            file = new File(file, fileName);
+            if (!file.exists()) {
+                if (file.createNewFile()) {
+                    return file;
+                }
+            }
+        } catch (IOException e) {
+            LogUtils.e(TAG, "--create new file error--", e);
+        }
+        return null;
+    }
+
     public static void write(File file, String text) {
         if (file == null)
-            throw new IllegalArgumentException( "The file can not be null" );
-        if (TextUtils.isEmpty( text ))
+            throw new IllegalArgumentException("The file can not be null");
+        if (TextUtils.isEmpty(text))
             return;
         FileWriter writer = null;
         try {
-            writer = new FileWriter( file );
-            writer.write( text );
+            writer = new FileWriter(file);
+            writer.write(text);
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,8 +101,8 @@ public class FileUtils {
         try {
             int len;
             byte[] data = new byte[1024];
-            while ((len = in.read( data )) != -1) {
-                out.write( data, 0, len );
+            while ((len = in.read(data)) != -1) {
+                out.write(data, 0, len);
             }
             out.flush();
         } catch (IOException e) {
@@ -89,7 +131,7 @@ public class FileUtils {
             File[] childFiles = file.listFiles();
             long size = 0;
             for (File childFile : childFiles) {
-                size += getFileSize( childFile );
+                size += getFileSize(childFile);
             }
             return size;
         }
@@ -110,9 +152,80 @@ public class FileUtils {
         } else if (file.isDirectory()) {
             File[] childFiles = file.listFiles();
             for (File childFile : childFiles) {
-                deleteFiles( childFile );
+                deleteFiles(childFile);
             }
             file.delete();
         }
+    }
+
+    public interface CompressCallback {
+        void onCompleted(byte[] bytes);
+    }
+
+    /**
+     * 图片压缩
+     *
+     * @param bitmap
+     * @param maxSize
+     * @param callback
+     */
+    public static void compressToFit(final Bitmap bitmap, final int maxSize, CompressCallback callback) {
+        if (bitmap == null) return;
+        new Thread() {
+            @Override
+            public void run() {
+                ByteArrayOutputStream bos = null;
+                int compressRatio = 80;
+                int preCompress = 5;
+                try {
+                    bos = new ByteArrayOutputStream();
+                    do {
+                        bos.reset();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, compressRatio, bos);
+                        compressRatio -= preCompress;
+                    } while (bos.size() > maxSize && compressRatio > 0);
+                    if (callback != null) {
+                        callback.onCompleted(bos.toByteArray());
+                    }
+                } catch (Exception e) {
+                    LogUtils.e(TAG, "compress bitmap error", e);
+                } finally {
+                    if (bos != null) {
+                        try {
+                            bos.close();
+                        } catch (IOException e) {
+                        }
+                    }
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 保存bitmap到本地
+     *
+     * @param context
+     * @param mBitmap
+     * @return
+     */
+    public static String saveBitmap(Context context, Bitmap mBitmap) {
+        String baseUrl = UUID.randomUUID().toString();
+        // 首先保存图片
+        File appDir = new File(Environment.getExternalStorageDirectory(), baseUrl);
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = baseUrl + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return file.getPath();
     }
 }

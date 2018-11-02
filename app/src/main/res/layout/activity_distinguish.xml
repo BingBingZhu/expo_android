@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</FrameLayout>
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextureView
+        android:id="@+id/sv_distinguish_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <com.expo.widget.ViewfinderView
+        android:id="@+id/vfv_distinguish_viewfinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:scanLine="@mipmap/icon_distinguish_scan_line"/>
+    <ImageView
+        android:id="@+id/iv_distinguish_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_20"
+        android:layout_marginTop="@dimen/dms_70"
+        android:src="@mipmap/ico_white_back" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dms_100"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/iv_distinguish_take_picture"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_30"
+        android:text="请正对需要识别的植物"/>
+    <ImageView
+        android:id="@+id/iv_distinguish_take_picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dms_120"
+        android:src="@mipmap/ico_take_picture"/>
+    <!--android:id="@+id/cb_distinguish_torch手电筒"-->
+</RelativeLayout>

@@ -109,5 +109,6 @@
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
+    <string name="please_enter_keywords">请输入关键字</string>
 
 </resources>
