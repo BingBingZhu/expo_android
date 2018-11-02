@@ -24,6 +24,7 @@ public interface Constants {
         public static final String KEY_GUIDE_SHOWN = "key_guide_shown";
         public static final String KEY_LANGUAGE_CHOOSE = "key_language_choose";
         public static final String KEY_SHOW_SELECT_LANGUAGE = "key_app_first_use";
+        public static final String KEY_HISTORY = "key_history";
     }
 
     /**
@@ -45,6 +46,7 @@ public interface Constants {
      * 网络访问等用到的地址相关的字符串
      */
     class URL {
+        public static final String ALI_BASE_URL = "http://47.95.215.6:8080/Api/";    //阿里云(识花)
         //IP
         public static final String IP = "39.105.120.171";
         //自己服务器基本请求用到的URL
@@ -53,16 +55,25 @@ public interface Constants {
         public static final String FILE_BASE_URL = "http://" + IP + "/res/";
         public static final String SCENIC_SPOTS = "GetParksList";
         public static final String ACTUAL_SCENES = "GetVenuesList";
+        //植物识别地址
+        public static final String DISTINGUISH_PLANT = "http://plantgw.nongbangzhu.cn/plant/recognize";
     }
 
     /**
      * 对app中内容配置
      */
     class Config {
+
+        public static final String BASE_FILE_PATH = "expo/";                          //数据存储文件夹
+        public static final String IMAGE_PATH = BASE_FILE_PATH + "images/";       //图片存储文件夹
+        public static final String CROP_SAVE_PATH = IMAGE_PATH + "crop/";             //图片裁剪存储文件
+        public static final int USERINFO_CROP_IMAGE_ASPECT_X = 1;                                //图片裁剪相关配置
+        public static final int USERINFO_CROP_IMAGE_ASPECT_Y = 1;
+        public static final int USERINFO_CROP_IMAGE_OUTPUT_X = 500;
+        public static final int USERINFO_CROP_IMAGE_OUTPUT_Y = 500;
+
         //下载任务最大同时下载数量
         public static final int DOWNLOAD_NUMBER = 2;
-        //sdcard保存文件的根地址
-        public static final String BASE_FILE_PATH = "lucas/";
         //临时存储文件路径 如拍照裁剪图片等
         public static final String TEMP_PATH = BASE_FILE_PATH + "tmp/";
         //解压地址
@@ -96,6 +107,8 @@ public interface Constants {
     class RequestCode {
 
         public static final int REQUEST111 = 11;
+        public static final int REQ_SELECT_IMAGE = 120;
+        public static final int REQ_CROP = 125;
     }
 
     /**

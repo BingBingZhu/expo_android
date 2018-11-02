@@ -29,6 +29,7 @@ public class AppBarView extends FrameLayout {
     private float mTitleSize;
     private int mTitleSizeUnit;
     private int mTitleColor;
+    private int mTitleBgColor;
 
     public AppBarView(Context context) {
         this(context, null);
@@ -54,6 +55,7 @@ public class AppBarView extends FrameLayout {
         mTitleSizeUnit = TypedValue.COMPLEX_UNIT_PX;
         mTitle = a.getString(R.styleable.AppBarView_title);
         mTitleColor = a.getColor(R.styleable.AppBarView_titleColor, getContext().getResources().getColor(R.color.caption_color));
+        mTitleBgColor = a.getColor(R.styleable.AppBarView_titleBgColor, getContext().getResources().getColor(R.color.white));
         mShowBackButton = a.getBoolean(R.styleable.AppBarView_showBack, true);
         a.recycle();
 
@@ -82,6 +84,7 @@ public class AppBarView extends FrameLayout {
         if (!TextUtils.isEmpty(mTitle)) {
             mTitleView.setText(mTitle);
         }
+        this.setBackgroundColor(mTitleBgColor);
         mTitleView.setTextSize(mTitleSizeUnit, mTitleSize);
         mTitleView.setTextColor(mTitleColor);
         mBackView.setImageDrawable(mBackImage);

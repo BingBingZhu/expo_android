@@ -10,6 +10,7 @@ import com.expo.contract.presenter.FeedbackPresenterImpl;
 import com.expo.contract.presenter.FreeWifiPresenterImpl;
 import com.expo.contract.presenter.HeartBeatPresenterImpl;
 import com.expo.contract.presenter.HomePresenterImpl;
+import com.expo.contract.presenter.ListPresenterImpl;
 import com.expo.contract.presenter.LoginPresenterImpl;
 import com.expo.contract.presenter.MessageKindPresenterImpl;
 import com.expo.contract.presenter.MessagesPresenterImpl;
@@ -68,6 +69,8 @@ public class PresenterFactory {
             return new SettingPresenterImpl( (SettingContract.View) view );
         } else if (view instanceof UserInfoContract.View) {
             return new UserInfoPresenterImpl( (UserInfoContract.View) view );
+        } else if (view instanceof ListContract.View) {
+            return new ListPresenterImpl( (ListContract.View) view );
         }
         throw new UnsupportedOperationException();
     }

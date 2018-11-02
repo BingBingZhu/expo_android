@@ -6,6 +6,7 @@ import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
+import com.expo.network.response.GetDistinguishPlantList_Rsb;
 import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
 import com.expo.network.response.UpdateTimeResp;
@@ -15,14 +16,19 @@ import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.network.response.VersionInfoResp;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 /**
  * 所有业务网络请求的接口
@@ -229,4 +235,15 @@ public interface DataServer {
     @POST("Types/GetAllTypesListFilter")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<AllTypeResp> loadAllTypes(@Body RequestBody requestBody);
+
+    /**
+     * 识花
+     * @param url
+     * @param params
+     * @return
+     */
+    @Headers({"Content-Type: application/x-www-form-urlencoded;charset=UTF-8", "Authorization: APPCODE 54c15d43df5c4e1fbe18bde79d40adc9"})
+    @FormUrlEncoded
+    @POST
+    Observable<GetDistinguishPlantList_Rsb> distinguishPlant(@Url String url, @FieldMap Map<String, String> params);
 }

@@ -7,14 +7,13 @@ import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
-import com.expo.base.utils.StatusBarUtils;
+import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
