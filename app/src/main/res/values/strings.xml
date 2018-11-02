@@ -20,6 +20,7 @@
     <string name="submit">submit</string>
     <string name="language">English</string>
     <string name="language_select">请选择语言</string>
+    <string name="bj_world_horticultural_exposition">北京世园会</string>
 
     <string name="ukey_error">用户数据错误，请重新登录</string>
     <string name="unlogin">请先登录</string>
@@ -52,6 +53,11 @@
     <string name="wrong_email">您的邮箱格式不正确，请重新输入</string>
     <string name="latest_app_version">当前为最新版本</string>
     <string name="see_detail">查看详情</string>
+    <string name="route_introduce">路线介绍</string>
+    <string name="spot_introduce">景点介绍</string>
+    <string name="see_more">查看更多</string>
+    <string name="hot">热度</string>
+    <string name="camera_touch">轻触拍照，按住摄像</string>
 
     <string name="main_home">Home</string>
     <string name="main_panorama">Pano</string>
@@ -110,11 +116,14 @@
     <string name="title_message_system_ac">系统消息</string>
     <string name="title_message_tourist_ac">游客服务</string>
     <string name="title_message_appointment_ac">预约提醒</string>
+    <string name="title_routest_ac">游玩路线</string>
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
     <string name="please_enter_keywords">请输入关键字</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
+
+    <integer name="video_time">60</integer>
 
 </resources>

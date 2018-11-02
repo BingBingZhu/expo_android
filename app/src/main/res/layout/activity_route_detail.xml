@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/item_route" />
+
+        <TextView
+            android:id="@+id/route_detail_time"
+            style="@style/TextSize14"
+            android:layout_marginLeft="@dimen/dms_50"
+            android:layout_marginTop="@dimen/dms_10"
+            android:layout_marginRight="@dimen/dms_50"
+            android:textColor="@color/gray_66" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dms_50"
+            android:layout_marginTop="@dimen/dms_10"
+            android:layout_marginRight="@dimen/dms_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/route_horn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/horn" />
+
+            <ProgressBar
+                android:id="@+id/route_progress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dms_4"
+                android:layout_marginLeft="@dimen/dms_10"
+                android:indeterminateOnly="false"
+                android:progress="0"
+                android:progressDrawable="@drawable/route_progress_bar" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/TextSizeBlack15"
+            android:layout_marginLeft="@dimen/dms_50"
+            android:layout_marginTop="@dimen/dms_30"
+            android:text="@string/route_introduce" />
+
+        <TextView
+            android:id="@+id/route_info"
+            style="@style/TextSizeBlack13"
+            android:layout_marginLeft="@dimen/dms_50"
+            android:layout_marginTop="@dimen/dms_30"
+            android:layout_marginRight="@dimen/dms_50"
+            android:textColor="@color/gray_66" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_60"
+            android:layout_marginTop="@dimen/dms_40"
+            android:background="@color/white_f2"
+            android:paddingLeft="@dimen/dms_50"
+            android:paddingRight="@dimen/dms_50">
+
+            <TextView
+                style="@style/LineVertical"
+                android:layout_width="@dimen/dms_8"
+                android:layout_centerVertical="true"
+                android:background="@color/colorAccent" />
+
+            <TextView
+                style="@style/TextSizeBlack15"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dms_20"
+                android:text="@string/spot_introduce" />
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                style="@style/TextSize14"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableRight="@drawable/arrow_right"
+                android:drawablePadding="@dimen/dms_10"
+                android:text="@string/see_more"
+                android:textColor="@color/gray_66" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dms_50"
+                android:layout_marginTop="@dimen/dms_40"
+                android:layout_marginRight="@dimen/dms_50"
+                android:descendantFocusability="blocksDescendants"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dms_30" />
+    </LinearLayout>
+
+</ScrollView>

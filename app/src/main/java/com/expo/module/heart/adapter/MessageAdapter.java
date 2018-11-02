@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.expo.R;
-import com.expo.base.utils.BaseAdapterItemClickListener;
+import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.entity.Message;
 import com.expo.utils.CommUtils;
 

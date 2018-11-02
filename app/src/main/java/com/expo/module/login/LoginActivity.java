@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
@@ -32,6 +33,7 @@ import com.sahooz.library.Country;
 import com.sahooz.library.PhoneNumberLibUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,8 +47,6 @@ import cn.sharesdk.wechat.friends.Wechat;
  */
 public class LoginActivity extends BaseActivity<LoginContract.Presenter> implements View.OnClickListener, LoginContract.View {
 
-    @BindView(R.id.login_gt_img)
-    ImageView mGtView;
     @BindView(R.id.login_phone_number_code)
     TextView mTvPhoneCode;
     @BindView(R.id.login_phone_number_et)
@@ -90,6 +90,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         mQQView.setOnClickListener(this);
         mSinaView.setOnClickListener(this);
         mProtocolView.setOnClickListener(this);
+
+        checkPermission();
     }
 
     @Override
@@ -106,20 +108,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (mEtPhoneView.isFocused()) {     //手机号输入框获取焦点
-                mGtView.setImageResource(R.drawable.ico_tuan_open);
-                if (s.length() != 11) {
-                    mGetCodeView.setEnabled(false);
-                    return;
-                }
-                if (s.toString().matches(Constants.Exps.PHONE)) {
-                    if (mGetCodeEnable)
-                        mGetCodeView.setEnabled(true);
-                } else {
-                    mGetCodeView.setEnabled(false);
-                    ToastHelper.showShort("请输入正确的手机号");
-                }
             } else {      //验证码输入框获取焦点
-                mGtView.setImageResource(R.drawable.ico_tuan_close);
                 if (s.length() != 4) {       //长度非4位进行错误处理
                     mLoginView.setEnabled(false);
                 } else {
@@ -279,11 +268,6 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     private void checkPermission() {
         List<String> permissionList = new ArrayList<>();
         List<String> perNameList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            perNameList.add("读取权限");
-        }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -303,6 +287,11 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.CAMERA);
             perNameList.add("相机权限");
+        }
+        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.CAMERA);
+            perNameList.add("录音权限");
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.ACCESS_WIFI_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -336,6 +325,13 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         }
         if (permissionList.size() > 0) {
             //弹出权限请求提示对话框
+            int size = permissionList.size();
+            String[] permissions = new String[size];
+            for (int i = 0; i < size; i++) {
+                permissions[i] = permissionList.get(i);
+            }
+            PermissionUtils.permission(permissions.clone()).request();
+
         }
     }
 }

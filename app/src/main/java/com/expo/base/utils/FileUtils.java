@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.text.TextUtils;
 
+import com.expo.utils.Constants;
+
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -228,4 +231,18 @@ public class FileUtils {
         }
         return file.getPath();
     }
+
+    //保存照片
+    public static void saveBitmap(String jpegName, Bitmap b) {
+        try {
+            FileOutputStream fout = new FileOutputStream(jpegName);
+            BufferedOutputStream bos = new BufferedOutputStream(fout);
+            b.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -13,7 +13,7 @@ import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.BaseAdapterItemClickListener;
+import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.contract.SeekHelpContract;
 import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;

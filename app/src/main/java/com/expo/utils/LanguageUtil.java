@@ -8,6 +8,9 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 
+import com.blankj.utilcode.util.StringUtils;
+import com.expo.base.utils.PrefsHelper;
+
 import java.util.Locale;
 
 import static android.provider.ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY;
@@ -43,6 +46,25 @@ public class LanguageUtil {
             configuration.locale = locale;
         }
         resources.updateConfiguration(configuration, metrics);
+    }
+
+    public static boolean isCN() {
+        if (StringUtils.equals(LANGUAGE_CN, PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null)))
+            return true;
+        return false;
+    }
+
+    /**
+     * 根据语音选择返回不同的string
+     *
+     * @param cn 中文
+     * @param en 英文
+     * @return
+     */
+    public static String chooseTest(String cn, String en) {
+        if (isCN())
+            return cn;
+        return en;
     }
 
 }

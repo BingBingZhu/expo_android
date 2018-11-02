@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.BaseAdapterItemClickListener;
+import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.contract.MessagesContract;
 import com.expo.db.QueryParams;
 import com.expo.module.heart.adapter.MessageAdapter;

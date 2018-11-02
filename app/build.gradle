@@ -132,6 +132,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.zhy:base-rvadapter:3.0.3'
+    implementation 'com.github.senierr:ShootButton:1.0.5'
     //高德
     implementation 'com.amap.api:navi-3dmap:6.3.0_3dmap6.4.1'
     implementation 'com.amap.api:location:4.2.0'
@@ -145,8 +146,9 @@ dependencies {
     implementation 'com.github.donkingliang:ImageSelector:1.6.7'
     //图片加载工具
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    //原先图片控件
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //圆形，圆角图片控件
+    implementation 'org.raphets:roundimageview:1.2.0'
+    //图片剪切控件
     implementation 'com.github.yalantis:ucrop:2.2.2'
 
     //日期选择器

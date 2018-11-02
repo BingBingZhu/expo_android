@@ -9,7 +9,7 @@
     android:focusableInTouchMode="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".module.bind.BindActivity">
+    tools:context=".module.login.BindPhoneActivity">
 
     <!--<com.expo.widget.AppBarView-->
         <!--android:id="@+id/login_back"-->
