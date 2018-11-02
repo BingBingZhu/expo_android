@@ -15,11 +15,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.UriUtils;
@@ -28,7 +26,6 @@ import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
-import com.expo.base.utils.ImageUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.UserInfoContract;
 import com.expo.entity.User;
@@ -43,6 +40,7 @@ import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
 
 import org.greenrobot.eventbus.EventBus;
+import org.raphets.roundimageview.RoundImageView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -51,7 +49,6 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /*
  * 用户信息页
@@ -137,7 +134,8 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     }
 
     public void initCircleView() {
-        CircleImageView imageView = new CircleImageView(this);
+        RoundImageView imageView = new RoundImageView(this);
+        imageView.setType(RoundImageView.TYPE_CIRCLE);
         int width = (int) getResources().getDimension(R.dimen.dms_100);
         mUserImg.addRightView(imageView, width, width);
     }
@@ -228,7 +226,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
                 mImageList.clear();
                 mImageList.add(UriUtils.uri2File(resultUri, "").getPath());
                 mUser.setPhotoUrl(mImageList.get(0));
-                Picasso.with(this).load("file://" + mImageList.get(0)).into((CircleImageView) mUserImg.getRightView());
+                Picasso.with(this).load("file://" + mImageList.get(0)).into((RoundImageView) mUserImg.getRightView());
             }
         }
     }
@@ -237,7 +235,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     public void refreshUserInfo(User user) {
         mUser = user;
         if (!StringUtils.isEmpty(mUser.getPhotoUrl()))
-            Picasso.with(this).load(mUser.getPhotoUrl()).into((CircleImageView) mUserImg.getRightView());
+            Picasso.with(this).load(mUser.getPhotoUrl()).into((RoundImageView) mUserImg.getRightView());
         ((TextView) mUserName.getRightView()).setText(mUser.getNick());
         if (StringUtils.equals("0", mUser.getSex())) {
             mRadioMale.setChecked(true);

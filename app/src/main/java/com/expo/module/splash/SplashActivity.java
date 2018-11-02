@@ -12,12 +12,14 @@ import com.expo.base.ExpoApp;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.SplashContract;
 import com.expo.entity.User;
+import com.expo.module.camera.CameraActivity;
 import com.expo.module.language.LanguageActivity;
 import com.expo.module.main.MainActivity;
 import com.expo.module.guide.GuideFragment;
 import com.expo.module.guide.LanguageFragment;
 import com.expo.module.login.LoginActivity;
 import com.expo.module.mine.UserInfoActivity;
+import com.expo.module.routes.RoutesActivity;
 import com.expo.utils.Constants;
 
 public class SplashActivity extends BaseActivity<SplashContract.Presenter> implements SplashContract.View {
@@ -62,7 +64,9 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
                     LoginActivity.startActivity(this);
                 } else {
                     ExpoApp.getApplication().setUser(user);
-                    MainActivity.startActivity(this);
+//                    MainActivity.startActivity(this);
+                    RoutesActivity.startActivity(this);
+//                    CameraActivity.startActivity(this);
                     mPresenter.appRun(user.getUid(), user.getUkey());
                 }
                 finish();

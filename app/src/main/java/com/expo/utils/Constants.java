@@ -1,13 +1,17 @@
 package com.expo.utils;
 
+import android.os.Environment;
+
 import com.expo.entity.ActualScene;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.DownloadInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
+import com.expo.entity.RouteInfo;
 import com.expo.entity.Subject;
 import com.expo.entity.User;
+import com.expo.entity.VenuesInfo;
 import com.squareup.picasso.RequestCreator;
 
 public interface Constants {
@@ -61,6 +65,8 @@ public interface Constants {
     class Config {
         //下载任务最大同时下载数量
         public static final int DOWNLOAD_NUMBER = 2;
+        //根目录
+        public static final String ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
         //sdcard保存文件的根地址
         public static final String BASE_FILE_PATH = "lucas/";
         //临时存储文件路径 如拍照裁剪图片等
@@ -69,7 +75,7 @@ public interface Constants {
         public static final String UNZIP_PATH = BASE_FILE_PATH + "unzip/";
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{ActualScene.class, CommonInfo.class, DataType.class, DownloadInfo.class,
-                Encyclopedias.class, Message.class, Subject.class, User.class};
+                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, VenuesInfo.class};
     }
 
     /**

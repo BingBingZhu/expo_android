@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.expo.widget.camera.CameraSurfaceView
+        android:id="@+id/camera_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dms_110"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.senierr.shootbutton.ShootButton
+            android:id="@+id/camera_btn"
+            android:layout_width="@dimen/dms_140"
+            android:layout_height="@dimen/dms_140"
+            app:centerColor="@color/white"
+            app:centerMode="circle"
+            app:centerPadding="0dp"
+            app:circleColor="@color/colorAccent"
+            app:circleWidth="@dimen/dms_8"
+            app:maxProgress="100"
+            app:progress="0"
+            app:progressBgColor="@color/white_d7"
+            app:progressColor="@color/colorAccent" />
+
+        <TextView
+            style="@style/TextSizeWhite15"
+            android:layout_marginTop="@dimen/dms_30"
+
+            android:text="@string/camera_touch" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/carmer_switch"
+        android:layout_width="@dimen/dms_60"
+        android:layout_height="@dimen/dms_60"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dms_110"
+        android:layout_marginRight="@dimen/dms_60"
+        android:padding="@dimen/dms_10"
+        android:src="@drawable/camera_switch" />
+
+</RelativeLayout>

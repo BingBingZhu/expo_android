@@ -1,7 +1,6 @@
 package com.expo.module.main;
 
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,20 +11,20 @@ import com.expo.base.BaseFragment;
 import com.expo.contract.MineContract;
 import com.expo.entity.User;
 import com.expo.module.heart.MessageKindActivity;
+import com.expo.module.mine.AboutActivity;
 import com.expo.module.mine.FeedbackActivity;
 import com.expo.module.mine.SettingActivity;
 import com.expo.module.mine.UserInfoActivity;
 import com.expo.utils.Constants;
-import com.expo.widget.MySettingView;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.raphets.roundimageview.RoundImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /*
  * 我的页
@@ -33,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MineFragment extends BaseFragment<MineContract.Presenter> implements MineContract.View {
 
     @BindView(R.id.mine_img)
-    CircleImageView mImageView;
+    RoundImageView mImageView;
     @BindView(R.id.mine_name)
     TextView mTvMineName;
 
@@ -88,6 +87,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
 
     @OnClick(R.id.item_mine_about)
     public void clickAbout(View view) {
+        AboutActivity.startActivity(getContext());
     }
 
     @OnClick(R.id.item_mine_setting)

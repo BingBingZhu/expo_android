@@ -6,11 +6,13 @@ import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
+import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
 import com.expo.network.response.UpdateTimeResp;
 import com.expo.network.response.UploadRsp;
 import com.expo.network.response.UserHeartBeatResp;
+import com.expo.network.response.VenuesInfoResp;
 import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.network.response.VersionInfoResp;
@@ -229,4 +231,35 @@ public interface DataServer {
     @POST("Types/GetAllTypesListFilter")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<AllTypeResp> loadAllTypes(@Body RequestBody requestBody);
+
+    ////路线相关接口
+    /**
+     * 获取路线列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetRouterList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<RouteInfoResp> loadRouteInfo(@Body RequestBody requestBody);
+
+    /**
+     * 获取路线列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("/Api/manage/AddRouterHotClick")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> addRouterHotClick(@Body RequestBody requestBody);
+
+    /**
+     * 获取场馆（设施）列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetVenuesList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<VenuesInfoResp> getVenuesList(@Body RequestBody requestBody);
 }

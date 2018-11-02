@@ -1,4 +1,4 @@
-package com.expo.base.utils;
+package com.expo.base;
 
 import android.view.View;
 

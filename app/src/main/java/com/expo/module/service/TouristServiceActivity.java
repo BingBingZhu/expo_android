@@ -11,7 +11,7 @@ import android.view.View;
 import com.blankj.utilcode.util.AppUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.BaseAdapterItemClickListener;
+import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.module.service.adapter.TouristServiceAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;

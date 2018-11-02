@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.expo.R;
-import com.expo.base.utils.BaseAdapterItemClickListener;
+import com.expo.base.BaseAdapterItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

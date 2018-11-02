@@ -1,8 +1,14 @@
 package com.expo.base.utils;
 
+import android.graphics.Bitmap;
+import android.os.Environment;
 import android.text.TextUtils;
 
+import com.expo.utils.Constants;
+
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,10 +20,10 @@ public class FileUtils {
     private static final String TAG = "FileUtils";
 
     public static File createFile(String path) {
-        if (TextUtils.isEmpty( path ))
-            throw new IllegalArgumentException( "The path of file can not be empty." );
+        if (TextUtils.isEmpty(path))
+            throw new IllegalArgumentException("The path of file can not be empty.");
         try {
-            File target = new File( path );
+            File target = new File(path);
             if (!target.exists()) {
                 if (!target.getParentFile().exists()) {
                     target.getParentFile().mkdirs();
@@ -36,13 +42,13 @@ public class FileUtils {
 
     public static void write(File file, String text) {
         if (file == null)
-            throw new IllegalArgumentException( "The file can not be null" );
-        if (TextUtils.isEmpty( text ))
+            throw new IllegalArgumentException("The file can not be null");
+        if (TextUtils.isEmpty(text))
             return;
         FileWriter writer = null;
         try {
-            writer = new FileWriter( file );
-            writer.write( text );
+            writer = new FileWriter(file);
+            writer.write(text);
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,8 +65,8 @@ public class FileUtils {
         try {
             int len;
             byte[] data = new byte[1024];
-            while ((len = in.read( data )) != -1) {
-                out.write( data, 0, len );
+            while ((len = in.read(data)) != -1) {
+                out.write(data, 0, len);
             }
             out.flush();
         } catch (IOException e) {
@@ -89,7 +95,7 @@ public class FileUtils {
             File[] childFiles = file.listFiles();
             long size = 0;
             for (File childFile : childFiles) {
-                size += getFileSize( childFile );
+                size += getFileSize(childFile);
             }
             return size;
         }
@@ -110,9 +116,23 @@ public class FileUtils {
         } else if (file.isDirectory()) {
             File[] childFiles = file.listFiles();
             for (File childFile : childFiles) {
-                deleteFiles( childFile );
+                deleteFiles(childFile);
             }
             file.delete();
         }
     }
+
+    //保存照片
+    public static void saveBitmap(String jpegName, Bitmap b) {
+        try {
+            FileOutputStream fout = new FileOutputStream(jpegName);
+            BufferedOutputStream bos = new BufferedOutputStream(fout);
+            b.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

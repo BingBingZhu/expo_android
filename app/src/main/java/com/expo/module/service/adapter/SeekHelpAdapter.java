@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.donkingliang.imageselector.view.SquareImageView;
 import com.expo.R;
-import com.expo.base.utils.BaseAdapterItemClickListener;
+import com.expo.base.BaseAdapterItemClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
