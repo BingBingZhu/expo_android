@@ -3,6 +3,7 @@ package com.expo.contract;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.db.QueryParams;
+import com.expo.entity.Message;
 
 import java.util.List;
 
@@ -13,11 +14,15 @@ public interface MessagesContract {
             super(view);
         }
 
-        public abstract List getData(int type, QueryParams queryParams);
+        public abstract void getMessage(String type);
+
+        public abstract void delMessage(long id, int position);
 
     }
 
     interface View extends IView {
+        void freshMessageList(List<Message> list);
 
+        void delMessage(int position);
     }
 }

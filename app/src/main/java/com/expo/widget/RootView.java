@@ -83,20 +83,20 @@ public class RootView extends LinearLayoutCompat {
 
     public void setGreenTitle() {
         if (mTitle == null) return;
-        mTitle.setBackgroundResource(R.color.colorAccent);
         ((AppBarView) mTitle).setTitleColor(mActivity.getResources().getColor(R.color.white));
         ((AppBarView) mTitle).setTitleSize(TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px(22));
         ((AppBarView) mTitle).setBackImageResource(R.drawable.icon_navbar_back_white);
         ((AppBarView) mTitle).onFinishInflate();
+        mTitle.setBackgroundResource(R.color.colorAccent);
     }
 
     public void setWhiteTitle() {
         if (mTitle == null) return;
-        mTitle.setBackgroundResource(R.color.white);
         ((AppBarView) mTitle).setTitleColor(mActivity.getResources().getColor(R.color.black));
         ((AppBarView) mTitle).setTitleSize(TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px(22));
         ((AppBarView) mTitle).setBackImageResource(R.drawable.icon_navbar_back_black);
         ((AppBarView) mTitle).onFinishInflate();
+        mTitle.setBackgroundResource(R.color.white);
     }
 
     public void initBodyView() {

@@ -8,6 +8,7 @@
         android:id="@+id/message_img"
         android:layout_width="@dimen/dms_30"
         android:layout_height="@dimen/dms_30"
+        android:layout_marginLeft="@dimen/dms_30"
         android:layout_marginRight="@dimen/dms_10"
         android:src="@drawable/message_system" />
 
@@ -31,7 +32,7 @@
         <TextView
             android:id="@+id/message_content"
             style="@style/TextSize14"
-            android:layout_marginTop="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_20"
             android:lines="2"
             android:textColor="@color/gray_99" />
     </LinearLayout>

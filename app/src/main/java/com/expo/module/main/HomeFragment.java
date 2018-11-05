@@ -17,11 +17,22 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-
+        mPresenter.startHeartService(getContext());
     }
 
     @Override
     protected boolean hasPresenter() {
         return true;
+    }
+
+    @Override
+    public void freshHeartMessage() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        mPresenter.stopHeartService(getContext());
+        super.onDestroy();
     }
 }

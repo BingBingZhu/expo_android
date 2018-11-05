@@ -2,6 +2,7 @@ package com.expo.contract.presenter;
 
 import android.text.TextUtils;
 
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.SplashContract;
@@ -13,6 +14,7 @@ import com.expo.entity.RouteInfo;
 import com.expo.entity.Subject;
 import com.expo.entity.User;
 import com.expo.entity.VenuesInfo;
+import com.expo.module.heart.HeartBeatService;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.AllTypeResp;

@@ -18,12 +18,18 @@ public class Message implements Parcelable {
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")
     private String caption;
+    @DatabaseField(columnName = "caption_en")
+    @SerializedName("captionen")
+    private String captionEn;
     @DatabaseField(columnName = "command")
     @SerializedName("cmd")
     private String command;//消息命令  logout 是通知用户强制登出消息  relogin 通知用户有人在其它手机登录   order 订单状态   pay 支付状态
     @DatabaseField(columnName = "content")
     @SerializedName("content")
     private String content;
+    @DatabaseField(columnName = "content_en")
+    @SerializedName("contenten")
+    private String contentEn;
     @DatabaseField(columnName = "create_time")
     @SerializedName("createtime")
     private String createTime;
@@ -56,8 +62,10 @@ public class Message implements Parcelable {
 
     protected Message(Parcel in) {
         caption = in.readString();
+        captionEn = in.readString();
         command = in.readString();
         content = in.readString();
+        contentEn = in.readString();
         createTime = in.readString();
         if (in.readByte() == 0) {
             id = null;
@@ -92,6 +100,14 @@ public class Message implements Parcelable {
         this.caption = caption;
     }
 
+    public String getCaptionEn() {
+        return captionEn;
+    }
+
+    public void setCaptionEn(String captionEn) {
+        this.captionEn = captionEn;
+    }
+
     public String getCommand() {
         return command;
     }
@@ -106,6 +122,14 @@ public class Message implements Parcelable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getContentEn() {
+        return contentEn;
+    }
+
+    public void setContentEn(String contentEn) {
+        this.contentEn = contentEn;
     }
 
     public String getCreateTime() {
@@ -192,8 +216,10 @@ public class Message implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString( caption );
+        dest.writeString( captionEn );
         dest.writeString( command );
         dest.writeString( content );
+        dest.writeString( contentEn );
         dest.writeString( createTime );
         if (id == null) {
             dest.writeByte( (byte) 0 );
