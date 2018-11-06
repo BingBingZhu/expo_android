@@ -59,6 +59,7 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mSearchContent.setOnEditorActionListener( this );
+        setTitle( 0,R.string.search );
 //        mResultView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));        // item分割线
 //        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_18);
 //        mResultView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
@@ -113,7 +114,7 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
         hideLoadingView();
     }
 
-    @OnClick({R.id.search_history_clear, R.id.title_back})
+    @OnClick(R.id.search_history_clear)
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.search_history_clear:

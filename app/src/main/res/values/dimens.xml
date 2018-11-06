@@ -13,6 +13,8 @@
     <dimen name="font_40">20sp</dimen>
     <dimen name="font_44">22sp</dimen>
     <dimen name="font_48">24sp</dimen>
+    <dimen name="font_20">10sp</dimen>
+    <dimen name="font_16">8sp</dimen>
 
     <!--尺寸-->
     <dimen name="dms_4">2dp</dimen>
@@ -39,7 +41,6 @@
     <dimen name="dms_180">90dp</dimen>
     <dimen name="dms_190">95dp</dimen>
     <dimen name="dms_230">115dp</dimen>
-
     <dimen name="dms_minus_44">-22dp</dimen>
     <dimen name="dms_28">14dp</dimen>
     <dimen name="dms_200">100dp</dimen>
@@ -51,10 +52,7 @@
     <dimen name="dms_26">13dp</dimen>
     <dimen name="dms_70">35dp</dimen>
     <dimen name="dms_150">75dp</dimen>
-    <dimen name="font_20">10sp</dimen>
     <dimen name="dms_6">3dp</dimen>
     <dimen name="dms_34">17dp</dimen>
     <dimen name="dms_114">57dp</dimen>
-    <dimen name="font_16">8sp</dimen>
-    <dimen name="dms_230">115dp</dimen>
 </resources>
