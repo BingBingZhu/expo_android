@@ -44,13 +44,13 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mPresenter.loadUser();
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register( this );
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister( this );
     }
 
     @Override
@@ -61,14 +61,14 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     @Override
     public void freshUser(User user) {
         if (user == null) return;
-        if (!StringUtils.isEmpty(user.getPhotoUrl()))
-            Picasso.with(getContext()).load(user.getPhotoUrl()).into(mImageView);
-        mTvMineName.setText(user.getNick());
+        if (!StringUtils.isEmpty( user.getPhotoUrl() ))
+            Picasso.with( getContext() ).load( user.getPhotoUrl() ).placeholder( R.drawable.ico_mine_def_photo ).into( mImageView );
+        mTvMineName.setText( user.getNick() );
     }
 
-    @OnClick(R.id.mine_edit_info)
+    @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name})
     public void clickEditInfo(View view) {
-        UserInfoActivity.startActivity(getContext());
+        UserInfoActivity.startActivity( getContext() );
     }
 
     @OnClick(R.id.item_mine_bespeak)
@@ -77,22 +77,22 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
 
     @OnClick(R.id.item_mine_comment_report)
     public void clickComment(View view) {
-        FeedbackActivity.startActivity(getContext());
+        FeedbackActivity.startActivity( getContext() );
     }
 
     @OnClick(R.id.item_mine_message)
     public void clickMessage(View view) {
-        MessageKindActivity.startActivity(getContext());
+        MessageKindActivity.startActivity( getContext() );
     }
 
     @OnClick(R.id.item_mine_about)
     public void clickAbout(View view) {
-        AboutActivity.startActivity(getContext());
+        AboutActivity.startActivity( getContext() );
     }
 
     @OnClick(R.id.item_mine_setting)
     public void clickSetting(View view) {
-        SettingActivity.startActivity(getContext());
+        SettingActivity.startActivity( getContext() );
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

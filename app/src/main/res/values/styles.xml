@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:screenOrientation">portrait</item>
     </style>
 
     <style name="AppTheme_Fullscreen" parent="AppTheme">
@@ -29,12 +28,12 @@
 
     <style name="LineHorizontal">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_height">@dimen/dms_2</item>
         <item name="android:background">@color/gray_cc</item>
     </style>
 
     <style name="LineVertical">
-        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_width">@dimen/dms_2</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/gray_cc</item>
     </style>

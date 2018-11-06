@@ -20,6 +20,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -64,6 +65,7 @@
 
         <activity
             android:name=".module.splash.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme_Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,63 +76,110 @@
 
         <activity
             android:name=".module.login.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/LoginTheme" />
 
-        <activity android:name=".module.main.MainActivity" />
+        <activity
+            android:name=".module.main.MainActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".module.language.LanguageActivity" />
+        <activity
+            android:name=".module.language.LanguageActivity"
+            android:screenOrientation="portrait" />
 
         <!--<activity android:name=".module.bind.BindActivity" />-->
 
         <activity
             android:name="com.sahooz.library.PickActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".module.webview.WebActivity" />
+        <activity
+            android:name=".module.webview.WebActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".module.mine.UserInfoActivity" />
-        <activity android:name=".module.mine.AboutActivity" />
+        <activity
+            android:name=".module.mine.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.AboutActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.mine.FeedbackActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".module.mine.SettingActivity" />
-        <activity android:name=".module.main.encyclopedia.EncyclopediaSearchActivity" />
-        <activity android:name=".module.distinguish.DistinguishActivity" />
-        <activity android:name=".module.freewifi.FreeWiFiActivity" />
-        <activity android:name=".module.heart.MessageKindActivity" />
-        <activity android:name=".module.heart.MessagesActivity" />
-        <activity android:name=".module.login.BindPhoneActivity" />
+        <activity
+            android:name=".module.mine.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.main.encyclopedia.EncyclopediaSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.distinguish.DistinguishActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.freewifi.FreeWiFiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.heart.MessageKindActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.heart.MessagesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.login.BindPhoneActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.login.NationalSmsCodeActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".module.map.NavigationActivity" />
-        <activity android:name=".module.map.ParkMapActivity" />
-        <activity android:name=".module.routes.RouteDetailActivity" />
-        <activity android:name=".module.routes.RoutesActivity" />
-        <activity android:name=".module.service.LocationDescribeActivity" />
+        <activity
+            android:name=".module.map.NavigationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.map.ParkMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.routes.RouteDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.routes.RoutesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.service.LocationDescribeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.service.SeekHelpActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".module.service.ShootActivity" />
-        <activity android:name=".module.service.TouristServiceActivity" />
-        <activity android:name=".module.camera.CameraActivity" />
+        <activity
+            android:name=".module.service.ShootActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.service.TouristServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.camera.CameraActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.donkingliang.imageselector.ImageSelectorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name="com.donkingliang.imageselector.PreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
             android:name="com.donkingliang.imageselector.ClipImageActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
 

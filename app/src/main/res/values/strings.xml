@@ -123,6 +123,7 @@
     <string name="please_enter_keywords">请输入关键字</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
+    <string name="not_input">未填写</string>
 
     <integer name="video_time">60</integer>
 
