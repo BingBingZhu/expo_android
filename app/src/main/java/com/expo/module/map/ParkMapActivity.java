@@ -72,7 +72,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_routes;
+        return R.layout.activity_park_map;
     }
 
     @Override
