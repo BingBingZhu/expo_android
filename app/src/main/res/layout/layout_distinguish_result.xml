@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,7 +24,8 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/distinguish_result_img"
             android:layout_width="@dimen/dms_170"
-            android:layout_height="@dimen/dms_170" />
+            android:layout_height="@dimen/dms_170"
+            app:roundedCornerRadius="@dimen/dms_4" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,15 +39,15 @@
                 android:ellipsize="end"
                 android:textSize="@dimen/font_28"
                 android:textColor="@color/color_333"
-                android:text="玫瑰花 Rosarugosa"/>
+                android:text=""/>
             <ScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dms_24">
                 <TextView
                     android:id="@+id/distinguish_result_intro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dms_24"
                     android:textSize="@dimen/font_26"
                     android:textColor="@color/color_999"
                     android:text=""/>
@@ -63,5 +65,7 @@
         android:paddingRight="@dimen/dms_26"
         android:layout_marginBottom="@dimen/dms_32"
         android:background="@drawable/bg_02cd9b_r5"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/white"
         android:text="继续识别"/>
 </LinearLayout>

@@ -101,9 +101,8 @@
             android:name=".module.login.NationalSmsCodeActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".module.map.NavigationActivity" />
-        <activity android:name=".module.map.ParkMapActivity" />
         <activity android:name=".module.routes.RouteDetailActivity" />
-        <activity android:name=".module.routes.RoutesActivity" />
+        <activity android:name=".module.map.ParkMapActivity" />
         <activity android:name=".module.service.LocationDescribeActivity" />
         <activity
             android:name=".module.service.SeekHelpActivity"

@@ -5,17 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.contract.RoutesContract;
 
-/*
- * 推荐路线列表
- */
-public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> implements RoutesContract.View {
+public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> {
     @Override
     protected int getContentView() {
-        return R.layout.activity_routes;
+        return 0;
     }
 
     @Override
@@ -25,7 +21,7 @@ public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> imple
 
     @Override
     protected boolean hasPresenter() {
-        return true;
+        return false;
     }
 
     /**

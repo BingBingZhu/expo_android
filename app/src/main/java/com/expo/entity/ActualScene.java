@@ -207,16 +207,24 @@ public class ActualScene implements Parcelable {
         this.updateTime = updateTime;
     }
 
-    public String getLng() {
-        return lng;
+    public Double getLng() {
+        try {
+            return Double.parseDouble(lng);
+        }catch (Exception e){
+            return 0.0;
+        }
     }
 
     public void setLng(String lng) {
         this.lng = lng;
     }
 
-    public String getLat() {
-        return lat;
+    public Double getLat() {
+        try {
+            return Double.parseDouble(lat);
+        }catch (Exception e){
+            return 0.0;
+        }
     }
 
     public void setLat(String lat) {

@@ -108,10 +108,6 @@ public class DistinguishActivity extends BaseActivity<DistinguishContract.Presen
             case R.id.iv_distinguish_take_picture:
                 cameraManager.takePicture(this);                             //拍照
                 mViewfinder.stopScanAnimation();
-
-//                Intent in = new Intent(Intent.ACTION_PICK);
-//                in.setType("image/*");
-//                startActivityForResult(in, Constants.RequestCode.REQ_SELECT_IMAGE);
                 break;
             case R.id.distinguish_result_continue:
                 // 继续识别
@@ -261,10 +257,11 @@ public class DistinguishActivity extends BaseActivity<DistinguishContract.Presen
         TextView btnContinue = v.findViewById(R.id.distinguish_result_continue);
         btnContinue.setOnClickListener(this);
         imageView.setImageURI(plant.baike_info.image_url);
-        tvName.setText(plant.name);
+        tvName.setText(plant.name + "   准确度:" + (int)(plant.score*100) + "%");
         tvIntro.setText(plant.baike_info.description);
         //将布局设置给Dialog
         dialog.setContentView(v);
+        dialog.setCancelable(false);
         //获取当前Activity所在的窗体
         Window dialogWindow = dialog.getWindow();
         if(dialogWindow == null){
@@ -297,6 +294,10 @@ public class DistinguishActivity extends BaseActivity<DistinguishContract.Presen
     public void onBaiduDistinguishComplete(GetBaiduDisting_Rsb plant) {     // 百度云接口返回
         if (null == plant){
             ToastHelper.showShort("识别失败");
+            restartPreview();
+            return;
+        }else if (plant.name.equals("非植物")){
+            ToastHelper.showShort("您识别的不是植物哦");
             restartPreview();
             return;
         }

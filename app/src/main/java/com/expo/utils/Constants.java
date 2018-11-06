@@ -7,6 +7,7 @@ import com.expo.entity.DownloadInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
 import com.expo.entity.Subject;
+import com.expo.entity.TouristType;
 import com.expo.entity.User;
 import com.squareup.picasso.RequestCreator;
 
@@ -21,6 +22,7 @@ public interface Constants {
         public static final String KEY_COMMON_INFO_UPDATE_TIME = "key_common_info_update_time";
         public static final String KEY_SUBJECT_UPDATE_TIME = "key_subject_update_time";
         public static final String KEY_ENCYCLOPEDIAS_UPDATE_TIME = "key_wiki_update_time";
+        public static final String KEY_TOURIST_TYPE_UPDATE_TIME = "key_tourist_type_list_update_time";
         public static final String KEY_GUIDE_SHOWN = "key_guide_shown";
         public static final String KEY_LANGUAGE_CHOOSE = "key_language_choose";
         public static final String KEY_SHOW_SELECT_LANGUAGE = "key_app_first_use";
@@ -80,7 +82,7 @@ public interface Constants {
         public static final String UNZIP_PATH = BASE_FILE_PATH + "unzip/";
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{ActualScene.class, CommonInfo.class, DataType.class, DownloadInfo.class,
-                Encyclopedias.class, Message.class, Subject.class, User.class};
+                Encyclopedias.class, Message.class, Subject.class, User.class, TouristType.class};
     }
 
     /**

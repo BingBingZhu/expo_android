@@ -10,6 +10,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Subject;
+import com.expo.entity.TouristType;
 import com.expo.entity.User;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
@@ -19,6 +20,7 @@ import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
+import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
 import com.expo.utils.Constants;
 
@@ -80,6 +82,12 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                         loadEncyclopedias();
                     }
                 }
+                if (!TextUtils.isEmpty(rsp.touristType)) {
+                    updateTime = PrefsHelper.getString(Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, null);
+                    if (!rsp.touristType.equals(updateTime)) {
+                        loadTouristTypeList();
+                    }
+                }
             }
 
             @Override
@@ -106,6 +114,29 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 PrefsHelper.setString(Constants.Prefs.KEY_ENCYCLOPEDIAS_UPDATE_TIME, rsp.updateTime);
                 mDao.clear(Encyclopedias.class);
                 mDao.saveOrUpdateAll(rsp.encyclopedias);
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable);
+    }
+
+    /**
+     * 加载导游类型列表
+     */
+    private void loadTouristTypeList() {
+        loadCompleteCount.addAndGet(1);
+        Map<String, Object> params = Http.getBaseParams();
+        params.put("ParkID", 1);
+        Observable<TouristTypeResp> observable = Http.getServer().loadTouristTypeList(Http.buildRequestBody(params));
+        Http.request(new ResponseCallback<TouristTypeResp>() {
+            @Override
+            protected void onResponse(TouristTypeResp rsp) {
+                PrefsHelper.setString(Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, rsp.updateTime);
+                mDao.clear(TouristType.class);
+                mDao.saveOrUpdateAll(rsp.touristTypes);
             }
 
             @Override

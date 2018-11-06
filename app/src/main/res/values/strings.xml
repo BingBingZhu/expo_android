@@ -116,5 +116,6 @@
     <string name="please_enter_keywords">请输入关键字</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
+    <string name="no_more_data_available">暂无更多数据</string>
 
 </resources>
