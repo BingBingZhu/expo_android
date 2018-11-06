@@ -69,4 +69,14 @@
         <attr name="scanLine" format="reference" />
     </declare-styleable>
 
+    <!--圆弧进度条-->
+    <declare-styleable name="TasksCompletedView">
+        <attr name="radius" format="dimension"/>
+        <attr name="strokeWidth" format="dimension"/>
+        <attr name="circleColor" format="color"/>
+        <attr name="cringColor" format="color"/>
+        <attr name="cringBgColor" format="color"/>
+        <attr name="centerPic" format="reference" />
+    </declare-styleable>
+
 </resources>

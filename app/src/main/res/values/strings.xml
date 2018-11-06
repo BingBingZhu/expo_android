@@ -126,5 +126,6 @@
     <string name="not_input">未填写</string>
 
     <integer name="video_time">60</integer>
+    <string name="no_more_data_available">暂无更多数据</string>
 
 </resources>

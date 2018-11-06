@@ -1,5 +1,6 @@
 package com.expo.network;
 
+import com.expo.entity.TouristType;
 import com.expo.entity.User;
 import com.expo.network.response.AllTypeResp;
 import com.expo.network.response.BaseResponse;
@@ -10,6 +11,7 @@ import com.expo.network.response.GetDistinguishPlantList_Rsb;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
+import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
 import com.expo.network.response.UploadRsp;
 import com.expo.network.response.UserHeartBeatResp;
@@ -195,6 +197,16 @@ public interface DataServer {
     @POST("Terminal/GetWikiCaptionsList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<EncyclopediasResp> loadEncyclopedias(@Body RequestBody requestBody);
+
+    /**
+     * 导游列表更新接口
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetTouristTypeList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<TouristTypeResp> loadTouristTypeList(@Body RequestBody requestBody);
 
     /**
      * 心跳接口

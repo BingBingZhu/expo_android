@@ -39,8 +39,8 @@ public class MapUtils {
      * 设置地图属性
      */
     public void settingMap(AMap.OnMapTouchListener onMapTouchListener, AMap.OnMarkerClickListener onMarkerClickListener) {
-        map.setMaxZoomLevel( 12F );
-        map.setMinZoomLevel( 10.5F );
+//        map.setMaxZoomLevel( 12F );
+//        map.setMinZoomLevel( 10.5F );
         map.getUiSettings().setRotateGesturesEnabled( false );
         map.getUiSettings().setTiltGesturesEnabled( false );
         map.getUiSettings().setZoomControlsEnabled( false );
@@ -145,22 +145,22 @@ public class MapUtils {
         if (null == myLocationStyle) {
             myLocationStyle = new MyLocationStyle();
             myLocationStyle.interval( 2000 );
-            myLocationStyle.strokeColor( BaseApplication.getApplication().getResources().getColor( R.color.color_local_stork ) );//设置定位蓝点精度圆圈的边框颜色的方法。
-            myLocationStyle.radiusFillColor( BaseApplication.getApplication().getResources().getColor( R.color.color_local ) );//设置定位蓝点精度圆圈的填充颜色的方法。
-            BitmapDescriptor bitmapDescriptor;
-            if (isPhoto) {
-                View view = LayoutInflater.from( BaseApplication.getApplication() ).inflate( R.layout.layout_local_icon, null );
-                if (null != ExpoApp.getApplication().getUser() && !ExpoApp.getApplication().getUser().getPhotoUrl().isEmpty()) {
-                    Http.loadBitmap( ExpoApp.getApplication().getUser().getPhotoUrl(), bitmap -> {
-                        settingLocalImage( bitmap );
-                        ExpoApp.getApplication().setUserHandBitmap( bitmap );
-                    }, ExpoApp.getApplication() );
-                }
-                bitmapDescriptor = BitmapDescriptorFactory.fromView( view );
-            } else {
-                bitmapDescriptor = BitmapDescriptorFactory.fromResource( R.drawable.ico_local_marker );
-            }
-            myLocationStyle.myLocationIcon( bitmapDescriptor );
+//            myLocationStyle.strokeColor( BaseApplication.getApplication().getResources().getColor( R.color.color_local_stork ) );//设置定位蓝点精度圆圈的边框颜色的方法。
+//            myLocationStyle.radiusFillColor( BaseApplication.getApplication().getResources().getColor( R.color.color_local ) );//设置定位蓝点精度圆圈的填充颜色的方法。
+//            BitmapDescriptor bitmapDescriptor;
+//            if (isPhoto) {
+//                View view = LayoutInflater.from( BaseApplication.getApplication() ).inflate( R.layout.layout_local_icon, null );
+//                if (null != ExpoApp.getApplication().getUser() && !ExpoApp.getApplication().getUser().getPhotoUrl().isEmpty()) {
+//                    Http.loadBitmap( ExpoApp.getApplication().getUser().getPhotoUrl(), bitmap -> {
+//                        settingLocalImage( bitmap );
+//                        ExpoApp.getApplication().setUserHandBitmap( bitmap );
+//                    }, ExpoApp.getApplication() );
+//                }
+//                bitmapDescriptor = BitmapDescriptorFactory.fromView( view );
+//            } else {
+//                bitmapDescriptor = BitmapDescriptorFactory.fromResource( R.drawable.ico_local_marker );
+//            }
+//            myLocationStyle.myLocationIcon( bitmapDescriptor );
         }
     }
 
@@ -179,6 +179,8 @@ public class MapUtils {
      * @param latLng
      */
     public void mapGoto(LatLng latLng) {
+        if (null == latLng || latLng.latitude == 0)
+            return;
         CameraUpdate cameraUpdate = CameraUpdateFactory.changeLatLng( latLng );
         map.animateCamera( cameraUpdate );
     }

@@ -8,6 +8,7 @@ import com.expo.adapters.EncyclopediasAdapter;
 import com.expo.adapters.ListItemData;
 import com.expo.adapters.Tab;
 import com.expo.base.BaseFragment;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ListContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.widget.SimpleRecyclerView;
@@ -39,14 +40,19 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
     }
 
     @Override
+    public boolean isNeedPaddingTop() {
+        return false;
+    }
+
+    @Override
     protected void onInitView(Bundle savedInstanceState) {
         mTab = getArguments().getParcelable("tab");
         mEncyclopediasList = new ArrayList<>();
         adapter = new EncyAndSceneListAdapter( getContext(), mEncyclopediasList );
         mRecyclerView.setAdapter( adapter );
-        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_18);
+//        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_18);
 //        int space = getResources().getDimensionPixelSize(R.dimen.dms_18);
-        mRecyclerView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
+//        mRecyclerView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
         mPresenter.loadEncyByType(mTab.getTab(), page);
         initLoadMore();
     }
@@ -75,9 +81,12 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
     @Override
     public void addEncysToList(List<Encyclopedias> data) {
         // 加载到列表
-        if (null == data)
-            return;
-        mEncyclopediasList.addAll(EncyclopediasAdapter.convertToTabList(data));
+        if ((null == data || data.size() == 0) && page>0){
+            page--;
+            ToastHelper.showShort(R.string.no_more_data_available);
+        }else {
+            mEncyclopediasList.addAll(EncyclopediasAdapter.convertToTabList(data));
+        }
         mPtrView.refreshComplete();
     }
 }

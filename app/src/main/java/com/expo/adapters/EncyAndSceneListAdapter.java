@@ -37,13 +37,15 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_ency_item, parent, false);
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
+        view.setLayoutParams(lp);
         return new ViewHolder( view );
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListItemData ency = mEncyList.get(position);
-        holder.img.setBackground(mContext.getResources().getDrawable(R.drawable.ico_def));
+//        holder.img.setBackground(mContext.getResources().getDrawable(R.drawable.ico_def));
         holder.img.setImageURI( Constants.URL.FILE_BASE_URL + ency.getPicUrl() );
         holder.tvName.setText( ency.getCaption() );
         holder.tvRecommend.setVisibility( ency.getRecommend() == 1 ? View.VISIBLE : View.GONE );

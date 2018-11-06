@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#62F8CA</color>
     <color name="transparent">#00000000</color>
     <color name="translucent_mask">#50000000</color>
@@ -29,9 +27,15 @@
     <color name="color_tab_line">#00C897</color>
     <!--<color name="color_ency_item_bg">#EFF2F4</color>-->
     <color name="color_999">#999</color>
+    <color name="color_666">#666</color>
     <color name="color_white_50diaphaneity">#80FFFFFF</color>
     <color name="color_333">#333</color>
     <color name="color_EEE">#EEE</color>
     <color name="black_translucent_50">#50000000</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="white2">#f5f3f3</color>
+    <color name="colorRed">#d50f09</color>
     <color name="white_f2">#F2F2F2</color>
 </resources>

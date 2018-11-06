@@ -1,6 +1,5 @@
 package com.expo.contract.presenter;
 
-import com.expo.contract.HomeContract;
 import com.expo.contract.ListContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.Encyclopedias;

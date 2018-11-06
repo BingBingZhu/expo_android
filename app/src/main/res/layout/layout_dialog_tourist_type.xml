@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_select_tourist"
+    android:gravity="center_horizontal">
+    <ImageView
+        android:id="@+id/dialog_tourist_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dms_40"
+        android:src="@mipmap/ico_tourist_select_close"
+        android:layout_gravity="right"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/dialog_tourist_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:layout_marginTop="@dimen/dms_10"/>
+</LinearLayout>
