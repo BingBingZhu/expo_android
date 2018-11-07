@@ -124,6 +124,7 @@
     <string name="please_enter_keywords">请输入关键字</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
+    <string name="not_input">未填写</string>
 
     <string name="home_func_item_wifi">免费wifi</string>
     <string name="home_func_item_tickets">园区购票</string>
@@ -135,5 +136,6 @@
     <string name="home_func_title_exhibit_garden">推荐展园</string>
 
     <integer name="video_time">60</integer>
+    <string name="no_more_data_available">暂无更多数据</string>
 
 </resources>

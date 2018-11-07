@@ -1,5 +1,7 @@
 package com.expo.contract;
 
+import android.content.Context;
+
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.Encyclopedias;
@@ -23,6 +25,11 @@ public interface HomeContract {
         public abstract void setExhibit();
 
         public abstract void setExhibitGarden();
+
+        public abstract void startHeartService(Context context);
+
+        public abstract void stopHeartService(Context context);
+
 
     }
 

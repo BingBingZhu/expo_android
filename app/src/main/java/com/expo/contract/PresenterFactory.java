@@ -17,9 +17,9 @@ import com.expo.contract.presenter.MessagesPresenterImpl;
 import com.expo.contract.presenter.MinePresenterImpl;
 import com.expo.contract.presenter.NationalSmsCodePresenterImpl;
 import com.expo.contract.presenter.NavigationPresenterImpl;
-import com.expo.contract.presenter.ParkMapPresenterImpl;
-import com.expo.contract.presenter.RouteDetailPresenterImpl;
 import com.expo.contract.presenter.RoutesPresenterImpl;
+import com.expo.contract.presenter.RouteDetailPresenterImpl;
+import com.expo.contract.presenter.ParkMapPresenterImpl;
 import com.expo.contract.presenter.SeekHelpPresenterImpl;
 import com.expo.contract.presenter.SettingPresenterImpl;
 import com.expo.contract.presenter.SplashPresenterImpl;
@@ -39,8 +39,8 @@ public class PresenterFactory {
             return new MinePresenterImpl( (MineContract.View) view );
         } else if (view instanceof NavigationContract.View) {
             return new NavigationPresenterImpl( (NavigationContract.View) view );
-        } else if (view instanceof ParkMapContract.View) {
-            return new ParkMapPresenterImpl( (ParkMapContract.View) view );
+        } else if (view instanceof RoutesContract.View) {
+            return new RoutesPresenterImpl( (RoutesContract.View) view );
         } else if (view instanceof HomeContract.View) {
             return new HomePresenterImpl( (HomeContract.View) view );
         } else if (view instanceof BindPhoneContract.View) {
@@ -61,8 +61,8 @@ public class PresenterFactory {
             return new NationalSmsCodePresenterImpl( (NationalSmsCodeContract.View) view );
         } else if (view instanceof RouteDetailContract.View) {
             return new RouteDetailPresenterImpl( (RouteDetailContract.View) view );
-        } else if (view instanceof RoutesContract.View) {
-            return new RoutesPresenterImpl( (RoutesContract.View) view );
+        } else if (view instanceof ParkMapContract.View) {
+            return new ParkMapPresenterImpl( (ParkMapContract.View) view );
         } else if (view instanceof SeekHelpContract.View) {
             return new SeekHelpPresenterImpl( (SeekHelpContract.View) view );
         } else if (view instanceof SettingContract.View) {

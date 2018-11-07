@@ -1,5 +1,7 @@
 package com.expo.contract.presenter;
 
+import android.content.Context;
+
 import com.expo.contract.HomeContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
@@ -7,6 +9,8 @@ import com.expo.entity.TopLineInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.expo.module.heart.HeartBeatService;
 
 public class HomePresenterImpl extends HomeContract.Presenter {
     public HomePresenterImpl(HomeContract.View view) {
@@ -63,5 +67,14 @@ public class HomePresenterImpl extends HomeContract.Presenter {
             list.add(encyclopedias);
         }
         mView.showExhibitGarden(list);
+    }
+
+    public void startHeartService(Context context) {
+        HeartBeatService.startService(context);
+    }
+
+    @Override
+    public void stopHeartService(Context context) {
+        HeartBeatService.stopService(context);
     }
 }

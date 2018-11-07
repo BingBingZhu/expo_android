@@ -74,4 +74,5 @@ public class ExpoApp extends BaseApplication {
         LocationManager.getInstance().destroy();
         super.onTerminate();
     }
+
 }

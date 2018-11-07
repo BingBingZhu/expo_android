@@ -98,7 +98,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mPresenter.setVenue();
         mPresenter.setExhibit();
         mPresenter.setExhibitGarden();
-
+        mPresenter.startHeartService(getContext());
 
     }
 
@@ -243,7 +243,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     public void onDestroy() {
+        mPresenter.stopHeartService(getContext());
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
 }

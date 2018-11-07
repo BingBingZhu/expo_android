@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:screenOrientation">portrait</item>
     </style>
 
     <style name="AppTheme_Fullscreen" parent="AppTheme">
@@ -29,12 +28,12 @@
 
     <style name="LineHorizontal">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_height">@dimen/dms_2</item>
         <item name="android:background">@color/gray_cc</item>
     </style>
 
     <style name="LineVertical">
-        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_width">@dimen/dms_2</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/gray_cc</item>
     </style>
@@ -185,6 +184,9 @@
     <style name="BottomActionSheetDialogStyle" parent="ActionSheetDialogStyle">
         <item name="android:windowAnimationStyle">@style/BottomDialogAnimation</item>
     </style>
+    <style name="TopActionSheetDialogStyle" parent="ActionSheetDialogStyle">
+        <item name="android:windowAnimationStyle">@style/TopDialogAnimation</item>
+    </style>
 
     <style name="style_home_fun_item" parent="@style/TextSizeBlack13">
         <item name="drawableTopHeight">@dimen/dms_100</item>
@@ -196,5 +198,10 @@
     <style name="BottomDialogAnimation" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/anim_dialog_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/anim_dialog_bottom_out</item>
+    </style>
+    <!-- dialog从上面进出动画 -->
+    <style name="TopDialogAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/anim_dialog_top_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_dialog_top_out</item>
     </style>
 </resources>

@@ -5,11 +5,15 @@ import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.expo.adapters.DownloadData;
+import com.expo.adapters.DownloadInfoAdapter;
+import com.expo.adapters.TouristTypeAdapter;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.LogUtils;
 import com.expo.db.dao.BaseDao;
 import com.expo.db.dao.BaseDaoImpl;
 import com.expo.entity.DownloadInfo;
+import com.expo.entity.TouristType;
 import com.expo.utils.Constants;
 
 import java.io.File;
@@ -42,6 +46,8 @@ public class DownloadManager {
     private static DownloadManager mInstance;
     private BaseDao mDao;
 
+    private List<TouristType> mTouristData;
+
     private DownloadManager() {
         mDao = new BaseDaoImpl();
     }
@@ -57,7 +63,11 @@ public class DownloadManager {
         return mInstance;
     }
 
-    public void addTask(DownloadInfo info) {
+    public void setData(List<TouristType> touristData){
+        this.mTouristData  = touristData;
+    }
+
+    public void addTask(DownloadData info) {
         if (mTaskQueue == null) {
             mTaskQueue = new LinkedList<>();
         }
@@ -70,8 +80,23 @@ public class DownloadManager {
 
     private DownloadListener mListener = new DownloadListener() {
         @Override
-        public void onProgressUpdate(DownloadInfo info) {
-            mDao.saveOrUpdate( info );
+        public void onProgressUpdate(DownloadData info) {
+            if (info instanceof TouristTypeAdapter){
+                for (TouristType type : mTouristData){
+                    if (type.getId() == info.getId()){
+//                        int index = mTouristData.indexOf(type);
+//                        TouristType touristType = mTouristData.get(index);
+//                        touristType.setDownState(info.getStatus());
+//                        touristType.setLocalPath(info.getLocalPath());
+                        type.setCurrPosition(info.getCurrPosition());
+//                        mTouristData.set(index, touristType);
+                        mDao.saveOrUpdate( type );
+                    }
+                }
+            }else if (info instanceof DownloadInfoAdapter){
+
+            }
+//            mDao.saveOrUpdate( info );
             if (mListeners != null && !mListeners.isEmpty()) {
                 for (int i = 0; i < mListeners.size(); i++) {
                     mListeners.get( i ).onProgressUpdate( info );
@@ -80,8 +105,23 @@ public class DownloadManager {
         }
 
         @Override
-        public void onStatusChanged(DownloadInfo info) {
-            mDao.saveOrUpdate( info );
+        public void onStatusChanged(DownloadData info) {
+            if (info instanceof TouristTypeAdapter){
+                for (TouristType type : mTouristData){
+                    if (type.getId() == info.getId()){
+//                        int index = mTouristData.indexOf(type);
+//                        TouristType touristType = mTouristData.get(index);
+                        type.setDownState(info.getStatus());
+//                        touristType.setLocalPath(info.getLocalPath());
+//                        touristType.setCurrPosition(info.getCurrPosition());
+//                        mTouristData.set(index, touristType);
+                        mDao.saveOrUpdate( type );
+                    }
+                }
+            }else if (info instanceof DownloadInfoAdapter){
+
+            }
+//            mDao.saveOrUpdate( info );
             if (mListeners != null && !mListeners.isEmpty()) {
                 for (int i = 0; i < mListeners.size(); i++) {
                     mListeners.get( i ).onStatusChanged( info );
@@ -130,7 +170,7 @@ public class DownloadManager {
         }
     }
 
-    public void removeTask(DownloadInfo info) {
+    public void removeTask(DownloadData info) {
         if (info.getStatus() == DOWNLOAD_WAITING && mTaskQueue == null) {
             return;
         } else if (info.getStatus() == DOWNLOAD_WAITING) {
@@ -183,13 +223,13 @@ public class DownloadManager {
 
     public static class DownloadTask extends AsyncTask<Void, Integer, Integer> {
         private static final String TAG = "DownloadTask";
-        DownloadInfo info;
+        DownloadData info;
         DownloadListener listener;
         boolean stop;
         DownloadManager manager;
         Call call;
 
-        public DownloadTask(DownloadInfo info, DownloadListener listener, DownloadManager manager) {
+        public DownloadTask(DownloadData info, DownloadListener listener, DownloadManager manager) {
             this.info = info;
             this.listener = listener;
             this.manager = manager;
@@ -342,7 +382,22 @@ public class DownloadManager {
             stop = true;
             call.cancel();
             info.setStatus( DOWNLOAD_STOPPED );
-            manager.mDao.saveOrUpdate( info );
+            if (info instanceof TouristTypeAdapter){
+                for (TouristType type : manager.mTouristData){
+                    if (type.getId() == info.getId()){
+//                        int index = mTouristData.indexOf(type);
+//                        TouristType touristType = mTouristData.get(index);
+                        type.setDownState(info.getStatus());
+//                        touristType.setLocalPath(info.getLocalPath());
+//                        type.setCurrPosition(info.getCurrPosition());
+//                        mTouristData.set(index, touristType);
+                        manager.mDao.saveOrUpdate( type );
+                    }
+                }
+            }else if (info instanceof DownloadInfoAdapter){
+
+            }
+//            manager.mDao.saveOrUpdate( info );
             manager.removeTask( this );
             notifyStatusChanged();
             this.cancel( true );
@@ -350,8 +405,8 @@ public class DownloadManager {
     }
 
     public interface DownloadListener {
-        void onProgressUpdate(DownloadInfo info);
+        void onProgressUpdate(DownloadData info);
 
-        void onStatusChanged(DownloadInfo info);
+        void onStatusChanged(DownloadData info);
     }
 }

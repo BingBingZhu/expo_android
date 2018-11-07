@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.expo.base.ExpoApp;
-import com.expo.base.IPresenter;
-import com.expo.base.IView;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.HeartBeatContract;
 import com.expo.entity.Message;
@@ -65,6 +63,7 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
                             message.setUid(uid);
                             isNewMessage = isNewMessage || handleMessage(message);
                         }
+                        mDao.saveOrUpdateAll(messages);
                         if (isNewMessage)
                             messages.get(0).sendMessageCount(null);
                     }
