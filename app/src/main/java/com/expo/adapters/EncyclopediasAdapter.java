@@ -26,22 +26,22 @@ public class EncyclopediasAdapter implements ListItemData {
 
     @Override
     public String getCaption() {
-        return mSceneAndEncy.getCaption();
+        return mSceneAndEncy.caption;
     }
 
     @Override
     public String getPicUrl() {
-        return mSceneAndEncy.getPicUrl();
+        return mSceneAndEncy.picUrl;
     }
 
     @Override
     public Integer getRecommend() {
-        return mSceneAndEncy.getRecommend();
+        return mSceneAndEncy.recommend;
     }
 
     @Override
     public String getRemark() {
-        return mSceneAndEncy.getRemark();
+        return mSceneAndEncy.remark;
     }
 
     public static List<ListItemData> convertToTabList(List<Encyclopedias> types) {

@@ -1,5 +1,6 @@
 package com.expo.network;
 
+import com.expo.entity.TopLineInfo;
 import com.expo.entity.User;
 import com.expo.network.response.AllTypeResp;
 import com.expo.network.response.BaseResponse;
@@ -10,6 +11,7 @@ import com.expo.network.response.GetDistinguishPlantList_Rsb;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
+import com.expo.network.response.TopLineResp;
 import com.expo.network.response.UpdateTimeResp;
 import com.expo.network.response.UploadRsp;
 import com.expo.network.response.UserHeartBeatResp;
@@ -49,7 +51,7 @@ public interface DataServer {
     Observable<UpdateTimeResp> checkUpdateTime(@Path("path") String path, @Body RequestBody requestBody);
 
     /**
-     * 检查指定数据的更新时间
+     * 终端通知app运行接口，用于统计和消息发送
      *
      * @param requestBody 上传参数
      * @return rxjava主题对象
@@ -279,4 +281,14 @@ public interface DataServer {
     @POST("Terminal/GetVenuesList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<VenuesInfoResp> getVenuesList(@Body RequestBody requestBody);
+
+    /**
+     * 获取头条列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetTopLineList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<TopLineResp> getTopLineList(@Body RequestBody requestBody);
 }

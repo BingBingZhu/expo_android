@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:orientation="vertical">
 
-</FrameLayout>
+    <include layout="@layout/home_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <include layout="@layout/home_map" />
+
+            <include
+                android:id="@+id/home_ad"
+                layout="@layout/home_ad" />
+
+            <include layout="@layout/home_func" />
+
+            <include
+                android:id="@+id/home_venue"
+                layout="@layout/home_venue" />
+
+            <include
+                android:id="@+id/home_exhibit"
+                layout="@layout/home_exhibit" />
+
+            <include
+                android:id="@+id/home_exhibit_garden"
+                layout="@layout/home_exhibit_garden" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dms_10" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

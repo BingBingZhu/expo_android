@@ -39,6 +39,8 @@
     <dimen name="dms_180">90dp</dimen>
     <dimen name="dms_190">95dp</dimen>
     <dimen name="dms_230">115dp</dimen>
+    <dimen name="dms_360">180dp</dimen>
+    <dimen name="dms_370">185dp</dimen>
 
     <dimen name="dms_minus_44">-22dp</dimen>
     <dimen name="dms_28">14dp</dimen>

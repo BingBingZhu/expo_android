@@ -11,55 +11,82 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Encyclopedias implements Parcelable {
     @DatabaseField(columnName = "area")
     @SerializedName("area")
-    private String area;
+    public String area;
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")
-    private String caption;
+    public String caption;
+    @DatabaseField(columnName = "caption_en")
+    @SerializedName("captionen")
+    public String captionEn;
     @DatabaseField(columnName = "collection_count")
     @SerializedName("collectioncount")
-    private Integer collectionCount;
+    public Integer collectionCount;
+    @DatabaseField(columnName = "create_time")
+    @SerializedName("createtime")
+    public Integer createTime;
     @DatabaseField(columnName = "content")
     @SerializedName("content")
-    private String content;
+    public String content;
     @DatabaseField(columnName = "country")
     @SerializedName("country")
-    private String country;
+    public String country;
     @DatabaseField(columnName = "h5_pic_url")
     @SerializedName("h5picurl")
-    private String h5PicUrl;
+    public String h5PicUrl;
     @DatabaseField(columnName = "_id", id = true)
     @SerializedName("id")
-    private Long id;
+    public Long id;
     @DatabaseField(columnName = "info_type")
     @SerializedName("infotype")
-    private String infoType;
+    public String infoType;
     @DatabaseField(columnName = "enable")
     @SerializedName("isenable")
-    private Integer enable;
+    public Integer enable;
     @DatabaseField(columnName = "recommend")
     @SerializedName("isrecommended")
-    private Integer recommend;
+    public Integer recommend;
     @DatabaseField(columnName = "link_h5_url")
     @SerializedName("linkh5url")
-    private String linkH5Url;
+    public String linkH5Url;
+    @DatabaseField(columnName = "link_h5_url_en")
+    @SerializedName("linkh5urlen")
+    public String linkH5UrlEn;
     @DatabaseField(columnName = "link_info_url")
     @SerializedName("linkinfourl")
-    private String linkInfoUrl;
+    public String linkInfoUrl;
     @DatabaseField(columnName = "pic_url")
     @SerializedName("picurl")
-    private String picUrl;
+    public String picUrl;
     @DatabaseField(columnName = "py")
     @SerializedName("py")
-    private String py;
+    public String py;
+    @DatabaseField(columnName = "recommended_idx")
+    @SerializedName("recommendedidx")
+    public String recommendedIdx;
     @DatabaseField(columnName = "remark")
     @SerializedName("remark")
-    private String remark;
+    public String remark;
+    @DatabaseField(columnName = "remark_en")
+    @SerializedName("remarken")
+    public String remarkEn;
     @DatabaseField(columnName = "type_id")
     @SerializedName("typeid")
-    private String typeId;
+    public String typeId;
     @DatabaseField(columnName = "type_name")
     @SerializedName("typename")
-    private String typeName;
+    public String typeName;
+    @DatabaseField(columnName = "type_name_en")
+    @SerializedName("typenameen")
+    public String typeNameEn;
+    @DatabaseField(columnName = "update_time")
+    @SerializedName("updatetime")
+    public String updateTime;
+    @DatabaseField(columnName = "voiceUrl")
+    @SerializedName("voiceurl")
+    public String voiceUrl;
+    @DatabaseField(columnName = "voiceEurl_en")
+    @SerializedName("voiceurlen")
+    public String voiceUrlEn;
 
     public Encyclopedias() {
     }
@@ -67,10 +94,16 @@ public class Encyclopedias implements Parcelable {
     protected Encyclopedias(Parcel in) {
         area = in.readString();
         caption = in.readString();
+        captionEn = in.readString();
         if (in.readByte() == 0) {
             collectionCount = null;
         } else {
             collectionCount = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            createTime = null;
+        } else {
+            createTime = in.readInt();
         }
         content = in.readString();
         country = in.readString();
@@ -86,19 +119,31 @@ public class Encyclopedias implements Parcelable {
         } else {
             enable = in.readInt();
         }
+        if (in.readByte() == 0) {
+            recommend = null;
+        } else {
+            recommend = in.readInt();
+        }
         linkH5Url = in.readString();
+        linkH5UrlEn = in.readString();
         linkInfoUrl = in.readString();
         picUrl = in.readString();
         py = in.readString();
+        recommendedIdx = in.readString();
         remark = in.readString();
+        remarkEn = in.readString();
         typeId = in.readString();
         typeName = in.readString();
+        typeNameEn = in.readString();
+        updateTime = in.readString();
+        voiceUrl = in.readString();
+        voiceUrlEn = in.readString();
     }
 
     public static final Creator<Encyclopedias> CREATOR = new Creator<Encyclopedias>() {
         @Override
         public Encyclopedias createFromParcel(Parcel in) {
-            return new Encyclopedias( in );
+            return new Encyclopedias(in);
         }
 
         @Override
@@ -114,172 +159,57 @@ public class Encyclopedias implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString( area );
-        dest.writeString( caption );
+        dest.writeString(area);
+        dest.writeString(caption);
+        dest.writeString(captionEn);
         if (collectionCount == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeInt( collectionCount );
+            dest.writeByte((byte) 1);
+            dest.writeInt(collectionCount);
         }
-        dest.writeString( content );
-        dest.writeString( country );
-        dest.writeString( h5PicUrl );
+        if (createTime == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(createTime);
+        }
+        dest.writeString(content);
+        dest.writeString(country);
+        dest.writeString(h5PicUrl);
         if (id == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeLong( id );
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
         }
-        dest.writeString( infoType );
+        dest.writeString(infoType);
         if (enable == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeInt( enable );
+            dest.writeByte((byte) 1);
+            dest.writeInt(enable);
         }
-        dest.writeString( linkH5Url );
-        dest.writeString( linkInfoUrl );
-        dest.writeString( picUrl );
-        dest.writeString( py );
-        dest.writeString( remark );
-        dest.writeString( typeId );
-        dest.writeString( typeName );
+        if (recommend == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(recommend);
+        }
+        dest.writeString(linkH5Url);
+        dest.writeString(linkH5UrlEn);
+        dest.writeString(linkInfoUrl);
+        dest.writeString(picUrl);
+        dest.writeString(py);
+        dest.writeString(recommendedIdx);
+        dest.writeString(remark);
+        dest.writeString(remarkEn);
+        dest.writeString(typeId);
+        dest.writeString(typeName);
+        dest.writeString(typeNameEn);
+        dest.writeString(updateTime);
+        dest.writeString(voiceUrl);
+        dest.writeString(voiceUrlEn);
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getCaption() {
-        return caption;
-    }
-
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
-
-    public Integer getCollectionCount() {
-        return collectionCount;
-    }
-
-    public void setCollectionCount(Integer collectionCount) {
-        this.collectionCount = collectionCount;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getH5PicUrl() {
-        return h5PicUrl;
-    }
-
-    public void setH5PicUrl(String h5PicUrl) {
-        this.h5PicUrl = h5PicUrl;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getInfoType() {
-        return infoType;
-    }
-
-    public void setInfoType(String infoType) {
-        this.infoType = infoType;
-    }
-
-    public Integer getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Integer enable) {
-        this.enable = enable;
-    }
-
-    public String getLinkH5Url() {
-        return linkH5Url;
-    }
-
-    public void setLinkH5Url(String linkH5Url) {
-        this.linkH5Url = linkH5Url;
-    }
-
-    public String getLinkInfoUrl() {
-        return linkInfoUrl;
-    }
-
-    public void setLinkInfoUrl(String linkInfoUrl) {
-        this.linkInfoUrl = linkInfoUrl;
-    }
-
-    public String getPicUrl() {
-        return picUrl;
-    }
-
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
-    }
-
-    public String getPy() {
-        return py;
-    }
-
-    public void setPy(String py) {
-        this.py = py;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
-    }
-
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public Integer getRecommend() {
-        return recommend;
-    }
-
-    public void setRecommend(Integer recommend) {
-        this.recommend = recommend;
-    }
 }

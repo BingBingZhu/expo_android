@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dms_4"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        style="@style/TextSize14"
+        android:layout_marginLeft="@dimen/dms_40"
+        android:padding="@dimen/dms_4"
+        android:text="@string/app_top_item"
+        android:textColor="@color/red_fa5452" />
+
+    <com.expo.widget.LimitScrollerView
+        android:id="@+id/home_ad_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_30"
+        app:durationTime="1200"
+        app:limit="1"
+        app:periodTime="2000" />
+</LinearLayout>

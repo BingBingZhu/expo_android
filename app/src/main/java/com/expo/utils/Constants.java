@@ -10,6 +10,7 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Subject;
+import com.expo.entity.TopLineInfo;
 import com.expo.entity.User;
 import com.expo.entity.VenuesInfo;
 import com.squareup.picasso.RequestCreator;
@@ -86,7 +87,7 @@ public interface Constants {
         public static final String UNZIP_PATH = BASE_FILE_PATH + "unzip/";
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{ActualScene.class, CommonInfo.class, DataType.class, DownloadInfo.class,
-                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, VenuesInfo.class};
+                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, VenuesInfo.class, TopLineInfo.class};
     }
 
     /**
@@ -131,6 +132,7 @@ public interface Constants {
      */
     class EventBusMessageId {
         public static final int EVENTBUS_ID_FRESH_USER = 1;//user反生变化
+        public static final int EVENTBUS_ID_HEART_MESSAGE_UNREAD_COUNT = 2;//新的心跳消息
     }
 
 }

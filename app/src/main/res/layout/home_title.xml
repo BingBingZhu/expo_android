@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dms_120"
+    android:background="@color/colorAccent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dms_30"
+    android:paddingRight="@dimen/dms_30">
+
+    <ImageView
+        android:id="@+id/title_home_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dms_30"
+        android:src="@drawable/home_icon" />
+
+    <ImageView
+        android:id="@+id/title_home_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:src="@drawable/home_msg" />
+
+    <TextView
+        android:id="@+id/title_home_msg_note"
+        android:layout_width="@dimen/dms_10"
+        android:layout_height="@dimen/dms_10"
+        android:layout_alignTop="@id/title_home_msg"
+        android:layout_alignRight="@id/title_home_msg"
+        android:layout_marginTop="@dimen/dms_10"
+        android:background="@drawable/red_pot"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/title_home_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/title_home_msg"
+        android:layout_toRightOf="@id/title_home_icon"
+        android:src="@drawable/home_search_btn" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/title_home_search"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dms_20"
+        android:src="@drawable/search" />
+
+</RelativeLayout>

@@ -34,17 +34,9 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
      * 启动ParkMapActivity
      *
      * @param context
-     * @param selectedId 导航标签被选中类型的id
-     * @param spotId     要查看的景点的id
      */
-    public static void startActivity(@NonNull Context context, @Nullable Long selectedId, @Nullable Long spotId) {
+    public static void startActivity(@NonNull Context context) {
         Intent in = new Intent( context, ParkMapActivity.class );
-        if (selectedId != null) {
-            in.putExtra( Constants.EXTRAS.EXTRA_TAB_ID, selectedId );
-        }
-        if (spotId != null) {
-            in.putExtra( Constants.EXTRAS.EXTRA_SPOT_ID, selectedId );
-        }
         context.startActivity( in );
     }
 }

@@ -186,6 +186,12 @@
         <item name="android:windowAnimationStyle">@style/BottomDialogAnimation</item>
     </style>
 
+    <style name="style_home_fun_item" parent="@style/TextSizeBlack13">
+        <item name="drawableTopHeight">@dimen/dms_100</item>
+        <item name="drawableTopWidth">@dimen/dms_100</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <!-- dialog从下面进出动画 -->
     <style name="BottomDialogAnimation" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/anim_dialog_bottom_in</item>

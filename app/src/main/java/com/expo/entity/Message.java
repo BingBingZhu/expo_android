@@ -4,13 +4,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.expo.base.BaseEventMessage;
+import com.expo.db.QueryParams;
+import com.expo.db.dao.BaseDao;
+import com.expo.db.dao.BaseDaoImpl;
 import com.expo.network.Http;
+import com.expo.utils.Constants;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @DatabaseTable(tableName = "message")
@@ -75,7 +83,7 @@ public class Message implements Parcelable {
     public static final Creator<Message> CREATOR = new Creator<Message>() {
         @Override
         public Message createFromParcel(Parcel in) {
-            return new Message( in );
+            return new Message(in);
         }
 
         @Override
@@ -149,11 +157,11 @@ public class Message implements Parcelable {
     }
 
     public Map<String, Object> getParams() {
-        if (TextUtils.isEmpty( params ))
+        if (TextUtils.isEmpty(params))
             return null;
-        params = params.replaceAll( "/'", "\"" );
-        return Http.getGsonInstance().fromJson( params, new TypeToken<HashMap<String, Object>>() {
-        }.getType() );
+        params = params.replaceAll("/'", "\"");
+        return Http.getGsonInstance().fromJson(params, new TypeToken<HashMap<String, Object>>() {
+        }.getType());
     }
 
     public void setParams(String params) {
@@ -191,21 +199,49 @@ public class Message implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString( caption );
-        dest.writeString( command );
-        dest.writeString( content );
-        dest.writeString( createTime );
+        dest.writeString(caption);
+        dest.writeString(command);
+        dest.writeString(content);
+        dest.writeString(createTime);
         if (id == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeLong( id );
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
         }
-        dest.writeString( linkId );
-        dest.writeString( mobile );
-        dest.writeString( msgKind );
-        dest.writeString( params );
-        dest.writeString( type );
-        dest.writeString( uid );
+        dest.writeString(linkId);
+        dest.writeString(mobile);
+        dest.writeString(msgKind);
+        dest.writeString(params);
+        dest.writeString(type);
+        dest.writeString(uid);
+    }
+
+    public static void saveMessage(List<Message> list) {
+        if (list == null || list.size() == 0) return;
+        BaseDao dao = new BaseDaoImpl();
+        dao.saveOrUpdateAll(list);
+        list.get(0).sendMessageCount(dao);
+    }
+
+    public void readMessage() {
+        BaseDao dao = new BaseDaoImpl();
+        read = true;
+        dao.saveOrUpdate(this);
+        sendMessageCount(dao);
+    }
+
+    public void delMessage() {
+        BaseDao dao = new BaseDaoImpl();
+        dao.delete(Message.class, type);
+        sendMessageCount(dao);
+    }
+
+    public void sendMessageCount(BaseDao dao) {
+        if (dao == null)
+            dao = new BaseDaoImpl();
+        QueryParams params = new QueryParams();
+        params.add("eq", "read", false);
+        EventBus.getDefault().post(new BaseEventMessage(Constants.EventBusMessageId.EVENTBUS_ID_HEART_MESSAGE_UNREAD_COUNT, dao.count(Message.class, params)));
     }
 }

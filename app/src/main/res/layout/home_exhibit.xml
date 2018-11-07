@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dms_30"
+    android:paddingTop="@dimen/dms_40">
+
+    <com.hedan.textdrawablelibrary.TextViewDrawable
+        style="@style/TextSizeBlack15"
+        android:drawableLeft="@drawable/home_thumb"
+        android:drawablePadding="@dimen/dms_10"
+        android:text="@string/home_func_title_exhibit"
+        android:textSize="@dimen/font_34" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_10">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_exhibit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</LinearLayout>

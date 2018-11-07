@@ -11,10 +11,7 @@ import android.view.ViewGroup;
 import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MessageKindContract;
-import com.expo.entity.Message;
-import com.expo.entity.MessageKindBean;
 import com.expo.module.heart.adapter.MessageKindAdapter;
 import com.expo.utils.Constants;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
@@ -70,35 +67,35 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
         mSwipeMenuRecyclerView.setSwipeMenuItemClickListener(this);
 
         /////////////////////////////////////
-        List<MessageKindBean> list = new ArrayList<>();
-        MessageKindBean bean1 = new MessageKindBean();
-        bean1.resId = R.drawable.msg_laba;
-        bean1.text1 = "游客服务反馈";
-        bean1.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
-        MessageKindBean bean2 = new MessageKindBean();
-        bean2.resId = R.drawable.msg_xitongtuisong;
-        bean2.text1 = "预约提醒";
-        bean2.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
-        MessageKindBean bean3 = new MessageKindBean();
-        bean3.resId = R.drawable.msg_biaoqian;
-        bean3.text1 = "系统提醒";
-        bean3.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
-        MessageKindBean bean4 = new MessageKindBean();
-        bean4.resId = R.drawable.msg_activity;
-        bean4.text1 = "活动消息";
-        bean4.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
-        MessageKindBean bean5 = new MessageKindBean();
-        bean5.resId = R.drawable.msg_laba;
-        bean5.text1 = "活动消息";
-        bean5.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
-        list.add(bean1);
-        list.add(bean2);
-        list.add(bean3);
-        list.add(bean4);
-        list.add(bean5);
-        mAdapter = new MessageKindAdapter(this);
-        mAdapter.setData(list);
-        mSwipeMenuRecyclerView.setAdapter(mAdapter);
+//        List<MessageKindBean> list = new ArrayList<>();
+//        MessageKindBean bean1 = new MessageKindBean();
+//        bean1.resId = R.drawable.msg_laba;
+//        bean1.text1 = "游客服务反馈";
+//        bean1.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
+//        MessageKindBean bean2 = new MessageKindBean();
+//        bean2.resId = R.drawable.msg_xitongtuisong;
+//        bean2.text1 = "预约提醒";
+//        bean2.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
+//        MessageKindBean bean3 = new MessageKindBean();
+//        bean3.resId = R.drawable.msg_biaoqian;
+//        bean3.text1 = "系统提醒";
+//        bean3.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
+//        MessageKindBean bean4 = new MessageKindBean();
+//        bean4.resId = R.drawable.msg_activity;
+//        bean4.text1 = "活动消息";
+//        bean4.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
+//        MessageKindBean bean5 = new MessageKindBean();
+//        bean5.resId = R.drawable.msg_laba;
+//        bean5.text1 = "活动消息";
+//        bean5.text2 = "恭喜您！您有巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉";
+//        list.add(bean1);
+//        list.add(bean2);
+//        list.add(bean3);
+//        list.add(bean4);
+//        list.add(bean5);
+//        mAdapter = new MessageKindAdapter(this);
+//        mAdapter.setData(list);
+//        mSwipeMenuRecyclerView.setAdapter(mAdapter);
     }
 
     //列表点击
@@ -146,7 +143,8 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
     public void onItemClick(SwipeMenuBridge menuBridge) {
         menuBridge.closeMenu();
         int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
-        mAdapter.mData.remove(adapterPosition);
-        mAdapter.notifyDataSetChanged();
+//        mAdapter.mData.get(adapterPosition)
+//        mAdapter.mData.remove(adapterPosition);
+//        mAdapter.notifyDataSetChanged();
     }
 }

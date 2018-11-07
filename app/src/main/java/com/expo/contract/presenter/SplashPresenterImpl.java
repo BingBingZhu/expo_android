@@ -11,6 +11,7 @@ import com.expo.entity.DataType;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Subject;
+import com.expo.entity.TopLineInfo;
 import com.expo.entity.User;
 import com.expo.entity.VenuesInfo;
 import com.expo.network.Http;
@@ -22,6 +23,7 @@ import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
+import com.expo.network.response.TopLineResp;
 import com.expo.network.response.UpdateTimeResp;
 import com.expo.network.response.VenuesInfoResp;
 import com.expo.utils.Constants;
@@ -57,6 +59,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         copyAMapStyleToSDCard();
         loadRouteInfo(emptyBody);
         loadVenuesInfo();
+        loadTopLine(emptyBody);
     }
 
     private void checkUpdateDate(RequestBody emptyBody) {
@@ -355,6 +358,25 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 }
                 mDao.clear(VenuesInfo.class);
                 mDao.saveOrUpdateAll(list);
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable);
+    }
+
+    /*
+     * 获取场馆（设施）列表
+     */
+    private void loadTopLine(RequestBody emptyBody) {
+        Observable<TopLineResp> observable = Http.getServer().getTopLineList(emptyBody);
+        Http.request(new ResponseCallback<TopLineResp>() {
+            @Override
+            protected void onResponse(TopLineResp rsp) {
+                mDao.clear(TopLineInfo.class);
+                mDao.saveOrUpdateAll(rsp.topLine);
             }
 
             @Override

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.expo.R;
-import com.expo.entity.MessageKindBean;
+import com.expo.entity.Message;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -17,13 +17,13 @@ import java.util.List;
 public class MessageKindAdapter extends RecyclerView.Adapter<MessageKindAdapter.ViewHolder> {
 
     Context mContext;
-    public List<MessageKindBean> mData;
+    public List<Message> mData;
 
     public MessageKindAdapter(Context context) {
         mContext = context;
     }
 
-    public void setData(List<MessageKindBean> data) {
+    public void setData(List<Message> data) {
         mData = data;
     }
 
@@ -35,9 +35,9 @@ public class MessageKindAdapter extends RecyclerView.Adapter<MessageKindAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.img.setImageResource(mData.get(position).resId);
-        holder.text1.setText(mData.get(position).text1);
-        holder.text2.setText(mData.get(position).text2);
+//        holder.img.setImageResource(mData.get(position).resId);
+//        holder.text1.setText(mData.get(position).text1);
+//        holder.text2.setText(mData.get(position).text2);
     }
 
     @Override
