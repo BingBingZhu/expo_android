@@ -181,7 +181,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         if (isDataEmpty(mHomeVenue, list)) return;
         mListVenue = list;
         mLlVenue.removeAllViews();
-        for (int i = 0; i < mListVenue.size(); i++) {
+        for (int i = 0; i < 3; i++) {
             addVenueView(i);
         }
     }
@@ -224,13 +224,15 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     private void addVenueView(int position) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_home_venue, null);
-        Encyclopedias encyclopedias = mListVenue.get(position);
-        Picasso.with(getContext())
-                .load(encyclopedias.picUrl)
-                .resize(ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension(R.dimen.dms_60) - (int) getContent().getResources().getDimension(R.dimen.dms_20) * (mListVenue.size() - 1), (int) getContent().getResources().getDimension(R.dimen.dms_190))
-                .centerInside()
-                .into((ImageView) view.findViewById(R.id.item_home_venue_img));
-        ((TextView) view.findViewById(R.id.item_home_venue_text)).setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+        if (mListVenue.size() > position) {
+            Encyclopedias encyclopedias = mListVenue.get(position);
+            Picasso.with(getContext())
+                    .load(encyclopedias.picUrl)
+                    .resize(ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension(R.dimen.dms_60) - (int) getContent().getResources().getDimension(R.dimen.dms_20) * (mListVenue.size() - 1), (int) getContent().getResources().getDimension(R.dimen.dms_190))
+                    .centerInside()
+                    .into((ImageView) view.findViewById(R.id.item_home_venue_img));
+            ((TextView) view.findViewById(R.id.item_home_venue_text)).setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+        }
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, -2);
         params.weight = 1;

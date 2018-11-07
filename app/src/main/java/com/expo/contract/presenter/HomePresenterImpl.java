@@ -45,7 +45,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     public void setExhibit() {
         //从数据库获取
         List<Encyclopedias> list = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             Encyclopedias encyclopedias = new Encyclopedias();
             encyclopedias.picUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541496680114&di=457c6a2761443037866dff39469c2bc8&imgtype=0&src=http%3A%2F%2Fpic5.nipic.com%2F20100130%2F4286795_181306438308_2.jpg";
             list.add(encyclopedias);

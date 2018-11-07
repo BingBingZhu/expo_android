@@ -65,7 +65,6 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
     @Override
     public int getItemCount() {
         if (mList == null || mList.size() == 0) return 0;
-        if (mList.size() == 1) return 1;
         return Integer.MAX_VALUE;
     }
 
