@@ -23,7 +23,7 @@ public class Encyclopedias implements Parcelable {
     public Integer collectionCount;
     @DatabaseField(columnName = "create_time")
     @SerializedName("createtime")
-    public Integer createTime;
+    public String createTime;
     @DatabaseField(columnName = "content")
     @SerializedName("content")
     public String content;
@@ -100,11 +100,7 @@ public class Encyclopedias implements Parcelable {
         } else {
             collectionCount = in.readInt();
         }
-        if (in.readByte() == 0) {
-            createTime = null;
-        } else {
-            createTime = in.readInt();
-        }
+        createTime = in.readString();
         content = in.readString();
         country = in.readString();
         h5PicUrl = in.readString();
@@ -168,12 +164,7 @@ public class Encyclopedias implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(collectionCount);
         }
-        if (createTime == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(createTime);
-        }
+        dest.writeString(createTime);
         dest.writeString(content);
         dest.writeString(country);
         dest.writeString(h5PicUrl);

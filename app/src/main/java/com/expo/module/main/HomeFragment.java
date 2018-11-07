@@ -24,6 +24,7 @@ import com.expo.module.main.adapter.HomeTopLineAdapter;
 import com.expo.module.map.ParkMapActivity;
 import com.expo.module.routes.RoutesActivity;
 import com.expo.module.service.TouristServiceActivity;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.LimitScrollerView;
@@ -120,11 +121,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     private void initRecyclerExhibitGarden() {
         mListExhibitGarden = new ArrayList<>();
         mRvExhibitGarden.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRvExhibitGarden.addItemDecoration(new SpaceDecoration((int) getContent().getResources().getDimension(R.dimen.dms_20)));
+        mRvExhibitGarden.addItemDecoration(new SpaceDecoration(0, 0, (int) getContent().getResources().getDimension(R.dimen.dms_4), (int) getContent().getResources().getDimension(R.dimen.dms_20), 0));
         mRvExhibitGarden.setAdapter(mAdapterExhibitGarden = new CommonAdapter<Encyclopedias>(getContext(), R.layout.item_home_exhibit_garden, mListExhibitGarden) {
             @Override
             protected void convert(ViewHolder holder, Encyclopedias encyclopedias, int position) {
-                Picasso.with(getContext()).load(encyclopedias.picUrl).into((ImageView) holder.getView(R.id.home_exhibit_garden_img));
+                Picasso.with(getContext()).load(CommUtils.getImgUrl(encyclopedias.picUrl)).into((ImageView) holder.getView(R.id.home_exhibit_garden_img));
                 holder.setText(R.id.home_exhibit_garden_name, LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
                 holder.setText(R.id.home_exhibit_garden_content, LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
             }
@@ -227,7 +228,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         if (mListVenue.size() > position) {
             Encyclopedias encyclopedias = mListVenue.get(position);
             Picasso.with(getContext())
-                    .load(encyclopedias.picUrl)
+                    .load(CommUtils.getImgUrl(encyclopedias.picUrl))
                     .resize(ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension(R.dimen.dms_60) - (int) getContent().getResources().getDimension(R.dimen.dms_20) * (mListVenue.size() - 1), (int) getContent().getResources().getDimension(R.dimen.dms_190))
                     .centerInside()
                     .into((ImageView) view.findViewById(R.id.item_home_venue_img));

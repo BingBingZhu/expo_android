@@ -14,6 +14,8 @@ import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.contract.RoutesContract;
 import com.expo.entity.RouteInfo;
+import com.expo.utils.CommUtils;
+import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.squareup.picasso.Picasso;
@@ -61,7 +63,7 @@ public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> imple
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
                 RouteInfo info = mData.get(position);
-                Picasso.with(RoutesActivity.this).load(info.picUrl).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
+                Picasso.with(RoutesActivity.this).load(CommUtils.getImgUrl(info.picUrl)).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
                 holder.setText(R.id.item_route_name, LanguageUtil.chooseTest(info.caption, info.captionen));
                 holder.setText(R.id.item_route_hot, "热度" + info.hotCount);
 
