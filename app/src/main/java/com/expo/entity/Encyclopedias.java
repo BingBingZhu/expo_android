@@ -88,6 +88,7 @@ public class Encyclopedias implements Parcelable {
     public Encyclopedias() {
     }
 
+
     protected Encyclopedias(Parcel in) {
         area = in.readString();
         caption = in.readString();
@@ -97,7 +98,6 @@ public class Encyclopedias implements Parcelable {
         } else {
             collectionCount = in.readInt();
         }
-        createTime = in.readString();
         content = in.readString();
         country = in.readString();
         h5PicUrl = in.readString();
@@ -125,7 +125,11 @@ public class Encyclopedias implements Parcelable {
         recommendedIdx = in.readString();
         remark = in.readString();
         remarkEn = in.readString();
-        typeId = in.readLong();
+        if (in.readByte() == 0) {
+            typeId = null;
+        } else {
+            typeId = in.readLong();
+        }
         typeName = in.readString();
         typeNameEn = in.readString();
         updateTime = in.readString();
@@ -136,7 +140,7 @@ public class Encyclopedias implements Parcelable {
     public static final Creator<Encyclopedias> CREATOR = new Creator<Encyclopedias>() {
         @Override
         public Encyclopedias createFromParcel(Parcel in) {
-            return new Encyclopedias(in);
+            return new Encyclopedias( in );
         }
 
         @Override
@@ -145,59 +149,48 @@ public class Encyclopedias implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getArea() {
+        return area;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(area);
-        dest.writeString(caption);
-        dest.writeString(captionEn);
-        if (collectionCount == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(collectionCount);
-        }
-        dest.writeString(createTime);
-        dest.writeString(content);
-        dest.writeString(country);
-        dest.writeString(h5PicUrl);
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(id);
-        }
-        dest.writeString(infoType);
-        if (enable == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(enable);
-        }
-        if (recommend == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(recommend);
-        }
-        dest.writeString(linkH5Url);
-        dest.writeString(linkH5UrlEn);
-        dest.writeString(linkInfoUrl);
-        dest.writeString(picUrl);
-        dest.writeString(py);
-        dest.writeString(recommendedIdx);
-        dest.writeString(remark);
-        dest.writeString(remarkEn);
-        dest.writeLong( typeId );
-        dest.writeString(typeName);
-        dest.writeString(typeNameEn);
-        dest.writeString(updateTime);
-        dest.writeString(voiceUrl);
-        dest.writeString(voiceUrlEn);
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public String getCaptionEn() {
+        return captionEn;
+    }
+
+    public void setCaptionEn(String captionEn) {
+        this.captionEn = captionEn;
+    }
+
+    public Integer getCollectionCount() {
+        return collectionCount;
+    }
+
+    public void setCollectionCount(Integer collectionCount) {
+        this.collectionCount = collectionCount;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
     public void setCountry(String country) {
@@ -236,12 +229,28 @@ public class Encyclopedias implements Parcelable {
         this.enable = enable;
     }
 
+    public Integer getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(Integer recommend) {
+        this.recommend = recommend;
+    }
+
     public String getLinkH5Url() {
         return linkH5Url;
     }
 
     public void setLinkH5Url(String linkH5Url) {
         this.linkH5Url = linkH5Url;
+    }
+
+    public String getLinkH5UrlEn() {
+        return linkH5UrlEn;
+    }
+
+    public void setLinkH5UrlEn(String linkH5UrlEn) {
+        this.linkH5UrlEn = linkH5UrlEn;
     }
 
     public String getLinkInfoUrl() {
@@ -268,12 +277,28 @@ public class Encyclopedias implements Parcelable {
         this.py = py;
     }
 
+    public String getRecommendedIdx() {
+        return recommendedIdx;
+    }
+
+    public void setRecommendedIdx(String recommendedIdx) {
+        this.recommendedIdx = recommendedIdx;
+    }
+
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getRemarkEn() {
+        return remarkEn;
+    }
+
+    public void setRemarkEn(String remarkEn) {
+        this.remarkEn = remarkEn;
     }
 
     public Long getTypeId() {
@@ -292,27 +317,94 @@ public class Encyclopedias implements Parcelable {
         this.typeName = typeName;
     }
 
-    public Integer getRecommend() {
-        return recommend;
+    public String getTypeNameEn() {
+        return typeNameEn;
     }
 
-    public void setRecommend(Integer recommend) {
-        this.recommend = recommend;
+    public void setTypeNameEn(String typeNameEn) {
+        this.typeNameEn = typeNameEn;
     }
 
-    public String getEnCaption() {
-        return enCaption;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setEnCaption(String enCaption) {
-        this.enCaption = enCaption;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public String getEnRemark() {
-        return enRemark;
+    public String getVoiceUrl() {
+        return voiceUrl;
     }
 
-    public void setEnRemark(String enRemark) {
-        this.enRemark = enRemark;
+    public void setVoiceUrl(String voiceUrl) {
+        this.voiceUrl = voiceUrl;
+    }
+
+    public String getVoiceUrlEn() {
+        return voiceUrlEn;
+    }
+
+    public void setVoiceUrlEn(String voiceUrlEn) {
+        this.voiceUrlEn = voiceUrlEn;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString( area );
+        dest.writeString( caption );
+        dest.writeString( captionEn );
+        if (collectionCount == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( collectionCount );
+        }
+        dest.writeString( content );
+        dest.writeString( country );
+        dest.writeString( h5PicUrl );
+        if (id == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeLong( id );
+        }
+        dest.writeString( infoType );
+        if (enable == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( enable );
+        }
+        if (recommend == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( recommend );
+        }
+        dest.writeString( linkH5Url );
+        dest.writeString( linkH5UrlEn );
+        dest.writeString( linkInfoUrl );
+        dest.writeString( picUrl );
+        dest.writeString( py );
+        dest.writeString( recommendedIdx );
+        dest.writeString( remark );
+        dest.writeString( remarkEn );
+        if (typeId == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeLong( typeId );
+        }
+        dest.writeString( typeName );
+        dest.writeString( typeNameEn );
+        dest.writeString( updateTime );
+        dest.writeString( voiceUrl );
+        dest.writeString( voiceUrlEn );
     }
 }

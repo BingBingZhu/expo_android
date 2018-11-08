@@ -46,12 +46,12 @@ public class EncyclopediasAdapter implements ListItemData {
 
     @Override
     public String getEnCaption() {
-        return mSceneAndEncy.getEnCaption();
+        return mSceneAndEncy.getCaptionEn();
     }
 
     @Override
     public String getEnRemark() {
-        return mSceneAndEncy.getEnRemark();
+        return mSceneAndEncy.getRemarkEn();
     }
 
     public static List<ListItemData> convertToTabList(List<Encyclopedias> types) {

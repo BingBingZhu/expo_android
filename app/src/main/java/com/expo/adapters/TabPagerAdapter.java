@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.expo.base.utils.LogUtils;
 import com.expo.module.main.encyclopedia.ListFragment;
 
 import java.util.List;
@@ -17,15 +16,15 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     private Bundle bundle;
 
     public TabPagerAdapter(FragmentManager fm) {
-        super(fm);
+        super( fm );
     }
 
     @Override
     public Fragment getItem(int position) {
         ListFragment fragment = new ListFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("tab", tabs.get(position));
-        fragment.setArguments(bundle);
+        bundle.putParcelable( "tab", tabs.get( position ) );
+        fragment.setArguments( bundle );
         return fragment;
     }
 
@@ -49,13 +48,13 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public void restoreState(Parcelable state, ClassLoader loader) {
         bundle = (Bundle) state;
-        if (bundle.getBoolean("needRestore", true)) {
-            super.restoreState(state, loader);
+        if (bundle == null || bundle.getBoolean( "needRestore", true )) {
+            super.restoreState( state, loader );
         }
     }
 
     public void needRestoreSave(boolean need) {
         if (bundle != null)
-            bundle.putBoolean("needRestore", need);
+            bundle.putBoolean( "needRestore", need );
     }
 }
