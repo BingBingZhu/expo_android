@@ -48,7 +48,7 @@
                 android:background="@drawable/shape_recommend_bg"
                 android:textSize="13sp"
                 android:textColor="@android:color/white"
-                android:text="推荐"/>
+                android:text="@string/recommend"/>
         </LinearLayout>
         <TextView
             android:id="@+id/ency_item_remark"

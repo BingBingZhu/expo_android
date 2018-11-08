@@ -12,44 +12,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_login"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:background="@drawable/bg_login">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="76dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dms_80"
-                android:scaleType="fitXY"
-                android:src="@drawable/language_logo" />
-
-        </RelativeLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dms_60"
+            android:scaleType="fitXY"
+            android:src="@drawable/language_logo" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/dms_190"
             android:paddingLeft="@dimen/dms_60"
             android:paddingRight="@dimen/dms_30">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dms_80"
-                android:background="@drawable/bg_white_62f8ca_r5_w1"
+                android:background="@drawable/bg_white_ccc_r5_w1"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dms_30"
                     android:src="@drawable/ico_login_phone"
                     android:visibility="gone" />
-
                 <TextView
                     android:id="@+id/login_phone_number_code"
                     android:layout_width="@dimen/dms_90"
@@ -58,12 +51,6 @@
                     android:drawableRight="@drawable/country_more"
                     android:gravity="center"
                     android:text="+86" />
-
-                <TextView
-                    style="@style/LineVertical"
-                    android:layout_height="@dimen/dms_50"
-                    android:layout_marginLeft="@dimen/dms_10" />
-
                 <EditText
                     android:id="@+id/login_phone_number_et"
                     android:layout_width="match_parent"
@@ -100,7 +87,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/login_get_ver_code"
                     android:layout_toRightOf="@id/login_code_ico"
-                    android:background="@drawable/bg_white_62f8ca_r5_w1"
+                    android:background="@drawable/bg_white_ccc_r5_w1"
                     android:hint="@string/input_identifying_code"
                     android:inputType="number"
                     android:maxLength="4"
@@ -116,34 +103,38 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dms_20"
-                    android:background="@drawable/bg_white_62f8ca_r5_w1"
+                    android:background="@drawable/selector_login_get_code"
                     android:gravity="center"
-                    android:text="获取验证码"
-                    android:textColor="@color/colorAccent"
+                    android:text="@string/get_code"
+                    android:textColor="@color/selector_get_code_text_color"
                     android:textSize="@dimen/font_30" />
             </RelativeLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/login_login_btn"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dms_90"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dms_24"
+                android:paddingBottom="@dimen/dms_24"
+                android:gravity="center"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dms_50"
-                android:background="@drawable/selector_5fffc1_425fffc1_r5"
+                android:background="@drawable/selector_login_correlation_btn_bg"
                 android:text="@string/login"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_34" />
+                android:textColor="@color/selector_login_correlation_text_color"
+                android:textSize="@dimen/font_34"
+                android:enabled="false" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dms_30"
+                android:layout_marginTop="@dimen/dms_24"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="点击立即登录代表您同意"
+                    android:text="@string/logging_in_is_an_agreement"
                     android:textColor="@color/caption_color"
                     android:textSize="@dimen/font_22" />
 
@@ -151,7 +142,7 @@
                     android:id="@+id/login_protocol_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="《光团伴你游》"
+                    android:text="《北京世园会用户服务协议》"
                     android:textColor="#43A67D"
                     android:textSize="@dimen/font_22" />
             </LinearLayout>
@@ -165,60 +156,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dms_90"
-            android:layout_marginRight="@dimen/dms_90"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1px"
-                android:layout_marginRight="@dimen/dms_38"
-                android:layout_weight="1"
-                android:background="@android:color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="其他登录方式"
-                android:textColor="@color/gray_66"
-                android:textSize="@dimen/font_22" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1px"
-                android:layout_marginLeft="@dimen/dms_38"
-                android:layout_weight="1"
-                android:background="@android:color/white" />
-        </LinearLayout>
-
+            android:layout_gravity="center_horizontal"
+            android:text="@string/other_login_methods"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/font_26" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dms_40"
             android:layout_marginTop="@dimen/dms_40"
             android:layout_marginRight="@dimen/dms_40"
-            android:layout_marginBottom="@dimen/dms_100">
-
+            android:layout_marginBottom="@dimen/dms_80">
             <ImageView
                 android:id="@+id/login_wechat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/ico_wechat_login" />
-
             <ImageView
                 android:id="@+id/login_qq"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/ico_qq_login" />
-
             <ImageView
                 android:id="@+id/login_microblog"
                 android:layout_width="0dp"

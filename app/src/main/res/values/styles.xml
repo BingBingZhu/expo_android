@@ -159,7 +159,7 @@
         <item name="android:layout_marginBottom">@dimen/dms_10</item>
         <item name="android:layout_marginLeft">@dimen/dms_10</item>
         <item name="textColor">@color/gray_32</item>
-        <item name="textSize">@dimen/font_32</item>
+        <item name="textSize">@dimen/font_28</item>
     </style>
 
     <style name="item_setting">

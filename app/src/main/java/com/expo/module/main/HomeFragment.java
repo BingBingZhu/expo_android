@@ -14,6 +14,7 @@ import com.expo.R;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.ToastHelper;
+import com.expo.base.utils.LogUtils;
 import com.expo.contract.HomeContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
@@ -246,7 +247,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     public void onDestroy() {
-        mPresenter.stopHeartService(getContext());
+        if (null != mPresenter)
+            mPresenter.stopHeartService(getContext());
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }

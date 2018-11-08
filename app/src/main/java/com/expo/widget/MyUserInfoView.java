@@ -53,7 +53,7 @@ public class MyUserInfoView extends FrameLayout {
     public void addRightView(View view, int width, int height) {
         mRightView = view;
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
-        layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.dms_10);
+        layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.dms_30);
         layoutParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
 
         mRightView.setLayoutParams(layoutParams);

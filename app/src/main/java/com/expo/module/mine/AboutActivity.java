@@ -31,8 +31,8 @@ public class AboutActivity extends BaseActivity {
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, R.string.item_mine_about);
 
-        mTvVersionName.setText(AppUtils.getAppVersionName());
-        mTvAppInfo.setText("\u3000\u3000" + "2019年中国北京世界园艺博览会是经国际园艺生产者协会批准、国际展览局认可，由中国政府主办、北京市承办的最高级别的世界园艺博览会，其主题为“绿色生活美丽家园”，将成为中国加强生态文明建设、构筑绿色产业体系、推动绿色优势向经济优势转变、体现人与自然和谐共生的集中展示。本届世园会将于2019年4月至10月在北京市延庆区举行，规划总面积960公顷。园区选址距离八达岭长城10公里，被称为“长城脚下的世园会”。\n\n\u3000\u30002019年中国北京世界园艺博览会是经国际园艺生产者协会批准、国际展览局认可，由中国政府主办、北京市承办的最高级别的世界园艺博览会，其主题为“绿色生活美丽家园”，将成为中国加强生态文明建设、构筑绿色产业体系、推动绿色优势向经济优势转变、体现人与自然和谐共生的集中展示。本届世园会将于2019年4月至10月在北京市延庆区举行，规划总面积960公顷。园区选址距离八达岭长城10公里，被称为“长城脚下的世园会”。");
+        mTvVersionName.setText("v"+AppUtils.getAppVersionName());
+        mTvAppInfo.setText(R.string.about_content_info);
     }
 
     @Override

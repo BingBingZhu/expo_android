@@ -31,13 +31,15 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         if (mContentView == null) {
             mContentView = inflater.inflate(getContentView(), null);
 
-            if (isNeedPaddingTop())
+            if (isNeedPaddingTop()) {
                 mContentView.setPadding(
                         mContentView.getPaddingLeft(),
                         mContentView.getPaddingTop() + StatusBarUtils.getStatusBarHeight(getContext()),
                         mContentView.getPaddingRight(),
                         mContentView.getPaddingBottom()
                 );
+
+            }
             ButterKnife.bind(this, mContentView);
             if (hasPresenter())
                 mPresenter = (P) PresenterFactory.getPresenter(this);

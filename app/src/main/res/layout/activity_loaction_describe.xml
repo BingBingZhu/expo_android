@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dms_30"
-        android:background="@drawable/bg_white_62f8ca_r5_w1"
+        android:background="@drawable/bg_white_ccc_r5_w1"
         android:gravity="top|left"
         android:lines="4"
         android:padding="@dimen/dms_10" />

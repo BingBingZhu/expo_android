@@ -37,7 +37,7 @@
     <string name="code_times_limit">今日请求次数已达上限</string>
     <string name="account_unable">账号已锁定</string>
     <string name="bind_phone_need_sms">绑定手机号码需要通过短信验证</string>
-    <string name="login">立即登录</string>
+    <string name="login">登录</string>
     <string name="logout">退出登录</string>
     <string name="next_step">下一步</string>
     <string name="send_sms_to_phone_number">我们将发送验证码到这个手机号码\n%s</string>
@@ -133,4 +133,22 @@
     <string name="home_func_title_venue">推荐场馆</string>
     <string name="home_func_title_exhibit">推荐展览</string>
     <string name="home_func_title_exhibit_garden">推荐展园</string>
+
+    <string name="please_enter_keywords">请输入关键字</string>
+    <string name="not_input">未填写</string>
+    <string name="no_more_data_available">暂无更多数据</string>
+    <string name="about_content_info">　　2019年中国北京世界园艺博览会是经国际园艺生产者协会批准、
+        国际展览局认可，由中国政府主办、北京市承办的最高级别的世界园艺博览会，其主题为“绿色生活美丽
+        家园”，将成为中国加强生态文明建设、构筑绿色产业体系、推动绿色优势向经济优势转变、体现人与自
+        然和谐共生的集中展示。本届世园会将于2019年4月至10月在北京市延庆区举行，规划总面积960公顷。园
+        区选址距离八达岭长城10公里，被称为“长城脚下的世园会”。 　　2019年中国北京世界园艺博览会是
+        经国际园艺生产者协会批准、国际展览局认可，由中国政府主办、北京市承办的最高级别的世界园艺博览
+        会，其主题为“绿色生活美丽家园”，将成为中国加强生态文明建设、构筑绿色产业体系、推动绿色优势
+        向经济优势转变、体现人与自然和谐共生的集中展示。本届世园会将于2019年4月至10月在北京市延庆区
+        举行，规划总面积960公顷。园区选址距离八达岭长城10公里，被称为“长城脚下的世园会”。</string>
+    <string name="logging_in_is_an_agreement">登录即表示同意</string>
+    <string name="other_login_methods">其他登录方式</string>
+    <string name="get_code">获取验证码</string>
+    <string name="recommend">推荐</string>
+    <string name="test_navi">导航导览</string>
 </resources>

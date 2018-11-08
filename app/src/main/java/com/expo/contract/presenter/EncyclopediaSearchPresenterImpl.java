@@ -22,9 +22,15 @@ public class EncyclopediaSearchPresenterImpl extends EncyclopediaSearchContract.
                 .add("like", "caption", "%"+searchContentStr+"%"));
         List<ActualScene> actualScenes = mDao.query(ActualScene.class, new QueryParams()
                 .add("like", "caption", "%"+searchContentStr+"%"));
+        List<Encyclopedias> encyclopedias_en = mDao.query(Encyclopedias.class, new QueryParams()
+                .add("like", "caption_en", "%"+searchContentStr+"%"));
+        List<ActualScene> actualScenes_en = mDao.query(ActualScene.class, new QueryParams()
+                .add("like", "caption_en", "%"+searchContentStr+"%"));
         List<ListItemData> listItemDatas = new ArrayList<>();
         listItemDatas.addAll(EncyclopediasAdapter.convertToTabList(encyclopedias));
         listItemDatas.addAll(ActualSceneAdapter.convertToTabList(actualScenes));
+        listItemDatas.addAll(EncyclopediasAdapter.convertToTabList(encyclopedias_en));
+        listItemDatas.addAll(ActualSceneAdapter.convertToTabList(actualScenes_en));
         mView.getSearchResult(listItemDatas);
     }
 }

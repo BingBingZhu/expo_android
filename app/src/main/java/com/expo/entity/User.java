@@ -188,4 +188,71 @@ public class User extends BaseResponse implements Parcelable {
         ExpoApp.getApplication().setUser(null);
         mDao.clear(User.class);
     }
+
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (null == obj){
+//            return false;
+//        }
+//        User u = (User) obj;
+//        if (uid.equals(u.uid) && ukey.equals(u.ukey) && mobile.equals(u.mobile) && score.equals(u.score) &&
+//                sex.equals(u.sex) && city.equals(u.city) && nick.equals(u.nick) && birthDay.equals(u.birthDay)
+//                && photoUrl.equals(u.photoUrl) && favoriteCount.equals(u.favoriteCount) ){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!uid.equals(user.uid)) return false;
+        if (!ukey.equals(user.ukey)) return false;
+        if (birthDay != null ? !birthDay.equals(user.birthDay) : user.birthDay != null)
+            return false;
+        if (nick != null ? !nick.equals(user.nick) : user.nick != null) return false;
+        if (favoriteCount != null ? !favoriteCount.equals(user.favoriteCount) : user.favoriteCount != null)
+            return false;
+        if (!mobile.equals(user.mobile)) return false;
+        if (score != null ? !score.equals(user.score) : user.score != null) return false;
+        if (sex != null ? !sex.equals(user.sex) : user.sex != null) return false;
+        if (city != null ? !city.equals(user.city) : user.city != null) return false;
+        return photoUrl != null ? photoUrl.equals(user.photoUrl) : user.photoUrl == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = uid.hashCode();
+        result = 31 * result + ukey.hashCode();
+        result = 31 * result + (birthDay != null ? birthDay.hashCode() : 0);
+        result = 31 * result + (nick != null ? nick.hashCode() : 0);
+        result = 31 * result + (favoriteCount != null ? favoriteCount.hashCode() : 0);
+        result = 31 * result + mobile.hashCode();
+        result = 31 * result + (score != null ? score.hashCode() : 0);
+        result = 31 * result + (sex != null ? sex.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (photoUrl != null ? photoUrl.hashCode() : 0);
+        return result;
+    }
+
+    public User clone() {
+        User user = new User();
+        user.uid = this.uid;
+        user.ukey = this.ukey;
+        user.birthDay = this.birthDay;
+        user.nick = this.nick;
+        user.favoriteCount = this.favoriteCount;
+        user.mobile = this.mobile;
+        user.score = this.score;
+        user.sex = this.sex;
+        user.city = this.city;
+        user.photoUrl = this.photoUrl;
+        return user;
+    }
 }

@@ -11,7 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Encyclopedias implements Parcelable {
     @DatabaseField(columnName = "area")
     @SerializedName("area")
-    public String area;
+    private String area;
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")
     public String caption;
@@ -20,10 +20,7 @@ public class Encyclopedias implements Parcelable {
     public String captionEn;
     @DatabaseField(columnName = "collection_count")
     @SerializedName("collectioncount")
-    public Integer collectionCount;
-    @DatabaseField(columnName = "create_time")
-    @SerializedName("createtime")
-    public String createTime;
+    private Integer collectionCount;
     @DatabaseField(columnName = "content")
     @SerializedName("content")
     public String content;
@@ -71,7 +68,7 @@ public class Encyclopedias implements Parcelable {
     public String remarkEn;
     @DatabaseField(columnName = "type_id")
     @SerializedName("typeid")
-    public String typeId;
+    public Long typeId;
     @DatabaseField(columnName = "type_name")
     @SerializedName("typename")
     public String typeName;
@@ -128,7 +125,7 @@ public class Encyclopedias implements Parcelable {
         recommendedIdx = in.readString();
         remark = in.readString();
         remarkEn = in.readString();
-        typeId = in.readString();
+        typeId = in.readLong();
         typeName = in.readString();
         typeNameEn = in.readString();
         updateTime = in.readString();
@@ -195,7 +192,7 @@ public class Encyclopedias implements Parcelable {
         dest.writeString(recommendedIdx);
         dest.writeString(remark);
         dest.writeString(remarkEn);
-        dest.writeString(typeId);
+        dest.writeLong( typeId );
         dest.writeString(typeName);
         dest.writeString(typeNameEn);
         dest.writeString(updateTime);
@@ -203,4 +200,119 @@ public class Encyclopedias implements Parcelable {
         dest.writeString(voiceUrlEn);
     }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getH5PicUrl() {
+        return h5PicUrl;
+    }
+
+    public void setH5PicUrl(String h5PicUrl) {
+        this.h5PicUrl = h5PicUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getInfoType() {
+        return infoType;
+    }
+
+    public void setInfoType(String infoType) {
+        this.infoType = infoType;
+    }
+
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
+    }
+
+    public String getLinkH5Url() {
+        return linkH5Url;
+    }
+
+    public void setLinkH5Url(String linkH5Url) {
+        this.linkH5Url = linkH5Url;
+    }
+
+    public String getLinkInfoUrl() {
+        return linkInfoUrl;
+    }
+
+    public void setLinkInfoUrl(String linkInfoUrl) {
+        this.linkInfoUrl = linkInfoUrl;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public String getPy() {
+        return py;
+    }
+
+    public void setPy(String py) {
+        this.py = py;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public Integer getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(Integer recommend) {
+        this.recommend = recommend;
+    }
+
+    public String getEnCaption() {
+        return enCaption;
+    }
+
+    public void setEnCaption(String enCaption) {
+        this.enCaption = enCaption;
+    }
+
+    public String getEnRemark() {
+        return enRemark;
+    }
+
+    public void setEnRemark(String enRemark) {
+        this.enRemark = enRemark;
+    }
 }

@@ -107,6 +107,7 @@ public interface Constants {
 
         public static final String LOGIN_CHANGE_OF_STATE_ACTION = "login_change_of_state_action";
         public static final String ACTION_RECEIVE_MESSAGE = "action_receive_message";
+        public static final String ACTION_CHANGE_LANGUAGE = "action_change_language";
     }
 
     /**

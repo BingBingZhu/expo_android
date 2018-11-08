@@ -1,13 +1,10 @@
 package com.expo.contract.presenter;
 
-import android.os.Parcel;
-
 import com.expo.adapters.DataTypeAdapter;
 import com.expo.adapters.Tab;
 import com.expo.contract.EncyclopediasContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.DataType;
-import com.expo.entity.Subject;
 
 import java.util.List;
 

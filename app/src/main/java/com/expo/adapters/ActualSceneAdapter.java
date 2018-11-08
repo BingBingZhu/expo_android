@@ -44,6 +44,16 @@ public class ActualSceneAdapter implements ListItemData {
         return mSceneAndEncy.getRemark();
     }
 
+    @Override
+    public String getEnCaption() {
+        return mSceneAndEncy.getEnCaption();
+    }
+
+    @Override
+    public String getEnRemark() {
+        return mSceneAndEncy.getEnRemark();
+    }
+
     public static List<ListItemData> convertToTabList(List<ActualScene> types) {
         if (types == null)
             return null;

@@ -19,6 +19,9 @@ public class DataType implements Parcelable {
     @DatabaseField(columnName = "name")
     @SerializedName(value = "typename", alternate = {"caption"})
     private String name;
+    @DatabaseField(columnName = "name_en")
+    @SerializedName(value = "typenameen", alternate = {"captionen"})
+    private String enName;
     @DatabaseField(columnName = "pic_url")
     @SerializedName("picurl")
     private String picUrl;
@@ -147,6 +150,14 @@ public class DataType implements Parcelable {
 
     public void setKind(Integer kind) {
         this.kind = kind;
+    }
+
+    public String getEnName() {
+        return enName;
+    }
+
+    public void setEnName(String enName) {
+        this.enName = enName;
     }
 
     @Override
