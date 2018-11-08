@@ -55,4 +55,7 @@
     <dimen name="dms_6">3dp</dimen>
     <dimen name="dms_34">17dp</dimen>
     <dimen name="dms_114">57dp</dimen>
+    <dimen name="dms_74">37dp</dimen>
+    <dimen name="dms_36">18dp</dimen>
+    <dimen name="dms_88">44dp</dimen>
 </resources>
