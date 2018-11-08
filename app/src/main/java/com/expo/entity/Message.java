@@ -259,7 +259,10 @@ public class Message implements Parcelable {
 
     public void delMessage() {
         BaseDao dao = new BaseDaoImpl();
-        dao.delete(Message.class, type);
+        QueryParams params = new QueryParams()
+                .add("eq", "type", type);
+        List<Message> messageList = dao.query(Message.class, params);
+        dao.deleteAll(messageList);
         sendMessageCount(dao);
     }
 
