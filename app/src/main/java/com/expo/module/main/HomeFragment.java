@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.expo.R;
 import com.expo.base.BaseFragment;
+import com.expo.base.utils.LogUtils;
 import com.expo.contract.HomeContract;
 import com.expo.module.map.ParkMapActivity;
 
@@ -36,7 +37,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     public void onDestroy() {
-        mPresenter.stopHeartService(getContext());
+        if (null != mPresenter)
+            mPresenter.stopHeartService(getContext());
         super.onDestroy();
     }
 

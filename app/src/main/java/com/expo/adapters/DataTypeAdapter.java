@@ -33,6 +33,11 @@ public class DataTypeAdapter implements Tab {
     }
 
     @Override
+    public String getEnTab() {
+        return mDataType.getEnName();
+    }
+
+    @Override
     public Long getId() {
         return Long.valueOf( mDataType.getTypeId() );
     }

@@ -8,11 +8,11 @@ import com.expo.adapters.EncyclopediasAdapter;
 import com.expo.adapters.ListItemData;
 import com.expo.adapters.Tab;
 import com.expo.base.BaseFragment;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ListContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.widget.SimpleRecyclerView;
-import com.expo.widget.decorations.SpaceDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +48,12 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
     protected void onInitView(Bundle savedInstanceState) {
         mTab = getArguments().getParcelable("tab");
         mEncyclopediasList = new ArrayList<>();
-        adapter = new EncyAndSceneListAdapter( getContext(), mEncyclopediasList );
-        mRecyclerView.setAdapter( adapter );
+        adapter = new EncyAndSceneListAdapter(getContext(), mEncyclopediasList);
+        mRecyclerView.setAdapter(adapter);
 //        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_18);
 //        int space = getResources().getDimensionPixelSize(R.dimen.dms_18);
 //        mRecyclerView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
-        mPresenter.loadEncyByType(mTab.getTab(), page);
+        mPresenter.loadEncyByType(mTab.getId(), page);
         initLoadMore();
     }
 
@@ -63,7 +63,7 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
                 page++;
-                mPresenter.loadEncyByType(mTab.getTab(), page);
+                mPresenter.loadEncyByType(mTab.getId(), page);
             }
 
             @Override
@@ -81,10 +81,10 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
     @Override
     public void addEncysToList(List<Encyclopedias> data) {
         // 加载到列表
-        if ((null == data || data.size() == 0) && page>0){
+        if ((null == data || data.size() == 0) && page > 0) {
             page--;
             ToastHelper.showShort(R.string.no_more_data_available);
-        }else {
+        } else {
             mEncyclopediasList.addAll(EncyclopediasAdapter.convertToTabList(data));
         }
         mPtrView.refreshComplete();

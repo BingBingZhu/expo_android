@@ -117,7 +117,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, R.string.title_setting_ac);
         mTvLanguage.setRightText(R.string.language);
-
+        mTvUpdate.setRightText("v" + AppUtils.getAppVersionName());
         mSelectCn = mIsCn = StringUtils.equals(PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null), LanguageUtil.LANGUAGE_CN);
     }
 

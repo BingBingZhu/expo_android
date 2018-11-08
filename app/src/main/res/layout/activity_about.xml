@@ -23,13 +23,17 @@
         android:layout_marginTop="@dimen/dms_10"
         android:textColor="@color/gray_66" />
 
-    <TextView
-        android:id="@+id/app_info"
-        style="@style/TextSize13"
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/dms_50"
         android:layout_marginTop="@dimen/dms_60"
-        android:layout_marginRight="@dimen/dms_50"
-        android:textColor="@color/gray_66" />
+        android:layout_marginRight="@dimen/dms_50">
+        <TextView
+            android:id="@+id/app_info"
+            style="@style/TextSize13"
+            android:layout_width="match_parent"
+            android:textColor="@color/gray_66" />
+    </ScrollView>
 
 </LinearLayout>

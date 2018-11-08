@@ -20,7 +20,7 @@
     <string name="submit">submit</string>
     <string name="language">English</string>
     <string name="language_select">请选择语言</string>
-    <string name="bj_world_horticultural_exposition">北京世园会</string>
+    <string name="bj_world_horticultural_exposition">International Horticultural Exhibition 2019 Beijing</string>
 
     <string name="ukey_error">用户数据错误，请重新登录</string>
     <string name="unlogin">请先登录</string>
@@ -78,7 +78,7 @@
     <string name="mine_edit_info">查看并编辑个人资料</string>
     <string name="item_mine_bespeak">我的预约</string>
     <string name="item_mine_comment_report">评价与反馈</string>
-    <string name="item_mine_message">我的消息</string>
+    <string name="item_mine_message">My News</string>
     <string name="item_mine_about">关于</string>
     <string name="item_mine_setting">设置</string>
 
@@ -120,12 +120,18 @@
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
-    <string name="please_enter_keywords">请输入关键字</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
-    <string name="not_input">未填写</string>
 
     <integer name="video_time">60</integer>
-    <string name="no_more_data_available">暂无更多数据</string>
+    <string name="please_enter_keywords">please enter keywords</string>
+    <string name="not_input">未填写</string>
+    <string name="no_more_data_available">no more data available</string>
+    <string name="about_content_info">   The 2019 Beijing world horticultural exposition is approved by the international horticultural producers association.</string>
+    <string name="logging_in_is_an_agreement">登录即表示同意</string>
+    <string name="other_login_methods">other login methods</string>
+    <string name="get_code">Get Code</string>
+    <string name="recommend">RECOMM</string>
+    <string name="test_navi">NAVI</string>
 
 </resources>

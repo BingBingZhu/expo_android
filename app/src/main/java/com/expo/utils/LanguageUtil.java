@@ -46,6 +46,7 @@ public class LanguageUtil {
             configuration.locale = locale;
         }
         resources.updateConfiguration(configuration, metrics);
+        LocalBroadcastUtil.sendBroadcast(context, null, Constants.Action.ACTION_CHANGE_LANGUAGE);
     }
 
     public static boolean isCN() {

@@ -4,18 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <View
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_50"
+        android:background="@color/color_EEE"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/top"
         android:layout_marginLeft="@dimen/dms_30"
-        android:layout_marginRight="@dimen/dms_30"
         android:orientation="vertical">
 
         <com.expo.widget.MySettingView
             android:id="@+id/setting_language"
             style="@style/item_setting"
-            android:layout_marginTop="@dimen/dms_40"
             app:textLeft="@string/item_setting_language" />
 
         <TextView

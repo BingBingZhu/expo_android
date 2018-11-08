@@ -7,4 +7,6 @@ public interface ListItemData extends Parcelable {
     String getPicUrl();
     Integer getRecommend();
     String getRemark();
+    String getEnCaption();
+    String getEnRemark();
 }

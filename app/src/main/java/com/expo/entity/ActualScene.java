@@ -19,12 +19,18 @@ public class ActualScene implements Parcelable {
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")
     private String caption;
+    @DatabaseField(columnName = "caption_en")
+    @SerializedName("captionen")
+    private String enCaption;
     @DatabaseField(columnName = "type")
     @SerializedName("type")
     private String type;
     @DatabaseField(columnName = "remark")
     @SerializedName("remark")
     private String remark;
+    @DatabaseField(columnName = "remark_en")
+    @SerializedName("remarken")
+    private String enRemark;
     @DatabaseField(columnName = "is_enable")
     @SerializedName("isenable")
     private int isEnable;
@@ -205,6 +211,22 @@ public class ActualScene implements Parcelable {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getEnCaption() {
+        return enCaption;
+    }
+
+    public void setEnCaption(String enCaption) {
+        this.enCaption = enCaption;
+    }
+
+    public String getEnRemark() {
+        return enRemark;
+    }
+
+    public void setEnRemark(String enRemark) {
+        this.enRemark = enRemark;
     }
 
     public Double getLng() {

@@ -13,6 +13,7 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.entity.ActualScene;
 import com.expo.entity.Encyclopedias;
 import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -47,9 +48,9 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
         ListItemData ency = mEncyList.get(position);
 //        holder.img.setBackground(mContext.getResources().getDrawable(R.drawable.ico_def));
         holder.img.setImageURI( Constants.URL.FILE_BASE_URL + ency.getPicUrl() );
-        holder.tvName.setText( ency.getCaption() );
+        holder.tvName.setText(LanguageUtil.chooseTest(ency.getCaption(), ency.getEnCaption()) );
         holder.tvRecommend.setVisibility( ency.getRecommend() == 1 ? View.VISIBLE : View.GONE );
-        holder.tvRemark.setText( ency.getRemark() );
+        holder.tvRemark.setText( LanguageUtil.chooseTest(ency.getRemark(), ency.getEnRemark()) );
         holder.root.setOnClickListener(v -> {
             ToastHelper.showShort(ency.getCaption());
         });

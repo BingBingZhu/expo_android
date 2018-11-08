@@ -15,6 +15,9 @@ public class Encyclopedias implements Parcelable {
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")
     private String caption;
+    @DatabaseField(columnName = "caption_en")
+    @SerializedName("captionen")
+    private String enCaption;
     @DatabaseField(columnName = "collection_count")
     @SerializedName("collectioncount")
     private Integer collectionCount;
@@ -54,9 +57,12 @@ public class Encyclopedias implements Parcelable {
     @DatabaseField(columnName = "remark")
     @SerializedName("remark")
     private String remark;
+    @DatabaseField(columnName = "remark_en")
+    @SerializedName("remarken")
+    private String enRemark;
     @DatabaseField(columnName = "type_id")
     @SerializedName("typeid")
-    private String typeId;
+    private Long typeId;
     @DatabaseField(columnName = "type_name")
     @SerializedName("typename")
     private String typeName;
@@ -91,7 +97,7 @@ public class Encyclopedias implements Parcelable {
         picUrl = in.readString();
         py = in.readString();
         remark = in.readString();
-        typeId = in.readString();
+        typeId = in.readLong();
         typeName = in.readString();
     }
 
@@ -143,7 +149,7 @@ public class Encyclopedias implements Parcelable {
         dest.writeString( picUrl );
         dest.writeString( py );
         dest.writeString( remark );
-        dest.writeString( typeId );
+        dest.writeLong( typeId );
         dest.writeString( typeName );
     }
 
@@ -259,11 +265,11 @@ public class Encyclopedias implements Parcelable {
         this.remark = remark;
     }
 
-    public String getTypeId() {
+    public Long getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(String typeId) {
+    public void setTypeId(Long typeId) {
         this.typeId = typeId;
     }
 
@@ -281,5 +287,21 @@ public class Encyclopedias implements Parcelable {
 
     public void setRecommend(Integer recommend) {
         this.recommend = recommend;
+    }
+
+    public String getEnCaption() {
+        return enCaption;
+    }
+
+    public void setEnCaption(String enCaption) {
+        this.enCaption = enCaption;
+    }
+
+    public String getEnRemark() {
+        return enRemark;
+    }
+
+    public void setEnRemark(String enRemark) {
+        this.enRemark = enRemark;
     }
 }

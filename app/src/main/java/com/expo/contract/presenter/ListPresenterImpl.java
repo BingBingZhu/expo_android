@@ -15,9 +15,9 @@ public class ListPresenterImpl extends ListContract.Presenter {
     }
 
     @Override
-    public void loadEncyByType(String typeName, int page) {
+    public void loadEncyByType(Long tabId, int page) {
         List<Encyclopedias> data = mDao.query(Encyclopedias.class, new QueryParams()
-                .add( "eq", "type_name", typeName )
+                .add( "eq", "type_id", tabId )
                 .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT )
                 .add( "orderBy", "py", true )
                 .add( "orderBy", "recommend", "desc" ));

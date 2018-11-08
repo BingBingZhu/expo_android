@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @BindView(R.id.login_get_ver_code)
     TextView mGetCodeView;
     @BindView(R.id.login_login_btn)
-    Button mLoginView;
+    TextView mLoginView;
     @BindView(R.id.login_protocol_tv)
     TextView mProtocolView;    // 服务协议
     @BindView(R.id.login_wechat)
@@ -205,6 +205,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
      */
     @Override
     public void returnRequestVerifyCodeResult(String code) {
+        mLoginView.setEnabled(true);
         mEtCodeView.requestFocus();
         mEtCodeView.setText("");
         mEtCodeView.append(code);

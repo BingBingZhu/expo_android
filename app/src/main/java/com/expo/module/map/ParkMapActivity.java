@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.TextureMapView;
@@ -32,6 +33,7 @@ import com.expo.adapters.Tab;
 import com.expo.adapters.TouristAdapter;
 import com.expo.adapters.TouristTypeAdapter;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ParkMapContract;
 import com.expo.entity.ActualScene;
 import com.expo.entity.TouristType;
@@ -56,6 +58,8 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     TabLayout mTabView;
     @BindView(R.id.map_view)
     TextureMapView mMapView;
+    @BindView(R.id.search_view)
+    SearchView mSearchView;
 
     private RecyclerView mTouristListView;
 
@@ -78,12 +82,23 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
+        initSearchView();
         mAMap = mMapView.getMap();
         mMapUtils = new MapUtils(mAMap);
         mMapUtils.settingMap(this, this);
         mAMap.setOnMyLocationChangeListener( mLocationChangeListener );
         mPresenter.loadTab();
         mPresenter.loadTouristType();
+    }
+
+    private void initSearchView() {
+        mSearchView.setOnCloseListener(() -> {
+            ToastHelper.showShort("关闭");
+            return false;
+        });
+        mSearchView.setOnSearchClickListener(v -> {
+            ToastHelper.showShort("打开");
+        });
     }
 
     @Override

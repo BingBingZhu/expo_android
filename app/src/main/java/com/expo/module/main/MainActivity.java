@@ -17,8 +17,6 @@ import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.BindView;
 
 /*
