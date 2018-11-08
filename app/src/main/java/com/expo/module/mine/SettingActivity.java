@@ -75,38 +75,40 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
         }
     };
 
-    OnClickListener mLanguageClickListener = new OnClickListener() { // 切换语言的监听
-        @Override
-        public void onClick(DialogPlus d, View v) {
-            switch (v.getId()) {
-                case R.id.language_cn:
-                    mSelectCn = true;
-                    break;
-                case R.id.language_en:
-                    mSelectCn = false;
-                    break;
-                case R.id.ok:
-                    if (mIsCn != mSelectCn) {
-                        Locale locale;
-                        if (mSelectCn) {
-                            locale = Locale.CHINA;
-                            PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_CN);
-                        } else {
-                            locale = Locale.ENGLISH;
-                            PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_EN);
-                        }
-                        LanguageUtil.changeAppLanguage(SettingActivity.this, locale);
-
-                        mIsCn = mSelectCn;
-                        fresh();
-                        ActivityHelper.reCreateAll(SettingActivity.this);
-                    }
-                case R.id.cancle:
-                    d.dismiss();
-                    break;
-            }
+    // 切换语言的监听
+    OnClickListener mLanguageClickListener = (d, v) -> {
+        switch (v.getId()) {
+            case R.id.language_cn:
+                changeLanguage(true, d);
+                break;
+            case R.id.language_en:
+                changeLanguage(false, d);
+                break;
+            case R.id.cancle:
+                d.dismiss();
+                break;
         }
     };
+
+    private void changeLanguage(boolean selectCn, DialogPlus d){
+        mSelectCn = selectCn;
+        if (mIsCn != mSelectCn) {
+            Locale locale;
+            if (mSelectCn) {
+                locale = Locale.CHINA;
+                PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_CN);
+            } else {
+                locale = Locale.ENGLISH;
+                PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_EN);
+            }
+            LanguageUtil.changeAppLanguage(SettingActivity.this, locale);
+
+            mIsCn = mSelectCn;
+            fresh();
+            ActivityHelper.reCreateAll(SettingActivity.this);
+        }
+        d.dismiss();
+    }
 
     @Override
     protected int getContentView() {
@@ -134,7 +136,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     @OnClick(R.id.setting_language)
     public void clickLanguage(MySettingView view) {
         if (mDialogLanguage == null) {
-            View dv = LayoutInflater.from(this).inflate(R.layout.dialog_language_select, null);
+            View dv = LayoutInflater.from(getContext()).inflate(R.layout.dialog_language_select, null);
             int viewId = mIsCn ? R.id.language_cn : R.id.language_en;
             dv.findViewById(viewId).performClick();
 

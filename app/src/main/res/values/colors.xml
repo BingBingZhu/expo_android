@@ -6,6 +6,7 @@
     <color name="white">#ffffff</color>
     <color name="white_dark">#f2f1f4</color>
     <color name="black">#000000</color>
+    <color name="black_oc">#0C0C0C</color>
     <color name="sliding_list_item_delete_bg">#FF9EA7</color>
     <color name="caption_color">#454545</color>
     <color name="gray_235">#454545</color>

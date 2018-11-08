@@ -1,73 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
     android:orientation="vertical">
-
     <TextView
+        android:id="@+id/cancle"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dms_90"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_34"
+        android:layout_marginLeft="@dimen/dms_20"
+        android:padding="@dimen/dms_10"
+        android:text="@string/cancel"
+        android:textColor="@color/black_oc"
+        android:textSize="@dimen/font_30" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_74"
+        android:layout_marginBottom="@dimen/dms_36"
         android:layout_centerInParent="true"
         android:background="@null"
         android:clickable="false"
         android:gravity="center"
         android:text="@string/language_select"
-        android:textColor="@color/gray_66"
+        android:textColor="@color/color_999"
         android:textSize="@dimen/font_36" />
-
-    <RadioButton
-        android:id="@+id/language_cn"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_90"
-        android:layout_centerInParent="true"
-        android:background="@null"
-        android:button="@null"
-        android:gravity="center"
-        android:text="中文"
-        android:textColor="@color/selector_66_02cd9b" />
-
-    <RadioButton
-        android:id="@+id/language_en"
+        android:layout_height="1px"
+        android:background="@color/color_EEE"/>
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_90"
-        android:layout_centerInParent="true"
-        android:button="@null"
-        android:clickable="false"
-        android:gravity="center"
-        android:text="English"
-        android:textColor="@color/selector_66_02cd9b" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_90"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/cancle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dms_60"
-            android:layout_marginRight="@dimen/dms_30"
-            android:layout_weight="1"
-            android:background="@drawable/bg_eaeaea_r90"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/language_cn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dms_34"
+            android:paddingBottom="@dimen/dms_34"
+            android:background="@null"
+            android:button="@null"
             android:gravity="center"
-            android:text="@string/cancel"
-            android:textColor="@color/gray_90"
-            android:textSize="@dimen/font_36" />
-
-        <TextView
-            android:id="@+id/ok"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dms_30"
-            android:layout_marginRight="@dimen/dms_60"
-            android:layout_weight="1"
-            android:background="@drawable/bg_02cd9b_r90"
+            android:text="中文"
+            android:textColor="@color/selector_66_02cd9b" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_EEE"/>
+        <RadioButton
+            android:id="@+id/language_en"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dms_34"
+            android:paddingBottom="@dimen/dms_34"
+            android:button="@null"
+            android:clickable="false"
             android:gravity="center"
-            android:text="@string/ok"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_36" />
-
-    </LinearLayout>
-</RadioGroup>
+            android:text="English"
+            android:textColor="@color/selector_66_02cd9b" />
+    </RadioGroup>
+</LinearLayout>
