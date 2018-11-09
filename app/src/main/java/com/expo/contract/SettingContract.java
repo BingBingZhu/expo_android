@@ -1,7 +1,10 @@
 package com.expo.contract;
 
+import android.content.Context;
+
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.AppInfo;
 import com.expo.network.response.VersionInfoResp;
 
 public interface SettingContract {
@@ -15,7 +18,7 @@ public interface SettingContract {
 
         public abstract void checkUpdate();
 
-        public abstract void update();
+        public abstract void update(Context context, AppInfo appInfo);
 
         public abstract void logout();
 
@@ -25,6 +28,6 @@ public interface SettingContract {
 
         void logout();
 
-        void appUpdate(VersionInfoResp info);
+        void appUpdate(AppInfo bean);
     }
 }

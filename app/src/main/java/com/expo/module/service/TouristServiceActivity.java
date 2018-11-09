@@ -40,7 +40,7 @@ public class TouristServiceActivity extends BaseActivity {
                     ) {
                 Intent intent = new Intent(TouristServiceActivity.this, SeekHelpActivity.class);
                 intent.putExtra(Constants.EXTRAS.EXTRA_TITLE, getResources().getText(getResources().getIdentifier("item_tourist_service_text_" + position, "string", AppUtils.getAppPackageName())));
-                intent.putExtra(Constants.EXTRAS.EXTRAS, 0);
+                intent.putExtra(Constants.EXTRAS.EXTRAS, position);
                 startActivity(intent);
             }
         }

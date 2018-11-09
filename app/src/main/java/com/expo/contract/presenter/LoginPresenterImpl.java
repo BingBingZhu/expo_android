@@ -5,6 +5,7 @@ import android.os.Message;
 
 import com.expo.R;
 import com.expo.base.ExpoApp;
+import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.LoginContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.CommonInfo;
@@ -14,6 +15,7 @@ import com.expo.network.ResponseCallback;
 import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
+import com.expo.utils.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +44,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
             @Override
             protected void onResponse(VerificationCodeResp rsp) {
                 mView.returnRequestVerifyCodeResult(rsp.verificationCode);
+                PrefsHelper.setString(Constants.Prefs.KEY_COUNTRY_CODE, countryCode);
                 mView.hideLoadingView();
             }
         }, observable);

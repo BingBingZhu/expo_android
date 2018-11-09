@@ -4,22 +4,42 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.utils.Constants;
+import com.expo.widget.MyRadioButton;
 
-import butterknife.OnCheckedChanged;
+import butterknife.BindView;
+import butterknife.OnClick;
+
 
 /*
  * 位置更改描述页
  */
-public class LocationDescribeActivity extends BaseActivity {
+public class LocationDescribeActivity extends BaseActivity implements PoiSearch.OnPoiSearchListener {
+
+    @BindView(R.id.location_layout)
+    RadioGroup mLayout;
+    @BindView(R.id.location_describe_edit)
+    EditText mEdit;
+
+    View mSelectView;
+
     @Override
+
     protected int getContentView() {
         return R.layout.activity_loaction_describe;
     }
@@ -27,6 +47,15 @@ public class LocationDescribeActivity extends BaseActivity {
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, R.string.title_location_describe_ac);
+        PoiSearch.Query query = new PoiSearch.Query("", "", "010");
+        query.setPageSize(3);
+        query.setCityLimit(true);
+        PoiSearch poiSearch = new PoiSearch(this, query);
+        poiSearch.setOnPoiSearchListener(this);
+        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(getIntent().getDoubleExtra(Constants.EXTRAS.EXTRA_LATITUDE, 0),
+                getIntent().getDoubleExtra(Constants.EXTRAS.EXTRA_LONGITUDE, 0)), 100));//设置周边搜索的中心点以及半径
+
+        poiSearch.searchPOIAsyn();
     }
 
     @Override
@@ -42,13 +71,11 @@ public class LocationDescribeActivity extends BaseActivity {
      * @param lng      当前定位位置的经度
      * @return RequestCode 请求码
      */
-    public static int startActivityForResult(@NonNull Activity activity, double lat, double lng) {
+    public static void startActivityForResult(@NonNull Activity activity, double lat, double lng) {
         Intent in = new Intent(activity, LocationDescribeActivity.class);
         in.putExtra(Constants.EXTRAS.EXTRA_LONGITUDE, lng);
         in.putExtra(Constants.EXTRAS.EXTRA_LATITUDE, lat);
-        int requestCode = 120;
-        activity.startActivityForResult(in, requestCode);
-        return requestCode;
+        activity.startActivityForResult(in, Constants.RequestCode.REQ_GET_LOCAL);
     }
 
     /*
@@ -61,30 +88,65 @@ public class LocationDescribeActivity extends BaseActivity {
             Intent result = new Intent();
             result.putExtra(Constants.EXTRAS.EXTRA_LATITUDE, lat);
             result.putExtra(Constants.EXTRAS.EXTRA_LONGITUDE, lng);
-            if (!TextUtils.isEmpty(content)) {
-                result.putExtra(Constants.EXTRAS.EXTRAS, content);
-            }
+            result.putExtra(Constants.EXTRAS.EXTRAS, content);
             setResult(RESULT_OK, result);
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        setResult(null, null, null);
+    @OnClick(R.id.location_describe_save)
+    public void clickSave(View view) {
+        LatLonPoint point = (LatLonPoint) mSelectView.getTag();
+        setResult(point.getLatitude(), point.getLongitude(), mEdit.getText().toString());
+        finish();
     }
 
-//    @OnCheckedChanged({R.id.location_describe_radio0, R.id.location_describe_radio1, R.id.location_describe_radio2, R.id.location_describe_radio3})
-//    public void checkChange(CompoundButton view, boolean isChecked) {
-//        switch (view.getId()) {
-//            case R.id.location_describe_radio0:
-//                break;
-//            case R.id.location_describe_radio1:
-//                break;
-//            case R.id.location_describe_radio2:
-//                break;
-//            case R.id.location_describe_radio3:
-//                break;
-//        }
+//    @Override
+//    public void onBackPressed() {
+//        LatLonPoint point = (LatLonPoint) mSelectView.getTag();
+//        setResult(point.getLatitude(), point.getLongitude(), mEdit.getText().toString());
+//        super.onBackPressed();
 //    }
+
+    @Override
+    public void onPoiSearched(PoiResult poiResult, int i) {
+        View headView = initItemView();
+        mLayout.addView(headView);
+        for (PoiItem item : poiResult.getPois()) {
+            mLayout.addView(initItemView(item));
+        }
+        headView.performClick();
+    }
+
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
+
+    }
+
+    // 动态添加
+    private View initItemView() {
+        View v = initItemView(getResources().getString(R.string.location_describe_radio1), new LatLonPoint(-1, -1));
+        mSelectView = v;
+        return v;
+    }
+
+    private View initItemView(PoiItem item) {
+        return initItemView(item.getTitle(), item.getLatLonPoint());
+    }
+
+    private View initItemView(String text, LatLonPoint point) {
+        MyRadioButton textViewDrawable = new MyRadioButton(this);
+        textViewDrawable.setLayoutParams(new LinearLayoutCompat.LayoutParams(-1, (int) getResources().getDimension(R.dimen.dms_80)));
+        textViewDrawable.setText(text);
+        textViewDrawable.setOnClickListener(v -> {
+            mSelectView = v;
+        });
+        textViewDrawable.setTextAppearance(this, R.style.TextSize16);
+        textViewDrawable.setTag(point);
+        textViewDrawable.setGravity(Gravity.CENTER_VERTICAL);
+        textViewDrawable.mDrawableSize = (int) getResources().getDimension(R.dimen.dms_30);
+        textViewDrawable.setCompoundDrawablePadding((int) getResources().getDimension(R.dimen.dms_30));
+        textViewDrawable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.selector_radio_location, 0, 0, 0);
+        return textViewDrawable;
+    }
+
 }

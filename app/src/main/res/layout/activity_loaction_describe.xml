@@ -8,31 +8,32 @@
     android:padding="@dimen/dms_40">
 
     <RadioGroup
+        android:id="@+id/location_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"/>
 
-        <com.expo.widget.MyRadioButton
-            android:id="@+id/location_describe_radio0"
-            style="@style/location_radio_style"
-            android:checked="true"
-            android:text="@string/location_describe_radio1" />
+        <!--<com.expo.widget.MyRadioButton-->
+            <!--android:id="@+id/location_describe_radio0"-->
+            <!--style="@style/location_radio_style"-->
+            <!--android:checked="true"-->
+            <!--android:text="@string/location_describe_radio1" />-->
 
-        <com.expo.widget.MyRadioButton
-            android:id="@+id/location_describe_radio1"
-            style="@style/location_radio_style"
-            android:text="@string/location_describe_radio2" />
+        <!--<com.expo.widget.MyRadioButton-->
+            <!--android:id="@+id/location_describe_radio1"-->
+            <!--style="@style/location_radio_style"-->
+            <!--android:text="@string/location_describe_radio2" />-->
 
-        <com.expo.widget.MyRadioButton
-            android:id="@+id/location_describe_radio2"
-            style="@style/location_radio_style"
-            android:text="@string/location_describe_radio3" />
+        <!--<com.expo.widget.MyRadioButton-->
+            <!--android:id="@+id/location_describe_radio2"-->
+            <!--style="@style/location_radio_style"-->
+            <!--android:text="@string/location_describe_radio3" />-->
 
-        <com.expo.widget.MyRadioButton
-            android:id="@+id/location_describe_radio3"
-            style="@style/location_radio_style"
-            android:text="@string/location_describe_radio4" />
-    </RadioGroup>
+        <!--<com.expo.widget.MyRadioButton-->
+            <!--android:id="@+id/location_describe_radio3"-->
+            <!--style="@style/location_radio_style"-->
+            <!--android:text="@string/location_describe_radio4" />-->
+    <!--</LinearLayout>-->
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         style="@style/TextSizeBlack16"
@@ -56,6 +57,7 @@
         android:padding="@dimen/dms_10" />
 
     <TextView
+        android:id="@+id/location_describe_save"
         style="@style/TextSizeWhite16"
         android:layout_width="@dimen/dms_180"
         android:layout_height="@dimen/dms_80"

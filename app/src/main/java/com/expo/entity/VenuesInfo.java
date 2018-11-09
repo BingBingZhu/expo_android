@@ -10,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "venues")
 public class VenuesInfo implements Parcelable {
 
-    @DatabaseField(columnName = "id", id = true)
+    @DatabaseField(columnName = "_id", id = true)
     @SerializedName("id")
     public int id;
     @DatabaseField(columnName = "caption")

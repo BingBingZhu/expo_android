@@ -2,19 +2,32 @@ package com.expo.module.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 
+import com.amap.api.maps.AMap;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
+import com.expo.base.ExpoApp;
+import com.expo.base.utils.CheckUtils;
+import com.expo.base.utils.GpsUtil;
+import com.expo.base.utils.PrefsHelper;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SeekHelpContract;
+import com.expo.entity.User;
+import com.expo.entity.VisitorService;
+import com.expo.map.LocationManager;
+import com.expo.module.map.ParkMapActivity;
 import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
@@ -35,9 +48,34 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     RecyclerView mRecycler;
     @BindView(R.id.seek_help_text3)
     EditText mEtEdit;
+    @BindView(R.id.seek_help_phone)
+    View mPhone;
 
     ArrayList<String> mImageList;
     SeekHelpAdapter mAdapter;
+    Location mLocation;
+
+    Double mLng, mLat;
+    String mCoordinateAssist = "";
+
+    boolean mIsLocation;
+
+    int mOpenGPSTimes;
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    if (2 == (mOpenGPSTimes = (mOpenGPSTimes + 1) % 3)) {
+                        hideLoadingView();
+                        ToastHelper.showShort(R.string.gps_open_weak);
+                    } else location(null);
+                    break;
+            }
+        }
+    };
 
     BaseAdapterItemClickListener<Integer> mClickListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
@@ -60,6 +98,13 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         }
     };
 
+    AMap.OnMyLocationChangeListener mLocationChangeListener = new AMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            mLocation = location;
+        }
+    };
+
     @Override
     protected int getContentView() {
         return R.layout.activity_seek_help;
@@ -68,7 +113,11 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, getIntent().getStringExtra(Constants.EXTRAS.EXTRA_TITLE));
+        if (getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0) != 0) {
+            mPhone.setVisibility(View.GONE);
+        }
         initRecyclerView();
+        mIsLocation = true;
     }
 
     @Override
@@ -85,6 +134,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         mImageList = new ArrayList<>();
         mAdapter.setClickListener(mClickListener);
         mAdapter.setDeleteListener(mDeleteListener);
+        LocationManager.getInstance().registerLocationListener(mLocationChangeListener);
 
     }
 
@@ -103,29 +153,49 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.RequestCode.REQ_OPEN_GPS) {
+            if (GpsUtil.isOPen(this))
+                location(null);
+        }
         if (resultCode == RESULT_OK)
-
             if (requestCode == Constants.RequestCode.REQUEST111 && data != null) {
                 mImageList.clear();
                 mImageList.addAll(data.getStringArrayListExtra(
                         ImageSelectorUtils.SELECT_RESULT));
                 mAdapter.refresh(mImageList);
+            } else if (requestCode == Constants.RequestCode.REQ_GET_LOCAL && data != null) {
+                mCoordinateAssist = data.getStringExtra(Constants.EXTRAS.EXTRAS);
+                mLat = data.getDoubleExtra(Constants.EXTRAS.EXTRA_LATITUDE, 0);
+                mLng = data.getDoubleExtra(Constants.EXTRAS.EXTRA_LONGITUDE, 0);
+                if (mLat == -1 && mLng == -1) mIsLocation = true;
+                else mIsLocation = false;
             }
     }
 
     @OnClick(R.id.seek_help_submit)
     public void submit(View view) {
-
+        VisitorService visitorService = initSubmitData();
+        if (visitorService != null)
+            mPresenter.addVisitorService(initSubmitData());
     }
 
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
-
+        ToastHelper.showShort("跳到导航界面");
     }
 
     @OnClick(R.id.seek_help_text4)
     public void location(View view) {
-        startActivity(new Intent(this, LocationDescribeActivity.class));
+        if (!GpsUtil.isOPen(this)) {
+            GpsUtil.openGPSSettings(this);
+            return;
+        }
+        showLoadingView();
+        if (mLocation != null) {
+            hideLoadingView();
+            LocationDescribeActivity.startActivityForResult(this, mLocation.getLatitude(), mLocation.getLongitude());
+        } else
+            mHandler.sendEmptyMessageDelayed(1, 1000);
     }
 
     @OnClick(R.id.seek_help_phone)
@@ -133,4 +203,66 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     }
 
+    private VisitorService initSubmitData() {
+        if (CheckUtils.isEmtpy(mEtEdit.getText().toString(), R.string.check_string_empty_localtion_descriptiong, true)) {
+            return null;
+        }
+
+        VisitorService visitorService = new VisitorService();
+        User user = ExpoApp.getApplication().getUser();
+        switch (mImageList.size()) {
+            case 3:
+                visitorService.img_url3 = mImageList.get(2);
+            case 2:
+                visitorService.img_url2 = mImageList.get(1);
+            case 1:
+                visitorService.img_url1 = mImageList.get(0);
+        }
+        switch (getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0)) {
+            case 0:
+                visitorService.servicetype = "1";
+                break;
+            case 1:
+                visitorService.servicetype = "3";
+                break;
+            case 2:
+                visitorService.servicetype = "5";
+                break;
+            case 3:
+                visitorService.servicetype = "4";
+                break;
+            case 4:
+                visitorService.servicetype = "2";
+                break;
+        }
+
+        visitorService.coordinate_assist = mCoordinateAssist;
+        visitorService.counttrycode = PrefsHelper.getString(Constants.Prefs.KEY_COUNTRY_CODE, "+86");
+        if (mIsLocation) {
+            if (mLocation != null) {
+                visitorService.gps_latitude = mLocation.getLatitude() + "";
+                visitorService.gps_longitude = mLocation.getLongitude() + "";
+            }
+        } else {
+            visitorService.gps_latitude = mLat + "";
+            visitorService.gps_longitude = mLng + "";
+        }
+        visitorService.phone = user.getMobile();
+        visitorService.situation = mEtEdit.getText().toString();
+        visitorService.userid = user.getUid();
+        visitorService.username = user.getNick();
+        return visitorService;
+    }
+
+    @Override
+    public void complete() {
+        ToastHelper.showShort(getResources().getString(R.string.submit_success));
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocationManager.getInstance().unregisterLocationListener(mLocationChangeListener);
+        super.onDestroy();
+    }
 }

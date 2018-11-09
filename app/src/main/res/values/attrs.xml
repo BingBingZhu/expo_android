@@ -88,4 +88,12 @@
         <attr name="centerPic" format="reference" />
     </declare-styleable>
 
+    <style name="ApkDownloadDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/TopDialogAnimation</item>
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">70%</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>

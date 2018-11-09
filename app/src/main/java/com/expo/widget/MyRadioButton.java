@@ -9,7 +9,7 @@ import android.widget.RadioButton;
 import com.expo.R;
 
 public class MyRadioButton extends RadioButton {
-    private int mDrawableSize;
+    public int mDrawableSize;
     //xml文件中设置的大小
 
     public MyRadioButton(Context context) {

@@ -9,7 +9,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "routes")
 public class RouteInfo implements Parcelable {
-    @DatabaseField(columnName = "id", id = true)
+    @DatabaseField(columnName = "_id", id = true)
     @SerializedName("id")
     public int id;
     @DatabaseField(columnName = "caption")
@@ -21,24 +21,21 @@ public class RouteInfo implements Parcelable {
     @DatabaseField(columnName = "create_time")
     @SerializedName("createtime")
     public String createTime;
-    @DatabaseField(columnName = "hot_count")
-    @SerializedName("hotcount")
-    public int hotCount;
     @DatabaseField(columnName = "ids_list")
     @SerializedName("idslist")
     public String idsList;
-    @DatabaseField(columnName = "is_enable")
+    @DatabaseField(columnName = "enable")
     @SerializedName("isenable")
-    public int isEnable;
+    public int enable;
     @DatabaseField(columnName = "lat")
     @SerializedName("lat")
     public String lat;
     @DatabaseField(columnName = "lines_list")
     @SerializedName("lineslist")
     public String linesList;
-    @DatabaseField(columnName = "link_url")
+    @DatabaseField(columnName = "link_h5_url")
     @SerializedName("linkh5url")
-    public String linkurl;
+    public String linkH5Url;
     @DatabaseField(columnName = "lon")
     @SerializedName("lon")
     public String lon;
@@ -63,22 +60,30 @@ public class RouteInfo implements Parcelable {
     @DatabaseField(columnName = "update_time")
     @SerializedName("updatetime")
     public String updateTime;
+    @DatabaseField(columnName = "voice_url")
+    @SerializedName("voiceurl")
+    public String voiceUrl;
+    @DatabaseField(columnName = "voice_url_en")
+    @SerializedName("voiceurlen")
+    public String voiceUrlEn;
+
+    @DatabaseField(columnName = "hotCount", defaultValue = "0")
+    public int hotCount;
 
     public RouteInfo() {
 
     }
 
-    public RouteInfo(Parcel in) {
+    protected RouteInfo(Parcel in) {
         id = in.readInt();
         caption = in.readString();
         captionen = in.readString();
         createTime = in.readString();
-        hotCount = in.readInt();
         idsList = in.readString();
-        isEnable = in.readInt();
+        enable = in.readInt();
         lat = in.readString();
         linesList = in.readString();
-        linkurl = in.readString();
+        linkH5Url = in.readString();
         lon = in.readString();
         parkId = in.readString();
         parkname = in.readString();
@@ -87,6 +92,9 @@ public class RouteInfo implements Parcelable {
         remarken = in.readString();
         typeId = in.readString();
         updateTime = in.readString();
+        voiceUrl = in.readString();
+        voiceUrlEn = in.readString();
+        hotCount = in.readInt();
     }
 
     public static final Creator<RouteInfo> CREATOR = new Creator<RouteInfo>() {
@@ -112,12 +120,11 @@ public class RouteInfo implements Parcelable {
         dest.writeString(caption);
         dest.writeString(captionen);
         dest.writeString(createTime);
-        dest.writeInt(hotCount);
         dest.writeString(idsList);
-        dest.writeInt(isEnable);
+        dest.writeInt(enable);
         dest.writeString(lat);
         dest.writeString(linesList);
-        dest.writeString(linkurl);
+        dest.writeString(linkH5Url);
         dest.writeString(lon);
         dest.writeString(parkId);
         dest.writeString(parkname);
@@ -126,149 +133,8 @@ public class RouteInfo implements Parcelable {
         dest.writeString(remarken);
         dest.writeString(typeId);
         dest.writeString(updateTime);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getCaption() {
-        return caption;
-    }
-
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
-
-    public String getCaptionen() {
-        return captionen;
-    }
-
-    public void setCaptionen(String captionen) {
-        this.captionen = captionen;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public int getHotCount() {
-        return hotCount;
-    }
-
-    public void setHotCount(int hotCount) {
-        this.hotCount = hotCount;
-    }
-
-    public String getIdsList() {
-        return idsList;
-    }
-
-    public void setIdsList(String idsList) {
-        this.idsList = idsList;
-    }
-
-    public int getIsEnable() {
-        return isEnable;
-    }
-
-    public void setIsEnable(int isEnable) {
-        this.isEnable = isEnable;
-    }
-
-    public String getLat() {
-        return lat;
-    }
-
-    public void setLat(String lat) {
-        this.lat = lat;
-    }
-
-    public String getLinesList() {
-        return linesList;
-    }
-
-    public void setLinesList(String linesList) {
-        this.linesList = linesList;
-    }
-
-    public String getLinkurl() {
-        return linkurl;
-    }
-
-    public void setLinkurl(String linkurl) {
-        this.linkurl = linkurl;
-    }
-
-    public String getLon() {
-        return lon;
-    }
-
-    public void setLon(String lon) {
-        this.lon = lon;
-    }
-
-    public String getParkId() {
-        return parkId;
-    }
-
-    public void setParkId(String parkId) {
-        this.parkId = parkId;
-    }
-
-    public String getParkname() {
-        return parkname;
-    }
-
-    public void setParkname(String parkname) {
-        this.parkname = parkname;
-    }
-
-    public String getPicUrl() {
-        return picUrl;
-    }
-
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getRemarken() {
-        return remarken;
-    }
-
-    public void setRemarken(String remarken) {
-        this.remarken = remarken;
-    }
-
-    public String getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+        dest.writeString(voiceUrl);
+        dest.writeString(voiceUrlEn);
+        dest.writeInt(hotCount);
     }
 }

@@ -43,14 +43,19 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mLanguage = PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null);
-        if (mLanguage == null) {
+//        mLanguage = PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null);
+//        if (mLanguage == null) {
+//            mLanguageCn.performClick();
+//        } else if (StringUtils.equals(LanguageUtil.LANGUAGE_CN, mLanguage)) {
+//            mLanguageCn.performClick();
+//        } else if (StringUtils.equals(LanguageUtil.LANGUAGE_EN, mLanguage)) {
+//            mLanguageEn.performClick();
+//        }
+        if (LanguageUtil.isCN())
             mLanguageCn.performClick();
-        } else if (StringUtils.equals(LanguageUtil.LANGUAGE_CN, mLanguage)) {
-            mLanguageCn.performClick();
-        } else if (StringUtils.equals(LanguageUtil.LANGUAGE_EN, mLanguage)) {
+        else
             mLanguageEn.performClick();
-        }
+
     }
 
     @Override

@@ -67,7 +67,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     }
 
     private void initTitle(String type) {
-        if (!StringUtils.equals("1", type)) {
+        if (StringUtils.equals("1", type)) {
             setTitle(0, R.string.title_message_system_ac);
         } else if (StringUtils.equals("4", type)) {
             setTitle(0, R.string.title_message_tourist_ac);
@@ -89,9 +89,8 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
 
         mAdapter = new MessageAdapter(this);
 
-        if (!StringUtils.equals("1", type)) {
+        if (StringUtils.equals("1", type)) {
             mAdapter.setLayoutId(R.layout.item_message_system);
-        } else if (StringUtils.equals("3", type)) {
         } else if (StringUtils.equals("4", type)) {
             mAdapter.setLayoutId(R.layout.item_message_tourist);
         } else if (StringUtils.equals("5", type)) {
@@ -121,6 +120,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     @Override
     public void onItemClick(View itemView, int position) {
         ToastHelper.showShort("点击了第" + position + "条");
+        mAdapter.mData.get(position).readMessage();
     }
 
     @Override

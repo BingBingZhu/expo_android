@@ -59,6 +59,8 @@
     <string name="hot">热度</string>
     <string name="camera_touch">轻触拍照，按住摄像</string>
     <string name="app_top_item">世园\n头条</string>
+    <string name="submit_success">你已经提交成功</string>
+    <string name="new_message">新消息提示</string>
 
     <string name="main_home">Home</string>
     <string name="main_panorama">Pano</string>
@@ -121,6 +123,8 @@
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
+    <string name="check_string_empty_localtion_descriptiong">情况描述不能为空</string>
+    <string name="please_enter_keywords">请输入关键字</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
 
@@ -132,6 +136,10 @@
     <string name="home_func_title_venue">推荐场馆</string>
     <string name="home_func_title_exhibit">推荐展览</string>
     <string name="home_func_title_exhibit_garden">推荐展园</string>
+
+    <string name="gps_open_weak">GPS信号较弱，请稍后再试</string>
+    <string name="gps_open_title">该功能需要打开定位功能。</string>
+    <string name="gps_open_content">请点击“设置”-“定位服务”打开定位功能</string>
 
     <integer name="video_time">60</integer>
     <string name="please_enter_keywords">please enter keywords</string>

@@ -13,12 +13,15 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
+import com.expo.adapters.DownloadData;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ActivityHelper;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SettingContract;
 import com.expo.contract.presenter.SettingPresenterImpl;
+import com.expo.entity.AppInfo;
+import com.expo.module.download.DownloadManager;
 import com.expo.module.login.LoginActivity;
 import com.expo.network.response.VersionInfoResp;
 import com.expo.utils.Constants;
@@ -192,25 +195,8 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     }
 
     @Override
-    public void appUpdate(VersionInfoResp info) {
-        if (StringUtils.equals(AppUtils.getAppVersionCode() + "", info.ver)) {
-            ToastHelper.showShort(R.string.latest_app_version);
-            return;
-        }
-        if (mDialogUpdate == null) {
-            View view = LayoutInflater.from(this).inflate(R.layout.dialog_app_update, null);
-            if (true) {// 是否是强制更新
-                view.findViewById(R.id.cancle).setVisibility(View.GONE);
-            }
-
-            mDialogUpdate = DialogPlus.newDialog(this)
-                    .setContentHolder(new ViewHolder(view))
-                    .setGravity(Gravity.CENTER)
-                    .setOnClickListener(mUpdateClickListener)
-                    .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                    .create();
-        }
-        mDialogUpdate.show();
+    public void appUpdate(AppInfo info) {
+        mPresenter.update(this, info);
     }
 
 }

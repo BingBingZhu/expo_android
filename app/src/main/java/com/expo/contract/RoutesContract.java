@@ -17,6 +17,8 @@ public interface RoutesContract {
 
         public abstract void clickRoute(String id);
 
+        public abstract void getRouterHotCount();
+
     }
 
     interface View extends IView {

@@ -20,10 +20,10 @@ public class CheckUtils {
     }
 
     public static boolean isEmtpy(String content, int resId, boolean showToast) {
-        if (showToast)
-            if (StringUtils.isEmpty(content))
-                ToastHelper.showShort(resId);
+        boolean isEmpty = StringUtils.isEmpty(content);
+        if (showToast && isEmpty)
+            ToastHelper.showShort(resId);
 
-        return StringUtils.isEmpty(content);
+        return isEmpty;
     }
 }

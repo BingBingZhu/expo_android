@@ -31,6 +31,7 @@ public interface Constants {
         public static final String KEY_LANGUAGE_CHOOSE = "key_language_choose";
         public static final String KEY_SHOW_SELECT_LANGUAGE = "key_app_first_use";
         public static final String KEY_HISTORY = "key_history";
+        public static final String KEY_COUNTRY_CODE = "key_country_code";
     }
 
     /**
@@ -108,6 +109,7 @@ public interface Constants {
         public static final String LOGIN_CHANGE_OF_STATE_ACTION = "login_change_of_state_action";
         public static final String ACTION_RECEIVE_MESSAGE = "action_receive_message";
         public static final String ACTION_CHANGE_LANGUAGE = "action_change_language";
+        public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
     }
 
     /**
@@ -118,6 +120,8 @@ public interface Constants {
         public static final int REQUEST111 = 11;
         public static final int REQ_SELECT_IMAGE = 120;
         public static final int REQ_CROP = 125;
+        public static final int REQ_OPEN_GPS = 126;
+        public static final int REQ_GET_LOCAL = 127;
     }
 
     /**

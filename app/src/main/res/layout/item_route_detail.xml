@@ -9,6 +9,7 @@
         android:layout_width="@dimen/dms_230"
         android:layout_height="@dimen/dms_170"
         android:scaleType="centerCrop"
+        android:src="@drawable/image_default"
         app:leftBottom_corner_radius="@dimen/dms_10"
         app:leftTop_corner_radius="@dimen/dms_10"
         app:type="round" />

@@ -38,6 +38,7 @@ public class HomeTopLineAdapter implements LimitScrollerView.LimitScrollAdapter 
         TextView text = (TextView) itemView.findViewById(R.id.text);
 
         text.setText(LanguageUtil.chooseTest(topLineInfo.caption, topLineInfo.captionEn));
+        itemView.setTag(topLineInfo);
         return itemView;
     }
 }
