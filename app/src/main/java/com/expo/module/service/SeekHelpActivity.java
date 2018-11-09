@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.CheckUtils;
+import com.expo.base.utils.GpsUtil;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SeekHelpContract;
@@ -51,6 +54,28 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     ArrayList<String> mImageList;
     SeekHelpAdapter mAdapter;
     Location mLocation;
+
+    Double mLng, mLat;
+    String mCoordinateAssist = "";
+
+    boolean mIsLocation;
+
+    int mOpenGPSTimes;
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    if (2 == (mOpenGPSTimes = (mOpenGPSTimes + 1) % 3)) {
+                        hideLoadingView();
+                        ToastHelper.showShort(R.string.gps_open_weak);
+                    } else location(null);
+                    break;
+            }
+        }
+    };
 
     BaseAdapterItemClickListener<Integer> mClickListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
@@ -92,6 +117,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
             mPhone.setVisibility(View.GONE);
         }
         initRecyclerView();
+        mIsLocation = true;
     }
 
     @Override
@@ -127,13 +153,22 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.RequestCode.REQ_OPEN_GPS) {
+            if (GpsUtil.isOPen(this))
+                location(null);
+        }
         if (resultCode == RESULT_OK)
-
             if (requestCode == Constants.RequestCode.REQUEST111 && data != null) {
                 mImageList.clear();
                 mImageList.addAll(data.getStringArrayListExtra(
                         ImageSelectorUtils.SELECT_RESULT));
                 mAdapter.refresh(mImageList);
+            } else if (requestCode == Constants.RequestCode.REQ_GET_LOCAL && data != null) {
+                mCoordinateAssist = data.getStringExtra(Constants.EXTRAS.EXTRAS);
+                mLat = data.getDoubleExtra(Constants.EXTRAS.EXTRA_LATITUDE, 0);
+                mLng = data.getDoubleExtra(Constants.EXTRAS.EXTRA_LONGITUDE, 0);
+                if (mLat == -1 && mLng == -1) mIsLocation = true;
+                else mIsLocation = false;
             }
     }
 
@@ -146,12 +181,21 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
-        ParkMapActivity.startActivity(getContext());
+        ToastHelper.showShort("跳到导航界面");
     }
 
     @OnClick(R.id.seek_help_text4)
     public void location(View view) {
-        startActivity(new Intent(this, LocationDescribeActivity.class));
+        if (!GpsUtil.isOPen(this)) {
+            GpsUtil.openGPSSettings(this);
+            return;
+        }
+        showLoadingView();
+        if (mLocation != null) {
+            hideLoadingView();
+            LocationDescribeActivity.startActivityForResult(this, mLocation.getLatitude(), mLocation.getLongitude());
+        } else
+            mHandler.sendEmptyMessageDelayed(1, 1000);
     }
 
     @OnClick(R.id.seek_help_phone)
@@ -192,10 +236,16 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                 break;
         }
 
+        visitorService.coordinate_assist = mCoordinateAssist;
         visitorService.counttrycode = PrefsHelper.getString(Constants.Prefs.KEY_COUNTRY_CODE, "+86");
-        if (mLocation != null) {
-            visitorService.gps_latitude = mLocation.getLatitude() + "";
-            visitorService.gps_longitude = mLocation.getLongitude() + "";
+        if (mIsLocation) {
+            if (mLocation != null) {
+                visitorService.gps_latitude = mLocation.getLatitude() + "";
+                visitorService.gps_longitude = mLocation.getLongitude() + "";
+            }
+        } else {
+            visitorService.gps_latitude = mLat + "";
+            visitorService.gps_longitude = mLng + "";
         }
         visitorService.phone = user.getMobile();
         visitorService.situation = mEtEdit.getText().toString();

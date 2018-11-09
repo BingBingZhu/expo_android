@@ -119,6 +119,8 @@ public interface Constants {
         public static final int REQUEST111 = 11;
         public static final int REQ_SELECT_IMAGE = 120;
         public static final int REQ_CROP = 125;
+        public static final int REQ_OPEN_GPS = 126;
+        public static final int REQ_GET_LOCAL = 127;
     }
 
     /**

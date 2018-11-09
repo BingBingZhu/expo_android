@@ -22,7 +22,6 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
 
     @Override
     public void addVisitorService(VisitorService visitorService) {
-        if(true) return;
         mView.showLoadingView();
         upLoadImgFile(visitorService, visitorService.img_url1, 0);
         upLoadImgFile(visitorService, visitorService.img_url2, 1);
@@ -60,6 +59,7 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
             @Override
             protected void onResponse(BaseResponse rsp) {
                 mView.hideLoadingView();
+                mView.complete();
             }
         }, verifyCodeLoginObservable);
 
