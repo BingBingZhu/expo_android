@@ -59,6 +59,7 @@
     <string name="hot">热度</string>
     <string name="camera_touch">轻触拍照，按住摄像</string>
     <string name="app_top_item">世园\n头条</string>
+    <string name="submit_success">你已经提交成功</string>
 
     <string name="main_home">首页</string>
     <string name="main_panorama">全景</string>
@@ -121,6 +122,7 @@
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
+    <string name="check_string_empty_localtion_descriptiong">情况描述不能为空</string>
     <string name="please_enter_keywords">请输入关键字</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>

@@ -2,6 +2,7 @@ package com.expo.module.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,12 +10,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 
+import com.amap.api.maps.AMap;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
+import com.expo.base.ExpoApp;
+import com.expo.base.utils.CheckUtils;
+import com.expo.base.utils.PrefsHelper;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SeekHelpContract;
+import com.expo.entity.User;
+import com.expo.entity.VisitorService;
+import com.expo.map.LocationManager;
+import com.expo.module.map.ParkMapActivity;
 import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
@@ -35,9 +45,12 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     RecyclerView mRecycler;
     @BindView(R.id.seek_help_text3)
     EditText mEtEdit;
+    @BindView(R.id.seek_help_phone)
+    View mPhone;
 
     ArrayList<String> mImageList;
     SeekHelpAdapter mAdapter;
+    Location mLocation;
 
     BaseAdapterItemClickListener<Integer> mClickListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
@@ -60,6 +73,13 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         }
     };
 
+    AMap.OnMyLocationChangeListener mLocationChangeListener = new AMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            mLocation = location;
+        }
+    };
+
     @Override
     protected int getContentView() {
         return R.layout.activity_seek_help;
@@ -68,6 +88,9 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, getIntent().getStringExtra(Constants.EXTRAS.EXTRA_TITLE));
+        if (getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0) != 0) {
+            mPhone.setVisibility(View.GONE);
+        }
         initRecyclerView();
     }
 
@@ -85,6 +108,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         mImageList = new ArrayList<>();
         mAdapter.setClickListener(mClickListener);
         mAdapter.setDeleteListener(mDeleteListener);
+        LocationManager.getInstance().registerLocationListener(mLocationChangeListener);
 
     }
 
@@ -115,12 +139,14 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_submit)
     public void submit(View view) {
-
+        VisitorService visitorService = initSubmitData();
+        if (visitorService != null)
+            mPresenter.addVisitorService(initSubmitData());
     }
 
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
-
+        ParkMapActivity.startActivity(getContext());
     }
 
     @OnClick(R.id.seek_help_text4)
@@ -133,4 +159,60 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     }
 
+    private VisitorService initSubmitData() {
+        if (CheckUtils.isEmtpy(mEtEdit.getText().toString(), R.string.check_string_empty_localtion_descriptiong, true)) {
+            return null;
+        }
+
+        VisitorService visitorService = new VisitorService();
+        User user = ExpoApp.getApplication().getUser();
+        switch (mImageList.size()) {
+            case 3:
+                visitorService.img_url3 = mImageList.get(2);
+            case 2:
+                visitorService.img_url2 = mImageList.get(1);
+            case 1:
+                visitorService.img_url1 = mImageList.get(0);
+        }
+        switch (getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0)) {
+            case 0:
+                visitorService.servicetype = "1";
+                break;
+            case 1:
+                visitorService.servicetype = "3";
+                break;
+            case 2:
+                visitorService.servicetype = "5";
+                break;
+            case 3:
+                visitorService.servicetype = "4";
+                break;
+            case 4:
+                visitorService.servicetype = "2";
+                break;
+        }
+
+        visitorService.counttrycode = PrefsHelper.getString(Constants.Prefs.KEY_COUNTRY_CODE, "+86");
+        if (mLocation != null) {
+            visitorService.gps_latitude = mLocation.getLatitude() + "";
+            visitorService.gps_longitude = mLocation.getLongitude() + "";
+        }
+        visitorService.phone = user.getMobile();
+        visitorService.situation = mEtEdit.getText().toString();
+        visitorService.userid = user.getUid();
+        visitorService.username = user.getNick();
+        return visitorService;
+    }
+
+    @Override
+    public void complete() {
+        ToastHelper.showShort(getResources().getString(R.string.submit_success));
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocationManager.getInstance().unregisterLocationListener(mLocationChangeListener);
+        super.onDestroy();
+    }
 }

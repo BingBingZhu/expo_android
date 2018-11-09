@@ -18,6 +18,7 @@ import com.expo.contract.RouteDetailContract;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.VenuesInfo;
 import com.expo.media.MediaPlayerManager;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.decorations.SpaceDecoration;
@@ -104,14 +105,12 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(1, R.string.title_routest_ac);
-        mPresenter.getRouteDetail(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_ID, 0));
-
         initRecyclerView();
+
         MediaPlayerManager.getInstence().setListener(mListener);
 
-        if (mList != null)
-            mPresenter.getVenuesList(mInfo.idsList);
-
+        mPresenter.getRouteDetail(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_ID, 0));
+        mPresenter.getVenuesList(mInfo.idsList);
     }
 
     @Override
@@ -138,7 +137,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         mRvRecycler.setAdapter(mAdapter = new CommonAdapter<VenuesInfo>(this, R.layout.item_route_detail, mList) {
             @Override
             protected void convert(ViewHolder holder, VenuesInfo venuesInfo, int position) {
-                Picasso.with(RouteDetailActivity.this).load(venuesInfo.picUrl).into((ImageView) holder.getView(R.id.item_route_img));
+                Picasso.with(RouteDetailActivity.this).load(CommUtils.getFullUrl(venuesInfo.picUrl)).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
                 holder.setText(R.id.item_route_name, venuesInfo.caption);
                 holder.setText(R.id.item_route_info, venuesInfo.remark);
             }
@@ -149,9 +148,9 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
     public void showRouteDetail(RouteInfo info) {
         mInfo = info;
         if (mInfo == null) return;
-        Picasso.with(this).load(info.picUrl).error(R.drawable.image_default).into(mIvImg);
+        Picasso.with(this).load(CommUtils.getFullUrl(info.picUrl)).error(R.drawable.image_default).into(mIvImg);
         mTvName.setText(LanguageUtil.chooseTest(info.caption, info.captionen));
-        mTvHot.setText(getResources().getString(R.string.hot) + LanguageUtil.chooseTest(info.caption, info.captionen));
+        mTvHot.setText(getResources().getString(R.string.hot) + info.hotCount);
         mTvTime.setText(info.updateTime);
         mTvInfo.setText(LanguageUtil.chooseTest(info.remark, info.remarken));
     }
@@ -159,14 +158,16 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
     @Override
     public void showVenuesList(List<VenuesInfo> list) {
         mList.clear();
-        mList.addAll(list);
+        if (list != null) {
+            mList.addAll(list);
+        }
         mAdapter.notifyDataSetChanged();
     }
 
     @OnClick(R.id.route_horn)
     public void clickHorn(View view) {
         if (mInfo == null) return;
-        MediaPlayerManager.getInstence().start(this, "http://audio.xmcdn.com/group29/M0A/B6/69/wKgJXVlLeQeSbdgPAAbo_IZ-YdA560.m4a");
+        MediaPlayerManager.getInstence().start(this, LanguageUtil.chooseTest(CommUtils.getFullUrl(mInfo.voiceUrl), CommUtils.getFullUrl(mInfo.voiceUrlEn)));
     }
 
     @Override

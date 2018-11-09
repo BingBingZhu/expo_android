@@ -7,6 +7,7 @@ import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.GetDistinguishPlantList_Rsb;
+import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
@@ -273,6 +274,16 @@ public interface DataServer {
     Observable<RouteInfoResp> loadRouteInfo(@Body RequestBody requestBody);
 
     /**
+     * 获取路线热度列表 id / hotscounts
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetRouterHotCountList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<RouteHotCountResp> getRouterHotCountList(@Body RequestBody requestBody);
+
+    /**
      * 获取路线列表
      *
      * @param requestBody
@@ -301,4 +312,16 @@ public interface DataServer {
     @POST("Terminal/GetTopLineList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<TopLineResp> getTopLineList(@Body RequestBody requestBody);
+
+    /**
+     * 获取头条列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/AddVisitorService")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> addVisitorService(@Body RequestBody requestBody);
+
+
 }

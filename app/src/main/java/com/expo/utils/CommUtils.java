@@ -18,7 +18,7 @@ public class CommUtils {
                 view[i].setVisibility(View.GONE);
     }
 
-    public static String getImgUrl(String url) {
+    public static String getFullUrl(String url) {
         String imgUrl = url;
         if (!imgUrl.startsWith(Constants.URL.FILE_BASE_URL))
             imgUrl = Constants.URL.FILE_BASE_URL + imgUrl;

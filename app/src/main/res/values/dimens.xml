@@ -20,10 +20,13 @@
     <dimen name="dms_4">2dp</dimen>
     <dimen name="dms_8">4dp</dimen>
     <dimen name="dms_10">5dp</dimen>
+    <dimen name="dms_16">8dp</dimen>
     <dimen name="dms_18">9dp</dimen>
     <dimen name="dms_20">10dp</dimen>
     <dimen name="dms_24">12dp</dimen>
+    <dimen name="dms_56">28dp</dimen>
     <dimen name="dms_30">15dp</dimen>
+    <dimen name="dms_36">18dp</dimen>
     <dimen name="dms_38">19dp</dimen>
     <dimen name="dms_40">20dp</dimen>
     <dimen name="dms_42">21dp</dimen>

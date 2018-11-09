@@ -1,12 +1,14 @@
 package com.expo.contract.presenter;
 
 import com.expo.base.ExpoApp;
+import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.BindPhoneContract;
 import com.expo.entity.User;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
+import com.expo.utils.Constants;
 
 import java.util.Map;
 
@@ -74,6 +76,7 @@ public class BindPhonePresenterImpl extends BindPhoneContract.Presenter {
             @Override
             protected void onResponse(VerifyCodeLoginResp rsp) {
                 setAppUserInfo(rsp);
+                PrefsHelper.setString(Constants.Prefs.KEY_COUNTRY_CODE, countryCode);
                 mView.verifyCodeLogin(rsp);
             }
         }, verifyCodeLoginObservable);

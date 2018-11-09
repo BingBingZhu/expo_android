@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.PrefsHelper;
 
 import java.util.Locale;
@@ -50,6 +51,10 @@ public class LanguageUtil {
 
     public static boolean isCN() {
         if (StringUtils.equals(LANGUAGE_CN, PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null)))
+            return true;
+        Locale locale = ExpoApp.getApplication().getResources().getConfiguration().locale;
+        String language = locale.getLanguage();
+        if (language.endsWith("zh"))
             return true;
         return false;
     }

@@ -1,6 +1,16 @@
 package com.expo.contract.presenter;
 
+import android.content.Context;
+
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.expo.R;
+import com.expo.adapters.DownloadData;
+import com.expo.adapters.DownloadInfoAdapter;
+import com.expo.base.utils.ToastHelper;
+import com.expo.base.utils.UpdateAppManager;
 import com.expo.contract.SettingContract;
+import com.expo.entity.AppInfo;
 import com.expo.entity.DownloadInfo;
 import com.expo.entity.User;
 import com.expo.module.download.DownloadManager;
@@ -34,14 +44,24 @@ public class SettingPresenterImpl extends SettingContract.Presenter {
             @Override
             protected void onResponse(VersionInfoResp rsp) {
                 mView.hideLoadingView();
-                mView.appUpdate(rsp);
+                if (StringUtils.equals(AppUtils.getAppVersionCode() + "", rsp.ver)) {
+                    ToastHelper.showShort(R.string.latest_app_version);
+                } else {
+                    for (int i = 0; i < rsp.Objlst.size(); i++) {
+                        if (StringUtils.equals("android", rsp.Objlst.get(i).platformname.toLowerCase())) {
+                            mView.appUpdate(rsp.Objlst.get(i));
+                            return;
+                        }
+                    }
+                }
             }
         }, observable);
     }
 
     @Override
-    public void update() {
+    public void update(Context context, AppInfo appInfo) {
         //调用下载功能
+        UpdateAppManager.getInstance(context).showNoticeDialog(appInfo, false);
     }
 
     @Override
@@ -62,4 +82,5 @@ public class SettingPresenterImpl extends SettingContract.Presenter {
             }
         }, observable);
     }
+
 }
