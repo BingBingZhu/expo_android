@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.StringUtils;
+import com.expo.R;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.HeartBeatContract;
@@ -16,6 +18,7 @@ import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.UserHeartBeatResp;
 import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 
 import java.text.SimpleDateFormat;
@@ -82,7 +85,8 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
         if (message == null) return false;
         if ("3".equals(message.getType())) {
             String currUkey = ExpoApp.getApplication().getUser().getUkey();
-            if ("relogin".equals(message.getCommand()) && message.getParams() != null && currUkey.equals(message.getParams().get("ukey"))) {
+            if ("relogin".equals(message.getCommand()) && message.getParams() != null
+                    && currUkey.equals(message.getParams().get("ukey"))) {
                 mDao.clear(User.class);
                 ExpoApp.getApplication().setUser(null);
                 Intent intent = new Intent();
@@ -93,6 +97,7 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
             return false;
         } else {
             mDao.saveOrUpdate(message);
+            checkMessage(message);
             LocalBroadcastUtil.sendBroadcast(mView.getContext(), null, Constants.Action.ACTION_RECEIVE_MESSAGE);
             return true;
         }
@@ -109,6 +114,17 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
                         LoginActivity.startActivity(ExpoApp.getApplication().getTopActivity());
                     }
                 })
+                .show();
+    }
+
+    private void checkMessage(Message message) {
+        if (message.getMsgKind().length() < 3) return;
+        if (!StringUtils.equals(message.getMsgKind().substring(2, 3), "1")) return;
+        if (!StringUtils.equals("1", message.getType())) return;
+        new AlertDialog.Builder(ExpoApp.getApplication().getTopActivity())
+                .setTitle(R.string.new_message)
+                .setMessage(LanguageUtil.chooseTest(message.getContent(), message.getContentEn()))
+                .setNegativeButton(R.string.ok, null)
                 .show();
     }
 }

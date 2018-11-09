@@ -60,6 +60,7 @@
     <string name="camera_touch">轻触拍照，按住摄像</string>
     <string name="app_top_item">世园\n头条</string>
     <string name="submit_success">你已经提交成功</string>
+    <string name="new_message">新消息提示</string>
 
     <string name="main_home">首页</string>
     <string name="main_panorama">全景</string>

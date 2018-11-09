@@ -47,7 +47,6 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
     @Override
     public void next() {
         if (false) {//直接去往某个界面，调试开发用的
-            UserInfoActivity.startActivity(this);
         }
         if (mPrepared) {
             String shownVer = PrefsHelper.getString(Constants.Prefs.KEY_GUIDE_SHOWN, null);
