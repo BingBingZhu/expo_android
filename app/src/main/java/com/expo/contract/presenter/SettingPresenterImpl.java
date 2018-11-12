@@ -1,6 +1,8 @@
 package com.expo.contract.presenter;
 
 import com.expo.contract.SettingContract;
+import com.expo.db.QueryParams;
+import com.expo.entity.CommonInfo;
 import com.expo.entity.DownloadInfo;
 import com.expo.entity.User;
 import com.expo.module.download.DownloadManager;
@@ -9,6 +11,7 @@ import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
 import com.expo.network.response.VersionInfoResp;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -61,5 +64,11 @@ public class SettingPresenterImpl extends SettingContract.Presenter {
                 mView.logout();
             }
         }, observable);
+    }
+
+    @Override
+    public void clickPolicy(String type) {
+        CommonInfo commonInfo = mDao.unique(CommonInfo.class, new QueryParams().add("eq", "type", type));
+        mView.returnCommonInfo(commonInfo);
     }
 }

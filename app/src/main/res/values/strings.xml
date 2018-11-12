@@ -143,5 +143,7 @@
     <string name="get_code">Get Code</string>
     <string name="recommend">RECOMM</string>
     <string name="test_navi">NAVI</string>
+    <string name="articles_of_agreement">《北京世园会用户服务协议》</string>
+    <string name="there_is_no_user_guidance">暂无用户指南</string>
 
 </resources>

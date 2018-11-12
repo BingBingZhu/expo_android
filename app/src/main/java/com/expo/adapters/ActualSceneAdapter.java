@@ -25,6 +25,11 @@ public class ActualSceneAdapter implements ListItemData {
     }
 
     @Override
+    public Long getId() {
+        return mSceneAndEncy.getId();
+    }
+
+    @Override
     public String getCaption() {
         return mSceneAndEncy.getCaption();
     }

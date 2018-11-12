@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.LoginContract;
+import com.expo.entity.CommonInfo;
 import com.expo.module.main.MainActivity;
 import com.expo.module.webview.WebActivity;
 import com.expo.network.response.VerifyCodeLoginResp;
@@ -180,12 +182,13 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     }
 
     @Override
-    public void toUserProtocol(String url) {
-        if (url.equals("")) {
+    public void toUserProtocol(CommonInfo commonInfo) {
+        if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())){
             ToastHelper.showLong(R.string.there_is_no_user_protocol);
             return;
         }
-        WebActivity.startActivity(this, url, getString(R.string.user_protocol));
+        WebActivity.startActivity(getContext(), commonInfo.getLinkUrl(),
+                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn());
     }
 
     @Override

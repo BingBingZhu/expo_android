@@ -40,6 +40,9 @@ public class ActualScene implements Parcelable {
     @DatabaseField(columnName = "link_h5_url")
     @SerializedName("linkh5url")
     private String linkH5Url;
+    @DatabaseField(columnName = "link_h5_url_en")
+    @SerializedName("linkh5urlen")
+    private String linkH5UrlEn;
     @DatabaseField(columnName = "create_time")
     @SerializedName("createtime")
     private String createTime;
@@ -157,8 +160,13 @@ public class ActualScene implements Parcelable {
         this.caption = caption;
     }
 
-    public String getType() {
-        return type;
+    public Long getType() {
+        try {
+            return Long.parseLong(type);
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0L;
+        }
     }
 
     public void setType(String type) {
@@ -195,6 +203,14 @@ public class ActualScene implements Parcelable {
 
     public void setLinkH5Url(String linkH5Url) {
         this.linkH5Url = linkH5Url;
+    }
+
+    public String getLinkH5UrlEn() {
+        return linkH5UrlEn;
+    }
+
+    public void setLinkH5UrlEn(String linkH5UrlEn) {
+        this.linkH5UrlEn = linkH5UrlEn;
     }
 
     public String getCreateTime() {

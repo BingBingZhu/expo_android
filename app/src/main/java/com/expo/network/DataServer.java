@@ -7,6 +7,7 @@ import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.GetDistinguishPlantList_Rsb;
+import com.expo.network.response.RichTextRsp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
@@ -301,4 +302,13 @@ public interface DataServer {
     @POST("Terminal/GetTopLineList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<TopLineResp> getTopLineList(@Body RequestBody requestBody);
+
+    /**
+     * 终端获取富文本根据id
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetRichText")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<RichTextRsp> getRichText(@Body RequestBody requestBody);
 }

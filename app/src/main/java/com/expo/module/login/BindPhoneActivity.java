@@ -183,10 +183,6 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
         finish();
     }
 
-    public void toUserProtocol(String url) {
-
-    }
-
     public void confirmPhoneNumber() {
         if (mAlertDialog == null) {
             mAlertDialog = new AlertDialog.Builder(this, R.style.TransparentDialog).create();

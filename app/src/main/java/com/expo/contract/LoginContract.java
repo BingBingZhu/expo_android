@@ -4,6 +4,7 @@ import android.support.annotation.StringRes;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.CommonInfo;
 import com.expo.network.response.VerifyCodeLoginResp;
 
 public interface LoginContract {
@@ -46,9 +47,9 @@ public interface LoginContract {
         /**
          * 跳转用户协议页面
          *
-         * @param url
+         * @param info
          */
-        void toUserProtocol(String url);
+        void toUserProtocol(CommonInfo info);
 
         /**
          * 返回第三方登录的取消或错误信息

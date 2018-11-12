@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,10 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SettingContract;
 import com.expo.contract.presenter.SettingPresenterImpl;
+import com.expo.entity.CommonInfo;
 import com.expo.module.login.LoginActivity;
+import com.expo.module.webview.WebActivity;
+import com.expo.module.webview.WebTemplateActivity;
 import com.expo.network.response.VersionInfoResp;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -173,12 +177,12 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_guide)
     public void clickGuide(MySettingView view) {
-
+        mPresenter.clickPolicy("0");
     }
 
     @OnClick(R.id.setting_policy)
     public void clickPolicy(MySettingView view) {
-
+        mPresenter.clickPolicy("1");
     }
 
     @OnClick(R.id.logout)
@@ -211,6 +215,23 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
                     .create();
         }
         mDialogUpdate.show();
+    }
+
+    @Override
+    public void returnCommonInfo(CommonInfo commonInfo) {
+        if (commonInfo.getType().equals("0")) {
+            if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())) {
+                ToastHelper.showLong(R.string.there_is_no_user_guidance);
+                return;
+            }
+        }else if (commonInfo.getType().equals("1")){
+            if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())) {
+                ToastHelper.showLong(R.string.there_is_no_user_protocol);
+                return;
+            }
+        }
+        WebActivity.startActivity(getContext(), commonInfo.getLinkUrl(),
+                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn());
     }
 
 }

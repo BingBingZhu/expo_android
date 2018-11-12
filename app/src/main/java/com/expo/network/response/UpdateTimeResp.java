@@ -19,7 +19,7 @@ public class UpdateTimeResp extends BaseResponse {
     public String wiki;
     @SerializedName(value = "gCacheUpdateTimeWikiType")
     public String wikiType;
-    @SerializedName(value = "gCacheUpdateTimetCommoninformation")
+    @SerializedName(value = "gCacheUpdateTimeCommoninformation")
     public String commoninformation;
     @SerializedName(value = "gCacheUpdateTimeSubject")
     public String subject;

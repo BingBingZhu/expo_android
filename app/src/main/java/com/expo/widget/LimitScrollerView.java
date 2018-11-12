@@ -357,7 +357,7 @@ public class LimitScrollerView extends LinearLayout implements View.OnClickListe
 
     public interface OnItemClickListener {
 
-        public void onItemClick(Object obj);
+        void onItemClick(Object obj);
 
     }
 

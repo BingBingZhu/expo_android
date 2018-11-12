@@ -46,6 +46,8 @@ public interface Constants {
         public static final String EXTRAS = "extras";
         public static final String EXTRA_LONGITUDE = "extra_longitude";
         public static final String EXTRA_LATITUDE = "extra_latitude";
+        public static final String EXTRA_TEMPLATE_TYPE = "extra_template_type";
+        public static final String EXTRA_DATA_ID = "extra_data_id";
     }
 
     /**

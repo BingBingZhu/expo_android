@@ -362,7 +362,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
     }
 
     /*
-     * 获取场馆（设施）列表
+     * 获取头条列表
      */
     private void loadTopLine(RequestBody emptyBody) {
         Observable<TopLineResp> observable = Http.getServer().getTopLineList(emptyBody);

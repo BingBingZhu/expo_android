@@ -189,11 +189,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
     @Override
     public void loadUserProtocol() {
         CommonInfo info = mDao.unique(CommonInfo.class, new QueryParams().add("eq", "type", "1"));
-        if (null == info) {
-            mView.toUserProtocol("");
-            return;
-        }
-        mView.toUserProtocol(info.getLinkUrl());
+        mView.toUserProtocol(info);
     }
 
     private void setAppUserInfo(VerifyCodeLoginResp rsp) {

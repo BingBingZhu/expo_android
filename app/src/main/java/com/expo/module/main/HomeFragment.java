@@ -25,6 +25,7 @@ import com.expo.module.main.adapter.HomeTopLineAdapter;
 import com.expo.module.map.ParkMapActivity;
 import com.expo.module.routes.RoutesActivity;
 import com.expo.module.service.TouristServiceActivity;
+import com.expo.module.webview.WebActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -79,7 +80,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     CommonAdapter<Encyclopedias> mAdapterExhibitGarden;
 
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
-
+        TopLineInfo topLine = (TopLineInfo)obj;
+        WebActivity.startActivity(getContext(),
+                LanguageUtil.chooseTest(topLine.linkH5Url, topLine.linkH5UrlEn),
+                LanguageUtil.chooseTest(topLine.caption, topLine.captionEn));
     };
 
 
@@ -140,7 +144,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @OnClick(R.id.home_map_img)
     public void clickMapImg(View view) {
-        ParkMapActivity.startActivity(getContext());
+        ParkMapActivity.startActivity(getContext(), 0L, 0L);
     }
 
     @OnClick({R.id.home_func_0, R.id.home_func_1, R.id.home_func_2, R.id.home_func_3, R.id.home_func_4})

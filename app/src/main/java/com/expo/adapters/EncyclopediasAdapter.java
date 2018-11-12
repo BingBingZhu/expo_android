@@ -25,6 +25,11 @@ public class EncyclopediasAdapter implements ListItemData {
     }
 
     @Override
+    public Long getId() {
+        return mSceneAndEncy.getId();
+    }
+
+    @Override
     public String getCaption() {
         return mSceneAndEncy.caption;
     }
