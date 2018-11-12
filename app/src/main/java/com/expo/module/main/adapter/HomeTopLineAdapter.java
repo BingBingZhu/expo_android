@@ -33,10 +33,8 @@ public class HomeTopLineAdapter implements LimitScrollerView.LimitScrollAdapter 
     @Override
     public View getView(int index) {
         TopLineInfo topLineInfo = mData.get(index);
-
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.item_home_ad, null, false);
         TextView text = (TextView) itemView.findViewById(R.id.text);
-
         text.setText(LanguageUtil.chooseTest(topLineInfo.caption, topLineInfo.captionEn));
         itemView.setTag(topLineInfo);
         return itemView;

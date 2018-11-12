@@ -12,6 +12,9 @@ import android.widget.ProgressBar;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
+import com.expo.contract.WebContract;
+import com.expo.contract.WebTemplateContract;
+import com.expo.entity.RichText;
 import com.expo.utils.Constants;
 import com.expo.widget.AppBarView;
 import com.expo.widget.X5WebView;
@@ -25,7 +28,7 @@ import butterknife.OnClick;
 /*
  * 加载HTML页面的通用页
  */
-public class WebActivity extends BaseActivity implements View.OnClickListener {
+public class WebActivity extends BaseActivity<WebContract.Presenter> implements WebContract.View {
 
     @BindView(R.id.common_x5)
     X5WebView mX5View;
@@ -50,11 +53,17 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void loadUrl(String url) {
-        if (!url.startsWith("http") && !url.startsWith("https")
-                && !url.startsWith("file") && !url.startsWith("javascript:")) {
-            url = Constants.URL.FILE_BASE_URL + url;
+        try {
+            int rulId = Integer.parseInt(url);
+            mPresenter.getUrlById(rulId);
+        }catch (Exception e){
+            if (!url.startsWith("http") && !url.startsWith("https")
+                    && !url.startsWith("file") && !url.startsWith("javascript:")
+                    && !url.startsWith("www")) {
+                url = Constants.URL.FILE_BASE_URL + url;
+            }
+            mX5View.loadUrl(url);
         }
-        mX5View.loadUrl(url);
     }
 
 
@@ -81,7 +90,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected boolean hasPresenter() {
-        return false;
+        return true;
     }
 
     public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title) {
@@ -92,12 +101,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    @OnClick(R.id.title_back)
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_back:
-                onBackPressed();
-                break;
-        }
+    public void returnRichText(RichText richText) {
+        mX5View.loadData(richText.getContent(), "text/html;charset=utf8", "UTF-8");
     }
 }

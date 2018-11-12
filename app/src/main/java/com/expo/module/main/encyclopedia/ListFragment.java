@@ -81,9 +81,11 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
     @Override
     public void addEncysToList(List<Encyclopedias> data) {
         // 加载到列表
-        if ((null == data || data.size() == 0) && page > 0) {
-            page--;
-            ToastHelper.showShort(R.string.no_more_data_available);
+        if (null == data || data.size() == 0) {
+            if (page > 0) {
+                page--;
+                ToastHelper.showShort(R.string.no_more_data_available);
+            }
         } else {
             mEncyclopediasList.addAll(EncyclopediasAdapter.convertToTabList(data));
         }

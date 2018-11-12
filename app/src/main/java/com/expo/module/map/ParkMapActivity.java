@@ -49,7 +49,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /*
- * 推荐路线列表
+ * 导游导览
  */
 public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> implements
         ParkMapContract.View, AMap.OnMapTouchListener, AMap.OnMarkerClickListener {
@@ -111,8 +111,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
      *
      * @param context
      */
-    public static void startActivity(@NonNull Context context) {
+    public static void startActivity(@NonNull Context context, @Nullable Long tabId, @Nullable Long spotId) {
         Intent in = new Intent( context, ParkMapActivity.class );
+        in.putExtra(Constants.EXTRAS.EXTRA_SPOT_ID, spotId);
+        in.putExtra(Constants.EXTRAS.EXTRA_TAB_ID, tabId);
         context.startActivity( in );
     }
 

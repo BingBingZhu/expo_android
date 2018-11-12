@@ -24,6 +24,8 @@ import com.expo.contract.presenter.SeekHelpPresenterImpl;
 import com.expo.contract.presenter.SettingPresenterImpl;
 import com.expo.contract.presenter.SplashPresenterImpl;
 import com.expo.contract.presenter.UserInfoPresenterImpl;
+import com.expo.contract.presenter.WebPresenterImpl;
+import com.expo.contract.presenter.WebTemplatePresenterImpl;
 
 public class PresenterFactory {
     public static IPresenter getPresenter(IView view) {
@@ -71,6 +73,10 @@ public class PresenterFactory {
             return new UserInfoPresenterImpl( (UserInfoContract.View) view );
         } else if (view instanceof ListContract.View) {
             return new ListPresenterImpl( (ListContract.View) view );
+        } else if (view instanceof WebTemplateContract.View) {
+            return new WebTemplatePresenterImpl( (WebTemplateContract.View) view );
+        } else if (view instanceof WebContract.View) {
+            return new WebPresenterImpl( (WebContract.View) view );
         }
         throw new UnsupportedOperationException();
     }

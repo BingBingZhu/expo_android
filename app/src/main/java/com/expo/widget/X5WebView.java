@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.expo.base.utils.ToastHelper;
+import com.expo.map.LocationManager;
+import com.expo.module.webview.WebTemplateActivity;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.AppInfo;
+import com.expo.entity.CommonInfo;
 import com.expo.network.response.VersionInfoResp;
 
 public interface SettingContract {
@@ -22,12 +23,16 @@ public interface SettingContract {
 
         public abstract void logout();
 
+        public abstract void clickPolicy(String type);
     }
 
     interface View extends IView {
 
         void logout();
 
+        //void appUpdate(VersionInfoResp info);
+
+        void returnCommonInfo(CommonInfo commonInfo);
         void appUpdate(AppInfo bean);
     }
 }

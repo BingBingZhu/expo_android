@@ -142,7 +142,7 @@
                     android:id="@+id/login_protocol_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="《北京世园会用户服务协议》"
+                    android:text="@string/articles_of_agreement"
                     android:textColor="#43A67D"
                     android:textSize="@dimen/font_22" />
             </LinearLayout>

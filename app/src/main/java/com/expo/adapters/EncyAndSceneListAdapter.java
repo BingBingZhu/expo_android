@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.utils.ToastHelper;
+import com.expo.contract.presenter.WebTemplatePresenterImpl;
 import com.expo.entity.ActualScene;
 import com.expo.entity.Encyclopedias;
+import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -52,7 +54,20 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
         holder.tvRecommend.setVisibility( ency.getRecommend() == 1 ? View.VISIBLE : View.GONE );
         holder.tvRemark.setText( LanguageUtil.chooseTest(ency.getRemark(), ency.getEnRemark()) );
         holder.root.setOnClickListener(v -> {
-            ToastHelper.showShort(ency.getCaption());
+            String title = "";
+            String lan = "";
+            int dataType = 0;
+            if (LanguageUtil.isCN()){
+                title = ency.getCaption();
+                lan = "ch";
+            }else{
+                title = ency.getEnCaption();
+                lan = "en";
+            }
+            if (ency instanceof EncyclopediasAdapter)
+                WebTemplateActivity.startActivity(mContext, WebTemplatePresenterImpl.ENCYCLOPEDIA, ency.getId(), lan, title);
+            else if (ency instanceof ActualSceneAdapter)
+                WebTemplateActivity.startActivity(mContext, WebTemplatePresenterImpl.ACTUAL_SCENE, ency.getId(), lan, title);
         });
     }
 
