@@ -85,7 +85,7 @@ public class RootView extends LinearLayoutCompat {
         if (mTitle == null) return;
         ((AppBarView) mTitle).setTitleColor(mActivity.getResources().getColor(R.color.white));
         ((AppBarView) mTitle).setTitleSize(TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px(17));
-        ((AppBarView) mTitle).setBackImageResource(R.drawable.icon_navbar_back_white);
+        ((AppBarView) mTitle).setBackImageResource(R.mipmap.ico_white_back);
         ((AppBarView) mTitle).onFinishInflate();
         mTitle.setBackgroundResource(R.color.green_02cd9b);
     }
@@ -94,7 +94,7 @@ public class RootView extends LinearLayoutCompat {
         if (mTitle == null) return;
         ((AppBarView) mTitle).setTitleColor(mActivity.getResources().getColor(R.color.black));
         ((AppBarView) mTitle).setTitleSize(TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px(17));
-        ((AppBarView) mTitle).setBackImageResource(R.drawable.icon_navbar_back_black);
+        ((AppBarView) mTitle).setBackImageResource(R.mipmap.ico_black_back);
         ((AppBarView) mTitle).onFinishInflate();
         mTitle.setBackgroundResource(R.color.white);
     }
