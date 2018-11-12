@@ -46,54 +46,54 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
     private boolean isRequest;
 
     public SplashPresenterImpl(SplashContract.View view) {
-        super(view);
+        super( view );
     }
 
     @Override
     public void loadInitData() {
         loadCompleteCount = new AtomicInteger();
-        RequestBody emptyBody = Http.buildRequestBody(Http.getBaseParams());
-        checkUpdateDate(emptyBody);
-        loadAllTypes(emptyBody);
+        RequestBody emptyBody = Http.buildRequestBody( Http.getBaseParams() );
+        checkUpdateDate( emptyBody );
+        loadAllTypes( emptyBody );
         copyAMapStyleToSDCard();
-        loadRouteInfo(emptyBody);
+        loadRouteInfo( emptyBody );
         loadVenuesInfo();
-        loadTopLine(emptyBody);
+        loadTopLine( emptyBody );
     }
 
     private void checkUpdateDate(RequestBody emptyBody) {
-        Observable<UpdateTimeResp> observable = Http.getServer().checkUpdateTime(emptyBody);
-        isRequest = Http.request(new ResponseCallback<UpdateTimeResp>() {
+        Observable<UpdateTimeResp> observable = Http.getServer().checkUpdateTime( emptyBody );
+        isRequest = Http.request( new ResponseCallback<UpdateTimeResp>() {
             @Override
             protected void onResponse(UpdateTimeResp rsp) {
                 String updateTime;
-                if (!TextUtils.isEmpty(rsp.commoninformation)) {
-                    updateTime = PrefsHelper.getString(Constants.Prefs.KEY_COMMON_INFO_UPDATE_TIME, null);
-                    if (!rsp.commoninformation.equals(updateTime)) {
-                        loadCommonInfo(emptyBody);
+                if (!TextUtils.isEmpty( rsp.commoninformation )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_COMMON_INFO_UPDATE_TIME, null );
+                    if (!rsp.commoninformation.equals( updateTime )) {
+                        loadCommonInfo( emptyBody );
                     }
                 }
-                if (!TextUtils.isEmpty(rsp.actualScene)) {
-                    updateTime = PrefsHelper.getString(Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, null);
-                    if (!rsp.actualScene.equals(updateTime)) {
-                        requestSpot(Constants.URL.ACTUAL_SCENES, emptyBody, Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, ActualScene.class);
+                if (!TextUtils.isEmpty( rsp.actualScene )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, null );
+                    if (!rsp.actualScene.equals( updateTime )) {
+                        requestSpot( Constants.URL.ACTUAL_SCENES, emptyBody, Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, ActualScene.class );
                     }
                 }
-                if (!TextUtils.isEmpty(rsp.subject)) {
-                    updateTime = PrefsHelper.getString(Constants.Prefs.KEY_SUBJECT_UPDATE_TIME, null);
-                    if (!rsp.subject.equals(updateTime)) {
-                        loadSubjects(emptyBody);
+                if (!TextUtils.isEmpty( rsp.subject )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_SUBJECT_UPDATE_TIME, null );
+                    if (!rsp.subject.equals( updateTime )) {
+                        loadSubjects( emptyBody );
                     }
                 }
-                if (!TextUtils.isEmpty(rsp.wiki)) {
-                    updateTime = PrefsHelper.getString(Constants.Prefs.KEY_ENCYCLOPEDIAS_UPDATE_TIME, null);
-                    if (!rsp.wiki.equals(updateTime)) {
+                if (!TextUtils.isEmpty( rsp.wiki )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ENCYCLOPEDIAS_UPDATE_TIME, null );
+                    if (!rsp.wiki.equals( updateTime )) {
                         loadEncyclopedias();
                     }
                 }
-                if (!TextUtils.isEmpty(rsp.touristType)) {
-                    updateTime = PrefsHelper.getString(Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, null);
-                    if (!rsp.touristType.equals(updateTime)) {
+                if (!TextUtils.isEmpty( rsp.touristType )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, null );
+                    if (!rsp.touristType.equals( updateTime )) {
                         loadTouristTypeList();
                     }
                 }
@@ -103,102 +103,101 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
-        if (isRequest)
-            loadCompleteCount.addAndGet(1);
+        }, observable );
+        addNetworkRecord();
     }
 
     /*
      * 加载攻略数据
      */
     private void loadEncyclopedias() {
-        loadCompleteCount.addAndGet(1);
         Map<String, Object> params = Http.getBaseParams();
-        params.put("Pageidx", 0);
-        params.put("Count", 1000000);
-        Observable<EncyclopediasResp> observable = Http.getServer().loadEncyclopedias(Http.buildRequestBody(params));
-        Http.request(new ResponseCallback<EncyclopediasResp>() {
+        params.put( "Pageidx", 0 );
+        params.put( "Count", 1000000 );
+        Observable<EncyclopediasResp> observable = Http.getServer().loadEncyclopedias( Http.buildRequestBody( params ) );
+        isRequest = Http.request( new ResponseCallback<EncyclopediasResp>() {
             @Override
             protected void onResponse(EncyclopediasResp rsp) {
-                PrefsHelper.setString(Constants.Prefs.KEY_ENCYCLOPEDIAS_UPDATE_TIME, rsp.updateTime);
-                mDao.clear(Encyclopedias.class);
-                mDao.saveOrUpdateAll(rsp.encyclopedias);
+                PrefsHelper.setString( Constants.Prefs.KEY_ENCYCLOPEDIAS_UPDATE_TIME, rsp.updateTime );
+                mDao.clear( Encyclopedias.class );
+                mDao.saveOrUpdateAll( rsp.encyclopedias );
             }
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
+                super.onError( e );
             }
 
             @Override
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
+        }, observable );
+        addNetworkRecord();
     }
 
     /**
      * 加载导游类型列表
      */
     private void loadTouristTypeList() {
-        loadCompleteCount.addAndGet(1);
         Map<String, Object> params = Http.getBaseParams();
-        params.put("ParkID", 1);
-        Observable<TouristTypeResp> observable = Http.getServer().loadTouristTypeList(Http.buildRequestBody(params));
-        Http.request(new ResponseCallback<TouristTypeResp>() {
+        params.put( "ParkID", 1 );
+        Observable<TouristTypeResp> observable = Http.getServer().loadTouristTypeList( Http.buildRequestBody( params ) );
+        isRequest = Http.request( new ResponseCallback<TouristTypeResp>() {
             @Override
             protected void onResponse(TouristTypeResp rsp) {
-                PrefsHelper.setString(Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, rsp.updateTime);
-                mDao.clear(TouristType.class);
-                mDao.saveOrUpdateAll(rsp.touristTypes);
+                PrefsHelper.setString( Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, rsp.updateTime );
+                mDao.clear( TouristType.class );
+                mDao.saveOrUpdateAll( rsp.touristTypes );
             }
 
             @Override
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
+        }, observable );
+        addNetworkRecord();
     }
 
     @Override
     public User loadUser() {
-        return mDao.unique(User.class, null);
+        return mDao.unique( User.class, null );
     }
 
     @Override
     public void appRun(String uId, String uKey) {
         Map<String, Object> params = Http.getBaseParams();
-        params.put("Uid", uId);
-        params.put("Ukey", uKey);
-        Observable<BaseResponse> observable = Http.getServer().userlogAppRun(Http.buildRequestBody(params));
-        Http.request(new ResponseCallback<BaseResponse>() {
+        params.put( "Uid", uId );
+        params.put( "Ukey", uKey );
+        Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( params ) );
+        Http.request( new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
             }
 
-        }, observable);
+        }, observable );
     }
 
     /*
      * 复制地图样式文件到手机储存中
      */
     public void copyAMapStyleToSDCard() {
-        loadCompleteCount.addAndGet(1);
+        loadCompleteCount.addAndGet( 1 );
         new Thread() {
             @Override
             public void run() {
                 String styleName = "style.data";
                 String filePath = mView.getContext().getFilesDir().getAbsolutePath();
-                File file = new File(filePath + File.separator + styleName);
+                File file = new File( filePath + File.separator + styleName );
                 if (file.exists()) {
                     notifyLoadComplete();
                     return;
                 }
                 try {
                     if (file.createNewFile()) {
-                        InputStream inputStream = mView.getContext().getAssets().open("map/" + styleName);
-                        FileOutputStream outputStream = new FileOutputStream(file);
-                        FileUtils.copy(inputStream, outputStream);
+                        InputStream inputStream = mView.getContext().getAssets().open( "map/" + styleName );
+                        FileOutputStream outputStream = new FileOutputStream( file );
+                        FileUtils.copy( inputStream, outputStream );
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -213,33 +212,33 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
      * 加载所有分类类型数据
      */
     private void loadAllTypes(RequestBody body) {
-        Observable<AllTypeResp> observable = Http.getServer().loadAllTypes(body);
-        isRequest = Http.request(new ResponseCallback<AllTypeResp>() {
+        Observable<AllTypeResp> observable = Http.getServer().loadAllTypes( body );
+        isRequest = Http.request( new ResponseCallback<AllTypeResp>() {
             @Override
             protected void onResponse(AllTypeResp rsp) {
-                mDao.clear(DataType.class);
+                mDao.clear( DataType.class );
                 if (rsp.messageTypes != null && rsp.messageTypes.size() > 0) {
                     for (DataType type : rsp.messageTypes) {
-                        type.setKind(1);
-                        mDao.saveOrUpdate(type);
+                        type.setKind( 1 );
+                        mDao.saveOrUpdate( type );
                     }
                 }
                 if (rsp.venueTypes != null && rsp.venueTypes.size() > 0) {
                     for (DataType type : rsp.venueTypes) {
-                        type.setKind(2);
-                        mDao.saveOrUpdate(type);
+                        type.setKind( 2 );
+                        mDao.saveOrUpdate( type );
                     }
                 }
                 if (rsp.wikiTypes != null && rsp.wikiTypes.size() > 0) {
                     for (DataType type : rsp.wikiTypes) {
-                        type.setKind(3);
-                        mDao.saveOrUpdate(type);
+                        type.setKind( 3 );
+                        mDao.saveOrUpdate( type );
                     }
                 }
                 if (rsp.feedbackTypes != null && rsp.feedbackTypes.size() > 0) {
                     for (DataType type : rsp.feedbackTypes) {
-                        type.setKind(5);
-                        mDao.saveOrUpdate(type);
+                        type.setKind( 5 );
+                        mDao.saveOrUpdate( type );
                     }
                 }
             }
@@ -248,9 +247,8 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
-        if (isRequest)
-            loadCompleteCount.addAndGet(1);
+        }, observable );
+        addNetworkRecord();
     }
 
 
@@ -258,21 +256,21 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
      * 加载主题数据
      */
     private void loadSubjects(RequestBody emptyBody) {
-        loadCompleteCount.addAndGet(1);
-        Observable<SubjectResp> observable = Http.getServer().loadSubjects(emptyBody);
-        Http.request(new ResponseCallback<SubjectResp>() {
+        Observable<SubjectResp> observable = Http.getServer().loadSubjects( emptyBody );
+        isRequest = Http.request( new ResponseCallback<SubjectResp>() {
             @Override
             protected void onResponse(SubjectResp rsp) {
-                PrefsHelper.setString(Constants.Prefs.KEY_SUBJECT_UPDATE_TIME, rsp.updateTime);
-                mDao.clear(Subject.class);
-                mDao.saveOrUpdateAll(rsp.subjects);
+                PrefsHelper.setString( Constants.Prefs.KEY_SUBJECT_UPDATE_TIME, rsp.updateTime );
+                mDao.clear( Subject.class );
+                mDao.saveOrUpdateAll( rsp.subjects );
             }
 
             @Override
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
+        }, observable );
+        addNetworkRecord();
     }
 
 
@@ -280,36 +278,35 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
      * 加载常用信息
      */
     private void loadCommonInfo(RequestBody emptyBody) {
-        loadCompleteCount.addAndGet(1);
-        Observable<CommonInfoResp> observable = Http.getServer().loadCommonInfos(emptyBody);
-        Http.request(new ResponseCallback<CommonInfoResp>() {
+        Observable<CommonInfoResp> observable = Http.getServer().loadCommonInfos( emptyBody );
+        isRequest = Http.request( new ResponseCallback<CommonInfoResp>() {
             @Override
             protected void onResponse(CommonInfoResp rsp) {
-                PrefsHelper.setString(Constants.Prefs.KEY_COMMON_INFO_UPDATE_TIME, rsp.updateTime);
-                mDao.clear(CommonInfo.class);
-                mDao.saveOrUpdateAll(rsp.commonInfos);
+                PrefsHelper.setString( Constants.Prefs.KEY_COMMON_INFO_UPDATE_TIME, rsp.updateTime );
+                mDao.clear( CommonInfo.class );
+                mDao.saveOrUpdateAll( rsp.commonInfos );
             }
 
             @Override
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
+        }, observable );
+        addNetworkRecord();
     }
 
     /*
      * 请求景点景观相关内容数据
      */
     private void requestSpot(String dataUrl, RequestBody body, String updateKey, Class clz) {
-        loadCompleteCount.addAndGet(1);
-        Observable<SpotsResp> observable = Http.getServer().loadSpots(dataUrl, body);
-        Http.request(new ResponseCallback<SpotsResp>() {
+        Observable<SpotsResp> observable = Http.getServer().loadSpots( dataUrl, body );
+        isRequest = Http.request( new ResponseCallback<SpotsResp>() {
             @Override
             protected void onResponse(SpotsResp rsp) {
-                PrefsHelper.setString(updateKey, rsp.updateTime);
-                mDao.clear(clz);
+                PrefsHelper.setString( updateKey, rsp.updateTime );
+                mDao.clear( clz );
                 if (clz == ActualScene.class) {
-                    mDao.saveOrUpdateAll(rsp.actualScenes);
+                    mDao.saveOrUpdateAll( rsp.actualScenes );
                 }
             }
 
@@ -317,27 +314,29 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
+        }, observable );
+
+        addNetworkRecord();
     }
 
     /*
      * 路线列表
      */
     private void loadRouteInfo(RequestBody emptyBody) {
-        loadCompleteCount.addAndGet(1);
-        Observable<RouteInfoResp> observable = Http.getServer().loadRouteInfo(emptyBody);
-        Http.request(new ResponseCallback<RouteInfoResp>() {
+        Observable<RouteInfoResp> observable = Http.getServer().loadRouteInfo( emptyBody );
+        isRequest = Http.request( new ResponseCallback<RouteInfoResp>() {
             @Override
             protected void onResponse(RouteInfoResp rsp) {
-                mDao.clear(RouteInfo.class);
-                mDao.saveOrUpdateAll(rsp.routeList);
+                mDao.clear( RouteInfo.class );
+                mDao.saveOrUpdateAll( rsp.routeList );
             }
 
             @Override
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
+        }, observable );
+        addNetworkRecord();
     }
 
     /*
@@ -345,46 +344,53 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
      */
     private void loadVenuesInfo() {
         Map<String, Object> params = Http.getBaseParams();
-        params.put("ParkId", "1");
-        Observable<VenuesInfoResp> observable = Http.getServer().getVenuesList(Http.buildRequestBody(params));
-        Http.request(new ResponseCallback<VenuesInfoResp>() {
+        params.put( "ParkId", "1" );
+        Observable<VenuesInfoResp> observable = Http.getServer().getVenuesList( Http.buildRequestBody( params ) );
+        isRequest = Http.request( new ResponseCallback<VenuesInfoResp>() {
             @Override
             protected void onResponse(VenuesInfoResp rsp) {
-                mDao.clear(VenuesInfo.class);
-                mDao.saveOrUpdateAll(rsp.venuesList);
+                mDao.clear( VenuesInfo.class );
+                mDao.saveOrUpdateAll( rsp.venuesList );
             }
 
             @Override
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
+        }, observable );
+        addNetworkRecord();
     }
 
     /*
      * 获取头条列表
      */
     private void loadTopLine(RequestBody emptyBody) {
-        Observable<TopLineResp> observable = Http.getServer().getTopLineList(emptyBody);
-        Http.request(new ResponseCallback<TopLineResp>() {
+        Observable<TopLineResp> observable = Http.getServer().getTopLineList( emptyBody );
+        isRequest = Http.request( new ResponseCallback<TopLineResp>() {
             @Override
             protected void onResponse(TopLineResp rsp) {
-                mDao.clear(TopLineInfo.class);
-                mDao.saveOrUpdateAll(rsp.topLine);
+                mDao.clear( TopLineInfo.class );
+                mDao.saveOrUpdateAll( rsp.topLine );
             }
 
             @Override
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable);
+        }, observable );
+        addNetworkRecord();
+    }
+
+    private void addNetworkRecord() {
+        if (isRequest)
+            loadCompleteCount.addAndGet( 1 );
     }
 
     /*
      * 通知一项加载完成,跳转下一界面
      */
     private void notifyLoadComplete() {
-        int value = loadCompleteCount.addAndGet(-1);
+        int value = loadCompleteCount.addAndGet( -1 );
         if (value == 0) {
             mView.next();
         }
