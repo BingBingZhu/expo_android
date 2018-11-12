@@ -124,7 +124,6 @@
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
     <string name="check_string_empty_localtion_descriptiong">情况描述不能为空</string>
-    <string name="please_enter_keywords">请输入关键字</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
 

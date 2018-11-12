@@ -60,23 +60,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     boolean mIsCn;//现在是否是汉语
     boolean mSelectCn;//现在是否是选择了汉语
 
-    DialogPlus mDialogUpdate;
     DialogPlus mDialogLanguage;
-
-    OnClickListener mUpdateClickListener = new OnClickListener() {
-
-        @Override
-        public void onClick(DialogPlus dialog, View view) {
-            switch (view.getId()) {
-                case R.id.ok:
-                    mPresenter.update();
-                    break;
-                case R.id.cancle:
-                    dialog.dismiss();
-                    break;
-            }
-        }
-    };
 
     // 切换语言的监听
     OnClickListener mLanguageClickListener = (d, v) -> {
