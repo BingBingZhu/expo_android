@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.expo.base.BaseEventMessage;
+import com.expo.base.ExpoApp;
 import com.expo.db.QueryParams;
 import com.expo.db.dao.BaseDao;
 import com.expo.db.dao.BaseDaoImpl;
@@ -223,12 +224,12 @@ public class Message implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString( caption );
-        dest.writeString( captionEn );
-        dest.writeString( command );
-        dest.writeString( content );
-        dest.writeString( contentEn );
-        dest.writeString( createTime );
+        dest.writeString(caption);
+        dest.writeString(captionEn);
+        dest.writeString(command);
+        dest.writeString(content);
+        dest.writeString(contentEn);
+        dest.writeString(createTime);
         if (id == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -257,10 +258,12 @@ public class Message implements Parcelable {
         sendMessageCount(dao);
     }
 
-    public void delMessage() {
+    public void delMessage(String uid) {
         BaseDao dao = new BaseDaoImpl();
         QueryParams params = new QueryParams()
-                .add("eq", "type", type);
+                .add("eq", "type", type)
+                .add("and")
+                .add("eq", "uid", uid);
         List<Message> messageList = dao.query(Message.class, params);
         dao.deleteAll(messageList);
         sendMessageCount(dao);
@@ -269,8 +272,10 @@ public class Message implements Parcelable {
     public void sendMessageCount(BaseDao dao) {
         if (dao == null)
             dao = new BaseDaoImpl();
-        QueryParams params = new QueryParams();
-        params.add("eq", "read", false);
+        QueryParams params = new QueryParams()
+                .add("eq", "read", false)
+                .add("and")
+                .add("eq", "uid", ExpoApp.getApplication().getUser().getUid());
         EventBus.getDefault().post(new BaseEventMessage(Constants.EventBusMessageId.EVENTBUS_ID_HEART_MESSAGE_UNREAD_COUNT, dao.count(Message.class, params)));
     }
 }

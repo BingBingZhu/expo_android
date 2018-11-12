@@ -27,7 +27,6 @@ import com.expo.contract.SeekHelpContract;
 import com.expo.entity.User;
 import com.expo.entity.VisitorService;
 import com.expo.map.LocationManager;
-import com.expo.module.map.ParkMapActivity;
 import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
@@ -51,7 +50,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     @BindView(R.id.seek_help_phone)
     View mPhone;
 
-    ArrayList<String> mImageList;
+        ArrayList<String> mImageList;
     SeekHelpAdapter mAdapter;
     Location mLocation;
 

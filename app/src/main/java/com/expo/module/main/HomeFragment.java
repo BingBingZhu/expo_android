@@ -130,7 +130,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mRvExhibitGarden.setAdapter(mAdapterExhibitGarden = new CommonAdapter<Encyclopedias>(getContext(), R.layout.item_home_exhibit_garden, mListExhibitGarden) {
             @Override
             protected void convert(ViewHolder holder, Encyclopedias encyclopedias, int position) {
-                Picasso.with(getContext()).load(CommUtils.getFullUrl(encyclopedias.picUrl)).into((ImageView) holder.getView(R.id.home_exhibit_garden_img));
+                Picasso.with(getContext()).load(CommUtils.getFullUrl(encyclopedias.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.home_exhibit_garden_img));
                 holder.setText(R.id.home_exhibit_garden_name, LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
                 holder.setText(R.id.home_exhibit_garden_content, LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
             }
@@ -234,6 +234,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             Encyclopedias encyclopedias = mListVenue.get(position);
             Picasso.with(getContext())
                     .load(CommUtils.getFullUrl(encyclopedias.picUrl))
+                    .placeholder(R.drawable.image_default).error(R.drawable.image_default)
                     .resize(ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension(R.dimen.dms_60) - (int) getContent().getResources().getDimension(R.dimen.dms_20) * (mListVenue.size() - 1), (int) getContent().getResources().getDimension(R.dimen.dms_190))
                     .centerInside()
                     .into((ImageView) view.findViewById(R.id.item_home_venue_img));

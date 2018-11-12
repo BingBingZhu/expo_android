@@ -62,7 +62,7 @@ public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> imple
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
                 RouteInfo info = mData.get(position);
-                Picasso.with(RoutesActivity.this).load(CommUtils.getFullUrl(info.picUrl)).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
+                Picasso.with(RoutesActivity.this).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
                 holder.setText(R.id.item_route_name, LanguageUtil.chooseTest(info.caption, info.captionen));
                 holder.setText(R.id.item_route_hot, "热度" + info.hotCount);
 

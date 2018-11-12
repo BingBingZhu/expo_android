@@ -1,5 +1,6 @@
 package com.expo.contract.presenter;
 
+import com.expo.base.ExpoApp;
 import com.expo.contract.MessageKindContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.Message;
@@ -19,7 +20,7 @@ public class MessageKindPresenterImpl extends MessageKindContract.Presenter {
 
     @Override
     public void delMessage(Message message, int position) {
-        message.delMessage();
+        message.delMessage(ExpoApp.getApplication().getUser().getUid());
         mView.delMessage(position);
     }
 }

@@ -1,5 +1,6 @@
 package com.expo.contract.presenter;
 
+import com.expo.base.ExpoApp;
 import com.expo.contract.MessagesContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.Message;
@@ -16,6 +17,8 @@ public class MessagesPresenterImpl extends MessagesContract.Presenter {
     public void getMessage(String type) {
         QueryParams params = new QueryParams()
                 .add("eq", "type", type)
+                .add("and")
+                .add("eq", "uid", ExpoApp.getApplication().getUser().getUid())
                 .add("orderBy", "create_time", true);
         mView.freshMessageList(mDao.query(Message.class, params));
     }

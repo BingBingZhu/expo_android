@@ -151,7 +151,6 @@ dependencies {
     implementation 'org.raphets:roundimageview:1.2.0'
     //图片剪切控件
     implementation 'com.github.yalantis:ucrop:2.2.2'
-
     //日期选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
     //dialog

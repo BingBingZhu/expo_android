@@ -137,7 +137,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         mRvRecycler.setAdapter(mAdapter = new CommonAdapter<VenuesInfo>(this, R.layout.item_route_detail, mList) {
             @Override
             protected void convert(ViewHolder holder, VenuesInfo venuesInfo, int position) {
-                Picasso.with(RouteDetailActivity.this).load(CommUtils.getFullUrl(venuesInfo.picUrl)).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
+                Picasso.with(RouteDetailActivity.this).load(CommUtils.getFullUrl(venuesInfo.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
                 holder.setText(R.id.item_route_name, venuesInfo.caption);
                 holder.setText(R.id.item_route_info, venuesInfo.remark);
             }
@@ -148,7 +148,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
     public void showRouteDetail(RouteInfo info) {
         mInfo = info;
         if (mInfo == null) return;
-        Picasso.with(this).load(CommUtils.getFullUrl(info.picUrl)).error(R.drawable.image_default).into(mIvImg);
+        Picasso.with(this).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into(mIvImg);
         mTvName.setText(LanguageUtil.chooseTest(info.caption, info.captionen));
         mTvHot.setText(getResources().getString(R.string.hot) + info.hotCount);
         mTvTime.setText(info.updateTime);

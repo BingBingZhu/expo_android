@@ -51,6 +51,7 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
         Encyclopedias encyclopedias = mList.get(position % mList.size());
         Picasso.with(mContext).load(getBackageImg(position))
                 .centerInside()
+                .placeholder(R.drawable.image_default).error(R.drawable.image_default)
                 .resize((int) (ScreenUtils.getScreenWidth() - mContext.getResources().getDimension(R.dimen.dms_200)), (int) mContext.getResources().getDimension(R.dimen.dms_360))
                 .into(holder.img);
 

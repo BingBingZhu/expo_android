@@ -264,7 +264,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         mUser = user;
         mOldUser = user.clone();
         if (!StringUtils.isEmpty(mUser.getPhotoUrl()))
-            Picasso.with(this).load(mUser.getPhotoUrl()).into((RoundImageView) mUserImg.getRightView());
+            Picasso.with(this).load(CommUtils.getFullUrl(mUser.getPhotoUrl())).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((RoundImageView) mUserImg.getRightView());
         ((TextView) mUserName.getRightView()).setText(mUser.getNick());
         if (StringUtils.equals("0", mUser.getSex())) {
             mRadioMale.setChecked(true);
