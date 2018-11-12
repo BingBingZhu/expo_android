@@ -38,7 +38,7 @@ public class MessageKindAdapter extends RecyclerView.Adapter<MessageKindAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_message_king_adapter, null));
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_message_king_adapter, parent, false));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MessageKindAdapter extends RecyclerView.Adapter<MessageKindAdapter.
         Message message = mData.get(position);
 
         holder.img.setImageResource(getImgRes(message.getType()));
-        holder.text1.setText(LanguageUtil.chooseTest(message.getCaption(), message.getCaptionEn()));
+        holder.text1.setText(getTitleText(message.getType()));
         holder.text2.setText(LanguageUtil.chooseTest(message.getContent(), message.getContentEn()));
 
         holder.itemView.setOnClickListener(v -> {
@@ -71,6 +71,20 @@ public class MessageKindAdapter extends RecyclerView.Adapter<MessageKindAdapter.
             return R.drawable.msg_xitongtuisong;
         else
             return R.drawable.msg_biaoqian;
+    }
+
+    private String getTitleText(String type){
+        switch (type){
+            case "1":
+                return mContext.getString(R.string.system_messages);
+            case "3":
+                return mContext.getString(R.string.active_message);
+            case "4":
+                return mContext.getString(R.string.feedback_on_tourist_service);
+            case "5":
+                return mContext.getString(R.string.to_make_an_appointment_to_remind);
+        }
+        return mContext.getString(R.string.system_messages);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

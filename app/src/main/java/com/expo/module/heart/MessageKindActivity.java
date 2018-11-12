@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.TypedValue;
 import android.view.View;
@@ -46,9 +47,8 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(0, R.string.title_message_kind_ac);
+        setTitle(1, R.string.title_message_kind_ac);
         initSwipeMenuRecyclerView();
-
         mPresenter.getMessage();
     }
 
@@ -68,7 +68,7 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
         mSwipeMenuRecyclerView.setSwipeItemClickListener(this);
         mSwipeMenuRecyclerView.setSwipeMenuCreator(this);
         mSwipeMenuRecyclerView.setSwipeMenuItemClickListener(this);
-
+        mSwipeMenuRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));        // item分割线
         mAdapter = new MessageKindAdapter(this);
         mSwipeMenuRecyclerView.setAdapter(mAdapter);
     }
