@@ -3,7 +3,6 @@ package com.expo.module.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -14,20 +13,15 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
-import com.expo.adapters.DownloadData;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ActivityHelper;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SettingContract;
-import com.expo.contract.presenter.SettingPresenterImpl;
 import com.expo.entity.AppInfo;
-import com.expo.module.download.DownloadManager;
 import com.expo.entity.CommonInfo;
 import com.expo.module.login.LoginActivity;
 import com.expo.module.webview.WebActivity;
-import com.expo.module.webview.WebTemplateActivity;
-import com.expo.network.response.VersionInfoResp;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.AppBarView;
@@ -35,8 +29,6 @@ import com.expo.widget.MySettingView;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.Locale;
 
@@ -70,10 +62,10 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     OnClickListener mLanguageClickListener = (d, v) -> {
         switch (v.getId()) {
             case R.id.language_cn:
-                changeLanguage(true, d);
+                changeLanguage( true, d );
                 break;
             case R.id.language_en:
-                changeLanguage(false, d);
+                changeLanguage( false, d );
                 break;
             case R.id.cancle:
                 d.dismiss();
@@ -81,22 +73,22 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
         }
     };
 
-    private void changeLanguage(boolean selectCn, DialogPlus d){
+    private void changeLanguage(boolean selectCn, DialogPlus d) {
         mSelectCn = selectCn;
         if (mIsCn != mSelectCn) {
             Locale locale;
             if (mSelectCn) {
                 locale = Locale.CHINA;
-                PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_CN);
+                PrefsHelper.setString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_CN );
             } else {
                 locale = Locale.ENGLISH;
-                PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_EN);
+                PrefsHelper.setString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_EN );
             }
-            LanguageUtil.changeAppLanguage(SettingActivity.this, locale);
+            LanguageUtil.changeAppLanguage( SettingActivity.this, locale );
 
             mIsCn = mSelectCn;
             fresh();
-            ActivityHelper.reCreateAll(SettingActivity.this);
+            ActivityHelper.reCreateAll( SettingActivity.this );
         }
         d.dismiss();
     }
@@ -108,10 +100,10 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(0, R.string.title_setting_ac);
-        mTvLanguage.setRightText(R.string.language);
-        mTvUpdate.setRightText("v" + AppUtils.getAppVersionName());
-        mSelectCn = mIsCn = StringUtils.equals(PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null), LanguageUtil.LANGUAGE_CN);
+        setTitle( 0, R.string.title_setting_ac );
+        mTvLanguage.setRightText( R.string.language );
+        mTvUpdate.setRightText( "v" + AppUtils.getAppVersionName() );
+        mSelectCn = mIsCn = StringUtils.equals( PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ), LanguageUtil.LANGUAGE_CN );
     }
 
     @Override
@@ -120,36 +112,36 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     }
 
     public static void startActivity(@NonNull Context context) {
-        Intent in = new Intent(context, SettingActivity.class);
-        context.startActivity(in);
+        Intent in = new Intent( context, SettingActivity.class );
+        context.startActivity( in );
     }
 
     @OnClick(R.id.setting_language)
     public void clickLanguage(MySettingView view) {
         if (mDialogLanguage == null) {
-            View dv = LayoutInflater.from(getContext()).inflate(R.layout.dialog_language_select, null);
+            View dv = LayoutInflater.from( getContext() ).inflate( R.layout.dialog_language_select, null );
             int viewId = mIsCn ? R.id.language_cn : R.id.language_en;
-            dv.findViewById(viewId).performClick();
+            dv.findViewById( viewId ).performClick();
 
-            mDialogLanguage = DialogPlus.newDialog(this)
-                    .setContentHolder(new ViewHolder(dv))
-                    .setGravity(Gravity.BOTTOM)
-                    .setOnClickListener(mLanguageClickListener)
-                    .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+            mDialogLanguage = DialogPlus.newDialog( this )
+                    .setContentHolder( new ViewHolder( dv ) )
+                    .setGravity( Gravity.BOTTOM )
+                    .setOnClickListener( mLanguageClickListener )
+                    .setExpanded( true )  // This will enable the expand feature, (similar to android L share dialog)
                     .create();
         }
         mDialogLanguage.show();
     }
 
     private void fresh() {
-        ((AppBarView) getTitleView()).setTitle(R.string.title_setting_ac);
+        ((AppBarView) getTitleView()).setTitle( R.string.title_setting_ac );
         mTvLanguage.fresh();
         mTvCache.fresh();
         mTvUpdate.fresh();
         mTvGuide.fresh();
         mTvPolicy.fresh();
 
-        mTvLogout.setText(R.string.logout);
+        mTvLogout.setText( R.string.logout );
     }
 
     @OnClick(R.id.setting_cache)
@@ -164,12 +156,12 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_guide)
     public void clickGuide(MySettingView view) {
-        mPresenter.clickPolicy("0");
+        mPresenter.clickPolicy( "0" );
     }
 
     @OnClick(R.id.setting_policy)
     public void clickPolicy(MySettingView view) {
-        mPresenter.clickPolicy("1");
+        mPresenter.clickPolicy( "1" );
     }
 
     @OnClick(R.id.logout)
@@ -179,29 +171,29 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @Override
     public void logout() {
-        LoginActivity.startActivity(this);
+        LoginActivity.startActivity( this );
     }
 
     @Override
     public void appUpdate(AppInfo info) {
-        mPresenter.update(this, info);
+        mPresenter.update( this, info );
     }
 
     @Override
     public void returnCommonInfo(CommonInfo commonInfo) {
-        if (commonInfo.getType().equals("0")) {
-            if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())) {
-                ToastHelper.showLong(R.string.there_is_no_user_guidance);
+        if (commonInfo.getType().equals( "0" )) {
+            if (null == commonInfo || TextUtils.isEmpty( commonInfo.getLinkUrl() )) {
+                ToastHelper.showLong( R.string.there_is_no_user_guidance );
                 return;
             }
-        }else if (commonInfo.getType().equals("1")){
-            if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())) {
-                ToastHelper.showLong(R.string.there_is_no_user_protocol);
+        } else if (commonInfo.getType().equals( "1" )) {
+            if (null == commonInfo || TextUtils.isEmpty( commonInfo.getLinkUrl() )) {
+                ToastHelper.showLong( R.string.there_is_no_user_protocol );
                 return;
             }
         }
-        WebActivity.startActivity(getContext(), commonInfo.getLinkUrl(),
-                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn());
+        WebActivity.startActivity( getContext(), commonInfo.getLinkUrl(),
+                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn() );
     }
 
 }

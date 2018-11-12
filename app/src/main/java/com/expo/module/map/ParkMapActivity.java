@@ -58,8 +58,6 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     TabLayout mTabView;
     @BindView(R.id.map_view)
     TextureMapView mMapView;
-    @BindView(R.id.search_view)
-    SearchView mSearchView;
 
     private RecyclerView mTouristListView;
 
@@ -82,23 +80,12 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
-        initSearchView();
         mAMap = mMapView.getMap();
         mMapUtils = new MapUtils(mAMap);
         mMapUtils.settingMap(this, this);
         mAMap.setOnMyLocationChangeListener( mLocationChangeListener );
         mPresenter.loadTab();
         mPresenter.loadTouristType();
-    }
-
-    private void initSearchView() {
-        mSearchView.setOnCloseListener(() -> {
-            ToastHelper.showShort("关闭");
-            return false;
-        });
-        mSearchView.setOnSearchClickListener(v -> {
-            ToastHelper.showShort("打开");
-        });
     }
 
     @Override
