@@ -11,16 +11,18 @@ public class ListPresenterImpl extends ListContract.Presenter {
     private static final int PER_PAGE_COUNT = 10;
 
     public ListPresenterImpl(ListContract.View view) {
-        super(view);
+        super( view );
     }
 
     @Override
     public void loadEncyByType(Long tabId, int page) {
-        List<Encyclopedias> data = mDao.query(Encyclopedias.class, new QueryParams()
+        List<Encyclopedias> data = mDao.query( Encyclopedias.class, new QueryParams()
                 .add( "eq", "type_id", tabId )
+                .add( "and" )
+                .add( "eq", "enable", 1 )
                 .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT )
-                .add( "orderBy", "py", true )
-                .add( "orderBy", "recommend", "desc" ));
-        mView.addEncysToList(data);
+                .add( "orderBy", "recommend", false )
+                .add( "orderBy", "py", true ) );
+        mView.addEncysToList( data );
     }
 }

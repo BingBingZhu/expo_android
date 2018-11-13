@@ -64,10 +64,17 @@ public class ActualScene implements Parcelable {
     @DatabaseField(columnName = "recommended_idx")
     @SerializedName("recommendedidx")
     private String recommendedIdx;
+    @DatabaseField(columnName = "wiki_id")
+    @SerializedName("wikiid")
+    private String wikiId;
+    @DatabaseField(columnName = "score")
+    @SerializedName("score")
+    private int score;
 
 
     public ActualScene() {
     }
+
 
     protected ActualScene(Parcel in) {
         if (in.readByte() == 0) {
@@ -76,11 +83,14 @@ public class ActualScene implements Parcelable {
             id = in.readLong();
         }
         caption = in.readString();
+        enCaption = in.readString();
         type = in.readString();
         remark = in.readString();
+        enRemark = in.readString();
         isEnable = in.readInt();
         picUrl = in.readString();
         linkH5Url = in.readString();
+        linkH5UrlEn = in.readString();
         createTime = in.readString();
         updateTime = in.readString();
         lng = in.readString();
@@ -92,6 +102,8 @@ public class ActualScene implements Parcelable {
             isRecommended = in.readInt();
         }
         recommendedIdx = in.readString();
+        wikiId = in.readString();
+        score = in.readInt();
     }
 
     public static final Creator<ActualScene> CREATOR = new Creator<ActualScene>() {
@@ -105,39 +117,6 @@ public class ActualScene implements Parcelable {
             return new ActualScene[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte( (byte) 0 );
-        } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeLong( id );
-        }
-        dest.writeString( caption );
-        dest.writeString( type );
-        dest.writeString( remark );
-        dest.writeInt( isEnable );
-        dest.writeString( picUrl );
-        dest.writeString( linkH5Url );
-        dest.writeString( createTime );
-        dest.writeString( updateTime );
-        dest.writeString( lng );
-        dest.writeString( lat );
-        dest.writeString( electronicFenceList );
-        if (isRecommended == null) {
-            dest.writeByte( (byte) 0 );
-        } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeInt( isRecommended );
-        }
-        dest.writeString( recommendedIdx );
-    }
 
     public ArrayList<double[]> getElectronicFenceList() {
         return Http.getGsonInstance().fromJson( electronicFenceList, new TypeToken<double[]>() {
@@ -162,8 +141,8 @@ public class ActualScene implements Parcelable {
 
     public Long getType() {
         try {
-            return Long.parseLong(type);
-        }catch (Exception e){
+            return Long.parseLong( type );
+        } catch (Exception e) {
             e.printStackTrace();
             return 0L;
         }
@@ -247,8 +226,8 @@ public class ActualScene implements Parcelable {
 
     public Double getLng() {
         try {
-            return Double.parseDouble(lng);
-        }catch (Exception e){
+            return Double.parseDouble( lng );
+        } catch (Exception e) {
             return 0.0;
         }
     }
@@ -259,8 +238,8 @@ public class ActualScene implements Parcelable {
 
     public Double getLat() {
         try {
-            return Double.parseDouble(lat);
-        }catch (Exception e){
+            return Double.parseDouble( lat );
+        } catch (Exception e) {
             return 0.0;
         }
     }
@@ -287,5 +266,59 @@ public class ActualScene implements Parcelable {
 
     public void setRecommendedIdx(String recommendedIdx) {
         this.recommendedIdx = recommendedIdx;
+    }
+
+    public String getWikiId() {
+        return wikiId;
+    }
+
+    public void setWikiId(String wikiId) {
+        this.wikiId = wikiId;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeLong( id );
+        }
+        dest.writeString( caption );
+        dest.writeString( enCaption );
+        dest.writeString( type );
+        dest.writeString( remark );
+        dest.writeString( enRemark );
+        dest.writeInt( isEnable );
+        dest.writeString( picUrl );
+        dest.writeString( linkH5Url );
+        dest.writeString( linkH5UrlEn );
+        dest.writeString( createTime );
+        dest.writeString( updateTime );
+        dest.writeString( lng );
+        dest.writeString( lat );
+        dest.writeString( electronicFenceList );
+        if (isRecommended == null) {
+            dest.writeByte( (byte) 0 );
+        } else {
+            dest.writeByte( (byte) 1 );
+            dest.writeInt( isRecommended );
+        }
+        dest.writeString( recommendedIdx );
+        dest.writeString( wikiId );
+        dest.writeInt( score );
     }
 }

@@ -9,10 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.expo.R;
-import com.expo.base.utils.ToastHelper;
-import com.expo.contract.presenter.WebTemplatePresenterImpl;
-import com.expo.entity.ActualScene;
-import com.expo.entity.Encyclopedias;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -26,11 +22,11 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
     private List<ListItemData> mEncyList;
     private Context mContext;
 
-    public EncyAndSceneListAdapter(Context context, List<ListItemData> encyList){
+    public EncyAndSceneListAdapter(Context context, List<ListItemData> encyList) {
         this.mContext = context;
-        if (null == encyList){
+        if (null == encyList) {
             this.mEncyList = new ArrayList<>();
-        }else{
+        } else {
             this.mEncyList = encyList;
         }
     }
@@ -39,36 +35,21 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_ency_item, parent, false);
-        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
-        view.setLayoutParams(lp);
+        View view = LayoutInflater.from( mContext ).inflate( R.layout.layout_ency_item, parent, false );
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams( RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT );
+        view.setLayoutParams( lp );
         return new ViewHolder( view );
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListItemData ency = mEncyList.get(position);
+        ListItemData ency = mEncyList.get( position );
 //        holder.img.setBackground(mContext.getResources().getDrawable(R.drawable.ico_def));
         holder.img.setImageURI( Constants.URL.FILE_BASE_URL + ency.getPicUrl() );
-        holder.tvName.setText(LanguageUtil.chooseTest(ency.getCaption(), ency.getEnCaption()) );
+        holder.tvName.setText( LanguageUtil.chooseTest( ency.getCaption(), ency.getEnCaption() ) );
         holder.tvRecommend.setVisibility( ency.getRecommend() == 1 ? View.VISIBLE : View.GONE );
-        holder.tvRemark.setText( LanguageUtil.chooseTest(ency.getRemark(), ency.getEnRemark()) );
-        holder.root.setOnClickListener(v -> {
-            String title = "";
-            String lan = "";
-            int dataType = 0;
-            if (LanguageUtil.isCN()){
-                title = ency.getCaption();
-                lan = "ch";
-            }else{
-                title = ency.getEnCaption();
-                lan = "en";
-            }
-            if (ency instanceof EncyclopediasAdapter)
-                WebTemplateActivity.startActivity(mContext, WebTemplatePresenterImpl.ENCYCLOPEDIA, ency.getId(), lan, title);
-            else if (ency instanceof ActualSceneAdapter)
-                WebTemplateActivity.startActivity(mContext, WebTemplatePresenterImpl.ACTUAL_SCENE, ency.getId(), lan, title);
-        });
+        holder.tvRemark.setText( LanguageUtil.chooseTest( ency.getRemark(), ency.getEnRemark() ) );
+        holder.root.setOnClickListener( v -> WebTemplateActivity.startActivity( mContext, ency.getId() ) );
     }
 
     @Override
@@ -76,7 +57,7 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
         return mEncyList.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         private View root;
         private SimpleDraweeView img;
@@ -85,12 +66,12 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
         private TextView tvRemark;
 
         public ViewHolder(View v) {
-            super(v);
-            root = v.findViewById(R.id.ency_item_root);
-            img = v.findViewById(R.id.ency_item_img);
-            tvName = v.findViewById(R.id.ency_item_name);
-            tvRecommend = v.findViewById(R.id.ency_item_recommend);
-            tvRemark = v.findViewById(R.id.ency_item_remark);
+            super( v );
+            root = v.findViewById( R.id.ency_item_root );
+            img = v.findViewById( R.id.ency_item_img );
+            tvName = v.findViewById( R.id.ency_item_name );
+            tvRecommend = v.findViewById( R.id.ency_item_recommend );
+            tvRemark = v.findViewById( R.id.ency_item_remark );
         }
     }
 }

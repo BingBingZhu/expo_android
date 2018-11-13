@@ -11,8 +11,6 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-
 
 import com.expo.base.utils.LogUtils;
 
@@ -36,7 +34,7 @@ public class CameraManager implements ICameraManager {
     private int mViewHeight;
     private boolean mDisplayIsReady;
     private boolean mCustomStarted;
-    private boolean mBack;
+    private boolean mBack = true;
     private int mState = STATE_IDEL;
     private int mOrientation = -1;
     private Camera.PreviewCallback mPreviewCallback;
@@ -151,12 +149,12 @@ public class CameraManager implements ICameraManager {
         float viewRatio = (float) mViewWidth / mViewHeight;
         if (ratio > viewRatio) {
             mViewWidth = (int) (mViewHeight * ratio);
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mDisplayView.getLayoutParams();
+            ViewGroup.LayoutParams lp = mDisplayView.getLayoutParams();
             lp.width = mViewWidth;
             mDisplayView.setLayoutParams( lp );
         } else {
             mViewHeight = (int) (mViewWidth / ratio);
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mDisplayView.getLayoutParams();
+            ViewGroup.LayoutParams lp = mDisplayView.getLayoutParams();
             lp.height = mViewHeight;
             mDisplayView.setLayoutParams( lp );
         }
@@ -298,7 +296,7 @@ public class CameraManager implements ICameraManager {
 
     @Override
     public void tackPicture(Camera.PictureCallback callback) {
-
+        mCamera.takePicture( null, null, callback );
     }
 
     /*

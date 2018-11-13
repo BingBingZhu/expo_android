@@ -32,6 +32,7 @@ public interface Constants {
         public static final String KEY_SHOW_SELECT_LANGUAGE = "key_app_first_use";
         public static final String KEY_HISTORY = "key_history";
         public static final String KEY_COUNTRY_CODE = "key_country_code";
+        public static final String KEY_IS_OPEN_SLIDINGDRAWER = "key_is_open_slidingdrawer";
     }
 
     /**
@@ -112,6 +113,7 @@ public interface Constants {
         public static final String ACTION_RECEIVE_MESSAGE = "action_receive_message";
         public static final String ACTION_CHANGE_LANGUAGE = "action_change_language";
         public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
+        public static final String ACTION_LOCATION_CHANGED_IN_SCENES = "action_location_changed_in_scenes";
     }
 
     /**

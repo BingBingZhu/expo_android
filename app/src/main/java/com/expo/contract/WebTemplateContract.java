@@ -3,22 +3,23 @@ package com.expo.contract;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.ActualScene;
+import com.expo.entity.Encyclopedias;
 
 public interface WebTemplateContract {
     abstract class Presenter extends IPresenter<View> {
 
         public Presenter(View view) {
-            super(view);
+            super( view );
         }
 
-        public abstract void setDataType(int intExtra);
-        public abstract String getDataJsonById(int id);
+        public abstract Encyclopedias loadEncyclopediaById(long id);
 
-        public abstract void getDataById(long id);
+        public abstract ActualScene loadSceneByWikiId(long id);
+
+        public abstract String toJson(Object obj);
     }
 
-    interface View extends IView{
-        void getDataJsonByIdRes(String jsonData);
+    interface View extends IView {
 
         void getActualSceneDataByIdRes(ActualScene actualScene);
     }
