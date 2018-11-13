@@ -293,5 +293,6 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     public void saveUserInfo() {
         ToastHelper.showShort(R.string.save_user_info_success);
         EventBus.getDefault().post(new BaseEventMessage(Constants.EventBusMessageId.EVENTBUS_ID_FRESH_USER, null));
+        finish();
     }
 }
