@@ -21,6 +21,8 @@
     <string name="language">中文</string>
     <string name="language_select">请选择语言</string>
     <string name="bj_world_horticultural_exposition">北京世园会</string>
+    <string name="within_minutes">%d分钟</string>
+    <string name="time_leng">时长：</string>
 
     <string name="ukey_error">用户数据错误，请重新登录</string>
     <string name="unlogin">请先登录</string>
@@ -140,6 +142,10 @@
     <string name="gps_open_weak">GPS信号较弱，请稍后再试</string>
     <string name="gps_open_title">该功能需要打开定位功能。</string>
     <string name="gps_open_content">请点击“设置”-“定位服务”打开定位功能</string>
+
+    <string name="navigationg_arrive">到达目的地</string>
+    <string name="navigationg_back">返回导航</string>
+
     <string name="not_input">未填写</string>
     <string name="no_more_data_available">暂无更多数据</string>
     <string name="about_content_info">　　2019年中国北京世界园艺博览会是经国际园艺生产者协会批准、

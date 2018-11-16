@@ -2,28 +2,41 @@ package com.expo.module.map;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import android.text.TextPaint;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.amap.api.fence.GeoFenceClient;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
+import com.amap.api.maps.model.BitmapDescriptor;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.enums.NaviType;
 import com.amap.api.navi.model.AMapCalcRouteResult;
 import com.amap.api.navi.model.AMapNaviPath;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
+import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
@@ -32,16 +45,31 @@ import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.NavigationContract;
 import com.expo.entity.ActualScene;
+import com.expo.entity.Encyclopedias;
+import com.expo.entity.VenuesDistance;
 import com.expo.map.LocationManager;
+import com.expo.media.MediaPlayerManager;
 import com.expo.utils.BitmapUtils;
 import com.expo.utils.CameraManager;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.DeviceRotateManager;
 import com.expo.utils.ICameraManager;
+import com.expo.utils.LanguageUtil;
 import com.expo.widget.MultiDirectionSlidingDrawer;
 import com.expo.widget.X5WebView;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnClickListener;
+import com.orhanobut.dialogplus.ViewHolder;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -81,6 +109,16 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private int mCenterY;
     private int mPhotoSize;
     private boolean mJsCanSend;
+    private ActualScene mActualScene;
+
+    Map<String, Marker> mMarker;
+    List<VenuesDistance> mVenuesDistance;
+    MythredFresh mMythredFresh;
+    MythredCalculate mMythredcCalculate;
+
+    final Object LOCK = new Object();
+
+    long mStartTime;
 
     @Override
     protected int getContentView() {
@@ -89,20 +127,24 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        StatusBarUtils.setStatusBarLight( this, true );
-        mMapView.onCreate( savedInstanceState );
+        StatusBarUtils.setStatusBarLight(this, true);
+        mMapView.onCreate(savedInstanceState);
+        //地图中心点
         mCenterX = getResources().getDisplayMetrics().widthPixels / 2;
         mCenterY = (int) (getResources().getDisplayMetrics().heightPixels * 0.85f);
-        mPhotoSize = getResources().getDimensionPixelSize( R.dimen.dms_54 );
+        //头像
+        mPhotoSize = getResources().getDimensionPixelSize(R.dimen.dms_54);
         mSlidingDrawerView.getLayoutParams().height = (int) (getResources().getDisplayMetrics().heightPixels * 0.666667f);
         mCameraManager = new CameraManager();
-        mCameraManager.setFacing( true );
-        mCameraManager.setDisplayView( mTextureView );
+        mCameraManager.setFacing(true);
+        mCameraManager.setDisplayView(mTextureView);
         initMapNaviView();
-        long spotId = getIntent().getLongExtra( Constants.EXTRAS.EXTRA_SPOT_ID, -1 );
-        virtualScene = mPresenter.loadSceneById( spotId );
+        initPoiSearch();
+        mActualScene = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
+        virtualScene = mPresenter.loadSceneById(mActualScene.getId());
         initSlidingDrawer();
         initWebView();
+        MediaPlayerManager.getInstence().setListener(null);
     }
 
     @Override
@@ -111,41 +153,45 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     }
 
     private void initWebView() {
-        mWebView.loadUrl( "file:///android_asset/newWebAr/liveNav.html" );
-        mWebView.addJavascriptInterface( new TerminalInterface(), "Terminal_Interface" );
+        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
+        mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
 
     private void endNavigation() {
-        ToastHelper.showShort( "到达目的地附近喽，导航结束" );
+        ToastHelper.showShort("到达目的地附近喽，导航结束");
         if (mSlidingDrawerView.isOpened()) {
-            changeAnimation( "endPoint" );
+            changeAnimation("endPoint");
         } else {
-            new AlertDialog.Builder( this )
-                    .setTitle( "临时提示" )
-                    .setMessage( "到达终点喽，目标接在附近！" )
-                    .setNegativeButton( "知道了", (dialog, which) -> finish() )
-                    .show();
+//            new AlertDialog.Builder(this)
+//                    .setTitle("临时提示")
+//                    .setMessage("到达终点喽，目标接在附近！")
+//                    .setNegativeButton("知道了", (dialog, which) -> finish())
+//                    .show();
+            showEndView();
         }
     }
 
+    /**
+     * 下拉窗体
+     */
     private void initSlidingDrawer() {
-        if (PrefsHelper.getBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true )) {
+        if (PrefsHelper.getBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true)) {
             mSlidingDrawerView.open();
             mCameraManager.startPreview();
-            updateMapStatue( true );
+            updateMapStatue(true);
         } else {
-            updateMapStatue( false );
+            updateMapStatue(false);
         }
-        mSlidingDrawerView.setOnDrawerCloseListener( () -> {
+        mSlidingDrawerView.setOnDrawerCloseListener(() -> {
             mCameraManager.stopPreview();
-            PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false );
-            updateMapStatue( false );
-        } );
-        mSlidingDrawerView.setOnDrawerOpenListener( () -> {
+            PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false);
+            updateMapStatue(false);
+        });
+        mSlidingDrawerView.setOnDrawerOpenListener(() -> {
             mCameraManager.startPreview();
-            PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true );
-            updateMapStatue( true );
-        } );
+            PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true);
+            updateMapStatue(true);
+        });
     }
 
     /*
@@ -156,22 +202,22 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mAutoToCenter = auto;
             if (auto) {
                 //禁止操作
-                mMap.getUiSettings().setAllGesturesEnabled( false );
-                mMap.setPointToCenter( mCenterX, mCenterY );
+                mMap.getUiSettings().setAllGesturesEnabled(false);
+                mMap.setPointToCenter(mCenterX, mCenterY);
                 if (mNaviRouteOverlay != null) {
                     mNaviRouteOverlay.moveCarToCenter();
                 }
             } else {
                 //解除禁止操作
-                mMap.getUiSettings().setAllGesturesEnabled( true );
-                mMap.setPointToCenter( mCenterX, getResources().getDisplayMetrics().heightPixels / 2 );
-                mMap.moveCamera( CameraUpdateFactory.changeTilt( 0 ) );
+                mMap.getUiSettings().setAllGesturesEnabled(true);
+                mMap.setPointToCenter(mCenterX, getResources().getDisplayMetrics().heightPixels / 2);
+                mMap.moveCamera(CameraUpdateFactory.changeTilt(0));
                 if (mNaviRouteOverlay != null) {
                     mNaviRouteOverlay.showBounds();
                 }
             }
             if (mNaviRouteOverlay != null) {
-                mNaviRouteOverlay.setAutoToCenter( mAutoToCenter );
+                mNaviRouteOverlay.setAutoToCenter(mAutoToCenter);
             }
         }
         mUseDeviceRotate = auto;
@@ -179,11 +225,17 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     private void initMapNaviView() {
         mMap = mMapView.getMap();
-        mMap.getUiSettings().setZoomControlsEnabled( false );
-        mMap.getUiSettings().setTiltGesturesEnabled( false );
-        DeviceRotateManager.getInstance().registerOrientationChangedListener( mOnOrientationChangedListener );
-        LocationManager.getInstance().registerLocationListener( mOnLocationChangeListener );
+        mMarker = new HashMap<>();
+        mMap.getUiSettings().setZoomControlsEnabled(false);
+        mMap.getUiSettings().setTiltGesturesEnabled(false);
+        DeviceRotateManager.getInstance().registerOrientationChangedListener(mOnOrientationChangedListener);//设备旋转
+        LocationManager.getInstance().registerLocationListener(mOnLocationChangeListener);//定位
+        mMap.setOnMarkerClickListener(mMarkerClickListener);
         showLoadingView();
+    }
+
+    private void initPoiSearch() {
+        mVenuesDistance = mPresenter.getVenues();
     }
 
     private AMap.OnMyLocationChangeListener mOnLocationChangeListener = new AMap.OnMyLocationChangeListener() {
@@ -191,14 +243,15 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         public void onMyLocationChange(Location location) {
             if (isFirst) {//第一次定位成功后移动到地图中心
                 isFirst = false;
-                mMap.moveCamera( CameraUpdateFactory.newLatLngZoom( new LatLng( location.getLatitude(), location.getLongitude() ), 20 ) );
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 20));
             }
             //设置导航使用的位置数据
-            mAMapNavi.setExtraGPSData( 2, location );
+            mAMapNavi.setExtraGPSData(2, location);
             //更新走过的路线
             if (mNaviRouteOverlay != null) {
-                mCalculateDirection = mNaviRouteOverlay.updatePassedRoute( new LatLng( location.getLatitude(), location.getLongitude() ) );
+                mCalculateDirection = mNaviRouteOverlay.updatePassedRoute(new LatLng(location.getLatitude(), location.getLongitude()));
             }
+            searchPoi(location);
         }
     };
     private DeviceRotateManager.OnOrientationChangedListener mOnOrientationChangedListener = new DeviceRotateManager.OnOrientationChangedListener() {
@@ -213,20 +266,20 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 degrees = azimuth - mRouteDirection;
             }
             if (mJsCanSend && mSlidingDrawerView.isOpened()) {
-                mWebView.loadUrl( String.format( Locale.getDefault(), "javascript:getAzimuthInfo(%.2f,%.2f)", degrees, azimuth ) );
+                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:getAzimuthInfo(%.2f,%.2f)", degrees, azimuth));
             }
             if (mNaviRouteOverlay == null || !mNaviRouteOverlay.isAnimating()) {
                 if (pitch < 0 && pitch > -60) {
-                    mMap.moveCamera( CameraUpdateFactory.changeTilt( Math.abs( pitch ) ) );
+                    mMap.moveCamera(CameraUpdateFactory.changeTilt(Math.abs(pitch)));
                 }
-                mMap.moveCamera( CameraUpdateFactory.changeBearing( azimuth ) );
+                mMap.moveCamera(CameraUpdateFactory.changeBearing(azimuth));
             }
         }
     };
 
     private void changeAnimation(String action) {
         if (mJsCanSend && mSlidingDrawerView.isOpened()) {
-            mWebView.loadUrl( String.format( "javascript:getActionState('%s')", action ) );
+            mWebView.loadUrl(String.format("javascript:getActionState('%s')", action));
         }
     }
 
@@ -246,37 +299,102 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     @Override
     protected void onDestroy() {
-        DeviceRotateManager.getInstance().unregisterOrientationChangedListener( mOnOrientationChangedListener );
-        LocationManager.getInstance().unregisterLocationListener( mOnLocationChangeListener );
+        DeviceRotateManager.getInstance().unregisterOrientationChangedListener(mOnOrientationChangedListener);
+        LocationManager.getInstance().unregisterLocationListener(mOnLocationChangeListener);
         mAMapNavi.stopNavi();
         mAMapNavi.destroy();
         mMapView.onDestroy();
+        MediaPlayerManager.getInstence().onDestory();
+        if (mMythredFresh != null)
+            mMythredFresh.exit();
+        if (mMythredcCalculate != null)
+            mMythredcCalculate.exit();
         super.onDestroy();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState( outState );
-        mMapView.onSaveInstanceState( outState );
+        super.onSaveInstanceState(outState);
+        mMapView.onSaveInstanceState(outState);
     }
 
     public void startNavi() {
         //获取AMapNavi实例
-        mAMapNavi = AMapNavi.getInstance( getContext() );
-        mAMapNavi.setUseInnerVoice( false );       // 使用内部语音播报
+        mAMapNavi = AMapNavi.getInstance(getContext());
+        mAMapNavi.setUseInnerVoice(false);       // 使用内部语音播报
         //添加监听回调，用于处理算路成功
-        mAMapNavi.addAMapNaviListener( mNaviListener );
+        mAMapNavi.addAMapNaviListener(mNaviListener);
     }
 
     private void startCalculateTheRoad(LatLng startLatLng, ActualScene virtualScene) {
-        mFrom = new NaviLatLng( startLatLng.latitude, startLatLng.longitude );
-        mTo = new NaviLatLng( virtualScene.getLat(), virtualScene.getLng() );
-        boolean isSuccess = mAMapNavi.calculateWalkRoute( mFrom, mTo );
+        mFrom = new NaviLatLng(startLatLng.latitude, startLatLng.longitude);
+        mTo = new NaviLatLng(virtualScene.getLat(), virtualScene.getLng());
+        boolean isSuccess = mAMapNavi.calculateWalkRoute(mFrom, mTo);
         if (!isSuccess) {
-            ToastHelper.showShort( "路线规划失败" );
-            Log.d( "NaviManager=======", "路线计算失败,检查参数情况" );
+            ToastHelper.showShort("路线规划失败");
+            Log.d("NaviManager=======", "路线计算失败,检查参数情况");
         }
     }
+
+    /**
+     * 搜索周边
+     */
+    private void searchPoi(Location location) {
+        if (mMythredcCalculate == null) {
+            mMythredcCalculate = new MythredCalculate();
+            mMythredcCalculate.setLatLon(location.getLatitude(), location.getLongitude());
+            mMythredcCalculate.start();
+        } else {
+            mMythredcCalculate.setLatLon(location.getLatitude(), location.getLongitude());
+        }
+        if (mMythredFresh == null) {
+            mMythredFresh = new MythredFresh();
+            mMythredFresh.setLatLon(location.getLatitude(), location.getLongitude());
+            mMythredFresh.start();
+        } else {
+
+            mMythredFresh.setLatLon(location.getLatitude(), location.getLongitude());
+        }
+
+    }
+
+    public void freshMarker() {
+        if (mMap != null) {
+            Map<String, Marker> tem = new HashMap<>();
+            for (int i = 0; i < mVenuesDistance.size(); i++) {
+                VenuesDistance vd = mVenuesDistance.get(i);
+                if (vd.distance >= 200.0f) break;
+                if (mMarker.containsKey(vd.id)) {
+                    tem.put(vd.id, mMarker.get(vd.id));
+                    mMarker.remove(vd.id);
+                    continue;
+                }
+                LatLng latLng = new LatLng(vd.lat, vd.lon);
+                MarkerOptions markerOptions = new MarkerOptions().position(latLng).icon(getNavigation());
+                Marker marker = mMap.addMarker(markerOptions);
+                marker.setObject(vd.id);
+                tem.put(vd.id, mMarker.get(vd.id));
+                mMarker.remove(vd.id);
+            }
+            for (Marker marker : mMarker.values()) {
+                marker.remove();
+            }
+            mMarker.clear();
+            mMarker.putAll(tem);
+        }
+    }
+
+    AMap.OnMarkerClickListener mMarkerClickListener = new AMap.OnMarkerClickListener() {
+        // marker 对象被点击时回调的接口
+        // 返回 true 则表示接口已响应事件，否则返回false
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            Encyclopedias encyclopedias = mPresenter.getEncyclopedias((String) marker.getObject());
+            MediaPlayerManager.getInstence().start(NavigationActivity.this, CommUtils.getFullUrl(LanguageUtil.chooseTest(encyclopedias.voiceUrl, encyclopedias.voiceUrlEn)));
+            return true;
+        }
+    };
+
 
     private NaviListener mNaviListener = new NaviListener() {
         @Override
@@ -289,32 +407,33 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         public void onInitNaviSuccess() {
             // 导航初始化成功时的回调函数。
             startCalculateTheRoad(
-                    LocationManager.getInstance().getCurrentLocationLatLng(), virtualScene );
+                    LocationManager.getInstance().getCurrentLocationLatLng(), virtualScene);
         }
 
         @Override
         public void onStartNavi(int i) {
             // 启动导航后的回调函数
-            ToastHelper.showLong( "启动导航" );
+            ToastHelper.showLong("启动导航");
+            mStartTime = TimeUtils.getNowMills();
         }
 
         @Override
         public void onGetNavigationText(String s) {
             if (s == null) return;
-            ToastHelper.showShort( s );
-            if (s.startsWith( "左转" )) {
-                changeAnimation( "turnLeft" );
-            } else if (s.startsWith( "右转" )) {
-                changeAnimation( "turnRight" );
-            } else if (s.startsWith( "前方直行" )) {
-                changeAnimation( "forward" );
+            ToastHelper.showShort(s);
+            if (s.startsWith("左转")) {
+                changeAnimation("turnLeft");
+            } else if (s.startsWith("右转")) {
+                changeAnimation("turnRight");
+            } else if (s.startsWith("前方直行")) {
+                changeAnimation("forward");
             }
         }
 
         @Override
         public void onGpsOpenStatus(boolean b) {
             // 用户手机GPS设置是否开启的回调函数。
-            ToastHelper.showLong( "手机GPS设置是否开启" + b );
+            ToastHelper.showLong("手机GPS设置是否开启" + b);
         }
 
         @Override
@@ -325,32 +444,32 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onCalculateRouteFailure(int i) {
             // 路线规划失败回调
-            Log.e( "NaviManager=======", "路径规划出错" + i );
-            ToastHelper.showLong( "路线规划失败" );
+            Log.e("NaviManager=======", "路径规划出错" + i);
+            ToastHelper.showLong("路线规划失败");
         }
 
         @Override
         public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
             // 算路返回结果
             AMapNaviPath naviPath = mAMapNavi.getNaviPath();
-            mNaviRouteOverlay = new NaviRouteOverlay( mMap, naviPath, mFrom, mTo );
+            mNaviRouteOverlay = new NaviRouteOverlay(mMap, naviPath, mFrom, mTo);
             if (ExpoApp.getApplication().getUserHandBitmap() == null) {
-                mNaviRouteOverlay.setCarMarkerIcon( BitmapUtils.circleBitmap(
-                        BitmapFactory.decodeResource( getResources(), R.drawable.ico_mine_def_photo ), mPhotoSize, mPhotoSize ) );
+                mNaviRouteOverlay.setCarMarkerIcon(BitmapUtils.circleBitmap(
+                        BitmapFactory.decodeResource(getResources(), R.drawable.ico_mine_def_photo), mPhotoSize, mPhotoSize));
             } else {
-                mNaviRouteOverlay.setCarMarkerIcon( BitmapUtils.circleBitmap( ExpoApp.getApplication().getUserHandBitmap(), mPhotoSize, mPhotoSize ) );
+                mNaviRouteOverlay.setCarMarkerIcon(BitmapUtils.circleBitmap(ExpoApp.getApplication().getUserHandBitmap(), mPhotoSize, mPhotoSize));
             }
-            mNaviRouteOverlay.setRouteCustomTexture( R.drawable.ico_route_item );
-            mNaviRouteOverlay.setRouteWidth( 40 );
-            mNaviRouteOverlay.setPassedRouteCustomTexture( R.drawable.ico_route_item_passed );
-            mNaviRouteOverlay.setAutoToCenter( mAutoToCenter );
+            mNaviRouteOverlay.setRouteCustomTexture(R.drawable.ico_route_item);
+            mNaviRouteOverlay.setRouteWidth(40);
+            mNaviRouteOverlay.setPassedRouteCustomTexture(R.drawable.ico_route_item_passed);
+            mNaviRouteOverlay.setAutoToCenter(mAutoToCenter);
             mNaviRouteOverlay.addToMap();
             if (!mAutoToCenter)
                 mNaviRouteOverlay.showBounds();
             if (naviPath == null) {
                 return;
             }
-            mAMapNavi.startNavi( NaviType.GPS );
+            mAMapNavi.startNavi(NaviType.GPS);
 //            mAMapNavi.startNavi( NaviType.EMULATOR );     // 模拟导航
             hideLoadingView();
         }
@@ -376,7 +495,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @JavascriptInterface
         public void canCallJS(boolean state) {
             mJsCanSend = state;
-            runOnUiThread( NavigationActivity.this::startNavi );
+            runOnUiThread(NavigationActivity.this::startNavi);
         }
     }
 
@@ -385,13 +504,112 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
      *
      * @param context
      */
-    public static void startActivity(@NonNull Context context, long spotId) {
-        if (spotId <= 0) {
-            ToastHelper.showShort( R.string.error_params );
+    public static void startActivity(@NonNull Context context, ActualScene actualScene, String voiceUrl) {
+        if (actualScene.getId() <= 0) {
+            ToastHelper.showShort(R.string.error_params);
             return;
         }
-        Intent in = new Intent( context, NavigationActivity.class );
-        in.putExtra( Constants.EXTRAS.EXTRA_SPOT_ID, spotId );
-        context.startActivity( in );
+        Intent in = new Intent(context, NavigationActivity.class);
+        in.putExtra(Constants.EXTRAS.EXTRAS, actualScene);
+        in.putExtra(Constants.EXTRAS.EXTRA_URL, voiceUrl);
+        context.startActivity(in);
+    }
+
+    private void showEndView() {
+        int time = (int) ((TimeUtils.getNowMills() - mStartTime) / (60 * 1000));
+
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_navigation_end, null);
+
+        CommUtils.setImgPic(this, mActualScene.getPicUrl(), view.findViewById(R.id.dialog_navigation_end_img));
+        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_name), mActualScene.getCaption(), mActualScene.getEnCaption());
+        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_content), mActualScene.getRemark(), mActualScene.getEnRemark());
+        ((TextView) view.findViewById(R.id.dialog_navigation_end_duration)).setText(getResources().getString(R.string.time_leng) + getResources().getString(R.string.within_minutes, time));
+        ((TextView) view.findViewById(R.id.dialog_navigation_end_distance)).setText("");
+
+        ViewHolder viewHolder = new ViewHolder(view);
+        DialogPlus dialog = DialogPlus.newDialog(this)
+                .setContentHolder(viewHolder)
+                .setGravity(Gravity.BOTTOM)
+                .setContentBackgroundResource(0)
+                .setMargin((int) getResources().getDimension(R.dimen.dms_50), 0, (int) getResources().getDimension(R.dimen.dms_50), 0)
+                .setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(DialogPlus dialog, View view) {
+                        if (view.getId() == R.id.dialog_navigation_end_finish)
+                            finish();
+                    }
+                })
+                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+                .create();
+        dialog.show();
+    }
+
+    class MythredCalculate extends Thread {
+        boolean isExit = false;
+        double lat, lon;
+
+        @Override
+        public void run() {
+            super.run();
+            while (!isExit) {
+                synchronized (LOCK) {
+                    for (VenuesDistance vd : mVenuesDistance) {
+                        vd.distance = AMapUtils.calculateLineDistance(
+                                new LatLng(lat, lon), new LatLng(vd.lat, vd.lon));
+                    }
+                    Collections.sort(mVenuesDistance, new Comparator<VenuesDistance>() {
+                        @Override
+                        public int compare(VenuesDistance o1, VenuesDistance o2) {
+                            return o1.distance <= o2.distance ? 0 : 1;
+                        }
+                    });
+                }
+                SystemClock.sleep(60 * 1000);
+            }
+        }
+
+        public void exit() {
+            isExit = true;
+        }
+
+        public void setLatLon(double lat, double lon) {
+            this.lat = lat;
+            this.lon = lon;
+        }
+    }
+
+    class MythredFresh extends Thread {
+
+        boolean isExit = false;
+        double lat, lon;
+
+        @Override
+        public void run() {
+            super.run();
+            while (!isExit) {
+                SystemClock.sleep(5 * 1000);
+                synchronized (LOCK) {
+                    freshMarker();
+                }
+            }
+        }
+
+        public void exit() {
+            isExit = true;
+        }
+
+        public void setLatLon(double lat, double lon) {
+            this.lat = lat;
+            this.lon = lon;
+        }
+    }
+
+    protected BitmapDescriptor getNavigation() {
+        View view = LayoutInflater.from(this).inflate(R.layout.view_marker, null);
+        ((ImageView) view.findViewById(R.id.marker_img)).setImageResource(R.drawable.navi_layer_2);
+        ((TextView) view.findViewById(R.id.marker_text)).setText("警卫局");
+        BitmapDescriptor bd = BitmapDescriptorFactory.fromView(view);
+
+        return bd;
     }
 }

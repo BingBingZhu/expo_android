@@ -15,6 +15,7 @@ import com.expo.module.mine.AboutActivity;
 import com.expo.module.mine.FeedbackActivity;
 import com.expo.module.mine.SettingActivity;
 import com.expo.module.mine.UserInfoActivity;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.squareup.picasso.Picasso;
 
@@ -62,7 +63,8 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     public void freshUser(User user) {
         if (user == null) return;
         if (!StringUtils.isEmpty( user.getPhotoUrl() ))
-            Picasso.with( getContext() ).load( user.getPhotoUrl() ).placeholder(R.drawable.image_default).error(R.drawable.image_default).into( mImageView );
+            CommUtils.setImgPic(getContext(), user.getPhotoUrl(), mImageView);
+
         mTvMineName.setText( user.getNick() );
     }
 

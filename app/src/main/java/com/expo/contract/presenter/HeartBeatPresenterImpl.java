@@ -71,6 +71,7 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
                             messages.get(0).sendMessageCount(null);
                     }
                 }
+                mView.setHeartInvTime(heartBeatRsb.HeartInvTime);
             }
         }, observable);
     }

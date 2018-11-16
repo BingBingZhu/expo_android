@@ -11,5 +11,6 @@ import java.util.List;
 
 public class UserHeartBeatResp extends BaseResponse {
     public String UpdateTime;
+    public int HeartInvTime;
     public List<Message> MessageList = new ArrayList<>();
 }
