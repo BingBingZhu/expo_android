@@ -48,6 +48,7 @@ import com.expo.entity.ActualScene;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.VenuesDistance;
 import com.expo.map.LocationManager;
+import com.expo.map.MapUtils;
 import com.expo.media.MediaPlayerManager;
 import com.expo.utils.BitmapUtils;
 import com.expo.utils.CameraManager;
@@ -115,6 +116,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     List<VenuesDistance> mVenuesDistance;
     MythredFresh mMythredFresh;
     MythredCalculate mMythredcCalculate;
+
+    private MapUtils mMapUtils;
 
     final Object LOCK = new Object();
 
@@ -226,6 +229,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private void initMapNaviView() {
         mMap = mMapView.getMap();
         mMarker = new HashMap<>();
+        mMapUtils = new MapUtils(mMap);
         mMap.getUiSettings().setZoomControlsEnabled(false);
         mMap.getUiSettings().setTiltGesturesEnabled(false);
         DeviceRotateManager.getInstance().registerOrientationChangedListener(mOnOrientationChangedListener);//设备旋转
@@ -370,7 +374,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                     continue;
                 }
                 LatLng latLng = new LatLng(vd.lat, vd.lon);
-                MarkerOptions markerOptions = new MarkerOptions().position(latLng).icon(getNavigation());
+                MarkerOptions markerOptions = new MarkerOptions().position(latLng).icon(mMapUtils.setMarkerIconDrawable(this, null, "警察局"));
                 Marker marker = mMap.addMarker(markerOptions);
                 marker.setObject(vd.id);
                 tem.put(vd.id, mMarker.get(vd.id));
@@ -454,15 +458,15 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             AMapNaviPath naviPath = mAMapNavi.getNaviPath();
             mNaviRouteOverlay = new NaviRouteOverlay(mMap, naviPath, mFrom, mTo);
             if (ExpoApp.getApplication().getUserHandBitmap() == null) {
-                mNaviRouteOverlay.setCarMarkerIcon( BitmapUtils.circleBitmap(
-                        BitmapFactory.decodeResource( getResources(), R.mipmap.ico_mine_def_photo ), mPhotoSize, mPhotoSize ) );
+                mNaviRouteOverlay.setCarMarkerIcon(BitmapUtils.circleBitmap(
+                        BitmapFactory.decodeResource(getResources(), R.mipmap.ico_mine_def_photo), mPhotoSize, mPhotoSize));
             } else {
                 mNaviRouteOverlay.setCarMarkerIcon(BitmapUtils.circleBitmap(ExpoApp.getApplication().getUserHandBitmap(), mPhotoSize, mPhotoSize));
             }
-            mNaviRouteOverlay.setRouteCustomTexture( R.mipmap.ico_route_item );
-            mNaviRouteOverlay.setRouteWidth( 40 );
-            mNaviRouteOverlay.setPassedRouteCustomTexture( R.mipmap.ico_route_item_passed );
-            mNaviRouteOverlay.setAutoToCenter( mAutoToCenter );
+            mNaviRouteOverlay.setRouteCustomTexture(R.mipmap.ico_route_item);
+            mNaviRouteOverlay.setRouteWidth(40);
+            mNaviRouteOverlay.setPassedRouteCustomTexture(R.mipmap.ico_route_item_passed);
+            mNaviRouteOverlay.setAutoToCenter(mAutoToCenter);
             mNaviRouteOverlay.addToMap();
             if (!mAutoToCenter)
                 mNaviRouteOverlay.showBounds();
@@ -604,12 +608,4 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         }
     }
 
-    protected BitmapDescriptor getNavigation() {
-        View view = LayoutInflater.from(this).inflate(R.layout.view_marker, null);
-        ((ImageView) view.findViewById(R.id.marker_img)).setImageResource(R.drawable.navi_layer_2);
-        ((TextView) view.findViewById(R.id.marker_text)).setText("警卫局");
-        BitmapDescriptor bd = BitmapDescriptorFactory.fromView(view);
-
-        return bd;
-    }
 }

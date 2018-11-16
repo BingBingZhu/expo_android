@@ -37,7 +37,7 @@ public class TouristServiceAdapter extends RecyclerView.Adapter<TouristServiceAd
 
     @Override
     public void onBindViewHolder(@NonNull TouristServiceViewHolder holder, int position) {
-        holder.mImage.setImageResource(mContext.getResources().getIdentifier("tourist_service_" + position, "drawable", AppUtils.getAppPackageName()));
+        holder.mImage.setImageResource(mContext.getResources().getIdentifier("tourist_service_" + position, "mipmap", AppUtils.getAppPackageName()));
         holder.mText.setText(mContext.getResources().getIdentifier("item_tourist_service_text_" + position, "string", AppUtils.getAppPackageName()));
         holder.itemView.setOnClickListener(v -> {
             if (listener != null)

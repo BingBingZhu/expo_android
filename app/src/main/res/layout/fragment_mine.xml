@@ -44,7 +44,7 @@
         <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/item_mine_bespeak"
             style="@style/item_mine_entry"
-            android:drawableLeft="@mipmap/select"
+            android:drawableLeft="@mipmap/time"
             android:text="@string/item_mine_bespeak" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable
