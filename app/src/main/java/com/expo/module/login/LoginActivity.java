@@ -110,6 +110,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (mEtPhoneView.isFocused()) {     //手机号输入框获取焦点
+                String phoneNumber = mEtPhoneView.getText().toString();
+                mGetCodeView.setEnabled(StringUtils.isEmpty(phoneNumber)? false:PhoneNumberLibUtil.checkPhoneNumber(LoginActivity.this, mCode, Long.valueOf(phoneNumber)));
             } else {      //验证码输入框获取焦点
                 if (s.length() != 4) {       //长度非4位进行错误处理
                     mLoginView.setEnabled(false);
@@ -142,15 +144,15 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
                 break;
             case R.id.login_get_ver_code:
 //                验证手机号
-                if (StringUtils.isEmpty(mEtPhoneView.getText().toString())) {
-                    ToastHelper.showShort(R.string.input_correct_phone);
-                    return;
-                }
+//                if (StringUtils.isEmpty(mEtPhoneView.getText().toString())) {
+//                    ToastHelper.showShort(R.string.input_correct_phone);
+//                    return;
+//                }
 //                验证手机号
-                if (!PhoneNumberLibUtil.checkPhoneNumber(this, mCode, Long.valueOf(mEtPhoneView.getText().toString()))) {
-                    ToastHelper.showShort(R.string.input_correct_phone);
-                    return;
-                }
+//                if (!PhoneNumberLibUtil.checkPhoneNumber(this, mCode, Long.valueOf(mEtPhoneView.getText().toString()))) {
+//                    ToastHelper.showShort(R.string.input_correct_phone);
+//                    return;
+//                }
                 mPresenter.getCode(mEtPhoneView.getText().toString().trim(), "+" + mCode, null);
                 mSurplusDuration = mDuration;
                 mTimeCount = new TimeCount((mDuration + 1) * 1000, 1000);
@@ -182,7 +184,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
     @Override
     public void toUserProtocol(CommonInfo commonInfo) {
-        if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())){
+        if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())) {
             ToastHelper.showLong(R.string.there_is_no_user_protocol);
             return;
         }

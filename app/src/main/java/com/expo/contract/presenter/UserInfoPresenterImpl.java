@@ -85,6 +85,8 @@ public class UserInfoPresenterImpl extends UserInfoContract.Presenter {
         if (!changeImg) saveUserInfoOnLine(user);
         else if (StringUtils.isEmpty(user.getPhotoUrl()))
             saveUserInfoOnLine(user);
+        else if (user.getPhotoUrl().toLowerCase().startsWith("http"))
+            saveUserInfoOnLine(user);
         else {
             File file = new File(user.getPhotoUrl());
             RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);

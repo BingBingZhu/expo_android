@@ -37,6 +37,14 @@
                 android:background="@drawable/bg_white_ccc_r5_w1"
                 android:gravity="center"
                 android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dms_30"
+                    android:src="@drawable/ico_login_phone"
+                    android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/login_phone_number_code"
                     android:layout_width="@dimen/dms_90"
@@ -45,6 +53,7 @@
                     android:drawableRight="@drawable/country_more"
                     android:gravity="center"
                     android:text="+86" />
+
                 <EditText
                     android:id="@+id/login_phone_number_et"
                     android:layout_width="match_parent"
@@ -88,6 +97,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dms_20"
                     android:background="@drawable/selector_login_get_code"
+                    android:enabled="false"
                     android:gravity="center"
                     android:text="@string/get_code"
                     android:textColor="@color/selector_get_code_text_color"
@@ -98,16 +108,16 @@
                 android:id="@+id/login_login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dms_24"
-                android:paddingBottom="@dimen/dms_24"
-                android:gravity="center"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dms_50"
                 android:background="@drawable/selector_login_correlation_btn_bg"
+                android:enabled="false"
+                android:gravity="center"
+                android:paddingTop="@dimen/dms_24"
+                android:paddingBottom="@dimen/dms_24"
                 android:text="@string/login"
                 android:textColor="@color/selector_login_correlation_text_color"
-                android:textSize="@dimen/font_34"
-                android:enabled="false" />
+                android:textSize="@dimen/font_34" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -140,6 +150,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -147,6 +158,7 @@
             android:text="@string/other_login_methods"
             android:textColor="@color/color_666"
             android:textSize="@dimen/font_26" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,18 +166,21 @@
             android:layout_marginTop="@dimen/dms_40"
             android:layout_marginRight="@dimen/dms_40"
             android:layout_marginBottom="@dimen/dms_80">
+
             <ImageView
                 android:id="@+id/login_wechat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/ico_wechat_login" />
+
             <ImageView
                 android:id="@+id/login_qq"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/ico_qq_login" />
+
             <ImageView
                 android:id="@+id/login_microblog"
                 android:layout_width="0dp"
