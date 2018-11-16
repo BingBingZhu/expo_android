@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,20 +25,16 @@ import com.expo.contract.LoginContract;
 import com.expo.entity.CommonInfo;
 import com.expo.module.main.MainActivity;
 import com.expo.module.webview.WebActivity;
-import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
-import com.expo.widget.AppBarView;
 import com.sahooz.library.Country;
 import com.sahooz.library.PhoneNumberLibUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
@@ -70,8 +65,9 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
     private int mDuration = 60;
     private int mSurplusDuration;
-    private boolean mGetCodeEnable = true;  // 是否允许获取验证码按钮可用
+    private boolean mCountDownOver = true;  // 倒计时是否结束
     private TimeCount mTimeCount;    //验证码获取计时器
+    private String mMobile;
     private int mCode = 86;    //手机号区域码
 
     @Override
@@ -96,6 +92,10 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         checkPermission();
     }
 
+    private boolean getCodeIsEnable(){
+        return mCountDownOver /*&&*/;
+    }
+
     @Override
     protected boolean hasPresenter() {
         return true;
@@ -110,6 +110,10 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (mEtPhoneView.isFocused()) {     //手机号输入框获取焦点
+                //  验证手机号
+                if (!PhoneNumberLibUtil.checkPhoneNumber(getContext(), mCode, Long.valueOf(s.toString()))) {
+
+                }
             } else {      //验证码输入框获取焦点
                 if (s.length() != 4) {       //长度非4位进行错误处理
                     mLoginView.setEnabled(false);
@@ -141,12 +145,12 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
                 startActivityForResult(new Intent(getApplicationContext(), NationalSmsCodeActivity.class), 111);
                 break;
             case R.id.login_get_ver_code:
-//                验证手机号
+                //  验证手机号
                 if (StringUtils.isEmpty(mEtPhoneView.getText().toString())) {
                     ToastHelper.showShort(R.string.input_correct_phone);
                     return;
                 }
-//                验证手机号
+                //  验证手机号
                 if (!PhoneNumberLibUtil.checkPhoneNumber(this, mCode, Long.valueOf(mEtPhoneView.getText().toString()))) {
                     ToastHelper.showShort(R.string.input_correct_phone);
                     return;
@@ -249,7 +253,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
         @Override
         public void onFinish() {// 计时完毕时触发
-            mGetCodeEnable = true;
+            mCountDownOver = true;
             mGetCodeView.setEnabled(true);
             mGetCodeView.setText("获取验证码");
         }
@@ -260,7 +264,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
                 mSurplusDuration--;
             }
             mGetCodeView.setText(mSurplusDuration + "秒");
-            mGetCodeEnable = false;
+            mCountDownOver = false;
             mGetCodeView.setEnabled(false);
         }
     }
