@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_300"
             android:scaleType="fitXY"
-            android:src="@drawable/login_bg" />
+            android:src="@mipmap/login_bg" />
 
         <TextView
             android:id="@+id/dialog_bind_phone_text"
@@ -65,5 +65,5 @@
         android:layout_width="@dimen/dms_60"
         android:layout_height="@dimen/dms_60"
         android:layout_alignParentRight="true"
-        android:src="@drawable/sliding_item_delete_icon" />
+        android:src="@mipmap/sliding_item_delete_icon" />
 </RelativeLayout>

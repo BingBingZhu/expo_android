@@ -36,7 +36,7 @@
             android:layout_height="@dimen/dms_90"
             android:layout_marginLeft="@dimen/dms_8"
             android:layout_marginRight="@dimen/dms_14"
-            android:drawableRight="@drawable/country_more"
+            android:drawableRight="@mipmap/country_more"
             android:gravity="center"
             android:text="+86" />
 

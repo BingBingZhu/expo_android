@@ -21,6 +21,6 @@
         android:gravity="center"
         android:padding="@dimen/dms_10"
         android:scaleType="fitXY"
-        android:src="@drawable/litter_close" />
+        android:src="@mipmap/litter_close" />
 
 </RelativeLayout>

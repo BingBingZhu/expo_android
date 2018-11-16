@@ -62,15 +62,15 @@ public class MessageKindAdapter extends RecyclerView.Adapter<MessageKindAdapter.
 
     private int getImgRes(String type) {
         if (StringUtils.equals("1", type))
-            return R.drawable.msg_biaoqian;
+            return R.mipmap.msg_biaoqian;
         else if (StringUtils.equals("3", type))
-            return R.drawable.msg_activity;
+            return R.mipmap.msg_activity;
         else if (StringUtils.equals("4", type))
-            return R.drawable.msg_laba;
+            return R.mipmap.msg_laba;
         else if (StringUtils.equals("5", type))
-            return R.drawable.msg_xitongtuisong;
+            return R.mipmap.msg_xitongtuisong;
         else
-            return R.drawable.msg_biaoqian;
+            return R.mipmap.msg_biaoqian;
     }
 
     private String getTitleText(String type){

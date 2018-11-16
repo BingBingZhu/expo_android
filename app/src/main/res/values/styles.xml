@@ -149,7 +149,7 @@
         <item name="android:drawablePadding">@dimen/dms_30</item>
         <item name="android:paddingLeft">@dimen/dms_30</item>
         <item name="android:paddingRight">@dimen/dms_30</item>
-        <item name="android:drawableRight">@drawable/arrow_mine</item>
+        <item name="android:drawableRight">@mipmap/arrow_mine</item>
     </style>
 
     <style name="item_user_info">

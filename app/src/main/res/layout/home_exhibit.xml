@@ -8,7 +8,7 @@
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         style="@style/TextSizeBlack15"
-        android:drawableLeft="@drawable/home_thumb"
+        android:drawableLeft="@mipmap/home_thumb"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/home_func_title_exhibit"
         android:textSize="@dimen/font_34" />

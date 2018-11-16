@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dms_30"
-        android:src="@drawable/home_icon" />
+        android:src="@mipmap/home_icon" />
 
     <ImageView
         android:id="@+id/title_home_msg"
@@ -22,7 +22,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dms_30"
-        android:src="@drawable/home_msg" />
+        android:src="@mipmap/home_msg" />
 
     <TextView
         android:id="@+id/title_home_msg_note"
@@ -41,7 +41,7 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/title_home_msg"
         android:layout_toRightOf="@id/title_home_icon"
-        android:src="@drawable/home_search_btn" />
+        android:src="@mipmap/home_search_btn" />
 
 
     <ImageView
@@ -50,6 +50,6 @@
         android:layout_alignLeft="@id/title_home_search"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dms_20"
-        android:src="@drawable/search" />
+        android:src="@mipmap/search" />
 
 </RelativeLayout>

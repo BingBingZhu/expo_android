@@ -41,5 +41,5 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dms_28"
         android:layout_marginTop="@dimen/dms_28"
-        android:src="@drawable/ic_back_navi" />
+        android:src="@mipmap/ic_back_navi" />
 </FrameLayout>

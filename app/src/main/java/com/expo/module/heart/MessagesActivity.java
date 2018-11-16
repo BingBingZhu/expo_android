@@ -131,7 +131,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
 
         SwipeMenuItem deleteItem = new SwipeMenuItem(this)
                 .setBackground(R.drawable.bg_gradient_y_fc2637_fc515e)
-                .setImage(R.drawable.delete)
+                .setImage(R.mipmap.delete)
                 .setWidth(width)
                 .setHeight(height);
         swipeRightMenu.addMenuItem(deleteItem); // 在Item右侧添加一个菜单。

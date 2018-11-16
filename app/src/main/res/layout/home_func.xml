@@ -12,7 +12,7 @@
         style="@style/style_home_fun_item"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:drawableTop="@drawable/home_free_wifi"
+        android:drawableTop="@mipmap/home_free_wifi"
         android:text="@string/home_func_item_wifi" />
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
@@ -20,7 +20,7 @@
         style="@style/style_home_fun_item"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:drawableTop="@drawable/home_buy_tickets"
+        android:drawableTop="@mipmap/home_buy_tickets"
         android:text="@string/home_func_item_tickets" />
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
@@ -28,7 +28,7 @@
         style="@style/style_home_fun_item"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:drawableTop="@drawable/home_venue_appointment"
+        android:drawableTop="@mipmap/home_venue_appointment"
         android:text="@string/home_func_item_appointment" />
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
@@ -36,7 +36,7 @@
         style="@style/style_home_fun_item"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:drawableTop="@drawable/home_tourist_service"
+        android:drawableTop="@mipmap/home_tourist_service"
         android:text="@string/home_func_item_service" />
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
@@ -44,6 +44,6 @@
         style="@style/style_home_fun_item"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:drawableTop="@drawable/home_play_line"
+        android:drawableTop="@mipmap/home_play_line"
         android:text="@string/home_func_item_line" />
 </LinearLayout>

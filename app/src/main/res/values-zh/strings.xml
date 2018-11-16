@@ -163,4 +163,5 @@
     <string name="active_message">活动消息</string>
     <string name="feedback_on_tourist_service">游客服务反馈</string>
     <string name="to_make_an_appointment_to_remind">预约提醒</string>
+    <string name="error_params">参数错误</string>
 </resources>

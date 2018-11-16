@@ -16,7 +16,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/sliding_item_delete_icon" />
+            android:src="@mipmap/sliding_item_delete_icon" />
 
         <TextView
             android:layout_width="wrap_content"

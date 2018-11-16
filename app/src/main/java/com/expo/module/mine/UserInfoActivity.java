@@ -133,7 +133,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
 
     public void initTitleRightImageView() {//原UI设计
         ImageView img = new ImageView(this);
-        img.setImageResource(R.drawable.user_info_edit_save);
+        img.setImageResource(R.mipmap.user_info_edit_save);
         ((AppBarView) getTitleView()).setRightView(img);
         img.setOnClickListener(v -> {
             mUser.setNick(((TextView) mUserName.getRightView()).getText().toString());
@@ -144,7 +144,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     public void initCircleView() {
         RoundImageView imageView = new RoundImageView(this);
         imageView.setType(RoundImageView.TYPE_CIRCLE);
-        imageView.setImageResource(R.drawable.ico_mine_def_photo);
+        imageView.setImageResource(R.mipmap.ico_mine_def_photo);
         int width = (int) getResources().getDimension(R.dimen.dms_100);
         mUserImg.addRightView(imageView, width, width);
     }
@@ -252,7 +252,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
                 mImageList.clear();
                 mImageList.add(UriUtils.uri2File(resultUri, "").getPath());
                 mUser.setPhotoUrl(mImageList.get(0));
-                Picasso.with(this).load("file://" + mImageList.get(0)).placeholder(R.drawable.ico_mine_def_photo)
+                Picasso.with(this).load("file://" + mImageList.get(0)).placeholder(R.mipmap.ico_mine_def_photo)
                         .into((RoundImageView) mUserImg.getRightView());
                 showSaveBtn(mUser);
             }

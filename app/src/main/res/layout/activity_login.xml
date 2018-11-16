@@ -22,7 +22,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dms_60"
             android:scaleType="fitXY"
-            android:src="@drawable/language_logo" />
+            android:src="@mipmap/language_logo" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:layout_width="@dimen/dms_90"
                     android:layout_height="@dimen/dms_90"
                     android:layout_marginLeft="@dimen/dms_20"
-                    android:drawableRight="@drawable/country_more"
+                    android:drawableRight="@mipmap/country_more"
                     android:gravity="center"
                     android:text="+86" />
                 <EditText
@@ -159,19 +159,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ico_wechat_login" />
+                android:src="@mipmap/ico_wechat_login" />
             <ImageView
                 android:id="@+id/login_qq"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ico_qq_login" />
+                android:src="@mipmap/ico_qq_login" />
             <ImageView
                 android:id="@+id/login_microblog"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ico_sina_login" />
+                android:src="@mipmap/ico_sina_login" />
         </LinearLayout>
     </LinearLayout>
 

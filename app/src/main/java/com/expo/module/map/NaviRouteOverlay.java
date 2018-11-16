@@ -332,7 +332,7 @@ public class NaviRouteOverlay {
      */
     private BitmapDescriptor getStartMarkerIcon() {
         if (mStartMarkerIcon == 0) {
-            return BitmapDescriptorFactory.fromResource( R.drawable.navi_start );
+            return BitmapDescriptorFactory.fromResource( R.mipmap.navi_start );
         }
         return BitmapDescriptorFactory.fromResource( mStartMarkerIcon );
     }
@@ -342,7 +342,7 @@ public class NaviRouteOverlay {
      */
     private BitmapDescriptor getEndMarkerIcon() {
         if (mEndMarkerIcon == 0) {
-            return BitmapDescriptorFactory.fromResource( R.drawable.navi_end );
+            return BitmapDescriptorFactory.fromResource( R.mipmap.navi_end );
         }
         return BitmapDescriptorFactory.fromResource( mEndMarkerIcon );
     }
@@ -352,7 +352,7 @@ public class NaviRouteOverlay {
      */
     private BitmapDescriptor getCarMarkerIcon() {
         if (mCarMarkerBitmap == null) {
-            return BitmapDescriptorFactory.fromResource( R.drawable.navi_map_gps_locked );
+            return BitmapDescriptorFactory.fromResource( R.mipmap.navi_map_gps_locked );
         }
         return BitmapDescriptorFactory.fromBitmap( mCarMarkerBitmap );
     }
