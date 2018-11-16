@@ -21,6 +21,8 @@
     <string name="language">English</string>
     <string name="language_select">请选择语言</string>
     <string name="bj_world_horticultural_exposition">International Horticultural Exhibition 2019 Beijing</string>
+    <string name="within_minutes">%d minutes</string>
+    <string name="time_leng">time:</string>
 
     <string name="ukey_error">用户数据错误，请重新登录</string>
     <string name="unlogin">请先登录</string>
@@ -139,6 +141,9 @@
     <string name="gps_open_weak">GPS信号较弱，请稍后再试</string>
     <string name="gps_open_title">该功能需要打开定位功能。</string>
     <string name="gps_open_content">请点击“设置”-“定位服务”打开定位功能</string>
+
+    <string name="navigationg_arrive">到达目的地</string>
+    <string name="navigationg_back">返回导航</string>
 
     <integer name="video_time">60</integer>
     <string name="please_enter_keywords">please enter keywords</string>

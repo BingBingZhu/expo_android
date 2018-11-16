@@ -21,27 +21,44 @@
         android:text="@string/kindly_reminder_info"
         android:textColor="@color/gray_99" />
 
-    <EditText
-        android:id="@+id/seek_help_text3"
-        style="@style/TextSizeBlack12"
+    <RelativeLayout
+        android:id="@+id/seek_help_layout"
         android:layout_width="match_parent"
-        android:layout_below="@id/seek_help_text2"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dms_50"
-        android:background="@null"
-        android:gravity="top"
-        android:hint="@string/situation_describe"
-        android:lines="4"
-        android:maxLength="300"
-        android:paddingTop="@dimen/dms_10"
-        android:paddingBottom="@dimen/dms_10"
-        android:textColor="@color/gray_99"
-        android:textColorHint="@color/gray_99" />
+        android:layout_below="@id/seek_help_text2">
+
+        <ImageView
+            android:id="@+id/seek_help_speech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/record" />
+
+        <EditText
+            android:id="@+id/seek_help_text3"
+            style="@style/TextSizeBlack12"
+            android:layout_width="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/seek_help_speech"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="@string/situation_describe"
+            android:lines="4"
+            android:maxLength="300"
+            android:paddingTop="@dimen/dms_10"
+            android:paddingRight="@dimen/dms_50"
+            android:paddingBottom="@dimen/dms_10"
+            android:textColor="@color/gray_99"
+            android:textColorHint="@color/gray_99" />
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/seek_help_image_selector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/seek_help_text3"
+        android:layout_below="@id/seek_help_layout"
         android:layout_marginTop="@dimen/dms_60" />
 
     <com.hedan.textdrawablelibrary.TextViewDrawable

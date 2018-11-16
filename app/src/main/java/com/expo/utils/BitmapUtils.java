@@ -6,6 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.text.TextPaint;
+
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.expo.R;
 
 public class BitmapUtils {
 

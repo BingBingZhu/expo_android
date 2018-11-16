@@ -57,6 +57,7 @@
     <dimen name="dms_110">55dp</dimen>
     <dimen name="dms_114">57dp</dimen>
     <dimen name="dms_120">60dp</dimen>
+    <dimen name="dms_130">65dp</dimen>
     <dimen name="dms_140">70dp</dimen>
     <dimen name="dms_150">75dp</dimen>
     <dimen name="dms_170">85dp</dimen>

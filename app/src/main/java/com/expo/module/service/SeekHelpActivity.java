@@ -9,10 +9,15 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
 import com.amap.api.maps.AMap;
+import com.baidu.speech.EventListener;
+import com.baidu.speech.EventManager;
+import com.baidu.speech.EventManagerFactory;
+import com.baidu.speech.asr.SpeechConstant;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
@@ -21,6 +26,7 @@ import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.CheckUtils;
 import com.expo.base.utils.GpsUtil;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SeekHelpContract;
@@ -31,7 +37,12 @@ import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -49,8 +60,10 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     EditText mEtEdit;
     @BindView(R.id.seek_help_phone)
     View mPhone;
+    @BindView(R.id.seek_help_speech)
+    View mSpeech;
 
-        ArrayList<String> mImageList;
+    ArrayList<String> mImageList;
     SeekHelpAdapter mAdapter;
     Location mLocation;
 
@@ -60,6 +73,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     boolean mIsLocation;
 
     int mOpenGPSTimes;
+
+    private EventManager asr;
 
     Handler mHandler = new Handler() {
         @Override
@@ -115,13 +130,32 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         if (getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0) != 0) {
             mPhone.setVisibility(View.GONE);
         }
+        initRecord();
         initRecyclerView();
+
         mIsLocation = true;
     }
 
     @Override
     protected boolean hasPresenter() {
         return true;
+    }
+
+    private void initRecord() {
+        asr = EventManagerFactory.create(this, "asr");
+        asr.registerListener(mListener); //  EventListener 中 onEvent方法\
+        mSpeech.setOnTouchListener((v, event) -> {
+            LogUtils.d("Action", event.getAction() + "");
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    startRecord();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    stopRecord();
+                    break;
+            }
+            return true;
+        });
     }
 
     private void initRecyclerView() {
@@ -264,4 +298,49 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         LocationManager.getInstance().unregisterLocationListener(mLocationChangeListener);
         super.onDestroy();
     }
+
+    //语音识别
+    private void startRecord() {
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        String event = null;
+        event = SpeechConstant.ASR_START; // 替换成测试的event
+
+        params.put(SpeechConstant.DECODER, 2);
+        params.put(SpeechConstant.VAD, SpeechConstant.VAD_DNN);
+        params.put(SpeechConstant.VAD_ENDPOINT_TIMEOUT, 15000);
+        params.put(SpeechConstant.ACCEPT_AUDIO_VOLUME, false);
+        // params.put(SpeechConstant.NLU, "enable");
+        // params.put(SpeechConstant.VAD_ENDPOINT_TIMEOUT, 0); // 长语音
+        // params.put(SpeechConstant.IN_FILE, "res:///com/baidu/android/voicedemo/16k_test.pcm");
+        // params.put(SpeechConstant.VAD, SpeechConstant.VAD_DNN);
+        // params.put(SpeechConstant.PROP ,20000);
+        // params.put(SpeechConstant.PID, 1537); // 中文输入法模型，有逗号
+        // 请先使用如‘在线识别’界面测试和生成识别参数。 params同ActivityRecog类中myRecognizer.start(params);
+        // 复制此段可以自动检测错误
+        String json = null; // 可以替换成自己的json
+        json = new JSONObject(params).toString(); // 这里可以替换成你需要测试的json
+        asr.send(event, json, null, 0, 0);
+    }
+
+    private void stopRecord() {
+        asr.send(SpeechConstant.ASR_STOP, null, null, 0, 0); //
+    }
+
+    EventListener mListener = new EventListener() {
+        @Override
+        public void onEvent(String name, String params, byte[] data, int offset, int length) {
+            if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL)) {
+//                if (params.contains("\"nlu_result\"")) {
+                if (params.contains("\"final_result\"")) {
+                    try {
+                        JSONObject gson = new JSONObject(params);
+                        mEtEdit.setText(mEtEdit.getText().toString() + gson.optString("best_result"));
+//                        mEtEdit.setText(mEtEdit.getText().toString() + new String(data, offset, length));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    };
 }
