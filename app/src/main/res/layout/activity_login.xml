@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@color/white"
     tools:context=".module.login.LoginActivity">
 
 
@@ -27,23 +27,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginTop="@dimen/dms_190"
+            android:orientation="vertical"
             android:paddingLeft="@dimen/dms_60"
             android:paddingRight="@dimen/dms_30">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dms_80"
                 android:background="@drawable/bg_white_ccc_r5_w1"
                 android:gravity="center"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dms_30"
-                    android:src="@drawable/ico_login_phone"
-                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/login_phone_number_code"
@@ -73,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dms_80"
                 android:layout_marginTop="@dimen/dms_30">
+
                 <EditText
                     android:id="@+id/login_ver_code_et"
                     android:layout_width="match_parent"
