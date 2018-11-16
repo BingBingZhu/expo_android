@@ -328,8 +328,8 @@ public class ActualScene implements Parcelable {
         dest.writeString( recommendedIdx );
         dest.writeString( wikiId );
         dest.writeInt( score );
-        dest.writeString(voiceUrl)
-        dest.writeString(voiceUrlEn)
+        dest.writeString(voiceUrl);
+        dest.writeString(voiceUrlEn);
     }
 
     public String getVoiceUrl() {
