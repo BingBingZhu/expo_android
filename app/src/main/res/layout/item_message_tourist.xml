@@ -22,7 +22,7 @@
         style="@style/TextSizeWhite14"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/dms_10"
-        android:drawableRight="@drawable/arrow_right"
+        android:drawableRight="@mipmap/arrow_right"
         android:text="@string/see_detail"
         android:textColor="@color/gray_66" />
 

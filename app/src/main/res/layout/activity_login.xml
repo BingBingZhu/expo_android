@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:background="@color/white"
     tools:context=".module.login.LoginActivity">
 
 
@@ -22,13 +22,13 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dms_60"
             android:scaleType="fitXY"
-            android:src="@drawable/language_logo" />
+            android:src="@mipmap/language_logo" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dms_190"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/dms_190"
             android:paddingLeft="@dimen/dms_60"
             android:paddingRight="@dimen/dms_30">
 
@@ -44,7 +44,7 @@
                     android:layout_width="@dimen/dms_90"
                     android:layout_height="@dimen/dms_90"
                     android:layout_marginLeft="@dimen/dms_20"
-                    android:drawableRight="@drawable/country_more"
+                    android:drawableRight="@mipmap/country_more"
                     android:gravity="center"
                     android:text="+86" />
 
@@ -103,6 +103,9 @@
                 android:id="@+id/login_login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dms_24"
+                android:paddingBottom="@dimen/dms_24"
+                android:gravity="center"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dms_50"
                 android:background="@drawable/selector_login_correlation_btn_bg"
@@ -167,21 +170,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ico_wechat_login" />
-
+                android:src="@mipmap/ico_wechat_login" />
             <ImageView
                 android:id="@+id/login_qq"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ico_qq_login" />
-
+                android:src="@mipmap/ico_qq_login" />
             <ImageView
                 android:id="@+id/login_microblog"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ico_sina_login" />
+                android:src="@mipmap/ico_sina_login" />
         </LinearLayout>
     </LinearLayout>
 

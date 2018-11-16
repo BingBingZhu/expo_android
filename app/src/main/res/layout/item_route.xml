@@ -31,7 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dms_30"
         android:layout_marginBottom="@dimen/dms_10"
-        android:drawableLeft="@drawable/hot"
+        android:drawableLeft="@mipmap/hot"
         android:textColor="@color/gray_99" />
 
 </RelativeLayout>

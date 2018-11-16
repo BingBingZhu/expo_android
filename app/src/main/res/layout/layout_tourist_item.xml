@@ -27,7 +27,7 @@
                 android:id="@+id/tourist_item_img"
                 android:layout_width="@dimen/dms_114"
                 android:layout_height="@dimen/dms_150"
-                android:background="@drawable/ico_def"/>
+                android:background="@mipmap/ico_def"/>
             <TextView
                 android:id="@+id/tourist_item_use"
                 android:layout_width="@dimen/dms_90"
@@ -95,7 +95,7 @@
                 android:layout_width="@dimen/dms_80"
                 android:layout_height="@dimen/dms_80"
                 app:radius="@dimen/dms_34"
-                app:centerPic="@drawable/ico_tourist_download"/>
+                app:centerPic="@mipmap/ico_tourist_download"/>
             <TextView
                 android:id="@+id/tourist_item_operating_btn"
                 android:layout_width="@dimen/dms_68"

@@ -38,7 +38,7 @@
     <com.hedan.textdrawablelibrary.TextViewDrawable
         style="@style/TextSizeBlack16"
         android:layout_height="@dimen/dms_80"
-        android:drawableLeft="@drawable/location_edit"
+        android:drawableLeft="@mipmap/location_edit"
         android:drawablePadding="@dimen/dms_30"
         android:gravity="center_vertical"
         android:text="@string/location_describe"

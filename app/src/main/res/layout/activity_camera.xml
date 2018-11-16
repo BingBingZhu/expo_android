@@ -47,6 +47,6 @@
         android:layout_marginTop="@dimen/dms_110"
         android:layout_marginRight="@dimen/dms_60"
         android:padding="@dimen/dms_10"
-        android:src="@drawable/camera_switch" />
+        android:src="@mipmap/camera_switch" />
 
 </RelativeLayout>

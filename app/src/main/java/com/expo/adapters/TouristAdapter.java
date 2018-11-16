@@ -60,27 +60,27 @@ public class TouristAdapter extends RecyclerView.Adapter<TouristAdapter.ViewHold
         switch (tourist.getDownState()) {
             case DownloadManager.DOWNLOAD_IDLE:
                 downState = mContext.getString(R.string.did_not_download);
-                holder.completedView.setCenterPic(R.drawable.ico_tourist_download);
+                holder.completedView.setCenterPic(R.mipmap.ico_tourist_download);
                 break;
             case DownloadManager.DOWNLOAD_WAITING:
                 downState = mContext.getString(R.string.waiting);
-                holder.completedView.setCenterPic(R.drawable.ico_tourist_downloading);
+                holder.completedView.setCenterPic(R.mipmap.ico_tourist_downloading);
                 break;
             case DownloadManager.DOWNLOAD_STARTED:
                 downState = mContext.getString(R.string.be_downloading);
-                holder.completedView.setCenterPic(R.drawable.ico_tourist_downloading);
+                holder.completedView.setCenterPic(R.mipmap.ico_tourist_downloading);
                 break;
             case DownloadManager.DOWNLOAD_ERROR:
                 downState = mContext.getString(R.string.download_failed);
-                holder.completedView.setCenterPic(R.drawable.ico_tourist_down_del);
+                holder.completedView.setCenterPic(R.mipmap.ico_tourist_down_del);
                 break;
             case DownloadManager.DOWNLOAD_STOPPED:
                 downState = mContext.getString(R.string.paused);
-                holder.completedView.setCenterPic(R.drawable.ico_tourist_downstop);
+                holder.completedView.setCenterPic(R.mipmap.ico_tourist_downstop);
                 break;
             case DownloadManager.DOWNLOAD_FINISH:
                 downState = mContext.getString(R.string.download_completes);
-                holder.completedView.setCenterPic(R.drawable.ico_tourist_downsuccess);
+                holder.completedView.setCenterPic(R.mipmap.ico_tourist_downsuccess);
                 break;
         }
         holder.tvOperatingBtn.setText(downState);

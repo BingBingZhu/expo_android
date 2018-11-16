@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_mine"
+    android:background="@mipmap/bg_mine"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -12,7 +12,7 @@
         android:layout_width="@dimen/dms_170"
         android:layout_height="@dimen/dms_170"
         android:layout_marginTop="@dimen/dms_40"
-        android:src="@drawable/ico_mine_def_photo"
+        android:src="@mipmap/ico_mine_def_photo"
         app:border_color="@color/white"
         app:border_width="@dimen/dms_6"
         app:type="circle" />
@@ -44,31 +44,31 @@
         <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/item_mine_bespeak"
             style="@style/item_mine_entry"
-            android:drawableLeft="@drawable/select"
+            android:drawableLeft="@mipmap/select"
             android:text="@string/item_mine_bespeak" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/item_mine_comment_report"
             style="@style/item_mine_entry"
-            android:drawableLeft="@drawable/select"
+            android:drawableLeft="@mipmap/select"
             android:text="@string/item_mine_comment_report" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/item_mine_message"
             style="@style/item_mine_entry"
-            android:drawableLeft="@drawable/remind"
+            android:drawableLeft="@mipmap/remind"
             android:text="@string/item_mine_message" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/item_mine_about"
             style="@style/item_mine_entry"
-            android:drawableLeft="@drawable/alert"
+            android:drawableLeft="@mipmap/alert"
             android:text="@string/item_mine_about" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/item_mine_setting"
             style="@style/item_mine_entry"
-            android:drawableLeft="@drawable/setting"
+            android:drawableLeft="@mipmap/setting"
             android:text="@string/item_mine_setting" />
     </LinearLayout>
 

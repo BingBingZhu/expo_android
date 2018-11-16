@@ -57,7 +57,7 @@ public class MySettingView extends FrameLayout {
 
         mRightText.setCompoundDrawablePadding((int) getContext().getResources().getDimension(R.dimen.dms_14));
         mRightText.setPadding(0, 0, (int) getContext().getResources().getDimension(R.dimen.dms_18), 0);
-        mRightText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_right, 0);
+        mRightText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrow_right, 0);
         addView(mRightText);
     }
 

@@ -9,7 +9,7 @@
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         style="@style/TextSizeBlack15"
-        android:drawableLeft="@drawable/flame"
+        android:drawableLeft="@mipmap/flame"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/home_func_title_venue"
         android:textSize="@dimen/font_34" />

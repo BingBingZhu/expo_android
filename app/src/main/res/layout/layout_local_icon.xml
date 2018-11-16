@@ -2,12 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/ico_local_frame">
+    android:background="@mipmap/ico_local_frame">
 
     <com.expo.widget.ImageViewPlus
         android:id="@+id/local_icon_img"
         android:layout_width="@dimen/dms_50"
         android:layout_height="@dimen/dms_50"
         android:layout_gravity="center"
-        android:src="@drawable/ico_mine_def_photo" />
+        android:src="@mipmap/ico_mine_def_photo" />
 </FrameLayout>

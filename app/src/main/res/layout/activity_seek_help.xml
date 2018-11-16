@@ -7,7 +7,7 @@
     <com.hedan.textdrawablelibrary.TextViewDrawable
         android:id="@+id/seek_help_text1"
         style="@style/TextSizeBlack16"
-        android:drawableLeft="@drawable/reminder"
+        android:drawableLeft="@mipmap/reminder"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/kindly_reminder"
         android:textColor="@color/gray_32" />
@@ -67,8 +67,8 @@
         android:layout_width="match_parent"
         android:layout_below="@id/seek_help_image_selector"
         android:layout_marginTop="@dimen/dms_40"
-        android:drawableLeft="@drawable/location"
-        android:drawableRight="@drawable/arrow_right"
+        android:drawableLeft="@mipmap/location"
+        android:drawableRight="@mipmap/arrow_right"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/location"
         android:textColor="@color/gray_32" />
@@ -111,7 +111,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dms_20"
                 android:layout_toLeftOf="@id/seek_help_text5"
-                android:src="@drawable/navigation" />
+                android:src="@mipmap/navigation" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -124,5 +124,5 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dms_40"
         android:layout_marginBottom="@dimen/dms_80"
-        android:src="@drawable/seek_phone" />
+        android:src="@mipmap/seek_phone" />
 </RelativeLayout>

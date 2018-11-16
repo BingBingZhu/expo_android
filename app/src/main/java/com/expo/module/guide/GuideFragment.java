@@ -30,7 +30,7 @@ public class GuideFragment extends BaseFragment {
     @BindView(R.id.guide_indicator)
     LinearLayout mIndicators;
     private IndicatorPagerAdapter mGuidePagerAdapter;
-    private int[] guidesImages = new int[]{R.drawable.guide1, R.drawable.guide2};
+    private int[] guidesImages = new int[]{R.mipmap.guide1, R.mipmap.guide2};
     private int[] guidesTitles = new int[]{R.string.guide1, R.string.guide2};
 
     @Override

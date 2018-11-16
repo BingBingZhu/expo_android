@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/bg_language" />
+            android:src="@mipmap/bg_language" />
 
         <ImageView
             android:layout_width="@dimen/dms_202"
@@ -25,7 +25,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dms_60"
             android:scaleType="fitXY"
-            android:src="@drawable/language_logo" />
+            android:src="@mipmap/language_logo" />
 
         <TextView
             android:id="@+id/languane_login"

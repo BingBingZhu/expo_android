@@ -31,16 +31,16 @@ public class SharePanelAdapter extends RecyclerView.Adapter<SharePanelAdapter.Sh
     private String mType;
 
     {
-        videoTypes.add( new PlatformItem( "微信", R.drawable.share_icon_wechat, Wechat.NAME ) );
-        videoTypes.add( new PlatformItem( "QZone", R.drawable.share_icon_qzone, QZone.NAME ) );
-        videoTypes.add( new PlatformItem( "新浪微博", R.drawable.share_icon_sina, SinaWeibo.NAME ) );
+        videoTypes.add( new PlatformItem( "微信", R.mipmap.share_icon_wechat, Wechat.NAME ) );
+        videoTypes.add( new PlatformItem( "QZone", R.mipmap.share_icon_qzone, QZone.NAME ) );
+        videoTypes.add( new PlatformItem( "新浪微博", R.mipmap.share_icon_sina, SinaWeibo.NAME ) );
 //        videoTypes.add( new PlatformItem( "删除", R.drawable.share_icon_delete, "delete" ) );
 
-        imageTypes.add( new PlatformItem( "微信", R.drawable.share_icon_wechat, Wechat.NAME ) );
-        imageTypes.add( new PlatformItem( "朋友圈", R.drawable.share_icon_wechat_moments, WechatMoments.NAME ) );
-        imageTypes.add( new PlatformItem( "QQ", R.drawable.share_icon_qq, QQ.NAME ) );
-        imageTypes.add( new PlatformItem( "QZone", R.drawable.share_icon_qzone, QZone.NAME ) );
-        imageTypes.add( new PlatformItem( "新浪微博", R.drawable.share_icon_sina, SinaWeibo.NAME ) );
+        imageTypes.add( new PlatformItem( "微信", R.mipmap.share_icon_wechat, Wechat.NAME ) );
+        imageTypes.add( new PlatformItem( "朋友圈", R.mipmap.share_icon_wechat_moments, WechatMoments.NAME ) );
+        imageTypes.add( new PlatformItem( "QQ", R.mipmap.share_icon_qq, QQ.NAME ) );
+        imageTypes.add( new PlatformItem( "QZone", R.mipmap.share_icon_qzone, QZone.NAME ) );
+        imageTypes.add( new PlatformItem( "新浪微博", R.mipmap.share_icon_sina, SinaWeibo.NAME ) );
 //        imageTypes.add( new PlatformItem( "删除", R.drawable.share_icon_delete, "delete" ) );
     }
 

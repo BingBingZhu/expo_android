@@ -454,15 +454,15 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             AMapNaviPath naviPath = mAMapNavi.getNaviPath();
             mNaviRouteOverlay = new NaviRouteOverlay(mMap, naviPath, mFrom, mTo);
             if (ExpoApp.getApplication().getUserHandBitmap() == null) {
-                mNaviRouteOverlay.setCarMarkerIcon(BitmapUtils.circleBitmap(
-                        BitmapFactory.decodeResource(getResources(), R.drawable.ico_mine_def_photo), mPhotoSize, mPhotoSize));
+                mNaviRouteOverlay.setCarMarkerIcon( BitmapUtils.circleBitmap(
+                        BitmapFactory.decodeResource( getResources(), R.mipmap.ico_mine_def_photo ), mPhotoSize, mPhotoSize ) );
             } else {
                 mNaviRouteOverlay.setCarMarkerIcon(BitmapUtils.circleBitmap(ExpoApp.getApplication().getUserHandBitmap(), mPhotoSize, mPhotoSize));
             }
-            mNaviRouteOverlay.setRouteCustomTexture(R.drawable.ico_route_item);
-            mNaviRouteOverlay.setRouteWidth(40);
-            mNaviRouteOverlay.setPassedRouteCustomTexture(R.drawable.ico_route_item_passed);
-            mNaviRouteOverlay.setAutoToCenter(mAutoToCenter);
+            mNaviRouteOverlay.setRouteCustomTexture( R.mipmap.ico_route_item );
+            mNaviRouteOverlay.setRouteWidth( 40 );
+            mNaviRouteOverlay.setPassedRouteCustomTexture( R.mipmap.ico_route_item_passed );
+            mNaviRouteOverlay.setAutoToCenter( mAutoToCenter );
             mNaviRouteOverlay.addToMap();
             if (!mAutoToCenter)
                 mNaviRouteOverlay.showBounds();

@@ -65,7 +65,7 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
     }
 
     private int getBackageImg(int position) {
-        return position % 2 == 0 ? R.drawable.banner1 : R.drawable.banner2;
+        return position % 2 == 0 ? R.mipmap.banner1 : R.mipmap.banner2;
     }
 
     public void setListener(BaseAdapterItemClickListener listener) {

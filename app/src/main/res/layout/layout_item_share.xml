@@ -14,7 +14,7 @@
         android:id="@+id/share_item_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/share_icon_delete" />
+        android:src="@mipmap/share_icon_delete" />
 
     <TextView
         android:id="@+id/share_item_name"

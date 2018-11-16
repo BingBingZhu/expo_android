@@ -13,7 +13,7 @@
         android:layout_marginRight="@dimen/dms_30"
         app:actualImageScaleType="centerCrop"
         app:roundedCornerRadius="@dimen/dms_8" />
-    <!--app:placeholderImage="@drawable/no_image"-->
+    <!--app:placeholderImage="@mipmap/no_image"-->
 
     <TextView
         android:id="@+id/tv_distinguish_result_name"
@@ -65,5 +65,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dms_20"
         android:layout_marginTop="@dimen/dms_60" />
-    <!--android:src="@drawable/icon_distinguish_close"-->
+    <!--android:src="@mipmap/icon_distinguish_close"-->
 </RelativeLayout>
