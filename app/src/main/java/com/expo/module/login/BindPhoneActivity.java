@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,9 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
     @BindView(R.id.login_login_btn)
     Button mBtnLogin;
 
-    private boolean getCodeEnable = true;  // 是否允许获取验证码按钮可用
+//    private boolean getCodeEnable = true;  // 是否允许获取验证码按钮可用
+    private boolean mCountDownOver = true;
+    private String mMobile;
     private TimeCount timeCount;    //验证码获取计时器
     private int mCode = 86;    //手机号区域码
     private String mPlatform;
@@ -82,19 +85,21 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (mEtPhoneNum.isFocused()) {     //手机号输入框获取焦点
-                if (s.length() != 11) {
-                    mTvGetCode.setEnabled(false);
-                    return;
-                }
-                if (s.toString().matches(Constants.Exps.PHONE)) {
-                    if (getCodeEnable)
-                        mTvGetCode.setEnabled(true);
-                } else {
-                    mTvGetCode.setEnabled(false);
-                    ToastHelper.showShort("请输入正确的手机号");
-                }
-            } else {      //验证码输入框获取焦点
-                if (s.length() != 4) {       //长度非4位进行错误处理
+                mMobile = s.toString();
+                setCodeBtnIsEnable(mMobile);
+//                if (s.length() != 11) {
+//                    mTvGetCode.setEnabled(false);
+//                    return;
+//                }
+//                if (s.toString().matches(Constants.Exps.PHONE)) {
+//                    if (getCodeEnable)
+//                        mTvGetCode.setEnabled(true);
+//                } else {
+//                    mTvGetCode.setEnabled(false);
+//                    ToastHelper.showShort("请输入正确的手机号");
+//                }
+            } else {      // 验证码输入框获取焦点
+                if (s.length() != 4) {       // 长度非4位进行错误处理
                     mBtnLogin.setEnabled(false);
                 } else {
                     mBtnLogin.setEnabled(true);
@@ -155,6 +160,18 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
     }
 
     /**
+     *
+     * @param mobile
+     */
+    private void setCodeBtnIsEnable(String mobile) {
+        if (TextUtils.isEmpty(mobile)){
+            mTvGetCode.setEnabled(false);
+            return;
+        }
+        mTvGetCode.setEnabled(mCountDownOver && PhoneNumberLibUtil.checkPhoneNumber(getContext(), mCode, Long.valueOf(mobile)));
+    }
+
+    /**
      * 返回验证码登录结果
      *
      * @param rsp
@@ -192,8 +209,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
 
         @Override
         public void onFinish() {// 计时完毕时触发
-            getCodeEnable = true;
-            mTvGetCode.setEnabled(true);
+            mCountDownOver = true;
+            setCodeBtnIsEnable(mMobile);
             mTvGetCode.setText("获取验证码");
         }
 
@@ -203,8 +220,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
                 surplusDuration--;
             }
             mTvGetCode.setText(surplusDuration + "秒");
-            getCodeEnable = false;
-            mTvGetCode.setEnabled(false);
+            mCountDownOver = false;
+            setCodeBtnIsEnable(mMobile);
         }
     }
 

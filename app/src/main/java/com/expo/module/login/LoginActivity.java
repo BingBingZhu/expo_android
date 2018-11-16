@@ -92,8 +92,12 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         checkPermission();
     }
 
-    private boolean getCodeIsEnable(){
-        return mCountDownOver /*&&*/;
+    private void setCodeBtnIsEnable(String mobile) {
+        if (TextUtils.isEmpty(mobile)){
+            mGetCodeView.setEnabled(false);
+            return;
+        }
+        mGetCodeView.setEnabled(mCountDownOver && PhoneNumberLibUtil.checkPhoneNumber(getContext(), mCode, Long.valueOf(mobile)));
     }
 
     @Override
@@ -111,9 +115,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (mEtPhoneView.isFocused()) {     //手机号输入框获取焦点
                 //  验证手机号
-                if (!PhoneNumberLibUtil.checkPhoneNumber(getContext(), mCode, Long.valueOf(s.toString()))) {
-
-                }
+                mMobile = s.toString();
+                setCodeBtnIsEnable(mMobile);
             } else {      //验证码输入框获取焦点
                 if (s.length() != 4) {       //长度非4位进行错误处理
                     mLoginView.setEnabled(false);
@@ -186,7 +189,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
     @Override
     public void toUserProtocol(CommonInfo commonInfo) {
-        if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())){
+        if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())) {
             ToastHelper.showLong(R.string.there_is_no_user_protocol);
             return;
         }
@@ -254,7 +257,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         @Override
         public void onFinish() {// 计时完毕时触发
             mCountDownOver = true;
-            mGetCodeView.setEnabled(true);
+            setCodeBtnIsEnable(mMobile);
             mGetCodeView.setText("获取验证码");
         }
 
@@ -265,7 +268,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
             }
             mGetCodeView.setText(mSurplusDuration + "秒");
             mCountDownOver = false;
-            mGetCodeView.setEnabled(false);
+            setCodeBtnIsEnable(mMobile);
         }
     }
 
