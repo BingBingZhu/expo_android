@@ -9,14 +9,17 @@ import com.expo.R;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.contract.MineContract;
+import com.expo.entity.CommonInfo;
 import com.expo.entity.User;
 import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.mine.AboutActivity;
 import com.expo.module.mine.FeedbackActivity;
 import com.expo.module.mine.SettingActivity;
 import com.expo.module.mine.UserInfoActivity;
+import com.expo.module.webview.WebActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -64,8 +67,13 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         if (user == null) return;
         if (!StringUtils.isEmpty( user.getPhotoUrl() ))
             CommUtils.setImgPic(getContext(), user.getPhotoUrl(), mImageView);
-
         mTvMineName.setText( user.getNick() );
+    }
+
+    @Override
+    public void returnCommonInfo(CommonInfo commonInfo) {
+        WebActivity.startActivity( getContext(), commonInfo.getLinkUrl(),
+                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn() );
     }
 
     @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name})
@@ -75,6 +83,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
 
     @OnClick(R.id.item_mine_bespeak)
     public void clickBespeak(View view) {
+        mPresenter.clickPolicy( "5" );
     }
 
     @OnClick(R.id.item_mine_comment_report)

@@ -68,6 +68,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     private boolean mCountDownOver = true;  // 倒计时是否结束
     private TimeCount mTimeCount;    //验证码获取计时器
     private String mMobile;
+    private String mSecurityCode;
     private int mCode = 86;    //手机号区域码
 
     @Override
@@ -88,16 +89,24 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         mQQView.setOnClickListener(this);
         mSinaView.setOnClickListener(this);
         mProtocolView.setOnClickListener(this);
-
         checkPermission();
     }
 
-    private void setCodeBtnIsEnable(String mobile) {
-        if (TextUtils.isEmpty(mobile)){
+    private void setCodeBtnIsEnable() {
+        if (TextUtils.isEmpty(mMobile)){
             mGetCodeView.setEnabled(false);
             return;
         }
-        mGetCodeView.setEnabled(mCountDownOver && PhoneNumberLibUtil.checkPhoneNumber(getContext(), mCode, Long.valueOf(mobile)));
+        mGetCodeView.setEnabled(mCountDownOver && PhoneNumberLibUtil.checkPhoneNumber(getContext(), mCode, Long.valueOf(mMobile)));
+    }
+
+    private void setLoginBtnIsEnable(){
+        if (TextUtils.isEmpty(mMobile)){
+            mLoginView.setEnabled(false);
+            return;
+        }
+        mLoginView.setEnabled( null != mTimeCount && PhoneNumberLibUtil.checkPhoneNumber(getContext(), mCode, Long.valueOf(mMobile)) &&
+            mSecurityCode.length() == 4);
     }
 
     @Override
@@ -113,17 +122,14 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (mEtPhoneView.isFocused()) {     //手机号输入框获取焦点
+            if (mEtPhoneView.isFocused()) {     // 手机号输入框获取焦点
                 //  验证手机号
                 mMobile = s.toString();
-                setCodeBtnIsEnable(mMobile);
-            } else {      //验证码输入框获取焦点
-                if (s.length() != 4) {       //长度非4位进行错误处理
-                    mLoginView.setEnabled(false);
-                } else {
-                    mLoginView.setEnabled(true);
-                }
+                setCodeBtnIsEnable();
+            } else {      // 验证码输入框获取焦点
+                mSecurityCode = s.toString();
             }
+            setLoginBtnIsEnable();
         }
 
         @Override
@@ -214,10 +220,10 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
      */
     @Override
     public void returnRequestVerifyCodeResult(String code) {
-        mLoginView.setEnabled(true);
         mEtCodeView.requestFocus();
         mEtCodeView.setText("");
         mEtCodeView.append(code);
+        setLoginBtnIsEnable();
     }
 
     /**
@@ -257,7 +263,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         @Override
         public void onFinish() {// 计时完毕时触发
             mCountDownOver = true;
-            setCodeBtnIsEnable(mMobile);
+            setCodeBtnIsEnable();
             mGetCodeView.setText("获取验证码");
         }
 
@@ -268,7 +274,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
             }
             mGetCodeView.setText(mSurplusDuration + "秒");
             mCountDownOver = false;
-            setCodeBtnIsEnable(mMobile);
+            setCodeBtnIsEnable();
         }
     }
 

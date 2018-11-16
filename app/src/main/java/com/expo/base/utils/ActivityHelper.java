@@ -39,7 +39,7 @@ public class ActivityHelper {
      */
     public synchronized static void finishAll() {
         if (activities == null) return;
-        for (int i = 0; i < activities.size(); i++) {
+        for (int i = activities.size() - 1; i >= 0; i--) {
             activities.remove(i).finish();
         }
         activities = null;
