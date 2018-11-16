@@ -11,8 +11,8 @@
     <string name="guide_join_now">Start to use</string>
     <string name="guide1">趣味导游小伙伴光团</string>
     <string name="guide2">非凡的AR体验</string>
-    <string name="input_phone">请输入手机号</string>
-    <string name="input_identifying_code">请输入验证码</string>
+    <string name="input_phone">请填写您的手机号码</string>
+    <string name="input_identifying_code">请输入手机验证码</string>
     <string name="there_is_no_user_protocol">暂无用户协议</string>
     <string name="user_protocol">用户协议</string>
     <string name="cancel">Cancel</string>
@@ -26,7 +26,7 @@
     <string name="unlogin">请先登录</string>
     <string name="data_unexistsd">数据已删除</string>
     <string name="req_json_error">参数错误</string>
-    <string name="input_correct_phone">请输入正确的手机号</string>
+    <string name="input_correct_phone">请输入正确的手机号码</string>
     <string name="relogin">请重新登录</string>
     <string name="no_req_code">请先请求验证码</string>
     <string name="no_reg">该账号未注册</string>
@@ -109,7 +109,7 @@
     <string name="authorization_failure">授权失败</string>
     <string name="authorization_success">授权成功</string>
 
-    <string name="title_bind_ac">绑定手机</string>
+    <string name="title_bind_ac">绑定手机号</string>
     <string name="title_pick_ac">region</string>
     <string name="title_message_kind_ac">消息中心</string>
     <string name="title_location_describe_ac">所在位置</string>
@@ -144,7 +144,14 @@
     <string name="please_enter_keywords">please enter keywords</string>
     <string name="not_input">未填写</string>
     <string name="no_more_data_available">no more data available</string>
-    <string name="about_content_info">   The 2019 Beijing world horticultural exposition is approved by the international horticultural producers association.</string>
+    <string name="about_content_info">\t\tThe 2019 world horticultural exposition in Beijing, Ch
+        ina is organized by the international horticultural producers associationApproved by the int
+        ernational exhibition bureau, the highest level world horticultural exposition sponsored by
+        the Chinese government and undertaken by Beijing is entitled "green living""Living and beautiful homeland" will be an embodiment of \n
+                                          \t\tThe 2019 world horticultural exposition in Beijing, Ch
+        ina is organized by the international horticultural producers associationApproved by the int
+        ernational exhibition bureau, the highest level world horticultural exposition sponsored by
+        the Chinese government and undertaken by Beijing is entitled "green living""Living and beautiful homeland" will be an embodiment of </string>
     <string name="logging_in_is_an_agreement">登录即表示同意</string>
     <string name="other_login_methods">other login methods</string>
     <string name="get_code">Get Code</string>
@@ -156,5 +163,21 @@
     <string name="active_message">活动消息</string>
     <string name="feedback_on_tourist_service">游客服务反馈</string>
     <string name="to_make_an_appointment_to_remind">预约提醒</string>
+    <string name="the_guide_tour">导游导览</string>
+    <string name="no_scene">没有数据</string>
+    <string name="bind_phone">绑定</string>
+    <string name="please_enter_your_search_terms">请输入搜索的关键词</string>
+    <string name="did_not_download">未下载</string>
+    <string name="waiting">等待中</string>
+    <string name="be_downloading">下载中</string>
+    <string name="download_failed">下载失败</string>
+    <string name="paused">已暂停</string>
+    <string name="download_completes">已完成</string>
+    <string name="load_age_info">年龄：%s岁</string>
+    <string name="sex_is">性别：</string>
+    <string name="use">使用</string>
+    <string name="used">已使用</string>
+    <string name="boy">男</string>
+    <string name="girl">女</string>
 
 </resources>

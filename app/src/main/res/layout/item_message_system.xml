@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/dms_30">
+    android:paddingTop="@dimen/dms_46"
+    android:paddingLeft="@dimen/dms_46"
+    android:paddingRight="@dimen/dms_46"
+    android:paddingBottom="@dimen/dms_14">
 
     <ImageView
         android:id="@+id/message_img"
@@ -10,30 +13,39 @@
         android:layout_height="@dimen/dms_30"
         android:layout_marginLeft="@dimen/dms_30"
         android:layout_marginRight="@dimen/dms_10"
-        android:src="@drawable/message_system" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignTop="@+id/message_name"
+        android:layout_alignBottom="@+id/message_name"
+        android:src="@mipmap/ico_system_message" />
+    <TextView
+        android:id="@+id/message_name"
+        style="@style/TextSize15"
         android:layout_toRightOf="@id/message_img"
-        android:orientation="vertical">
+        android:layout_marginLeft="@dimen/dms_12"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/gray_32"
+        android:text="大象"/>
 
-        <TextView
-            android:id="@+id/message_name"
-            style="@style/TextSize15"
-            android:textColor="@color/gray_32" />
+    <TextView
+        android:id="@+id/message_time"
+        style="@style/TextSize13"
+        android:layout_toRightOf="@id/message_img"
+        android:layout_marginLeft="@dimen/dms_12"
+        android:layout_below="@id/message_img"
+        android:layout_marginTop="@dimen/dms_14"
+        android:textColor="@color/gray_99"
+        android:text="2018-6-6 14:55:55"/>
 
-        <TextView
-            android:id="@+id/message_time"
-            style="@style/TextSize14"
-            android:layout_marginTop="@dimen/dms_10"
-            android:textColor="@color/gray_99" />
-
-        <TextView
-            android:id="@+id/message_content"
-            style="@style/TextSize14"
-            android:layout_marginTop="@dimen/dms_20"
-            android:lines="2"
-            android:textColor="@color/gray_99" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/message_content"
+        style="@style/TextSize13"
+        android:layout_toRightOf="@id/message_img"
+        android:layout_marginLeft="@dimen/dms_12"
+        android:layout_below="@id/message_time"
+        android:layout_marginTop="@dimen/dms_30"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/gray_99"
+        android:text="daxiangxiangxixinxi "/>
 </RelativeLayout>

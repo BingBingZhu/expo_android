@@ -93,7 +93,7 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
             }
         });
 
-        mSide.addIndex("#", mSide.indexes.size());
+//        mSide.addIndex("#", mSide.indexes.size());
         mSide.setOnLetterChangeListener(new SideBar.OnLetterChangeListener() {
             @Override
             public void onLetterChange(String letter) {

@@ -13,7 +13,7 @@ public interface BindPhoneContract {
             super(view);
         }
 
-        public abstract void getCode(String mobile);
+        public abstract void getCode(String mobile, String code);
 
         public abstract void requestThirdLogin(String mobile, String countryCode, String verifyCode, String platform);
 

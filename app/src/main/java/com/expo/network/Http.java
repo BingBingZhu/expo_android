@@ -172,7 +172,7 @@ public final class Http {
         if (Fresco.getImagePipeline().isInBitmapMemoryCache( ir )) {                                  //有缓存时直接从缓存中加载
             Bitmap bmp = ((CloseableBitmap) dataSource.getResult().get()).getUnderlyingBitmap();
             if (listener != null) {
-                listener.onComplete( bmp );
+                listener.onComplete( url, bmp, callerContext );
             }
             CloseableReference<CloseableImage> closeableReference = dataSource.getResult();
             if (closeableReference != null) {
@@ -185,7 +185,7 @@ public final class Http {
                 @Override
                 protected void onNewResultImpl(@Nullable Bitmap bitmap) {
                     if (listener != null) {
-                        listener.onComplete( bitmap );
+                        listener.onComplete( url, bitmap, callerContext );
                     }
                     dataSource.close();
                 }
@@ -193,7 +193,7 @@ public final class Http {
                 @Override
                 protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
                     if (listener != null) {
-                        listener.onComplete( null );
+                        listener.onComplete( url, null, callerContext );
                     }
                     LogUtils.d( "--load user photo failure--", dataSource.getFailureCause() );
                     CloseableReference<CloseableImage> closeableReference = dataSource.getResult();
@@ -210,6 +210,6 @@ public final class Http {
      * 加载图完成监听
      */
     public interface OnLoadImageCompleteListener {
-        void onComplete(Bitmap bitmap);
+        void onComplete(String url,Bitmap bitmap,Object obj);
     }
 }

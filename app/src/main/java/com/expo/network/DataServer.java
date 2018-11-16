@@ -7,6 +7,7 @@ import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.GetDistinguishPlantList_Rsb;
+import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RichTextRsp;
 import com.expo.network.response.RouteInfoResp;
@@ -18,6 +19,7 @@ import com.expo.network.response.UpdateTimeResp;
 import com.expo.network.response.UploadRsp;
 import com.expo.network.response.UserHeartBeatResp;
 import com.expo.network.response.VenuesInfoResp;
+import com.expo.network.response.VenuesTypeResp;
 import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.network.response.VersionInfoResp;
@@ -209,6 +211,26 @@ public interface DataServer {
     @POST("Terminal/GetTouristTypeList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<TouristTypeResp> loadTouristTypeList(@Body RequestBody requestBody);
+
+    /**
+     * 设施类型更新接口
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetVenuesTypeList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<VenuesTypeResp> loadVenuesTypeList(@Body RequestBody requestBody);
+
+    /**
+     * 获得公园列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetParksList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<ParkResp> loadParksList(@Body RequestBody requestBody);
 
     /**
      * 心跳接口

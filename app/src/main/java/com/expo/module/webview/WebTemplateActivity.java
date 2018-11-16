@@ -127,6 +127,12 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     }
 
     @Override
+    protected void onDestroy() {
+        mX5View.loadUrl("javascript:leavePage()");
+        super.onDestroy();
+    }
+
+    @Override
     public void getActualSceneDataByIdRes(ActualScene actualScene) {
         ParkMapActivity.startActivity(getContext(), actualScene.getType(), actualScene.getId());
     }
@@ -137,10 +143,8 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     public class JsHook {
         @JavascriptInterface
         public String getDataById(int id) {
-            LogUtils.e("getDataJsonById", "---------" + id);
             mPresenter.setDataType(getIntent().getIntExtra(Constants.EXTRAS.EXTRA_TEMPLATE_TYPE, -1));
             String jsonData = mPresenter.getDataJsonById(id);
-            LogUtils.e("getDataJsonByIdRes", "---------" + jsonData);
             return jsonData;
         }
 

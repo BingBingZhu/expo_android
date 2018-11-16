@@ -13,6 +13,7 @@ import com.expo.R;
 import com.expo.entity.TouristType;
 import com.expo.module.download.DownloadManager;
 import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 import com.expo.widget.CompletedView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -46,37 +47,39 @@ public class TouristAdapter extends RecyclerView.Adapter<TouristAdapter.ViewHold
         TouristType tourist = mTourists.get(position);
         holder.imgPic.setImageURI(Constants.URL.FILE_BASE_URL + tourist.getPicUrl());
         holder.tvUse.setVisibility(tourist.getDownState() == DownloadManager.DOWNLOAD_FINISH ? View.VISIBLE : View.GONE);
-        holder.tvUse.setText(tourist.isUsed() ? "已使用" : "使用");
+        holder.tvUse.setText(tourist.isUsed() ? mContext.getString(R.string.used) : mContext.getString(R.string.use));
         holder.tvUse.setSelected(tourist.isUsed());
         holder.imgSelected.setVisibility(tourist.isUsed() ? View.VISIBLE : View.GONE);
-        holder.tvName.setText(tourist.getCaption());
-        holder.tvSex.setText(tourist.getSex());
-        holder.tvAge.setText(tourist.getAge());
+        holder.tvName.setText(LanguageUtil.chooseTest(tourist.getCaption(), tourist.getCaptionEN()));
+        holder.tvSex.setText(mContext.getString(R.string.sex_is) +
+                (tourist.getSex().equals("0") ? mContext.getString(R.string.boy) : mContext.getString(R.string.girl)));
+        holder.tvAge.setText( String.format(mContext.getString(R.string.load_age_info), tourist.getAge()) );
+
         holder.tvRemark.setText(tourist.getRemark());
-        String downState = "未下载";
+        String downState = mContext.getString(R.string.did_not_download);
         switch (tourist.getDownState()) {
             case DownloadManager.DOWNLOAD_IDLE:
-                downState = "未下载";
+                downState = mContext.getString(R.string.did_not_download);
                 holder.completedView.setCenterPic(R.drawable.ico_tourist_download);
                 break;
             case DownloadManager.DOWNLOAD_WAITING:
-                downState = "等待中";
+                downState = mContext.getString(R.string.waiting);
                 holder.completedView.setCenterPic(R.drawable.ico_tourist_downloading);
                 break;
             case DownloadManager.DOWNLOAD_STARTED:
-                downState = "下载中";
+                downState = mContext.getString(R.string.be_downloading);
                 holder.completedView.setCenterPic(R.drawable.ico_tourist_downloading);
                 break;
             case DownloadManager.DOWNLOAD_ERROR:
-                downState = "下载失败";
+                downState = mContext.getString(R.string.download_failed);
                 holder.completedView.setCenterPic(R.drawable.ico_tourist_down_del);
                 break;
             case DownloadManager.DOWNLOAD_STOPPED:
-                downState = "已暂停";
+                downState = mContext.getString(R.string.paused);
                 holder.completedView.setCenterPic(R.drawable.ico_tourist_downstop);
                 break;
             case DownloadManager.DOWNLOAD_FINISH:
-                downState = "已完成";
+                downState = mContext.getString(R.string.download_completes);
                 holder.completedView.setCenterPic(R.drawable.ico_tourist_downsuccess);
                 break;
         }
@@ -122,7 +125,6 @@ public class TouristAdapter extends RecyclerView.Adapter<TouristAdapter.ViewHold
         public void setOnUseClickListener(View.OnClickListener clickListener) {
             if (clickListener != null) {
                 this.tvUse.setOnClickListener(clickListener);
-                this.downloadView.setOnClickListener(clickListener);
             }
         }
 

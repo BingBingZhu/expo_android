@@ -37,12 +37,6 @@
                 android:background="@drawable/bg_white_ccc_r5_w1"
                 android:gravity="center"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dms_30"
-                    android:src="@drawable/ico_login_phone"
-                    android:visibility="gone" />
                 <TextView
                     android:id="@+id/login_phone_number_code"
                     android:layout_width="@dimen/dms_90"
@@ -70,16 +64,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dms_80"
                 android:layout_marginTop="@dimen/dms_30">
-
-                <ImageView
-                    android:id="@+id/login_code_ico"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dms_30"
-                    android:src="@drawable/ico_login_code"
-                    android:visibility="gone" />
-
                 <EditText
                     android:id="@+id/login_ver_code_et"
                     android:layout_width="match_parent"
@@ -98,7 +82,7 @@
 
                 <TextView
                     android:id="@id/login_get_ver_code"
-                    android:layout_width="110dp"
+                    android:layout_width="@dimen/dms_220"
                     android:layout_height="@dimen/dms_90"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"

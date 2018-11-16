@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/as_ico_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ico_park_map_marker_top_bg"
+        android:gravity="center"
+        android:text="zh中"/>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_minus_10"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/ico_park_map_marker_main_bg">
+        <ImageView
+            android:id="@+id/icon_center_img"
+            android:layout_width="@dimen/dms_34"
+            android:layout_height="@dimen/dms_34"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dms_14"
+            android:src="@mipmap/test_1"/>
+    </FrameLayout>
+</LinearLayout>

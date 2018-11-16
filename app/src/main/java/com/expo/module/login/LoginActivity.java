@@ -68,7 +68,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @BindView(R.id.login_microblog)
     ImageView mSinaView;     // 微博登录
 
-    private int mDuration = 0;
+    private int mDuration = 60;
     private int mSurplusDuration;
     private boolean mGetCodeEnable = true;  // 是否允许获取验证码按钮可用
     private TimeCount mTimeCount;    //验证码获取计时器
@@ -152,7 +152,6 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
                     return;
                 }
                 mPresenter.getCode(mEtPhoneView.getText().toString().trim(), "+" + mCode, null);
-                mDuration += 60;
                 mSurplusDuration = mDuration;
                 mTimeCount = new TimeCount((mDuration + 1) * 1000, 1000);
                 mTimeCount.start();

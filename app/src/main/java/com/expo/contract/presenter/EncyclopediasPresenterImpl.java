@@ -19,60 +19,8 @@ public class EncyclopediasPresenterImpl extends EncyclopediasContract.Presenter 
                 .add( "eq", "kind", 3 )
                 .add( "and" )
                 .add( "eq", "enabled", 1 )
-                .add( "orderBy", "sort", true ) );
+                .add( "orderBy", "sort", "asc" ) );
         List<Tab> data = DataTypeAdapter.convertToTabList( encyclopediaTypes );
-//        data.add(new Tab() {
-//            @Override
-//            public String getTab() {
-//                return "测试百科类型1";
-//            }
-//
-//            @Override
-//            public Long getId() {
-//                return null;
-//            }
-//
-//            @Override
-//            public Object getData() {
-//                return null;
-//            }
-//
-//            @Override
-//            public int describeContents() {
-//                return 0;
-//            }
-//
-//            @Override
-//            public void writeToParcel(Parcel dest, int flags) {
-//
-//            }
-//        });
-//        data.add(new Tab() {
-//            @Override
-//            public String getTab() {
-//                return "其他";
-//            }
-//
-//            @Override
-//            public Long getId() {
-//                return null;
-//            }
-//
-//            @Override
-//            public Object getData() {
-//                return null;
-//            }
-//
-//            @Override
-//            public int describeContents() {
-//                return 0;
-//            }
-//
-//            @Override
-//            public void writeToParcel(Parcel dest, int flags) {
-//
-//            }
-//        });
         mView.setTabData( data );
     }
 }

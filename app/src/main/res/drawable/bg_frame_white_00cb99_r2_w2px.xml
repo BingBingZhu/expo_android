@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:width="91dp" android:height="27dp">
+    <item android:width="@dimen/dms_180" android:height="@dimen/dms_54">
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/dms_180" />
             <stroke android:width="2px" android:color="@color/green_00cb99" />

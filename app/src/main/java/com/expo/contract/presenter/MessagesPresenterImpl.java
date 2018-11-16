@@ -16,7 +16,7 @@ public class MessagesPresenterImpl extends MessagesContract.Presenter {
     public void getMessage(String type) {
         QueryParams params = new QueryParams()
                 .add("eq", "type", type)
-                .add("orderBy", "create_time", true);
+                .add("orderBy", "create_time", "desc");
         mView.freshMessageList(mDao.query(Message.class, params));
     }
 

@@ -64,6 +64,12 @@ public class ActualScene implements Parcelable {
     @DatabaseField(columnName = "recommended_idx")
     @SerializedName("recommendedidx")
     private String recommendedIdx;
+    @DatabaseField(columnName = "voice_url")
+    @SerializedName("voiceurl")
+    private String voiceUrl ;           // 场馆音频介绍 ,
+    @DatabaseField(columnName = "voice_url_en")
+    @SerializedName("voiceurlen")
+    private String voiceUrlEn;          //场馆音频介绍英文，如果没有可以使用中文介绍的链接 ,
 
 
     public ActualScene() {
@@ -287,5 +293,21 @@ public class ActualScene implements Parcelable {
 
     public void setRecommendedIdx(String recommendedIdx) {
         this.recommendedIdx = recommendedIdx;
+    }
+
+    public String getVoiceUrl() {
+        return voiceUrl;
+    }
+
+    public void setVoiceUrl(String voiceUrl) {
+        this.voiceUrl = voiceUrl;
+    }
+
+    public String getVoiceUrlEn() {
+        return voiceUrlEn;
+    }
+
+    public void setVoiceUrlEn(String voiceUrlEn) {
+        this.voiceUrlEn = voiceUrlEn;
     }
 }

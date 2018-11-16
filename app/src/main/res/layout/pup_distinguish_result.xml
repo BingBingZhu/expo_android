@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="15dp">
+    android:padding="@dimen/dms_30">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdv_distinguish_result_img"
         android:layout_width="@dimen/dms_140"
         android:layout_height="@dimen/dms_140"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="@dimen/dms_30"
         app:actualImageScaleType="centerCrop"
         app:roundedCornerRadius="@dimen/dms_8" />
     <!--app:placeholderImage="@drawable/no_image"-->
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tv_distinguish_result_name"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="@dimen/dms_30"
         android:layout_toRightOf="@id/tv_distinguish_result_name"
         android:ellipsize="end"
         android:singleLine="true"
@@ -63,7 +63,7 @@
         android:layout_height="@dimen/dms_140"
         android:layout_below="@id/sdv_distinguish_result_img"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp" />
+        android:layout_marginBottom="@dimen/dms_20"
+        android:layout_marginTop="@dimen/dms_60" />
     <!--android:src="@drawable/icon_distinguish_close"-->
 </RelativeLayout>

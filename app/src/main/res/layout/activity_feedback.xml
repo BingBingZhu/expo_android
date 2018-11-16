@@ -51,7 +51,7 @@
             android:id="@+id/feed_back_comment"
             style="@style/TextSizeBlack14"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/dms_300"
             android:layout_marginTop="@dimen/dms_20"
             android:background="@drawable/bg_frame_32_r2_w1px"
             android:gravity="top|left"
