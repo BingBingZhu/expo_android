@@ -9,18 +9,21 @@ import com.expo.entity.ActualScene;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Subject;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.User;
 import com.expo.entity.VenuesInfo;
+import com.expo.entity.VenuesType;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.AllTypeResp;
 import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
+import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
@@ -28,6 +31,7 @@ import com.expo.network.response.TopLineResp;
 import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
 import com.expo.network.response.VenuesInfoResp;
+import com.expo.network.response.VenuesTypeResp;
 import com.expo.utils.Constants;
 
 import java.io.File;
@@ -97,6 +101,18 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                         loadTouristTypeList();
                     }
                 }
+                if (!TextUtils.isEmpty( rsp.scenicSpotType )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_SCENIC_SPOT_TYPE_UPDATE_TIME, null );
+                    if (!rsp.scenicSpotType.equals( updateTime )) {
+                        loadVenuesTypeList();
+                    }
+                }
+                if (!TextUtils.isEmpty( rsp.parkList )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_PARK_UPDATE_TIME, null );
+                    if (!rsp.parkList.equals( updateTime )) {
+                        loadParksList();
+                    }
+                }
             }
 
             @Override
@@ -149,6 +165,48 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 PrefsHelper.setString( Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( TouristType.class );
                 mDao.saveOrUpdateAll( rsp.touristTypes );
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable );
+        addNetworkRecord();
+    }
+
+    /**
+     * 获取场馆（设施）类型列表
+     */
+    private void loadVenuesTypeList() {
+        Observable<VenuesTypeResp> observable = Http.getServer().loadVenuesTypeList( Http.buildRequestBody( Http.getBaseParams() ) );
+        isRequest = Http.request( new ResponseCallback<VenuesTypeResp>() {
+            @Override
+            protected void onResponse(VenuesTypeResp rsp) {
+                PrefsHelper.setString( Constants.Prefs.KEY_SCENIC_SPOT_TYPE_UPDATE_TIME, rsp.updateTime );
+                mDao.clear( VenuesType.class );
+                mDao.saveOrUpdateAll( rsp.venuesList );
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable );
+        addNetworkRecord();
+    }
+
+    /**
+     * 获取公园列表
+     */
+    private void loadParksList() {
+        Observable<ParkResp> observable = Http.getServer().loadParksList( Http.buildRequestBody( Http.getBaseParams() ) );
+        isRequest = Http.request( new ResponseCallback<ParkResp>() {
+            @Override
+            protected void onResponse(ParkResp rsp) {
+                PrefsHelper.setString( Constants.Prefs.KEY_PARK_UPDATE_TIME, rsp.updateTime );
+                mDao.clear( Park.class );
+                mDao.saveOrUpdateAll( rsp.parkList);
             }
 
             @Override

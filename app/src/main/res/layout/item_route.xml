@@ -10,7 +10,7 @@
     <org.raphets.roundimageview.RoundImageView
         android:id="@+id/item_route_img"
         android:layout_width="match_parent"
-        android:layout_height="195dp"
+        android:layout_height="@dimen/dms_390"
         android:scaleType="centerCrop"
         app:leftBottom_corner_radius="@dimen/dms_10"
         app:leftTop_corner_radius="@dimen/dms_10"

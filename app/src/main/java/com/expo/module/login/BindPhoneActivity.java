@@ -49,8 +49,6 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
     private int mCode = 86;    //手机号区域码
     private String mPlatform;
 
-    AlertDialog mAlertDialog;
-
     @Override
     protected int getContentView() {
         return R.layout.activity_bind;
@@ -128,28 +126,15 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
                     ToastHelper.showShort(R.string.input_correct_phone);
                     return;
                 }
-//                验证手机号
+                // 验证手机号
                 if (!PhoneNumberLibUtil.checkPhoneNumber(this, mCode, Long.valueOf(mEtPhoneNum.getText().toString()))) {
                     ToastHelper.showShort(R.string.input_correct_phone);
                     return;
                 }
-                confirmPhoneNumber();
-                break;
-            case R.id.dialog_bind_phone_cancle:
-            case R.id.dialog_bind_phone_hide:
-                if (mAlertDialog != null) {
-                    mAlertDialog.dismiss();
-                }
-                break;
-            case R.id.dialog_bind_phone_ok:
-                mPresenter.getCode(mEtPhoneNum.getText().toString());
-                duration += 60;
+                mPresenter.getCode(mEtPhoneNum.getText().toString(), "+"+mCode);
                 surplusDuration = duration;
                 timeCount = new TimeCount((duration + 1) * 1000, 1000);
                 timeCount.start();
-                if (mAlertDialog != null) {
-                    mAlertDialog.dismiss();
-                }
                 break;
             case R.id.login_login_btn:
                 // 使用验证码登录
@@ -183,32 +168,6 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
         finish();
     }
 
-    public void confirmPhoneNumber() {
-        if (mAlertDialog == null) {
-            mAlertDialog = new AlertDialog.Builder(this, R.style.TransparentDialog).create();
-        }
-        mAlertDialog.show();
-        mAlertDialog.setContentView(getDialogView());
-    }
-
-    View mDialogView;
-
-    public View getDialogView() {
-        if (mDialogView == null) {
-            synchronized (this) {
-                if (mDialogView == null) {
-                    mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_bind_phone, null);
-                    mDialogView.findViewById(R.id.dialog_bind_phone_cancle).setOnClickListener(this);
-                    mDialogView.findViewById(R.id.dialog_bind_phone_hide).setOnClickListener(this);
-                    mDialogView.findViewById(R.id.dialog_bind_phone_ok).setOnClickListener(this);
-                }
-            }
-        }
-        ((TextView) mDialogView.findViewById(R.id.dialog_bind_phone_text)).setText(getResources().getString(R.string.send_sms_to_phone_number,
-                mTvPhoneCode.getText().toString() + " " + mEtPhoneNum.getText().toString()));
-        return mDialogView;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -223,7 +182,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
         ToastHelper.showShort(resId);
     }
 
-    private int duration = 0;
+    private int duration = 60;
     private int surplusDuration;
 
     class TimeCount extends CountDownTimer {

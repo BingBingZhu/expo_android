@@ -11,7 +11,7 @@ public class ListPresenterImpl extends ListContract.Presenter {
     private static final int PER_PAGE_COUNT = 10;
 
     public ListPresenterImpl(ListContract.View view) {
-        super( view );
+        super(view);
     }
 
     @Override

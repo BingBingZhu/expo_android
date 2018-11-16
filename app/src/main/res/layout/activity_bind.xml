@@ -10,12 +10,6 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".module.login.BindPhoneActivity">
-
-    <!--<com.expo.widget.AppBarView-->
-        <!--android:id="@+id/login_back"-->
-        <!--style="@style/TitleTextWhite12"-->
-        <!--app:title="@string/title_bind_ac" />-->
-
     <TextView
         style="@style/TextSizeBlack16"
         android:layout_marginTop="@dimen/dms_40"
@@ -34,20 +28,17 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ico_login_phone" />
+            android:src="@mipmap/ico_login_phone" />
 
         <TextView
             android:id="@+id/login_phone_number_code"
             android:layout_width="@dimen/dms_90"
             android:layout_height="@dimen/dms_90"
-            android:layout_marginLeft="@dimen/dms_20"
+            android:layout_marginLeft="@dimen/dms_8"
+            android:layout_marginRight="@dimen/dms_14"
+            android:drawableRight="@drawable/country_more"
             android:gravity="center"
             android:text="+86" />
-
-        <TextView
-            style="@style/LineVertical"
-            android:layout_height="@dimen/dms_50"
-            android:layout_marginLeft="@dimen/dms_10" />
 
         <EditText
             android:id="@+id/login_phone_number_et"
@@ -57,7 +48,6 @@
             android:hint="@string/input_phone"
             android:inputType="number"
             android:maxLength="15"
-            android:paddingLeft="@dimen/dms_20"
             android:paddingRight="@dimen/dms_20"
             android:textColor="@color/caption_color"
             android:textSize="@dimen/font_30" />
@@ -79,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@drawable/ico_login_code" />
+            android:src="@mipmap/ico_login_code" />
 
         <EditText
             android:id="@+id/login_ver_code_et"
@@ -99,15 +89,15 @@
 
         <TextView
             android:id="@id/login_get_ver_code"
-            android:layout_width="110dp"
+            android:layout_width="@dimen/dms_220"
             android:layout_height="@dimen/dms_80"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dms_20"
-            android:background="@drawable/bg_white_62f8ca_r5_w3"
+            android:background="@drawable/selector_login_get_code"
             android:gravity="center"
-            android:text="获取验证码"
-            android:textColor="@color/colorAccent"
+            android:text="@string/get_code"
+            android:textColor="@color/selector_get_code_text_color"
             android:textSize="@dimen/font_30" />
     </RelativeLayout>
 
@@ -120,7 +110,7 @@
         android:layout_marginTop="@dimen/dms_50"
         android:layout_marginRight="@dimen/dms_60"
         android:background="@drawable/selector_login_correlation_btn_bg"
-        android:text="@string/next_step"
+        android:text="@string/bind_phone"
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_34" />
 

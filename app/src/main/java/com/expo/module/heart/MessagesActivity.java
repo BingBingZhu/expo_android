@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -82,7 +83,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
         if (StringUtils.equals("5", type)) {
             mSwipeMenuRecyclerView.setBackgroundResource(R.color.colorAccent);
         }
-        mSwipeMenuRecyclerView.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_20)));
+        mSwipeMenuRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));        // item分割线
         mSwipeMenuRecyclerView.setSwipeItemClickListener(this);
         mSwipeMenuRecyclerView.setSwipeMenuCreator(this);
         mSwipeMenuRecyclerView.setSwipeMenuItemClickListener(this);

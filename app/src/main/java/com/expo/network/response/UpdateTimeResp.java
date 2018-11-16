@@ -23,4 +23,6 @@ public class UpdateTimeResp extends BaseResponse {
     public String commoninformation;
     @SerializedName(value = "gCacheUpdateTimeSubject")
     public String subject;
+    @SerializedName(value = "gCacheUpdateTimePark")
+    public String parkList;
 }

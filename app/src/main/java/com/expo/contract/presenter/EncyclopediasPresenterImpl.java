@@ -19,7 +19,7 @@ public class EncyclopediasPresenterImpl extends EncyclopediasContract.Presenter 
                 .add( "eq", "kind", 3 )
                 .add( "and" )
                 .add( "eq", "enabled", 1 )
-                .add( "orderBy", "sort", true ) );
+                .add( "orderBy", "sort", "asc" ) );
         List<Tab> data = DataTypeAdapter.convertToTabList( encyclopediaTypes );
         mView.setTabData( data );
     }

@@ -43,6 +43,9 @@ public class TouristType implements Parcelable {
     @DatabaseField(columnName = "pic_url")
     @SerializedName("picurl")
     private String picUrl;
+    @DatabaseField(columnName = "pic_small_url")
+    @SerializedName("picsmallurl")
+    private String picSmallUrl;
     @DatabaseField(columnName = "remark")
     @SerializedName("remark")
     private String remark;
@@ -263,6 +266,14 @@ public class TouristType implements Parcelable {
 
     public void setLocalPath(String localPath) {
         this.localPath = localPath;
+    }
+
+    public String getPicSmallUrl() {
+        return picSmallUrl;
+    }
+
+    public void setPicSmallUrl(String picSmallUrl) {
+        this.picSmallUrl = picSmallUrl;
     }
 
     @Override

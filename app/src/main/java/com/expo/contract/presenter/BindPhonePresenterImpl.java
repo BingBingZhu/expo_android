@@ -23,9 +23,10 @@ public class BindPhonePresenterImpl extends BindPhoneContract.Presenter {
     }
 
     @Override
-    public void getCode(String mobile) {
+    public void getCode(String mobile, String code) {
         Map<String, Object> params = Http.getBaseParams();
         params.put("Mobile", mobile);
+        params.put("countrycode", code);
         RequestBody requestBody = Http.buildRequestBody(params);
         Observable<VerificationCodeResp> observable = Http.getServer().getVerificationCode(requestBody);
         Http.request(new ResponseCallback<VerificationCodeResp>() {
@@ -66,7 +67,6 @@ public class BindPhonePresenterImpl extends BindPhoneContract.Presenter {
 //        mShareParams.put("thirdtype", ShareSDK.getPlatform(mPlatform.getDevinfo(Wechat.NAME)).getSortId());
         params.put("thirdtype", thirdtype);
         params.put("city", "");
-
         params.put("VerificationCode", verifyCode);
         params.put("countrycode", countryCode);
         params.put("mobile", mobile);

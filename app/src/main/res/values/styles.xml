@@ -204,4 +204,11 @@
         <item name="android:windowEnterAnimation">@anim/anim_dialog_top_in</item>
         <item name="android:windowExitAnimation">@anim/anim_dialog_top_out</item>
     </style>
+
+
+    <!-- dialog从上面进出动画 -->
+    <style name="TopPopupAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/anim_dialog_top_in_scale</item>
+        <item name="android:windowExitAnimation">@anim/anim_dialog_top_out_scale</item>
+    </style>
 </resources>

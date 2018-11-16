@@ -98,7 +98,7 @@
                 app:centerPic="@drawable/ico_tourist_download"/>
             <TextView
                 android:id="@+id/tourist_item_operating_btn"
-                android:layout_width="34dp"
+                android:layout_width="@dimen/dms_68"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="@dimen/dms_4"

@@ -1,5 +1,6 @@
 package com.expo.entity;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -25,6 +26,12 @@ public class DataType implements Parcelable {
     @DatabaseField(columnName = "pic_url")
     @SerializedName("picurl")
     private String picUrl;
+    @DatabaseField(columnName = "pic_lst_url")
+    @SerializedName("piclsturl")
+    private String picListUrl;
+    @DatabaseField(columnName = "pic_mark_url")
+    @SerializedName("picmarkurl")
+    private String picMarkUrl;
     @DatabaseField(columnName = "link_h5_url")
     @SerializedName("linkh5url")
     private String linkH5Url;
@@ -36,10 +43,11 @@ public class DataType implements Parcelable {
     private int enabled;
     @DatabaseField(columnName = "sort")
     @SerializedName("idx")
-    private String sort;
+    private Integer sort;
     @DatabaseField(columnName = "kind")
     @Expose(deserialize = false, serialize = false)
     private Integer kind;//1:消息类型;2:实体景观类型;3:百科类型;4:攻略类型;5:平台反馈；6:ar反馈;
+    public Bitmap bitmap;
 
     public DataType() {
     }
@@ -60,7 +68,7 @@ public class DataType implements Parcelable {
         linkH5Url = in.readString();
         remark = in.readString();
         enabled = in.readInt();
-        sort = in.readString();
+        sort = in.readInt();
         if (in.readByte() == 0) {
             kind = null;
         } else {
@@ -112,6 +120,22 @@ public class DataType implements Parcelable {
         this.picUrl = picUrl;
     }
 
+    public String getPicListUrl() {
+        return picListUrl;
+    }
+
+    public void setPicListUrl(String picListUrl) {
+        this.picListUrl = picListUrl;
+    }
+
+    public String getPicMarkUrl() {
+        return picMarkUrl;
+    }
+
+    public void setPicMarkUrl(String picMarkUrl) {
+        this.picMarkUrl = picMarkUrl;
+    }
+
     public String getLinkH5Url() {
         return linkH5Url;
     }
@@ -136,11 +160,11 @@ public class DataType implements Parcelable {
         this.enabled = enabled;
     }
 
-    public String getSort() {
+    public Integer getSort() {
         return sort;
     }
 
-    public void setSort(String sort) {
+    public void setSort(Integer sort) {
         this.sort = sort;
     }
 
@@ -184,7 +208,7 @@ public class DataType implements Parcelable {
         dest.writeString( linkH5Url );
         dest.writeString( remark );
         dest.writeInt( enabled );
-        dest.writeString( sort );
+        dest.writeInt( sort );
         if (kind == null) {
             dest.writeByte( (byte) 0 );
         } else {

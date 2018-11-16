@@ -4,19 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <EditText
-        android:id="@+id/et_search"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@null"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:hint="@string/search"
-        android:imeOptions="actionSearch"
-        android:maxLines="1"
-        android:textColor="@android:color/black"
-        android:textColorHint="#666666" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_46"
+            android:layout_marginBottom="@dimen/dms_46"
+            android:layout_marginLeft="@dimen/dms_40"
+            android:layout_marginRight="@dimen/dms_34"
+            android:src="@mipmap/ico_search"/>
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dms_20"
+            android:background="@color/transparent"
+            android:hint="@string/please_enter_your_search_terms"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:textSize="@dimen/font_26"
+            android:textColor="@color/color_333"
+            android:textColorHint="@color/color_999" />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,7 +42,7 @@
 
         <com.sahooz.library.SideBar
             android:id="@+id/side"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/dms_40"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             app:letterColor="#888"
@@ -38,8 +51,8 @@
 
         <TextView
             android:id="@+id/tv_letter"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/dms_120"
+            android:layout_height="@dimen/dms_120"
             android:layout_centerInParent="true"
             android:background="#80000000"
             android:gravity="center"

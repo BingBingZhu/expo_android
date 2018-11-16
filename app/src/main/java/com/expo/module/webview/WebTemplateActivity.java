@@ -42,7 +42,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
     @Override
     protected int getContentView() {
-        getWindow().setFormat( PixelFormat.TRANSLUCENT );
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
         return R.layout.activity_web;
     }
 
@@ -107,6 +107,12 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         String url = "http://192.168.1.143:8080/dist/index.html#/introduce" + param;
         in.putExtra( Constants.EXTRAS.EXTRA_URL, url );
         context.startActivity( in );
+    }
+
+    @Override
+    protected void onDestroy() {
+        mX5View.loadUrl("javascript:leavePage()");
+        super.onDestroy();
     }
 
     @Override

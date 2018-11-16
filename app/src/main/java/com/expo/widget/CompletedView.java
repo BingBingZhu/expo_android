@@ -71,7 +71,7 @@ public class CompletedView extends View {
         mStrokeWidth = typeArray.getDimension(R.styleable.TasksCompletedView_strokeWidth, getResources().getDimensionPixelSize(R.dimen.dms_6));
         mCircleColor = typeArray.getColor(R.styleable.TasksCompletedView_circleColor, getContext().getResources().getColor(R.color.transparent));
         mCirclePointColor = getContext().getResources().getColor(R.color.white);
-        mRingColor = typeArray.getColor(R.styleable.TasksCompletedView_cringColor, getContext().getResources().getColor(R.color.colorAccent));
+        mRingColor = typeArray.getColor(R.styleable.TasksCompletedView_cringColor, getContext().getResources().getColor(R.color.green_00cb99));
         mRingBgColor = typeArray.getColor(R.styleable.TasksCompletedView_cringBgColor, getContext().getResources().getColor(R.color.gray_cc));
         mCenterDrawable = typeArray.getDrawable(R.styleable.TasksCompletedView_centerPic);
         mRingRadius = mRadius + mStrokeWidth / 2;

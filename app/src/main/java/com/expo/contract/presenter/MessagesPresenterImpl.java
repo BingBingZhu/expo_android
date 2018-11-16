@@ -19,7 +19,7 @@ public class MessagesPresenterImpl extends MessagesContract.Presenter {
                 .add("eq", "type", type)
                 .add("and")
                 .add("eq", "uid", ExpoApp.getApplication().getUser().getUid())
-                .add("orderBy", "create_time", true);
+                .add("orderBy", "create_time", "desc");
         mView.freshMessageList(mDao.query(Message.class, params));
     }
 

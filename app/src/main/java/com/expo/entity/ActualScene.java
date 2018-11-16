@@ -70,6 +70,12 @@ public class ActualScene implements Parcelable {
     @DatabaseField(columnName = "score")
     @SerializedName("score")
     private int score;
+    @DatabaseField(columnName = "voice_url")
+    @SerializedName("voiceurl")
+    private String voiceUrl ;           // 场馆音频介绍 ,
+    @DatabaseField(columnName = "voice_url_en")
+    @SerializedName("voiceurlen")
+    private String voiceUrlEn;          //场馆音频介绍英文，如果没有可以使用中文介绍的链接 ,
 
 
     public ActualScene() {
@@ -104,6 +110,8 @@ public class ActualScene implements Parcelable {
         recommendedIdx = in.readString();
         wikiId = in.readString();
         score = in.readInt();
+        voiceUrl=in.readString();
+        voiceUrlEn = in.readString();
     }
 
     public static final Creator<ActualScene> CREATOR = new Creator<ActualScene>() {
@@ -320,5 +328,23 @@ public class ActualScene implements Parcelable {
         dest.writeString( recommendedIdx );
         dest.writeString( wikiId );
         dest.writeInt( score );
+        dest.writeString(voiceUrl)
+        dest.writeString(voiceUrlEn)
+    }
+
+    public String getVoiceUrl() {
+        return voiceUrl;
+    }
+
+    public void setVoiceUrl(String voiceUrl) {
+        this.voiceUrl = voiceUrl;
+    }
+
+    public String getVoiceUrlEn() {
+        return voiceUrlEn;
+    }
+
+    public void setVoiceUrlEn(String voiceUrlEn) {
+        this.voiceUrlEn = voiceUrlEn;
     }
 }

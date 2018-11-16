@@ -19,7 +19,7 @@
                 android:id="@+id/ency_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="36dp"
+                android:layout_marginLeft="@dimen/dms_72"
                 android:layout_marginRight="@dimen/dms_140"
                 android:background="@drawable/shape_ency_search_bar_bg"
                 android:orientation="horizontal">
@@ -44,13 +44,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="14dp"
+                android:layout_marginRight="@dimen/dms_28"
                 android:src="@mipmap/ico_ency_scan"/>
         </FrameLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_2"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="@dimen/dms_14"
             android:background="#00C897"/>
         <android.support.design.widget.TabLayout
             android:id="@+id/ency_tab"
