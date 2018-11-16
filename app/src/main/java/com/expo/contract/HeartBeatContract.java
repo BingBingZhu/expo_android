@@ -7,12 +7,13 @@ public interface HeartBeatContract {
     abstract class Presenter extends IPresenter<View> {
 
         public Presenter(View view) {
-            super( view );
+            super(view);
         }
 
         public abstract void sendHeartBeat();
     }
 
     interface View extends IView {
+        void setHeartInvTime(int heartInvTime);
     }
 }

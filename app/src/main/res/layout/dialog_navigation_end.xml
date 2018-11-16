@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/navigation_bg2"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/TextSize18"
+        android:text="@string/navigationg_arrive"
+        android:textColor="@color/gray_66" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_140"
+        android:layout_marginLeft="@dimen/dms_50"
+        android:layout_marginTop="@dimen/dms_14"
+        android:layout_marginRight="@dimen/dms_50">
+
+        <ImageView
+            android:id="@+id/dialog_navigation_end_img"
+            android:layout_width="@dimen/dms_140"
+            android:layout_height="@dimen/dms_130" />
+
+        <TextView
+            android:id="@+id/dialog_navigation_end_name"
+            style="@style/TextSize15"
+            android:layout_gravity="left"
+            android:layout_marginLeft="@dimen/dms_40"
+            android:layout_marginTop="@dimen/dms_6"
+            android:layout_toRightOf="@id/dialog_navigation_end_img"
+            android:textColor="@color/gray_66" />
+
+        <TextView
+            android:id="@+id/dialog_navigation_end_content"
+            style="@style/TextSize15"
+            android:layout_below="@id/dialog_navigation_end_name"
+            android:layout_alignLeft="@id/dialog_navigation_end_name"
+            android:layout_gravity="left"
+            android:layout_marginTop="@dimen/dms_20"
+            android:lines="2"
+            android:textColor="@color/gray_66" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_50"
+        android:layout_marginTop="@dimen/dms_20"
+        android:layout_marginRight="@dimen/dms_50">
+
+        <TextView
+            android:id="@+id/dialog_navigation_end_duration"
+            style="@style/TextSize12"
+            android:layout_gravity="left"
+            android:textColor="@color/gray_66" />
+
+        <TextView
+            android:id="@+id/dialog_navigation_end_distance"
+            style="@style/TextSize12"
+            android:layout_gravity="right"
+            android:textColor="@color/gray_66" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/dialog_navigation_end_finish"
+        style="@style/TextSize15"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dms_10"
+        android:gravity="center"
+        android:padding="@dimen/dms_10"
+        android:text="@string/navigationg_back"
+        android:textColor="@color/gray_66" />
+
+</LinearLayout>

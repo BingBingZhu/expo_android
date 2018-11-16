@@ -60,6 +60,16 @@
             android:name="com.amap.api.v2.apikey"
             android:value="51b7af71356b15ac619a9682e7ea26a3" />
 
+        <meta-data
+            android:name="com.baidu.speech.APP_ID"
+            android:value="14824611"/>
+        <meta-data
+            android:name="com.baidu.speech.API_KEY"
+            android:value="6zE5wiPZP15n8WN4kP4tzopl"/>
+        <meta-data
+            android:name="com.baidu.speech.SECRET_KEY"
+            android:value="vy4R0DZ6XemTZkWSppgHCoBpl5hz3RgU"/>
+
         <activity
             android:name=".module.splash.SplashActivity"
             android:screenOrientation="portrait"
@@ -190,6 +200,10 @@
         <service android:name=".module.heart.HeartBeatService" />
         <!-- 定位服务 -->
         <service android:name="com.amap.api.location.APSService" />
+        <!--百度语音服务-->
+        <!--<service-->
+            <!--android:name="com.baidu.speech."-->
+            <!--android:exported="false"/>-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"
