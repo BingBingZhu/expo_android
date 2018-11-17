@@ -2,6 +2,7 @@ package com.expo.module.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ActivityHelper;
+import com.expo.base.utils.DataCleanUtil;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SettingContract;
@@ -26,6 +28,7 @@ import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.AppBarView;
 import com.expo.widget.MySettingView;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
@@ -101,6 +104,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle( 0, R.string.title_setting_ac );
+        mTvCache.setRightText(DataCleanUtil.getCacheSize());
         mTvLanguage.setRightText( R.string.language );
         mTvUpdate.setRightText( "v" + AppUtils.getAppVersionName() );
         mSelectCn = mIsCn = StringUtils.equals( PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ), LanguageUtil.LANGUAGE_CN );
@@ -146,7 +150,23 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_cache)
     public void clickCache(MySettingView view) {
+        // 清除缓存
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                //清除Fresco的图片文件缓存
+                Fresco.getImagePipeline().clearDiskCaches();
+                //清理截图等缓存
+                DataCleanUtil.deleteCacheFiles();
+                return null;
+            }
 
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                view.setRightText(DataCleanUtil.getCacheSize());
+                ToastHelper.showLong("缓存已清除");
+            }
+        }.execute();
     }
 
     @OnClick(R.id.setting_update)

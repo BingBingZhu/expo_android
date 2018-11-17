@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 
 import com.expo.BuildConfig;
 import com.expo.R;
@@ -59,7 +60,7 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
 //                showFragment(new LanguageFragment());
             } else {//检查是否需要登录
                 User user = mPresenter.loadUser();
-                if (user == null) {
+                if (user == null || TextUtils.isEmpty(user.getUid())) {
                     LoginActivity.startActivity(this);
                 } else {
                     ExpoApp.getApplication().setUser(user);

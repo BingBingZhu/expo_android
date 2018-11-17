@@ -78,6 +78,8 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
         if (plat == null) {
             return;
         }
+        plat.removeAccount(true); //移除授权状态和本地缓存，下次授权会重新授权
+        plat.SSOSetting(false); //SSO授权，传false默认是客户端授权，没有客户端授权或者不支持客户端授权会跳web授权
         plat.setPlatformActionListener(this);
         //关闭SSO授权
 //        plat.SSOSetting(true);
