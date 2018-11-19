@@ -112,12 +112,13 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     @Override
     protected void onDestroy() {
         mX5View.loadUrl("javascript:leavePage()");
+        mX5View.loadUrl("about:blank");
         super.onDestroy();
     }
 
     @Override
     public void getActualSceneDataByIdRes(ActualScene actualScene) {
-        ParkMapActivity.startActivity(getContext(), actualScene.getType(), actualScene.getId());
+        ParkMapActivity.startActivity(getContext(), actualScene.getId());
     }
 
     /**

@@ -36,7 +36,7 @@
 //        this.remark = remark;
 //    }
 //
-//    public String getPicUrl() {
+//    public String getEncy() {
 //        return picUrl;
 //    }
 //

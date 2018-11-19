@@ -190,7 +190,7 @@ public class MapUtils {
         for (int i = 0; i < markers.size(); i++) {
             boundsBuilder.include( markers.get( i ).getPosition() );
         }
-        map.animateCamera( CameraUpdateFactory.newLatLngBounds( boundsBuilder.build(), 120 ) );
+        map.animateCamera( CameraUpdateFactory.newLatLngBounds( boundsBuilder.build(), 260 ) );
     }
 
     public BitmapDescriptor setMarkerIconDrawable(Context context, Bitmap bitmap, String text){

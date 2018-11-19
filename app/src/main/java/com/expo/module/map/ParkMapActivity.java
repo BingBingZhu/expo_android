@@ -28,9 +28,12 @@ import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.Polyline;
+import com.amap.api.maps.model.PolylineOptions;
 import com.expo.R;
 import com.expo.adapters.DownloadData;
 import com.expo.adapters.ParkActualSceneAdapter;
+import com.expo.adapters.ParkRouteAdapter;
 import com.expo.adapters.TouristAdapter;
 import com.expo.adapters.TouristTypeAdapter;
 import com.expo.base.BaseActivity;
@@ -38,21 +41,33 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.base.utils.ViewUtils;
 import com.expo.contract.ParkMapContract;
 import com.expo.entity.ActualScene;
+import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
+import com.expo.entity.RouteInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.VenuesType;
 import com.expo.map.MapUtils;
 import com.expo.module.download.DownloadManager;
+import com.expo.module.webview.WebActivity;
+import com.expo.module.webview.WebTemplateActivity;
+import com.expo.network.Http;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.RecycleViewDivider;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Route;
 
 /*
  * 导游导览
@@ -75,12 +90,15 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     private List<ActualScene> mFacilities;
     private Long mTabId;
     private List<Marker> markers;
+    private List<Polyline> polylines;
     private MapUtils mMapUtils;
     private LatLng mLatLng;
     private Dialog mTouristDialog;
     private Dialog mActualSceneDialog;
+    private Dialog mRouteInfoDialog;
     private List<TouristType> mTouristTypes;
     private List<VenuesType> mVenuesTypes;
+    private List<RouteInfo> mRouteInfos;
     private TouristAdapter mTouristAdapter;
     private int mTabPosition = 0;
     private List<ActualScene> mAtActualScene;   // 当前tab下的场馆
@@ -98,7 +116,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         mMapUtils = new MapUtils(mAMap);
         mMapUtils.settingMap(this, this);
         mAMap.setOnMyLocationChangeListener(mLocationChangeListener);
-        mPresenter.loadParkMapData();
+        mPresenter.loadParkMapData(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_SPOT_ID, 0));
     }
 
     @Override
@@ -111,10 +129,9 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
      *
      * @param context
      */
-    public static void startActivity(@NonNull Context context, @Nullable Long tabId, @Nullable Long spotId) {
+    public static void startActivity(@NonNull Context context, @Nullable Long spotId) {
         Intent in = new Intent(context, ParkMapActivity.class);
         in.putExtra(Constants.EXTRAS.EXTRA_SPOT_ID, spotId);
-        in.putExtra(Constants.EXTRAS.EXTRA_TAB_ID, tabId);
         context.startActivity(in);
     }
 
@@ -128,17 +145,53 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 showTouristTypeDialog();
                 break;
             case R.id.park_map_menu:      // 菜单按钮
-                showSearchPopup();
+                if (isTabByCnName("路线")) {
+                    showLinePopup(mRouteInfos, 1);
+                } else {
+                    showPointPopup();
+                }
                 break;
         }
+    }
+
+    private void showLinePopup(List<RouteInfo> routeInfos, int type) {
+        List<RouteInfo> atRouteInfos = new ArrayList<>();
+        for (RouteInfo routeInfo : routeInfos){
+            if (routeInfo.typeId.equals("1"))
+                atRouteInfos.add(routeInfo);
+        }
+        imgMenu.setSelected(true);
+        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_park_menu, null);
+        RecyclerView recyclerView = contentView.findViewById(R.id.popup_recycler_view);
+        ParkRouteAdapter parkRouteAdapter = new ParkRouteAdapter(getContext(), atRouteInfos, mVenuesTypes.get(mTabPosition));
+        recyclerView.setAdapter(parkRouteAdapter);
+        parkRouteAdapter.setOnItemClickListener(v -> {
+            RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
+            int position = holder.getAdapterPosition();
+            showRouteInfoDialog(atRouteInfos.get(position));
+        });
+        setPopup(contentView);
+    }
+
+    /**
+     * 获得当前tab的中文名称
+     *
+     * @return
+     */
+    private boolean isTabByCnName(String name) {
+        return mVenuesTypes.get(mTabPosition).getTypeName().equals(name);
     }
 
     /**
      * 显示搜索菜单
      */
-    private void showSearchPopup() {
+    private void showPointPopup() {
         imgMenu.setSelected(true);
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_park_menu, null);
+        View searchRoot = contentView.findViewById(R.id.popup_search_root);
+        if (isTabByCnName("景点")) {
+            searchRoot.setVisibility(View.VISIBLE);
+        }
         EditText searchContent = contentView.findViewById(R.id.popup_search_edit);
         TextView btnSearch = contentView.findViewById(R.id.popup_search);
         RecyclerView recyclerView = contentView.findViewById(R.id.popup_recycler_view);
@@ -151,7 +204,6 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
             int position = holder.getAdapterPosition();
             ActualScene as = actualScenes.get(position);
-            mMapUtils.mapGoto(as.getLat(), as.getLng());
             showActualSceneDialog(as);
         });
         adapter.setOnVoiceClickListener(v -> {
@@ -175,6 +227,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             }
             adapter.notifyDataSetChanged();
         });
+        setPopup(contentView);
+    }
+
+    private void setPopup(View contentView) {
         final PopupWindow popupWindow = new PopupWindow(contentView,
                 WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setAnimationStyle(R.style.TopPopupAnimation);
@@ -190,38 +246,102 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     }
 
     @Override
-    public void loadTabRes(List<VenuesType> venuesTypes) {
+    public void loadTabRes(List<VenuesType> venuesTypes, int tabPosition) {
         this.mVenuesTypes = venuesTypes;
-        mTabId = getIntent().getLongExtra(Constants.EXTRAS.EXTRA_TAB_ID, 0);
-        mTabId = mTabId <= 0 ? this.mVenuesTypes.get(0).getId() : mTabId;
-        initTab(this.mVenuesTypes);
+        initTab(this.mVenuesTypes, tabPosition);
     }
 
     @Override
-    public void loadFacilityRes(List<ActualScene> facilities) {
+    public void loadFacilityRes(List<ActualScene> facilities, ActualScene as) {
         this.mFacilities = facilities;
         mAtActualScene = new ArrayList<>();
         markers = new ArrayList<>();
-        addActualSceneMarker(mTabId, mFacilities);
-        if (getIntent().getLongExtra(Constants.EXTRAS.EXTRA_SPOT_ID, 0) != 0) {
-            // 弹出marker提示框
-//            showActualSceneDialog();
-        }
+        polylines = new ArrayList<>();
+        addActualSceneMarker(mTabId, mFacilities, true);
+        // 弹出marker提示框
+        showActualSceneDialog(as);
     }
 
     /**
      * 设施信息弹出框
      */
     private void showActualSceneDialog(ActualScene actualScene) {
+        if (null == actualScene) {
+            return;
+        }
+        mMapUtils.mapGoto(actualScene.getLat(), actualScene.getLng());
         mActualSceneDialog = new Dialog(getContext(), R.style.TopActionSheetDialogStyle);
         if (mActualSceneDialog.isShowing())
             return;
         View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_as_dialog, null);
-        TextView tvTest = v.findViewById(R.id.test_tv);
-        tvTest.setText(actualScene.getCaption());
+        View voiceRoot = v.findViewById(R.id.park_mark_dialog_voice_root);
+        ImageView imgVoice = v.findViewById(R.id.park_mark_dialog_voice_img);   // 音频图片
+        TextView appointmentTime = v.findViewById(R.id.park_mark_dialog_appointment_time);  // 预约时间
+        SimpleDraweeView pic = v.findViewById(R.id.park_mark_dialog_pic);
+        TextView asName = v.findViewById(R.id.park_mark_dialog_name);
+        TextView asHint = v.findViewById(R.id.park_mark_dialog_hint);   // 场馆人多提示
+        ImageView asInfo = v.findViewById(R.id.park_mark_dialog_info);
+        ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
+        ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
+        asName.setText(LanguageUtil.chooseTest(actualScene.getCaption(), actualScene.getEnCaption()));
+        Encyclopedias wiki = mPresenter.getEncy(actualScene.getWikiId());
+        if (wiki != null)
+            pic.setImageURI(Constants.URL.FILE_BASE_URL + wiki.getPicUrl());
+        voiceRoot.setOnClickListener(v14 -> ToastHelper.showShort("音频"));
+        asInfo.setOnClickListener(v12 -> {
+            if (null == wiki) {
+                ToastHelper.showShort("暂无详情信息");
+                return;
+            }
+            WebTemplateActivity.startActivity(getContext(), wiki.getId());
+            mActualSceneDialog.dismiss();
+        });
+        asLine.setOnClickListener(v13 ->{
+            NavigationActivity.startActivity(getContext(), actualScene,
+                    LanguageUtil.chooseTest(actualScene.getVoiceUrl(), actualScene.getVoiceUrlEn()));
+        });
+        dialogClose.setOnClickListener(v1 -> mActualSceneDialog.dismiss());
         mActualSceneDialog.setContentView(v);
         ViewUtils.settingDialog(getContext(), mActualSceneDialog);
         mActualSceneDialog.show();//显示对话框
+    }
+
+    /**
+     * 设施信息弹出框
+     */
+    private void showRouteInfoDialog(RouteInfo routeInfo) {
+        if (null == routeInfo) {
+            return;
+        }
+        mRouteInfoDialog = new Dialog(getContext(), R.style.TopActionSheetDialogStyle);
+        if (mRouteInfoDialog.isShowing())
+            return;
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_as_dialog, null);
+        View voiceRoot = v.findViewById(R.id.park_mark_dialog_voice_root);
+        ImageView imgVoice = v.findViewById(R.id.park_mark_dialog_voice_img);   // 音频图片
+        TextView appointmentTime = v.findViewById(R.id.park_mark_dialog_appointment_time);  // 预约时间
+        SimpleDraweeView pic = v.findViewById(R.id.park_mark_dialog_pic);
+        TextView asName = v.findViewById(R.id.park_mark_dialog_name);
+        TextView asHint = v.findViewById(R.id.park_mark_dialog_hint);   // 场馆人多提示
+        ImageView asInfo = v.findViewById(R.id.park_mark_dialog_info);
+        ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
+        ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
+        pic.setImageURI( Constants.URL.FILE_BASE_URL + routeInfo.picUrl );
+        asName.setText(LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
+        voiceRoot.setOnClickListener(v14 -> ToastHelper.showShort("音频"));
+        asInfo.setOnClickListener(v12 -> {
+            WebActivity.startActivity(getContext(), routeInfo.linkH5Url, LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
+            mRouteInfoDialog.dismiss();
+        });
+        asLine.setOnClickListener(v13 -> {
+            drawLineFacilityToMap(routeInfo);
+            drawLine(routeInfo);
+            mRouteInfoDialog.dismiss();
+        });
+        dialogClose.setOnClickListener(v1 -> mRouteInfoDialog.dismiss());
+        mRouteInfoDialog.setContentView(v);
+        ViewUtils.settingDialog(getContext(), mRouteInfoDialog);
+        mRouteInfoDialog.show();//显示对话框
     }
 
     @Override
@@ -253,6 +373,16 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     @Override
     public void showParkScope(Park park) {
         mMapUtils.setLimits(park);
+    }
+
+    /**
+     * 路线
+     *
+     * @param routeInfos
+     */
+    @Override
+    public void loadRoute(List<RouteInfo> routeInfos) {
+        this.mRouteInfos = routeInfos;
     }
 
     @Override
@@ -331,17 +461,26 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         mTouristDialog.show();//显示对话框
     }
 
-    private void addActualSceneMarker(Long tabId, List<ActualScene> facilities) {
+    private void addActualSceneMarker(Long tabId, List<ActualScene> facilities, boolean flag) {
         mAtActualScene.clear();
-        for (ActualScene as : facilities) {
-            if (as.getType() == tabId) {
-                mAtActualScene.add(as);
+        if (flag) {
+            for (ActualScene as : facilities) {
+                if (as.getType() == tabId) {
+                    mAtActualScene.add(as);
+                }
             }
+        }else{
+            mAtActualScene.addAll(facilities);
         }
         if (!markers.isEmpty()) {
             for (Marker marker : markers)
                 marker.remove();
             markers.clear();
+        }
+        if (!polylines.isEmpty()) {
+            for (Polyline polyline : polylines)
+                polyline.remove();
+            polylines.clear();
         }
         for (ActualScene as : mAtActualScene) {
             if (as.getLat() == 0)
@@ -355,6 +494,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             marker.setObject(as);
             markers.add(marker);
         }
+        mMapUtils.setCameraZoom(markers);
     }
 
     // 获得视图资源
@@ -365,7 +505,9 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         return v;
     }
 
-    private void initTab(List<VenuesType> venuesTypes) {
+    private void initTab(List<VenuesType> venuesTypes, int tabPosition) {
+//        mTabId = mTabId <= 0 ? this.mVenuesTypes.get(0).getId() : mTabId;
+        mTabId = venuesTypes.get(tabPosition).getId();
         mTabView.setTabMode(TabLayout.MODE_SCROLLABLE);
         //tab的下划线颜色,默认是粉红色
         mTabView.setSelectedTabIndicatorColor(Color.TRANSPARENT);
@@ -381,8 +523,17 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             public void onTabSelected(TabLayout.Tab tab) {
                 mTabPosition = mTabView.getSelectedTabPosition();
                 mTabId = ParkMapActivity.this.mVenuesTypes.get(mTabPosition).getId();
-                if (null != mFacilities) {
-                    addActualSceneMarker(mTabId, mFacilities);
+                if (isTabByCnName("路线")) {
+                    drawLineToMap("1", 0);
+                } else {
+                    if (null != mFacilities) {
+                        if (isTabByCnName("导览车")) {
+                            addActualSceneMarker(mTabId, mFacilities, true);
+                            drawLineToMap("2", 0);
+                        } else {
+                            addActualSceneMarker(mTabId, mFacilities, true);
+                        }
+                    }
                 }
             }
 
@@ -394,6 +545,61 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+    }
+
+    private void drawLineToMap(String typeid, int position) {
+        List<RouteInfo> atRouteInfos = new ArrayList<>();
+        for (RouteInfo routeInfo : mRouteInfos) {
+            if (routeInfo.typeId.equals(typeid)) {
+                atRouteInfos.add(routeInfo);
+            }
+        }
+        if (atRouteInfos.size() == 0) {
+            return;
+        }
+        if (typeid.equals("1")) {
+            drawLineFacilityToMap(atRouteInfos.get(position));
+            drawLine(atRouteInfos.get(position));
+        }else{
+            for (RouteInfo routeInfo : atRouteInfos){
+                drawLine(routeInfo);
+            }
+        }
+    }
+
+    /**
+     * 游玩路线
+     * @param atRouteInfo
+     */
+    private void drawLineFacilityToMap(RouteInfo atRouteInfo){
+        ArrayList<Integer> ids = Http.getGsonInstance().fromJson(atRouteInfo.idsList, new TypeToken<ArrayList<Integer>>() {
+        }.getType());
+        List<ActualScene> ass = mPresenter.getActualScenes(ids);
+        addActualSceneMarker(mTabId, ass, false);
+    }
+
+    /**
+     * 画线
+     * @param atRouteInfo
+     */
+    private void drawLine(RouteInfo atRouteInfo){
+        ArrayList<MyLatLng> myLatLngs = Http.getGsonInstance().fromJson(atRouteInfo.linesList, new TypeToken<ArrayList<MyLatLng>>() {
+        }.getType());
+        List<LatLng> latLngs = new ArrayList<>();
+        for (MyLatLng mll : myLatLngs) {
+            latLngs.add(mll.getLatLng());
+        }
+        polylines.add(mAMap.addPolyline(new PolylineOptions().addAll(latLngs).width(10).
+                color(Color.argb(255, getRandColor(), getRandColor(), getRandColor()))));
+    }
+
+    /**
+     * 随机数生成（用于随机颜色）
+     * @return
+     */
+    public int getRandColor() {
+        Random random = new Random();
+        return random.nextInt(256);
     }
 
     @Override
@@ -429,7 +635,6 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        mMapUtils.mapGoto(marker.getPosition());
         ActualScene actualScene = (ActualScene) marker.getObject();
         // 显示marker弹窗
         showActualSceneDialog(actualScene);

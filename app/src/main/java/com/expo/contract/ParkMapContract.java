@@ -5,11 +5,14 @@ import com.expo.adapters.Tab;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.ActualScene;
+import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
+import com.expo.entity.RouteInfo;
 import com.expo.entity.Subject;
 import com.expo.entity.TouristType;
 import com.expo.entity.VenuesType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ParkMapContract {
@@ -31,13 +34,17 @@ public interface ParkMapContract {
 
         public abstract void saveUsed(List<TouristType> mTouristTypes);
 
-        public abstract void loadParkMapData();
+        public abstract void loadParkMapData(Long asId);
+
+        public abstract Encyclopedias getEncy(String wikiId);
+
+        public abstract List<ActualScene> getActualScenes(ArrayList<Integer> ids);
     }
 
     interface View extends IView {
-        void loadTabRes(List<VenuesType> venuesTypes);
+        void loadTabRes(List<VenuesType> venuesTypes, int tabPosition);
 
-        void loadFacilityRes(List<ActualScene> facilities);
+        void loadFacilityRes(List<ActualScene> facilities, ActualScene as);
 
         void loadTouristTypeRes(List<TouristType> touristTypes);
 
@@ -48,5 +55,7 @@ public interface ParkMapContract {
         void updatePic(VenuesType vt);
 
         void showParkScope(Park park);
+
+        void loadRoute(List<RouteInfo> routeInfos);
     }
 }

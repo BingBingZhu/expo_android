@@ -77,4 +77,9 @@
     <dimen name="dms_minus_10">-5dp</dimen>
     <dimen name="dms_minus_30">-15dp</dimen>
     <dimen name="dms_minus_44">-22dp</dimen>
+    <dimen name="dms_260">130dp</dimen>
+    <dimen name="dms_424">212dp</dimen>
+    <dimen name="font_14">7sp</dimen>
+    <dimen name="dms_minus_70">-35dp</dimen>
+    <dimen name="dms_minus_260">-130dp</dimen>
 </resources>

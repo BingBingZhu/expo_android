@@ -13,7 +13,9 @@ import com.expo.contract.ParkMapContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.ActualScene;
 import com.expo.entity.DataType;
+import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
+import com.expo.entity.RouteInfo;
 import com.expo.entity.Subject;
 import com.expo.entity.TouristType;
 import com.expo.entity.VenuesType;
@@ -21,6 +23,7 @@ import com.expo.module.download.DownloadManager;
 import com.expo.network.Http;
 import com.expo.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
@@ -29,12 +32,11 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
     }
 
     @Override
-    public void loadParkMapData() {
+    public void loadParkMapData(Long asId) {
         mView.showLoadingView();
         new Thread() {
             @Override
             public void run() {
-                List<Park> parks = mDao.query(Park.class, new QueryParams());
                 Park park = mDao.queryById(Park.class, 1);
                 if (park != null && park.getElectronicFenceList().size() >= 3) {
                     new Handler(Looper.getMainLooper())
@@ -42,6 +44,7 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                                 mView.showParkScope(park);
                             });
                 }
+                List<RouteInfo> routeInfos = mDao.query(RouteInfo.class, new QueryParams().add("eq", "enable", 1));
                 List<ActualScene> facilities = mDao.query(ActualScene.class, new QueryParams()
                         .add("eq", "is_enable", 1));
                 if (null == facilities || facilities.isEmpty()) {
@@ -54,16 +57,39 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                 }
                 List<VenuesType> venuesTypes = mDao.query(VenuesType.class, new QueryParams().add("eq", "is_enable", 1));
                 List<TouristType> touristTypes = mDao.query(TouristType.class, new QueryParams().add("eq", "is_enable", 1));
+                int tabPosition = 0;
+                ActualScene as = mDao.queryById(ActualScene.class, asId);
+                if (asId != 0 && null != as) {
+                    for (int i = 0; i < venuesTypes.size(); i++) {
+                        if (venuesTypes.get(i).getId() == as.getType()) {
+                            tabPosition = i;
+                        }
+                    }
+                }
+                int finalTabPosition = tabPosition;
                 new Handler(Looper.getMainLooper())
                         .post(() -> {
-                            mView.loadTabRes(venuesTypes);
-                            mView.loadFacilityRes(facilities);
+                            mView.loadTabRes(venuesTypes, finalTabPosition);
+                            mView.loadFacilityRes(facilities, as);
                             mView.loadTouristTypeRes(touristTypes);
+                            mView.loadRoute(routeInfos);
                             mView.hideLoadingView();
+
                             loadSubjectImages(venuesTypes);
                         });
             }
         }.start();
+    }
+
+    @Override
+    public Encyclopedias getEncy(String wikiId) {
+        return mDao.queryById(Encyclopedias.class, wikiId);
+    }
+
+    @Override
+    public List<ActualScene> getActualScenes(ArrayList<Integer> ids) {
+        List<ActualScene> actualScenes = mDao.query(ActualScene.class,new QueryParams().add("in","_id",ids));
+        return actualScenes;
     }
 
     private void loadSubjectImages(List<VenuesType> venuesTypes) {

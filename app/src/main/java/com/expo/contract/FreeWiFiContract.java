@@ -10,6 +10,7 @@ public interface FreeWiFiContract {
             super( view );
         }
 
+        public abstract String[] queryWifi();
     }
 
     interface View extends IView {

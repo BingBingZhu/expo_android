@@ -144,7 +144,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @OnClick(R.id.home_map_img)
     public void clickMapImg(View view) {
-        ParkMapActivity.startActivity(getContext(), 0L, 0L);
+        ParkMapActivity.startActivity(getContext(), 0L);
     }
 
     @OnClick({R.id.home_func_0, R.id.home_func_1, R.id.home_func_2, R.id.home_func_3, R.id.home_func_4})

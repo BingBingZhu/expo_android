@@ -6,8 +6,10 @@
     android:orientation="vertical"
     android:background="@color/white">
     <RelativeLayout
+        android:id="@+id/popup_search_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/dms_24"
         android:layout_marginLeft="@dimen/dms_32"
         android:layout_marginRight="@dimen/dms_32">

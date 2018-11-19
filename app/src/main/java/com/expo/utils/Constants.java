@@ -47,7 +47,6 @@ public interface Constants {
         public static final String EXTRA_URL = "extra_url";
         public static final String EXTRA_LOGIN_STATE = "extra_login_state";
         public static final String EXTRA_ID = "extra_id";
-        public static final String EXTRA_TAB_ID = "extra_tab_id";
         public static final String EXTRA_SPOT_ID = "extra_spot_id";
         public static final String EXTRAS = "extras";
         public static final String EXTRA_LONGITUDE = "extra_longitude";
