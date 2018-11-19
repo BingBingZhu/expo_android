@@ -18,19 +18,39 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.senierr.shootbutton.ShootButton
-            android:id="@+id/camera_btn"
-            android:layout_width="@dimen/dms_140"
-            android:layout_height="@dimen/dms_140"
-            app:centerColor="@color/white"
-            app:centerMode="circle"
-            app:centerPadding="0dp"
-            app:circleColor="@color/colorAccent"
-            app:circleWidth="@dimen/dms_8"
-            app:maxProgress="100"
-            app:progress="0"
-            app:progressBgColor="@color/white_d7"
-            app:progressColor="@color/colorAccent" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/camera_cancle"
+                android:layout_width="@dimen/dms_120"
+                android:layout_height="@dimen/dms_120"
+                android:src="@mipmap/camera_cancle" />
+
+            <com.senierr.shootbutton.ShootButton
+                android:id="@+id/camera_btn"
+                android:layout_width="@dimen/dms_140"
+                android:layout_height="@dimen/dms_140"
+                android:layout_marginLeft="@dimen/dms_20"
+                android:layout_marginRight="@dimen/dms_20"
+                app:centerColor="@color/white"
+                app:centerMode="circle"
+                app:centerPadding="0dp"
+                app:circleColor="@color/colorAccent"
+                app:circleWidth="@dimen/dms_8"
+                app:maxProgress="100"
+                app:progress="0"
+                app:progressBgColor="@color/white_d7"
+                app:progressColor="@color/colorAccent" />
+
+            <ImageView
+                android:id="@+id/camera_ok"
+                android:layout_width="@dimen/dms_120"
+                android:layout_height="@dimen/dms_120"
+                android:src="@mipmap/camera_ok" />
+        </LinearLayout>
 
         <TextView
             style="@style/TextSizeWhite15"

@@ -44,7 +44,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     Context context;
 
     private String mOutFilePath;
-    CameraSurfaceViewListener mListener;
+//    CameraSurfaceViewListener mListener;
 
     public CameraSurfaceView(Context context) {
         super(context);
@@ -401,8 +401,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
                         FileUtils.saveBitmap(picPath, bitmap);
 //                        Toast.makeText(context, "拍照成功", Toast.LENGTH_SHORT).show();
 //                        startPreview();
-                        if (mListener != null)
-                            mListener.complete();
+//                        if (mListener != null)
+//                            mListener.complete();
                     }
                 });
             } catch (Exception e) {
@@ -476,16 +476,16 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             mediaRecorder.stop();
             isRecording = false;
 //            Toast.makeText(context, "视频已保存在根目录", Toast.LENGTH_SHORT).show();
-            if (mListener != null)
-                mListener.complete();
+//            if (mListener != null)
+//                mListener.complete();
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
     }
 
-    public void setListener(CameraSurfaceViewListener listener) {
-        this.mListener = listener;
-    }
+//    public void setListener(CameraSurfaceViewListener listener) {
+//        this.mListener = listener;
+//    }
 
     /**
      * _________________________________________________________________________________________
@@ -509,8 +509,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         return mOutFilePath;
     }
 
-    public interface CameraSurfaceViewListener {
-        void complete();
-    }
+//    public interface CameraSurfaceViewListener {
+//        void complete();
+//    }
 
 }

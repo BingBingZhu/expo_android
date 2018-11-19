@@ -131,16 +131,6 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         });
     }
 
-    public void initTitleRightImageView() {//原UI设计
-        ImageView img = new ImageView(this);
-        img.setImageResource(R.mipmap.user_info_edit_save);
-        ((AppBarView) getTitleView()).setRightView(img);
-        img.setOnClickListener(v -> {
-            mUser.setNick(((TextView) mUserName.getRightView()).getText().toString());
-            mPresenter.saveUserInfo(mChangeImg, mUser);
-        });
-    }
-
     public void initCircleView() {
         RoundImageView imageView = new RoundImageView(this);
         imageView.setType(RoundImageView.TYPE_CIRCLE);

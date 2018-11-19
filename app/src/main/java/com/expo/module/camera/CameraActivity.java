@@ -36,12 +36,12 @@ public class CameraActivity extends BaseActivity {
     boolean mIsFinish = false;
     boolean mIsVideo = false;
 
-    CameraSurfaceView.CameraSurfaceViewListener mListener = new CameraSurfaceView.CameraSurfaceViewListener() {
-        @Override
-        public void complete() {
-            cameraFinish();
-        }
-    };
+//    CameraSurfaceView.CameraSurfaceViewListener mListener = new CameraSurfaceView.CameraSurfaceViewListener() {
+//        @Override
+//        public void complete() {
+//            cameraFinish();
+//        }
+//    };
 
     @Override
     protected int getContentView() {
@@ -50,7 +50,7 @@ public class CameraActivity extends BaseActivity {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mCarmer.setListener(mListener);
+//        mCarmer.setListener(mListener);
     }
 
     @Override
@@ -91,6 +91,16 @@ public class CameraActivity extends BaseActivity {
                 break;
         }
         return true;
+    }
+
+    @OnClick(R.id.camera_cancle)
+    public void cameraCancle(View view) {
+        finish();
+    }
+
+    @OnClick(R.id.camera_ok)
+    public void cameraOk(View view) {
+        cameraFinish();
     }
 
     @OnClick(R.id.carmer_switch)

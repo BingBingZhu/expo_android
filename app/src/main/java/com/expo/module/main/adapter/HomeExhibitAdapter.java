@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.expo.R;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.entity.Encyclopedias;
+import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.LanguageUtil;
 import com.squareup.picasso.Picasso;
 
@@ -29,7 +30,6 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
 
     private List<Encyclopedias> mList;
     private Context mContext;
-    BaseAdapterItemClickListener mListener;
 
     public HomeExhibitAdapter(Context context) {
         super();
@@ -59,17 +59,12 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
         holder.content.setText(LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
 
         holder.itemView.setOnClickListener(v -> {
-            if (mListener != null)
-                mListener.itemClick(v, position, mList.get(position % getItemCount()));
+            WebTemplateActivity.startActivity( mContext, encyclopedias.getId());
         });
     }
 
     private int getBackageImg(int position) {
         return position % 2 == 0 ? R.mipmap.banner1 : R.mipmap.banner2;
-    }
-
-    public void setListener(BaseAdapterItemClickListener listener) {
-        this.mListener = listener;
     }
 
     @Override

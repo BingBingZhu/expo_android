@@ -34,22 +34,11 @@
         android:background="@drawable/red_pot"
         android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/title_home_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/title_home_msg"
-        android:layout_toRightOf="@id/title_home_icon"
-        android:src="@mipmap/home_search_btn" />
+    <TextView
+        style="@style/TextSizeWhite18"
+        android:textSize="@dimen/font_34"
+        android:text="@string/title_home"
+        android:layout_centerInParent="true"/>
 
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/title_home_search"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/dms_20"
-        android:src="@mipmap/search" />
 
 </RelativeLayout>

@@ -15,6 +15,7 @@
     <dimen name="font_48">24sp</dimen>
     <dimen name="font_20">10sp</dimen>
     <dimen name="font_16">8sp</dimen>
+    <dimen name="font_100">50sp</dimen>
 
     <!--尺寸-->
     <dimen name="dms_2">1dp</dimen>
@@ -77,6 +78,8 @@
     <dimen name="dms_minus_10">-5dp</dimen>
     <dimen name="dms_minus_30">-15dp</dimen>
     <dimen name="dms_minus_44">-22dp</dimen>
+    <dimen name="dms_minus_70">-35dp</dimen>
+    <dimen name="dms_minus_260">-130dp</dimen>
     <dimen name="dms_260">130dp</dimen>
     <dimen name="dms_424">212dp</dimen>
     <dimen name="font_14">7sp</dimen>
