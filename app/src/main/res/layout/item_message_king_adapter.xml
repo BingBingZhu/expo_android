@@ -28,6 +28,10 @@
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/dms_20"
         android:layout_toRightOf="@id/img"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
         android:textColor="@color/gray_99" />
 </RelativeLayout>

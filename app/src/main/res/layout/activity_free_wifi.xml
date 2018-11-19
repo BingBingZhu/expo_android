@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/wifi_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="222dp"
+        android:background="@mipmap/login_bg" />
+
+    <TextView
+        style="@style/TextSizeWhite14"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dms_180"
+        android:text="W L A N"
+        android:textSize="@dimen/font_100" />
+
+    <TextView
+        android:id="@+id/wifi_state"
+        style="@style/TextSize14"
+        android:layout_alignBottom="@id/wifi_img"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/gray_00a47b" />
+
+</RelativeLayout>

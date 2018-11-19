@@ -22,7 +22,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dms_60"
             android:scaleType="fitXY"
-            android:src="@mipmap/language_logo" />
+            android:src="@mipmap/login_logo" />
 
         <LinearLayout
             android:layout_width="match_parent"

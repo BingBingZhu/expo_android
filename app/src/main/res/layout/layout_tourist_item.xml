@@ -27,7 +27,7 @@
                 android:id="@+id/tourist_item_img"
                 android:layout_width="@dimen/dms_114"
                 android:layout_height="@dimen/dms_150"
-                android:background="@mipmap/ico_def"/>
+                android:background="@drawable/ico_def"/>
             <TextView
                 android:id="@+id/tourist_item_use"
                 android:layout_width="@dimen/dms_90"

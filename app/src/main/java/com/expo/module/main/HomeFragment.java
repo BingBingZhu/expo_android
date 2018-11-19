@@ -14,7 +14,6 @@ import com.expo.R;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.ToastHelper;
-import com.expo.base.utils.LogUtils;
 import com.expo.contract.HomeContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
@@ -26,6 +25,7 @@ import com.expo.module.map.ParkMapActivity;
 import com.expo.module.routes.RoutesActivity;
 import com.expo.module.service.TouristServiceActivity;
 import com.expo.module.webview.WebActivity;
+import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -80,7 +80,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     CommonAdapter<Encyclopedias> mAdapterExhibitGarden;
 
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
-        TopLineInfo topLine = (TopLineInfo)obj;
+        TopLineInfo topLine = (TopLineInfo) obj;
         WebActivity.startActivity(getContext(),
                 LanguageUtil.chooseTest(topLine.linkH5Url, topLine.linkH5UrlEn),
                 LanguageUtil.chooseTest(topLine.caption, topLine.captionEn));
@@ -133,6 +133,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 Picasso.with(getContext()).load(CommUtils.getFullUrl(encyclopedias.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.home_exhibit_garden_img));
                 holder.setText(R.id.home_exhibit_garden_name, LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
                 holder.setText(R.id.home_exhibit_garden_content, LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
+                holder.itemView.setOnClickListener(v -> WebTemplateActivity.startActivity(mContext, encyclopedias.getId()));
             }
         });
     }
@@ -239,6 +240,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                     .centerInside()
                     .into((ImageView) view.findViewById(R.id.item_home_venue_img));
             ((TextView) view.findViewById(R.id.item_home_venue_text)).setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+            view.setOnClickListener(v -> WebTemplateActivity.startActivity(getContext(), encyclopedias.getId()));
         }
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, -2);
@@ -248,6 +250,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         }
         view.setLayoutParams(params);
         mLlVenue.addView(view);
+
     }
 
     @Override

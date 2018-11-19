@@ -49,7 +49,7 @@ public class SeekHelpAdapter extends RecyclerView.Adapter<SeekHelpAdapter.ViewHo
         });
         if (position == getItemCount() - 1) {
             holder.mImageClose.setVisibility(View.GONE);
-            holder.mImage.setImageResource(R.drawable.bg_add_image_dd);
+            holder.mImage.setImageResource(R.mipmap.seek_add_image);
         } else {
             Picasso.with(mContext).load("file://" + mImages.get(position)).into(holder.mImage);
             holder.mImageClose.setVisibility(View.VISIBLE);
