@@ -42,50 +42,50 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
     @Override
     protected int getContentView() {
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        getWindow().setFormat( PixelFormat.TRANSLUCENT );
         return R.layout.activity_web;
     }
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mTitle = getIntent().getStringExtra(Constants.EXTRAS.EXTRA_TITLE);
-        mUrl = getIntent().getStringExtra(Constants.EXTRAS.EXTRA_URL);
-        id = getIntent().getLongExtra(Constants.EXTRAS.EXTRA_DATA_ID, 0);
-        mEncyclopedias = mPresenter.loadEncyclopediaById(id);
-        mActualScene = mPresenter.loadSceneByWikiId(id);
-        setTitle(0, LanguageUtil.chooseTest(mEncyclopedias.caption, mEncyclopedias.captionEn));
-        mX5View.setWebChromeClient(webChromeClient);
-        mX5View.removeTencentAd(this);
-        mX5View.addJavascriptInterface(new JsHook(), "hook");
-        loadUrl(mUrl + (mActualScene == null ? "&data_type=0" : "&data_type=1"));
+        mTitle = getIntent().getStringExtra( Constants.EXTRAS.EXTRA_TITLE );
+        mUrl = getIntent().getStringExtra( Constants.EXTRAS.EXTRA_URL );
+        id = getIntent().getLongExtra( Constants.EXTRAS.EXTRA_DATA_ID, 0 );
+        mEncyclopedias = mPresenter.loadEncyclopediaById( id );
+        mActualScene = mPresenter.loadSceneByWikiId( id );
+        setTitle( 0, LanguageUtil.chooseTest( mEncyclopedias.caption, mEncyclopedias.captionEn ) );
+        mX5View.setWebChromeClient( webChromeClient );
+        mX5View.removeTencentAd( this );
+        mX5View.addJavascriptInterface( new JsHook(), "hook" );
+        loadUrl( mUrl + (mActualScene == null ? "&data_type=0" : "&data_type=1") );
     }
 
     private void loadUrl(String url) {
-        if (!url.startsWith("http") && !url.startsWith("https")
-                && !url.startsWith("file") && !url.startsWith("javascript:")
-                && !url.startsWith("www")) {
+        if (!url.startsWith( "http" ) && !url.startsWith( "https" )
+                && !url.startsWith( "file" ) && !url.startsWith( "javascript:" )
+                && !url.startsWith( "www" )) {
             url = Constants.URL.FILE_BASE_URL + url;
         }
-        mX5View.loadUrl(url);
+        mX5View.loadUrl( url );
     }
 
 
     private WebChromeClient webChromeClient = new WebChromeClient() {
         @Override
         public boolean onJsAlert(WebView webView, String s, String s1, JsResult jsResult) {
-            ToastHelper.showShort(s1);
+            ToastHelper.showShort( s1 );
             jsResult.confirm();
             return true;
         }
 
         @Override
         public void onProgressChanged(WebView webView, int i) {                                     //加载进度条处理
-            super.onProgressChanged(webView, i);
+            super.onProgressChanged( webView, i );
             if (i == 100) {
-                mProgressView.setVisibility(View.GONE);
+                mProgressView.setVisibility( View.GONE );
             } else {
-                mProgressView.setVisibility(View.VISIBLE);
-                mProgressView.setProgress(i);
+                mProgressView.setVisibility( View.VISIBLE );
+                mProgressView.setProgress( i );
             }
         }
     };
@@ -98,27 +98,27 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
     public static void startActivity(@NonNull Context context, long id) {
         if (id <= 0) {
-            ToastHelper.showShort(R.string.error_params);
+            ToastHelper.showShort( R.string.error_params );
             return;
         }
-        Intent in = new Intent(context, WebTemplateActivity.class);
-        in.putExtra(Constants.EXTRAS.EXTRA_DATA_ID, id);
-        String param = "?id=" + id + "&lan=" + LanguageUtil.chooseTest("zh", "en");
-        String url = "http://192.168.1.143:8080/dist/index.html#/introduce" + param;
-        in.putExtra(Constants.EXTRAS.EXTRA_URL, url);
-        context.startActivity(in);
+        Intent in = new Intent( context, WebTemplateActivity.class );
+        in.putExtra( Constants.EXTRAS.EXTRA_DATA_ID, id );
+        String param = "?id=" + id + "&lan=" + LanguageUtil.chooseTest( "zh", "en" );
+        String url = Constants.URL.ENCYCLOPEDIAS_DETAIL_URL + param;
+        in.putExtra( Constants.EXTRAS.EXTRA_URL, url );
+        context.startActivity( in );
     }
 
     @Override
     protected void onDestroy() {
-        mX5View.loadUrl("javascript:leavePage()");
-        mX5View.loadUrl("about:blank");
+        mX5View.loadUrl( "javascript:leavePage()" );
+        mX5View.loadUrl( "about:blank" );
         super.onDestroy();
     }
 
     @Override
     public void getActualSceneDataByIdRes(ActualScene actualScene) {
-        ParkMapActivity.startActivity(getContext(), actualScene.getId());
+        ParkMapActivity.startActivity( getContext(), actualScene.getId() );
     }
 
     /**
@@ -127,14 +127,14 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     public class JsHook {
         @JavascriptInterface
         public String getDataById(int id) {
-            return mPresenter.toJson(mEncyclopedias);
+            return mPresenter.toJson( mEncyclopedias );
         }
 
         @JavascriptInterface
         public void gotoDataLocation() {
-            runOnUiThread(() -> {
-                NavigationActivity.startActivity(WebTemplateActivity.this, mActualScene, LanguageUtil.chooseTest(mEncyclopedias.voiceUrl, mEncyclopedias.voiceUrlEn));
-            });
+            runOnUiThread( () -> {
+                NavigationActivity.startActivity( WebTemplateActivity.this, mActualScene, LanguageUtil.chooseTest( mEncyclopedias.voiceUrl, mEncyclopedias.voiceUrlEn ) );
+            } );
         }
     }
 }
