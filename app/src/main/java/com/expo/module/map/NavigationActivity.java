@@ -92,6 +92,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     X5WebView mWebView;
     @BindView(R.id.texture_view)
     TextureView mTextureView;
+    @BindView(R.id.gt_navi_tips)
+    TextView mTvTips;
     public AMapNavi mAMapNavi;
     private AMap mMap;
     private ActualScene virtualScene;
@@ -162,6 +164,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     private void endNavigation() {
         ToastHelper.showShort("到达目的地附近喽，导航结束");
+        mTvTips.setText("到达目的地附近喽，导航结束");
         if (mSlidingDrawerView.isOpened()) {
             changeAnimation("endPoint");
         } else {
@@ -425,6 +428,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         public void onGetNavigationText(String s) {
             if (s == null) return;
             ToastHelper.showShort(s);
+            mTvTips.setText(s);
             if (s.startsWith("左转")) {
                 changeAnimation("turnLeft");
             } else if (s.startsWith("右转")) {

@@ -42,4 +42,16 @@
         android:layout_marginLeft="@dimen/dms_28"
         android:layout_marginTop="@dimen/dms_28"
         android:src="@mipmap/ic_back_navi" />
+
+    <TextView
+        android:id="@+id/gt_navi_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_70"
+        android:layout_marginTop="@dimen/dms_140"
+        android:layout_marginRight="@dimen/dms_70"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="2"
+        android:focusableInTouchMode="true"
+        android:singleLine="true" />
 </FrameLayout>
