@@ -70,6 +70,7 @@ public interface Constants {
         public static final String ACTUAL_SCENES = "GetVenuesList";
         //植物识别地址
         public static final String DISTINGUISH_PLANT = "http://plantgw.nongbangzhu.cn/plant/recognize";
+        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
     }
 
     /**
@@ -94,9 +95,9 @@ public interface Constants {
         //解压地址
         public static final String UNZIP_PATH = BASE_FILE_PATH + "unzip/";
         //实体类
-        public static final Class[] DB_CLASSES = new Class[]{ ActualScene.class, CommonInfo.class, DataType.class, DownloadInfo.class,
+        public static final Class[] DB_CLASSES = new Class[]{ActualScene.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, VenuesInfo.class, TouristType.class,
-                TopLineInfo.class, VenuesType.class, Park.class };
+                TopLineInfo.class, VenuesType.class, Park.class};
     }
 
     /**
