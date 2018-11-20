@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--字体-->
+    <dimen name="font_14">7sp</dimen>
     <dimen name="font_18">9sp</dimen>
     <dimen name="font_22">11sp</dimen>
     <dimen name="font_24">12sp</dimen>
@@ -69,20 +70,17 @@
     <dimen name="dms_216">108dp</dimen>
     <dimen name="dms_220">110dp</dimen>
     <dimen name="dms_230">115dp</dimen>
+    <dimen name="dms_260">130dp</dimen>
     <dimen name="dms_300">150dp</dimen>
     <dimen name="dms_340">170dp</dimen>
     <dimen name="dms_360">180dp</dimen>
     <dimen name="dms_370">185dp</dimen>
     <dimen name="dms_390">195dp</dimen>
+    <dimen name="dms_424">212dp</dimen>
 
     <dimen name="dms_minus_10">-5dp</dimen>
     <dimen name="dms_minus_30">-15dp</dimen>
     <dimen name="dms_minus_44">-22dp</dimen>
-    <dimen name="dms_minus_70">-35dp</dimen>
-    <dimen name="dms_minus_260">-130dp</dimen>
-    <dimen name="dms_260">130dp</dimen>
-    <dimen name="dms_424">212dp</dimen>
-    <dimen name="font_14">7sp</dimen>
     <dimen name="dms_minus_70">-35dp</dimen>
     <dimen name="dms_minus_260">-130dp</dimen>
 </resources>
