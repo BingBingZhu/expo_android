@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 背景 -->
-    <item android:id="@android:id/background">
+    <item
+        android:id="@android:id/background"
+        android:height="@dimen/dms_4"
+        android:gravity="center">
         <shape>
             <corners android:radius="0dp" />
             <gradient
@@ -25,7 +28,10 @@
     <!--</clip>-->
     <!--</item>-->
     <!-- 第一进度条样式，我想修改的，修改成简单的灰色 -->
-    <item android:id="@android:id/progress">
+    <item
+        android:id="@android:id/progress"
+        android:height="@dimen/dms_4"
+        android:gravity="center">
         <clip>
             <shape>
                 <!-- 圆角设置 -->

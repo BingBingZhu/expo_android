@@ -13,6 +13,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
@@ -31,9 +32,14 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
     public void upLoadImgFile(VisitorService visitorService, String filePath, int positon) {
         if (!StringUtils.isEmpty(filePath)) {
             File file = new File(filePath);
+            String fileType = "";
+            if (filePath.endsWith("mp4"))
+                fileType = "video.mp4";
+            else
+                fileType = "image.png";
             RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
-            Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile(requestBody);
+            ;
+            Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile(MultipartBody.Part.createFormData("file", fileType, requestBody));
             Http.request(new ResponseCallback<UploadRsp>() {
                 @Override
                 protected void onResponse(UploadRsp rsp) {

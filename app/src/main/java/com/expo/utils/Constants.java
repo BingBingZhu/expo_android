@@ -98,6 +98,8 @@ public interface Constants {
         public static final Class[] DB_CLASSES = new Class[]{ActualScene.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, VenuesInfo.class, TouristType.class,
                 TopLineInfo.class, VenuesType.class, Park.class};
+        //下载任务最大同时下载数量
+        public static final int IMAGE_MAX_COUNT = 3;
     }
 
     /**
@@ -131,6 +133,7 @@ public interface Constants {
         public static final int REQ_CROP = 125;
         public static final int REQ_OPEN_GPS = 126;
         public static final int REQ_GET_LOCAL = 127;
+        public static final int REQ_TO_CAMERA = 128;
     }
 
     /**

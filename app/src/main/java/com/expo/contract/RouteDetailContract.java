@@ -16,6 +16,8 @@ public interface RouteDetailContract {
 
         public abstract void getRouteDetail(Long id);
 
+        public abstract void getRouteDetailFromency(String id);
+
         public abstract void getVenuesList(String ids);
 
     }
@@ -23,6 +25,8 @@ public interface RouteDetailContract {
     interface View extends IView {
 
         void showRouteDetail(RouteInfo info);
+
+        void showRemarkDetail(String remark);
 
         void showVenuesList(List<VenuesInfo> list);
     }

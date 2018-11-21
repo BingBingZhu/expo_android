@@ -131,10 +131,10 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         }
 
         @JavascriptInterface
-        public void gotoDataLocation() {
-            runOnUiThread( () -> {
-                NavigationActivity.startActivity( WebTemplateActivity.this, mActualScene, LanguageUtil.chooseTest( mEncyclopedias.voiceUrl, mEncyclopedias.voiceUrlEn ) );
-            } );
+        public void gotoDataLocation(int id) {
+            runOnUiThread(() -> {
+                NavigationActivity.startActivity(WebTemplateActivity.this, mActualScene, LanguageUtil.chooseTest(mEncyclopedias.voiceUrl, mEncyclopedias.voiceUrlEn));
+            });
         }
     }
 }

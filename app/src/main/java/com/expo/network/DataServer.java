@@ -27,6 +27,7 @@ import com.expo.network.response.VersionInfoResp;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
@@ -179,7 +180,7 @@ public interface DataServer {
     })
     @Multipart
     @POST("Resources/UploadResource")
-    Observable<UploadRsp> uploadFile(@Part("file\"; filename=\"image.png\"") RequestBody requestBody);
+    Observable<UploadRsp> uploadFile(@Part MultipartBody.Part part);
 
 
     /**

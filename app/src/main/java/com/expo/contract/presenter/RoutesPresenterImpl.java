@@ -1,6 +1,7 @@
 package com.expo.contract.presenter;
 
 import com.expo.contract.RoutesContract;
+import com.expo.db.QueryParams;
 import com.expo.entity.RouteHotInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.network.Http;
@@ -20,7 +21,11 @@ public class RoutesPresenterImpl extends RoutesContract.Presenter {
 
     @Override
     public void getRoutesData() {
-        mView.freshRoutes(mDao.query(RouteInfo.class, null));
+        QueryParams params = new QueryParams()
+                .add("eq", "enable", "1")
+                .add("and")
+                .add("eq", "type_id", "1");
+        mView.freshRoutes(mDao.query(RouteInfo.class, params));
     }
 
     @Override

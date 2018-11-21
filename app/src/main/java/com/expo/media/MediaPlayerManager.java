@@ -61,6 +61,8 @@ public class MediaPlayerManager implements MediaPlayer.OnCompletionListener, Med
 
     public void setSeek(int progress) {
         if (mMediaPlayer == null) return;
+        if (!mMediaPlayer.isPlaying())
+            mMediaPlayer.start();
         mMediaPlayer.seekTo(progress);
     }
 
