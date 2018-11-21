@@ -78,12 +78,12 @@ public class FileUtils {
     }
 
     public static void write(File file, String text) {
-        if (file == null)
-            throw new IllegalArgumentException( "The file can not be null" );
-        if (TextUtils.isEmpty( text ))
-            return;
         FileWriter writer = null;
         try {
+            if (file == null)
+                throw new IllegalArgumentException( "The file can not be null" );
+            if (TextUtils.isEmpty( text ))
+                return;
             writer = new FileWriter( file );
             writer.write( text );
             writer.flush();

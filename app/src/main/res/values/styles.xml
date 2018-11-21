@@ -14,6 +14,11 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="AppTheme_Splash" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+    </style>
+
 
     <style name="LoginTheme" parent="AppTheme"></style>
 
@@ -184,6 +189,7 @@
     <style name="BottomActionSheetDialogStyle" parent="ActionSheetDialogStyle">
         <item name="android:windowAnimationStyle">@style/BottomDialogAnimation</item>
     </style>
+
     <style name="TopActionSheetDialogStyle" parent="ActionSheetDialogStyle">
         <item name="android:windowAnimationStyle">@style/TopDialogAnimation</item>
     </style>

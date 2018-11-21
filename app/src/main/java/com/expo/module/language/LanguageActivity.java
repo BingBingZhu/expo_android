@@ -43,6 +43,7 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        setDoubleTapToExit( true );
 //        mLanguage = PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null);
 //        if (mLanguage == null) {
 //            mLanguageCn.performClick();

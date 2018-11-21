@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Process;
 import android.support.multidex.MultiDexApplication;
 
 import com.expo.R;
@@ -38,6 +39,8 @@ public class BaseApplication extends MultiDexApplication {
 
     private Thread.UncaughtExceptionHandler uncaughtExceptionHandler = (t, e) -> {
         LogUtils.e( TAG, "Thread id:" + t.getId(), e );
+        ActivityHelper.finishAll();
+        Process.killProcess( Process.myPid() );
     };
 
     /*
