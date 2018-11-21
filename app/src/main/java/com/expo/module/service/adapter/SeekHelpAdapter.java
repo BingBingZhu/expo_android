@@ -1,6 +1,8 @@
 package com.expo.module.service.adapter;
 
 import android.content.Context;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +53,12 @@ public class SeekHelpAdapter extends RecyclerView.Adapter<SeekHelpAdapter.ViewHo
             holder.mImageClose.setVisibility(View.GONE);
             holder.mImage.setImageResource(R.mipmap.seek_add_image);
         } else {
-            Picasso.with(mContext).load("file://" + mImages.get(position)).into(holder.mImage);
+            if (mImages.get(position).endsWith("mp4")) {
+                holder.mImage.setImageBitmap(ThumbnailUtils.createVideoThumbnail(mImages.get(position), MediaStore.Images.Thumbnails.MINI_KIND));
+//            Picasso.with(mContext).load("file://" + mImages.get(position)).into(holder.mImage);
+            } else {
+                Picasso.with(mContext).load("file://" + mImages.get(position)).into(holder.mImage);
+            }
             holder.mImageClose.setVisibility(View.VISIBLE);
 
             holder.mImageClose.setOnClickListener(v -> {

@@ -36,13 +36,14 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/horn" />
 
-            <ProgressBar
+            <SeekBar
                 android:id="@+id/route_progress"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dms_4"
+                android:layout_height="@dimen/dms_20"
                 android:layout_marginLeft="@dimen/dms_10"
                 android:indeterminateOnly="false"
                 android:progress="0"
+                android:thumb="@drawable/point_accent"
                 android:progressDrawable="@drawable/route_progress_bar" />
         </LinearLayout>
 

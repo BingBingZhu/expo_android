@@ -1,6 +1,7 @@
 package com.expo.utils;
 
 import android.content.Context;
+import android.location.Location;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -40,5 +41,10 @@ public class CommUtils {
 
     public static void setText(TextView textView, String cn, String en) {
         textView.setText(LanguageUtil.chooseTest(cn, en));
+    }
+
+    public static boolean isLocationEquals(Location l1, Location l2){
+        if(l1 == null || l2 == null) return false;
+       return l1.getLatitude() == l2.getLatitude() && l1.getLongitude() == l2.getLongitude();
     }
 }

@@ -2,6 +2,7 @@ package com.expo.contract.presenter;
 
 import com.expo.contract.RouteDetailContract;
 import com.expo.db.QueryParams;
+import com.expo.entity.Encyclopedias;
 import com.expo.entity.RouteHotInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.VenuesInfo;
@@ -9,6 +10,7 @@ import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.VerificationCodeResp;
+import com.expo.utils.LanguageUtil;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -27,6 +29,12 @@ public class RouteDetailPresenterImpl extends RouteDetailContract.Presenter {
         QueryParams params = new QueryParams();
         params.add("eq", "_id", id);
         mView.showRouteDetail(mDao.unique(RouteInfo.class, params));
+    }
+
+    @Override
+    public void getRouteDetailFromency(String id) {
+        Encyclopedias encyclopedias = mDao.queryById(Encyclopedias.class, id);
+        mView.showRemarkDetail(LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
     }
 
     @Override

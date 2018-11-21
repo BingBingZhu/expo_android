@@ -45,13 +45,16 @@
 
     <TextView
         android:id="@+id/gt_navi_tips"
+        style="@style/TextSizeBlack16"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dms_70"
         android:layout_marginTop="@dimen/dms_140"
         android:layout_marginRight="@dimen/dms_70"
+        android:background="@drawable/navigation_bg1"
         android:ellipsize="marquee"
-        android:marqueeRepeatLimit="2"
+        android:padding="@dimen/dms_20"
         android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:marqueeRepeatLimit="2"
         android:singleLine="true" />
 </FrameLayout>

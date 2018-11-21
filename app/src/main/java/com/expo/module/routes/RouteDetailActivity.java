@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.contract.RouteDetailContract;
@@ -52,7 +54,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
     @BindView(R.id.recycler)
     RecyclerView mRvRecycler;
     @BindView(R.id.route_progress)
-    ProgressBar mPbProgress;
+    SeekBar mPbProgress;
 
     RouteInfo mInfo;
     CommonAdapter mAdapter;
@@ -95,6 +97,23 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         }
     };
 
+    SeekBar.OnSeekBarChangeListener mSeekListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            MediaPlayerManager.getInstence().setSeek(seekBar.getProgress());
+        }
+    };
+
     Handler mHandler = new Handler();
 
     @Override
@@ -107,6 +126,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         setTitle(1, R.string.title_routest_ac);
         initRecyclerView();
 
+        mPbProgress.setOnSeekBarChangeListener(mSeekListener);
         MediaPlayerManager.getInstence().setListener(mListener);
 
         mPresenter.getRouteDetail(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_ID, 0));
@@ -152,7 +172,15 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         mTvName.setText(LanguageUtil.chooseTest(info.caption, info.captionen));
         mTvHot.setText(getResources().getString(R.string.hot) + info.hotCount);
         mTvTime.setText(info.updateTime);
+        if(StringUtils.isEmpty(LanguageUtil.chooseTest(info.remark, info.remarken)))
+            mPresenter.getRouteDetailFromency(info.wikiId);
+            else
         mTvInfo.setText(LanguageUtil.chooseTest(info.remark, info.remarken));
+    }
+
+    @Override
+    public void showRemarkDetail(String remark) {
+        mTvInfo.setText(remark);
     }
 
     @Override
@@ -167,7 +195,8 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
     @OnClick(R.id.route_horn)
     public void clickHorn(View view) {
         if (mInfo == null) return;
-        MediaPlayerManager.getInstence().start(this, LanguageUtil.chooseTest(CommUtils.getFullUrl(mInfo.voiceUrl), CommUtils.getFullUrl(mInfo.voiceUrlEn)));
+//        MediaPlayerManager.getInstence().start(this, LanguageUtil.chooseTest(CommUtils.getFullUrl(mInfo.voiceUrl), CommUtils.getFullUrl(mInfo.voiceUrlEn)));
+        MediaPlayerManager.getInstence().start(this, "http://audio.xmcdn.com/group15/M06/1D/EA/wKgDZVV47ZLD3fFXABohc_qeKmc390.m4a");
     }
 
     @Override

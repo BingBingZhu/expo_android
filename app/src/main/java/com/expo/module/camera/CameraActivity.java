@@ -29,6 +29,8 @@ public class CameraActivity extends BaseActivity {
     CameraSurfaceView mCarmer;
     @BindView(R.id.camera_btn)
     ShootButton mBar;
+    @BindView(R.id.camera_ok)
+    View mVOk;
 
     private TimeCount mTimeCount;    //验证码获取计时器
 
@@ -36,12 +38,12 @@ public class CameraActivity extends BaseActivity {
     boolean mIsFinish = false;
     boolean mIsVideo = false;
 
-//    CameraSurfaceView.CameraSurfaceViewListener mListener = new CameraSurfaceView.CameraSurfaceViewListener() {
-//        @Override
-//        public void complete() {
-//            cameraFinish();
-//        }
-//    };
+    CameraSurfaceView.CameraSurfaceViewListener mListener = new CameraSurfaceView.CameraSurfaceViewListener() {
+        @Override
+        public void complete() {
+            mVOk.setVisibility(View.VISIBLE);
+        }
+    };
 
     @Override
     protected int getContentView() {
@@ -50,7 +52,7 @@ public class CameraActivity extends BaseActivity {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-//        mCarmer.setListener(mListener);
+        mCarmer.setListener(mListener);
     }
 
     @Override
@@ -83,7 +85,7 @@ public class CameraActivity extends BaseActivity {
                 if (mIsVideo) ;
                 else if (time - mTouchTime > 300) {
                     mIsVideo = true;
-                    mCarmer.startRecord();
+                    mCarmer.startRecord(false);
                     mTimeCount = new TimeCount((10) * 1000, 100);
                     mTimeCount.start();
                     mBar.setProgress(0);
@@ -115,7 +117,7 @@ public class CameraActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.putExtra(Constants.EXTRAS.EXTRAS, mCarmer.getOutFilePath());
         setResult(RESULT_OK, intent);
-        ToastHelper.showLong("保存的位置是" + mCarmer.getOutFilePath());
+//        ToastHelper.showLong("保存的位置是" + mCarmer.getOutFilePath());
         finish();
     }
 

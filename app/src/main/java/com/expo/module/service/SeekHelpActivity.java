@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -33,9 +34,14 @@ import com.expo.contract.SeekHelpContract;
 import com.expo.entity.User;
 import com.expo.entity.VisitorService;
 import com.expo.map.LocationManager;
+import com.expo.module.camera.CameraActivity;
 import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.DialogPlusBuilder;
+import com.orhanobut.dialogplus.OnItemClickListener;
+import com.orhanobut.dialogplus.ViewHolder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,6 +82,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     private EventManager asr;
 
+    int mCameraPosition = 0;
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -94,19 +102,15 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     BaseAdapterItemClickListener<Integer> mClickListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
         public void itemClick(View view, int position, Integer o) {
-            ImageSelector.builder()
-                    .useCamera(true) // 设置是否使用拍照
-                    .setSingle(false)  //设置是否单选
-                    .setMaxSelectCount(3) // 图片的最大选择数量，小于等于0时，不限数量。
-                    .setSelected(mImageList) // 把已选的图片传入默认选中。
-                    .setViewImage(true) //是否点击放大图片查看,，默认为true
-                    .start(SeekHelpActivity.this, Constants.RequestCode.REQUEST111); // 打开相册
+            if (position == mImageList.size())
+                showImgSelectDialog();
         }
     };
 
     BaseAdapterItemClickListener<Integer> mDeleteListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
         public void itemClick(View view, int position, Integer o) {
+            removeCameraPosition(position);
             mImageList.remove(position);
             mAdapter.refresh(mImageList);
         }
@@ -192,7 +196,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         }
         if (resultCode == RESULT_OK)
             if (requestCode == Constants.RequestCode.REQUEST111 && data != null) {
-                mImageList.clear();
+//                mImageList.clear();
+                resetCameraPosition();
                 mImageList.addAll(data.getStringArrayListExtra(
                         ImageSelectorUtils.SELECT_RESULT));
                 mAdapter.refresh(mImageList);
@@ -202,6 +207,11 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                 mLng = data.getDoubleExtra(Constants.EXTRAS.EXTRA_LONGITUDE, 0);
                 if (mLat == -1 && mLng == -1) mIsLocation = true;
                 else mIsLocation = false;
+            } else if (requestCode == Constants.RequestCode.REQ_TO_CAMERA) {
+                String path = data.getStringExtra(Constants.EXTRAS.EXTRAS);
+                mCameraPosition = mCameraPosition | 1 << mImageList.size();
+                mImageList.add(path);
+                mAdapter.refresh(mImageList);
             }
     }
 
@@ -209,7 +219,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     public void submit(View view) {
         VisitorService visitorService = initSubmitData();
         if (visitorService != null)
-            mPresenter.addVisitorService(initSubmitData());
+            mPresenter.addVisitorService(visitorService);
     }
 
     @OnClick(R.id.seek_help_navigation)
@@ -233,6 +243,75 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_phone)
     public void phone(View view) {
+
+    }
+
+    private void showImgSelectDialog() {
+        DialogPlus dialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ViewHolder(LayoutInflater.from(SeekHelpActivity.this).inflate(R.layout.dialog_image_select, null)))
+                .setExpanded(true)
+                .setOnClickListener((dialog1, view) -> {
+                    switch (view.getId()) {
+                        case R.id.image_record:
+                        case R.id.image_record_explain:
+                            startActivityForResult(new Intent(SeekHelpActivity.this, CameraActivity.class), Constants.RequestCode.REQ_TO_CAMERA);
+                            dialog1.dismiss();
+                            break;
+                        case R.id.image_album:
+                            goImageSelector();
+                            dialog1.dismiss();
+                            break;
+                        case R.id.cancle:
+                            dialog1.dismiss();
+                            break;
+                    }
+                })
+                .create();// This will enable the expand feature, (similar to android L share dialog)
+        dialog.show();
+    }
+
+    private void goImageSelector() {
+        int count = getCameraImageCount();
+        if (count >= 3)
+            ToastHelper.showShort(R.string.today);
+        else
+            ImageSelector.builder()
+                    .useCamera(true) // 设置是否使用拍照
+                    .setSingle(false)  //设置是否单选
+                    .setMaxSelectCount(Constants.Config.IMAGE_MAX_COUNT - count) // 图片的最大选择数量，小于等于0时，不限数量。
+                    .setSelected(mImageList) // 把已选的图片传入默认选中。
+                    .setViewImage(true) //是否点击放大图片查看,，默认为true
+                    .start(SeekHelpActivity.this, Constants.RequestCode.REQUEST111); // 打开相册
+    }
+
+    private int getCameraImageCount() {
+        int count = 0;
+        int cameraPosition = mCameraPosition;
+        while (cameraPosition > 0) {
+            if ((cameraPosition | 1) == cameraPosition) {
+                count++;
+            }
+            cameraPosition = cameraPosition >> 1;
+        }
+        return count;
+    }
+
+    private void resetCameraPosition() {
+        for (int i = mImageList.size() - 1; i >= 0; i--) {
+            if ((mCameraPosition | 1 << i) != mCameraPosition)
+                mImageList.remove(i);
+        }
+
+        mCameraPosition = 0;
+        for (int i = 0; i < mImageList.size(); i++) {
+            mCameraPosition += 1 << i;
+        }
+    }
+
+    private void removeCameraPosition(int position) {
+        int right = mCameraPosition & ((1 << position) - 1);
+        int left = mCameraPosition >> (position + 1);
+        mCameraPosition = (left << position) + right;
 
     }
 

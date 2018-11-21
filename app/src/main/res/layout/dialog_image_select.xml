@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/image_record"
+        style="@style/TextSizeBlack16"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="false"
+        android:gravity="center_horizontal|bottom"
+        android:paddingTop="@dimen/dms_20"
+        android:text="@string/dialog_image_record" />
+
+    <TextView
+        android:id="@+id/image_record_explain"
+        style="@style/TextSizeBlack14"
+        android:layout_width="match_parent"
+        android:clickable="false"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|top"
+        android:paddingBottom="@dimen/dms_20"
+        android:text="@string/dialog_image_image_video"
+        android:textColor="@color/gray_99" />
+
+    <View style="@style/LineHorizontal" />
+
+    <TextView
+        android:id="@+id/image_album"
+        style="@style/TextSizeBlack16"
+        android:layout_width="match_parent"
+        android:clickable="false"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:padding="@dimen/dms_10"
+        android:paddingBottom="@dimen/dms_20"
+        android:text="@string/dialog_image_album" />
+
+    <View style="@style/LineHorizontal" />
+
+    <TextView
+        android:id="@+id/cancle"
+        style="@style/TextSizeBlack16"
+        android:layout_width="match_parent"
+        android:clickable="false"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:paddingTop="@dimen/dms_10"
+        android:paddingBottom="@dimen/dms_20"
+        android:text="@string/cancel" />
+</LinearLayout>

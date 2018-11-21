@@ -188,5 +188,10 @@
     <string name="boy">男</string>
     <string name="girl">女</string>
     <string name="error_params">参数错误</string>
+    <string name="img_count_is_max">您选择的图片数量已经达到最大值，请先删除</string>
+
+    <string name="dialog_image_record">拍摄</string>
+    <string name="dialog_image_image_video">照片或者视频</string>
+    <string name="dialog_image_album">从手机相册选择</string>
 
 </resources>

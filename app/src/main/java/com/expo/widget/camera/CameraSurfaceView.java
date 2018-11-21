@@ -44,7 +44,9 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     Context context;
 
     private String mOutFilePath;
-//    CameraSurfaceViewListener mListener;
+    CameraSurfaceViewListener mListener;
+
+    int mType = 0;
 
     public CameraSurfaceView(Context context) {
         super(context);
@@ -103,6 +105,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         }
         try {
             mCamera = Camera.open(mCameraId);
+            mCamera.autoFocus(this);
         } catch (Exception ee) {
             mCamera = null;
             cameraState = CameraState.ERROR;
@@ -377,38 +380,74 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         if (mCamera == null) return;
         FileUtils.createFile(String.format("%s/%s", Environment.getExternalStorageDirectory().getAbsolutePath(),
                 Constants.Config.TEMP_PATH));
+        mType = 1;
         mCamera.autoFocus(this);
+
     }
 
     @Override
     public void onAutoFocus(boolean success, Camera camera) {
         if (success) {
-            try {
-                mCamera.takePicture(null, null, new Camera.PictureCallback() {
-                    @Override
-                    public void onPictureTaken(byte[] data, Camera camera) {
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                        Matrix matrix = new Matrix();
-                        if (mOpenBackCamera) {
-                            matrix.setRotate(90);
-                        } else {
-                            matrix.setRotate(270);
-                            matrix.postScale(-1, 1);
-                        }
-                        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-                        String picPath = newOutFilePath("jpg");
-                        FileUtils.saveBitmap(picPath, bitmap);
-//                        Toast.makeText(context, "拍照成功", Toast.LENGTH_SHORT).show();
-//                        startPreview();
+            if (mType == 1)
+                takePicture();
+//            try {
+//                mCamera.takePicture(null, null, new Camera.PictureCallback() {
+//                    @Override
+//                    public void onPictureTaken(byte[] data, Camera camera) {
+//                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+//                        Matrix matrix = new Matrix();
+//                        if (mOpenBackCamera) {
+//                            matrix.setRotate(90);
+//                        } else {
+//                            matrix.setRotate(270);
+//                            matrix.postScale(-1, 1);
+//                        }
+//                        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+//
+//                        String picPath = newOutFilePath("jpg");
+//                        FileUtils.saveBitmap(picPath, bitmap);
+////                        Toast.makeText(context, "拍照成功", Toast.LENGTH_SHORT).show();
+////                        startPreview();
 //                        if (mListener != null)
 //                            mListener.complete();
+//                    }
+//                });
+//            } catch (Exception e) {
+//                if (isRecording) {
+//                    Toast.makeText(context, "请先结束录像", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+            else if(mType == 2)
+                startRecord(true);
+        }
+    }
+
+    private void takePicture() {
+        try {
+            mCamera.takePicture(null, null, new Camera.PictureCallback() {
+                @Override
+                public void onPictureTaken(byte[] data, Camera camera) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    Matrix matrix = new Matrix();
+                    if (mOpenBackCamera) {
+                        matrix.setRotate(90);
+                    } else {
+                        matrix.setRotate(270);
+                        matrix.postScale(-1, 1);
                     }
-                });
-            } catch (Exception e) {
-                if (isRecording) {
-                    Toast.makeText(context, "请先结束录像", Toast.LENGTH_SHORT).show();
+                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+                    String picPath = newOutFilePath("jpg");
+                    FileUtils.saveBitmap(picPath, bitmap);
+//                        Toast.makeText(context, "拍照成功", Toast.LENGTH_SHORT).show();
+//                        startPreview();
+                    if (mListener != null)
+                        mListener.complete();
                 }
+            });
+        } catch (Exception e) {
+            if (isRecording) {
+                Toast.makeText(context, "请先结束录像", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -423,8 +462,14 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         return isRecording;
     }
 
-    public boolean startRecord() {
-        return startRecord(-1, null);
+    public void startRecord(boolean isAutoFocus) {
+        if (isAutoFocus)
+            startRecord(-1, null);
+        else{
+            mType = 2;
+            mCamera.autoFocus(this);
+        }
+
     }
 
     public boolean startRecord(int maxDurationMs, MediaRecorder.OnInfoListener onInfoListener) {
@@ -476,16 +521,16 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             mediaRecorder.stop();
             isRecording = false;
 //            Toast.makeText(context, "视频已保存在根目录", Toast.LENGTH_SHORT).show();
-//            if (mListener != null)
-//                mListener.complete();
+            if (mListener != null)
+                mListener.complete();
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
     }
 
-//    public void setListener(CameraSurfaceViewListener listener) {
-//        this.mListener = listener;
-//    }
+    public void setListener(CameraSurfaceViewListener listener) {
+        this.mListener = listener;
+    }
 
     /**
      * _________________________________________________________________________________________
@@ -509,8 +554,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         return mOutFilePath;
     }
 
-//    public interface CameraSurfaceViewListener {
-//        void complete();
-//    }
+    public interface CameraSurfaceViewListener {
+        void complete();
+    }
 
 }
