@@ -20,6 +20,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class UserInfoPresenterImpl extends UserInfoContract.Presenter {
@@ -89,9 +90,9 @@ public class UserInfoPresenterImpl extends UserInfoContract.Presenter {
             saveUserInfoOnLine(user);
         else {
             File file = new File(user.getPhotoUrl());
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data;"), file);
 
-            Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile(requestBody);
+            Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile(MultipartBody.Part.createFormData("file", "image.png", requestBody));
             Http.request(new ResponseCallback<UploadRsp>() {
                 @Override
                 protected void onResponse(UploadRsp rsp) {

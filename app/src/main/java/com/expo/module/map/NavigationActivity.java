@@ -152,6 +152,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     private void initWebView() {
         mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
+//        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
 
@@ -364,7 +365,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             Map<String, Marker> tem = new HashMap<>();
             for (int i = 0; i < mVenuesDistance.size(); i++) {
                 VenuesDistance vd = mVenuesDistance.get(i);
-                if (vd.distance >= 20.0f) break;
+                if (vd.distance >= 200.0f) break;
                 if (mMarker.containsKey(vd.id)) {
                     tem.put(vd.id, mMarker.get(vd.id));
                     mMarker.remove(vd.id);
@@ -377,6 +378,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 tem.put(vd.id, mMarker.get(vd.id));
                 mMarker.remove(vd.id);
 
+//                mWebView.loadUrl(String.format("javascript:tipTips('%d', '%s')", 0, "调用成功了"));
+//                mWebView.loadUrl(String.format("javascript:tipTips('%d', '%s')", 0, "调用成功了"));
                 mWebView.loadUrl("javascript:setMarker('1', '" + vd + "')");
             }
             for (Marker marker : mMarker.values()) {
@@ -480,6 +483,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 mAMapNavi.startNavi(NaviType.GPS);
                 mAMapNavi.startNavi(NaviType.EMULATOR);     // 模拟导航
                 hideLoadingView();
+
             } else {
                 LatLng startLatLng = LocationManager.getInstance().getCurrentLocationLatLng();
                 mFrom = new NaviLatLng(startLatLng.latitude, startLatLng.longitude);
@@ -490,7 +494,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onNaviInfoUpdate(NaviInfo naviInfo) {
             mRouteDirection = naviInfo.getDirection();
-            mTvTips.setText(naviInfo.currentSpeed + "");
         }
     };
 
