@@ -553,7 +553,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                             finish();
                     }
                 })
-                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
                 .create();
         dialog.show();
     }

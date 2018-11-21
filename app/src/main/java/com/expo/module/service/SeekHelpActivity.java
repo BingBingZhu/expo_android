@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.amap.api.maps.AMap;
@@ -249,7 +250,6 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     private void showImgSelectDialog() {
         DialogPlus dialog = DialogPlus.newDialog(this)
                 .setContentHolder(new ViewHolder(LayoutInflater.from(SeekHelpActivity.this).inflate(R.layout.dialog_image_select, null)))
-                .setExpanded(true)
                 .setOnClickListener((dialog1, view) -> {
                     switch (view.getId()) {
                         case R.id.image_record:
