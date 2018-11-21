@@ -208,6 +208,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 111 && resultCode == RESULT_OK) {
             Country country = Country.fromJson(data.getStringExtra("country"));
+            mEtPhoneView.getText().clear();
+            mEtCodeView.getText().clear();
             mTvPhoneCode.setText("+" + country.code);
             mCode = country.code;
         }

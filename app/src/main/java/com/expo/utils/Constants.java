@@ -71,6 +71,7 @@ public interface Constants {
         //植物识别地址
         public static final String DISTINGUISH_PLANT = "http://plantgw.nongbangzhu.cn/plant/recognize";
         public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
+        public static final String HTML_404 = "file:///android_asset/web/404.html";
     }
 
     /**

@@ -35,7 +35,7 @@ public class CommonInfo implements Parcelable {
     private String remark;
     @DatabaseField(columnName = "type")
     @SerializedName("type")
-    private String type;// 0 用户指南  1 用户协议  2 购票须知  3 用户须知  4 无障碍服务 5 预约  6 购票 7 球幕玩法(暂无)
+    private String type;// 0 用户指南  1 用户协议  2 购票须知  3 用户须知  4 无障碍服务 5 预约  6 购票 7 全景地址
     @DatabaseField(columnName = "update_time")
     @SerializedName("updatetime")
     private String updateTime;

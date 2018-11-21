@@ -13,7 +13,7 @@ public interface HomeContract {
     abstract class Presenter extends IPresenter<View> {
 
         public Presenter(View view) {
-            super(view);
+            super( view );
         }
 
         public abstract void setMessageCount();
@@ -30,7 +30,9 @@ public interface HomeContract {
 
         public abstract void stopHeartService(Context context);
 
+        public abstract String loadBuyTicketsUrl();
 
+        public abstract String loadVenueBespeakUrl();
     }
 
     interface View extends IView {
