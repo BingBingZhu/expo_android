@@ -45,6 +45,7 @@ import com.expo.entity.VenuesDistance;
 import com.expo.map.LocationManager;
 import com.expo.map.MapUtils;
 import com.expo.media.MediaPlayerManager;
+import com.expo.network.Http;
 import com.expo.utils.BitmapUtils;
 import com.expo.utils.CameraManager;
 import com.expo.utils.CommUtils;
@@ -58,6 +59,7 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -151,7 +153,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     }
 
     private void initWebView() {
-        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
+//        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
+        mWebView.loadUrl("http://192.168.6.129/sever/dist/index.html#/navigation");
 //        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
@@ -365,7 +368,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             Map<String, Marker> tem = new HashMap<>();
             for (int i = 0; i < mVenuesDistance.size(); i++) {
                 VenuesDistance vd = mVenuesDistance.get(i);
-                if (vd.distance >= 200.0f) break;
+                if (vd.distance >= 20.0f) break;
                 if (mMarker.containsKey(vd.id)) {
                     tem.put(vd.id, mMarker.get(vd.id));
                     mMarker.remove(vd.id);
@@ -380,7 +383,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
 //                mWebView.loadUrl(String.format("javascript:tipTips('%d', '%s')", 0, "调用成功了"));
 //                mWebView.loadUrl(String.format("javascript:tipTips('%d', '%s')", 0, "调用成功了"));
-                mWebView.loadUrl("javascript:setMarker('1', '" + vd + "')");
+                mWebView.loadUrl("javascript:setMarker('1', '" + Http.getGsonInstance().toJson(vd) + "')");
             }
             for (Marker marker : mMarker.values()) {
                 marker.remove();
@@ -572,6 +575,22 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                     for (VenuesDistance vd : mVenuesDistance) {
                         vd.distance = AMapUtils.calculateLineDistance(
                                 new LatLng(lat, lon), new LatLng(vd.lat, vd.lon));
+                        double angle = 0;
+                        double jd = vd.lat - lat;
+                        if (jd == 0)
+                            angle = 90.0d;
+                        else
+                            angle = Math.atan(Math.abs((vd.lon - lon) / jd)) * 180 / Math.PI;
+                        if(vd.lat < lat){
+                            angle += 180;
+                            if(vd.lon < lon)
+                                angle += 90;
+
+                        } else {
+                            if(vd.lon > lon)
+                                angle += 90;
+                        }
+                        vd.angle = new BigDecimal(angle).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
                     }
                     Collections.sort(mVenuesDistance, new Comparator<VenuesDistance>() {
                         @Override
