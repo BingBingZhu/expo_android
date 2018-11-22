@@ -17,7 +17,7 @@ import com.expo.contract.presenter.HeartBeatPresenterImpl;
 public class HeartBeatService extends Service implements HeartBeatContract.View {
     private boolean mExit;                                                               //结束心跳
     private HeartBeatContract.Presenter mPresenter;
-    private int mTimes = 0;
+    private int mTimes = 18;
     private int mHeartInvTime = 60 * 1000;
 
     @Nullable
