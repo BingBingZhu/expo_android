@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        setDoubleTapToExit( true );
         mTabHostView.setup(this, getSupportFragmentManager(), R.id.container);
         mTabHostView.getTabWidget().setDividerDrawable(null); // 去掉分割线
         for (int i = 0; i < tabTags.length; i++) {
