@@ -56,17 +56,15 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
                 if (heartBeatRsb.MessageList != null && !heartBeatRsb.MessageList.isEmpty()) {
                     PrefsHelper.setString(Constants.Prefs.KEY_LAST_MESSAGE_TIME, heartBeatRsb.UpdateTime);
                     List<Message> messages = heartBeatRsb.MessageList;
-                    if (messages != null && !messages.isEmpty()) {                                  //新消息集合不为空
-                        String uid = ExpoApp.getApplication().getUser().getUid();
+                    //新消息集合不为空
+                    if (messages != null && !messages.isEmpty()) {
                         boolean isNewMessage = false;
                         for (Message message : messages) {
                             if (message.getType() == null) {
                                 continue;
                             }
-                            message.setUid(uid);
                             isNewMessage = isNewMessage || handleMessage(message);
                         }
-                        mDao.saveOrUpdateAll(messages);
                         if (isNewMessage)
                             messages.get(0).sendMessageCount(null);
                     }
@@ -87,7 +85,7 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
         if ("3".equals(message.getType())) {
             String currUkey = ExpoApp.getApplication().getUser().getUkey();
             if ("relogin".equals(message.getCommand()) && message.getParams() != null
-                    && currUkey.equals(message.getParams().get("ukey"))) {
+                    && (!currUkey.equals(message.getParams().get("ukey")))) {
                 mDao.clear(User.class);
                 ExpoApp.getApplication().setUser(null);
                 Intent intent = new Intent();
