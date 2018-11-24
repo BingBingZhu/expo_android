@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dms_30"
-    android:paddingTop="@dimen/dms_40"
+    android:paddingTop="@dimen/dms_56"
     android:paddingRight="@dimen/dms_30">
 
     <com.hedan.textdrawablelibrary.TextViewDrawable

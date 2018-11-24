@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 
 import com.expo.BuildConfig;
@@ -120,7 +121,7 @@ public final class Http {
     }
 
     public static <T> boolean request(Observer<T> observer, Observable<T>... observables) {
-        if (!isConnected()) {
+        if (!isConnected() && Thread.currentThread() == Looper.getMainLooper().getThread()) {
             ToastHelper.showShort( R.string.no_network_connection );
             return false;
         }
@@ -210,6 +211,6 @@ public final class Http {
      * 加载图完成监听
      */
     public interface OnLoadImageCompleteListener {
-        void onComplete(String url,Bitmap bitmap,Object obj);
+        void onComplete(String url, Bitmap bitmap, Object obj);
     }
 }
