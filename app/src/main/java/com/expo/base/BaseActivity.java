@@ -14,12 +14,7 @@ import com.expo.R;
 import com.expo.base.utils.ActivityHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.PresenterFactory;
-import com.expo.widget.AppBarView;
 import com.expo.widget.RootView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 

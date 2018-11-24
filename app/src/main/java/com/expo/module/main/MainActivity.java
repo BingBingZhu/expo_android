@@ -2,6 +2,7 @@ package com.expo.module.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
+import com.expo.base.utils.StatusBarUtils;
 import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -49,19 +52,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setDoubleTapToExit( true );
+        setDoubleTapToExit(true);
         mTabHostView.setup(this, getSupportFragmentManager(), R.id.container);
         mTabHostView.getTabWidget().setDividerDrawable(null); // 去掉分割线
         for (int i = 0; i < tabTags.length; i++) {
             TabHost.TabSpec tabSpec = mTabHostView.newTabSpec(tabTags[i]).setIndicator(getView(i));
             mTabHostView.addTab(tabSpec, fragments[i], null);
         }
-        mTabHostView.setOnTabChangedListener(mTabChangeListener);
+        StatusBarUtils.cancelStatusBarFullTransparent(MainActivity.this);
     }
-
-    private TabHost.OnTabChangeListener mTabChangeListener = tabId -> {
-
-    };
 
     @Override
     protected boolean hasPresenter() {

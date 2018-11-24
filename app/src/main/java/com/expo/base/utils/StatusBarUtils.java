@@ -93,4 +93,5 @@ public class StatusBarUtils {
         Window window = activity.getWindow();
         window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
     }
+
 }
