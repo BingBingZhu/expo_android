@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
     android:orientation="vertical">
 
-    <include layout="@layout/home_title" />
-
-    <ScrollView
+    <com.expo.widget.MyScrollView
+        android:id="@+id/home_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -46,7 +44,10 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </com.expo.widget.MyScrollView>
 
+    <include
+        android:id="@+id/home_title"
+        layout="@layout/home_title" />
 
-</LinearLayout>
+</FrameLayout>

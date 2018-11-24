@@ -2,48 +2,87 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/dms_40"
-    android:paddingTop="@dimen/dms_30"
     android:paddingRight="@dimen/dms_40">
 
-    <com.hedan.textdrawablelibrary.TextViewDrawable
-        android:id="@+id/home_func_0"
-        style="@style/style_home_fun_item"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:drawableTop="@mipmap/home_free_wifi"
-        android:text="@string/home_func_item_wifi" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dms_30">
 
-    <com.hedan.textdrawablelibrary.TextViewDrawable
-        android:id="@+id/home_func_1"
-        style="@style/style_home_fun_item"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:drawableTop="@mipmap/home_buy_tickets"
-        android:text="@string/home_func_item_tickets" />
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/home_func_0"
+            style="@style/style_home_fun_item"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/home_free_wifi"
+            android:text="@string/home_func_item_service" />
 
-    <com.hedan.textdrawablelibrary.TextViewDrawable
-        android:id="@+id/home_func_2"
-        style="@style/style_home_fun_item"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:drawableTop="@mipmap/home_venue_appointment"
-        android:text="@string/home_func_item_appointment" />
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/home_func_1"
+            style="@style/style_home_fun_item"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/home_buy_tickets"
+            android:text="@string/home_func_item_wifi" />
 
-    <com.hedan.textdrawablelibrary.TextViewDrawable
-        android:id="@+id/home_func_3"
-        style="@style/style_home_fun_item"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:drawableTop="@mipmap/home_tourist_service"
-        android:text="@string/home_func_item_service" />
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/home_func_2"
+            style="@style/style_home_fun_item"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/home_venue_appointment"
+            android:text="@string/home_func_item_tickets" />
 
-    <com.hedan.textdrawablelibrary.TextViewDrawable
-        android:id="@+id/home_func_4"
-        style="@style/style_home_fun_item"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:drawableTop="@mipmap/home_play_line"
-        android:text="@string/home_func_item_line" />
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/home_func_3"
+            style="@style/style_home_fun_item"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/home_tourist_service"
+            android:text="@string/home_func_item_appointment" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dms_30">
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/home_func_4"
+            style="@style/style_home_fun_item"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/home_play_line"
+            android:text="@string/home_func_item_tourist_service" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/home_func_5"
+            style="@style/style_home_fun_item"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/home_buy_tickets"
+            android:text="@string/home_func_item_line" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/home_func_6"
+            style="@style/style_home_fun_item"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/home_venue_appointment"
+            android:text="@string/home_func_item_word" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/home_func_7"
+            style="@style/style_home_fun_item"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/home_tourist_service"
+            android:text="@string/home_func_item_periphery" />
+    </LinearLayout>
+
 </LinearLayout>

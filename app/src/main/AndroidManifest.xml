@@ -30,7 +30,6 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="com.casvd.permission.ACCESS_DOWNLOAD_MANAGER" />
     <uses-permission android:name="com.casvd.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED" />
     <uses-permission android:name="com.casvd.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
