@@ -2,16 +2,13 @@ package com.expo.module.webview;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.TypedValue;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ProgressBar;
 
-import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
@@ -22,7 +19,6 @@ import com.expo.module.map.NavigationActivity;
 import com.expo.module.map.ParkMapActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
-import com.expo.widget.AppBarView;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -36,13 +32,11 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
     private static final String TAG = "WebTemplateActivity";
 
-    AppBarView mAvTitle;
     @BindView(R.id.common_x5)
     X5WebView mX5View;
     @BindView(R.id.common_progress)
     ProgressBar mProgressView;
     private String mUrl;
-    private String mTitle;
     private long id;
     private Venue mVenue;
     private Encyclopedias mEncyclopedias;
@@ -56,7 +50,6 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mTitle = getIntent().getStringExtra( Constants.EXTRAS.EXTRA_TITLE );
         mUrl = getIntent().getStringExtra( Constants.EXTRAS.EXTRA_URL );
         id = getIntent().getLongExtra( Constants.EXTRAS.EXTRA_DATA_ID, 0 );
         mEncyclopedias = mPresenter.loadEncyclopediaById( id );
@@ -65,25 +58,12 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
             mNearByVenues = mPresenter.loadNeayByVenues( mVenue );
         }
 
-//        setTitle( 0, LanguageUtil.chooseTest( mEncyclopedias.caption, mEncyclopedias.captionEn ) );
-
-        initTitleView();
-        mAvTitle.setTitleColor( getResources().getColor( R.color.black_333333 ) );
-        mAvTitle.setBackgroundColor( Color.WHITE );
-        mAvTitle.setBackImageResource( R.mipmap.ico_black_back );
+        setTitle( BaseActivity.TITLE_COLOR_STYLE_WHITE, R.string.sence_introduction );
 
         mX5View.setWebChromeClient( webChromeClient );
         mX5View.removeTencentAd( this );
         mX5View.addJavascriptInterface( new JsHook(), "hook" );
         loadUrl( mUrl + (mVenue == null ? "&data_type=0" : "&data_type=1") );
-    }
-
-    private void initTitleView() {
-        setTitle( 0, R.string.sence_introduction );
-        mAvTitle = (AppBarView) super.getTitleView();
-        mAvTitle.setTitleColor( getResources().getColor( R.color.white ) );
-        mAvTitle.setTitleSize( TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px( 17 ) );
-        mAvTitle.setBackImageResource( R.mipmap.ico_white_back );
     }
 
     private void loadUrl(String url) {
@@ -133,6 +113,15 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         String url = Constants.URL.ENCYCLOPEDIAS_DETAIL_URL + param;
         in.putExtra( Constants.EXTRAS.EXTRA_URL, url );
         context.startActivity( in );
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mX5View.canGoBack()) {
+            mX5View.goBack();
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
