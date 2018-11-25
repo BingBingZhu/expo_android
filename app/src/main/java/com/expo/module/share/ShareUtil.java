@@ -174,7 +174,12 @@ public class ShareUtil {
     }
 
     public static void doShare(String name, String fileUrl){
-        ShareSDK.getPlatform(QQ.NAME).share(new Platform.ShareParams());
+        Platform.ShareParams paramsToShare = new Platform.ShareParams();
+        paramsToShare.setText(null);
+        paramsToShare.setTitle(null);
+        paramsToShare.setTitleUrl(null);
+        paramsToShare.setImagePath(fileUrl);
+        ShareSDK.getPlatform(name).share(paramsToShare);
     }
 
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -57,6 +58,7 @@ import com.expo.widget.RecycleViewDivider;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -201,12 +203,6 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             Venue as = venues.get(position);
             showActualSceneDialog(as);
         });
-        adapter.setOnVoiceClickListener(v -> {
-            // 音频点击事件
-            RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
-            int position = holder.getAdapterPosition();
-            ToastHelper.showShort( venues.get(position).getCaption() + "音频");
-        });
         btnSearch.setOnClickListener(v -> {
             // 搜索
             String searchStr = searchContent.getText().toString().trim();
@@ -282,7 +278,15 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         Encyclopedias wiki = mPresenter.getEncy( venue.getWikiId());
         if (wiki != null)
             pic.setImageURI(Constants.URL.FILE_BASE_URL + wiki.getPicUrl());
-        voiceRoot.setOnClickListener(v14 -> ToastHelper.showShort("音频"));
+        voiceRoot.setOnClickListener(v14 -> {
+            String voiceUrl = LanguageUtil.chooseTest(venue.getVoiceUrl(),
+                    venue.getVoiceUrlEn().isEmpty() ? venue.getVoiceUrl() : venue.getVoiceUrlEn());
+            if (voiceUrl.isEmpty()){
+                ToastHelper.showShort("该景点暂无音频");
+                return;
+            }
+            play(voiceUrl);
+        });
         asInfo.setOnClickListener(v12 -> {
             if (null == wiki) {
                 ToastHelper.showShort("暂无详情信息");
@@ -299,6 +303,29 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         mActualSceneDialog.setContentView(v);
         ViewUtils.settingDialog(getContext(), mActualSceneDialog);
         mActualSceneDialog.show();//显示对话框
+    }
+
+    private void play(String url){
+        url = Constants.URL.FILE_BASE_URL + url;
+        //1 初始化mediaplayer
+        final MediaPlayer mediaPlayer = new MediaPlayer();
+        //2 设置到播放的资源位置 path 可以是网络 路径 也可以是本地路径
+
+        try {
+            mediaPlayer.setDataSource(url);
+            //3 准备播放
+            mediaPlayer.prepareAsync();
+            //3.1 设置一个准备完成的监听
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    // 4 开始播放
+                    mediaPlayer.start();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -323,7 +350,15 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
         pic.setImageURI( Constants.URL.FILE_BASE_URL + routeInfo.picUrl );
         asName.setText(LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
-        voiceRoot.setOnClickListener(v14 -> ToastHelper.showShort("音频"));
+        voiceRoot.setOnClickListener(v14 -> {
+            String voiceUrl = LanguageUtil.chooseTest(routeInfo.voiceUrl,
+                    routeInfo.voiceUrlEn.isEmpty() ? routeInfo.voiceUrl : routeInfo.voiceUrlEn);
+            if (voiceUrl.isEmpty()){
+                ToastHelper.showShort("该景点暂无音频");
+                return;
+            }
+            play(voiceUrl);
+        });
         asInfo.setOnClickListener(v12 -> {
             WebActivity.startActivity(getContext(), routeInfo.linkH5Url, LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
             mRouteInfoDialog.dismiss();

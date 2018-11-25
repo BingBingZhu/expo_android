@@ -28,7 +28,6 @@ public class ParkActualSceneAdapter extends RecyclerView.Adapter<ParkActualScene
     private LatLng mLatLng;
 
     private View.OnClickListener onItemClickListener;
-    private View.OnClickListener onVoiceClickListener;
 
     public ParkActualSceneAdapter(Context context, List<Venue> venues, VenuesType venuesType, LatLng latLng) {
         this.mContext = context;
@@ -47,7 +46,6 @@ public class ParkActualSceneAdapter extends RecyclerView.Adapter<ParkActualScene
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_park_as_item, parent, false);
         ParkActualSceneAdapter.ViewHolder holder = new ParkActualSceneAdapter.ViewHolder(view);
         holder.setOnItemClickListener(onItemClickListener);
-        holder.setOnVoiceClickListener(onVoiceClickListener);
         return holder;
     }
 
@@ -87,19 +85,10 @@ public class ParkActualSceneAdapter extends RecyclerView.Adapter<ParkActualScene
                 this.itemView.setOnClickListener(clickListener);
             }
         }
-
-        public void setOnVoiceClickListener(View.OnClickListener clickListener) {
-            if (clickListener != null) {
-                this.imgIsVoice.setOnClickListener(clickListener);
-            }
-        }
     }
 
     public void setOnItemClickListener(View.OnClickListener clickListener){
         this.onItemClickListener = clickListener;
-    }
-    public void setOnVoiceClickListener(View.OnClickListener clickListener){
-        this.onVoiceClickListener = clickListener;
     }
 
     private String getDistance(Double lat, Double lng) {
