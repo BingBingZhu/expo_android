@@ -18,6 +18,7 @@
         android:paddingRight="@dimen/dms_10"
         android:paddingBottom="@dimen/dms_4"
         android:text="@string/app_top_item"
+        android:textStyle="bold"
         android:textColor="@color/red_fa5452" />
 
     <com.expo.widget.LimitScrollerView

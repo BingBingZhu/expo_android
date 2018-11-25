@@ -28,6 +28,7 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
@@ -115,6 +116,11 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             back();
         }
         return super.onKeyDown( keyCode, event );
+    }
+
+    @OnClick(R.id.title_back)
+    public void onClick(View v){
+        back();
     }
 
     private void back() {
