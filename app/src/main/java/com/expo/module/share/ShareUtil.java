@@ -20,6 +20,7 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 
@@ -171,6 +172,11 @@ public class ShareUtil {
             platform.share( new Platform.ShareParams( mShareParams ) );
         }
     }
+
+    public static void doShare(String name, String fileUrl){
+        ShareSDK.getPlatform(QQ.NAME).share(new Platform.ShareParams());
+    }
+
 
     /**
      * title标题，在印象笔记、邮箱、信息、微信（包括好友、朋友圈和收藏）、

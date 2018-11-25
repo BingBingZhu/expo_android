@@ -53,7 +53,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     MyScrollView.OnScrollListener mScrollListener = new MyScrollView.OnScrollListener() {
         @Override
         public void onScroll(int scrollY) {
-//            mAvTitle.setBackgroundColor(Color.argb(Math.min(255, Math.max(scrollY, 0) / 3), 2, 205, 155));
+            mAvTitle.setBackgroundColor(Color.argb(Math.min(255, Math.max(scrollY, 0) / 3), 2, 205, 155));
             mAvTitle.setAlpha(Math.min(1.0f, Math.max(Float.valueOf(scrollY), 0.0f) / (255.0f * 2)));
         }
     };
@@ -61,7 +61,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     @Override
     protected int getContentView() {
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        return R.layout.activity_web;
+        return R.layout.activity_template_web;
     }
 
     @Override

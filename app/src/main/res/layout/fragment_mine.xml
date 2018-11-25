@@ -4,8 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:background="@color/green_00cb99"
+    android:background="@drawable/mine_bg"
     android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_28"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_34"
+        android:gravity="center"
+        android:text="@string/personal_center"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_220"
+        android:layout_marginTop="@dimen/dms_88"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
+        android:background="@drawable/shape_mine_bg">
+
+    </RelativeLayout>
 
     <org.raphets.roundimageview.RoundImageView
         android:id="@+id/mine_img"

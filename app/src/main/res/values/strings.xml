@@ -197,5 +197,11 @@
     <string name="dialog_image_image_video">照片或者视频</string>
     <string name="dialog_image_album">从手机相册选择</string>
     <string name="buy_tickets">购票</string>
+    <string name="please_click_the_button_to_open_wlan">请点击按钮开启WLAN</string>
+    <string name="free_wifi_at_beijing_world_expo">北京世园会免费wifi</string>
+    <string name="connecting">连接中</string>
+    <string name="successfu_lconnection">连接成功</string>
+    <string name="disconnect">断开连接</string>
+    <string name="personal_center">个人中心</string>
 
 </resources>

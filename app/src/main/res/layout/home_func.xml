@@ -17,7 +17,7 @@
             style="@style/style_home_fun_item"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/home_free_wifi"
+            android:drawableTop="@mipmap/home_buy_tickets"
             android:text="@string/home_func_item_service" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable
@@ -25,7 +25,7 @@
             style="@style/style_home_fun_item"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/home_buy_tickets"
+            android:drawableTop="@mipmap/home_free_wifi"
             android:text="@string/home_func_item_wifi" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable

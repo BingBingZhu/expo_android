@@ -83,4 +83,5 @@
     <dimen name="dms_minus_44">-22dp</dimen>
     <dimen name="dms_minus_70">-35dp</dimen>
     <dimen name="dms_minus_260">-130dp</dimen>
+    <dimen name="dms_380">190dp</dimen>
 </resources>
