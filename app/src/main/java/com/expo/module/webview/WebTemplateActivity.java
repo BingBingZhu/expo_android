@@ -11,13 +11,12 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ProgressBar;
 
-import com.baidu.speech.utils.LogUtil;
 import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebTemplateContract;
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.module.map.NavigationActivity;
 import com.expo.module.map.ParkMapActivity;
@@ -39,7 +38,6 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
     private static final String TAG = "WebTemplateActivity";
 
-    @BindView(R.id.app_title)
     AppBarView mAvTitle;
     @BindView(R.id.common_x5)
     X5WebView mX5View;
@@ -48,17 +46,9 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     private String mUrl;
     private String mTitle;
     private long id;
-    private ActualScene mActualScene;
+    private Venue mVenue;
     private Encyclopedias mEncyclopedias;
     private List<Encyclopedias> mNearByVenues;
-
-    MyScrollView.OnScrollListener mScrollListener = new MyScrollView.OnScrollListener() {
-        @Override
-        public void onScroll(int scrollY) {
-//            mAvTitle.setBackgroundColor(Color.argb(Math.min(255, Math.max(scrollY, 0) / 3), 2, 205, 155));
-            mAvTitle.setAlpha( Math.min( 1.0f, Math.max( Float.valueOf( scrollY ), 0.0f ) / (255.0f * 2) ) );
-        }
-    };
 
     @Override
     protected int getContentView() {
@@ -72,9 +62,9 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         mUrl = getIntent().getStringExtra( Constants.EXTRAS.EXTRA_URL );
         id = getIntent().getLongExtra( Constants.EXTRAS.EXTRA_DATA_ID, 0 );
         mEncyclopedias = mPresenter.loadEncyclopediaById( id );
-        mActualScene = mPresenter.loadSceneByWikiId( id );
-        if (mActualScene != null) {
-            mNearByVenues = mPresenter.loadNeayByVenues( mActualScene );
+        mVenue = mPresenter.loadSceneByWikiId( id );
+        if (mVenue != null) {
+            mNearByVenues = mPresenter.loadNeayByVenues( mVenue );
         }
 
 //        setTitle( 0, LanguageUtil.chooseTest( mEncyclopedias.caption, mEncyclopedias.captionEn ) );
@@ -88,14 +78,14 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         mX5View.setWebChromeClient( webChromeClient );
         mX5View.removeTencentAd( this );
         mX5View.addJavascriptInterface( new JsHook(), "hook" );
-        loadUrl( mUrl + (mActualScene == null ? "&data_type=0" : "&data_type=1") );
+        loadUrl( mUrl + (mVenue == null ? "&data_type=0" : "&data_type=1") );
     }
 
     private void initTitleView() {
+        mAvTitle = (AppBarView) super.getTitleView();
         mAvTitle.setTitleColor( getResources().getColor( R.color.white ) );
         mAvTitle.setTitleSize( TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px( 17 ) );
         mAvTitle.setBackImageResource( R.mipmap.ico_white_back );
-//        mAvTitle.setAlpha(0);
     }
 
     private void loadUrl(String url) {
@@ -160,8 +150,8 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     }
 
     @Override
-    public void getActualSceneDataByIdRes(ActualScene actualScene) {
-        ParkMapActivity.startActivity( getContext(), actualScene.getId() );
+    public void getActualSceneDataByIdRes(Venue venue) {
+        ParkMapActivity.startActivity( getContext(), venue.getId() );
     }
 
     /**
@@ -182,7 +172,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         @JavascriptInterface
         public void gotoDataLocation(int id) {
             runOnUiThread( () -> {
-                NavigationActivity.startActivity( WebTemplateActivity.this, mActualScene, LanguageUtil.chooseTest( mEncyclopedias.voiceUrl, mEncyclopedias.voiceUrlEn ) );
+                NavigationActivity.startActivity( WebTemplateActivity.this, mVenue, LanguageUtil.chooseTest( mEncyclopedias.voiceUrl, mEncyclopedias.voiceUrlEn ) );
             } );
         }
     }

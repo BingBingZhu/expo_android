@@ -2,10 +2,9 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.VenuesDistance;
-import com.expo.entity.VenuesInfo;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public interface NavigationContract {
             super(view);
         }
 
-        public abstract ActualScene loadSceneById(long spotId);
+        public abstract Venue loadSceneById(long spotId);
 
         public abstract List<VenuesDistance> getVenues();
 

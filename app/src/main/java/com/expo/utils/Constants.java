@@ -2,7 +2,6 @@ package com.expo.utils;
 
 import android.os.Environment;
 
-import com.expo.entity.ActualScene;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.DownloadInfo;
@@ -14,7 +13,7 @@ import com.expo.entity.Subject;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.User;
-import com.expo.entity.VenuesInfo;
+import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 
 public interface Constants {
@@ -37,6 +36,11 @@ public interface Constants {
         public static final String KEY_HISTORY = "key_history";
         public static final String KEY_COUNTRY_CODE = "key_country_code";
         public static final String KEY_IS_OPEN_SLIDINGDRAWER = "key_is_open_slidingdrawer";
+        public static final String KEY_HEART_INV_TIME = "key_heart_inv_time";
+        public static final String KEY_UPDATE_TIME_INV_TIME = "key_update_time_inv_time";
+        public static final String KEY_ALL_TYPE_UPDATE_TIME = "key_all_type_update_time";
+        public static final String KEY_TOP_LINE_UPDATE_TIME = "key_top_line_update_time";
+        public static final String KEY_VENUES_UPDATE_TIME = "key_venues_update_time";
     }
 
     /**
@@ -53,6 +57,7 @@ public interface Constants {
         public static final String EXTRA_LATITUDE = "extra_latitude";
         public static final String EXTRA_TEMPLATE_TYPE = "extra_template_type";
         public static final String EXTRA_DATA_ID = "extra_data_id";
+        public static final String EXTRA_SHOW_TITLE = "extra_show_title";
     }
 
     /**
@@ -70,8 +75,8 @@ public interface Constants {
         public static final String ACTUAL_SCENES = "GetVenuesList";
         //植物识别地址
         public static final String DISTINGUISH_PLANT = "http://plantgw.nongbangzhu.cn/plant/recognize";
-//        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
-        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce?id=12&lan=ch&data_type=1";
+        //        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
+        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce";
         public static final String HTML_404 = "file:///android_asset/web/404.html";
     }
 
@@ -97,8 +102,8 @@ public interface Constants {
         //解压地址
         public static final String UNZIP_PATH = BASE_FILE_PATH + "unzip/";
         //实体类
-        public static final Class[] DB_CLASSES = new Class[]{ActualScene.class, CommonInfo.class, DataType.class, DownloadInfo.class,
-                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, VenuesInfo.class, TouristType.class,
+        public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
+                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class,
                 TopLineInfo.class, VenuesType.class, Park.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;

@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.SplashContract;
-import com.expo.entity.ActualScene;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.Encyclopedias;
@@ -15,7 +14,7 @@ import com.expo.entity.Subject;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.User;
-import com.expo.entity.VenuesInfo;
+import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
@@ -25,12 +24,11 @@ import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteInfoResp;
-import com.expo.network.response.SpotsResp;
 import com.expo.network.response.SubjectResp;
 import com.expo.network.response.TopLineResp;
 import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
-import com.expo.network.response.VenuesInfoResp;
+import com.expo.network.response.VenueResp;
 import com.expo.network.response.VenuesTypeResp;
 import com.expo.utils.Constants;
 
@@ -58,11 +56,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         loadCompleteCount = new AtomicInteger();
         RequestBody emptyBody = Http.buildRequestBody( Http.getBaseParams() );
         checkUpdateDate( emptyBody );
-        loadAllTypes( emptyBody );
         copyAMapStyleToSDCard();
-        loadRouteInfo( emptyBody );
-        loadVenuesInfo();
-        loadTopLine( emptyBody );
     }
 
     private void checkUpdateDate(RequestBody emptyBody) {
@@ -77,17 +71,35 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                         loadCommonInfo( emptyBody );
                     }
                 }
-                if (!TextUtils.isEmpty( rsp.actualScene )) {
-                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, null );
-                    if (!rsp.actualScene.equals( updateTime )) {
-                        requestSpot( Constants.URL.ACTUAL_SCENES, emptyBody, Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, ActualScene.class );
+                if (!TextUtils.isEmpty( rsp.topLine )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_TOP_LINE_UPDATE_TIME, null );
+                    if (!rsp.topLine.equals( updateTime )) {
+                        loadTopLine( emptyBody );
                     }
                 }
-                if (!TextUtils.isEmpty( rsp.subject )) {
-                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_SUBJECT_UPDATE_TIME, null );
-                    if (!rsp.subject.equals( updateTime )) {
-                        loadSubjects( emptyBody );
+                if (!TextUtils.isEmpty( rsp.allType )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ALL_TYPE_UPDATE_TIME, null );
+                    if (!rsp.allType.equals( updateTime )) {
+                        loadAllTypes( emptyBody );
                     }
+                }
+                if (!TextUtils.isEmpty( rsp.venue )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, null );
+                    if (!rsp.venue.equals( updateTime )) {
+                        requestSpot( Constants.URL.ACTUAL_SCENES, emptyBody, Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, Venue.class );
+                    }
+                }
+                if (!TextUtils.isEmpty( rsp.router )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, null );
+                    if (!rsp.router.equals( updateTime )) {
+                        loadRouteInfo( emptyBody );
+                    }
+                }
+                if (!TextUtils.isEmpty( rsp.heartInvTime ) && rsp.heartInvTime.matches( Constants.Exps.NUMBER )) {
+                    PrefsHelper.setLong( Constants.Prefs.KEY_HEART_INV_TIME, Long.parseLong( rsp.heartInvTime ) );
+                }
+                if (!TextUtils.isEmpty( rsp.updateTimeInvTime ) && rsp.updateTimeInvTime.matches( Constants.Exps.NUMBER )) {
+                    PrefsHelper.setLong( Constants.Prefs.KEY_UPDATE_TIME_INV_TIME, Long.parseLong( rsp.updateTimeInvTime ) );
                 }
                 if (!TextUtils.isEmpty( rsp.wiki )) {
                     updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ENCYCLOPEDIAS_UPDATE_TIME, null );
@@ -101,9 +113,9 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                         loadTouristTypeList();
                     }
                 }
-                if (!TextUtils.isEmpty( rsp.scenicSpotType )) {
+                if (!TextUtils.isEmpty( rsp.venueType )) {
                     updateTime = PrefsHelper.getString( Constants.Prefs.KEY_SCENIC_SPOT_TYPE_UPDATE_TIME, null );
-                    if (!rsp.scenicSpotType.equals( updateTime )) {
+                    if (!rsp.venueType.equals( updateTime )) {
                         loadVenuesTypeList();
                     }
                 }
@@ -206,7 +218,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             protected void onResponse(ParkResp rsp) {
                 PrefsHelper.setString( Constants.Prefs.KEY_PARK_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( Park.class );
-                mDao.saveOrUpdateAll( rsp.parkList);
+                mDao.saveOrUpdateAll( rsp.parkList );
             }
 
             @Override
@@ -274,6 +286,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         isRequest = Http.request( new ResponseCallback<AllTypeResp>() {
             @Override
             protected void onResponse(AllTypeResp rsp) {
+                PrefsHelper.setString( Constants.Prefs.KEY_ALL_TYPE_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( DataType.class );
                 if (rsp.messageTypes != null && rsp.messageTypes.size() > 0) {
                     for (DataType type : rsp.messageTypes) {
@@ -357,14 +370,14 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
      * 请求景点景观相关内容数据
      */
     private void requestSpot(String dataUrl, RequestBody body, String updateKey, Class clz) {
-        Observable<SpotsResp> observable = Http.getServer().loadSpots( dataUrl, body );
-        isRequest = Http.request( new ResponseCallback<SpotsResp>() {
+        Observable<VenueResp> observable = Http.getServer().loadSpots( dataUrl, body );
+        isRequest = Http.request( new ResponseCallback<VenueResp>() {
             @Override
-            protected void onResponse(SpotsResp rsp) {
+            protected void onResponse(VenueResp rsp) {
                 PrefsHelper.setString( updateKey, rsp.updateTime );
                 mDao.clear( clz );
-                if (clz == ActualScene.class) {
-                    mDao.saveOrUpdateAll( rsp.actualScenes );
+                if (clz == Venue.class) {
+                    mDao.saveOrUpdateAll( rsp.venues );
                 }
             }
 
@@ -373,7 +386,6 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 notifyLoadComplete();
             }
         }, observable );
-
         addNetworkRecord();
     }
 
@@ -398,28 +410,6 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
     }
 
     /*
-     * 获取场馆（设施）列表
-     */
-    private void loadVenuesInfo() {
-        Map<String, Object> params = Http.getBaseParams();
-        params.put( "ParkId", "1" );
-        Observable<VenuesInfoResp> observable = Http.getServer().getVenuesList( Http.buildRequestBody( params ) );
-        isRequest = Http.request( new ResponseCallback<VenuesInfoResp>() {
-            @Override
-            protected void onResponse(VenuesInfoResp rsp) {
-                mDao.clear( VenuesInfo.class );
-                mDao.saveOrUpdateAll( rsp.venuesList );
-            }
-
-            @Override
-            public void onComplete() {
-                notifyLoadComplete();
-            }
-        }, observable );
-        addNetworkRecord();
-    }
-
-    /*
      * 获取头条列表
      */
     private void loadTopLine(RequestBody emptyBody) {
@@ -427,6 +417,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         isRequest = Http.request( new ResponseCallback<TopLineResp>() {
             @Override
             protected void onResponse(TopLineResp rsp) {
+                PrefsHelper.setString( Constants.Prefs.KEY_TOP_LINE_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( TopLineInfo.class );
                 mDao.saveOrUpdateAll( rsp.topLine );
             }

@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dms_26"
-    android:layout_marginTop="@dimen/dms_56"
-    android:layout_marginRight="@dimen/dms_26"
-    android:background="@color/white"
-    android:elevation="3dp"
+    android:layout_marginLeft="@dimen/dms_10"
+    android:layout_marginTop="@dimen/dms_40"
+    android:layout_marginRight="@dimen/dms_10"
+    android:background="@drawable/top_line_bg"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 

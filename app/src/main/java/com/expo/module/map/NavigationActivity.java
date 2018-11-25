@@ -39,7 +39,7 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.NavigationContract;
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.VenuesDistance;
 import com.expo.map.LocationManager;
@@ -91,7 +91,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     TextView mTvTips;
     public AMapNavi mAMapNavi;
     private AMap mMap;
-    private ActualScene virtualScene;
+    private Venue virtualScene;
     private ICameraManager mCameraManager;
 
     private GeoFenceClient mGeoFenceClient;
@@ -107,7 +107,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private int mCenterY;
     private int mPhotoSize;
     private boolean mJsCanSend;
-    private ActualScene mActualScene;
+    private Venue mVenue;
 
     Map<String, Marker> mMarker;
     List<VenuesDistance> mVenuesDistance;
@@ -140,8 +140,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mCameraManager.setDisplayView(mTextureView);
         initMapNaviView();
         initPoiSearch();
-        mActualScene = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
-        virtualScene = mPresenter.loadSceneById(mActualScene.getId());
+        mVenue = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
+        virtualScene = mPresenter.loadSceneById( mVenue.getId());
         initSlidingDrawer();
         initWebView();
         MediaPlayerManager.getInstence().setListener(null);
@@ -331,7 +331,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mAMapNavi.addAMapNaviListener(mNaviListener);
     }
 
-    private void startCalculateTheRoad(LatLng startLatLng, ActualScene virtualScene) {
+    private void startCalculateTheRoad(LatLng startLatLng, Venue virtualScene) {
         mFrom = new NaviLatLng(startLatLng.latitude, startLatLng.longitude);
         mTo = new NaviLatLng(virtualScene.getLat(), virtualScene.getLng());
         boolean isSuccess = mAMapNavi.calculateWalkRoute(mFrom, mTo);
@@ -524,13 +524,13 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
      *
      * @param context
      */
-    public static void startActivity(@NonNull Context context, ActualScene actualScene, String voiceUrl) {
-        if (actualScene.getId() <= 0) {
+    public static void startActivity(@NonNull Context context, Venue venue, String voiceUrl) {
+        if (venue.getId() <= 0) {
             ToastHelper.showShort(R.string.error_params);
             return;
         }
         Intent in = new Intent(context, NavigationActivity.class);
-        in.putExtra(Constants.EXTRAS.EXTRAS, actualScene);
+        in.putExtra(Constants.EXTRAS.EXTRAS, venue );
         in.putExtra(Constants.EXTRAS.EXTRA_URL, voiceUrl);
         context.startActivity(in);
     }
@@ -540,9 +540,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_navigation_end, null);
 
-        CommUtils.setImgPic(this, mActualScene.getPicUrl(), view.findViewById(R.id.dialog_navigation_end_img));
-        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_name), mActualScene.getCaption(), mActualScene.getEnCaption());
-        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_content), mActualScene.getRemark(), mActualScene.getEnRemark());
+        CommUtils.setImgPic(this, mVenue.getPicUrl(), view.findViewById(R.id.dialog_navigation_end_img));
+        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_name), mVenue.getCaption(), mVenue.getEnCaption());
+        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_content), mVenue.getRemark(), mVenue.getEnRemark());
         ((TextView) view.findViewById(R.id.dialog_navigation_end_duration)).setText(getResources().getString(R.string.time_leng) + getResources().getString(R.string.within_minutes, time));
         ((TextView) view.findViewById(R.id.dialog_navigation_end_distance)).setText("");
 

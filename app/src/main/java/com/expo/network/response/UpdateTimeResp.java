@@ -5,24 +5,36 @@ import com.google.gson.annotations.SerializedName;
 public class UpdateTimeResp extends BaseResponse {
     @SerializedName(value = "UpdateTime")
     public String updateTime;
+    @SerializedName(value = "gCacheHeartInvTime")
+    public String heartInvTime;//心跳间隔时间
+    @SerializedName(value = "gCacheGetUpdateTimeInvTime")
+    public String updateTimeInvTime;//数据更新间隔时间
+    @SerializedName(value = "gCacheUpdateTimeAllType")
+    public String allType;//所有类型数据变化时间
+    @SerializedName(value = "gCacheUpdateTimeBadge")
+    public String badge;//勋章数据更新时间
+    @SerializedName(value = "gCacheUpdateTimeTopLine")
+    public String topLine;//头条数据更新时间
+    @SerializedName(value = "gCacheUpdateTimePanCam")
+    public String panorama;//全景数据更新时间
     @SerializedName(value = "gCacheUpdateTimeRouter")
-    public String router;
-    @SerializedName(value = "gCacheUpdateTimeTourist")
-    public String tourist;
+    public String router;//推荐路线更新时间
+    //    @SerializedName(value = "gCacheUpdateTimeTourist")
+//    public String tourist;//导游动作数据更新时间
     @SerializedName(value = "gCacheUpdateTimeTouristType")
-    public String touristType;
+    public String touristType;//导游类型数据更新时间
     @SerializedName(value = "gCacheUpdateTimeVenue")
-    public String actualScene;
+    public String venue;//场馆数据更新时间
     @SerializedName(value = "gCacheUpdateTimeVenueType")
-    public String scenicSpotType;
+    public String venueType;//场馆类型更新时间
     @SerializedName(value = "gCacheUpdateTimeWiki")
-    public String wiki;
+    public String wiki;//百科数据更新时间
     @SerializedName(value = "gCacheUpdateTimeWikiType")
-    public String wikiType;
+    public String wikiType;//百科类型更新时间
     @SerializedName(value = "gCacheUpdateTimeCommoninformation")
-    public String commoninformation;
-    @SerializedName(value = "gCacheUpdateTimeSubject")
-    public String subject;
+    public String commoninformation;//常用信息更新时间
+    //    @SerializedName(value = "gCacheUpdateTimeSubject")
+//    public String subject;//主题类型更新时间
     @SerializedName(value = "gCacheUpdateTimePark")
-    public String parkList;
+    public String parkList;//园区数据更新时间
 }

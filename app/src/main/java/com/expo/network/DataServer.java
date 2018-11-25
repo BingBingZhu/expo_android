@@ -11,14 +11,13 @@ import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RichTextRsp;
 import com.expo.network.response.RouteInfoResp;
-import com.expo.network.response.SpotsResp;
+import com.expo.network.response.VenueResp;
 import com.expo.network.response.SubjectResp;
 import com.expo.network.response.TopLineResp;
 import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
 import com.expo.network.response.UploadRsp;
 import com.expo.network.response.UserHeartBeatResp;
-import com.expo.network.response.VenuesInfoResp;
 import com.expo.network.response.VenuesTypeResp;
 import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
@@ -125,7 +124,7 @@ public interface DataServer {
      */
     @POST("Terminal/{path}")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
-    Observable<SpotsResp> loadSpots(@Path("path") String path, @Body RequestBody requestBody);
+    Observable<VenueResp> loadSpots(@Path("path") String path, @Body RequestBody requestBody);
 
     /**
      * 获取通用信息数据
@@ -172,7 +171,7 @@ public interface DataServer {
     /**
      * 上传文件
      *
-     * @param requestBody
+     * @param part
      * @return
      */
     @Headers({
@@ -316,16 +315,6 @@ public interface DataServer {
     @POST("/Api/manage/AddRouterHotClick")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<BaseResponse> addRouterHotClick(@Body RequestBody requestBody);
-
-    /**
-     * 获取场馆（设施）列表
-     *
-     * @param requestBody
-     * @return
-     */
-    @POST("Terminal/GetVenuesList")
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
-    Observable<VenuesInfoResp> getVenuesList(@Body RequestBody requestBody);
 
     /**
      * 获取头条列表

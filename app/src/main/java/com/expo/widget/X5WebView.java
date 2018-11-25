@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.expo.BuildConfig;
 import com.expo.base.utils.ToastHelper;
 import com.expo.map.LocationManager;
 import com.expo.module.webview.WebTemplateActivity;
@@ -49,6 +50,8 @@ public class X5WebView extends WebView {
         super( arg0, arg1 );
         this.setWebViewClient( client );
         this.setWebChromeClient( chromeClient );
+        String ua = getSettings().getUserAgentString();
+        getSettings().setUserAgent( ua + " Expo/" + BuildConfig.VERSION_NAME );
         // this.setWebChromeClient(chromeClient);
         // WebStorage webStorage = WebStorage.getInstance();
         initWebViewSettings();

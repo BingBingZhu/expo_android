@@ -13,17 +13,16 @@ import android.widget.TextView;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.expo.R;
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.utils.LanguageUtil;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParkActualSceneAdapter extends RecyclerView.Adapter<ParkActualSceneAdapter.ViewHolder> {
 
-    private List<ActualScene> mActualScenes;
+    private List<Venue> mVenues;
     private Context mContext;
     private VenuesType mVenuesType;
     private LatLng mLatLng;
@@ -31,12 +30,12 @@ public class ParkActualSceneAdapter extends RecyclerView.Adapter<ParkActualScene
     private View.OnClickListener onItemClickListener;
     private View.OnClickListener onVoiceClickListener;
 
-    public ParkActualSceneAdapter(Context context, List<ActualScene> actualScenes, VenuesType venuesType, LatLng latLng) {
+    public ParkActualSceneAdapter(Context context, List<Venue> venues, VenuesType venuesType, LatLng latLng) {
         this.mContext = context;
-        if (null == actualScenes) {
-            this.mActualScenes = new ArrayList<>();
+        if (null == venues) {
+            this.mVenues = new ArrayList<>();
         } else {
-            this.mActualScenes = actualScenes;
+            this.mVenues = venues;
         }
         this.mVenuesType = venuesType;
         this.mLatLng = latLng;
@@ -54,16 +53,16 @@ public class ParkActualSceneAdapter extends RecyclerView.Adapter<ParkActualScene
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ActualScene actualScene = mActualScenes.get(position);
+        Venue venue = mVenues.get(position);
         holder.imgIco.setImageBitmap(mVenuesType.getLstBitmap());
-        holder.imgIsVoice.setEnabled(!TextUtils.isEmpty(actualScene.getVoiceUrl()));
-        holder.tvName.setText(LanguageUtil.chooseTest(actualScene.getCaption(), actualScene.getEnCaption()));
-        holder.tvDistance.setText(getDistance(actualScene.getLat(), actualScene.getLng()));
+        holder.imgIsVoice.setEnabled(!TextUtils.isEmpty( venue.getVoiceUrl()));
+        holder.tvName.setText(LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption()));
+        holder.tvDistance.setText(getDistance( venue.getLat(), venue.getLng()));
     }
 
     @Override
     public int getItemCount() {
-        return mActualScenes.size();
+        return mVenues.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

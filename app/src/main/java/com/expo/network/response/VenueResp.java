@@ -1,13 +1,13 @@
 package com.expo.network.response;
 
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class SpotsResp extends BaseResponse {
+public class VenueResp extends BaseResponse {
     @SerializedName(value = "Updatetime", alternate = {"UpTime", "UpdateTime"})
     public String updateTime;
     @SerializedName("VenuesList")
-    public List<ActualScene> actualScenes;
+    public List<Venue> venues;
 }

@@ -35,6 +35,7 @@
                 android:id="@+id/home_navigation_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dms_40"
                 android:adjustViewBounds="true"
                 android:src="@mipmap/home_navigation_item"/>
 

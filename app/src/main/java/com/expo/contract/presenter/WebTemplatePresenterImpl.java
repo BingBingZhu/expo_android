@@ -2,7 +2,7 @@ package com.expo.contract.presenter;
 
 import com.expo.contract.WebTemplateContract;
 import com.expo.db.QueryParams;
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.network.Http;
 
@@ -21,8 +21,8 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
     }
 
     @Override
-    public ActualScene loadSceneByWikiId(long id) {
-        return mDao.unique( ActualScene.class, new QueryParams()
+    public Venue loadSceneByWikiId(long id) {
+        return mDao.unique( Venue.class, new QueryParams()
                 .add( "eq", "wiki_id", String.valueOf( id ) ) );
     }
 
@@ -32,10 +32,10 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
     }
 
     @Override
-    public List<Encyclopedias> loadNeayByVenues(ActualScene as) {
-        List<ActualScene> actualScenes = mDao.query( ActualScene.class, null );
+    public List<Encyclopedias> loadNeayByVenues(Venue as) {
+        List<Venue> venues = mDao.query( Venue.class, null );
         List<Long> ids = new ArrayList<>();
-        for (ActualScene actualScene : actualScenes) {
+        for (Venue venue : venues) {
 
         }
         return null;

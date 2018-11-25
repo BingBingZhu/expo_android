@@ -7,16 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.expo.R;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.HomeContract;
 import com.expo.entity.Encyclopedias;
@@ -182,7 +181,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         EncyclopediaSearchActivity.startActivity( getContext() );
     }
 
-    @OnClick({R.id.home_func_0, R.id.home_func_1, R.id.home_func_2, R.id.home_func_3, R.id.home_func_4, R.id.home_func_5, R.id.home_func_6, R.id.home_func_7,R.id.home_navigation_item})
+    @OnClick({R.id.home_func_0, R.id.home_func_1, R.id.home_func_2, R.id.home_func_3, R.id.home_func_4, R.id.home_func_5, R.id.home_func_6, R.id.home_func_7, R.id.home_navigation_item})
     public void clickFunc(View view) {
         switch (view.getId()) {
             case R.id.home_func_0:
@@ -196,8 +195,12 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, getString( R.string.buy_tickets ) );
                 break;
             case R.id.home_func_3:
-                url = mPresenter.loadVenueBespeakUrl();
-                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, getString( R.string.home_func_item_appointment ) );
+//                url = mPresenter.loadVenueBespeakUrl();
+//                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, getString( R.string.home_func_item_appointment ),false );
+                url = "http://192.168.1.13:8080/";
+                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
+                        url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
+                                + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_appointment ),false );
                 break;
             case R.id.home_func_4:
                 TouristServiceActivity.startActivity( getContext() );

@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class AllTypeResp extends BaseResponse {
+    @SerializedName("UpdateTime")
+    public String updateTime;
     @SerializedName("messageTypeLst")
     public List<DataType> messageTypes;
     @SerializedName("wikitypeLst")

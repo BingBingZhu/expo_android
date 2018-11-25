@@ -4,12 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.expo.widget.AppBarView
-        android:id="@+id/app_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/green_02cd9b" />
-
     <ProgressBar
         android:id="@+id/common_progress"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"

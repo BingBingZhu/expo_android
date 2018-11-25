@@ -11,8 +11,8 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.ArrayList;
 
-@DatabaseTable(tableName = "actual_scene")
-public class ActualScene implements Parcelable {
+@DatabaseTable(tableName = "venue")
+public class Venue implements Parcelable {
     @DatabaseField(columnName = "_id", id = true)
     @SerializedName("id")
     private Long id;
@@ -72,17 +72,31 @@ public class ActualScene implements Parcelable {
     private int score;
     @DatabaseField(columnName = "voice_url")
     @SerializedName("voiceurl")
-    private String voiceUrl ;           // 场馆音频介绍 ,
+    private String voiceUrl;           // 场馆音频介绍 ,
     @DatabaseField(columnName = "voice_url_en")
     @SerializedName("voiceurlen")
-    private String voiceUrlEn;          //场馆音频介绍英文，如果没有可以使用中文介绍的链接 ,
+    private String voiceUrlEn;          //场馆音频介绍英文，如果没有可以使用中文介绍的链接
+    @DatabaseField(columnName = "gis_id")
+    @SerializedName("gisid")
+    public String gisId;
+    @DatabaseField(columnName = "gis_type_id")
+    @SerializedName("gistypeid")
+    public String gisTypeId;
+    @DatabaseField(columnName = "park_id")
+    @SerializedName("parkid")
+    public String parkId;
+    @DatabaseField(columnName = "park_name")
+    @SerializedName("parkname")
+    public String parkName;
+    @DatabaseField(columnName = "pic_url_en")
+    @SerializedName("picurlen")
+    public String picUrlEn;
 
-
-    public ActualScene() {
+    public Venue() {
     }
 
 
-    protected ActualScene(Parcel in) {
+    protected Venue(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {
@@ -110,25 +124,61 @@ public class ActualScene implements Parcelable {
         recommendedIdx = in.readString();
         wikiId = in.readString();
         score = in.readInt();
-        voiceUrl=in.readString();
+        voiceUrl = in.readString();
         voiceUrlEn = in.readString();
+        gisId = in.readString();
+        gisTypeId = in.readString();
+        parkId = in.readString();
+        parkName = in.readString();
+        picUrlEn = in.readString();
     }
 
-    public static final Creator<ActualScene> CREATOR = new Creator<ActualScene>() {
+    public static final Creator<Venue> CREATOR = new Creator<Venue>() {
         @Override
-        public ActualScene createFromParcel(Parcel in) {
-            return new ActualScene( in );
+        public Venue createFromParcel(Parcel in) {
+            return new Venue( in );
         }
 
         @Override
-        public ActualScene[] newArray(int size) {
-            return new ActualScene[size];
+        public Venue[] newArray(int size) {
+            return new Venue[size];
         }
     };
 
     public ArrayList<double[]> getElectronicFenceList() {
         return Http.getGsonInstance().fromJson( electronicFenceList, new TypeToken<double[]>() {
         }.getType() );
+    }
+
+
+    public Long getType() {
+        try {
+            return Long.parseLong( type );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0L;
+        }
+    }
+
+
+    public Double getLng() {
+        try {
+            return Double.parseDouble( lng );
+        } catch (Exception e) {
+            return 0.0;
+        }
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public Double getLat() {
+        try {
+            return Double.parseDouble( lat );
+        } catch (Exception e) {
+            return 0.0;
+        }
     }
 
     public Long getId() {
@@ -147,13 +197,12 @@ public class ActualScene implements Parcelable {
         this.caption = caption;
     }
 
-    public Long getType() {
-        try {
-            return Long.parseLong( type );
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0L;
-        }
+    public String getEnCaption() {
+        return enCaption;
+    }
+
+    public void setEnCaption(String enCaption) {
+        this.enCaption = enCaption;
     }
 
     public void setType(String type) {
@@ -166,6 +215,14 @@ public class ActualScene implements Parcelable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getEnRemark() {
+        return enRemark;
+    }
+
+    public void setEnRemark(String enRemark) {
+        this.enRemark = enRemark;
     }
 
     public int getIsEnable() {
@@ -216,42 +273,6 @@ public class ActualScene implements Parcelable {
         this.updateTime = updateTime;
     }
 
-    public String getEnCaption() {
-        return enCaption;
-    }
-
-    public void setEnCaption(String enCaption) {
-        this.enCaption = enCaption;
-    }
-
-    public String getEnRemark() {
-        return enRemark;
-    }
-
-    public void setEnRemark(String enRemark) {
-        this.enRemark = enRemark;
-    }
-
-    public Double getLng() {
-        try {
-            return Double.parseDouble( lng );
-        } catch (Exception e) {
-            return 0.0;
-        }
-    }
-
-    public void setLng(String lng) {
-        this.lng = lng;
-    }
-
-    public Double getLat() {
-        try {
-            return Double.parseDouble( lat );
-        } catch (Exception e) {
-            return 0.0;
-        }
-    }
-
     public void setLat(String lat) {
         this.lat = lat;
     }
@@ -292,6 +313,62 @@ public class ActualScene implements Parcelable {
         this.score = score;
     }
 
+    public String getVoiceUrl() {
+        return voiceUrl;
+    }
+
+    public void setVoiceUrl(String voiceUrl) {
+        this.voiceUrl = voiceUrl;
+    }
+
+    public String getVoiceUrlEn() {
+        return voiceUrlEn;
+    }
+
+    public void setVoiceUrlEn(String voiceUrlEn) {
+        this.voiceUrlEn = voiceUrlEn;
+    }
+
+    public String getGisId() {
+        return gisId;
+    }
+
+    public void setGisId(String gisId) {
+        this.gisId = gisId;
+    }
+
+    public String getGisTypeId() {
+        return gisTypeId;
+    }
+
+    public void setGisTypeId(String gisTypeId) {
+        this.gisTypeId = gisTypeId;
+    }
+
+    public String getParkId() {
+        return parkId;
+    }
+
+    public void setParkId(String parkId) {
+        this.parkId = parkId;
+    }
+
+    public String getParkName() {
+        return parkName;
+    }
+
+    public void setParkName(String parkName) {
+        this.parkName = parkName;
+    }
+
+    public String getPicUrlEn() {
+        return picUrlEn;
+    }
+
+    public void setPicUrlEn(String picUrlEn) {
+        this.picUrlEn = picUrlEn;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -328,23 +405,12 @@ public class ActualScene implements Parcelable {
         dest.writeString( recommendedIdx );
         dest.writeString( wikiId );
         dest.writeInt( score );
-        dest.writeString(voiceUrl);
-        dest.writeString(voiceUrlEn);
-    }
-
-    public String getVoiceUrl() {
-        return voiceUrl;
-    }
-
-    public void setVoiceUrl(String voiceUrl) {
-        this.voiceUrl = voiceUrl;
-    }
-
-    public String getVoiceUrlEn() {
-        return voiceUrlEn;
-    }
-
-    public void setVoiceUrlEn(String voiceUrlEn) {
-        this.voiceUrlEn = voiceUrlEn;
+        dest.writeString( voiceUrl );
+        dest.writeString( voiceUrlEn );
+        dest.writeString( gisId );
+        dest.writeString( gisTypeId );
+        dest.writeString( parkId );
+        dest.writeString( parkName );
+        dest.writeString( picUrlEn );
     }
 }

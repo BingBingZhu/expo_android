@@ -3,10 +3,8 @@ package com.expo.map;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,15 +17,12 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.TileOverlayOptions;
 import com.amap.api.maps.model.UrlTileProvider;
 import com.expo.R;
 import com.expo.base.BaseApplication;
 import com.expo.base.ExpoApp;
-import com.expo.entity.ActualScene;
-import com.expo.entity.DataType;
 import com.expo.entity.Park;
 import com.expo.network.Http;
 import com.expo.widget.ImageViewPlus;
@@ -64,7 +59,7 @@ public class MapUtils {
 //     *
 //     * @param scenicSpot
 //     */
-//    public void setMapCamera(ActualScene scenicSpot) {
+//    public void setMapCamera(Venue scenicSpot) {
 //        map.moveCamera( CameraUpdateFactory.newLatLngBounds( getBoundsBuilder( scenicSpot ), 120 ) );
 //    }
 

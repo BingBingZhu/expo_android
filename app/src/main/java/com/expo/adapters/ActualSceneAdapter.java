@@ -3,7 +3,7 @@ package com.expo.adapters;
 import android.annotation.SuppressLint;
 import android.os.Parcel;
 
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.List;
 @SuppressLint("ParcelCreator")
 public class ActualSceneAdapter implements ListItemData {
 
-    private ActualScene mSceneAndEncy;
-    public ActualSceneAdapter(ActualScene dataType) {
+    private Venue mSceneAndEncy;
+    public ActualSceneAdapter(Venue dataType) {
         this.mSceneAndEncy = dataType;
     }
 
@@ -20,7 +20,7 @@ public class ActualSceneAdapter implements ListItemData {
         if (in.readByte() == 0) {
             mSceneAndEncy = null;
         } else {
-            mSceneAndEncy = in.readParcelable( ActualScene.class.getClassLoader() );
+            mSceneAndEncy = in.readParcelable( Venue.class.getClassLoader() );
         }
     }
 
@@ -59,11 +59,11 @@ public class ActualSceneAdapter implements ListItemData {
         return mSceneAndEncy.getEnRemark();
     }
 
-    public static List<ListItemData> convertToTabList(List<ActualScene> types) {
+    public static List<ListItemData> convertToTabList(List<Venue> types) {
         if (types == null)
             return null;
         List<ListItemData> listItemData = new ArrayList<>();
-        for (ActualScene sceneAndEncy : types) {
+        for (Venue sceneAndEncy : types) {
             listItemData.add( new ActualSceneAdapter( sceneAndEncy ) );
         }
         return listItemData;

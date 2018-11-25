@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -18,7 +17,7 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.contract.RouteDetailContract;
 import com.expo.entity.RouteInfo;
-import com.expo.entity.VenuesInfo;
+import com.expo.entity.Venue;
 import com.expo.media.MediaPlayerManager;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
@@ -58,7 +57,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
 
     RouteInfo mInfo;
     CommonAdapter mAdapter;
-    List<VenuesInfo> mList;
+    List<Venue> mList;
 
     MediaPlayerManager.MediaPlayerManagerListener mListener = new MediaPlayerManager.MediaPlayerManagerListener() {
         @Override
@@ -68,22 +67,22 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
 
         @Override
         public void setProgress(int seek) {
-            mHandler.post(new Runnable() {
+            mHandler.post( new Runnable() {
                 @Override
                 public void run() {
-                    mPbProgress.setProgress(seek);
+                    mPbProgress.setProgress( seek );
                 }
-            });
+            } );
         }
 
         @Override
         public void setDuration(int duration) {
-            mHandler.post(new Runnable() {
+            mHandler.post( new Runnable() {
                 @Override
                 public void run() {
-                    mPbProgress.setMax(duration);
+                    mPbProgress.setMax( duration );
                 }
-            });
+            } );
         }
 
         @Override
@@ -93,7 +92,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
 
         @Override
         public void complete() {
-            mPbProgress.setProgress(mPbProgress.getMax());
+            mPbProgress.setProgress( mPbProgress.getMax() );
         }
     };
 
@@ -110,7 +109,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            MediaPlayerManager.getInstence().setSeek(seekBar.getProgress());
+            MediaPlayerManager.getInstence().setSeek( seekBar.getProgress() );
         }
     };
 
@@ -123,14 +122,14 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(1, R.string.title_routest_ac);
+        setTitle( 1, R.string.title_routest_ac );
         initRecyclerView();
 
-        mPbProgress.setOnSeekBarChangeListener(mSeekListener);
-        MediaPlayerManager.getInstence().setListener(mListener);
+        mPbProgress.setOnSeekBarChangeListener( mSeekListener );
+        MediaPlayerManager.getInstence().setListener( mListener );
 
-        mPresenter.getRouteDetail(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_ID, 0));
-        mPresenter.getVenuesList(mInfo.idsList);
+        mPresenter.getRouteDetail( getIntent().getLongExtra( Constants.EXTRAS.EXTRA_ID, 0 ) );
+        mPresenter.getVenuesList( mInfo.idsList );
     }
 
     @Override
@@ -145,49 +144,49 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
      * @param routeId
      */
     public static void startActivity(@NonNull Context context, @NonNull Long routeId) {
-        Intent in = new Intent(context, RouteDetailActivity.class);
-        in.putExtra(Constants.EXTRAS.EXTRA_ID, routeId);
-        context.startActivity(in);
+        Intent in = new Intent( context, RouteDetailActivity.class );
+        in.putExtra( Constants.EXTRAS.EXTRA_ID, routeId );
+        context.startActivity( in );
     }
 
     private void initRecyclerView() {
-        mRvRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRvRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_30)));
+        mRvRecycler.setLayoutManager( new LinearLayoutManager( this ) );
+        mRvRecycler.addItemDecoration( new SpaceDecoration( (int) getResources().getDimension( R.dimen.dms_30 ) ) );
         mList = new ArrayList<>();
-        mRvRecycler.setAdapter(mAdapter = new CommonAdapter<VenuesInfo>(this, R.layout.item_route_detail, mList) {
+        mRvRecycler.setAdapter( mAdapter = new CommonAdapter<Venue>( this, R.layout.item_route_detail, mList ) {
             @Override
-            protected void convert(ViewHolder holder, VenuesInfo venuesInfo, int position) {
-                Picasso.with(RouteDetailActivity.this).load(CommUtils.getFullUrl(venuesInfo.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
-                holder.setText(R.id.item_route_name, venuesInfo.caption);
-                holder.setText(R.id.item_route_info, venuesInfo.remark);
+            protected void convert(ViewHolder holder, Venue venue, int position) {
+                Picasso.with( RouteDetailActivity.this ).load( CommUtils.getFullUrl( venue.getPicUrl() ) ).placeholder( R.drawable.image_default ).error( R.drawable.image_default ).into( (ImageView) holder.getView( R.id.item_route_img ) );
+                holder.setText( R.id.item_route_name, LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption() ) );
+                holder.setText( R.id.item_route_info, LanguageUtil.chooseTest( venue.getRemark(), venue.getEnRemark() ) );
             }
-        });
+        } );
     }
 
     @Override
     public void showRouteDetail(RouteInfo info) {
         mInfo = info;
         if (mInfo == null) return;
-        Picasso.with(this).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into(mIvImg);
-        mTvName.setText(LanguageUtil.chooseTest(info.caption, info.captionen));
-        mTvHot.setText(getResources().getString(R.string.hot) + info.hotCount);
-        mTvTime.setText(info.updateTime);
-        if(StringUtils.isEmpty(LanguageUtil.chooseTest(info.remark, info.remarken)))
-            mPresenter.getRouteDetailFromency(info.wikiId);
-            else
-        mTvInfo.setText(LanguageUtil.chooseTest(info.remark, info.remarken));
+        Picasso.with( this ).load( CommUtils.getFullUrl( info.picUrl ) ).placeholder( R.drawable.image_default ).error( R.drawable.image_default ).into( mIvImg );
+        mTvName.setText( LanguageUtil.chooseTest( info.caption, info.captionen ) );
+        mTvHot.setText( getResources().getString( R.string.hot ) + info.hotCount );
+        mTvTime.setText( info.updateTime );
+        if (StringUtils.isEmpty( LanguageUtil.chooseTest( info.remark, info.remarken ) ))
+            mPresenter.getRouteDetailFromency( info.wikiId );
+        else
+            mTvInfo.setText( LanguageUtil.chooseTest( info.remark, info.remarken ) );
     }
 
     @Override
     public void showRemarkDetail(String remark) {
-        mTvInfo.setText(remark);
+        mTvInfo.setText( remark );
     }
 
     @Override
-    public void showVenuesList(List<VenuesInfo> list) {
+    public void showVenuesList(List<Venue> list) {
         mList.clear();
         if (list != null) {
-            mList.addAll(list);
+            mList.addAll( list );
         }
         mAdapter.notifyDataSetChanged();
     }
@@ -196,7 +195,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
     public void clickHorn(View view) {
         if (mInfo == null) return;
 //        MediaPlayerManager.getInstence().start(this, LanguageUtil.chooseTest(CommUtils.getFullUrl(mInfo.voiceUrl), CommUtils.getFullUrl(mInfo.voiceUrlEn)));
-        MediaPlayerManager.getInstence().start(this, "http://audio.xmcdn.com/group15/M06/1D/EA/wKgDZVV47ZLD3fFXABohc_qeKmc390.m4a");
+        MediaPlayerManager.getInstence().start( this, "http://audio.xmcdn.com/group15/M06/1D/EA/wKgDZVV47ZLD3fFXABohc_qeKmc390.m4a" );
     }
 
     @Override
