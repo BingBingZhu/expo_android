@@ -28,7 +28,6 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
@@ -111,24 +110,12 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            back();
-        }
-        return super.onKeyDown( keyCode, event );
-    }
-
-    @OnClick(R.id.title_back)
-    public void onClick(View v){
-        back();
-    }
-
-    private void back() {
+    public void onBackPressed() {
         if (mX5View.canGoBack()) {
             mX5View.goBack();
             return;
         }
-        finish();
+        super.onBackPressed();
     }
 
     public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title) {
@@ -176,6 +163,11 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         @JavascriptInterface
         public void weibo() {
             share( SinaWeibo.NAME );
+        }
+
+        @JavascriptInterface
+        public void unLogin(){
+            ToastHelper.showShort("账号异常");
         }
     }
 

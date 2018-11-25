@@ -64,7 +64,7 @@ public class RootView extends LinearLayoutCompat {
             if (mTitle == null) {
                 mTitle = new AppBarView( mActivity );
                 ((AppBarView) mTitle).setOnClickListener( v -> {
-                    mActivity.finish();
+                    mActivity.onBackPressed();
                 } );
             }
             if (layoutId == 0) {
@@ -92,7 +92,7 @@ public class RootView extends LinearLayoutCompat {
 
     public void setWhiteTitle() {
         if (mTitle == null) return;
-        ((AppBarView) mTitle).setTitleColor( mActivity.getResources().getColor( R.color.black ) );
+        ((AppBarView) mTitle).setTitleColor( mActivity.getResources().getColor( R.color.black_333333 ) );
         ((AppBarView) mTitle).setTitleSize( TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px( 17 ) );
         ((AppBarView) mTitle).setBackImageResource( R.mipmap.ico_black_back );
         ((AppBarView) mTitle).onFinishInflate();
@@ -139,7 +139,7 @@ public class RootView extends LinearLayoutCompat {
     }
 
     public void setTitleVisibility(int visibility) {
-        if (mTitle!=null)
+        if (mTitle != null)
             mTitle.setVisibility( visibility );
     }
 
