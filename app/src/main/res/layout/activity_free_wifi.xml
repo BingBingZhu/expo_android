@@ -4,17 +4,33 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@drawable/bg_wifi">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/font_30"
-        android:textColor="#00A47B"
-        android:text="请点击按钮开启WLAN" />
-    <ImageView
-        android:id="@+id/wifi_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_30"
-        android:src="@mipmap/wifi_unconnect" />
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_wifi"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dms_100"
+            android:src="@mipmap/ico_wlan"/>
+        <TextView
+            android:id="@+id/wifi_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_380"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/font_30"
+            android:textColor="#00A47B"
+            android:text="@string/please_click_the_button_to_open_wlan" />
+        <ImageView
+            android:id="@+id/wifi_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dms_30"
+            android:src="@mipmap/wifi_unconnect" />
+    </LinearLayout>
 </LinearLayout>

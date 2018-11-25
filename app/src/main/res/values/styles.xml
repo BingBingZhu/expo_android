@@ -148,13 +148,15 @@
     </style>
 
     <style name="item_mine_entry" parent="TextSizeBlack16">
-        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_weight">1</item>
+        <!--<item name="android:layout_weight">wrap_content</item>-->
         <item name="android:gravity">center_vertical</item>
         <item name="android:drawablePadding">@dimen/dms_30</item>
         <item name="android:paddingLeft">@dimen/dms_30</item>
         <item name="android:paddingRight">@dimen/dms_30</item>
+        <item name="android:paddingTop">@dimen/dms_36</item>
+        <item name="android:paddingBottom">@dimen/dms_36</item>
         <item name="android:drawableRight">@mipmap/arrow_mine</item>
     </style>
 

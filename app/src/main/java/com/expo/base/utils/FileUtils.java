@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.text.TextUtils;
 
+import com.expo.utils.Constants;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -200,6 +202,13 @@ public class FileUtils {
                 }
             }
         }.start();
+    }
+
+    public static String saveScreenShot(Bitmap bmp){
+        File file = new File( Environment.getExternalStorageDirectory(), Constants.Config.SCREEN_SAVE_PATH + System.currentTimeMillis() + ".jpg" );
+        file = FileUtils.createFile( file );
+        FileUtils.saveBitmap( file, bmp );
+        return file.toString();
     }
 
     //保存照片

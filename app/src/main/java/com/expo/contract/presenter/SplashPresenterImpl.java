@@ -39,6 +39,9 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 

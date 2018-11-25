@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
@@ -26,7 +27,9 @@ import butterknife.OnClick;
 public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> implements FreeWiFiContract.View {
 
     @BindView(R.id.wifi_btn)
-    ImageView view;
+    ImageView imgView;
+    @BindView(R.id.wifi_state)
+    TextView tvState;
 
     private String[] wifi;
 
@@ -37,8 +40,8 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        setTitle(0, R.string.free_wifi_at_beijing_world_expo);
         wifi = mPresenter.queryWifi();
-        registerBroadcastReceiver();
     }
 
     @Override
@@ -74,13 +77,39 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
 
     @OnClick(R.id.wifi_btn)
     public void onClick(View v) {
-        WifiUtil.changeWifiState(this, true);
+        if (tvState.getText().equals(getString(R.string.please_click_the_button_to_open_wlan))) {
+            setWifiView(1);
+            registerBroadcastReceiver();
+            WifiUtil.changeWifiState(getContext(), true);
+        }
+    }
+
+    public void setWifiView(int state){
+        int imgId = 0;
+        String stateStr = "";
+        switch (state){
+            case 1:
+                imgId = R.mipmap.ico_connecting;
+                stateStr = getString(R.string.connecting);
+                break;
+            case 2:
+                imgId = R.mipmap.ico_connect_un_success;
+                stateStr = getString(R.string.successfu_lconnection);
+                break;
+            case 3:
+                imgId = R.mipmap.ico_connect_off;
+                stateStr = getString(R.string.disconnect);
+                break;
+        }
+        imgView.setImageResource(imgId);
+        tvState.setText(stateStr);
     }
 
     private WifiReceiverActionListener listener = new WifiReceiverActionListener() {
         @Override
         public void onWifiConnected(WifiInfo wifiInfo) {
-            ToastHelper.showShort( "已连接至 " + wifiInfo.getSSID() );
+            setWifiView(2);
+//            ToastHelper.showShort( "已连接至 " + wifiInfo.getSSID() );
         }
 
         @Override
@@ -99,6 +128,7 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
 
         @Override
         public void onWifiClosed() {
+            setWifiView(3);
             // ToastHelper.showShort("wifi关闭了..");
         }
 

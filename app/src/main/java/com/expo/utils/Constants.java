@@ -88,6 +88,7 @@ public interface Constants {
         public static final String BASE_FILE_PATH = "expo/";                          //数据存储文件夹
         public static final String IMAGE_PATH = BASE_FILE_PATH + "images/";       //图片存储文件夹
         public static final String CROP_SAVE_PATH = IMAGE_PATH + "crop/";             //图片裁剪存储文件
+        public static final String SCREEN_SAVE_PATH = IMAGE_PATH + "screen/";             //截图存储文件
         public static final int USERINFO_CROP_IMAGE_ASPECT_X = 1;                                //图片裁剪相关配置
         public static final int USERINFO_CROP_IMAGE_ASPECT_Y = 1;
         public static final int USERINFO_CROP_IMAGE_OUTPUT_X = 500;
