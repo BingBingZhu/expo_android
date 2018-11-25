@@ -122,7 +122,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle( 1, R.string.title_routest_ac );
+        setTitle( 1, R.string.title_routest_detail );
         initRecyclerView();
 
         mPbProgress.setOnSeekBarChangeListener( mSeekListener );
@@ -156,7 +156,30 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         mRvRecycler.setAdapter( mAdapter = new CommonAdapter<Venue>( this, R.layout.item_route_detail, mList ) {
             @Override
             protected void convert(ViewHolder holder, Venue venue, int position) {
-                Picasso.with( RouteDetailActivity.this ).load( CommUtils.getFullUrl( venue.getPicUrl() ) ).placeholder( R.drawable.image_default ).error( R.drawable.image_default ).into( (ImageView) holder.getView( R.id.item_route_img ) );
+                int picRes = 0;
+                if (venue.getType() == 25 || venue.getType() == 26) {//场馆、景点
+                    mPresenter.loadRemarkFormEncyclopedia( venue );
+                    Picasso.with( RouteDetailActivity.this ).load( CommUtils.getFullUrl( venue.getPicUrl() ) )
+                            .placeholder( R.drawable.image_default )
+                            .error( R.drawable.image_default )
+                            .into( (ImageView) holder.getView( R.id.item_route_img ) );
+                } else if (venue.getType() == 27) {//美食
+                    picRes = R.mipmap.ico_car_def_img;
+                } else if (venue.getType() == 28) {//卫生间
+                    picRes = R.mipmap.ico_toilet_def_img;
+                } else if (venue.getType() == 30) {//治安
+                    picRes = R.mipmap.ico_public_security_def_img;
+                } else if (venue.getType() == 31) {//服务中心
+                    picRes = R.mipmap.ico_car_def_img;
+                } else if (venue.getType() == 32) {//导览车
+                    picRes = R.mipmap.ico_car_def_img;
+                }
+                if (picRes != 0) {
+                    Picasso.with( RouteDetailActivity.this ).load( picRes )
+                            .placeholder( R.drawable.image_default )
+                            .error( R.drawable.image_default )
+                            .into( (ImageView) holder.getView( R.id.item_route_img ) );
+                }
                 holder.setText( R.id.item_route_name, LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption() ) );
                 holder.setText( R.id.item_route_info, LanguageUtil.chooseTest( venue.getRemark(), venue.getEnRemark() ) );
             }

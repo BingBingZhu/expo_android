@@ -1,10 +1,13 @@
 package com.expo.contract.presenter;
 
+import android.text.TextUtils;
+
 import com.expo.contract.RouteDetailContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Venue;
+import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
 import java.util.Arrays;
@@ -37,6 +40,21 @@ public class RouteDetailPresenterImpl extends RouteDetailContract.Presenter {
         params.add( "and" );
         params.add( "eq", "is_enable", "1" );
         mView.showVenuesList( mDao.query( Venue.class, params ) );
+    }
+
+    @Override
+    public void loadRemarkFormEncyclopedia(Venue venue) {
+        if (venue == null || TextUtils.isEmpty( venue.getWikiId() ) || !venue.getWikiId().matches( Constants.Exps.NUMBER )) {
+            return;
+        }
+        Encyclopedias encyclopedias = mDao.queryById( Encyclopedias.class, new QueryParams()
+                .add( "eq", "_id", Long.parseLong( venue.getWikiId() ) ) );
+        if (encyclopedias == null) {
+            return;
+        }
+        venue.setRemark( encyclopedias.getRemark() );
+        venue.setEnRemark( encyclopedias.getRemarkEn() );
+        venue.setPicUrl( encyclopedias.getPicUrl() );
     }
 
 }

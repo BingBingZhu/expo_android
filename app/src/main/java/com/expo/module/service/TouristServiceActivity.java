@@ -47,20 +47,20 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
                 intent.putExtra( Constants.EXTRAS.EXTRAS, position );
                 startActivity( intent );
             } else if (position == 3) {
-                toWebView( "4", title );
+                toWebView( "4", title, TITLE_COLOR_STYLE_GREEN );
             } else if (position == 6) {
-                toWebView( "6", title );
+                toWebView( "6", title, TITLE_COLOR_STYLE_GREEN );
             } else if (position == 7) {
-                toWebView( "3", title );
+                toWebView( "3", title, TITLE_COLOR_STYLE_GREEN );
             } else if (position == 8) {
-                toWebView( "5", title );
+                toWebView( "5", title, TITLE_COLOR_STYLE_WHITE );
             }
         }
     };
 
-    private void toWebView(String type, String title) {
+    private void toWebView(String type, String title, int titleStyle) {
         String url = mPresenter.loadCommonUrlByType( type );
-        WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, title );
+        WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, title, titleStyle );
     }
 
     @Override

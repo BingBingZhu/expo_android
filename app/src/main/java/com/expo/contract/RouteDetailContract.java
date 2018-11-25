@@ -20,6 +20,7 @@ public interface RouteDetailContract {
 
         public abstract void getVenuesList(String ids);
 
+        public abstract void loadRemarkFormEncyclopedia(Venue venue);
     }
 
     interface View extends IView {
