@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/green_00cb99"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_120"
-        android:paddingLeft="@dimen/dms_30"
-        android:paddingRight="@dimen/dms_30">
+        android:layout_height="@dimen/dms_100"
+        android:paddingLeft="@dimen/dms_36"
+        android:paddingRight="@dimen/dms_36">
 
         <ImageView
             android:id="@+id/title_home_icon"
@@ -42,18 +40,16 @@
             android:id="@+id/home_title_text"
             style="@style/TextSizeWhite14"
             android:layout_centerInParent="true"
-            android:background="@drawable/bg_white_r90"
-            android:paddingTop="@dimen/dms_10"
-            android:paddingBottom="@dimen/dms_10"
-            android:layout_toRightOf="@id/title_home_icon"
             android:layout_toLeftOf="@id/title_home_msg"
+            android:layout_toRightOf="@id/title_home_icon"
+            android:background="@drawable/bg_white_r90"
             android:drawableLeft="@mipmap/ico_search"
-            android:textColor="@color/gray_99"
             android:drawablePadding="@dimen/dms_20"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dms_10"
-            android:text="@string/title_home"/>
+            android:paddingTop="@dimen/dms_10"
+            android:paddingBottom="@dimen/dms_10"
+            android:text="@string/title_home"
+            android:textColor="@color/gray_99" />
     </RelativeLayout>
-
-
-</RelativeLayout>
+</FrameLayout>

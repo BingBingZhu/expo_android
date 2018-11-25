@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.ToastHelper;
 import com.expo.map.LocationManager;
 import com.expo.module.webview.WebTemplateActivity;
@@ -73,7 +74,7 @@ public class X5WebView extends WebView {
         webSetting.setSupportMultipleWindows( true );
         // webSetting.setLoadWithOverviewMode(true);
         webSetting.setAppCacheEnabled( true );
-        // webSetting.setDatabaseEnabled(true);
+         webSetting.setDatabaseEnabled(true);
         webSetting.setDomStorageEnabled( true );
         webSetting.setGeolocationEnabled( true );
         webSetting.setAppCacheMaxSize( Long.MAX_VALUE );

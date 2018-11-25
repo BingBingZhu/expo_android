@@ -71,7 +71,7 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
     @Override
     protected void onInitView(Bundle savedInstanceState) {
 
-        setTitle( 0, R.string.home_func_item_service );
+        setTitle( 0, R.string.home_func_item_navigation );
 
         mAdapter = new TouristServiceAdapter( this );
         mAdapter.setListener( mListener );

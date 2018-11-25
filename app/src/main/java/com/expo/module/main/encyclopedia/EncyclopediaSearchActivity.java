@@ -59,7 +59,8 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mSearchContent.setOnEditorActionListener( this );
-        setTitle( 0,R.string.search );
+        mResultView.addItemDecoration( new SpaceDecoration( 0, getResources().getDimensionPixelSize( R.dimen.dms_4 ) ) );
+        setTitle( 0, R.string.search );
 //        mResultView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));        // item分割线
 //        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_18);
 //        mResultView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
@@ -69,9 +70,9 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
     private void loadHistory() {
         mSearchRecordUtil = new SearchRecordUtil();
         mHistory = mSearchRecordUtil.loadHistory();
-        mHistoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.layout_history_item, mHistory);
-        mHistoryList.setAdapter(mHistoryAdapter);
-        mHistoryList.setOnItemClickListener((parent, view, position, id) -> search(mHistory[position]));
+        mHistoryAdapter = new ArrayAdapter<String>( getContext(), R.layout.layout_history_item, mHistory );
+        mHistoryList.setAdapter( mHistoryAdapter );
+        mHistoryList.setOnItemClickListener( (parent, view, position, id) -> search( mHistory[position] ) );
     }
 
     @Override
@@ -92,7 +93,7 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
                 ToastHelper.showShort( R.string.please_enter_keywords );
                 return true;
             }
-            search(mSearchContentStr);
+            search( mSearchContentStr );
             return true;
         }
         return false;
@@ -102,26 +103,26 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService( INPUT_METHOD_SERVICE );
         inputMethodManager.hideSoftInputFromWindow( getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS );
         showLoadingView();
-        mSearchRecordUtil.saveToHistory(searchContent);
-        mPresenter.searchEncy(searchContent);
+        mSearchRecordUtil.saveToHistory( searchContent );
+        mPresenter.searchEncy( searchContent );
     }
 
     @Override
     public void getSearchResult(List<ListItemData> listItemDatas) {
-        mResultView.setAdapter(new EncyAndSceneListAdapter(getContext(), listItemDatas));
-        mHistoryView.setVisibility(View.GONE);
-        mResultView.setVisibility(View.VISIBLE);
+        mResultView.setAdapter( new EncyAndSceneListAdapter( getContext(), listItemDatas ) );
+        mHistoryView.setVisibility( View.GONE );
+        mResultView.setVisibility( View.VISIBLE );
         hideLoadingView();
     }
 
     @OnClick(R.id.search_history_clear)
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.search_history_clear:
                 mSearchRecordUtil.clearHistory();
                 mHistory = mSearchRecordUtil.loadHistory();
-                mHistoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.layout_history_item, mHistory);
-                mHistoryList.setAdapter(mHistoryAdapter);
+                mHistoryAdapter = new ArrayAdapter<String>( getContext(), R.layout.layout_history_item, mHistory );
+                mHistoryList.setAdapter( mHistoryAdapter );
                 break;
             case R.id.title_back:
                 finish();

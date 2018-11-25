@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dms_20"
-        android:background="@color/white_e6"
+        android:background="@color/white_f4"
         android:overScrollMode="never"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         android:visibility="gone"/>

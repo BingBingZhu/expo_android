@@ -39,6 +39,10 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     RoundImageView mImageView;
     @BindView(R.id.mine_name)
     TextView mTvMineName;
+    @BindView(R.id.mine_integral)
+    TextView mTvIntegral;
+    @BindView(R.id.mine_badge)
+    TextView mTvBadge;
 
     @Override
     public int getContentView() {
@@ -76,34 +80,38 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
                 LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn() );
     }
 
-    @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name})
-    public void clickEditInfo(View view) {
-        UserInfoActivity.startActivity( getContext() );
-    }
+    @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name, R.id.item_mine_bespeak,
+            R.id.item_mine_comment_report, R.id.item_mine_message, R.id.item_mine_about,
+            R.id.item_mine_setting, R.id.mine_integral, R.id.mine_badge})
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.mine_edit_info:
+            case R.id.mine_img:
+            case R.id.mine_name:
+                UserInfoActivity.startActivity( getContext() );
+                break;
+            case R.id.item_mine_bespeak:
+                mPresenter.clickPolicy( "5" );
+                break;
+            case R.id.item_mine_comment_report:
+                FeedbackActivity.startActivity( getContext() );
+                break;
+            case R.id.item_mine_message:
+                MessageKindActivity.startActivity( getContext() );
+                break;
+            case R.id.item_mine_about:
+                AboutActivity.startActivity( getContext() );
+                break;
+            case R.id.item_mine_setting:
+                SettingActivity.startActivity( getContext() );
+                break;
+            case R.id.mine_integral:    // 积分
 
-    @OnClick(R.id.item_mine_bespeak)
-    public void clickBespeak(View view) {
-        mPresenter.clickPolicy( "5" );
-    }
+                break;
+            case R.id.mine_badge:       // 徽章
 
-    @OnClick(R.id.item_mine_comment_report)
-    public void clickComment(View view) {
-        FeedbackActivity.startActivity( getContext() );
-    }
-
-    @OnClick(R.id.item_mine_message)
-    public void clickMessage(View view) {
-        MessageKindActivity.startActivity( getContext() );
-    }
-
-    @OnClick(R.id.item_mine_about)
-    public void clickAbout(View view) {
-        AboutActivity.startActivity( getContext() );
-    }
-
-    @OnClick(R.id.item_mine_setting)
-    public void clickSetting(View view) {
-        SettingActivity.startActivity( getContext() );
+                break;
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

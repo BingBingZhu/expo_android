@@ -6,6 +6,9 @@ import com.expo.entity.ActualScene;
 import com.expo.entity.Encyclopedias;
 import com.expo.network.Http;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
 
     public WebTemplatePresenterImpl(WebTemplateContract.View view) {
@@ -26,5 +29,15 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
     @Override
     public String toJson(Object obj) {
         return Http.getGsonInstance().toJson( obj );
+    }
+
+    @Override
+    public List<Encyclopedias> loadNeayByVenues(ActualScene as) {
+        List<ActualScene> actualScenes = mDao.query( ActualScene.class, null );
+        List<Long> ids = new ArrayList<>();
+        for (ActualScene actualScene : actualScenes) {
+
+        }
+        return null;
     }
 }

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dms_30"
-    android:paddingTop="@dimen/dms_40">
+    android:paddingTop="@dimen/dms_50">
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         style="@style/TextSizeBlack15"
@@ -15,8 +15,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_10">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_exhibit"

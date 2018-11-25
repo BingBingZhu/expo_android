@@ -35,5 +35,5 @@
         android:layout_height="wrap_content"
         app:backSrc="@mipmap/ico_white_back"
         app:titleColor="@color/white"
-        app:titleBgColor="@color/green_02cd9b" />
+        android:background="@color/green_02cd9b" />
 </FrameLayout>

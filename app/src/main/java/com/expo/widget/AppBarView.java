@@ -29,78 +29,76 @@ public class AppBarView extends FrameLayout {
     private float mTitleSize;
     private int mTitleSizeUnit;
     private int mTitleColor;
-    private int mTitleBgColor;
 
     public AppBarView(Context context) {
-        this(context, null);
+        this( context, null );
     }
 
     public AppBarView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        this( context, attrs, 0 );
     }
 
     public AppBarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(attrs);
+        super( context, attrs, defStyleAttr );
+        init( attrs );
     }
 
     private void init(AttributeSet attrs) {
 
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AppBarView);
-        mBackImage = a.getDrawable(R.styleable.AppBarView_backSrc);
+        TypedArray a = getContext().obtainStyledAttributes( attrs, R.styleable.AppBarView );
+        mBackImage = a.getDrawable( R.styleable.AppBarView_backSrc );
         if (mBackImage == null) {
-            mBackImage = getContext().getResources().getDrawable(R.mipmap.ico_black_back);
+            mBackImage = getContext().getResources().getDrawable( R.mipmap.ico_black_back );
         }
-        mTitleSize = getResources().getDimensionPixelSize(R.dimen.font_40);
+        mTitleSize = getResources().getDimensionPixelSize( R.dimen.font_40 );
         mTitleSizeUnit = TypedValue.COMPLEX_UNIT_PX;
-        mTitle = a.getString(R.styleable.AppBarView_title);
-        mTitleColor = a.getColor(R.styleable.AppBarView_titleColor, getContext().getResources().getColor(R.color.caption_color));
-        mTitleBgColor = a.getColor(R.styleable.AppBarView_titleBgColor, getContext().getResources().getColor(R.color.white));
-        mShowBackButton = a.getBoolean(R.styleable.AppBarView_showBack, true);
+        mTitle = a.getString( R.styleable.AppBarView_title );
+        mTitleColor = a.getColor( R.styleable.AppBarView_titleColor, getContext().getResources().getColor( R.color.caption_color ) );
+        mShowBackButton = a.getBoolean( R.styleable.AppBarView_showBack, true );
         a.recycle();
 
-        mBackView = new ImageView(getContext());
-        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        mBackView = new ImageView( getContext() );
+        LayoutParams lp = new LayoutParams( LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT );
         lp.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
-        addView(mBackView, lp);
+        addView( mBackView, lp );
 
-        mTitleView = new TextView(getContext());
-        lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        mTitleView = new TextView( getContext() );
+        lp = new LayoutParams( LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT );
         lp.gravity = Gravity.CENTER;
-        mTitleView.setMaxLines(1);
-        mTitleView.setEllipsize(TextUtils.TruncateAt.END);
-        addView(mTitleView, lp);
-        setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
+        mTitleView.setMaxLines( 1 );
+        mTitleView.setEllipsize( TextUtils.TruncateAt.END );
+        addView( mTitleView, lp );
+        setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         if (mShowBackButton) {
-            mBackView.setVisibility(VISIBLE);
+            mBackView.setVisibility( VISIBLE );
         } else {
-            mBackView.setVisibility(GONE);
+            mBackView.setVisibility( GONE );
         }
-        if (!TextUtils.isEmpty(mTitle)) {
-            mTitleView.setText(mTitle);
+        if (!TextUtils.isEmpty( mTitle )) {
+            mTitleView.setText( mTitle );
         }
-        this.setBackgroundColor(mTitleBgColor);
-        mTitleView.setTextSize(mTitleSizeUnit, mTitleSize);
-        mTitleView.setTextColor(mTitleColor);
-        mBackView.setImageDrawable(mBackImage);
-        mBackView.setId(R.id.title_back);
-        mTitleView.setId(R.id.appbar_title);
-        int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getContext().getResources().getDisplayMetrics());
-        mBackView.setPadding(margin, margin, margin, margin);
+        this.setBackgroundColor( getResources().getColor( R.color.green_00cb99 ) );
+        mTitleView.setTextSize( mTitleSizeUnit, mTitleSize );
+        mTitleView.setTextColor( mTitleColor );
+        mBackView.setImageDrawable( mBackImage );
+        mBackView.setId( R.id.title_back );
+        mTitleView.setId( R.id.appbar_title );
+        int margin = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 12, getContext().getResources().getDisplayMetrics() );
+        mBackView.setPadding( margin, margin, margin, margin );
         if (mClickListener != null) {
-            mBackView.setOnClickListener(mClickListener);
+            mBackView.setOnClickListener( mClickListener );
         }
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        mTitleView.setMaxWidth(w - mBackView.getMeasuredWidth() * 2);
+        super.onSizeChanged( w, h, oldw, oldh );
+        mTitleView.setMaxWidth( w - mBackView.getMeasuredWidth() * 2 );
     }
 
     @Override
@@ -114,23 +112,23 @@ public class AppBarView extends FrameLayout {
 
 
     public void setTitle(int resId) {
-        mTitle = getContext().getResources().getString(resId);
+        mTitle = getContext().getResources().getString( resId );
         if (mTitleView != null) {
-            mTitleView.setText(mTitle);
+            mTitleView.setText( mTitle );
         }
     }
 
     public void setTitle(String title) {
         mTitle = title;
         if (mTitleView != null) {
-            mTitleView.setText(mTitle);
+            mTitleView.setText( mTitle );
         }
     }
 
     public void setTitleColor(int titleColor) {
         this.mTitleColor = titleColor;
         if (mTitleView != null) {
-            mTitleView.setTextColor(titleColor);
+            mTitleView.setTextColor( titleColor );
         }
     }
 
@@ -138,23 +136,23 @@ public class AppBarView extends FrameLayout {
         this.mTitleSize = size;
         this.mTitleSizeUnit = unit;
         if (mTitleView != null) {
-            this.mTitleView.setTextSize(mTitleSizeUnit, mTitleSize);
+            this.mTitleView.setTextSize( mTitleSizeUnit, mTitleSize );
         }
     }
 
     public void setBackImageResource(@DrawableRes int resId) {
-        this.mBackImage = getContext().getResources().getDrawable(resId);
+        this.mBackImage = getContext().getResources().getDrawable( resId );
         if (this.mBackView != null) {
-            this.mBackView.setImageDrawable(mBackImage);
+            this.mBackView.setImageDrawable( mBackImage );
         }
     }
 
     public void setRightView(View view) {
         mRightView = view;
-        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        LayoutParams lp = new LayoutParams( LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT );
         lp.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
-        view.setPadding((int) getContext().getResources().getDimension(R.dimen.dms_30), 0, (int) getContext().getResources().getDimension(R.dimen.dms_30), 0);
-        addView(mRightView, lp);
+        view.setPadding( (int) getContext().getResources().getDimension( R.dimen.dms_30 ), 0, (int) getContext().getResources().getDimension( R.dimen.dms_30 ), 0 );
+        addView( mRightView, lp );
     }
 
     public View getRightView() {

@@ -5,6 +5,8 @@ import com.expo.base.IView;
 import com.expo.entity.ActualScene;
 import com.expo.entity.Encyclopedias;
 
+import java.util.List;
+
 public interface WebTemplateContract {
     abstract class Presenter extends IPresenter<View> {
 
@@ -17,6 +19,8 @@ public interface WebTemplateContract {
         public abstract ActualScene loadSceneByWikiId(long id);
 
         public abstract String toJson(Object obj);
+
+        public abstract List<Encyclopedias> loadNeayByVenues(ActualScene as);
     }
 
     interface View extends IView {
