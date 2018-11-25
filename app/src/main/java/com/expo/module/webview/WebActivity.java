@@ -6,10 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -23,24 +20,14 @@ import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebContract;
 import com.expo.entity.RichText;
-import com.expo.module.map.NavigationActivity;
 import com.expo.module.share.ShareUtil;
 import com.expo.utils.Constants;
-import com.expo.utils.LanguageUtil;
-import com.expo.widget.AppBarView;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import butterknife.BindView;
-import butterknife.OnClick;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
@@ -54,8 +41,6 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     X5WebView mX5View;
     @BindView(R.id.common_progress)
     ProgressBar mProgressView;
-    @BindView(R.id.app_title)
-    AppBarView mAvTitle;
     private String mUrl;
     private String mTitle;
     private ShareUtil mShareUtil;
@@ -71,25 +56,26 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         mUrl = getIntent().getStringExtra( Constants.EXTRAS.EXTRA_URL );
         if (getIntent().getBooleanExtra( Constants.EXTRAS.EXTRA_SHOW_TITLE, true )) {
             mTitle = getIntent().getStringExtra( Constants.EXTRAS.EXTRA_TITLE );
-            setTitle( 0, mTitle );
+            int titleColorStyle = getIntent().getIntExtra( Constants.EXTRAS.EXTRA_TITLE_COLOR_STYLE, 0 );
+            setTitle( titleColorStyle, mTitle );
         } else {
             setTitle( 0, "" );
             setTitleVisibility( View.GONE );
         }
         mX5View.setWebChromeClient( webChromeClient );
-        mX5View.addJavascriptInterface(new WebActivity.JsHook(), "hook");
+        mX5View.addJavascriptInterface( new WebActivity.JsHook(), "hook" );
         loadUrl( mUrl );
-        mShareUtil = new ShareUtil(this);
+        mShareUtil = new ShareUtil( this );
     }
 
     private void loadUrl(String url) {
         try {
-            int rulId = Integer.parseInt(url);
-            mPresenter.getUrlById(rulId);
-        }catch (Exception e){
-            if (!url.startsWith("http") && !url.startsWith("https")
-                    && !url.startsWith("file") && !url.startsWith("javascript:")
-                    && !url.startsWith("www")) {
+            int rulId = Integer.parseInt( url );
+            mPresenter.getUrlById( rulId );
+        } catch (Exception e) {
+            if (!url.startsWith( "http" ) && !url.startsWith( "https" )
+                    && !url.startsWith( "file" ) && !url.startsWith( "javascript:" )
+                    && !url.startsWith( "www" )) {
                 url = Constants.URL.FILE_BASE_URL + url;
             }
             mX5View.loadUrl( url );
@@ -123,17 +109,12 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         return true;
     }
 
-    @OnClick(R.id.title_back)
-    public void onClick(View v) {
-        back();
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             back();
         }
-        return super.onKeyDown(keyCode, event);
+        return super.onKeyDown( keyCode, event );
     }
 
     private void back() {
@@ -159,6 +140,14 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         context.startActivity( in );
     }
 
+    public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title, int titleColorStyle) {
+        Intent in = new Intent( context, WebActivity.class );
+        in.putExtra( Constants.EXTRAS.EXTRA_TITLE, title == null ? "" : title );
+        in.putExtra( Constants.EXTRAS.EXTRA_URL, url );
+        in.putExtra( Constants.EXTRAS.EXTRA_TITLE_COLOR_STYLE, titleColorStyle );
+        context.startActivity( in );
+    }
+
     @Override
     public void returnRichText(RichText richText) {
         mX5View.loadData( richText.getContent(), "text/html;charset=utf8", "UTF-8" );
@@ -170,25 +159,25 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     public class JsHook {
         @JavascriptInterface
         public void weixin() {
-            share(Wechat.NAME);
+            share( Wechat.NAME );
         }
 
         @JavascriptInterface
         public void qq() {
-            share(QQ.NAME);
+            share( QQ.NAME );
         }
 
         @JavascriptInterface
         public void weibo() {
-            share(SinaWeibo.NAME);
+            share( SinaWeibo.NAME );
         }
     }
 
-    private void share(String name){
-        Bitmap bitmap = captureScreen(WebActivity.this);
-        String filePath = FileUtils.saveScreenShot(bitmap);
-        mShareUtil.setImagePath(filePath);
-        mShareUtil.doShare(name, filePath);
+    private void share(String name) {
+        Bitmap bitmap = captureScreen( WebActivity.this );
+        String filePath = FileUtils.saveScreenShot( bitmap );
+        mShareUtil.setImagePath( filePath );
+        mShareUtil.doShare( name, filePath );
     }
 
     /**
@@ -200,13 +189,13 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     @SuppressLint("NewApi")
     private Bitmap captureScreen(Activity context) {
         View cv = context.getWindow().getDecorView();
-        cv.setDrawingCacheEnabled(true);
+        cv.setDrawingCacheEnabled( true );
         cv.buildDrawingCache();
         Bitmap bmp = cv.getDrawingCache();
         if (bmp == null) {
             return null;
         }
-        bmp.setHasAlpha(false);
+        bmp.setHasAlpha( false );
         bmp.prepareToDraw();
         return bmp;
     }

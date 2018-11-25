@@ -24,6 +24,9 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IView {
 
+    public final static int TITLE_COLOR_STYLE_GREEN = 0;
+    public final static int TITLE_COLOR_STYLE_WHITE = 1;
+
     // Activity是否双击返回键退出应用 默认false
     private boolean mDoubleTapToExit;
     // 加载进度条视图

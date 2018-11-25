@@ -58,6 +58,7 @@ public interface Constants {
         public static final String EXTRA_TEMPLATE_TYPE = "extra_template_type";
         public static final String EXTRA_DATA_ID = "extra_data_id";
         public static final String EXTRA_SHOW_TITLE = "extra_show_title";
+        public static final String EXTRA_TITLE_COLOR_STYLE = "extra_title_color_style";
     }
 
     /**

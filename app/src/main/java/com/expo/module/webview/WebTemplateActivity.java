@@ -16,14 +16,13 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebTemplateContract;
-import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.Venue;
 import com.expo.module.map.NavigationActivity;
 import com.expo.module.map.ParkMapActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.AppBarView;
-import com.expo.widget.MyScrollView;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -32,7 +31,6 @@ import com.tencent.smtt.sdk.WebView;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presenter> implements WebTemplateContract.View {
 
@@ -70,7 +68,6 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 //        setTitle( 0, LanguageUtil.chooseTest( mEncyclopedias.caption, mEncyclopedias.captionEn ) );
 
         initTitleView();
-        mAvTitle.setTitle( R.string.sence_introduction );
         mAvTitle.setTitleColor( getResources().getColor( R.color.black_333333 ) );
         mAvTitle.setBackgroundColor( Color.WHITE );
         mAvTitle.setBackImageResource( R.mipmap.ico_black_back );
@@ -82,6 +79,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     }
 
     private void initTitleView() {
+        setTitle( 0, R.string.sence_introduction );
         mAvTitle = (AppBarView) super.getTitleView();
         mAvTitle.setTitleColor( getResources().getColor( R.color.white ) );
         mAvTitle.setTitleSize( TypedValue.COMPLEX_UNIT_PX, SizeUtils.sp2px( 17 ) );
@@ -135,11 +133,6 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         String url = Constants.URL.ENCYCLOPEDIAS_DETAIL_URL + param;
         in.putExtra( Constants.EXTRAS.EXTRA_URL, url );
         context.startActivity( in );
-    }
-
-    @OnClick(R.id.app_title)
-    protected void clickTitle(View view) {
-        finish();
     }
 
     @Override
