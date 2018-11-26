@@ -30,7 +30,10 @@
             android:id="@+id/park_as_item_isvoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dms_10"
+            android:paddingLeft="@dimen/dms_10"
+            android:paddingRight="@dimen/dms_10"
+            android:paddingTop="@dimen/dms_16"
+            android:paddingBottom="@dimen/dms_16"
             android:layout_marginTop="@dimen/dms_2"
             android:layout_marginBottom="@dimen/dms_2"
             android:src="@drawable/selector_park_voice_ico"/>
