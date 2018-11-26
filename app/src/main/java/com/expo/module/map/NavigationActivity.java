@@ -141,7 +141,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         initMapNaviView();
         initPoiSearch();
         mVenue = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
-        virtualScene = mPresenter.loadSceneById( mVenue.getId());
+        virtualScene = mPresenter.loadSceneById(mVenue.getId());
         initSlidingDrawer();
         initWebView();
         MediaPlayerManager.getInstence().setListener(null);
@@ -306,8 +306,10 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     protected void onDestroy() {
         DeviceRotateManager.getInstance().unregisterOrientationChangedListener(mOnOrientationChangedListener);
         LocationManager.getInstance().unregisterLocationListener(mOnLocationChangeListener);
-        mAMapNavi.stopNavi();
-        mAMapNavi.destroy();
+        if (mAMapNavi != null) {
+            mAMapNavi.stopNavi();
+            mAMapNavi.destroy();
+        }
         mMapView.onDestroy();
         MediaPlayerManager.getInstence().onDestory();
         if (mMythredFresh != null)
@@ -530,7 +532,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             return;
         }
         Intent in = new Intent(context, NavigationActivity.class);
-        in.putExtra(Constants.EXTRAS.EXTRAS, venue );
+        in.putExtra(Constants.EXTRAS.EXTRAS, venue);
         in.putExtra(Constants.EXTRAS.EXTRA_URL, voiceUrl);
         context.startActivity(in);
     }
@@ -581,13 +583,13 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                             angle = 90.0d;
                         else
                             angle = Math.atan(Math.abs((vd.lon - lon) / jd)) * 180 / Math.PI;
-                        if(vd.lat < lat){
+                        if (vd.lat < lat) {
                             angle += 180;
-                            if(vd.lon < lon)
+                            if (vd.lon < lon)
                                 angle += 90;
 
                         } else {
-                            if(vd.lon > lon)
+                            if (vd.lon > lon)
                                 angle += 90;
                         }
                         vd.angle = new BigDecimal(angle).setScale(2, BigDecimal.ROUND_HALF_UP).toString();

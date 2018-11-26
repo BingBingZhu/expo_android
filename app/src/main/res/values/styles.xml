@@ -11,6 +11,10 @@
         <item name="android:windowBackground">@color/white_f4</item>
     </style>
 
+    <style name="AppTheme_Tourist_service" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/tourist_service_bg</item>
+    </style>
+
     <style name="AppTheme_Fullscreen" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
     </style>
@@ -176,7 +180,8 @@
     </style>
 
     <style name="tab_text_appearance">
-        <item name="android:textSize">@dimen/font_28</item>
+        <item name="android:textSize">@dimen/font_34</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">

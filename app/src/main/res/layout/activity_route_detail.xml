@@ -36,15 +36,30 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/horn" />
 
+            <TextView
+                android:id="@+id/player_curr_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_333333"
+                android:layout_marginLeft="@dimen/dms_28"
+                android:text="00:00" />
+
             <SeekBar
                 android:id="@+id/route_progress"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dms_20"
-                android:layout_marginLeft="@dimen/dms_10"
+                android:layout_weight="1"
                 android:indeterminateOnly="false"
                 android:progress="0"
-                android:thumb="@drawable/point_accent"
-                android:progressDrawable="@drawable/route_progress_bar" />
+                android:progressDrawable="@drawable/route_progress_bar"
+                android:thumb="@drawable/point_accent" />
+
+            <TextView
+                android:id="@+id/player_total_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_333333"
+                android:text="00:00" />
         </LinearLayout>
 
         <TextView

@@ -35,6 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dms_12"
             android:layout_marginRight="@dimen/dms_18"
+            android:paddingTop="@dimen/dms_18"
+            android:paddingBottom="@dimen/dms_18"
             android:background="@android:color/transparent"
             android:textSize="@dimen/font_26"
             android:textColorHint="@color/color_999"
@@ -61,7 +63,7 @@
                 android:layout_marginTop="@dimen/dms_28"
                 android:layout_marginBottom="@dimen/dms_28"
                 android:layout_marginLeft="@dimen/dms_30"
-                android:textSize="@dimen/font_30"
+                android:textSize="@dimen/font_34"
                 android:textColor="@color/color_333"
                 android:text="历史记录"/>
             <ImageView

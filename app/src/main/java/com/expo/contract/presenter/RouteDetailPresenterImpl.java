@@ -47,8 +47,7 @@ public class RouteDetailPresenterImpl extends RouteDetailContract.Presenter {
         if (venue == null || TextUtils.isEmpty( venue.getWikiId() ) || !venue.getWikiId().matches( Constants.Exps.NUMBER )) {
             return;
         }
-        Encyclopedias encyclopedias = mDao.queryById( Encyclopedias.class, new QueryParams()
-                .add( "eq", "_id", Long.parseLong( venue.getWikiId() ) ) );
+        Encyclopedias encyclopedias = mDao.queryById( Encyclopedias.class, Long.parseLong( venue.getWikiId() ) );
         if (encyclopedias == null) {
             return;
         }

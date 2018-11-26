@@ -71,6 +71,8 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
         mSearchRecordUtil = new SearchRecordUtil();
         mHistory = mSearchRecordUtil.loadHistory();
         mHistoryAdapter = new ArrayAdapter<String>( getContext(), R.layout.layout_history_item, mHistory );
+        mHistoryList.setDivider(getResources().getDrawable(android.R.drawable.divider_horizontal_bright));
+        mHistoryList.setDividerHeight(getResources().getDimensionPixelSize(R.dimen.dms_2));
         mHistoryList.setAdapter( mHistoryAdapter );
         mHistoryList.setOnItemClickListener( (parent, view, position, id) -> search( mHistory[position] ) );
     }

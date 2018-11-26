@@ -60,13 +60,13 @@
 
         <meta-data
             android:name="com.baidu.speech.APP_ID"
-            android:value="14824611"/>
+            android:value="14824611" />
         <meta-data
             android:name="com.baidu.speech.API_KEY"
-            android:value="6zE5wiPZP15n8WN4kP4tzopl"/>
+            android:value="6zE5wiPZP15n8WN4kP4tzopl" />
         <meta-data
             android:name="com.baidu.speech.SECRET_KEY"
-            android:value="vy4R0DZ6XemTZkWSppgHCoBpl5hz3RgU"/>
+            android:value="vy4R0DZ6XemTZkWSppgHCoBpl5hz3RgU" />
 
         <activity
             android:name=".module.splash.SplashActivity"
@@ -168,7 +168,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.service.TouristServiceActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Tourist_service" />
         <activity
             android:name=".module.camera.CameraActivity"
             android:screenOrientation="portrait" />
@@ -200,8 +201,8 @@
         <service android:name="com.amap.api.location.APSService" />
         <!--百度语音服务-->
         <!--<service-->
-            <!--android:name="com.baidu.speech."-->
-            <!--android:exported="false"/>-->
+        <!--android:name="com.baidu.speech."-->
+        <!--android:exported="false"/>-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"
