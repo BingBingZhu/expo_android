@@ -34,7 +34,7 @@
             style="@style/style_home_fun_item"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/home_tourist_service"
+            android:drawableTop="@mipmap/home_venue_order"
             android:text="@string/home_func_item_appointment" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable
