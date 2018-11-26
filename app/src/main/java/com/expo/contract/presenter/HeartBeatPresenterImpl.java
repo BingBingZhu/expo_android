@@ -31,30 +31,30 @@ import io.reactivex.Observable;
 
 public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
     public HeartBeatPresenterImpl(HeartBeatContract.View view) {
-        super(view);
+        super( view );
     }
 
     @Override
     public void sendHeartBeat() {
         Map<String, Object> params = Http.getBaseParams();
-        if (!params.containsKey("Uid") || !params.containsKey("Ukey")) {
+        if (!params.containsKey( "Uid" ) || !params.containsKey( "Ukey" )) {
             return;
         }
-        params.put("Position", LocationManager.getInstance().getDirection());
+        params.put( "Position", LocationManager.getInstance().getDirection() );
         //获取上次获取消息的时间
-        String time = PrefsHelper.getString(Constants.Prefs.KEY_LAST_MESSAGE_TIME, null);
-        if (TextUtils.isEmpty(time)) {
+        String time = PrefsHelper.getString( Constants.Prefs.KEY_LAST_MESSAGE_TIME, null );
+        if (TextUtils.isEmpty( time )) {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -15);
-            time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(calendar.getTime());
+            calendar.add( Calendar.DATE, -15 );
+            time = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss", Locale.getDefault() ).format( calendar.getTime() );
         }
-        params.put("LastMessageTime", time);
-        Observable<UserHeartBeatResp> observable = Http.getServer().sendHeartBeat(Http.buildRequestBody(params));
-        Http.request(new ResponseCallback<UserHeartBeatResp>() {
+        params.put( "LastMessageTime", time );
+        Observable<UserHeartBeatResp> observable = Http.getServer().sendHeartBeat( Http.buildRequestBody( params ) );
+        Http.request( new ResponseCallback<UserHeartBeatResp>() {
             @Override
             public void onResponse(UserHeartBeatResp heartBeatRsb) {
                 if (heartBeatRsb.MessageList != null && !heartBeatRsb.MessageList.isEmpty()) {
-                    PrefsHelper.setString(Constants.Prefs.KEY_LAST_MESSAGE_TIME, heartBeatRsb.UpdateTime);
+                    PrefsHelper.setString( Constants.Prefs.KEY_LAST_MESSAGE_TIME, heartBeatRsb.UpdateTime );
                     List<Message> messages = heartBeatRsb.MessageList;
                     //新消息集合不为空
                     if (messages != null && !messages.isEmpty()) {
@@ -63,15 +63,15 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
                             if (message.getType() == null) {
                                 continue;
                             }
-                            isNewMessage = isNewMessage || handleMessage(message);
+                            isNewMessage = isNewMessage || handleMessage( message );
                         }
                         if (isNewMessage)
-                            messages.get(0).sendMessageCount(null);
+                            messages.get( 0 ).sendMessageCount( null );
                     }
                 }
-                mView.setHeartInvTime(heartBeatRsb.HeartInvTime);
+                mView.setHeartInvTime( heartBeatRsb.HeartInvTime );
             }
-        }, observable);
+        }, observable );
     }
 
     /**
@@ -82,48 +82,47 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
      */
     private boolean handleMessage(Message message) {
         if (message == null) return false;
-        if ("3".equals(message.getType())) {
-            String currUkey = ExpoApp.getApplication().getUser().getUkey();
-            if ("relogin".equals(message.getCommand()) && message.getParams() != null
-                    && (!currUkey.equals(message.getParams().get("ukey")))) {
-                mDao.clear(User.class);
-                ExpoApp.getApplication().setUser(null);
+        message.setUid( ExpoApp.getApplication().getUser().getUid() );
+        if ("3".equals( message.getType() )) {
+            if ("relogin".equals( message.getCommand() ) && message.getParams() != null) {
+                mDao.clear( User.class );
+                ExpoApp.getApplication().setUser( null );
                 Intent intent = new Intent();
-                intent.putExtra(Constants.EXTRAS.EXTRA_LOGIN_STATE, false);
-                LocalBroadcastUtil.sendBroadcast(mView.getContext(), intent, Constants.Action.LOGIN_CHANGE_OF_STATE_ACTION);
+                intent.putExtra( Constants.EXTRAS.EXTRA_LOGIN_STATE, false );
+                LocalBroadcastUtil.sendBroadcast( mView.getContext(), intent, Constants.Action.LOGIN_CHANGE_OF_STATE_ACTION );
                 showForceSingOutDialog();
             }
             return false;
         } else {
-            mDao.saveOrUpdate(message);
-            checkMessage(message);
-            LocalBroadcastUtil.sendBroadcast(mView.getContext(), null, Constants.Action.ACTION_RECEIVE_MESSAGE);
+            mDao.saveOrUpdate( message );
+            checkMessage( message );
+            LocalBroadcastUtil.sendBroadcast( mView.getContext(), null, Constants.Action.ACTION_RECEIVE_MESSAGE );
             return true;
         }
     }
 
     private void showForceSingOutDialog() {
-        new AlertDialog.Builder(ExpoApp.getApplication().getTopActivity())
-                .setMessage("您的账号在其他设备登录")
-                .setCancelable(false)
-                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder( ExpoApp.getApplication().getTopActivity() )
+                .setMessage( "您的账号在其他设备登录" )
+                .setCancelable( false )
+                .setNegativeButton( "确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ExpoApp.getApplication().setUser(null);
-                        LoginActivity.startActivity(ExpoApp.getApplication().getTopActivity());
+                        ExpoApp.getApplication().setUser( null );
+                        LoginActivity.startActivity( ExpoApp.getApplication().getTopActivity() );
                     }
-                })
+                } )
                 .show();
     }
 
     private void checkMessage(Message message) {
         if (message.getMsgKind().length() < 3) return;
-        if (!StringUtils.equals(message.getMsgKind().substring(2, 3), "1")) return;
-        if (!StringUtils.equals("1", message.getType())) return;
-        new AlertDialog.Builder(ExpoApp.getApplication().getTopActivity())
-                .setTitle(R.string.new_message)
-                .setMessage(LanguageUtil.chooseTest(message.getContent(), message.getContentEn()))
-                .setNegativeButton(R.string.ok, null)
+        if (!StringUtils.equals( message.getMsgKind().substring( 2, 3 ), "1" )) return;
+        if (!StringUtils.equals( "1", message.getType() )) return;
+        new AlertDialog.Builder( ExpoApp.getApplication().getTopActivity() )
+                .setTitle( R.string.new_message )
+                .setMessage( LanguageUtil.chooseTest( message.getContent(), message.getContentEn() ) )
+                .setNegativeButton( R.string.ok, null )
                 .show();
     }
 }

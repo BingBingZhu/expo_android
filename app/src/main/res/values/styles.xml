@@ -8,11 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowBackground">@color/white_f4</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="AppTheme_Tourist_service" parent="AppTheme">
         <item name="android:windowBackground">@drawable/tourist_service_bg</item>
+    </style>
+
+    <style name="AppTheme_Main" parent="AppTheme">
+        <item name="android:windowBackground">@color/white_f4</item>
     </style>
 
     <style name="AppTheme_Fullscreen" parent="AppTheme">
@@ -38,7 +42,7 @@
 
     <style name="LineHorizontal">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dms_2</item>
+        <item name="android:layout_height">1px</item>
         <item name="android:background">@color/gray_cc</item>
     </style>
 
@@ -115,6 +119,8 @@
     <style name="TextSize16">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <!--<item name="android:layout_marginTop">@dimen/dms_40</item>-->
+        <!--<item name="android:layout_marginBottom">@dimen/dms_40</item>-->
         <item name="android:textSize">@dimen/font_32</item>
     </style>
 
@@ -156,11 +162,11 @@
         <item name="android:layout_width">match_parent</item>
         <!--<item name="android:layout_weight">wrap_content</item>-->
         <item name="android:gravity">center_vertical</item>
-        <item name="android:drawablePadding">@dimen/dms_30</item>
-        <item name="android:paddingLeft">@dimen/dms_30</item>
-        <item name="android:paddingRight">@dimen/dms_30</item>
-        <item name="android:paddingTop">@dimen/dms_36</item>
-        <item name="android:paddingBottom">@dimen/dms_36</item>
+        <item name="android:drawablePadding">@dimen/dms_10</item>
+        <item name="android:paddingLeft">@dimen/dms_26</item>
+        <item name="android:paddingRight">@dimen/dms_26</item>
+        <item name="android:paddingTop">@dimen/dms_28</item>
+        <item name="android:paddingBottom">@dimen/dms_28</item>
         <item name="android:drawableRight">@mipmap/arrow_mine</item>
     </style>
 

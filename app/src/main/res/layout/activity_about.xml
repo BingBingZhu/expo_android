@@ -33,6 +33,7 @@
             android:id="@+id/app_info"
             style="@style/TextSize13"
             android:layout_width="match_parent"
+            android:lineSpacingMultiplier="1.5"
             android:textColor="@color/gray_66" />
     </ScrollView>
 

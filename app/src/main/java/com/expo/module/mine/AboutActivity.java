@@ -29,7 +29,7 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(0, R.string.item_mine_about);
+        setTitle(0, "");
 
         mTvVersionName.setText("v"+AppUtils.getAppVersionName());
         mTvAppInfo.setText(R.string.about_content_info);

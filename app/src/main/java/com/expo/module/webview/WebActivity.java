@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.expo.R;
@@ -20,12 +21,16 @@ import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebContract;
 import com.expo.entity.RichText;
+import com.expo.module.login.LoginActivity;
 import com.expo.module.share.ShareUtil;
 import com.expo.utils.Constants;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import butterknife.BindView;
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -143,7 +148,13 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
     @Override
     public void returnRichText(RichText richText) {
-        mX5View.loadData( richText.getContent(), "text/html;charset=utf8", "UTF-8" );
+        String content = "<html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body><div>"+richText.getContent()+"</div></body>";
+        mX5View.loadData( content, "text/html;charset=utf8", "UTF-8" );
+    }
+
+    @Override
+    public void logout() {
+        LoginActivity.startActivity( getContext() );
     }
 
     /**
@@ -167,7 +178,8 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
         @JavascriptInterface
         public void unLogin(){
-            ToastHelper.showShort("账号异常");
+            ToastHelper.showShort("账号异常，请重新登录！");
+            mPresenter.logout();
         }
     }
 

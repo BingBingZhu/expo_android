@@ -12,11 +12,13 @@ import android.widget.TextView;
 
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
+import com.baidu.speech.utils.LogUtil;
 import com.expo.R;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.utils.LanguageUtil;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,19 +45,19 @@ public class ParkActualSceneAdapter extends RecyclerView.Adapter<ParkActualScene
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_park_as_item, parent, false);
-        ParkActualSceneAdapter.ViewHolder holder = new ParkActualSceneAdapter.ViewHolder(view);
-        holder.setOnItemClickListener(onItemClickListener);
+        View view = LayoutInflater.from( mContext ).inflate( R.layout.layout_park_as_item, parent, false );
+        ParkActualSceneAdapter.ViewHolder holder = new ParkActualSceneAdapter.ViewHolder( view );
+        holder.setOnItemClickListener( onItemClickListener );
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Venue venue = mVenues.get(position);
-        holder.imgIco.setImageBitmap(mVenuesType.getLstBitmap());
-        holder.imgIsVoice.setEnabled(!TextUtils.isEmpty( venue.getVoiceUrl()));
-        holder.tvName.setText(LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption()));
-        holder.tvDistance.setText(getDistance( venue.getLat(), venue.getLng()));
+        Venue venue = mVenues.get( position );
+        holder.imgIco.setImageBitmap( mVenuesType.getLstBitmap() );
+        holder.imgIsVoice.setEnabled( !TextUtils.isEmpty( venue.getVoiceUrl() ) );
+        holder.tvName.setText( LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption() ) );
+        holder.tvDistance.setText( getDistance( venue.getLat(), venue.getLng() ) );
     }
 
     @Override
@@ -71,39 +73,41 @@ public class ParkActualSceneAdapter extends RecyclerView.Adapter<ParkActualScene
         TextView tvDistance;
 
         public ViewHolder(View v) {
-            super(v);
-            imgIco = v.findViewById(R.id.park_as_item_ico);
-            imgIsVoice = v.findViewById(R.id.park_as_item_isvoice);
-            tvName = v.findViewById(R.id.park_as_item_name);
-            tvDistance = v.findViewById(R.id.park_as_item_distance);
-            imgIsVoice.setTag(this);
-            v.setTag(this);
+            super( v );
+            imgIco = v.findViewById( R.id.park_as_item_ico );
+            imgIsVoice = v.findViewById( R.id.park_as_item_isvoice );
+            tvName = v.findViewById( R.id.park_as_item_name );
+            tvDistance = v.findViewById( R.id.park_as_item_distance );
+            imgIsVoice.setTag( this );
+            v.setTag( this );
         }
 
         public void setOnItemClickListener(View.OnClickListener clickListener) {
             if (clickListener != null) {
-                this.itemView.setOnClickListener(clickListener);
+                this.itemView.setOnClickListener( clickListener );
             }
         }
     }
 
-    public void setOnItemClickListener(View.OnClickListener clickListener){
+    public void setOnItemClickListener(View.OnClickListener clickListener) {
         this.onItemClickListener = clickListener;
     }
+
+    private DecimalFormat mDecimalFormat;
 
     private String getDistance(Double lat, Double lng) {
         if (null == mLatLng || mLatLng.latitude == 0) {
             return "未定位";
         }
         String units = "m";
-        float distance = AMapUtils.calculateLineDistance(new LatLng(lat, lng), mLatLng);
+        float distance = AMapUtils.calculateLineDistance( new LatLng( lat, lng ), mLatLng );
         if (distance >= 1000) {
             units = "km";
             distance = distance / 1000;
         }
-        int itemNum = 3;
-        float totalPrice = distance * itemNum;
-        float num = (float) (Math.round(totalPrice * 100) / 100);
-        return num + units;
+        if (mDecimalFormat == null) {
+            mDecimalFormat = new DecimalFormat( "#######.00" );
+        }
+        return mDecimalFormat.format( distance ) + units;
     }
 }

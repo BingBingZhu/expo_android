@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
+import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.contract.MineContract;
@@ -70,21 +71,21 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     public void freshUser(User user) {
         if (user == null) return;
         if (!StringUtils.isEmpty( user.getPhotoUrl() ))
-            CommUtils.setImgPic(getContext(), user.getPhotoUrl(), mImageView);
+            CommUtils.setImgPic( getContext(), user.getPhotoUrl(), mImageView );
         mTvMineName.setText( user.getNick() );
     }
 
     @Override
     public void returnCommonInfo(CommonInfo commonInfo) {
         WebActivity.startActivity( getContext(), commonInfo.getLinkUrl(),
-                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn() );
+                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn(), BaseActivity.TITLE_COLOR_STYLE_WHITE );
     }
 
     @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name, R.id.item_mine_bespeak,
             R.id.item_mine_comment_report, R.id.item_mine_message, R.id.item_mine_about,
             R.id.item_mine_setting, R.id.mine_integral, R.id.mine_badge})
-    public void onClick(View v){
-        switch (v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.mine_edit_info:
             case R.id.mine_img:
             case R.id.mine_name:

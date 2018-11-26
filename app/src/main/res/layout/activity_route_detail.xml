@@ -40,7 +40,7 @@
                 android:id="@+id/player_curr_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black_333333"
+                android:textColor="@color/gray_99"
                 android:layout_marginLeft="@dimen/dms_28"
                 android:text="00:00" />
 
@@ -58,7 +58,7 @@
                 android:id="@+id/player_total_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black_333333"
+                android:textColor="@color/gray_99"
                 android:text="00:00" />
         </LinearLayout>
 

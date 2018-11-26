@@ -39,6 +39,11 @@ public class PanoramaFragment extends BaseFragment<PanoramaContract.Presenter> i
     }
 
     @Override
+    public boolean isNeedPaddingTop() {
+        return false;
+    }
+
+    @Override
     protected boolean hasPresenter() {
         return true;
     }
