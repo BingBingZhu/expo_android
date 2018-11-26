@@ -153,8 +153,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     }
 
     private void initWebView() {
-//        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
-        mWebView.loadUrl("http://192.168.6.129/sever/dist/index.html#/navigation");
+        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
+//        mWebView.loadUrl("http://192.168.6.129/sever/dist/index.html#/navigation");
 //        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }

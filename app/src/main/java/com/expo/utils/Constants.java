@@ -41,6 +41,7 @@ public interface Constants {
         public static final String KEY_ALL_TYPE_UPDATE_TIME = "key_all_type_update_time";
         public static final String KEY_TOP_LINE_UPDATE_TIME = "key_top_line_update_time";
         public static final String KEY_VENUES_UPDATE_TIME = "key_venues_update_time";
+        public static final String KEY_ROUTES_UPDATE_TIME = "key_routes_update_time";
     }
 
     /**

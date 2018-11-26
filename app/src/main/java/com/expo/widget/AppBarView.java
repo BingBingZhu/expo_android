@@ -67,10 +67,10 @@ public class AppBarView extends FrameLayout {
         lp.gravity = Gravity.CENTER;
         mTitleView.setMaxLines( 1 );
         mTitleView.setSingleLine();
-        mTitleView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        mTitleView.setFocusableInTouchMode(true);
-        mTitleView.setMarqueeRepeatLimit(-1);
-        mTitleView.setMaxWidth((int) getContext().getResources().getDimension(R.dimen.dms_390));
+        mTitleView.setEllipsize( TextUtils.TruncateAt.MARQUEE );
+        mTitleView.setFocusableInTouchMode( true );
+        mTitleView.setMarqueeRepeatLimit( -1 );
+        mTitleView.setMaxWidth( (int) getContext().getResources().getDimension( R.dimen.dms_390 ) );
         addView( mTitleView, lp );
         setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
     }
@@ -95,7 +95,7 @@ public class AppBarView extends FrameLayout {
         int margin = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 12, getContext().getResources().getDisplayMetrics() );
         mBackView.setPadding( margin, margin, margin, margin );
         if (mClickListener != null) {
-            mBackView.setOnClickListener( mClickListener );
+            mBackView.setOnClickListener( (v) -> mClickListener.onClick( v ) );
         }
     }
 

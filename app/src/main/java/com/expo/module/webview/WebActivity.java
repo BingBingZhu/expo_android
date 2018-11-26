@@ -9,10 +9,8 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.expo.R;
@@ -28,9 +26,6 @@ import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import butterknife.BindView;
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -67,6 +62,13 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             setTitle( 0, "" );
             setTitleVisibility( View.GONE );
         }
+        getTitleView().setOnClickListener( (v) -> {
+            if (mX5View.canGoBack()) {
+                mX5View.goBack();
+                return;
+            }
+            onBackPressed();
+        } );
         mX5View.setWebChromeClient( webChromeClient );
         mX5View.addJavascriptInterface( new WebActivity.JsHook(), "hook" );
         loadUrl( mUrl );
@@ -114,15 +116,6 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        if (mX5View.canGoBack()) {
-            mX5View.goBack();
-            return;
-        }
-        super.onBackPressed();
-    }
-
     public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title) {
         Intent in = new Intent( context, WebActivity.class );
         in.putExtra( Constants.EXTRAS.EXTRA_TITLE, title == null ? "" : title );
@@ -148,7 +141,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
     @Override
     public void returnRichText(RichText richText) {
-        String content = "<html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body><div>"+richText.getContent()+"</div></body>";
+        String content = "<html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body><div>" + richText.getContent() + "</div></body>";
         mX5View.loadData( content, "text/html;charset=utf8", "UTF-8" );
     }
 
@@ -177,8 +170,8 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         }
 
         @JavascriptInterface
-        public void unLogin(){
-            ToastHelper.showShort("账号异常，请重新登录！");
+        public void unLogin() {
+            ToastHelper.showShort( "账号异常，请重新登录！" );
             mPresenter.logout();
         }
     }

@@ -93,7 +93,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                     }
                 }
                 if (!TextUtils.isEmpty( rsp.router )) {
-                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, null );
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ROUTES_UPDATE_TIME, null );
                     if (!rsp.router.equals( updateTime )) {
                         loadRouteInfo( emptyBody );
                     }
@@ -325,29 +325,6 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         addNetworkRecord();
     }
 
-
-    /*
-     * 加载主题数据
-     */
-    private void loadSubjects(RequestBody emptyBody) {
-        Observable<SubjectResp> observable = Http.getServer().loadSubjects( emptyBody );
-        isRequest = Http.request( new ResponseCallback<SubjectResp>() {
-            @Override
-            protected void onResponse(SubjectResp rsp) {
-                PrefsHelper.setString( Constants.Prefs.KEY_SUBJECT_UPDATE_TIME, rsp.updateTime );
-                mDao.clear( Subject.class );
-                mDao.saveOrUpdateAll( rsp.subjects );
-            }
-
-            @Override
-            public void onComplete() {
-                notifyLoadComplete();
-            }
-        }, observable );
-        addNetworkRecord();
-    }
-
-
     /*
      * 加载常用信息
      */
@@ -400,6 +377,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         isRequest = Http.request( new ResponseCallback<RouteInfoResp>() {
             @Override
             protected void onResponse(RouteInfoResp rsp) {
+                PrefsHelper.setString( Constants.Prefs.KEY_ROUTES_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( RouteInfo.class );
                 mDao.saveOrUpdateAll( rsp.routeList );
             }

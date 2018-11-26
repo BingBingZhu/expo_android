@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/dms_46"
-    android:paddingLeft="@dimen/dms_46"
+    android:paddingLeft="@dimen/dms_44"
     android:paddingRight="@dimen/dms_46"
     android:paddingBottom="@dimen/dms_14">
 
@@ -11,7 +11,6 @@
         android:id="@+id/message_img"
         android:layout_width="@dimen/dms_30"
         android:layout_height="@dimen/dms_30"
-        android:layout_marginLeft="@dimen/dms_30"
         android:layout_marginRight="@dimen/dms_10"
         android:layout_centerVertical="true"
         android:layout_alignTop="@+id/message_name"
@@ -33,7 +32,7 @@
         android:layout_toRightOf="@id/message_img"
         android:layout_marginLeft="@dimen/dms_12"
         android:layout_below="@id/message_img"
-        android:layout_marginTop="@dimen/dms_14"
+        android:layout_marginTop="@dimen/dms_6"
         android:textColor="@color/gray_99"
         android:text="2018-6-6 14:55:55"/>
 
@@ -43,7 +42,7 @@
         android:layout_toRightOf="@id/message_img"
         android:layout_marginLeft="@dimen/dms_12"
         android:layout_below="@id/message_time"
-        android:layout_marginTop="@dimen/dms_30"
+        android:layout_marginTop="@dimen/dms_18"
         android:maxLines="2"
         android:ellipsize="end"
         android:textColor="@color/gray_99"
