@@ -105,13 +105,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         }
         try {
             mCamera = Camera.open(mCameraId);
-            Camera.Parameters parameters = mCamera.getParameters();
-            //连续对焦
-            parameters.setFocusMode( Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE );
-            //设置预览帧率
-            parameters.setPreviewFrameRate( 30 );
-            parameters.setPictureFormat( ImageFormat.JPEG );
-            mCamera.setParameters( parameters );
+            mCamera.autoFocus(this);
         } catch (Exception ee) {
             mCamera = null;
             cameraState = CameraState.ERROR;
