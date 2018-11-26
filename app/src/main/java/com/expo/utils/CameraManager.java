@@ -124,8 +124,8 @@ public class CameraManager implements ICameraManager {
             //改变预览视图尺寸
             changeDisplayViewSize( previewSize );
         }
-        LogUtils.d( TAG, "preview size------>>>[" + previewSize.width + "," + previewSize.height + "]" );
-        LogUtils.d( TAG, "view size------>>>[" + mViewWidth + "," + mViewHeight + "]" );
+//        LogUtils.d( TAG, "preview size------>>>[" + previewSize.width + "," + previewSize.height + "]" );
+//        LogUtils.d( TAG, "view size------>>>[" + mViewWidth + "," + mViewHeight + "]" );
         //设置拍照尺寸
         Camera.Size pictureSize = getOptimalPictureSize( mViewWidth, mViewHeight );
         if (pictureSize != null)

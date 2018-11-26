@@ -1,7 +1,13 @@
 package com.expo.contract.presenter;
 
+import android.location.Location;
+
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.contract.SeekHelpContract;
+import com.expo.db.QueryParams;
+import com.expo.entity.RouteInfo;
+import com.expo.entity.Venue;
+import com.expo.entity.VenuesType;
 import com.expo.entity.VisitorService;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
@@ -9,6 +15,7 @@ import com.expo.network.response.BaseResponse;
 import com.expo.network.response.UploadRsp;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -27,6 +34,12 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
         upLoadImgFile(visitorService, visitorService.img_url1, 0);
         upLoadImgFile(visitorService, visitorService.img_url2, 1);
         upLoadImgFile(visitorService, visitorService.img_url3, 2);
+    }
+
+    @Override
+    public void getServerPoint(Location mLocation) {
+//        List<Venue> facilities = mDao.query(Venue.class, new QueryParams()
+//                .add("eq", "is_enable", 1));
     }
 
     public void upLoadImgFile(VisitorService visitorService, String filePath, int positon) {

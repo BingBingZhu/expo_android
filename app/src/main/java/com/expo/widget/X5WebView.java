@@ -65,7 +65,6 @@ public class X5WebView extends WebView {
 
         WebSettings webSetting = this.getSettings();
         webSetting.setDefaultTextEncodingName( "UTF-8" );
-        webSetting.setUserAgentString( webSetting.getUserAgentString() + APP_NAME_UA );
         webSetting.setAllowFileAccessFromFileURLs( true );
         webSetting.setJavaScriptEnabled( true );
         webSetting.setJavaScriptCanOpenWindowsAutomatically( true );

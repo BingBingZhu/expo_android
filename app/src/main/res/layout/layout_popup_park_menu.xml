@@ -56,8 +56,8 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/dms_20"
         android:paddingRight="@dimen/dms_20"
-        android:layout_marginTop="@dimen/dms_28"
-        android:layout_marginBottom="@dimen/dms_28"
+        android:layout_marginTop="@dimen/dms_16"
+        android:layout_marginBottom="@dimen/dms_16"
         android:overScrollMode="never"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 </LinearLayout>
