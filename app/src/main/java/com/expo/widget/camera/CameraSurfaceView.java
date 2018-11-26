@@ -94,7 +94,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         isAttachedWindow = true;
     }
 
-    private void openCamera() {
+    public void openCamera() {
         if (mOpenBackCamera) {
             mCameraId = findCamera(false);
         } else {
@@ -216,7 +216,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     };
 
     //设置Camera各项参数
-    private void startPreview() {
+    public void startPreview() {
         if (mCamera == null) return;
         try {
             mParam = mCamera.getParameters();
