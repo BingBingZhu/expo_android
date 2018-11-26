@@ -135,7 +135,7 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
 
     private View initItemView(String text, LatLonPoint point) {
         MyRadioButton textViewDrawable = new MyRadioButton(this);
-        textViewDrawable.setLayoutParams(new LinearLayoutCompat.LayoutParams(-1, (int) getResources().getDimension(R.dimen.dms_80)));
+        textViewDrawable.setLayoutParams(new LinearLayoutCompat.LayoutParams(-1, (int) getResources().getDimension(R.dimen.dms_110)));
         textViewDrawable.setText(text);
         textViewDrawable.setOnClickListener(v -> {
             mSelectView = v;
