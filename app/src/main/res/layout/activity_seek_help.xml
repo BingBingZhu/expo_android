@@ -2,11 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dms_30">
+    android:paddingTop="@dimen/dms_30"
+    android:paddingBottom="@dimen/dms_30">
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         android:id="@+id/seek_help_text1"
         style="@style/TextSizeBlack16"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
         android:drawableLeft="@mipmap/reminder"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/kindly_reminder"
@@ -17,16 +20,27 @@
         style="@style/TextSizeBlack12"
         android:layout_width="match_parent"
         android:layout_below="@id/seek_help_text1"
+        android:layout_marginLeft="@dimen/dms_30"
         android:layout_marginTop="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
         android:text="@string/kindly_reminder_info"
         android:textColor="@color/gray_99" />
+
+    <TextView
+        android:id="@+id/line1"
+        style="@style/LineHorizontal"
+        android:layout_height="@dimen/dms_8"
+        android:layout_below="@id/seek_help_text2"
+        android:layout_marginTop="@dimen/dms_26" />
 
     <RelativeLayout
         android:id="@+id/seek_help_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_50"
-        android:layout_below="@id/seek_help_text2">
+        android:layout_below="@id/line1"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginTop="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30">
 
         <ImageView
             android:id="@+id/seek_help_speech"
@@ -59,25 +73,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/seek_help_layout"
-        android:layout_marginTop="@dimen/dms_60" />
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginTop="@dimen/dms_60"
+        android:layout_marginRight="@dimen/dms_30" />
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         android:id="@+id/seek_help_text4"
         style="@style/TextSizeBlack16"
         android:layout_width="match_parent"
         android:layout_below="@id/seek_help_image_selector"
+        android:layout_marginLeft="@dimen/dms_30"
         android:layout_marginTop="@dimen/dms_40"
+        android:layout_marginRight="@dimen/dms_30"
         android:drawableLeft="@mipmap/location"
         android:drawableRight="@mipmap/arrow_right"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/location"
         android:textColor="@color/gray_32" />
 
+    <TextView
+        android:id="@+id/line2"
+        style="@style/LineHorizontal"
+        android:layout_height="@dimen/dms_8"
+        android:layout_below="@id/seek_help_text4"
+        android:layout_marginTop="@dimen/dms_10" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/seek_help_text4"
-        android:layout_marginTop="@dimen/dms_80">
+        android:layout_below="@id/line2"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginTop="@dimen/dms_80"
+        android:layout_marginRight="@dimen/dms_30">
 
         <TextView
             android:id="@+id/seek_help_submit"
@@ -122,7 +149,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/dms_40"
+        android:layout_marginRight="@dimen/dms_50"
         android:layout_marginBottom="@dimen/dms_80"
         android:src="@mipmap/seek_phone" />
 </RelativeLayout>
