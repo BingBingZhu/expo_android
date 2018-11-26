@@ -17,8 +17,9 @@
 
     <TextView
         android:id="@+id/seek_help_text2"
-        style="@style/TextSizeBlack12"
+        style="@style/TextSizeBlack13"
         android:layout_width="match_parent"
+        android:lineSpacingMultiplier="1.5"
         android:layout_below="@id/seek_help_text1"
         android:layout_marginLeft="@dimen/dms_30"
         android:layout_marginTop="@dimen/dms_30"
@@ -30,6 +31,7 @@
         android:id="@+id/line1"
         style="@style/LineHorizontal"
         android:layout_height="@dimen/dms_8"
+        android:background="@color/translucent_per_5"
         android:layout_below="@id/seek_help_text2"
         android:layout_marginTop="@dimen/dms_26" />
 
@@ -51,7 +53,7 @@
 
         <EditText
             android:id="@+id/seek_help_text3"
-            style="@style/TextSizeBlack12"
+            style="@style/TextSizeBlack13"
             android:layout_width="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/seek_help_speech"
@@ -94,9 +96,10 @@
     <TextView
         android:id="@+id/line2"
         style="@style/LineHorizontal"
+        android:background="@color/translucent_per_5"
         android:layout_height="@dimen/dms_8"
         android:layout_below="@id/seek_help_text4"
-        android:layout_marginTop="@dimen/dms_10" />
+        android:layout_marginTop="@dimen/dms_14" />
 
     <LinearLayout
         android:layout_width="match_parent"
