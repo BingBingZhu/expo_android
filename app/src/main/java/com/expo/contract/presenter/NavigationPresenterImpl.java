@@ -1,15 +1,26 @@
 package com.expo.contract.presenter;
 
+import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.NavigationContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.ActualScene;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.RouteInfo;
+import com.expo.entity.TouristType;
 import com.expo.entity.VenuesDistance;
 import com.expo.entity.VenuesInfo;
+import com.expo.network.Http;
+import com.expo.network.ResponseCallback;
+import com.expo.network.response.VerificationCodeResp;
+import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import io.reactivex.Observable;
+import okhttp3.RequestBody;
 
 public class NavigationPresenterImpl extends NavigationContract.Presenter {
     public NavigationPresenterImpl(NavigationContract.View view) {
@@ -50,6 +61,13 @@ public class NavigationPresenterImpl extends NavigationContract.Presenter {
     @Override
     public Encyclopedias getEncyclopedias(String id) {
         return mDao.queryById(Encyclopedias.class, id);
+    }
+
+    @Override
+    public TouristType getTourist() {
+        QueryParams params = new QueryParams();
+        params.add("eq", "used", true);
+        return mDao.unique(TouristType.class, params);
     }
 
 }

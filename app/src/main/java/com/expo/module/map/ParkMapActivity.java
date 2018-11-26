@@ -156,7 +156,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     private void showLinePopup(List<RouteInfo> routeInfos, int type) {
         List<RouteInfo> atRouteInfos = new ArrayList<>();
-        for (RouteInfo routeInfo : routeInfos){
+        for (RouteInfo routeInfo : routeInfos) {
             if (routeInfo.typeId.equals("1"))
                 atRouteInfos.add(routeInfo);
         }
@@ -296,7 +296,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             WebTemplateActivity.startActivity(getContext(), wiki.getId());
             mActualSceneDialog.dismiss();
         });
-        asLine.setOnClickListener(v13 ->{
+        asLine.setOnClickListener(v13 -> {
             NavigationActivity.startActivity(getContext(), actualScene,
                     LanguageUtil.chooseTest(actualScene.getVoiceUrl(), actualScene.getVoiceUrlEn()));
         });
@@ -326,7 +326,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         ImageView asInfo = v.findViewById(R.id.park_mark_dialog_info);
         ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
         ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
-        pic.setImageURI( Constants.URL.FILE_BASE_URL + routeInfo.picUrl );
+        pic.setImageURI(Constants.URL.FILE_BASE_URL + routeInfo.picUrl);
         asName.setText(LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
         voiceRoot.setOnClickListener(v14 -> ToastHelper.showShort("音频"));
         asInfo.setOnClickListener(v12 -> {
@@ -346,6 +346,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     @Override
     public void loadTouristTypeRes(List<TouristType> touristTypes) {
+        if (touristTypes == null) {
+            mTourGuideImg.setImageResource(R.mipmap.ico_park_map_test1);
+            return;
+        }
         this.mTouristTypes = touristTypes;
         for (TouristType touristType : mTouristTypes) {
             if (touristType.isUsed()) {
@@ -433,6 +437,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 if (touristType.getId() == mTouristTypes.get(position).getId()) {
                     touristType.setUsed(true);
                     mTourGuideImg.setImageURI(Constants.URL.FILE_BASE_URL + touristType.getPicSmallUrl());
+                    mPresenter.useTouristType(touristType);
                 } else {
                     touristType.setUsed(false);
                 }
@@ -469,7 +474,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                     mAtActualScene.add(as);
                 }
             }
-        }else{
+        } else {
             mAtActualScene.addAll(facilities);
         }
         if (!markers.isEmpty()) {
@@ -560,8 +565,8 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         if (typeid.equals("1")) {
             drawLineFacilityToMap(atRouteInfos.get(position));
             drawLine(atRouteInfos.get(position));
-        }else{
-            for (RouteInfo routeInfo : atRouteInfos){
+        } else {
+            for (RouteInfo routeInfo : atRouteInfos) {
                 drawLine(routeInfo);
             }
         }
@@ -569,9 +574,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     /**
      * 游玩路线
+     *
      * @param atRouteInfo
      */
-    private void drawLineFacilityToMap(RouteInfo atRouteInfo){
+    private void drawLineFacilityToMap(RouteInfo atRouteInfo) {
         ArrayList<Integer> ids = Http.getGsonInstance().fromJson(atRouteInfo.idsList, new TypeToken<ArrayList<Integer>>() {
         }.getType());
         List<ActualScene> ass = mPresenter.getActualScenes(ids);
@@ -580,9 +586,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     /**
      * 画线
+     *
      * @param atRouteInfo
      */
-    private void drawLine(RouteInfo atRouteInfo){
+    private void drawLine(RouteInfo atRouteInfo) {
         ArrayList<MyLatLng> myLatLngs = Http.getGsonInstance().fromJson(atRouteInfo.linesList, new TypeToken<ArrayList<MyLatLng>>() {
         }.getType());
         List<LatLng> latLngs = new ArrayList<>();
@@ -595,6 +602,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     /**
      * 随机数生成（用于随机颜色）
+     *
      * @return
      */
     public int getRandColor() {

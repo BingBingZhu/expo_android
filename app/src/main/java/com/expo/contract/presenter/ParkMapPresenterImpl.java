@@ -4,10 +4,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.ZipUtils;
 import com.expo.R;
 import com.expo.adapters.DataTypeAdapter;
 import com.expo.adapters.DownloadData;
 import com.expo.adapters.Tab;
+import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ParkMapContract;
 import com.expo.db.QueryParams;
@@ -22,7 +24,10 @@ import com.expo.entity.VenuesType;
 import com.expo.module.download.DownloadManager;
 import com.expo.network.Http;
 import com.expo.utils.Constants;
+import com.expo.utils.MD5Util;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,8 +93,18 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
 
     @Override
     public List<ActualScene> getActualScenes(ArrayList<Integer> ids) {
-        List<ActualScene> actualScenes = mDao.query(ActualScene.class,new QueryParams().add("in","_id",ids));
+        List<ActualScene> actualScenes = mDao.query(ActualScene.class, new QueryParams().add("in", "_id", ids));
         return actualScenes;
+    }
+
+    @Override
+    public void useTouristType(TouristType type) {
+//        try {
+//            FileUtils.deleteFiles(new File(Constants.NaviTip.TO_JS_NAVI_FILE_PATH));
+//            ZipUtils.unzipFile(type.getLocalPath(), Constants.NaviTip.TO_JS_NAVI_FILE_PATH);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void loadSubjectImages(List<VenuesType> venuesTypes) {
