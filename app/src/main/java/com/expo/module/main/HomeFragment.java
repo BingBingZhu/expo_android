@@ -173,11 +173,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         MessageKindActivity.startActivity( getContext() );
     }
 
-//    @OnClick(R.id.home_map_img)
-//    public void clickMapImg(View view) {
-//        ParkMapActivity.startActivity(getContext(), 0L);
-//    }
-
     @OnClick(R.id.home_title_text)
     public void clickTitleText(View view) {
         EncyclopediaSearchActivity.startActivity( getContext() );
@@ -198,11 +193,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 break;
             case R.id.home_func_3:
                 url = mPresenter.loadVenueBespeakUrl();
-                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, getString( R.string.home_func_item_appointment ),BaseActivity.TITLE_COLOR_STYLE_WHITE );
 //                url = "http://192.168.1.13:8080/";
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                         url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
-                                + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_appointment ),BaseActivity.TITLE_COLOR_STYLE_WHITE );
+                                + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_appointment ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
                 break;
             case R.id.home_func_4:
                 TouristServiceActivity.startActivity( getContext() );
