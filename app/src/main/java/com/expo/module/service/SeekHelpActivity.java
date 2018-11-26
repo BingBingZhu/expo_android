@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -231,7 +232,11 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
-        ToastHelper.showShort("跳到导航界面");
+        if (null == mLocation || mLocation.getLatitude() == 0){
+            ToastHelper.showShort("光团儿正在努力定位，请您稍等片刻！");
+            return;
+        }
+        mPresenter.getServerPoint(mLocation);
     }
 
     @OnClick(R.id.seek_help_text4)
@@ -251,7 +256,9 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_phone)
     public void phone(View view) {
-
+        Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+"400 818 6666"));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 

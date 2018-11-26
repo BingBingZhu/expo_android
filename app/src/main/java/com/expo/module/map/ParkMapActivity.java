@@ -275,9 +275,19 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
         ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
         asName.setText(LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption()));
+        if (isTabByCnName("美食")){
+            pic.setImageResource(R.mipmap.ico_food_def_img);
+        }else if (isTabByCnName("卫生间")){
+            pic.setImageResource(R.mipmap.ico_toilet_def_img);
+        } else if (isTabByCnName("导览车")){
+            pic.setImageResource(R.mipmap.ico_car_def_img);
+        } else if (isTabByCnName("治安亭")) {
+            pic.setImageResource(R.mipmap.ico_public_security_def_img);
+        }
         Encyclopedias wiki = mPresenter.getEncy( venue.getWikiId());
-        if (wiki != null)
+        if (wiki != null) {
             pic.setImageURI(Constants.URL.FILE_BASE_URL + wiki.getPicUrl());
+        }
         voiceRoot.setOnClickListener(v14 -> {
             String voiceUrl = LanguageUtil.chooseTest(venue.getVoiceUrl(),
                     venue.getVoiceUrlEn().isEmpty() ? venue.getVoiceUrl() : venue.getVoiceUrlEn());
@@ -329,7 +339,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     }
 
     /**
-     * 设施信息弹出框
+     * 路线信息弹出框
      */
     private void showRouteInfoDialog(RouteInfo routeInfo) {
         if (null == routeInfo) {

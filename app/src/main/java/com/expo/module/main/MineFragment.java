@@ -1,6 +1,7 @@
 package com.expo.module.main;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +10,7 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
+import com.expo.base.ExpoApp;
 import com.expo.contract.MineContract;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.User;
@@ -77,8 +79,12 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
 
     @Override
     public void returnCommonInfo(CommonInfo commonInfo) {
-        WebActivity.startActivity( getContext(), commonInfo.getLinkUrl(),
-                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn(), BaseActivity.TITLE_COLOR_STYLE_WHITE );
+//        WebActivity.startActivity( getContext(), commonInfo.getLinkUrl(),
+//                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn(), BaseActivity.TITLE_COLOR_STYLE_WHITE );
+        String url = commonInfo.getLinkUrl();
+        WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
+                url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
+                        + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_appointment ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
     }
 
     @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name, R.id.item_mine_bespeak,
@@ -92,7 +98,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
                 UserInfoActivity.startActivity( getContext() );
                 break;
             case R.id.item_mine_bespeak:
-                mPresenter.clickPolicy( "5" );
+                mPresenter.clickPolicy( "9" );
                 break;
             case R.id.item_mine_comment_report:
                 FeedbackActivity.startActivity( getContext() );
