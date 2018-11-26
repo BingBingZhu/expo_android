@@ -42,7 +42,7 @@
             style="@style/style_home_fun_item"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/home_buy_tickets"
+            android:drawableTop="@mipmap/home_wifi"
             android:text="@string/home_func_item_wifi" />
 
     </LinearLayout>
@@ -66,7 +66,7 @@
             style="@style/style_home_fun_item"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/home_buy_tickets"
+            android:drawableTop="@mipmap/home_road"
             android:text="@string/home_func_item_line" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable

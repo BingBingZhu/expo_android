@@ -205,7 +205,7 @@
     <string name="disconnect">断开连接</string>
     <string name="personal_center">个人中心</string>
     <string name="badge">Badge</string>
-    <string name="the_current_integral">积分：0分</string>
+    <string name="the_current_integral">当前积分：0分</string>
     <string name="title_routest_detail">路线详情</string>
 
 </resources>

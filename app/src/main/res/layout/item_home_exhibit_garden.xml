@@ -23,10 +23,11 @@
     <TextView
         android:id="@+id/home_exhibit_garden_content"
         style="@style/TextSize13"
-        android:layout_marginLeft="@dimen/dms_20"
+        android:layout_marginLeft="@dimen/dms_32"
         android:layout_marginTop="@dimen/dms_20"
         android:layout_marginBottom="@dimen/dms_26"
         android:singleLine="true"
-        android:textColor="@color/gray_66" />
+        android:textColor="@color/gray_66"
+        android:layout_marginRight="@dimen/dms_20"/>
 
 </LinearLayout>
