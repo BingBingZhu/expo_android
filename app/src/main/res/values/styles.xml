@@ -38,7 +38,7 @@
 
     <style name="LineHorizontal">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dms_2</item>
+        <item name="android:layout_height">1px</item>
         <item name="android:background">@color/gray_cc</item>
     </style>
 
@@ -115,6 +115,8 @@
     <style name="TextSize16">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <!--<item name="android:layout_marginTop">@dimen/dms_40</item>-->
+        <!--<item name="android:layout_marginBottom">@dimen/dms_40</item>-->
         <item name="android:textSize">@dimen/font_32</item>
     </style>
 

@@ -66,7 +66,11 @@ public class AppBarView extends FrameLayout {
         lp = new LayoutParams( LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT );
         lp.gravity = Gravity.CENTER;
         mTitleView.setMaxLines( 1 );
-        mTitleView.setEllipsize( TextUtils.TruncateAt.END );
+        mTitleView.setSingleLine();
+        mTitleView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        mTitleView.setFocusableInTouchMode(true);
+        mTitleView.setMarqueeRepeatLimit(-1);
+        mTitleView.setMaxWidth((int) getContext().getResources().getDimension(R.dimen.dms_390));
         addView( mTitleView, lp );
         setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
     }

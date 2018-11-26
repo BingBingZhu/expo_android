@@ -1,5 +1,6 @@
 package com.expo.module.service;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -9,11 +10,16 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.baidu.speech.EventListener;
@@ -59,7 +65,7 @@ import static com.expo.utils.Constants.EXTRAS.EXTRAS;
 /*
  * 游客求助，0:医疗救助、1:人员走失、2:寻物启事、3:治安举报、4:问询咨询通用页面
  */
-public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View {
+public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View, View.OnClickListener {
 
     @BindView(R.id.seek_help_image_selector)
     RecyclerView mRecycler;
@@ -229,6 +235,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     }
 
     @OnClick(R.id.seek_help_text4)
+
     public void location(View view) {
         if (!GpsUtil.isOPen(this)) {
             GpsUtil.openGPSSettings(this);
@@ -247,27 +254,55 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     }
 
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.image_record:
+            case R.id.image_record_explain:
+                startActivityForResult(new Intent(SeekHelpActivity.this, CameraActivity.class), Constants.RequestCode.REQ_TO_CAMERA);
+                dialog.dismiss();
+                break;
+            case R.id.image_album:
+                goImageSelector();
+                dialog.dismiss();
+                break;
+            case R.id.cancle:
+                dialog.dismiss();
+                break;
+        }
+    }
+    private Dialog dialog;
+
     private void showImgSelectDialog() {
-        DialogPlus dialog = DialogPlus.newDialog(this)
-                .setContentHolder(new ViewHolder(LayoutInflater.from(SeekHelpActivity.this).inflate(R.layout.dialog_image_select, null)))
-                .setOnClickListener((dialog1, view) -> {
-                    switch (view.getId()) {
-                        case R.id.image_record:
-                        case R.id.image_record_explain:
-                            startActivityForResult(new Intent(SeekHelpActivity.this, CameraActivity.class), Constants.RequestCode.REQ_TO_CAMERA);
-                            dialog1.dismiss();
-                            break;
-                        case R.id.image_album:
-                            goImageSelector();
-                            dialog1.dismiss();
-                            break;
-                        case R.id.cancle:
-                            dialog1.dismiss();
-                            break;
-                    }
-                })
-                .create();// This will enable the expand feature, (similar to android L share dialog)
-        dialog.show();
+        dialog = new Dialog(this, R.style.BottomActionSheetDialogStyle);
+        //填充对话框的布局
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_image_select, null);
+        //初始化控件
+        TextView tvCamera1 = v.findViewById(R.id.image_record);
+        TextView tvCamera2 = v.findViewById(R.id.image_record_explain);
+        TextView tvPhoto = v.findViewById(R.id.image_album);
+        TextView tvCancle = v.findViewById(R.id.cancle);
+        tvCamera1.setOnClickListener(this);
+        tvCamera2.setOnClickListener(this);
+        tvPhoto.setOnClickListener(this);
+        tvCancle.setOnClickListener(this);
+        //将布局设置给Dialog
+        dialog.setContentView(v);
+        //获取当前Activity所在的窗体
+        Window dialogWindow = dialog.getWindow();
+        if(dialogWindow == null){
+            return;
+        }
+        //设置Dialog从窗体底部弹出
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        //获得窗体的属性
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.y = 20;//设置Dialog距离底部的距离
+        //将属性设置给窗体
+        dialogWindow.setAttributes(lp);
+        dialog.show();//显示对话框
     }
 
     private void goImageSelector() {

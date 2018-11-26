@@ -84,70 +84,74 @@
         app:border_color="@color/white"
         app:border_width="@dimen/dms_6"
         app:type="circle" />
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/mine_user_info"
-        android:layout_marginTop="@dimen/dms_4"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/dms_40"
-        android:paddingBottom="@dimen/dms_40">
+        android:layout_below="@id/mine_user_info">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dms_4"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dms_40"
+            android:paddingBottom="@dimen/dms_40">
 
-        <com.hedan.textdrawablelibrary.TextViewDrawable
-            android:id="@+id/item_mine_bespeak"
-            style="@style/item_mine_entry"
-            android:drawableLeft="@mipmap/time"
-            android:text="@string/item_mine_bespeak" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/dms_30"
-            android:layout_marginRight="@dimen/dms_30"
-            android:background="@color/gray_ca"/>
-        <com.hedan.textdrawablelibrary.TextViewDrawable
-            android:id="@+id/item_mine_comment_report"
-            style="@style/item_mine_entry"
-            android:drawableLeft="@mipmap/select"
-            android:text="@string/item_mine_comment_report" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/dms_30"
-            android:layout_marginRight="@dimen/dms_30"
-            android:background="@color/gray_ca"/>
-        <com.hedan.textdrawablelibrary.TextViewDrawable
-            android:id="@+id/item_mine_message"
-            style="@style/item_mine_entry"
-            android:drawableLeft="@mipmap/remind"
-            android:text="@string/item_mine_message" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/dms_30"
-            android:layout_marginRight="@dimen/dms_30"
-            android:background="@color/gray_ca"/>
-        <com.hedan.textdrawablelibrary.TextViewDrawable
-            android:id="@+id/item_mine_about"
-            style="@style/item_mine_entry"
-            android:drawableLeft="@mipmap/alert"
-            android:text="@string/item_mine_about" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/dms_30"
-            android:layout_marginRight="@dimen/dms_30"
-            android:background="@color/gray_ca"/>
-        <com.hedan.textdrawablelibrary.TextViewDrawable
-            android:id="@+id/item_mine_setting"
-            style="@style/item_mine_entry"
-            android:drawableLeft="@mipmap/setting"
-            android:text="@string/item_mine_setting" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/dms_30"
-            android:layout_marginRight="@dimen/dms_30"
-            android:background="@color/gray_ca"/>
-    </LinearLayout>
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_mine_bespeak"
+                style="@style/item_mine_entry"
+                android:drawableLeft="@mipmap/time"
+                android:text="@string/item_mine_bespeak" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginRight="@dimen/dms_30"
+                android:background="@color/gray_ca"/>
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_mine_comment_report"
+                style="@style/item_mine_entry"
+                android:drawableLeft="@mipmap/select"
+                android:text="@string/item_mine_comment_report" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginRight="@dimen/dms_30"
+                android:background="@color/gray_ca"/>
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_mine_message"
+                style="@style/item_mine_entry"
+                android:drawableLeft="@mipmap/remind"
+                android:text="@string/item_mine_message" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginRight="@dimen/dms_30"
+                android:background="@color/gray_ca"/>
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_mine_about"
+                style="@style/item_mine_entry"
+                android:drawableLeft="@mipmap/alert"
+                android:text="@string/item_mine_about" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginRight="@dimen/dms_30"
+                android:background="@color/gray_ca"/>
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_mine_setting"
+                style="@style/item_mine_entry"
+                android:drawableLeft="@mipmap/setting"
+                android:text="@string/item_mine_setting" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginRight="@dimen/dms_30"
+                android:background="@color/gray_ca"/>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
