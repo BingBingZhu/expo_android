@@ -9,11 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.entity.Message;
 import com.expo.utils.CommUtils;
+import com.expo.utils.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -23,6 +27,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public List<Message> mData;
     BaseAdapterItemClickListener mListener;
     int mLayoutId;
+
+    String mDate;
 
     public MessageAdapter(Context context) {
         mContext = context;
@@ -60,6 +66,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             });
 
         initView(holder);
+        setDate(holder, message);
     }
 
     @Override
@@ -72,6 +79,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         CommUtils.hideView(holder.mDate);
         if (mLayoutId == R.layout.item_message_tourist) {
             CommUtils.hideView(holder.mImg);
+        }
+    }
+
+    private void setDate(MessageAdapter.ViewHolder holder, Message message) {
+        if (holder.mDate == null) return;
+        String day = TimeUtils.millis2String(TimeUtils.string2Millis(message.getCreateTime()), new SimpleDateFormat(Constants.TimeFormat.TYPE_SIMPLE));
+        if (!StringUtils.equals(mDate, day)) {
+            mDate = day;
+            holder.mDate.setVisibility(View.VISIBLE);
+            holder.mDate.setText(day);
         }
     }
 

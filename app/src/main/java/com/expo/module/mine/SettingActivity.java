@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import com.expo.widget.AppBarView;
 import com.expo.widget.MySettingView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
@@ -65,10 +67,10 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     OnClickListener mLanguageClickListener = (d, v) -> {
         switch (v.getId()) {
             case R.id.language_cn:
-                changeLanguage( true, d );
+                changeLanguage(true, d);
                 break;
             case R.id.language_en:
-                changeLanguage( false, d );
+                changeLanguage(false, d);
                 break;
             case R.id.cancle:
                 d.dismiss();
@@ -82,16 +84,16 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
             Locale locale;
             if (mSelectCn) {
                 locale = Locale.CHINA;
-                PrefsHelper.setString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_CN );
+                PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_CN);
             } else {
                 locale = Locale.ENGLISH;
-                PrefsHelper.setString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_EN );
+                PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, LanguageUtil.LANGUAGE_EN);
             }
-            LanguageUtil.changeAppLanguage( SettingActivity.this, locale );
+            LanguageUtil.changeAppLanguage(SettingActivity.this, locale);
 
             mIsCn = mSelectCn;
             fresh();
-            ActivityHelper.reCreateAll( SettingActivity.this );
+            ActivityHelper.reCreateAll(SettingActivity.this);
         }
         d.dismiss();
     }
@@ -103,11 +105,11 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle( 0, R.string.title_setting_ac );
+        setTitle(0, R.string.title_setting_ac);
         mTvCache.setRightText(DataCleanUtil.getCacheSize());
-        mTvLanguage.setRightText( R.string.language );
-        mTvUpdate.setRightText( "v" + AppUtils.getAppVersionName() );
-        mSelectCn = mIsCn = StringUtils.equals( PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ), LanguageUtil.LANGUAGE_CN );
+        mTvLanguage.setRightText(R.string.language);
+        mTvUpdate.setRightText("v" + AppUtils.getAppVersionName());
+        mSelectCn = mIsCn = StringUtils.equals(PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null), LanguageUtil.LANGUAGE_CN);
     }
 
     @Override
@@ -116,57 +118,64 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     }
 
     public static void startActivity(@NonNull Context context) {
-        Intent in = new Intent( context, SettingActivity.class );
-        context.startActivity( in );
+        Intent in = new Intent(context, SettingActivity.class);
+        context.startActivity(in);
     }
 
     @OnClick(R.id.setting_language)
     public void clickLanguage(MySettingView view) {
         if (mDialogLanguage == null) {
-            View dv = LayoutInflater.from( getContext() ).inflate( R.layout.dialog_language_select, null );
+            View dv = LayoutInflater.from(getContext()).inflate(R.layout.dialog_language_select, null);
             int viewId = mIsCn ? R.id.language_cn : R.id.language_en;
-            dv.findViewById( viewId ).performClick();
+            dv.findViewById(viewId).performClick();
 
-            mDialogLanguage = DialogPlus.newDialog( this )
-                    .setContentHolder( new ViewHolder( dv ) )
-                    .setGravity( Gravity.BOTTOM )
-                    .setOnClickListener( mLanguageClickListener )
-                    .setExpanded( true )  // This will enable the expand feature, (similar to android L share dialog)
+            mDialogLanguage = DialogPlus.newDialog(this)
+                    .setContentHolder(new ViewHolder(dv))
+                    .setGravity(Gravity.BOTTOM)
+                    .setOnClickListener(mLanguageClickListener)
+                    .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
                     .create();
         }
         mDialogLanguage.show();
     }
 
     private void fresh() {
-        ((AppBarView) getTitleView()).setTitle( R.string.title_setting_ac );
+        ((AppBarView) getTitleView()).setTitle(R.string.title_setting_ac);
         mTvLanguage.fresh();
         mTvCache.fresh();
         mTvUpdate.fresh();
         mTvGuide.fresh();
         mTvPolicy.fresh();
 
-        mTvLogout.setText( R.string.logout );
+        mTvLogout.setText(R.string.logout);
     }
 
     @OnClick(R.id.setting_cache)
     public void clickCache(MySettingView view) {
-        // 清除缓存
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                //清除Fresco的图片文件缓存
-                Fresco.getImagePipeline().clearDiskCaches();
-                //清理截图等缓存
-                DataCleanUtil.deleteCacheFiles();
-                return null;
-            }
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.clear_cache_msg)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                view.setRightText(DataCleanUtil.getCacheSize());
-                ToastHelper.showLong("缓存已清除");
-            }
-        }.execute();
+                    // 清除缓存
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            //清除Fresco的图片文件缓存
+                            Fresco.getImagePipeline().clearDiskCaches();
+                            //清理截图等缓存
+                            DataCleanUtil.deleteCacheFiles();
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            view.setRightText(DataCleanUtil.getCacheSize());
+                            ToastHelper.showLong("缓存已清除");
+                        }
+                    }.execute();
+                    dialog.dismiss();
+                }).setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     @OnClick(R.id.setting_update)
@@ -176,12 +185,12 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_guide)
     public void clickGuide(MySettingView view) {
-        mPresenter.clickPolicy( "0" );
+        mPresenter.clickPolicy("0");
     }
 
     @OnClick(R.id.setting_policy)
     public void clickPolicy(MySettingView view) {
-        mPresenter.clickPolicy( "1" );
+        mPresenter.clickPolicy("1");
     }
 
     @OnClick(R.id.logout)
@@ -191,29 +200,29 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @Override
     public void logout() {
-        LoginActivity.startActivity( this );
+        LoginActivity.startActivity(this);
     }
 
     @Override
     public void appUpdate(AppInfo info) {
-        mPresenter.update( this, info );
+        mPresenter.update(this, info);
     }
 
     @Override
     public void returnCommonInfo(CommonInfo commonInfo) {
-        if (commonInfo.getType().equals( "0" )) {
-            if (null == commonInfo || TextUtils.isEmpty( commonInfo.getLinkUrl() )) {
-                ToastHelper.showLong( R.string.there_is_no_user_guidance );
+        if (commonInfo.getType().equals("0")) {
+            if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())) {
+                ToastHelper.showLong(R.string.there_is_no_user_guidance);
                 return;
             }
-        } else if (commonInfo.getType().equals( "1" )) {
-            if (null == commonInfo || TextUtils.isEmpty( commonInfo.getLinkUrl() )) {
-                ToastHelper.showLong( R.string.there_is_no_user_protocol );
+        } else if (commonInfo.getType().equals("1")) {
+            if (null == commonInfo || TextUtils.isEmpty(commonInfo.getLinkUrl())) {
+                ToastHelper.showLong(R.string.there_is_no_user_protocol);
                 return;
             }
         }
-        WebActivity.startActivity( getContext(), commonInfo.getLinkUrl(),
-                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn() );
+        WebActivity.startActivity(getContext(), commonInfo.getLinkUrl(),
+                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn());
     }
 
 }
