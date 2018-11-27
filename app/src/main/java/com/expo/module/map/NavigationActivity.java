@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -123,6 +125,45 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     long mStartTime;
 
     boolean isBackStage = false;
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_START));
+                    break;
+                case 1:
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_DIVERGE));
+                    break;
+                case 2:
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LONG_MUSIC_START));
+                    break;
+                case 3:
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LONG_MUSIC_END));
+                    break;
+                case 4:
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_GPA_WEAK));
+                    break;
+                case 5:
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_GPA_LOST));
+                    break;
+                case 6:
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_WAKE));
+                    break;
+                case 7:
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE));
+                    break;
+                case 8:
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_END));
+                    break;
+            }
+            if (msg.what < 8) {
+                mHandler.sendEmptyMessageDelayed(msg.what + 1, 5000);
+            }
+        }
+    };
 
     @Override
     protected int getContentView() {
@@ -357,6 +398,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         if (touristType != null)
             mWebView.loadUrl(String.format("javascript:setTourist('%s')", touristType.getUnZipPath()));
 //            mWebView.loadUrl(touristType.getLocalPath());
+
+        mHandler.sendEmptyMessageDelayed(0, 5000);
     }
 
     private void startCalculateTheRoad(LatLng startLatLng, ActualScene virtualScene) {

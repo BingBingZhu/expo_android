@@ -1,7 +1,9 @@
 package com.expo.module.download;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
 
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
@@ -11,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -22,6 +25,7 @@ import java.util.zip.ZipFile;
 
 public class UnzipTask extends AsyncTask<File, Void, Void> {
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected Void doInBackground(File... files) {
         InputStream is;
@@ -30,7 +34,7 @@ public class UnzipTask extends AsyncTask<File, Void, Void> {
         FileOutputStream fos;
         for (File file : files) {
             try {
-                ZipFile zipFile = new ZipFile(file);
+                ZipFile zipFile = new ZipFile(file, Charset.forName("GBK"));
                 Enumeration<? extends ZipEntry> entries = zipFile.entries();
                 File f = new File(Environment.getExternalStorageDirectory(),
                         Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName() + File.separator + file.getName().substring(0, file.getName().indexOf(".")));

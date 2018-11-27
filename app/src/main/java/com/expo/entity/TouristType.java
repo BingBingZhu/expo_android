@@ -1,8 +1,10 @@
 package com.expo.entity;
 
+import android.os.Build;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.RequiresApi;
 
 import com.expo.base.ExpoApp;
 import com.expo.module.download.DownloadManager;
@@ -14,6 +16,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.zip.ZipFile;
 
 @DatabaseTable(tableName = "tourist_type")
@@ -284,11 +287,12 @@ public class TouristType implements Parcelable {
         this.picSmallUrl = picSmallUrl;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public String getUnZipPath() {
         File f = new File(localPath.replace(".tmp", ""));
         ZipFile zipFile = null;
         try {
-            zipFile = new ZipFile(f);
+            zipFile = new ZipFile(f, Charset.forName("GBK"));
             String path = zipFile.entries().nextElement().toString();
             path = path.substring(0, path.indexOf("/"));
             return new File(Environment.getExternalStorageDirectory(),

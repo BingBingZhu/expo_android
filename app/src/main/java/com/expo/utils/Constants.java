@@ -159,7 +159,7 @@ public interface Constants {
      */
     class NaviTip {
 //        public static final String TO_JS_NAVI_FILE_PATH = Config.IMAGE_PATH + "navi/";//文件包路径
-        public static final String TO_JS_NAVI_TIP_TYPE = "0";//向js提示使用光团gif图片
+        public static final String TO_JS_NAVI_TIP_TYPE = "1";//向js提示使用光团gif图片
 
         public static final String TO_JS_NAVI_TIP_START = "callstart/callstart";//出场问好（导航路线规划完成）
         public static final String TO_JS_NAVI_TIP_DIVERGE = "calldiverge/calldiverge";//偏离线路提示（自动重新规划时）
