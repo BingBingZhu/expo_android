@@ -308,7 +308,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.CAMERA);
+            permissionList.add(Manifest.permission.RECORD_AUDIO);
             perNameList.add("录音权限");
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.ACCESS_WIFI_STATE)

@@ -287,12 +287,15 @@ public class TouristType implements Parcelable {
         this.picSmallUrl = picSmallUrl;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public String getUnZipPath() {
         File f = new File(localPath.replace(".tmp", ""));
         ZipFile zipFile = null;
         try {
-            zipFile = new ZipFile(f, Charset.forName("GBK"));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                zipFile = new ZipFile(f, Charset.forName("GBK"));
+            } else {
+                zipFile = new ZipFile(f);
+            }
             String path = zipFile.entries().nextElement().toString();
             path = path.substring(0, path.indexOf("/"));
             return new File(Environment.getExternalStorageDirectory(),

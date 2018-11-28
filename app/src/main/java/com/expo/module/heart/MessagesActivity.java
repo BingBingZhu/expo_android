@@ -20,6 +20,10 @@ import com.expo.contract.MessagesContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.Message;
 import com.expo.module.heart.adapter.MessageAdapter;
+import com.expo.module.heart.message.MessageTypeAppointment;
+import com.expo.module.heart.message.MessageTypeInterface;
+import com.expo.module.heart.message.MessageTypeSystem;
+import com.expo.module.heart.message.MessageTypeTourist;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
@@ -44,6 +48,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     SwipeMenuRecyclerView mSwipeMenuRecyclerView;
 
     MessageAdapter mAdapter;
+    MessageTypeInterface mMessageType;
 
     BaseAdapterItemClickListener mListener = new BaseAdapterItemClickListener() {
         @Override
@@ -60,20 +65,21 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         String type = getIntent().getStringExtra(Constants.EXTRAS.EXTRAS);
-        initTitle(type);
+        initMessageType(type);
+
+        setTitle(0, mMessageType.getTitle());
         initRecyclerView(type);
 
         mPresenter.getMessage(type);
-
     }
 
-    private void initTitle(String type) {
+    private void initMessageType(String type) {
         if (StringUtils.equals("1", type)) {
-            setTitle(0, R.string.title_message_system_ac);
+            mMessageType = new MessageTypeSystem();
         } else if (StringUtils.equals("4", type)) {
-            setTitle(0, R.string.title_message_tourist_ac);
+            mMessageType = new MessageTypeTourist();
         } else if (StringUtils.equals("5", type)) {
-            setTitle(0, R.string.title_message_appointment_ac);
+            mMessageType = new MessageTypeAppointment();
         }
     }
 
@@ -90,13 +96,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
 
         mAdapter = new MessageAdapter(this);
 
-        if (StringUtils.equals("1", type)) {
-            mAdapter.setLayoutId(R.layout.item_message_system);
-        } else if (StringUtils.equals("4", type)) {
-            mAdapter.setLayoutId(R.layout.item_message_tourist);
-        } else if (StringUtils.equals("5", type)) {
-            mAdapter.setLayoutId(R.layout.item_message_appointment);
-        }
+        mAdapter.setLayoutId(mMessageType.getItemRes());
         mAdapter.setListener(mListener);
         mSwipeMenuRecyclerView.setAdapter(mAdapter);
     }

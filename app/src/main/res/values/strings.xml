@@ -89,6 +89,7 @@
 
     <string name="feed_back_tips">衷心的感谢您对我们的信任和支持。为了不断提高我们的服务质量,完善 我们的工作,为了给您提供更加优质的服务，欢迎您提出合理的评介与意见！</string>
     <string name="comment_content">评价内容</string>
+    <string name="short_content">请输入十个字符以上</string>
 
     <string name="item_user_img">修改头像</string>
     <string name="item_user_name">昵称</string>
@@ -126,6 +127,7 @@
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
+    <string name="check_string_empty_report_content">评论内容不能为空</string>
     <string name="check_string_empty_localtion_descriptiong">情况描述不能为空</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
