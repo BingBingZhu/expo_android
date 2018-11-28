@@ -1,11 +1,8 @@
 package com.expo.module.heart.message;
 
-import android.content.Context;
-
 import com.expo.R;
-import com.expo.entity.Message;
 
-public class MessageTypeTourist implements MessageTypeInterface{
+public class MessageTypeTourist extends MessageType {
     @Override
     public int getTitle() {
         return R.string.title_message_tourist_ac;
@@ -16,8 +13,4 @@ public class MessageTypeTourist implements MessageTypeInterface{
         return R.layout.item_message_tourist;
     }
 
-    @Override
-    public void itemClick(Context context, Message message) {
-
-    }
 }

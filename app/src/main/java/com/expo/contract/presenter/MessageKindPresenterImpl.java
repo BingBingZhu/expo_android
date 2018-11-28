@@ -14,7 +14,7 @@ public class MessageKindPresenterImpl extends MessageKindContract.Presenter {
     public void getMessage() {
         QueryParams params = new QueryParams()
                 .add("eq", "uid", ExpoApp.getApplication().getUser().getUid())
-                .add("groupBy", "type", true)
+                .add("groupBy", "type")
                 .add("orderBy", "create_time", true);
         mView.freshMessageList(mDao.query(Message.class, params));
     }

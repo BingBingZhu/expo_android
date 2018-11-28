@@ -8,8 +8,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.idst.nls.internal.utils.Base64Encoder;
 import com.expo.R;
 import com.squareup.picasso.Picasso;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.Base64;
 
 public class CommUtils {
 
@@ -47,4 +54,5 @@ public class CommUtils {
         if(l1 == null || l2 == null) return false;
        return l1.getLatitude() == l2.getLatitude() && l1.getLongitude() == l2.getLongitude();
     }
+
 }

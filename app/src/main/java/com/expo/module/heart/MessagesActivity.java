@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,15 +16,13 @@ import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MessagesContract;
-import com.expo.db.QueryParams;
 import com.expo.entity.Message;
 import com.expo.module.heart.adapter.MessageAdapter;
 import com.expo.module.heart.message.MessageTypeAppointment;
-import com.expo.module.heart.message.MessageTypeInterface;
+import com.expo.module.heart.message.MessageType;
 import com.expo.module.heart.message.MessageTypeSystem;
 import com.expo.module.heart.message.MessageTypeTourist;
 import com.expo.utils.Constants;
-import com.expo.widget.decorations.SpaceDecoration;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -48,12 +45,12 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     SwipeMenuRecyclerView mSwipeMenuRecyclerView;
 
     MessageAdapter mAdapter;
-    MessageTypeInterface mMessageType;
+    MessageType mMessageType;
 
     BaseAdapterItemClickListener mListener = new BaseAdapterItemClickListener() {
         @Override
         public void itemClick(View view, int position, Object o) {
-
+            mMessageType.itemClick(MessagesActivity.this, (Message) o);
         }
     };
 

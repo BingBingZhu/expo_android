@@ -48,6 +48,9 @@ public class Message implements Parcelable {
     @DatabaseField(columnName = "link_id")
     @SerializedName("linkid")
     private String linkId;
+    @DatabaseField(columnName = "link_id_en")
+    @SerializedName("linkiden")
+    private String linkIdEn;
     @DatabaseField(columnName = "mobile")
     @SerializedName("mobile")
     private String mobile;
@@ -82,6 +85,7 @@ public class Message implements Parcelable {
             id = in.readLong();
         }
         linkId = in.readString();
+        linkIdEn = in.readString();
         mobile = in.readString();
         msgKind = in.readString();
         params = in.readString();
@@ -165,6 +169,14 @@ public class Message implements Parcelable {
         this.linkId = linkId;
     }
 
+    public String getLinkIdEn() {
+        return linkIdEn;
+    }
+
+    public void setLinkIdEn(String linkIdEn) {
+        this.linkIdEn = linkIdEn;
+    }
+
     public String getMobile() {
         return mobile;
     }
@@ -237,6 +249,7 @@ public class Message implements Parcelable {
             dest.writeLong(id);
         }
         dest.writeString(linkId);
+        dest.writeString(linkIdEn);
         dest.writeString(mobile);
         dest.writeString(msgKind);
         dest.writeString(params);

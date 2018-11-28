@@ -201,6 +201,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 //        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
 //        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.loadUrl("http://192.168.6.133/sever/dist/index.html#/navigation");
+//        mWebView.loadUrl(String.format("javascript:aa('%s')", "file:///storage/emulated/0/expo/unzip/com.expo/1543297121596/光团/callstart/callstart.gif"));
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
 
@@ -397,8 +398,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         TouristType touristType = mPresenter.getTourist();
         if (touristType != null)
             mWebView.loadUrl(String.format("javascript:setTourist('%s')", touristType.getUnZipPath()));
-//            mWebView.loadUrl(touristType.getLocalPath());
-
         mHandler.sendEmptyMessageDelayed(0, 5000);
     }
 
@@ -575,7 +574,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     @OnClick(R.id.gt_navi_back)
     public void onClick(View v) {
-        finish();
+        onBackPressed();
     }
 
     //提供给网络端的回调方法

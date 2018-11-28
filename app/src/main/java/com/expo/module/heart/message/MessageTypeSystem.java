@@ -5,7 +5,7 @@ import android.content.Context;
 import com.expo.R;
 import com.expo.entity.Message;
 
-public class MessageTypeSystem implements MessageTypeInterface{
+public class MessageTypeSystem extends MessageType {
     @Override
     public int getTitle() {
         return R.string.title_message_system_ac;
@@ -17,7 +17,6 @@ public class MessageTypeSystem implements MessageTypeInterface{
     }
 
     @Override
-    public void itemClick(Context context, Message message){
-
+    public void itemClick(Context context, Message message) {
     }
 }
