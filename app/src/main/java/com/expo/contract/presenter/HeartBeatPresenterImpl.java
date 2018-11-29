@@ -68,6 +68,7 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
                         }
                         mDao.saveOrUpdateAll(messages);
                         if (isNewMessage)
+
                             messages.get(0).sendMessageCount(null);
                     }
                 }

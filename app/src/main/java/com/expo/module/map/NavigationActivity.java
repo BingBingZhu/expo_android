@@ -199,8 +199,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     private void initWebView() {
 //        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
+        mWebView.loadUrl("file:///android_asset/nav/nav.html");
 //        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
-        mWebView.loadUrl("http://192.168.6.133/sever/dist/index.html#/navigation");
+//        mWebView.loadUrl("http://192.168.6.133/sever/dist/index.html#/navigation");
 //        mWebView.loadUrl(String.format("javascript:aa('%s')", "file:///storage/emulated/0/expo/unzip/com.expo/1543297121596/光团/callstart/callstart.gif"));
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
@@ -397,8 +398,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mAMapNavi.addAMapNaviListener(mNaviListener);
         TouristType touristType = mPresenter.getTourist();
         if (touristType != null)
-            mWebView.loadUrl(String.format("javascript:setTourist('%s')", touristType.getUnZipPath()));
+            mWebView.loadUrl(String.format("javascript:setTourist('%s')",  touristType.getUnZipPath()));
         mHandler.sendEmptyMessageDelayed(0, 5000);
+//        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "1", "callstart/callstart"));
     }
 
     private void startCalculateTheRoad(LatLng startLatLng, ActualScene virtualScene) {

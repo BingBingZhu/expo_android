@@ -298,6 +298,7 @@ public class TouristType implements Parcelable {
             }
             String path = zipFile.entries().nextElement().toString();
             path = path.substring(0, path.indexOf("/"));
+            path = new String(path.getBytes("utf-8"), "GB2312");
             return new File(Environment.getExternalStorageDirectory(),
                     Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName() + File.separator + f.getName().substring(0, f.getName().indexOf("."))).getAbsolutePath()
                     + File.separator + path;
