@@ -117,7 +117,6 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
 
     @Override
     public void onItemClick(View itemView, int position) {
-        ToastHelper.showShort("点击了第" + position + "条");
         mAdapter.mData.get(position).readMessage();
     }
 

@@ -9,15 +9,17 @@
     tools:context=".module.language.LanguageActivity">
 
     <RelativeLayout
+        android:id="@+id/language_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@mipmap/bg_language"
         android:layout_weight="0.6">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@mipmap/bg_language" />
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:src="@mipmap/bg_language" />-->
 
         <ImageView
             android:layout_width="@dimen/dms_202"
@@ -113,10 +115,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dms_40"
-            android:paddingTop="@dimen/dms_28"
-            android:paddingBottom="@dimen/dms_28"
             android:background="@drawable/selector_login_correlation_btn_bg"
             android:gravity="center"
+            android:paddingTop="@dimen/dms_28"
+            android:paddingBottom="@dimen/dms_28"
             android:text="创建账号"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_34" />

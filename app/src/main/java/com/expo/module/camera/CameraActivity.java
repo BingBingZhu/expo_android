@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import butterknife.OnTouch;
 
 /*
@@ -74,34 +75,59 @@ public class CameraActivity extends BaseActivity {
         context.startActivity(in);
     }
 
+    @OnClick(R.id.camera_btn)
+    public void cameraClick(View view) {
+        mCarmer.capture();
+    }
+
+    @OnLongClick(R.id.camera_btn)
+    public boolean cameraLongClick(View view) {
+        mTouchTime = TimeUtils.getNowMills();
+        mIsVideo = true;
+        mCarmer.startRecord(true);
+        mTimeCount = new TimeCount((10) * 1000, 100);
+        mTimeCount.start();
+        mBar.setProgress(0);
+        return false;
+    }
+
     @OnTouch(R.id.camera_btn)
     public boolean cameraTouch(View view, MotionEvent event) {
-        long time = TimeUtils.getNowMills();
+//        long time = TimeUtils.getNowMills();
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mTouchTime = TimeUtils.getNowMills();
-                break;
+//            case MotionEvent.ACTION_DOWN:
+//                System.out.println("MotionEvent MotionEvent.ACTION_DOWN");
+//                mTouchTime = TimeUtils.getNowMills();
+//                break;
             case MotionEvent.ACTION_UP:
-                if (time - mTouchTime < 300) {
-                    mCarmer.capture();
-                } else {
+                if (mIsVideo) {
                     mCarmer.stopRecord();
                     if (mTimeCount != null)
                         mTimeCount.cancel();
                 }
+                mIsVideo = false;
+//                System.out.println("MotionEvent MotionEvent.ACTION_UP");
+//                if (time - mTouchTime < 300) {
+//                    mCarmer.capture();
+//                } else {
+//                    mCarmer.stopRecord();
+//                    if (mTimeCount != null)
+//                        mTimeCount.cancel();
+//                }
                 break;
-            default:
-                if (mIsVideo) ;
-                else if (time - mTouchTime > 300) {
-                    mIsVideo = true;
-                    mCarmer.startRecord(false);
-                    mTimeCount = new TimeCount((10) * 1000, 100);
-                    mTimeCount.start();
-                    mBar.setProgress(0);
-                }
-                break;
+//            default:
+//                System.out.println("MotionEvent MotionEvent.default");
+//                if (mIsVideo) ;
+//                else if (time - mTouchTime > 300) {
+//                    mIsVideo = true;
+//                    mCarmer.startRecord(false);
+//                    mTimeCount = new TimeCount((10) * 1000, 100);
+//                    mTimeCount.start();
+//                    mBar.setProgress(0);
+//                }
+//                break;
         }
-        return true;
+        return false;
     }
 
     @OnClick(R.id.camera_cancle)

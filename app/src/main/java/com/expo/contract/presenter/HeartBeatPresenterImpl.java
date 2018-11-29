@@ -87,8 +87,7 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
         if (message == null) return false;
         if ("3".equals(message.getType())) {
             String currUkey = ExpoApp.getApplication().getUser().getUkey();
-            if ("relogin".equals(message.getCommand()) && message.getParams() != null
-                    && currUkey.equals(message.getParams().get("ukey"))) {
+            if ("relogin".equals(message.getCommand())) {// && message.getParams() != null  && currUkey.equals(message.getParams().get("ukey"))
                 mDao.clear(User.class);
                 ExpoApp.getApplication().setUser(null);
                 Intent intent = new Intent();

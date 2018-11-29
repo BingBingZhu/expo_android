@@ -63,7 +63,7 @@
         android:layout_height="@dimen/dms_80"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dms_40"
-        android:background="@drawable/bg_5fffc1_r5"
+        android:background="@drawable/bg_02cd9b_r5"
         android:gravity="center"
         android:text="@string/save" />
 
