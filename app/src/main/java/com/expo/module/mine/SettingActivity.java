@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import com.expo.widget.AppBarView;
 import com.expo.widget.MySettingView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
@@ -150,23 +152,30 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_cache)
     public void clickCache(MySettingView view) {
-        // 清除缓存
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                //清除Fresco的图片文件缓存
-                Fresco.getImagePipeline().clearDiskCaches();
-                //清理截图等缓存
-                DataCleanUtil.deleteCacheFiles();
-                return null;
-            }
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.clear_cache_msg)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                view.setRightText(DataCleanUtil.getCacheSize());
-                ToastHelper.showLong(R.string.cache_cleared);
-            }
-        }.execute();
+                    // 清除缓存
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            //清除Fresco的图片文件缓存
+                            Fresco.getImagePipeline().clearDiskCaches();
+                            //清理截图等缓存
+                            DataCleanUtil.deleteCacheFiles();
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            view.setRightText(DataCleanUtil.getCacheSize());
+                            ToastHelper.showLong(R.string.cache_cleared);
+                        }
+                    }.execute();
+                    dialog.dismiss();
+                }).setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     @OnClick(R.id.setting_update)

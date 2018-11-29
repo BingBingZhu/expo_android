@@ -114,21 +114,21 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mSvScroll.setOnScrollListener( mScrollListener );
+        mSvScroll.setOnScrollListener(mScrollListener);
 
-        mHtTitle.setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
+        mHtTitle.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
 
         initRecyclerTop();
         initRecyclerExhibit();
         initRecyclerExhibitGarden();
-        EventBus.getDefault().register( this );
+        EventBus.getDefault().register(this);
 
         mPresenter.setMessageCount();
         mPresenter.setTopLine();
         mPresenter.setVenue();
         mPresenter.setExhibit();
         mPresenter.setExhibitGarden();
-        mPresenter.startHeartService( getContext() );
+        mPresenter.startHeartService(getContext());
     }
 
     @Override
@@ -155,8 +155,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     private void initRecyclerExhibitGarden() {
         mListExhibitGarden = new ArrayList<>();
         mRvExhibitGarden.setLayoutManager( new LinearLayoutManager( getContext() ) );
-        int margin = (int) getContent().getResources().getDimension( R.dimen.dms_4 );
-        mRvExhibitGarden.addItemDecoration( new SpaceDecoration( margin, margin, margin, margin, 0, (int) getContent().getResources().getDimension( R.dimen.dms_20 ) ) );
+        mRvExhibitGarden.addItemDecoration( new SpaceDecoration( 0, 0, (int) getContent().getResources().getDimension( R.dimen.dms_4 ), (int) getContent().getResources().getDimension( R.dimen.dms_20 ), 0 ) );
         mRvExhibitGarden.setAdapter( mAdapterExhibitGarden = new CommonAdapter<Encyclopedias>( getContext(), R.layout.item_home_exhibit_garden, mListExhibitGarden ) {
             @Override
             protected void convert(ViewHolder holder, Encyclopedias encyclopedias, int position) {

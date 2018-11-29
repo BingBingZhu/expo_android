@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.expo.R;
+import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.entity.Encyclopedias;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.LanguageUtil;
@@ -42,30 +43,32 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder( LayoutInflater.from( mContext ).inflate( R.layout.item_home_exhibit, null ) );
+        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_home_exhibit, null));
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         if (getItemCount() == 0) return;
-        Encyclopedias encyclopedias = mList.get( position % mList.size() );
-        Picasso.with( mContext ).load( getBackageImg( position ) )
-                .placeholder( R.drawable.image_default ).error( R.drawable.image_default )
-                .into( holder.img );
+        Encyclopedias encyclopedias = mList.get(position % mList.size());
+        Picasso.with(mContext).load(getBackageImg(position))
+                .centerInside()
+                .placeholder(R.drawable.image_default).error(R.drawable.image_default)
+                .resize((int) (ScreenUtils.getScreenWidth() - mContext.getResources().getDimension(R.dimen.dms_200)), (int) mContext.getResources().getDimension(R.dimen.dms_360))
+                .into(holder.img);
 
-        holder.name.setText( LanguageUtil.chooseTest( encyclopedias.caption, encyclopedias.captionEn ) );
-        holder.content.setText( LanguageUtil.chooseTest( encyclopedias.remark, encyclopedias.remarkEn ) );
+        holder.name.setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+        holder.content.setText(LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( (int) (ScreenUtils.getScreenWidth() - mContext.getResources().getDimension( R.dimen.dms_200 )), (int) mContext.getResources().getDimension( R.dimen.dms_360 ) );
-        holder.itemView.setLayoutParams( params );
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) (ScreenUtils.getScreenWidth() - mContext.getResources().getDimension(R.dimen.dms_200)), (int) mContext.getResources().getDimension(R.dimen.dms_360));
+        holder.itemView.setLayoutParams(params);
 
-        holder.itemView.setOnClickListener( v -> {
-            WebTemplateActivity.startActivity( mContext, encyclopedias.getId() );
-        } );
+        holder.itemView.setOnClickListener(v -> {
+            WebTemplateActivity.startActivity( mContext, encyclopedias.getId());
+        });
     }
 
     private int getBackageImg(int position) {
-        return position % 2 == 0 ? R.mipmap.banner2 : R.mipmap.banner1;
+        return position % 2 == 0 ? R.mipmap.banner1 : R.mipmap.banner2;
     }
 
     @Override
@@ -84,8 +87,8 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
         TextView content;
 
         public MyViewHolder(View itemView) {
-            super( itemView );
-            ButterKnife.bind( this, itemView );
+            super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

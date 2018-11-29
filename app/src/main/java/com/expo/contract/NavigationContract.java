@@ -4,6 +4,7 @@ import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.TouristType;
 import com.expo.entity.VenuesDistance;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public interface NavigationContract {
         public abstract List<VenuesDistance> getVenues();
 
         public abstract Encyclopedias getEncyclopedias(String id);
+
+        public abstract TouristType getTourist();
     }
 
     interface View extends IView {

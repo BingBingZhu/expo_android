@@ -1,16 +1,24 @@
 package com.expo.entity;
 
+import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.expo.base.ExpoApp;
 import com.expo.module.download.DownloadManager;
+import com.expo.utils.Constants;
+import com.expo.utils.ZipUtils;
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.zip.ZipFile;
+
 @DatabaseTable(tableName = "tourist_type")
 public class TouristType implements Parcelable {
-    @DatabaseField(columnName = "id",id = true)
+    @DatabaseField(columnName = "id", id = true)
     @SerializedName("id")
     private Long id;
     @DatabaseField(columnName = "age")
@@ -68,8 +76,8 @@ public class TouristType implements Parcelable {
     @DatabaseField(columnName = "local_path")
     private String localPath;
 
-
-    public TouristType(){}
+    public TouristType() {
+    }
 
     protected TouristType(Parcel in) {
         age = in.readString();
@@ -234,7 +242,7 @@ public class TouristType implements Parcelable {
     }
 
     public Integer getDownState() {
-        if (null == downState){
+        if (null == downState) {
             return DownloadManager.DOWNLOAD_IDLE;
         }
         return downState;
@@ -274,6 +282,23 @@ public class TouristType implements Parcelable {
 
     public void setPicSmallUrl(String picSmallUrl) {
         this.picSmallUrl = picSmallUrl;
+    }
+
+    public String getUnZipPath() {
+        File f = new File(localPath.replace(".tmp", ""));
+        ZipFile zipFile = null;
+        try {
+            zipFile = new ZipFile(f);
+            String path = zipFile.entries().nextElement().toString();
+            path = path.substring(0, path.indexOf("/"));
+            return new File(Environment.getExternalStorageDirectory(),
+                    Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName() + File.separator + f.getName().substring(0, f.getName().indexOf("."))).getAbsolutePath()
+                    + File.separator + path;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     @Override

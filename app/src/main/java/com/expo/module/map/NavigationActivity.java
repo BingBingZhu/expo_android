@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.contract.NavigationContract;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.TouristType;
 import com.expo.entity.VenuesDistance;
 import com.expo.map.LocationManager;
 import com.expo.map.MapUtils;
@@ -120,6 +122,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     long mStartTime;
 
+    boolean isBackStage = false;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_navigation;
@@ -170,6 +174,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 //                    .setMessage("到达终点喽，目标接在附近！")
 //                    .setNegativeButton("知道了", (dialog, which) -> finish())
 //                    .show();
+            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_END));
             showEndView();
         }
     }
@@ -284,19 +289,23 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private void changeAnimation(String action) {
         if (mJsCanSend && mSlidingDrawerView.isOpened()) {
             mWebView.loadUrl(String.format("javascript:getActionState('%s')", action));
-            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "0", action));
+//            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "0", action));
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (isBackStage)
+            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_WAKE));
+        isBackStage = false;
         mMapView.onResume();
         mWebView.onResume();
     }
 
     @Override
     protected void onPause() {
+        isBackStage = true;
         mMapView.onPause();
         mWebView.onPause();
         super.onPause();
@@ -320,6 +329,19 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     }
 
     @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE));
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.leave_navi)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ok, (dialog, which) -> finish())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mMapView.onSaveInstanceState(outState);
@@ -331,6 +353,10 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mAMapNavi.setUseInnerVoice(false);       // 使用内部语音播报
         //添加监听回调，用于处理算路成功
         mAMapNavi.addAMapNaviListener(mNaviListener);
+        TouristType touristType = mPresenter.getTourist();
+        if (touristType != null)
+            mWebView.loadUrl(String.format("javascript:setTourist('%s')", touristType.getUnZipPath()));
+//            mWebView.loadUrl(touristType.getLocalPath());
     }
 
     private void startCalculateTheRoad(LatLng startLatLng, Venue virtualScene) {
@@ -428,6 +454,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             // 启动导航后的回调函数
             ToastHelper.showLong(R.string.start_the_navigation);
             mStartTime = TimeUtils.getNowMills();
+            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_START));
         }
 
         @Override
@@ -441,6 +468,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 changeAnimation("turnRight");
             } else if (s.startsWith("前方直行")) {
                 changeAnimation("forward");
+            } else if (s.indexOf("偏离") != -1) {
+                mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_DIVERGE));
             }
         }
 
@@ -461,7 +490,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         public void onCalculateRouteFailure(int i) {
             // 路线规划失败回调
             Log.e("NaviManager=======", "路径规划出错" + i);
-            ToastHelper.showLong(R.string.route_planning_failure);
+            ToastHelper.showLong("路线规划失败");
         }
 
 
