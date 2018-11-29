@@ -368,6 +368,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mMythredFresh.exit();
         if (mMythredcCalculate != null)
             mMythredcCalculate.exit();
+        mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 

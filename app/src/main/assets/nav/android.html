@@ -83,7 +83,7 @@
         </div>
       <div class="nav_btm">
         <img :src="imgsrc" alt="" class="nav_btm_img">
-        <audio src=""  autoplay loop id="audio" @change="haha"></audio>
+        <audio :src="audiosrc"  autoplay id="audio"></audio>
         <!--<img src="file:///storage/emulated/0/expo/unzip/com.expo/1543297121596/光团/callstart/callstart/start2.png" alt="">-->
       </div>
 
@@ -97,31 +97,39 @@
         bourn:'中国馆',
         distance:'500m',
         time:'10:00',
-        imgsrc:'./out/callstart/callstart.gif',
-        audio:document.querySelector('#audio'),//'./out/callstart/callstart.wav',
+        imgsrc:'',
+        audiosrc:'',
         audioTime:'',
+        next:true,
       },
       mounted:function () {
         this.register();
-        console.error(this.audio)
       },
       methods:{
-        haha (a){
-          console.error(a)
-        },
         //后台设置主位置
         setMarker:function (init,maker){
           var data = typeof marker == 'object'? marker : JSON.parse(marker);
         },
         //后台调取动画
         tipTips:function(I,tip){
-          // alert(path+'/'+tip+'.gif')
+          var _this = this;
           var rootPath = this.path+'/'+tip
           this.imgsrc = rootPath+'.gif';
-          this.audio.src = rootPath+'.wav';
-          var a = new Audio(rootPath+'.wav')
-          this.audioTime = a.duration;
-          alert(this.audioTime)
+          this.audiosrc = rootPath+'.wav';
+          alert(rootPath)
+          var audio = new Audio(this.audiosrc);
+          // var audio = new Audio('file:///Library/WebServer/Documents/sever/nav'+rootPath.replace('.',"")+'.wav');
+          audio.load();
+          audio.oncanplay = function () {
+            this.audioTime = audio.duration;
+            // console.log('file:///Library/WebServer/Documents/sever/nav'+rootPath.replace('.',"")+'.wav')
+            setTimeout(()=>{
+              alert('初始化')
+              _this.imgsrc = this.path+'/random/fly.gif';
+              _this.audiosrc = '';
+            },this.audioTime*1000)
+            console.log(this.audioTime)
+          }
         },
         //后台返回主路径
         setTourist:function(res) { this.path = res; },
