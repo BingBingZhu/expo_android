@@ -197,6 +197,8 @@
     <string name="dialog_image_image_video">照片或者视频</string>
     <string name="dialog_image_album">从手机相册选择</string>
     <string name="buy_tickets">Buy Tickets</string>
+    <string name="clear_cache_msg">确定要清除缓存吗？</string>
+    <string name="leave_navi">确定要离开导航吗？</string>
     <string name="sence_introduction">Introduction of scenic spots</string>
     <string name="please_click_the_button_to_open_wlan">请点击按钮开启WLAN</string>
     <string name="free_wifi_at_beijing_world_expo">北京世园会免费wifi</string>
@@ -207,5 +209,6 @@
     <string name="badge">Badge</string>
     <string name="the_current_integral">当前积分：0分</string>
     <string name="title_routest_detail">路线详情</string>
+    <string name="the_account_is_abnormal_please_log_in_again">账号异常，请重新登录！</string>
 
 </resources>

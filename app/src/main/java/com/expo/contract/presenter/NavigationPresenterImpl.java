@@ -3,6 +3,7 @@ package com.expo.contract.presenter;
 import com.expo.contract.NavigationContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.TouristType;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesDistance;
 import com.expo.utils.LanguageUtil;
@@ -49,6 +50,13 @@ public class NavigationPresenterImpl extends NavigationContract.Presenter {
     @Override
     public Encyclopedias getEncyclopedias(String id) {
         return mDao.queryById( Encyclopedias.class, id );
+    }
+
+    @Override
+    public TouristType getTourist() {
+        QueryParams params = new QueryParams();
+        params.add("eq", "used", true);
+        return mDao.unique(TouristType.class, params);
     }
 
 }

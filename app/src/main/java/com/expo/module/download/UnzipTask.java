@@ -30,12 +30,18 @@ public class UnzipTask extends AsyncTask<File, Void, Void> {
         FileOutputStream fos;
         for (File file : files) {
             try {
-                ZipFile zipFile = new ZipFile( file );
+                ZipFile zipFile = new ZipFile(file);
                 Enumeration<? extends ZipEntry> entries = zipFile.entries();
+                File f = new File(Environment.getExternalStorageDirectory(),
+                        Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName() + File.separator + file.getName().substring(0, file.getName().indexOf(".")));
+                if (f.isDirectory() && !f.exists()) {
+                    f.mkdirs();
+                }
                 while (entries.hasMoreElements()) {
                     zipEntry = entries.nextElement();
-                    target = new File( Environment.getExternalStorageDirectory(),
-                            Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName() + File.separator + zipEntry.getName() );
+                    target = new File(Environment.getExternalStorageDirectory(),
+                            Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName()
+                                    + File.separator + file.getName().substring(0, file.getName().indexOf(".")) + File.separator + zipEntry.getName());
                     if (zipEntry.isDirectory() && !target.exists()) {
                         target.mkdirs();
                     } else {
@@ -46,11 +52,11 @@ public class UnzipTask extends AsyncTask<File, Void, Void> {
                             target.getParentFile().mkdirs();
                         }
                         if (!target.createNewFile()) {
-                            throw new RuntimeException( "can not create file on " + target.getPath() );
+//                            throw new RuntimeException( "can not create file on " + target.getPath() );
                         }
-                        fos = new FileOutputStream( target );
-                        is = zipFile.getInputStream( zipEntry );
-                        FileUtils.copy( is, fos );
+                        fos = new FileOutputStream(target);
+                        is = zipFile.getInputStream(zipEntry);
+                        FileUtils.copy(is, fos);
                         if (fos != null) {
                             fos.close();
                         }
