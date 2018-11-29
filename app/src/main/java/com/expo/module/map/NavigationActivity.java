@@ -160,8 +160,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     }
 
     private void endNavigation() {
-        ToastHelper.showShort("到达目的地附近喽，导航结束");
-        mTvTips.setText("到达目的地附近喽，导航结束");
+        ToastHelper.showShort(R.string.end_of_the_navigation);
+        mTvTips.setText(R.string.end_of_the_navigation);
         if (mSlidingDrawerView.isOpened()) {
             changeAnimation("endPoint");
         } else {
@@ -338,7 +338,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mTo = new NaviLatLng(virtualScene.getLat(), virtualScene.getLng());
         boolean isSuccess = mAMapNavi.calculateWalkRoute(mFrom, mTo);
         if (!isSuccess) {
-            ToastHelper.showShort("路线规划失败");
+            ToastHelper.showShort(R.string.route_planning_failure);
             Log.d("NaviManager=======", "路线计算失败,检查参数情况");
         }
     }
@@ -426,7 +426,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onStartNavi(int i) {
             // 启动导航后的回调函数
-            ToastHelper.showLong("启动导航");
+            ToastHelper.showLong(R.string.start_the_navigation);
             mStartTime = TimeUtils.getNowMills();
         }
 
@@ -447,7 +447,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onGpsOpenStatus(boolean b) {
             // 用户手机GPS设置是否开启的回调函数。
-            ToastHelper.showLong("手机GPS设置是否开启" + b);
+            if (!b){
+                ToastHelper.showLong(R.string.the_phone_is_gps_settings_are_not_on);
+            }
         }
 
         @Override
@@ -459,7 +461,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         public void onCalculateRouteFailure(int i) {
             // 路线规划失败回调
             Log.e("NaviManager=======", "路径规划出错" + i);
-            ToastHelper.showLong("路线规划失败");
+            ToastHelper.showLong(R.string.route_planning_failure);
         }
 
 

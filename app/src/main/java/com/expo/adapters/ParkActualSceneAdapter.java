@@ -97,7 +97,7 @@ public class ParkActualSceneAdapter extends RecyclerView.Adapter<ParkActualScene
 
     private String getDistance(Double lat, Double lng) {
         if (null == mLatLng || mLatLng.latitude == 0) {
-            return "未定位";
+            return mContext.getString(R.string.not_locate);
         }
         String units = "m";
         float distance = AMapUtils.calculateLineDistance( new LatLng( lat, lng ), mLatLng );

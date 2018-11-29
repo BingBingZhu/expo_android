@@ -7,6 +7,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="语言选择页"
+        android:text="@string/language_selector_page"
         android:textSize="@dimen/font_40" />
 </FrameLayout>

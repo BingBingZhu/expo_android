@@ -220,7 +220,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
             if ((venue.getType() == 25 || venue.getType() == 26) && !TextUtils.isEmpty(venue.getWikiId()) && venue.getWikiId().matches(Constants.Exps.NUMBER)) {
                 WebTemplateActivity.startActivity(getContext(), Long.parseLong(venue.getWikiId()));
             } else {
-                ToastHelper.showShort("无介绍");
+                ToastHelper.showShort(R.string.no_introduction);
             }
         }
 

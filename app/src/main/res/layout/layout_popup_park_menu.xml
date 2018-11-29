@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dms_28"
                 android:layout_marginRight="@dimen/dms_60"
-                android:hint="请输入您想搜索的景区"
+                android:hint="@string/please_enter_the_scenic_spot_you_want_to_search"
                 android:background="@color/transparent"
                 android:textColor="@color/color_333"
                 android:textColorHint="@color/color_999"
@@ -48,7 +48,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textColor="@color/green_00cb99"
-            android:text="搜索"/>
+            android:text="@string/search"/>
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/popup_recycler_view"

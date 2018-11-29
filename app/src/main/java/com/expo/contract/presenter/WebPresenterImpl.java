@@ -47,7 +47,7 @@ public class WebPresenterImpl extends WebContract.Presenter {
             protected void onResponse(BaseResponse rsp) {
                 mView.hideLoadingView();
                 user.deleteOnDb(mDao);
-                mView.logout();
+                mView.logoutResp();
             }
         }, observable);
     }

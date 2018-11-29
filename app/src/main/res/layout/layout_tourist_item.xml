@@ -39,7 +39,7 @@
                 android:textSize="@dimen/font_18"
                 android:textColor="@color/white2"
                 android:background="@drawable/selector_tourist_use_bg"
-                android:text="使用"/>
+                android:text="@string/use"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -55,32 +55,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_24"
-                android:textColor="@color/green_00cb99"
-                android:text="萌芽"/>
+                android:textColor="@color/green_00cb99"/>
             <TextView
                 android:id="@+id/tourist_item_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dms_10"
                 android:textSize="@dimen/font_20"
-                android:textColor="@color/color_666"
-                android:text="性别：女"/>
+                android:textColor="@color/color_666"/>
             <TextView
                 android:id="@+id/tourist_item_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dms_10"
                 android:textSize="@dimen/font_20"
-                android:textColor="@color/color_666"
-                android:text="年龄：9岁"/>
+                android:textColor="@color/color_666"/>
             <TextView
                 android:id="@+id/tourist_item_remark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dms_10"
                 android:textSize="@dimen/font_20"
-                android:textColor="@color/color_666"
-                android:text="性格：阳光、乐天派、可信赖、充满善意。"/>
+                android:textColor="@color/color_666"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/tourist_item_down_progress"
@@ -107,7 +103,7 @@
                 android:background="@color/gray_ca"
                 android:textColor="@color/white2"
                 android:textSize="@dimen/font_16"
-                android:text="暂停下载"/>
+                android:text="@string/pause_to_download"/>
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

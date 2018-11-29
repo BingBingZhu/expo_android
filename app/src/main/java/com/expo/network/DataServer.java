@@ -2,6 +2,7 @@ package com.expo.network;
 
 import com.expo.entity.User;
 import com.expo.network.response.AllTypeResp;
+import com.expo.network.response.BadgeResp;
 import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.CommonInfoResp;
@@ -213,6 +214,16 @@ public interface DataServer {
     Observable<TouristTypeResp> loadTouristTypeList(@Body RequestBody requestBody);
 
     /**
+     * 徽章更新接口
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetBadgeList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BadgeResp> getBadgeList(@Body RequestBody requestBody);
+
+    /**
      * 设施类型更新接口
      *
      * @param requestBody
@@ -344,4 +355,5 @@ public interface DataServer {
     @POST("Terminal/GetRichText")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<RichTextRsp> getRichText(@Body RequestBody requestBody);
+
 }

@@ -9,6 +9,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        useLibrary 'org.apache.http.legacy'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 26

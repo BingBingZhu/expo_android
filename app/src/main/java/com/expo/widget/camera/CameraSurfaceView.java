@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.expo.R;
 import com.expo.base.utils.FileUtils;
 import com.expo.utils.Constants;
 
@@ -119,7 +120,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             }
         }
         if (mCamera == null) {
-            Toast.makeText( context, "打开摄像头失败", Toast.LENGTH_SHORT ).show();
+            Toast.makeText( context, R.string.failed_to_turn_on_the_camera, Toast.LENGTH_SHORT ).show();
             return;
         }
     }
@@ -145,7 +146,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     public boolean setDefaultCamera(boolean backCamera) {
         if (mOpenBackCamera == backCamera) return false;
         if (isRecording) {
-            Toast.makeText( context, "请先结束录像", Toast.LENGTH_SHORT ).show();
+            Toast.makeText( context, R.string.please_finish_recording_first, Toast.LENGTH_SHORT ).show();
             return false;
         }
         mOpenBackCamera = backCamera;
@@ -338,7 +339,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         if (mCamera == null) return;
         if (b == mRunInBackground) return;
         if (!b && !isAttachedWindow) {
-            Toast.makeText( context, "Vew未依附在Window,无法显示", Toast.LENGTH_SHORT ).show();
+            Toast.makeText( context, R.string.cannot_be_displayed, Toast.LENGTH_SHORT ).show();
             return;
         }
         mRunInBackground = b;
@@ -452,7 +453,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             } );
         } catch (Exception e) {
             if (isRecording) {
-                Toast.makeText( context, "请先结束录像", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( context, R.string.please_finish_recording_first, Toast.LENGTH_SHORT ).show();
             }
         }
     }

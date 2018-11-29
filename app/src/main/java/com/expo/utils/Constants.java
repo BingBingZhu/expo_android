@@ -2,6 +2,7 @@ package com.expo.utils;
 
 import android.os.Environment;
 
+import com.expo.entity.Badge;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.DownloadInfo;
@@ -30,6 +31,7 @@ public interface Constants {
         public static final String KEY_TOURIST_TYPE_UPDATE_TIME = "key_tourist_type_list_update_time";
         public static final String KEY_SCENIC_SPOT_TYPE_UPDATE_TIME = "key_scenic_spot_type_update_time";
         public static final String KEY_PARK_UPDATE_TIME = "key_park_update_time";
+        public static final String KEY_BADGE_UPDATE_TIME = "key_badge_update_time";
         public static final String KEY_GUIDE_SHOWN = "key_guide_shown";
         public static final String KEY_LANGUAGE_CHOOSE = "key_language_choose";
         public static final String KEY_SHOW_SELECT_LANGUAGE = "key_app_first_use";
@@ -106,7 +108,7 @@ public interface Constants {
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class,
-                TopLineInfo.class, VenuesType.class, Park.class};
+                TopLineInfo.class, VenuesType.class, Park.class, Badge.class };
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }

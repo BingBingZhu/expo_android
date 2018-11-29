@@ -81,6 +81,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     public void returnCommonInfo(CommonInfo commonInfo) {
 //        WebActivity.startActivity( getContext(), commonInfo.getLinkUrl(),
 //                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn(), BaseActivity.TITLE_COLOR_STYLE_WHITE );
+//        String url = "http://192.168.1.13:8080/#/myOrder";
         String url = commonInfo.getLinkUrl();
         WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                 url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()

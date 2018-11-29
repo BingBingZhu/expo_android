@@ -21,7 +21,7 @@ public class VenuesType implements Parcelable {
     private String gisTypeId;           //gis系统的类型id ,
     @DatabaseField(columnName = "idx")
     @SerializedName("idx")
-    private String idx;                 //排序 ,
+    private Integer idx;                 //排序 ,
     @DatabaseField(columnName = "is_enable")
     @SerializedName("isenable")
     private Integer isEnable;           //设施是否可用 1 可用 0 禁用 ,
@@ -82,11 +82,11 @@ public class VenuesType implements Parcelable {
         this.gisTypeId = gisTypeId;
     }
 
-    public String getIdx() {
-        return idx;
+    public Integer getIdx() {
+        return null == idx ? 0 : idx;
     }
 
-    public void setIdx(String idx) {
+    public void setIdx(Integer idx) {
         this.idx = idx;
     }
 
@@ -198,7 +198,7 @@ public class VenuesType implements Parcelable {
         }
         createTime = in.readString();
         gisTypeId = in.readString();
-        idx = in.readString();
+        idx = in.readInt();
         if (in.readByte() == 0) {
             isEnable = null;
         } else {
@@ -242,7 +242,7 @@ public class VenuesType implements Parcelable {
         }
         dest.writeString(createTime);
         dest.writeString(gisTypeId);
-        dest.writeString(idx);
+        dest.writeInt(idx);
         if (isEnable == null) {
             dest.writeByte((byte) 0);
         } else {

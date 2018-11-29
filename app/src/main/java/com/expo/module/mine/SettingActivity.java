@@ -164,7 +164,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
             @Override
             protected void onPostExecute(Void aVoid) {
                 view.setRightText(DataCleanUtil.getCacheSize());
-                ToastHelper.showLong("缓存已清除");
+                ToastHelper.showLong(R.string.cache_cleared);
             }
         }.execute();
     }

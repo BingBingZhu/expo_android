@@ -25,7 +25,7 @@
             android:layout_marginRight="@dimen/dms_10"
             android:textColor="@color/color_666"
             android:textSize="@dimen/font_24"
-            android:text="景点名称"/>
+            android:text=""/>
         <ImageView
             android:id="@+id/park_as_item_isvoice"
             android:layout_width="wrap_content"
@@ -43,6 +43,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
-        android:textColor="@color/color_999"
-        android:text="888.88m"/>
+        android:textColor="@color/color_999"/>
 </FrameLayout>

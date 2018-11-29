@@ -78,7 +78,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/dms_24"
             android:paddingBottom="@dimen/dms_24"
-            android:text="下载新版本"
+            android:text="@string/download_the_new_version"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/font_28" />
 
@@ -94,7 +94,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/dms_24"
             android:paddingBottom="@dimen/dms_24"
-            android:text="下次再说"
+            android:text="@string/talk_to_you_later"
             android:textColor="@color/gray_66"
             android:textSize="@dimen/font_28" />
     </LinearLayout>

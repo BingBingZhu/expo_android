@@ -103,9 +103,9 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
 
     private void showForceSingOutDialog() {
         new AlertDialog.Builder( ExpoApp.getApplication().getTopActivity() )
-                .setMessage( "您的账号在其他设备登录" )
+                .setMessage( R.string.your_account_is_logged_in_on_another_device )
                 .setCancelable( false )
-                .setNegativeButton( "确定", new DialogInterface.OnClickListener() {
+                .setNegativeButton( R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ExpoApp.getApplication().setUser( null );

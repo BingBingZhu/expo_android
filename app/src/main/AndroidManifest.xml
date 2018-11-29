@@ -195,7 +195,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-
         <!--心跳连接服务-->
         <service android:name=".module.heart.HeartBeatService" />
         <!-- 定位服务 -->

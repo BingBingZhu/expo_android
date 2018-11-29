@@ -50,7 +50,9 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                             });
                     return;
                 }
-                List<VenuesType> venuesTypes = mDao.query(VenuesType.class, new QueryParams().add("eq", "is_enable", 1));
+                List<VenuesType> venuesTypes = mDao.query(VenuesType.class, new QueryParams()
+                        .add("eq", "is_enable", 1)
+                        .add("orderBy", "idx", true));
                 List<TouristType> touristTypes = mDao.query(TouristType.class, new QueryParams().add("eq", "is_enable", 1));
                 int tabPosition = 0;
                 Venue as = mDao.queryById(Venue.class, asId);
@@ -84,6 +86,20 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
     @Override
     public List<Venue> getActualScenes(ArrayList<Integer> ids) {
         List<Venue> venues = mDao.query(Venue.class,new QueryParams().add("in","_id",ids));
+        return venues;
+    }
+
+    @Override
+    public List<Venue> selectVenueByCaption(String caption) {
+        VenuesType venuesType = mDao.unique(VenuesType.class, new QueryParams()
+                .add("eq", "type_name", "景点")
+                .add("and")
+                .add("eq", "is_enable", 1));
+        List<Venue> venues = mDao.query(Venue.class, new QueryParams()
+                .add("eq", "type", venuesType.getId()).add("and")
+                .add("eq", "is_enable", 1).add("and")
+                .add("like", "caption", "%"+caption+"%"/*, "COLLATE NOCASE"*/).add("or")
+                .add("like", "caption_en", "%"+caption+"%"/*, "COLLATE NOCASE"*/));
         return venues;
     }
 

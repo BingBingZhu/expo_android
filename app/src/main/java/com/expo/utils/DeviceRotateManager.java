@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import com.expo.R;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.ToastHelper;
 
@@ -60,7 +61,7 @@ public class DeviceRotateManager implements SensorEventListener {
             // 注册传感器监听
             mSensorMag.registerListener( this, orientationSensor, mDelayRate );
         } else {
-            ToastHelper.showLong( "缺少陀螺仪组件，部分功能无法使用" );
+            ToastHelper.showLong( R.string.missing_gyro_assembly );
 //            Sensor magneticSensor      = mSensorMag.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 //            Sensor accelerometerSensor = mSensorMag.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 //            //初始化数组

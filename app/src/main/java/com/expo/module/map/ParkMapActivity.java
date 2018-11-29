@@ -54,6 +54,7 @@ import com.expo.module.webview.WebTemplateActivity;
 import com.expo.network.Http;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
+import com.expo.utils.media.MediaPlayUtil;
 import com.expo.widget.RecycleViewDivider;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
@@ -98,6 +99,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     private List<RouteInfo> mRouteInfos;
     private TouristAdapter mTouristAdapter;
     private int mTabPosition = 0;
+    private int mOldTabPosition = 0;
     private List<Venue> mAtVenue;   // 当前tab下的场馆
 
     @Override
@@ -107,7 +109,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(1, R.string.the_guide_tour);
+        setTitle(1, R.string.home_func_item_navigation);
         mMapView.onCreate(savedInstanceState);
         mAMap = mMapView.getMap();
         mMapUtils = new MapUtils(mAMap);
@@ -208,11 +210,12 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             String searchStr = searchContent.getText().toString().trim();
             venues.clear();
             if (!TextUtils.isEmpty(searchStr)) {
-                for (Venue as : mAtVenue) {
-                    if (LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption()).indexOf(searchStr) >= 0) {
-                        venues.add(as);
-                    }
-                }
+                venues.addAll(mPresenter.selectVenueByCaption(searchStr));
+//                for (Venue as : mAtVenue) {
+//                    if (LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption()).indexOf(searchStr) >= 0) {
+//                        venues.add(as);
+//                    }
+//                }
             } else {
                 venues.addAll( mAtVenue );
             }
@@ -289,17 +292,17 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             pic.setImageURI(Constants.URL.FILE_BASE_URL + wiki.getPicUrl());
         }
         voiceRoot.setOnClickListener(v14 -> {
-            String voiceUrl = LanguageUtil.chooseTest(venue.getVoiceUrl(),
-                    venue.getVoiceUrlEn().isEmpty() ? venue.getVoiceUrl() : venue.getVoiceUrlEn());
+            String voiceUrl = LanguageUtil.chooseTest(wiki.getVoiceUrl(),
+                    wiki.getVoiceUrlEn().isEmpty() ? wiki.getVoiceUrl() : wiki.getVoiceUrlEn());
             if (voiceUrl.isEmpty()){
-                ToastHelper.showShort("该景点暂无音频");
+                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
                 return;
             }
             play(voiceUrl);
         });
         asInfo.setOnClickListener(v12 -> {
             if (null == wiki) {
-                ToastHelper.showShort("暂无详情信息");
+                ToastHelper.showShort(R.string.no_details_are_available);
                 return;
             }
             WebTemplateActivity.startActivity(getContext(), wiki.getId());
@@ -316,26 +319,9 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     }
 
     private void play(String url){
-        url = Constants.URL.FILE_BASE_URL + url;
-        //1 初始化mediaplayer
-        final MediaPlayer mediaPlayer = new MediaPlayer();
-        //2 设置到播放的资源位置 path 可以是网络 路径 也可以是本地路径
-
-        try {
-            mediaPlayer.setDataSource(url);
-            //3 准备播放
-            mediaPlayer.prepareAsync();
-            //3.1 设置一个准备完成的监听
-            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    // 4 开始播放
-                    mediaPlayer.start();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        url = "4b74742e9ff342e8a870cc6268b6be78.mp3";
+        MediaPlayUtil.getInstence().initMediaPlayer();
+        MediaPlayUtil.getInstence().startPlay(url);
     }
 
     /**
@@ -364,7 +350,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             String voiceUrl = LanguageUtil.chooseTest(routeInfo.voiceUrl,
                     routeInfo.voiceUrlEn.isEmpty() ? routeInfo.voiceUrl : routeInfo.voiceUrlEn);
             if (voiceUrl.isEmpty()){
-                ToastHelper.showShort("该景点暂无音频");
+                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
                 return;
             }
             play(voiceUrl);
@@ -501,6 +487,22 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         mTouristDialog.show();//显示对话框
     }
 
+    /**
+     * 清除地图覆盖物
+     */
+    private void clearMap(){
+        if (!markers.isEmpty()) {
+            for (Marker marker : markers)
+                marker.remove();
+            markers.clear();
+        }
+        if (!polylines.isEmpty()) {
+            for (Polyline polyline : polylines)
+                polyline.remove();
+            polylines.clear();
+        }
+    }
+
     private void addActualSceneMarker(Long tabId, List<Venue> facilities, boolean flag) {
         mAtVenue.clear();
         if (flag) {
@@ -512,16 +514,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         }else{
             mAtVenue.addAll(facilities);
         }
-        if (!markers.isEmpty()) {
-            for (Marker marker : markers)
-                marker.remove();
-            markers.clear();
-        }
-        if (!polylines.isEmpty()) {
-            for (Polyline polyline : polylines)
-                polyline.remove();
-            polylines.clear();
-        }
+        clearMap();
         for (Venue as : mAtVenue) {
             if (as.getLat() == 0)
                 continue;
@@ -546,7 +539,6 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     }
 
     private void initTab(List<VenuesType> venuesTypes, int tabPosition) {
-//        mTabId = mTabId <= 0 ? this.mVenuesTypes.get(0).getId() : mTabId;
         mTabId = venuesTypes.get(tabPosition).getId();
         mTabView.setTabMode(TabLayout.MODE_SCROLLABLE);
         //tab的下划线颜色,默认是粉红色
@@ -562,6 +554,11 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mTabPosition = mTabView.getSelectedTabPosition();
+                if (mTabPosition == mOldTabPosition){
+                    return;
+                }
+                mOldTabPosition = mTabPosition;
+                clearMap();
                 mTabId = ParkMapActivity.this.mVenuesTypes.get(mTabPosition).getId();
                 if (isTabByCnName("路线")) {
                     drawLineToMap("1", 0);

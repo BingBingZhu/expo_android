@@ -124,7 +124,8 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
         mTabView.setVisibility( View.VISIBLE );
         mTabView.setTabMode( TabLayout.MODE_SCROLLABLE );
         for (Tab type : tabs) {
-            mTabView.addTab( mTabView.newTab().setText( LanguageUtil.chooseTest( type.getTab(), type.getEnTab() ) ) );
+            String tabText = LanguageUtil.chooseTest( type.getTab(), type.getEnTab() );
+            mTabView.addTab( mTabView.newTab().setText( tabText ) );
         }
         mAdapter.notifyDataSetChanged();
     }

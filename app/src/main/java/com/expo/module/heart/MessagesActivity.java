@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MessagesContract;
 import com.expo.db.QueryParams;
@@ -120,7 +121,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
 
     @Override
     public void onItemClick(View itemView, int position) {
-        ToastHelper.showShort("点击了第" + position + "条");
+        LogUtils.d("", "点击了第" + position + "条");
         mAdapter.mData.get(position).readMessage();
     }
 

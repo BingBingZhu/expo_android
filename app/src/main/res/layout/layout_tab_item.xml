@@ -10,5 +10,4 @@
     android:paddingTop="@dimen/dms_30"
     android:paddingBottom="@dimen/dms_30"
     android:textSize="@dimen/font_30"
-    android:textColor="@color/selector_tab_text_color"
-    android:text="景园" />
+    android:textColor="@color/selector_tab_text_color" />

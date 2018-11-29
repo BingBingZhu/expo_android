@@ -100,12 +100,12 @@ public class ShareUtil {
 
         boolean isWechat = "Wechat".equals( name ) || "WechatMoments".equals( name );
         if (isWechat && !plat.isClientValid()) {
-            ToastHelper.showShort( "未安装微信" );
+            ToastHelper.showShort( R.string.wechat_is_not_installed );
             return false;
         }
 
         if ("QZone".equals( name ) && !plat.isClientValid()) {
-            ToastHelper.showShort( "未安装QQ空间" );
+            ToastHelper.showShort( R.string.qq_space_is_not_installed );
             return false;
         }
         if (!mShareParams.containsKey( "shareType" )) {
