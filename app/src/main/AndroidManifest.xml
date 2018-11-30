@@ -20,7 +20,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
@@ -34,6 +33,9 @@
     <uses-permission android:name="com.casvd.permission.ACCESS_DOWNLOAD_MANAGER" />
     <uses-permission android:name="com.casvd.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED" />
     <uses-permission android:name="com.casvd.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name=".base.ExpoApp"
@@ -62,13 +64,13 @@
 
         <meta-data
             android:name="com.baidu.speech.APP_ID"
-            android:value="14824611"/>
+            android:value="14824611" />
         <meta-data
             android:name="com.baidu.speech.API_KEY"
-            android:value="6zE5wiPZP15n8WN4kP4tzopl"/>
+            android:value="6zE5wiPZP15n8WN4kP4tzopl" />
         <meta-data
             android:name="com.baidu.speech.SECRET_KEY"
-            android:value="vy4R0DZ6XemTZkWSppgHCoBpl5hz3RgU"/>
+            android:value="vy4R0DZ6XemTZkWSppgHCoBpl5hz3RgU" />
 
         <activity
             android:name=".module.splash.SplashActivity"
@@ -202,8 +204,8 @@
         <service android:name="com.amap.api.location.APSService" />
         <!--百度语音服务-->
         <!--<service-->
-            <!--android:name="com.baidu.speech."-->
-            <!--android:exported="false"/>-->
+        <!--android:name="com.baidu.speech."-->
+        <!--android:exported="false"/>-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"

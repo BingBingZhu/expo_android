@@ -69,6 +69,7 @@
 </head>
 <body>
 	<div id="nav">
+        <p style="font-size: .4rem;">{{haha}}</p>
         <div class="nav_guide">
             <img src="way_guide.png" alt="" class="img">
             <p>{{bourn}}</p>
@@ -82,7 +83,7 @@
           <!--<audio src=""></audio>-->
         </div>
       <div class="nav_btm">
-        <img :src="imgsrc" alt="" class="nav_btm_img">
+        <img :src="imgsrc" alt="" class="nav_btm_img" @click="imgClick">
         <audio :src="audiosrc"  autoplay id="audio"></audio>
         <!--<img src="file:///storage/emulated/0/expo/unzip/com.expo/1543297121596/光团/callstart/callstart/start2.png" alt="">-->
       </div>
@@ -101,22 +102,28 @@
         audiosrc:'',
         audioTime:'',
         next:true,
+        state:'1',
+        haha:''
       },
       mounted:function () {
         this.register();
       },
       methods:{
         //后台设置主位置
-        setMarker:function (init,maker){
+        setMarker:function (init,marker){
           var data = typeof marker == 'object'? marker : JSON.parse(marker);
+          this.haha = data;
+          this.bourn = data.title;
+          this.distance = data.distance.toFixed(0)+'m';
+          this.time = '未定';
         },
         //后台调取动画
         tipTips:function(I,tip){
           var _this = this;
-          var rootPath = this.path+'/'+tip
+          var rootPath = this.path+'/'+tip;
           this.imgsrc = rootPath+'.gif';
           this.audiosrc = rootPath+'.wav';
-          alert(rootPath)
+          // alert(rootPath)
           var audio = new Audio(this.audiosrc);
           // var audio = new Audio('file:///Library/WebServer/Documents/sever/nav'+rootPath.replace('.',"")+'.wav');
           audio.load();
@@ -124,12 +131,16 @@
             this.audioTime = audio.duration;
             // console.log('file:///Library/WebServer/Documents/sever/nav'+rootPath.replace('.',"")+'.wav')
             setTimeout(()=>{
-              alert('初始化')
-              _this.imgsrc = this.path+'/random/fly.gif';
+              this.state = '1';
+              _this.imgsrc = _this.path+'/fly.gif';
+              alert('初始化'+ _this.imgsrc )
               _this.audiosrc = '';
             },this.audioTime*1000)
             console.log(this.audioTime)
           }
+        },
+        imgClick: function (){
+
         },
         //后台返回主路径
         setTourist:function(res) { this.path = res; },
@@ -148,7 +159,7 @@
           }
         },
       }
-    })
+    });
 		// reqPath('./chuchang.',function (res) {
 		// 	console.log(res);
 		// })

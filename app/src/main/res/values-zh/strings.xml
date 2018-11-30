@@ -149,6 +149,13 @@
     <string name="navigationg_arrive">到达目的地</string>
     <string name="navigationg_back">返回导航</string>
 
+    <string name="message_kind_system_title">系统消息</string>
+    <string name="message_kind_system_content">系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息</string>
+    <string name="message_kind_appointment_title">预约提醒</string>
+    <string name="message_kind_appointment_content">预约提醒预约提醒预约提醒预约提醒预约提醒预约提醒预约提醒预约提醒</string>
+    <string name="message_kind_tourist_title">游客服务反馈</string>
+    <string name="message_kind_tourist_content">游客服务反馈游客服务反馈游客服务反馈游客服务反馈游客服务反馈游客服务反馈游客服务反馈</string>
+
     <string name="wifi_state_init">请点击按钮开启WLAN</string>
 
     <string name="not_input">未填写</string>

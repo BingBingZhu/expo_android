@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,12 +25,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
+import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
 import com.expo.adapters.DownloadData;
 import com.expo.adapters.ParkActualSceneAdapter;
@@ -46,7 +50,12 @@ import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.VenuesType;
+import com.expo.map.ClusterClickListener;
+import com.expo.map.ClusterItem;
+import com.expo.map.ClusterOverlay;
+import com.expo.map.ClusterRender;
 import com.expo.map.MapUtils;
+import com.expo.map.RegionItem;
 import com.expo.module.download.DownloadManager;
 import com.expo.module.webview.WebActivity;
 import com.expo.module.webview.WebTemplateActivity;
@@ -103,6 +112,51 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     private int mTabPosition = 0;
     private List<ActualScene> mAtActualScene;   // 当前tab下的场馆
 
+    private ClusterOverlay mClusterOverlay;
+    ClusterRender mClusterRender = new ClusterRender() {
+        @Override
+        public Drawable getDrawAble(int clusterNum) {
+            return null;
+//            int radius = SizeUtils.dp2px(80);
+//            if (clusterNum == 1) {
+//                Drawable bitmapDrawable = new b
+//                if (bitmapDrawable == null) {
+//                    bitmapDrawable =
+//                            getApplication().getResources().getDrawable(
+//                                    R.mipmap.ico_park_map_marker_main_bg);
+//                }
+//
+//                return bitmapDrawable;
+//            } else {
+//
+//                Drawable bitmapDrawable = mBackDrawAbles.get(2);
+//                if (bitmapDrawable == null) {
+//                    bitmapDrawable = new BitmapDrawable(null, drawCircle(radius,
+//                            Color.argb(159, 210, 154, 6)));
+//                }
+//
+//                return bitmapDrawable;
+//            }
+        }
+    };
+
+    ClusterClickListener mClusterClickListener = new ClusterClickListener() {
+        @Override
+        public void onClick(Marker marker, List<ClusterItem> clusterItems) {
+            if(clusterItems.size() == 1){
+                showActualSceneDialog(((RegionItem)clusterItems.get(0)).actualScene);
+            } else if(clusterItems.size() > 1){
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                for (ClusterItem clusterItem : clusterItems) {
+                    builder.include(clusterItem.getPosition());
+                }
+                LatLngBounds latLngBounds = builder.build();
+                mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0)
+                );
+            }
+        }
+    };
+
     @Override
     protected int getContentView() {
         return R.layout.activity_park_map;
@@ -117,6 +171,11 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         mMapUtils.settingMap(this, this);
         mAMap.setOnMyLocationChangeListener(mLocationChangeListener);
         mPresenter.loadParkMapData(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_SPOT_ID, 0));
+        mClusterOverlay = new ClusterOverlay(mAMap, null,
+                SizeUtils.dp2px(50),
+                this);
+        mClusterOverlay.setClusterRenderer(mClusterRender);
+        mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
     }
 
     @Override
@@ -492,12 +551,18 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 continue;
             LatLng latLng = new LatLng(as.getLat(), as.getLng());
             VenuesType vt = mVenuesTypes.get(mTabPosition);
-            Marker marker = mAMap.addMarker(new MarkerOptions()
-                    .icon(mMapUtils.setMarkerIconDrawable(getContext(), vt.getMarkBitmap(),
-                            LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption())))
-                    .anchor(0.5F, 0.90F).position(latLng));
-            marker.setObject(as);
-            markers.add(marker);
+//            Marker marker = mAMap.addMarker(new MarkerOptions()
+//                    .icon(mMapUtils.setMarkerIconDrawable(getContext(), vt.getMarkBitmap(),
+//                            LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption())))
+//                    .anchor(0.5F, 0.90F).position(latLng));
+//            marker.setObject(as);
+//            markers.add(marker);
+
+            RegionItem regionItem = new RegionItem(latLng,
+                    LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption()));
+            regionItem.venuesType = vt;
+            regionItem.actualScene = as;
+            mClusterOverlay.addClusterItem(regionItem);
         }
         mMapUtils.setCameraZoom(markers);
     }

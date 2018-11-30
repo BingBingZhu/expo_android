@@ -76,15 +76,15 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
     @Override
     public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
 
-        int width = SizeUtils.dp2px(60);
-        int height = ViewGroup.LayoutParams.MATCH_PARENT;
-
-        SwipeMenuItem deleteItem = new SwipeMenuItem(this)
-                .setBackground(R.drawable.bg_gradient_y_fc2637_fc515e)
-                .setImage(R.mipmap.delete)
-                .setWidth(width)
-                .setHeight(height);
-        swipeRightMenu.addMenuItem(deleteItem); // 在Item右侧添加一个菜单。
+//        int width = SizeUtils.dp2px(60);
+//        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+//
+//        SwipeMenuItem deleteItem = new SwipeMenuItem(this)
+//                .setBackground(R.drawable.bg_gradient_y_fc2637_fc515e)
+//                .setImage(R.mipmap.delete)
+//                .setWidth(width)
+//                .setHeight(height);
+//        swipeRightMenu.addMenuItem(deleteItem); // 在Item右侧添加一个菜单。
     }
 
     //侧边栏点击

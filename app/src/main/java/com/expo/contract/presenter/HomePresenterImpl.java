@@ -8,6 +8,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
 import com.expo.entity.TopLineInfo;
+import com.expo.module.gps.GPSLocationService;
 import com.expo.module.heart.HeartBeatService;
 
 public class HomePresenterImpl extends HomeContract.Presenter {
@@ -65,11 +66,13 @@ public class HomePresenterImpl extends HomeContract.Presenter {
 
     public void startHeartService(Context context) {
         HeartBeatService.startService( context );
+        GPSLocationService.startService( context );
     }
 
     @Override
     public void stopHeartService(Context context) {
         HeartBeatService.stopService( context );
+        GPSLocationService.stopService( context );
     }
 
     @Override
