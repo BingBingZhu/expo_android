@@ -43,6 +43,7 @@ import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.NavigationContract;
 import com.expo.entity.ActualScene;
+import com.expo.entity.Destination;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TouristType;
 import com.expo.entity.VenuesDistance;
@@ -126,54 +127,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     boolean isBackStage = false;
 
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_START));
-                    break;
-                case 1:
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_GPS_DIVERGE));
-                    break;
-                case 2:
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LONG_MUSIC_START));
-                    break;
-                case 3:
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LONG_MUSIC_END));
-                    break;
-                case 4:
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_GPS_LOW));
-                    break;
-                case 5:
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_GPS_LOST));
-                    break;
-                case 6:
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_WAKE));
-                    break;
-                case 7:
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE));
-                    break;
-                case 8:
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_END));
-                    break;
-                case 9:
-                    for (int i = 0; i < (mVenuesDistance.size() & 1); i++) {
-                        VenuesDistance vd = mVenuesDistance.get(i);
-                        LatLng latLng = new LatLng(vd.lat, vd.lon);
-                        mWebView.loadUrl("javascript:setMarker('1', '" + Http.getGsonInstance().toJson(vd) + "')");
-                    }
-                    break;
-            }
-            if (msg.what < 8) {
-                mHandler.sendEmptyMessageDelayed(msg.what + 1, 10000);
-            } else if (msg.what == 9) {
-                mHandler.sendEmptyMessageDelayed(msg.what, 5000);
-
-            }
-        }
-    };
+    Location mLocation;
 
     @Override
     protected int getContentView() {
@@ -303,6 +257,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private AMap.OnMyLocationChangeListener mOnLocationChangeListener = new AMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
+            mLocation = location;
             if (isFirst) {//第一次定位成功后移动到地图中心
                 isFirst = false;
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 20));
@@ -319,7 +274,17 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private DeviceRotateManager.OnOrientationChangedListener mOnOrientationChangedListener = new DeviceRotateManager.OnOrientationChangedListener() {
         @Override
         public void onChanged(float azimuth, float pitch, float roll) {
-            if (!mUseDeviceRotate) return;
+            if (mLocation == null) return;
+            Destination des = new Destination();
+            des.content = LanguageUtil.chooseTest(mActualScene.getCaption(), mActualScene.getEnCaption());
+            des.distance = AMapUtils.calculateLineDistance(
+                    new LatLng(mActualScene.getLat(), mActualScene.getLng()),
+                    new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
+            if (!mUseDeviceRotate) {
+                des.angle = "";
+                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,%.2f)"));
+                return;
+            }
             //计算角度以通知HTML页面使用
             float degrees;
             if (mCalculateDirection >= 0) {
@@ -328,7 +293,11 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 degrees = azimuth - mRouteDirection;
             }
             if (mJsCanSend && mSlidingDrawerView.isOpened()) {
-                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:getAzimuthInfo(%.2f,%.2f)", degrees, azimuth));
+                //degrees 当前方向和路的夹角
+                //azimuth 陀螺仪和正北方夹角
+//                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:getAzimuthInfo(%.2f,%.2f)", degrees, azimuth));
+                des.angle = degrees + "";
+                mWebView.loadUrl("javascript:setMarker('1','" + Http.getGsonInstance().toJson(des) + "')");
             }
             if (mNaviRouteOverlay == null || !mNaviRouteOverlay.isAnimating()) {
                 if (pitch < 0 && pitch > -60) {
@@ -378,7 +347,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mMythredFresh.exit();
         if (mMythredcCalculate != null)
             mMythredcCalculate.exit();
-        mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 
@@ -411,7 +379,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         if (touristType != null)
             mWebView.loadUrl(String.format("javascript:setTourist('%s')", touristType.getUnZipPath()));
 //        mHandler.sendEmptyMessageDelayed(0, 5000);
-        mHandler.sendEmptyMessageDelayed(9, 5000);
         mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "1", "callstart/callstart"));
     }
 
@@ -453,6 +420,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             for (int i = 0; i < mVenuesDistance.size(); i++) {
                 VenuesDistance vd = mVenuesDistance.get(i);
                 if (vd.distance >= 20.0f) break;
+                mWebView.loadUrl("javascript:nearWiki('" + vd.title + "', '" + vd.voice + "')");
                 if (mMarker.containsKey(vd.id)) {
                     tem.put(vd.id, mMarker.get(vd.id));
                     mMarker.remove(vd.id);
@@ -465,11 +433,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 tem.put(vd.id, mMarker.get(vd.id));
                 mMarker.remove(vd.id);
 
-                mWebView.loadUrl("javascript:setMarker('1', '" + Http.getGsonInstance().toJson(vd) + "')");
             }
             for (Marker marker : mMarker.values()) {
                 marker.remove();
-                mWebView.loadUrl("javascript:setMarker('0', '" + marker + "')");
             }
             mMarker.clear();
             mMarker.putAll(tem);

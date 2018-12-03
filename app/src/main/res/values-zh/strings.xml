@@ -66,6 +66,7 @@
 
     <string name="main_home">首页</string>
     <string name="main_panorama">全景</string>
+    <string name="main_find">发现</string>
     <string name="main_encyclopedias">百科</string>
     <string name="main_mine">我的</string>
 
@@ -95,6 +96,8 @@
     <string name="item_user_name">昵称</string>
     <string name="item_user_sex">性别</string>
     <string name="item_user_age">年龄</string>
+    <string name="item_user_email">邮箱</string>
+    <string name="item_user_work">工作行业</string>
 
     <string name="item_setting_language">语言设置</string>
     <string name="item_setting_cache">清除缓存</string>

@@ -66,6 +66,7 @@
 
     <string name="main_home">Home</string>
     <string name="main_panorama">Pano</string>
+    <string name="main_find">Find</string>
     <string name="main_encyclopedias">Ency</string>
     <string name="main_mine">Mine</string>
 
@@ -95,6 +96,8 @@
     <string name="item_user_name">昵称</string>
     <string name="item_user_sex">性别</string>
     <string name="item_user_age">年龄</string>
+    <string name="item_user_email">邮箱</string>
+    <string name="item_user_work">工作行业</string>
 
     <string name="item_setting_language">Language Setting</string>
     <string name="item_setting_cache">清除缓存</string>

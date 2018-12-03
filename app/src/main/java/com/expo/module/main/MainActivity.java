@@ -14,6 +14,7 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.module.main.encyclopedia.EncyclopediaFragment;
+import com.expo.module.main.find.FindFragment;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
@@ -29,16 +30,18 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_host)
     FragmentTabHost mTabHostView;
 
-    private String[] tabTags = {"home", "panorama", "encyclopedias", "mine"};
-    private int[] tabTitles = {R.string.main_home, R.string.main_panorama, R.string.main_encyclopedias, R.string.main_mine};
+    private String[] tabTags = {"home", "panorama", "find", "encyclopedias", "mine"};
+    private int[] tabTitles = {R.string.main_home, R.string.main_panorama, R.string.main_find, R.string.main_encyclopedias, R.string.main_mine};
     private int mImages[] = {
             R.drawable.selector_tab_home,
             R.drawable.selector_tab_panorama,
+            R.drawable.selector_tab_encyclopedia,
             R.drawable.selector_tab_encyclopedia,
             R.drawable.selector_tab_mine};
     private Class[] fragments = new Class[]{
             HomeFragment.class,
             PanoramaFragment.class,
+            FindFragment.class,
             EncyclopediaFragment.class,
             MineFragment.class};
 

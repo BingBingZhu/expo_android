@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/find_top_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green_02cd9b"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/find_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dms_72"
+            android:layout_marginTop="@dimen/dms_20"
+            android:layout_marginRight="@dimen/dms_140"
+            android:background="@drawable/shape_ency_search_bar_bg"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dms_20"
+                android:src="@mipmap/ico_ency_search" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dms_20"
+                android:paddingTop="@dimen/dms_20"
+                android:paddingBottom="@dimen/dms_20"
+                android:text="搜索目的地/景点/场馆"
+                android:textColor="@color/color_white_50diaphaneity"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_2"
+            android:layout_marginTop="@dimen/dms_14"
+            android:background="#00C897" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/find_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/color_ency_tab"
+            app:tabIndicatorHeight="@dimen/dms_4"
+            app:tabMinWidth="@dimen/dms_200"
+            app:tabMode="scrollable"
+            app:tabPaddingBottom="@dimen/dms_28"
+            app:tabPaddingTop="@dimen/dms_28"
+            app:tabSelectedTextColor="@color/color_ency_tab"
+            app:tabTextAppearance="@style/tab_text_appearance"
+
+            app:tabTextColor="@android:color/white" />
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/find_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
+</LinearLayout>

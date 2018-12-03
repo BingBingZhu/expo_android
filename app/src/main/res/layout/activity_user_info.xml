@@ -3,18 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_50"
         android:background="@color/color_EEE" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dms_34"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dms_34">
+
         <com.expo.widget.MyUserInfoView
             android:id="@+id/user_img"
             style="@style/item_user_info"
@@ -46,6 +49,24 @@
             android:id="@+id/user_age"
             style="@style/item_user_info"
             app:text="@string/item_user_age" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <com.expo.widget.MyUserInfoView
+            android:id="@+id/user_email"
+            style="@style/item_user_info"
+            app:text="@string/item_user_email" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <com.expo.widget.MyUserInfoView
+            android:id="@+id/user_work"
+            style="@style/item_user_info"
+            app:text="@string/item_user_work" />
 
         <TextView
             style="@style/LineHorizontal"
