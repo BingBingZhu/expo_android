@@ -55,7 +55,7 @@ public class MapUtils {
         map.setMyLocationEnabled( true );
         map.setOnMapTouchListener( onMapTouchListener );
         map.setOnMarkerClickListener( onMarkerClickListener );
-        map.setMapType((int) PrefsHelper.getLong(Constants.Prefs.KEY_MAP_PATTERN, 1));
+        map.setMapType( (int) PrefsHelper.getLong( Constants.Prefs.KEY_MAP_PATTERN, 1 ) );
         setNotFollow();
     }
 
@@ -74,31 +74,31 @@ public class MapUtils {
      * @param park 园区
      */
     public void setLimits(Park park) {
-        map.setMapStatusLimits(getBoundsBuilder(park));
+        map.setMapStatusLimits( getBoundsBuilder( park ) );
     }
 
     private LatLngBounds getBoundsBuilder(Park park) {
         ArrayList<double[]> electronicFenceList = park.getElectronicFenceList();
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
         for (double[] lngLat : electronicFenceList) {
-            boundsBuilder.include(new LatLng(lngLat[1], lngLat[0]));
+            boundsBuilder.include( new LatLng( lngLat[1], lngLat[0] ) );
         }
         return boundsBuilder.build();
     }
 
-    public List<DPoint> getGeoFencePoints(Park park){
+    public List<DPoint> getGeoFencePoints(Park park) {
         List<DPoint> dPoints = new ArrayList<>();
         ArrayList<double[]> electronicFenceList = park.getElectronicFenceList();
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
         for (double[] lngLat : electronicFenceList) {
-            dPoints.add(new DPoint(lngLat[1], lngLat[0]));
+            dPoints.add( new DPoint( lngLat[1], lngLat[0] ) );
         }
         return dPoints;
     }
 
     public float setMapMinZoom() {
         float zoom = map.getCameraPosition().zoom;
-        map.setMinZoomLevel(zoom);
+        map.setMinZoomLevel( zoom );
         return zoom;
     }
 
@@ -203,22 +203,26 @@ public class MapUtils {
         map.animateCamera( CameraUpdateFactory.newLatLngBounds( boundsBuilder.build(), 260 ) );
     }
 
-    public BitmapDescriptor setMarkerIconDrawable(Context context, Bitmap bitmap, String text){
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_as_icon, null);
-        TextView tv = view.findViewById(R.id.as_ico_text);
-        ImageView img = view.findViewById(R.id.icon_center_img);
-        TextView ctv = view.findViewById(R.id.icon_center_text);
-        tv.setText(text);
-        if (null == bitmap && StringUtils.isEmpty(centerText)) {
-            bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.test_1);
-            img.setImageBitmap(bitmap);
-        } else if (!StringUtils.isEmpty(centerText)) {
-            img.setImageResource(0);
-            tv.setVisibility(View.GONE);
-            ctv.setVisibility(View.VISIBLE);
-            ctv.setText(centerText);
+    public BitmapDescriptor setMarkerIconDrawable(Context context, Bitmap bitmap, String text) {
+        return setMarkerIconDrawable( context, bitmap, text, null );
+    }
+
+    public BitmapDescriptor setMarkerIconDrawable(Context context, Bitmap bitmap, String text, String centerText) {
+        View view = LayoutInflater.from( context ).inflate( R.layout.layout_as_icon, null );
+        TextView tv = view.findViewById( R.id.as_ico_text );
+        ImageView img = view.findViewById( R.id.icon_center_img );
+        TextView ctv = view.findViewById( R.id.icon_center_text );
+        tv.setText( text );
+        if (null == bitmap && StringUtils.isEmpty( centerText )) {
+            bitmap = BitmapFactory.decodeResource( context.getResources(), R.mipmap.test_1 );
+            img.setImageBitmap( bitmap );
+        } else if (!StringUtils.isEmpty( centerText )) {
+            img.setImageResource( 0 );
+            tv.setVisibility( View.GONE );
+            ctv.setVisibility( View.VISIBLE );
+            ctv.setText( centerText );
         }
-        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromView( view );
         return bitmapDescriptor;
     }
 
@@ -232,25 +236,25 @@ public class MapUtils {
     public void useTile(String baseUrl) {
         final String url = baseUrl + "/tiles/%d/%d_%d.png";
         TileOverlayOptions tileOverlayOptions =
-                new TileOverlayOptions().tileProvider(new UrlTileProvider(256, 256) {
+                new TileOverlayOptions().tileProvider( new UrlTileProvider( 256, 256 ) {
                     @Override
                     public URL getTileUrl(int x, int y, int zoom) {
                         try {
-                            return new URL(String.format(url, zoom, x, y));
+                            return new URL( String.format( url, zoom, x, y ) );
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         return null;
                     }
-                });
-        tileOverlayOptions.diskCacheEnabled(true)
-                .diskCacheDir("/storage/emulated/0/amap/tilecache")
-                .diskCacheSize(100000)
-                .memoryCacheEnabled(true)
-                .memCacheSize(100000)
-                .zIndex(-10);
+                } );
+        tileOverlayOptions.diskCacheEnabled( true )
+                .diskCacheDir( "/storage/emulated/0/amap/tilecache" )
+                .diskCacheSize( 100000 )
+                .memoryCacheEnabled( true )
+                .memCacheSize( 100000 )
+                .zIndex( -10 );
         /*TileOverlay mtileOverlay = */
-        map.addTileOverlay(tileOverlayOptions);
+        map.addTileOverlay( tileOverlayOptions );
     }
 
 }

@@ -282,9 +282,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         public void onChanged(float azimuth, float pitch, float roll) {
             if (mLocation == null) return;
             Destination des = new Destination();
-            des.content = LanguageUtil.chooseTest(mActualScene.getCaption(), mActualScene.getEnCaption());
+            des.content = LanguageUtil.chooseTest(mVenue.getCaption(), mVenue.getEnCaption());
             des.distance = AMapUtils.calculateLineDistance(
-                    new LatLng(mActualScene.getLat(), mActualScene.getLng()),
+                    new LatLng(mVenue.getLat(), mVenue.getLng()),
                     new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
             if (!mUseDeviceRotate) {
                 des.angle = "";

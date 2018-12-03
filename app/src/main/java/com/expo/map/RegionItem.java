@@ -1,7 +1,7 @@
 package com.expo.map;
 
 import com.amap.api.maps.model.LatLng;
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 
 /**
@@ -12,10 +12,11 @@ public class RegionItem implements ClusterItem {
     private LatLng mLatLng;
     private String mTitle;
     public VenuesType venuesType;
-    public ActualScene actualScene;
+    public Venue actualScene;
+
     public RegionItem(LatLng latLng, String title) {
-        mLatLng=latLng;
-        mTitle=title;
+        mLatLng = latLng;
+        mTitle = title;
     }
 
     @Override
@@ -23,7 +24,8 @@ public class RegionItem implements ClusterItem {
         // TODO Auto-generated method stub
         return mLatLng;
     }
-    public String getTitle(){
+
+    public String getTitle() {
         return mTitle;
     }
 
