@@ -2,13 +2,14 @@ package com.expo.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "badge")
-public class Badge implements Parcelable {
+public class Badge implements Parcelable, Comparable<Badge> {
 
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")
@@ -25,7 +26,7 @@ public class Badge implements Parcelable {
     @DatabaseField(columnName = "icon_small")
     @SerializedName("iconsmall")
     private String iconSmall;   // iconsmall ,
-    @DatabaseField(columnName = "id")
+    @DatabaseField(columnName = "id",id = true)
     @SerializedName("id")
     private Long id;   //
     @DatabaseField(columnName = "level")
@@ -193,5 +194,10 @@ public class Badge implements Parcelable {
             dest.writeInt(score);
         }
         dest.writeString(updateTime);
+    }
+
+    @Override
+    public int compareTo(@NonNull Badge o) {
+        return this.getLevel() - o.getLevel();
     }
 }

@@ -91,6 +91,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     TextureView mTextureView;
     @BindView(R.id.gt_navi_tips)
     TextView mTvTips;
+    @BindView(R.id.img_module_show)
+    ImageView mImgModuleShow;
+
     public AMapNavi mAMapNavi;
     private AMap mMap;
     private Venue virtualScene;
@@ -131,6 +134,11 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false)) {
+            mImgModuleShow.setVisibility(View.GONE);
+        }
+        mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
+                true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
         StatusBarUtils.setStatusBarLight(this, true);
         mMapView.onCreate(savedInstanceState);
         //地图中心点
@@ -157,8 +165,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     }
 
     private void initWebView() {
-//        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
-        mWebView.loadUrl("http://192.168.6.129/sever/dist/index.html#/navigation");
+        mWebView.loadUrl("file:///android_asset/web/merge.html");
+        mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
 //        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
@@ -289,7 +297,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private void changeAnimation(String action) {
         if (mJsCanSend && mSlidingDrawerView.isOpened()) {
             mWebView.loadUrl(String.format("javascript:getActionState('%s')", action));
-//            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "0", action));
+            //mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "0", action));
         }
     }
 
@@ -533,9 +541,19 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         }
     };
 
-    @OnClick(R.id.gt_navi_back)
+    @OnClick({R.id.gt_navi_back, R.id.img_module_show})
     public void onClick(View v) {
-        finish();
+        switch (v.getId()){
+            case R.id.gt_navi_back:
+                finish();
+                break;
+            case R.id.img_module_show:
+                PrefsHelper.setBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, ! PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true));
+                mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
+                        true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
+                mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
+                break;
+        }
     }
 
     //提供给网络端的回调方法

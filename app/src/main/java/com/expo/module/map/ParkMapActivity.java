@@ -1,20 +1,23 @@
 package com.expo.module.map;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.view.Gravity;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +27,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.amap.api.fence.GeoFence;
+import com.amap.api.fence.GeoFenceClient;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.LatLng;
@@ -38,6 +43,7 @@ import com.expo.adapters.ParkRouteAdapter;
 import com.expo.adapters.TouristAdapter;
 import com.expo.adapters.TouristTypeAdapter;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.base.utils.ViewUtils;
 import com.expo.contract.ParkMapContract;
@@ -48,6 +54,7 @@ import com.expo.entity.RouteInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.VenuesType;
 import com.expo.map.MapUtils;
+import com.expo.map.NaviManager;
 import com.expo.module.download.DownloadManager;
 import com.expo.module.webview.WebActivity;
 import com.expo.module.webview.WebTemplateActivity;
@@ -59,7 +66,6 @@ import com.expo.widget.RecycleViewDivider;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -67,24 +73,33 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.amap.api.fence.GeoFenceClient.GEOFENCE_IN;
+import static com.amap.api.fence.GeoFenceClient.GEOFENCE_OUT;
+
 /*
  * 导游导览
  */
 public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> implements
         ParkMapContract.View, AMap.OnMapTouchListener, AMap.OnMarkerClickListener {
 
+    public static final String GEOFENCE_BROADCAST_ACTION = "com.location.apis.geofencedemo.broadcast";
+    public static final String EXPO_PARK = "expo_park";
+
     @BindView(R.id.tab_layout)
     TabLayout mTabView;
     @BindView(R.id.map_view)
     TextureMapView mMapView;
     @BindView(R.id.park_map_menu)
-    ImageView imgMenu;
+    ImageView mImgMenu;
     @BindView(R.id.select_tour_guide)
     SimpleDraweeView mTourGuideImg;
+    @BindView(R.id.map_pattern_chanage)
+    ImageView mImgChanagePattern;
 
     private RecyclerView mTouristListView;
 
     private AMap mAMap;
+    private GeoFenceClient mGeoFenceClient;
     private List<Venue> mFacilities;
     private Long mTabId;
     private List<Marker> markers;
@@ -101,6 +116,8 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     private int mTabPosition = 0;
     private int mOldTabPosition = 0;
     private List<Venue> mAtVenue;   // 当前tab下的场馆
+    private boolean mIsInPark;
+    private long mPattern = 1;
 
     @Override
     protected int getContentView() {
@@ -110,12 +127,22 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(1, R.string.home_func_item_navigation);
+        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false))
+            mImgChanagePattern.setVisibility(View.GONE);
         mMapView.onCreate(savedInstanceState);
         mAMap = mMapView.getMap();
         mMapUtils = new MapUtils(mAMap);
         mMapUtils.settingMap(this, this);
+        mPattern = PrefsHelper.getLong(Constants.Prefs.KEY_MAP_PATTERN, 1);
         mAMap.setOnMyLocationChangeListener(mLocationChangeListener);
         mPresenter.loadParkMapData(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_SPOT_ID, 0));
+        // 地理围栏
+        mGeoFenceClient = new GeoFenceClient( getContext() );
+        mGeoFenceClient.setActivateAction( GEOFENCE_IN | GEOFENCE_OUT );
+        mGeoFenceClient.createPendingIntent( GEOFENCE_BROADCAST_ACTION );
+        IntentFilter filter = new IntentFilter( ConnectivityManager.CONNECTIVITY_ACTION );
+        filter.addAction( GEOFENCE_BROADCAST_ACTION );
+        registerReceiver( mGeoFenceReceiver , filter );
     }
 
     @Override
@@ -134,7 +161,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         context.startActivity(in);
     }
 
-    @OnClick({R.id.latched_position, R.id.select_tour_guide, R.id.park_map_menu})
+    @OnClick({R.id.latched_position, R.id.select_tour_guide, R.id.park_map_menu, R.id.map_pattern_chanage})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.latched_position:     // 位置锁定
@@ -145,21 +172,28 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 break;
             case R.id.park_map_menu:      // 菜单按钮
                 if (isTabByCnName("路线")) {
-                    showLinePopup(mRouteInfos, 1);
+                    showLinePopup(mRouteInfos);
                 } else {
                     showPointPopup();
                 }
                 break;
+            case R.id.map_pattern_chanage:
+                // 地图模切换
+                mPattern++;
+                mPattern = mPattern >= 3 ? 1 : mPattern;
+                PrefsHelper.setLong(Constants.Prefs.KEY_MAP_PATTERN, mPattern);
+                mAMap.setMapType((int) mPattern);
+                break;
         }
     }
 
-    private void showLinePopup(List<RouteInfo> routeInfos, int type) {
+    private void showLinePopup(List<RouteInfo> routeInfos) {
         List<RouteInfo> atRouteInfos = new ArrayList<>();
         for (RouteInfo routeInfo : routeInfos){
             if (routeInfo.typeId.equals("1"))
                 atRouteInfos.add(routeInfo);
         }
-        imgMenu.setSelected(true);
+        mImgMenu.setSelected(true);
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_park_menu, null);
         RecyclerView recyclerView = contentView.findViewById(R.id.popup_recycler_view);
         ParkRouteAdapter parkRouteAdapter = new ParkRouteAdapter(getContext(), atRouteInfos, mVenuesTypes.get(mTabPosition));
@@ -185,7 +219,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
      * 显示搜索菜单
      */
     private void showPointPopup() {
-        imgMenu.setSelected(true);
+        mImgMenu.setSelected(true);
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_park_menu, null);
         View searchRoot = contentView.findViewById(R.id.popup_search_root);
         if (isTabByCnName("景点")) {
@@ -205,17 +239,33 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             Venue as = venues.get(position);
             showActualSceneDialog(as);
         });
+        searchContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchStr = s.toString().trim();
+                venues.clear();
+                if (searchStr.isEmpty()){
+                    venues.addAll( mAtVenue );
+                }else {
+                    venues.addAll(mPresenter.selectVenueByCaption(searchStr));
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
         btnSearch.setOnClickListener(v -> {
             // 搜索
             String searchStr = searchContent.getText().toString().trim();
             venues.clear();
             if (!TextUtils.isEmpty(searchStr)) {
                 venues.addAll(mPresenter.selectVenueByCaption(searchStr));
-//                for (Venue as : mAtVenue) {
-//                    if (LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption()).indexOf(searchStr) >= 0) {
-//                        venues.add(as);
-//                    }
-//                }
             } else {
                 venues.addAll( mAtVenue );
             }
@@ -231,12 +281,9 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         popupWindow.setTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.setOnDismissListener(() -> {
-            imgMenu.setSelected(false);
+            mImgMenu.setSelected(false);
         });
-        int windowPos[] = ViewUtils.calculatePopWindowPos(imgMenu, contentView);
-        int yOff = getResources().getDimensionPixelSize(R.dimen.dms_20);
-        windowPos[1] += yOff;
-        popupWindow.showAtLocation(mTabView, Gravity.TOP, 0, windowPos[1]);
+        popupWindow.showAsDropDown(mTabView);
     }
 
     @Override
@@ -309,8 +356,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             mActualSceneDialog.dismiss();
         });
         asLine.setOnClickListener(v13 ->{
-            NavigationActivity.startActivity(getContext(), venue,
-                    LanguageUtil.chooseTest( venue.getVoiceUrl(), venue.getVoiceUrlEn()));
+            if (mIsInPark)
+                NavigationActivity.startActivity(getContext(), venue, LanguageUtil.chooseTest( venue.getVoiceUrl(), venue.getVoiceUrlEn()));
+            else
+                NaviManager.getInstance( getContext() ).showSelectorNavi( venue );
         });
         dialogClose.setOnClickListener(v1 -> mActualSceneDialog.dismiss());
         mActualSceneDialog.setContentView(v);
@@ -320,6 +369,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     private void play(String url){
 //        url = "4b74742e9ff342e8a870cc6268b6be78.mp3";
+        MediaPlayUtil.getInstence().stopMusic();
         MediaPlayUtil.getInstence().initMediaPlayer();
         MediaPlayUtil.getInstence().startPlay(url);
     }
@@ -399,7 +449,24 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     @Override
     public void showParkScope(Park park) {
         mMapUtils.setLimits(park);
+        mGeoFenceClient.addGeoFence(mMapUtils.getGeoFencePoints(park), EXPO_PARK);
     }
+
+    private BroadcastReceiver mGeoFenceReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(GEOFENCE_BROADCAST_ACTION)) {
+                Bundle bundle = intent.getExtras();
+                int status = bundle.getInt(GeoFence.BUNDLE_KEY_FENCESTATUS);
+                String customId = bundle.getString(GeoFence.BUNDLE_KEY_CUSTOMID);
+                if (status == GEOFENCE_IN  && customId.equals(EXPO_PARK) ){
+                    mIsInPark = true;
+                }else if (status == GEOFENCE_OUT  && customId.equals(EXPO_PARK) ) {
+                    mIsInPark = false;
+                }
+            }
+        }
+    };
 
     /**
      * 路线

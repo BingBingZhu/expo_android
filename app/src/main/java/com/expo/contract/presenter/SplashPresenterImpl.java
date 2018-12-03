@@ -40,6 +40,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -98,7 +100,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                     }
                 }
                 if (!TextUtils.isEmpty( rsp.router )) {
-                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ACTUAL_SCENE_UPDATE_TIME, null );
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_ROUTES_UPDATE_TIME, null );
                     if (!rsp.router.equals( updateTime )) {
                         loadRouteInfo( emptyBody );
                     }
@@ -211,7 +213,9 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             protected void onResponse(BadgeResp rsp) {
                 PrefsHelper.setString( Constants.Prefs.KEY_BADGE_UPDATE_TIME, rsp.updatetime );
                 mDao.clear( Badge.class );
-                mDao.saveOrUpdateAll( rsp.badges );
+                List<Badge> badges = rsp.badges;
+                Collections.sort(badges);
+                mDao.saveOrUpdateAll( badges );
             }
 
             @Override
@@ -357,29 +361,6 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         addNetworkRecord();
     }
 
-
-    /*
-     * 加载主题数据
-     */
-    private void loadSubjects(RequestBody emptyBody) {
-        Observable<SubjectResp> observable = Http.getServer().loadSubjects( emptyBody );
-        isRequest = Http.request( new ResponseCallback<SubjectResp>() {
-            @Override
-            protected void onResponse(SubjectResp rsp) {
-                PrefsHelper.setString( Constants.Prefs.KEY_SUBJECT_UPDATE_TIME, rsp.updateTime );
-                mDao.clear( Subject.class );
-                mDao.saveOrUpdateAll( rsp.subjects );
-            }
-
-            @Override
-            public void onComplete() {
-                notifyLoadComplete();
-            }
-        }, observable );
-        addNetworkRecord();
-    }
-
-
     /*
      * 加载常用信息
      */
@@ -432,6 +413,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         isRequest = Http.request( new ResponseCallback<RouteInfoResp>() {
             @Override
             protected void onResponse(RouteInfoResp rsp) {
+                PrefsHelper.setString( Constants.Prefs.KEY_ROUTES_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( RouteInfo.class );
                 mDao.saveOrUpdateAll( rsp.routeList );
             }

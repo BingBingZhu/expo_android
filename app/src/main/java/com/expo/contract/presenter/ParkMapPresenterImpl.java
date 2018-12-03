@@ -99,6 +99,8 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                 .add("eq", "type", venuesType.getId()).add("and")
                 .add("eq", "is_enable", 1).add("and")
                 .add("like", "caption", "%"+caption+"%"/*, "COLLATE NOCASE"*/).add("or")
+                .add("eq", "type", venuesType.getId()).add("and")
+                .add("eq", "is_enable", 1).add("and")
                 .add("like", "caption_en", "%"+caption+"%"/*, "COLLATE NOCASE"*/));
         return venues;
     }

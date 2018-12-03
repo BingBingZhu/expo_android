@@ -2,6 +2,7 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.contract.presenter.BadgePresenterImpl;
 import com.expo.contract.presenter.BindPhonePresenterImpl;
 import com.expo.contract.presenter.DistinguishPresenterImpl;
 import com.expo.contract.presenter.EncyclopediaSearchPresenterImpl;
@@ -83,6 +84,8 @@ public class PresenterFactory {
             return new TouristServicePresenterImpl( (TouristServiceContract.View) view );
         } else if (view instanceof PanoramaContract.View) {
             return new PanoramaPresenterImpl( (PanoramaContract.View) view );
+        } else if (view instanceof BadgeContract.View) {
+            return new BadgePresenterImpl( (BadgeContract.View) view );
         }
         throw new UnsupportedOperationException();
     }

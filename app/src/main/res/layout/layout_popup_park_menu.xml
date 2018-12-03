@@ -25,6 +25,7 @@
                 android:layout_marginLeft="@dimen/dms_28"
                 android:layout_marginRight="@dimen/dms_60"
                 android:hint="@string/please_enter_the_scenic_spot_you_want_to_search"
+                android:maxLines="1"
                 android:background="@color/transparent"
                 android:textColor="@color/color_333"
                 android:textColorHint="@color/color_999"

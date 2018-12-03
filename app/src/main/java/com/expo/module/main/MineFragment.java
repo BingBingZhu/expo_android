@@ -1,5 +1,6 @@
 package com.expo.module.main;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.expo.base.ExpoApp;
 import com.expo.contract.MineContract;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.User;
+import com.expo.module.badge.BadgeActivity;
 import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.mine.AboutActivity;
 import com.expo.module.mine.FeedbackActivity;
@@ -47,6 +49,8 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     @BindView(R.id.mine_badge)
     TextView mTvBadge;
 
+    private int score;
+
     @Override
     public int getContentView() {
         return R.layout.fragment_mine;
@@ -69,12 +73,16 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         return true;
     }
 
+    @SuppressLint("StringFormatInvalid")
     @Override
     public void freshUser(User user) {
         if (user == null) return;
         if (!StringUtils.isEmpty( user.getPhotoUrl() ))
             CommUtils.setImgPic( getContext(), user.getPhotoUrl(), mImageView );
         mTvMineName.setText( user.getNick() );
+        String scores = getResources().getString(R.string.the_current_integral);
+        score = user.getIntTotscores();
+        mTvIntegral.setText( String.format(scores, score));
     }
 
     @Override
@@ -117,7 +125,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
 
                 break;
             case R.id.mine_badge:       // 徽章
-
+                BadgeActivity.startActivity(getContext(), score);
                 break;
         }
     }

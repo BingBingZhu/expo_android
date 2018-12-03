@@ -60,6 +60,28 @@
         <TextView
             style="@style/LineHorizontal"
             android:background="@color/white_e6" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_100">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/gray_32"
+                android:textSize="@dimen/font_30"
+                android:text="地图模式切换"/>
+            <ImageView
+                android:id="@+id/setting_map_on_off"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="@dimen/dms_40"/>
+        </FrameLayout>
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
     </LinearLayout>
 
     <TextView

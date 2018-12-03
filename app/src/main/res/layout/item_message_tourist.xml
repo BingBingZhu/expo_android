@@ -19,9 +19,12 @@
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         android:id="@+id/item_more"
-        style="@style/TextSizeWhite14"
+        style="@style/TextSizeWhite13"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/dms_10"
+        android:layout_marginLeft="@dimen/dms_56"
+        android:layout_marginRight="@dimen/dms_60"
+        android:layout_marginBottom="@dimen/dms_24"
         android:drawableRight="@mipmap/arrow_right"
         android:text="@string/see_detail"
         android:textColor="@color/gray_66" />

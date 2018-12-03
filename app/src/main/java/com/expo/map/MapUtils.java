@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
+import com.amap.api.location.DPoint;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -23,8 +24,10 @@ import com.amap.api.maps.model.UrlTileProvider;
 import com.expo.R;
 import com.expo.base.BaseApplication;
 import com.expo.base.ExpoApp;
+import com.expo.base.utils.PrefsHelper;
 import com.expo.entity.Park;
 import com.expo.network.Http;
+import com.expo.utils.Constants;
 import com.expo.widget.ImageViewPlus;
 
 import java.net.URL;
@@ -51,6 +54,7 @@ public class MapUtils {
         map.setMyLocationEnabled( true );
         map.setOnMapTouchListener( onMapTouchListener );
         map.setOnMarkerClickListener( onMarkerClickListener );
+        map.setMapType((int) PrefsHelper.getLong(Constants.Prefs.KEY_MAP_PATTERN, 1));
         setNotFollow();
     }
 
@@ -79,6 +83,16 @@ public class MapUtils {
             boundsBuilder.include( new LatLng( lngLat[1], lngLat[0] ) );
         }
         return boundsBuilder.build();
+    }
+
+    public List<DPoint> getGeoFencePoints(Park park){
+        List<DPoint> dPoints = new ArrayList<>();
+        ArrayList<double[]> electronicFenceList = park.getElectronicFenceList();
+        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
+        for (double[] lngLat : electronicFenceList) {
+            dPoints.add(new DPoint(lngLat[1], lngLat[0]));
+        }
+        return dPoints;
     }
 
     public float setMapMinZoom() {

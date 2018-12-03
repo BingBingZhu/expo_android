@@ -68,6 +68,13 @@
             android:name="com.baidu.speech.SECRET_KEY"
             android:value="vy4R0DZ6XemTZkWSppgHCoBpl5hz3RgU" />
 
+        <meta-data
+            android:name="BaiduMobAd_STAT_ID"
+            android:value="8de2009258" />
+        <meta-data
+            android:name="BaiduMobAd_EXCEPTION_LOG"
+            android:value="true" />
+
         <activity
             android:name=".module.splash.SplashActivity"
             android:screenOrientation="portrait"
@@ -187,6 +194,11 @@
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".module.badge.BadgeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 

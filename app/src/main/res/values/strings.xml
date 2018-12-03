@@ -136,7 +136,7 @@
     <string name="home_func_item_appointment">场馆预约</string>
     <string name="home_func_item_tourist_service">游客服务</string>
     <string name="home_func_item_line">游玩路线</string>
-    <string name="home_func_item_distinguish">扫图识花</string>
+    <string name="home_func_item_distinguish">光影森林</string>
     <string name="home_func_item_periphery">周边服务</string>
     <string name="home_func_title_venue">推荐场馆</string>
     <string name="home_func_title_exhibit">推荐展览</string>
@@ -186,8 +186,6 @@
     <string name="download_completes">已完成</string>
     <string name="load_age_info">年龄：%s岁</string>
     <string name="sex_is">性别：</string>
-    <string name="use">使用</string>
-    <string name="used">已使用</string>
     <string name="boy">男</string>
     <string name="girl">女</string>
     <string name="error_params">参数错误</string>
@@ -207,9 +205,8 @@
     <string name="disconnect">断开连接</string>
     <string name="personal_center">个人中心</string>
     <string name="badge">Badge</string>
-    <string name="the_current_integral">当前积分：0分</string>
+    <string name="the_current_integral">当前积分：%d分</string>
     <string name="title_routest_detail">路线详情</string>
-    <string name="the_account_is_abnormal_please_log_in_again">账号异常，请重新登录！</string>
     <string name="the_account_is_abnormal_please_log_in_again">账号异常，请重新登录！</string>
     <string name="your_account_is_logged_in_on_another_device">您的账号在其他设备登录</string>
     <string name="history">history</string>
@@ -279,5 +276,7 @@
     <string name="south_west">西南</string>
     <string name="north_west">西北</string>
     <string name="welcome_to_the_beijing_world_expo">Welcome to the Beijing world expo</string>
+    <string name="baidu_navi">百度导航</string>
+    <string name="autonavi_navi">高德导航</string>
 
 </resources>

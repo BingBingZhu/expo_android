@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
@@ -57,6 +58,8 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     MySettingView mTvPolicy;
     @BindView(R.id.logout)
     TextView mTvLogout;
+    @BindView(R.id.setting_map_on_off)
+    ImageView imgON_OFF;
 
     boolean mIsCn;//现在是否是汉语
     boolean mSelectCn;//现在是否是选择了汉语
@@ -106,6 +109,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle( 0, R.string.title_setting_ac );
+        imgON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
         mTvCache.setRightText(DataCleanUtil.getCacheSize());
         mTvLanguage.setRightText( R.string.language );
         mTvUpdate.setRightText( "v" + AppUtils.getAppVersionName() );
@@ -196,6 +200,13 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     @OnClick(R.id.logout)
     public void logout(View view) {
         mPresenter.logout();
+    }
+
+    @OnClick(R.id.setting_map_on_off)
+    public void onOFF(View v){
+        PrefsHelper.setBoolean(Constants.Prefs.KEY_MAP_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false));
+        // 设置图片
+        imgON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
     }
 
     @Override

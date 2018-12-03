@@ -43,6 +43,10 @@ public interface Constants {
         public static final String KEY_ALL_TYPE_UPDATE_TIME = "key_all_type_update_time";
         public static final String KEY_TOP_LINE_UPDATE_TIME = "key_top_line_update_time";
         public static final String KEY_VENUES_UPDATE_TIME = "key_venues_update_time";
+        public static final String KEY_ROUTES_UPDATE_TIME = "key_routes_update_time";
+        public static final String KEY_MAP_ON_OFF = "key_map_on_off";
+        public static final String KEY_MAP_PATTERN = "key_map_pattern";
+        public static final String KEY_MODULE_ON_OFF = "key_module_on_off ";
     }
 
     /**
@@ -61,6 +65,7 @@ public interface Constants {
         public static final String EXTRA_DATA_ID = "extra_data_id";
         public static final String EXTRA_SHOW_TITLE = "extra_show_title";
         public static final String EXTRA_TITLE_COLOR_STYLE = "extra_title_color_style";
+        public static final String EXTRA_USER_SCORE = "extra_user_score";
     }
 
     /**

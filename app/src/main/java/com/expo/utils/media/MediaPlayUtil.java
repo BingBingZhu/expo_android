@@ -87,8 +87,10 @@ public class MediaPlayUtil {
      * 停止播放
      */
     public void stopMusic() {
-        currentState = STATE_NORMAL;
-        mediaPlayer.pause();
+        if (null != mediaPlayer) {
+            currentState = STATE_NORMAL;
+            mediaPlayer.pause();
+        }
     }
 
     private void playMusic(String url) {
