@@ -199,7 +199,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
         public void onFinish() {// 计时完毕时触发
             mCountDownOver = true;
             setCodeBtnIsEnable();
-            mTvGetCode.setText("获取验证码");
+            mTvGetCode.setText(R.string.get_code);
         }
 
         @Override
@@ -207,7 +207,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneContract.Presenter>
             if (surplusDuration > 0) {
                 surplusDuration--;
             }
-            mTvGetCode.setText(surplusDuration + "秒");
+            mTvGetCode.setText(surplusDuration + getString(R.string.second));
             mCountDownOver = false;
             setCodeBtnIsEnable();
         }

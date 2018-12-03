@@ -49,7 +49,7 @@
                 android:id="@+id/camera_ok"
                 android:layout_width="@dimen/dms_120"
                 android:layout_height="@dimen/dms_120"
-                android:visibility="gone"
+                android:visibility="invisible"
                 android:src="@mipmap/camera_ok" />
         </LinearLayout>
 

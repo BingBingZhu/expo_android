@@ -16,6 +16,7 @@ public class MediaPlayerManager implements MediaPlayer.OnCompletionListener, Med
 
     private int mDuration;
     private int mProgress;
+    private boolean prepared;
     Mythred mMyThred;
 
 
@@ -28,23 +29,75 @@ public class MediaPlayerManager implements MediaPlayer.OnCompletionListener, Med
         return mMediaPlayerManager;
     }
 
+    public boolean isPlaying() {
+        return mMediaPlayer.isPlaying();
+    }
+
     public void start(Context context, String url) {
         try {
-            if (mMediaPlayer == null) initMediaPlayer();
-            mMediaPlayer.reset();
+            if (mMediaPlayer == null) {
+                if (mMediaPlayer == null) initMediaPlayer();
+                mMediaPlayer.reset();
 //            mMediaPlayer.setDataSource(url);
-            mMediaPlayer.setDataSource(context, Uri.parse(url));
-            mMediaPlayer.prepareAsync();
+                mMediaPlayer.setDataSource(context, Uri.parse(url));
+                mMediaPlayer.prepareAsync();
+                if (mMyThred != null) {
+                    mMyThred.exit();
+                    mMyThred = null;
+                }
+                mMyThred = new Mythred();
+                mMyThred.start();
+                if (mListener != null) {
+                    mListener.start();
+                }
+            } else if (mMediaPlayer.isPlaying()) {
+                mMediaPlayer.pause();
+                if (mListener != null) {
+                    mListener.paused();
+                }
+            } else {
+                mMediaPlayer.start();
+                if (mListener != null) {
+                    mListener.start();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void start() {
+        if (mMediaPlayer == null) {
+
+        } else if (mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
             if (mMyThred != null) {
                 mMyThred.exit();
                 mMyThred = null;
             }
+            if (mListener != null) {
+                mListener.paused();
+            }
+        } else {
+            mMediaPlayer.start();
             mMyThred = new Mythred();
             mMyThred.start();
             if (mListener != null) {
                 mListener.start();
             }
+        }
+    }
 
+    public void setDataSource(Context context, String url) {
+        if (mMediaPlayer == null) {
+            initMediaPlayer();
+        } else {
+            prepared = false;
+            mMediaPlayer.reset();
+        }
+        try {
+            mMediaPlayer.setDataSource(context, Uri.parse(url));
+            mMediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,7 +147,7 @@ public class MediaPlayerManager implements MediaPlayer.OnCompletionListener, Med
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        mMediaPlayer.start();
+        prepared = true;
         mDuration = mMediaPlayer.getDuration();
         if (mListener != null)
             mListener.setDuration(mDuration);
@@ -116,6 +169,8 @@ public class MediaPlayerManager implements MediaPlayer.OnCompletionListener, Med
         void error(String error);
 
         void complete();
+
+        void paused();
     }
 
     class Mythred extends Thread {

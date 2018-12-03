@@ -124,8 +124,8 @@ public class CameraManager implements ICameraManager {
             //改变预览视图尺寸
             changeDisplayViewSize( previewSize );
         }
-        LogUtils.d( TAG, "preview size------>>>[" + previewSize.width + "," + previewSize.height + "]" );
-        LogUtils.d( TAG, "view size------>>>[" + mViewWidth + "," + mViewHeight + "]" );
+//        LogUtils.d( TAG, "preview size------>>>[" + previewSize.width + "," + previewSize.height + "]" );
+//        LogUtils.d( TAG, "view size------>>>[" + mViewWidth + "," + mViewHeight + "]" );
         //设置拍照尺寸
         Camera.Size pictureSize = getOptimalPictureSize( mViewWidth, mViewHeight );
         if (pictureSize != null)
@@ -173,7 +173,7 @@ public class CameraManager implements ICameraManager {
         Map<Float, Camera.Size> tmp = new HashMap<>();
         for (Camera.Size size : sizes) {
             //控制宽高在需求宽高的一定范围内
-            if (size.width > w * 0.7f && size.height > h * 0.7f)
+            if (size.width > w * 0.5f && size.height > h * 0.5f)
                 tmp.put( Math.abs( (float) w * size.height / (size.width * h) - 1 ), size );
         }
         if (!tmp.isEmpty()) { //存在近似的尺寸
@@ -184,7 +184,7 @@ public class CameraManager implements ICameraManager {
         return null;
     }
 
-    /* 获取最佳的预览画面尺寸 */
+    /* 获取最佳的拍摄画面尺寸 */
     private Camera.Size getOptimalPictureSize(int w, int h) {
         int orientation = getOrientation();
         //w,h互换

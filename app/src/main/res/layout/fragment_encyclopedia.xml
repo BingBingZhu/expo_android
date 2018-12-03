@@ -35,9 +35,9 @@
                     android:paddingTop="@dimen/dms_20"
                     android:paddingBottom="@dimen/dms_20"
                     android:layout_marginLeft="@dimen/dms_20"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/dms_28"
                     android:textColor="@color/color_white_50diaphaneity"
-                    android:text="搜索目的地/景点/场馆"/>
+                    android:text="@string/search_for_destinations_attractions_venues"/>
             </LinearLayout>
             <ImageView
                 android:id="@+id/ency_scan"

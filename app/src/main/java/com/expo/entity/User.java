@@ -36,6 +36,9 @@ public class User extends BaseResponse implements Parcelable {
     @DatabaseField(columnName = "score")
     @SerializedName("scores")
     private String score;
+    @DatabaseField(columnName = "totscores")
+    @SerializedName("totscores")
+    private String totscores;
     @DatabaseField(columnName = "sex")
     @SerializedName("sex")
     private String sex;
@@ -149,6 +152,16 @@ public class User extends BaseResponse implements Parcelable {
         if (TextUtils.isEmpty(score) || !score.matches(Constants.Exps.NUMBER))
             return 0;
         return Integer.parseInt(score);
+    }
+
+    public int getIntTotscores() {
+        if (TextUtils.isEmpty(totscores) || !totscores.matches(Constants.Exps.NUMBER))
+            return 0;
+        return Integer.parseInt(totscores);
+    }
+
+    public void setTotscores(String totscores) {
+        this.totscores = totscores;
     }
 
     public void setScore(String score) {

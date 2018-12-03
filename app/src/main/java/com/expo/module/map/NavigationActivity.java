@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,8 +40,9 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.NavigationContract;
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.TouristType;
 import com.expo.entity.VenuesDistance;
 import com.expo.map.LocationManager;
 import com.expo.map.MapUtils;
@@ -89,9 +91,12 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     TextureView mTextureView;
     @BindView(R.id.gt_navi_tips)
     TextView mTvTips;
+    @BindView(R.id.img_module_show)
+    ImageView mImgModuleShow;
+
     public AMapNavi mAMapNavi;
     private AMap mMap;
-    private ActualScene virtualScene;
+    private Venue virtualScene;
     private ICameraManager mCameraManager;
 
     private GeoFenceClient mGeoFenceClient;
@@ -107,7 +112,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private int mCenterY;
     private int mPhotoSize;
     private boolean mJsCanSend;
-    private ActualScene mActualScene;
+    private Venue mVenue;
 
     Map<String, Marker> mMarker;
     List<VenuesDistance> mVenuesDistance;
@@ -120,6 +125,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     long mStartTime;
 
+    boolean isBackStage = false;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_navigation;
@@ -127,6 +134,11 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false)) {
+            mImgModuleShow.setVisibility(View.GONE);
+        }
+        mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
+                true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
         StatusBarUtils.setStatusBarLight(this, true);
         mMapView.onCreate(savedInstanceState);
         //地图中心点
@@ -140,8 +152,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mCameraManager.setDisplayView(mTextureView);
         initMapNaviView();
         initPoiSearch();
-        mActualScene = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
-        virtualScene = mPresenter.loadSceneById(mActualScene.getId());
+        mVenue = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
+        virtualScene = mPresenter.loadSceneById(mVenue.getId());
         initSlidingDrawer();
         initWebView();
         MediaPlayerManager.getInstence().setListener(null);
@@ -153,15 +165,15 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     }
 
     private void initWebView() {
-//        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
-        mWebView.loadUrl("http://192.168.6.129/sever/dist/index.html#/navigation");
+        mWebView.loadUrl("file:///android_asset/web/merge.html");
+        mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
 //        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
 
     private void endNavigation() {
-        ToastHelper.showShort("到达目的地附近喽，导航结束");
-        mTvTips.setText("到达目的地附近喽，导航结束");
+        ToastHelper.showShort(R.string.end_of_the_navigation);
+        mTvTips.setText(R.string.end_of_the_navigation);
         if (mSlidingDrawerView.isOpened()) {
             changeAnimation("endPoint");
         } else {
@@ -170,6 +182,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 //                    .setMessage("到达终点喽，目标接在附近！")
 //                    .setNegativeButton("知道了", (dialog, which) -> finish())
 //                    .show();
+            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_END));
             showEndView();
         }
     }
@@ -284,19 +297,23 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private void changeAnimation(String action) {
         if (mJsCanSend && mSlidingDrawerView.isOpened()) {
             mWebView.loadUrl(String.format("javascript:getActionState('%s')", action));
-            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "0", action));
+            //mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "0", action));
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (isBackStage)
+            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_WAKE));
+        isBackStage = false;
         mMapView.onResume();
         mWebView.onResume();
     }
 
     @Override
     protected void onPause() {
+        isBackStage = true;
         mMapView.onPause();
         mWebView.onPause();
         super.onPause();
@@ -306,8 +323,10 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     protected void onDestroy() {
         DeviceRotateManager.getInstance().unregisterOrientationChangedListener(mOnOrientationChangedListener);
         LocationManager.getInstance().unregisterLocationListener(mOnLocationChangeListener);
-        mAMapNavi.stopNavi();
-        mAMapNavi.destroy();
+        if (mAMapNavi != null) {
+            mAMapNavi.stopNavi();
+            mAMapNavi.destroy();
+        }
         mMapView.onDestroy();
         MediaPlayerManager.getInstence().onDestory();
         if (mMythredFresh != null)
@@ -315,6 +334,19 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         if (mMythredcCalculate != null)
             mMythredcCalculate.exit();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE));
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.leave_navi)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ok, (dialog, which) -> finish())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+
     }
 
     @Override
@@ -329,14 +361,18 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mAMapNavi.setUseInnerVoice(false);       // 使用内部语音播报
         //添加监听回调，用于处理算路成功
         mAMapNavi.addAMapNaviListener(mNaviListener);
+        TouristType touristType = mPresenter.getTourist();
+        if (touristType != null)
+            mWebView.loadUrl(String.format("javascript:setTourist('%s')", touristType.getUnZipPath()));
+//            mWebView.loadUrl(touristType.getLocalPath());
     }
 
-    private void startCalculateTheRoad(LatLng startLatLng, ActualScene virtualScene) {
+    private void startCalculateTheRoad(LatLng startLatLng, Venue virtualScene) {
         mFrom = new NaviLatLng(startLatLng.latitude, startLatLng.longitude);
         mTo = new NaviLatLng(virtualScene.getLat(), virtualScene.getLng());
         boolean isSuccess = mAMapNavi.calculateWalkRoute(mFrom, mTo);
         if (!isSuccess) {
-            ToastHelper.showShort("路线规划失败");
+            ToastHelper.showShort(R.string.route_planning_failure);
             Log.d("NaviManager=======", "路线计算失败,检查参数情况");
         }
     }
@@ -424,8 +460,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onStartNavi(int i) {
             // 启动导航后的回调函数
-            ToastHelper.showLong("启动导航");
+            ToastHelper.showLong(R.string.start_the_navigation);
             mStartTime = TimeUtils.getNowMills();
+            mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_START));
         }
 
         @Override
@@ -439,13 +476,17 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 changeAnimation("turnRight");
             } else if (s.startsWith("前方直行")) {
                 changeAnimation("forward");
+            } else if (s.indexOf("偏离") != -1) {
+                mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_DIVERGE));
             }
         }
 
         @Override
         public void onGpsOpenStatus(boolean b) {
             // 用户手机GPS设置是否开启的回调函数。
-            ToastHelper.showLong("手机GPS设置是否开启" + b);
+            if (!b){
+                ToastHelper.showLong(R.string.the_phone_is_gps_settings_are_not_on);
+            }
         }
 
         @Override
@@ -500,9 +541,19 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         }
     };
 
-    @OnClick(R.id.gt_navi_back)
+    @OnClick({R.id.gt_navi_back, R.id.img_module_show})
     public void onClick(View v) {
-        finish();
+        switch (v.getId()){
+            case R.id.gt_navi_back:
+                finish();
+                break;
+            case R.id.img_module_show:
+                PrefsHelper.setBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, ! PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true));
+                mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
+                        true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
+                mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
+                break;
+        }
     }
 
     //提供给网络端的回调方法
@@ -524,13 +575,13 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
      *
      * @param context
      */
-    public static void startActivity(@NonNull Context context, ActualScene actualScene, String voiceUrl) {
-        if (actualScene.getId() <= 0) {
+    public static void startActivity(@NonNull Context context, Venue venue, String voiceUrl) {
+        if (venue.getId() <= 0) {
             ToastHelper.showShort(R.string.error_params);
             return;
         }
         Intent in = new Intent(context, NavigationActivity.class);
-        in.putExtra(Constants.EXTRAS.EXTRAS, actualScene);
+        in.putExtra(Constants.EXTRAS.EXTRAS, venue);
         in.putExtra(Constants.EXTRAS.EXTRA_URL, voiceUrl);
         context.startActivity(in);
     }
@@ -540,9 +591,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_navigation_end, null);
 
-        CommUtils.setImgPic(this, mActualScene.getPicUrl(), view.findViewById(R.id.dialog_navigation_end_img));
-        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_name), mActualScene.getCaption(), mActualScene.getEnCaption());
-        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_content), mActualScene.getRemark(), mActualScene.getEnRemark());
+        CommUtils.setImgPic(this, mVenue.getPicUrl(), view.findViewById(R.id.dialog_navigation_end_img));
+        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_name), mVenue.getCaption(), mVenue.getEnCaption());
+        CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_content), mVenue.getRemark(), mVenue.getEnRemark());
         ((TextView) view.findViewById(R.id.dialog_navigation_end_duration)).setText(getResources().getString(R.string.time_leng) + getResources().getString(R.string.within_minutes, time));
         ((TextView) view.findViewById(R.id.dialog_navigation_end_distance)).setText("");
 
@@ -581,13 +632,13 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                             angle = 90.0d;
                         else
                             angle = Math.atan(Math.abs((vd.lon - lon) / jd)) * 180 / Math.PI;
-                        if(vd.lat < lat){
+                        if (vd.lat < lat) {
                             angle += 180;
-                            if(vd.lon < lon)
+                            if (vd.lon < lon)
                                 angle += 90;
 
                         } else {
-                            if(vd.lon > lon)
+                            if (vd.lon > lon)
                                 angle += 90;
                         }
                         vd.angle = new BigDecimal(angle).setScale(2, BigDecimal.ROUND_HALF_UP).toString();

@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/dms_44"
         android:textSize="@dimen/font_28"
         android:textColor="@color/color_333"
-        android:text="识别结果"/>
+        android:text="@string/identify_the_result"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_170"
@@ -67,5 +67,5 @@
         android:background="@drawable/bg_02cd9b_r5"
         android:textSize="@dimen/font_26"
         android:textColor="@color/white"
-        android:text="继续识别"/>
+        android:text="@string/continue_to_identify"/>
 </LinearLayout>

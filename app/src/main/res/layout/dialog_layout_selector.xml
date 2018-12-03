@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/dms_26"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_r5"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/dialog_select_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_90"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="@string/baidu_navi"
+            android:textColor="@color/caption_color"
+            android:textSize="@dimen/font_36"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_999"/>
+
+        <Button
+            android:id="@+id/dialog_select_2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_90"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="@string/autonavi_navi"
+            android:textColor="@color/caption_color"
+            android:textSize="@dimen/font_36"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_90"
+        android:layout_marginTop="@dimen/dms_16"
+        android:background="@drawable/bg_white_r5"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:textColor="@color/caption_color"
+        android:textSize="@dimen/font_36"/>
+</LinearLayout>

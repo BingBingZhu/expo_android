@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title></title>
+	<script src="./vue.js"></script>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		img{width: 100%;}
+		.img{position: absolute;left: 0;top: 0;.w(100%);z-index: -1;}
+		#nav{
+			position: relative;
+			width: 100vw;
+			height: 100vh;
+		}
+		#nav .nav_guide{
+            top: 30%;
+            left: 1rem;
+            position: absolute;
+            width: 3.36rem;
+            height: 2.25rem;
+            box-sizing: border-box;
+            padding: .54rem;
+        }
+        #nav .nav_guide p{
+        	color: #19503F;
+        	font-size: .24rem;
+        	line-height: .4rem;
+        }
+        #nav .nav_guide p:nth-child(1){
+        	font-size: .4rem;
+        	text-align: center;
+        	line-height: .4rem;
+        }
+        #nav .nav_voice{
+            position: absolute;
+            top: 7rem;
+            right: 0;
+            width:2.53rem;
+            height:1.6rem;
+            box-sizing: border-box;
+            padding: .47rem;
+
+
+        }
+        #nav .nav_voice .img_left{
+            width:.5rem;
+            position: absolute;
+            top: 50%;
+            left: .4rem;
+            transform: translateY(-50%);
+        }
+        #nav .nav_voice span{
+            font-size: .35rem;
+            color: #fff;
+            text-shadow: 0.04rem 0.05rem #3C6658;
+            margin-left: .5rem;
+            vertical-align: top;
+        }
+        #nav .nav_btm{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 5rem;
+        }
+	</style>
+</head>
+<body>
+	<div id="nav">
+        <p style="font-size: .4rem;">{{haha}}</p>
+        <div class="nav_guide" :style="{left:left}">
+            <img src="way_guide.png" alt="" class="img">
+            <p>{{bourn}}</p>
+            <p>距离{{distance}}</p>
+            <p>预计时间{{time}}</p>
+        </div>
+        <div class="nav_voice">
+          <img src="way_voice.png" alt="" class="img">
+          <!-- <img src="way_right.png" alt="" class="img_left"> -->
+          <span class="nav_voice_p">植物园</span>
+          <!--<audio src=""></audio>-->
+        </div>
+      <div class="nav_btm">
+        <img :src="imgsrc" alt="" class="nav_btm_img" @click="imgClick" v-if="imgShow">
+        <audio :src="audiosrc"  autoplay id="audio"></audio>
+        <!--<img src="file:///storage/emulated/0/expo/unzip/com.expo/1543297121596/光团/callstart/callstart/start2.png" alt="">-->
+      </div>
+
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+      el:'#nav',
+      data:{
+        path:'.',
+        bourn:'中国馆',
+        distance:'500m',
+        time:'10:00',
+        imgsrc:'',
+        audiosrc:'',
+        audioTime:'',
+        next:true,
+        state:'1',
+        imgShow:true,
+        haha:'展示后台内容',
+        platform:'',
+        left:'2rem'
+      },
+      mounted:function () {
+        this.register();
+      },
+      methods:{
+        //后台设置主位置
+        setMarker:function (init,marker){
+          init.toString().length>3 ? marker = init:'';
+          var data = typeof marker == 'object'? marker : JSON.parse(marker);
+          this.haha = data;
+          this.bourn = data.title;
+          this.distance = data.distance.toFixed(0)+'m';
+          this.time = '未定';
+        },
+        //后台调取动画
+        tipTips:function(I,tip){
+          I.toString().length>3 ? tip = I : '';
+          this.state = 'other';
+          var _this = this,
+              rootPath = this.path+'/'+tip;
+          this.imgsrc = rootPath+'.gif';
+          this.audiosrc = rootPath+'.wav';
+          // alert(rootPath)
+          var audio = new Audio(this.audiosrc);
+          // var audio = new Audio('file:///Library/WebServer/Documents/sever/nav'+rootPath.replace('.',"")+'.wav');
+          audio.load();
+          audio.oncanplay = function () {
+            this.audioTime = audio.duration;
+            // console.log('file:///Library/WebServer/Documents/sever/nav'+rootPath.replace('.',"")+'.wav')
+            setTimeout(()=>{
+              this.state = 'fly';
+              _this.imgsrc = _this.path+'/fly.gif';
+              alert('初始化'+ _this.imgsrc )
+              _this.audiosrc = '';
+            },this.audioTime*1000)
+            console.log(this.audioTime)
+          }
+        },
+        imgClick: function (){
+            if(this.state == 'fly'){
+              this.tipTips('click/click'+parseInt(Math.random()*3+1));
+            }
+        },
+        //控制图片的显示隐藏
+        toggleImg (bol){
+          this.imgShow = bol
+        },
+        //后台返回主路径
+        setTourist (res) { this.path = res; },
+        //后台传递定位
+        getAzimuthInfo (lat,lon) {/* console.log(lat,lon);*/},
+        //android方法注册
+        android () {
+          window.tipTips = this.tipTips;//后台调取动画
+          window.setMarker = this.setMarker;//后台设置主位置
+          window.toggleImg = this.toggleImg;//控制图片的显隐
+          window.setTourist = this.setTourist;//后台返回主路径
+          window.getAzimuthInfo = this.getAzimuthInfo;//后台传递定位
+          try {
+            window.Terminal_Interface.canCallJS(true);//页面加载完成
+          }catch (e) { }
+        },
+        //IOS方法注册
+        IOS (){
+          //后台调取动画
+          this.registerhandler('tipTips',(tip)=>{this.tipTips(tip);});
+          //控制图片显隐
+          this.registerhandler('toggleImg',(bol)=>{this.toggleImg(bol);})
+          //后台返回主路径
+          this.registerhandler('setTourist',(path)=>{this.setTourist(path);});
+          //后台设置主位置
+          this.registerhandler('setMarker',(marker)=>{this.setMarker(marker);});
+          //后台传递定位
+          this.registerhandler('getAzimuthInfo',(latlon)=>{this.getAzimuthInfo(latlon);});
+          //页面加载完成
+          this.callhandler('canCallJS',{},(res)=>{console.error(res);});
+        },
+        //注册方法
+        register (){
+          var u = navigator.userAgent;
+          // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android
+          var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+          isIOS ? this.IOS() : this.android();
+        },
+        //IOS方法封装
+        callhandler (name, data, callback) {
+          this.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler(name, data, callback)
+          })
+        },
+        registerhandler (name,callback){
+          this.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.registerHandler(name, function(data, responseCallback) {
+              callback(data)//处理oc给的传参
+              var responseData = { 'result':'handle success' }
+              //回调传值给oc
+              responseCallback(responseData)
+            })
+          })
+        },
+        setupWebViewJavascriptBridge (callback) {
+          if (window.WebViewJavascriptBridge) {
+            return callback(window.WebViewJavascriptBridge)
+          }
+          if (window.WVJBCallbacks) {
+            return window.WVJBCallbacks.push(callback)
+          }
+          window.WVJBCallbacks = [callback]
+          let WVJBIframe = document.createElement('iframe')
+          WVJBIframe.style.display = 'none'
+          WVJBIframe.src = 'https://__bridge_loaded__'
+          document.documentElement.appendChild(WVJBIframe)
+          setTimeout(() => {
+            document.documentElement.removeChild(WVJBIframe)
+          }, 0)
+        }
+      }
+    });
+		// reqPath('./chuchang.',function (res) {
+		// 	console.log(res);
+		// })
+		var path = '.';
+
+		function reqPath (path,callback){
+	        console.log('开始');
+	        var _this = this,index = 0,time=95;
+	        // var init = 1;
+	        function f () {
+	          setTimeout(()=>{
+	            // init++;
+	            // if(init % 5 == 0){
+	              index++;
+	              index = dataNum(index,6)
+	              var a = path+index+'.png'
+	              CheckImgExists(a,function (res) {
+	              	_$('nav_btm_img').src = path+index+'.png';
+	              	setTimeout(f,time);
+	              },function (res) {
+	              	callback();
+	              })
+	            // }else{
+	              // setTimeout(f);
+	            // }
+	          },time)
+	        }
+	        f();
+	    }
+		//数字前面补零
+		function dataNum(num, n) {
+            return (Array(n).join(0) + num).slice(-n);
+        }
+</script>
+<script>
+//兼容手机端的rem
+(function flexible(window, document) {
+	var docEl = document.documentElement
+	var dpr = window.devicePixelRatio || 1
+	// adjust body font size
+	function setBodyFontSize() {
+		if(document.body) {
+			document.body.style.fontSize = (12 * dpr) + 'px'
+		} else {
+			document.addEventListener('DOMContentLoaded', setBodyFontSize)
+		}
+	}
+	setBodyFontSize();
+	// set 1rem = viewWidth / 10
+	function setRemUnit() {
+		var rem = docEl.clientWidth / 10
+		docEl.style.fontSize = rem + 'px'
+	}
+	setRemUnit()
+	// reset rem unit on page resize
+	window.addEventListener('resize', setRemUnit)
+	window.addEventListener('pageshow', function(e) {
+		if(e.persisted) {
+			setRemUnit()
+		}
+	})
+	// detect 0.5px supports
+	if(dpr >= 2) {
+		var fakeBody = document.createElement('body')
+		var testElement = document.createElement('div')
+		testElement.style.border = '.5px solid transparent'
+		fakeBody.appendChild(testElement)
+		docEl.appendChild(fakeBody)
+		if(testElement.offsetHeight === 1) {
+			docEl.classList.add('hairlines')
+		}
+		docEl.removeChild(fakeBody)
+	}
+}(window, document));
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+

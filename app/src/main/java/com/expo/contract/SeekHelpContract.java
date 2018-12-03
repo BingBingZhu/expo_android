@@ -1,5 +1,7 @@
 package com.expo.contract;
 
+import android.location.Location;
+
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.VisitorService;
@@ -13,6 +15,7 @@ public interface SeekHelpContract {
 
         public abstract void addVisitorService(VisitorService visitorService);
 
+        public abstract void getServerPoint(Location mLocation);
     }
 
     interface View extends IView {

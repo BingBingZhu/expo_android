@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#62F8CA</color>
+    <color name="colorAccent">#00CB99</color>
     <color name="transparent">#00000000</color>
     <color name="translucent_mask">#50000000</color>
+    <color name="translucent_per_5">#0C000000</color>
     <color name="white">#ffffff</color>
     <color name="white_dark">#f2f1f4</color>
     <color name="black">#000000</color>
+    <color name="black_333333">#333333</color>
     <color name="black_oc">#0C0C0C</color>
     <color name="sliding_list_item_delete_bg">#FF9EA7</color>
     <color name="caption_color">#454545</color>
@@ -25,9 +27,10 @@
     <color name="green_02cd9b">#02CD9B</color>
     <color name="green_00cb99">#00CB99</color>
     <color name="white_e6">#E6E6E6</color>
+    <color name="white_f4">#F4F4F4</color>
     <color name="white_d7">#D7D7D7</color>
     <color name="white_ea">#EAEAEA</color>
-    <color name="color_ency_tab">#F8A932</color>
+    <color name="color_ency_tab">#FFF100</color>
     <color name="color_tab_line">#00C897</color>
     <!--<color name="color_ency_item_bg">#EFF2F4</color>-->
     <color name="color_999">#999</color>

@@ -266,7 +266,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         public void onFinish() {// 计时完毕时触发
             mCountDownOver = true;
             setCodeBtnIsEnable();
-            mGetCodeView.setText("获取验证码");
+            mGetCodeView.setText(getContext().getResources().getString(R.string.get_code));
         }
 
         @Override
@@ -274,7 +274,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
             if (mSurplusDuration > 0) {
                 mSurplusDuration--;
             }
-            mGetCodeView.setText(mSurplusDuration + "秒");
+            mGetCodeView.setText(mSurplusDuration + getContext().getResources().getString(R.string.second) );
+
             mCountDownOver = false;
             setCodeBtnIsEnable();
         }
@@ -289,57 +290,57 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            perNameList.add("存储权限");
+            perNameList.add(getString(R.string.store_permissions));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.ACCESS_NETWORK_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_NETWORK_STATE);
-            perNameList.add("修改网络");
+            perNameList.add(getString(R.string.change_network_permissions));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.INTERNET);
-            perNameList.add("网络访问");
+            perNameList.add(getString(R.string.network_access_permissions));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.CAMERA);
-            perNameList.add("相机权限");
+            perNameList.add(getString(R.string.camera_permissions));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.CAMERA);
-            perNameList.add("录音权限");
+            permissionList.add(Manifest.permission.RECORD_AUDIO);
+            perNameList.add(getString(R.string.the_recording_permissions));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.ACCESS_WIFI_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_WIFI_STATE);
-            perNameList.add("WIFI信息");
+            perNameList.add(getString(R.string.get_wifi_information_permission));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.READ_PHONE_STATE);
-            perNameList.add("电话权限");
+            perNameList.add(getString(R.string.phone_privileges));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-            perNameList.add("定位权限");
+            perNameList.add(getString(R.string.location_permissions));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.CHANGE_WIFI_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.CHANGE_WIFI_STATE);
-            perNameList.add("WIFI状态");
+            perNameList.add(getString(R.string.get_wifi_state_permission));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.BLUETOOTH_ADMIN)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.BLUETOOTH_ADMIN);
-            perNameList.add("蓝牙权限");
+            perNameList.add(getString(R.string.bluetooth_permissions));
         }
         if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.GET_ACCOUNTS)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.GET_ACCOUNTS);
-            perNameList.add("通讯录");
+            perNameList.add(getString(R.string.address_book_permissions));
         }
         if (permissionList.size() > 0) {
             //弹出权限请求提示对话框

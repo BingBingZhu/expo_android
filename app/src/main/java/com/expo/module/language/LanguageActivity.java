@@ -73,8 +73,8 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
             case R.id.language_cn:
                 mLocale = Locale.CHINA;
                 mLanguage = LanguageUtil.LANGUAGE_CN;
-                mTvCreate.setText("创建账号");
-                mTvLogin.setText("登录");
+                mTvCreate.setText(R.string.create_an_account);
+                mTvLogin.setText(R.string.login);
                 break;
             case R.id.language_en:
                 mLocale = Locale.ENGLISH;

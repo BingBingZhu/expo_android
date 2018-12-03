@@ -7,7 +7,7 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_30" />
+        android:layout_marginTop="@dimen/dms_88" />
 
     <TextView
         android:id="@+id/tourist_services_phone"

@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.6">
+        android:layout_weight="0.7">
 
         <ImageView
             android:layout_width="match_parent"
@@ -20,21 +20,34 @@
             android:src="@mipmap/bg_language" />
 
         <ImageView
+            android:id="@+id/logo"
             android:layout_width="@dimen/dms_202"
             android:layout_height="@dimen/dms_190"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dms_60"
+            android:layout_marginTop="@dimen/dms_106"
             android:scaleType="fitXY"
             android:src="@mipmap/language_logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:text="@string/welcome_to_the_beijing_world_expo"
+            android:layout_marginTop="@dimen/dms_40"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_48"
+            android:textColor="#163B6B"/>
 
         <TextView
             android:id="@+id/languane_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/dms_40"
+            android:layout_marginRight="@dimen/dms_36"
+            android:layout_marginTop="@dimen/dms_88"
             android:clickable="false"
-            android:text="登录"
+            android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="@dimen/font_32" />
     </RelativeLayout>
@@ -51,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请选择语言 Select language"
+            android:text="@string/select_language"
             android:textColor="@color/black"
             android:textSize="@dimen/font_32" />
 
@@ -76,7 +89,7 @@
                 android:layout_centerInParent="true"
                 android:clickable="false"
                 android:gravity="center"
-                android:text="中文"
+                android:text="@string/language_ch"
                 android:textColor="@color/selector_99_5fffc1" />
 
         </RelativeLayout>
@@ -102,7 +115,7 @@
                 android:layout_centerInParent="true"
                 android:clickable="false"
                 android:gravity="center"
-                android:text="English"
+                android:text="@string/language_en"
                 android:textColor="@color/selector_99_5fffc1" />
 
         </RelativeLayout>
@@ -117,7 +130,7 @@
             android:paddingBottom="@dimen/dms_28"
             android:background="@drawable/selector_login_correlation_btn_bg"
             android:gravity="center"
-            android:text="创建账号"
+            android:text="@string/create_an_account"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_34" />
 
