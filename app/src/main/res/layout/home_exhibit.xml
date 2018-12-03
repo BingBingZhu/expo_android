@@ -4,19 +4,19 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dms_30"
-    android:paddingTop="@dimen/dms_40">
+    android:paddingTop="@dimen/dms_50">
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         style="@style/TextSizeBlack15"
         android:drawableLeft="@mipmap/home_thumb"
+        android:textStyle="bold"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/home_func_title_exhibit"
         android:textSize="@dimen/font_34" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_10">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_exhibit"

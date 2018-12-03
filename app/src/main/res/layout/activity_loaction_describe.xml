@@ -13,33 +13,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"/>
 
-        <!--<com.expo.widget.MyRadioButton-->
-            <!--android:id="@+id/location_describe_radio0"-->
-            <!--style="@style/location_radio_style"-->
-            <!--android:checked="true"-->
-            <!--android:text="@string/location_describe_radio1" />-->
-
-        <!--<com.expo.widget.MyRadioButton-->
-            <!--android:id="@+id/location_describe_radio1"-->
-            <!--style="@style/location_radio_style"-->
-            <!--android:text="@string/location_describe_radio2" />-->
-
-        <!--<com.expo.widget.MyRadioButton-->
-            <!--android:id="@+id/location_describe_radio2"-->
-            <!--style="@style/location_radio_style"-->
-            <!--android:text="@string/location_describe_radio3" />-->
-
-        <!--<com.expo.widget.MyRadioButton-->
-            <!--android:id="@+id/location_describe_radio3"-->
-            <!--style="@style/location_radio_style"-->
-            <!--android:text="@string/location_describe_radio4" />-->
-    <!--</LinearLayout>-->
-
     <com.hedan.textdrawablelibrary.TextViewDrawable
         style="@style/TextSizeBlack16"
         android:layout_height="@dimen/dms_80"
         android:drawableLeft="@mipmap/location_edit"
         android:drawablePadding="@dimen/dms_30"
+        android:layout_marginTop="@dimen/dms_14"
         android:gravity="center_vertical"
         android:text="@string/location_describe"
         android:textColor="@color/gray_4c"
@@ -49,7 +28,7 @@
     <EditText
         android:id="@+id/location_describe_edit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dms_240"
         android:layout_marginTop="@dimen/dms_30"
         android:background="@drawable/bg_white_ccc_r5_w1"
         android:gravity="top|left"
@@ -63,7 +42,7 @@
         android:layout_height="@dimen/dms_80"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dms_40"
-        android:background="@drawable/bg_5fffc1_r5"
+        android:background="@drawable/bg_02cd9b_r5"
         android:gravity="center"
         android:text="@string/save" />
 

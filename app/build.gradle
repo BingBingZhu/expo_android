@@ -6,9 +6,10 @@ android {
     defaultConfig {
         applicationId "com.expo"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        useLibrary 'org.apache.http.legacy'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 26
@@ -155,6 +156,7 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
     //dialog
     implementation 'com.orhanobut:dialogplus:1.11@aar'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc12'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

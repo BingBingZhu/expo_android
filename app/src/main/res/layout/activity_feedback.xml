@@ -8,6 +8,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dms_30"
         android:layout_marginRight="@dimen/dms_30"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <TextView

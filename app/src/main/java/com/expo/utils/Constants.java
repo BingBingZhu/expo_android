@@ -2,7 +2,7 @@ package com.expo.utils;
 
 import android.os.Environment;
 
-import com.expo.entity.ActualScene;
+import com.expo.entity.Badge;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.DownloadInfo;
@@ -14,7 +14,7 @@ import com.expo.entity.Subject;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.User;
-import com.expo.entity.VenuesInfo;
+import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 
 public interface Constants {
@@ -31,12 +31,22 @@ public interface Constants {
         public static final String KEY_TOURIST_TYPE_UPDATE_TIME = "key_tourist_type_list_update_time";
         public static final String KEY_SCENIC_SPOT_TYPE_UPDATE_TIME = "key_scenic_spot_type_update_time";
         public static final String KEY_PARK_UPDATE_TIME = "key_park_update_time";
+        public static final String KEY_BADGE_UPDATE_TIME = "key_badge_update_time";
         public static final String KEY_GUIDE_SHOWN = "key_guide_shown";
         public static final String KEY_LANGUAGE_CHOOSE = "key_language_choose";
         public static final String KEY_SHOW_SELECT_LANGUAGE = "key_app_first_use";
         public static final String KEY_HISTORY = "key_history";
         public static final String KEY_COUNTRY_CODE = "key_country_code";
         public static final String KEY_IS_OPEN_SLIDINGDRAWER = "key_is_open_slidingdrawer";
+        public static final String KEY_HEART_INV_TIME = "key_heart_inv_time";
+        public static final String KEY_UPDATE_TIME_INV_TIME = "key_update_time_inv_time";
+        public static final String KEY_ALL_TYPE_UPDATE_TIME = "key_all_type_update_time";
+        public static final String KEY_TOP_LINE_UPDATE_TIME = "key_top_line_update_time";
+        public static final String KEY_VENUES_UPDATE_TIME = "key_venues_update_time";
+        public static final String KEY_ROUTES_UPDATE_TIME = "key_routes_update_time";
+        public static final String KEY_MAP_ON_OFF = "key_map_on_off";
+        public static final String KEY_MAP_PATTERN = "key_map_pattern";
+        public static final String KEY_MODULE_ON_OFF = "key_module_on_off ";
     }
 
     /**
@@ -53,6 +63,9 @@ public interface Constants {
         public static final String EXTRA_LATITUDE = "extra_latitude";
         public static final String EXTRA_TEMPLATE_TYPE = "extra_template_type";
         public static final String EXTRA_DATA_ID = "extra_data_id";
+        public static final String EXTRA_SHOW_TITLE = "extra_show_title";
+        public static final String EXTRA_TITLE_COLOR_STYLE = "extra_title_color_style";
+        public static final String EXTRA_USER_SCORE = "extra_user_score";
     }
 
     /**
@@ -70,7 +83,8 @@ public interface Constants {
         public static final String ACTUAL_SCENES = "GetVenuesList";
         //植物识别地址
         public static final String DISTINGUISH_PLANT = "http://plantgw.nongbangzhu.cn/plant/recognize";
-        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
+                public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
+//        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce";
         public static final String HTML_404 = "file:///android_asset/web/404.html";
     }
 
@@ -82,6 +96,7 @@ public interface Constants {
         public static final String BASE_FILE_PATH = "expo/";                          //数据存储文件夹
         public static final String IMAGE_PATH = BASE_FILE_PATH + "images/";       //图片存储文件夹
         public static final String CROP_SAVE_PATH = IMAGE_PATH + "crop/";             //图片裁剪存储文件
+        public static final String SCREEN_SAVE_PATH = IMAGE_PATH + "screen/";             //截图存储文件
         public static final int USERINFO_CROP_IMAGE_ASPECT_X = 1;                                //图片裁剪相关配置
         public static final int USERINFO_CROP_IMAGE_ASPECT_Y = 1;
         public static final int USERINFO_CROP_IMAGE_OUTPUT_X = 500;
@@ -96,9 +111,9 @@ public interface Constants {
         //解压地址
         public static final String UNZIP_PATH = BASE_FILE_PATH + "unzip/";
         //实体类
-        public static final Class[] DB_CLASSES = new Class[]{ActualScene.class, CommonInfo.class, DataType.class, DownloadInfo.class,
-                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, VenuesInfo.class, TouristType.class,
-                TopLineInfo.class, VenuesType.class, Park.class};
+        public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
+                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class,
+                TopLineInfo.class, VenuesType.class, Park.class, Badge.class };
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }
@@ -152,6 +167,26 @@ public interface Constants {
     class EventBusMessageId {
         public static final int EVENTBUS_ID_FRESH_USER = 1;//user反生变化
         public static final int EVENTBUS_ID_HEART_MESSAGE_UNREAD_COUNT = 2;//新的心跳消息
+    }
+
+    /**
+     *
+     */
+    class NaviTip {
+//        public static final String TO_JS_NAVI_FILE_PATH = Config.IMAGE_PATH + "navi/";//文件包路径
+        public static final String TO_JS_NAVI_TIP_TYPE = "0";//向js提示使用光团gif图片
+
+        public static final String TO_JS_NAVI_TIP_START = "callstart/callstart";//出场问好（导航路线规划完成）
+        public static final String TO_JS_NAVI_TIP_DIVERGE = "calldiverge/calldiverge";//偏离线路提示（自动重新规划时）
+        public static final String TO_JS_NAVI_TIP_LONG_MUSIC_START = "callmusic/callmusic_start";//戴耳机听音乐-长时间等待（原地停留超过5分钟）
+        public static final String TO_JS_NAVI_TIP_LONG_MUSIC_END = "callmusic/callmusic_end";//戴耳机听音乐-长时间等待（原地停留超过5分钟）
+        public static final String TO_JS_NAVI_TIP_GPA_WEAK = "callGPSweak/callGPSweak";//GPS信号弱或丢失（GPS信号弱）
+        public static final String TO_JS_NAVI_TIP_GPA_LOST = "callGPSlost/callGPSlost";//GPS信号弱或丢失（GPS信号弱）
+        public static final String TO_JS_NAVI_TIP_WAKE = "callwake/callwake";//姿势夸张睡觉
+        public static final String TO_JS_NAVI_TIP_LEAVE = "callleave/callleave";//结束导航，抽泣、哭泣（要离开我吗）真的要离开我吗(人为点返回键）
+        public static final String TO_JS_NAVI_TIP_END = "callend/callend";//到达终点，庆祝
+
+
     }
 
 }

@@ -1,14 +1,12 @@
 package com.expo.contract;
 
 import com.expo.adapters.DownloadData;
-import com.expo.adapters.Tab;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
-import com.expo.entity.ActualScene;
+import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
-import com.expo.entity.Subject;
 import com.expo.entity.TouristType;
 import com.expo.entity.VenuesType;
 
@@ -38,13 +36,16 @@ public interface ParkMapContract {
 
         public abstract Encyclopedias getEncy(String wikiId);
 
-        public abstract List<ActualScene> getActualScenes(ArrayList<Integer> ids);
+        public abstract List<Venue> getActualScenes(ArrayList<Integer> ids);
+
+        public abstract List<Venue> selectVenueByCaption(String caption);
+
     }
 
     interface View extends IView {
         void loadTabRes(List<VenuesType> venuesTypes, int tabPosition);
 
-        void loadFacilityRes(List<ActualScene> facilities, ActualScene as);
+        void loadFacilityRes(List<Venue> facilities, Venue as);
 
         void loadTouristTypeRes(List<TouristType> touristTypes);
 

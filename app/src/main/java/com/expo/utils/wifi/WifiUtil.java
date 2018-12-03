@@ -19,6 +19,15 @@ public class WifiUtil {
         return wifiManager.isWifiEnabled(); // 返回wifi状态
     }
 
+    public static boolean isAtWifi(Context context, String ssid){
+        initWifiManager(context);
+//        int wifiState = wifiManager.getWifiState();
+        WifiInfo info = wifiManager.getConnectionInfo();
+        String wifiId = info != null ? info.getSSID() : "";
+        ssid = "\""+ssid+"\"";
+        return wifiId.equals(ssid);
+    }
+
     /**
      * 开启或关闭wifi
      * @param context

@@ -10,9 +10,10 @@
 
 
     <LinearLayout
+        android:id="@+id/login_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_login"
+        android:background="@drawable/bg_login_top"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -20,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dms_60"
+            android:layout_marginTop="@dimen/dms_100"
+            android:layout_marginBottom="@dimen/dms_10"
             android:scaleType="fitXY"
             android:src="@mipmap/login_logo" />
     </LinearLayout>
@@ -28,21 +30,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_below="@id/login_top"
+        android:layout_above="@+id/login_bottom"
         android:orientation="vertical"
+        android:gravity="top"
+        android:background="@drawable/bg_login_center"
         android:paddingLeft="@dimen/dms_60"
         android:paddingRight="@dimen/dms_60">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_80"
+            android:layout_marginTop="@dimen/dms_40"
             android:background="@drawable/bg_white_ccc_r5_w1"
             android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/login_phone_number_code"
-                android:layout_width="@dimen/dms_90"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/dms_90"
                 android:layout_marginLeft="@dimen/dms_20"
                 android:drawableRight="@mipmap/country_more"
@@ -141,6 +147,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/login_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

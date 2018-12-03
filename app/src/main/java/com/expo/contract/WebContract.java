@@ -12,10 +12,14 @@ public interface WebContract {
         }
 
         public abstract void getUrlById(int rulId);
+
+        public abstract void logout();
     }
 
     interface View extends IView{
 
         void returnRichText(RichText richText);
+
+        void logoutResp();
     }
 }

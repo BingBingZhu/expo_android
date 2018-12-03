@@ -3,9 +3,12 @@ package com.expo.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class RouteHotInfo implements Parcelable {
+import com.google.gson.annotations.SerializedName;
 
+public class RouteHotInfo implements Parcelable {
+    @SerializedName("element")
     public String element;
+    @SerializedName("score")
     public int score;
 
     protected RouteHotInfo() {

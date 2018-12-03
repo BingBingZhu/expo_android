@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
@@ -57,6 +58,9 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
 
         holder.name.setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
         holder.content.setText(LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) (ScreenUtils.getScreenWidth() - mContext.getResources().getDimension(R.dimen.dms_200)), (int) mContext.getResources().getDimension(R.dimen.dms_360));
+        holder.itemView.setLayoutParams(params);
 
         holder.itemView.setOnClickListener(v -> {
             WebTemplateActivity.startActivity( mContext, encyclopedias.getId());

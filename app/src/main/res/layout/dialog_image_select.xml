@@ -2,42 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dms_26"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/image_record"
-        style="@style/TextSizeBlack16"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_50"
-        android:clickable="false"
-        android:gravity="center_horizontal|bottom"
-        android:text="@string/dialog_image_record" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_r5"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/image_record"
+            style="@style/TextSizeBlack16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_50"
+            android:clickable="false"
+            android:gravity="center_horizontal|bottom"
+            android:text="@string/dialog_image_record" />
 
-    <TextView
-        android:id="@+id/image_record_explain"
-        style="@style/TextSizeBlack14"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_50"
-        android:clickable="false"
-        android:gravity="center_horizontal|top"
-        android:paddingTop="@dimen/dms_4"
-        android:text="@string/dialog_image_image_video"
-        android:textColor="@color/gray_99" />
+        <TextView
+            android:id="@+id/image_record_explain"
+            style="@style/TextSizeBlack14"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_50"
+            android:clickable="false"
+            android:gravity="center_horizontal|top"
+            android:paddingTop="@dimen/dms_4"
+            android:text="@string/dialog_image_image_video"
+            android:textColor="@color/gray_99" />
 
-    <View style="@style/LineHorizontal" />
+        <View style="@style/LineHorizontal" />
 
-    <TextView
-        android:id="@+id/image_album"
-        style="@style/TextSizeBlack16"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_100"
-        android:clickable="false"
-        android:gravity="center"
-        android:padding="@dimen/dms_10"
-        android:paddingBottom="@dimen/dms_20"
-        android:text="@string/dialog_image_album" />
-
-    <View style="@style/LineHorizontal" />
+        <TextView
+            android:id="@+id/image_album"
+            style="@style/TextSizeBlack16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_100"
+            android:clickable="false"
+            android:gravity="center"
+            android:padding="@dimen/dms_10"
+            android:paddingBottom="@dimen/dms_20"
+            android:text="@string/dialog_image_album" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/cancle"
@@ -46,7 +51,7 @@
         android:layout_width="match_parent"
         android:clickable="false"
         android:gravity="center"
-        android:paddingTop="@dimen/dms_10"
-        android:paddingBottom="@dimen/dms_20"
+        android:layout_marginTop="@dimen/dms_14"
+        android:background="@drawable/bg_white_r5"
         android:text="@string/cancel" />
 </LinearLayout>

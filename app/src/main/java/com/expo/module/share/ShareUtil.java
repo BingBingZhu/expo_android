@@ -20,6 +20,7 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 
@@ -99,12 +100,12 @@ public class ShareUtil {
 
         boolean isWechat = "Wechat".equals( name ) || "WechatMoments".equals( name );
         if (isWechat && !plat.isClientValid()) {
-            ToastHelper.showShort( "未安装微信" );
+            ToastHelper.showShort( R.string.wechat_is_not_installed );
             return false;
         }
 
         if ("QZone".equals( name ) && !plat.isClientValid()) {
-            ToastHelper.showShort( "未安装QQ空间" );
+            ToastHelper.showShort( R.string.qq_space_is_not_installed );
             return false;
         }
         if (!mShareParams.containsKey( "shareType" )) {
@@ -171,6 +172,16 @@ public class ShareUtil {
             platform.share( new Platform.ShareParams( mShareParams ) );
         }
     }
+
+    public static void doShare(String name, String fileUrl){
+        Platform.ShareParams paramsToShare = new Platform.ShareParams();
+        paramsToShare.setText(null);
+        paramsToShare.setTitle(null);
+        paramsToShare.setTitleUrl(null);
+        paramsToShare.setImagePath(fileUrl);
+        ShareSDK.getPlatform(name).share(paramsToShare);
+    }
+
 
     /**
      * title标题，在印象笔记、邮箱、信息、微信（包括好友、朋友圈和收藏）、

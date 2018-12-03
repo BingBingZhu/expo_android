@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/login_phone_number_code"
-            android:layout_width="@dimen/dms_90"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dms_90"
             android:layout_marginLeft="@dimen/dms_8"
             android:layout_marginRight="@dimen/dms_14"

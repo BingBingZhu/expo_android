@@ -1,6 +1,8 @@
 package com.expo.module.main.encyclopedia;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 
 import com.expo.R;
 import com.expo.adapters.EncyAndSceneListAdapter;
@@ -13,6 +15,7 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ListContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.widget.SimpleRecyclerView;
+import com.expo.widget.decorations.SpaceDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,7 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
         mEncyclopediasList = new ArrayList<>();
         adapter = new EncyAndSceneListAdapter(getContext(), mEncyclopediasList);
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.addItemDecoration( new SpaceDecoration( 0,getResources().getDimensionPixelSize( R.dimen.dms_4 ) ) );
 //        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_18);
 //        int space = getResources().getDimensionPixelSize(R.dimen.dms_18);
 //        mRecyclerView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));

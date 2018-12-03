@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 
 import com.blankj.utilcode.util.StringUtils;
@@ -53,24 +54,41 @@ public class LanguageUtil {
     public static boolean isCN() {
         if (StringUtils.equals(LANGUAGE_CN, PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null)))
             return true;
-        Locale locale = ExpoApp.getApplication().getResources().getConfiguration().locale;
-        String language = locale.getLanguage();
-        if (language.endsWith("zh"))
-            return true;
+        // 下方代码注释掉吧，不然存在问题
+//        Locale locale;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            locale = ExpoApp.getApplication().getResources().getConfiguration().getLocales().get(0);
+//        } else {
+//            locale = ExpoApp.getApplication().getResources().getConfiguration().locale;
+//        }
+//        String language = locale.getLanguage();
+//        if (language.endsWith("zh"))
+//            return true;
         return false;
     }
 
     /**
-     * 根据语音选择返回不同的string
+     * 根据语言选择返回不同的string
      *
      * @param cn 中文
      * @param en 英文
      * @return
      */
     public static String chooseTest(String cn, String en) {
-        if (isCN())
-            return cn;
-        return en;
+        if (isCN()) return cn;
+        else return en;
+    }
+
+    /**
+     * 根据语言选择返回不同的图片资源
+     *
+     * @param cnImgId 中文图片
+     * @param enImgId 英文图片
+     * @return
+     */
+    public static int chooseImg(int cnImgId, int enImgId) {
+        if (isCN())  return cnImgId;
+        else return enImgId;
     }
 
 }
