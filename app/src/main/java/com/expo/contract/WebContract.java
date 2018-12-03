@@ -20,6 +20,6 @@ public interface WebContract {
 
         void returnRichText(RichText richText);
 
-        void logout();
+        void logoutResp();
     }
 }

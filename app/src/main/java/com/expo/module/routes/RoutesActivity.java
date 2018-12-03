@@ -64,7 +64,7 @@ public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> imple
                 RouteInfo info = mData.get(position);
                 Picasso.with(RoutesActivity.this).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
                 holder.setText(R.id.item_route_name, LanguageUtil.chooseTest(info.caption, info.captionen));
-                holder.setText(R.id.item_route_hot, "热度" + info.hotCount);
+                holder.setText(R.id.item_route_hot, getString(R.string.heat) + info.hotCount);
 
                 holder.itemView.setOnClickListener(v -> {
                     mListener.itemClick(v, position, Long.valueOf(info.id));

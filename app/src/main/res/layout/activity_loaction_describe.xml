@@ -13,28 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"/>
 
-        <!--<com.expo.widget.MyRadioButton-->
-            <!--android:id="@+id/location_describe_radio0"-->
-            <!--style="@style/location_radio_style"-->
-            <!--android:checked="true"-->
-            <!--android:text="@string/location_describe_radio1" />-->
-
-        <!--<com.expo.widget.MyRadioButton-->
-            <!--android:id="@+id/location_describe_radio1"-->
-            <!--style="@style/location_radio_style"-->
-            <!--android:text="@string/location_describe_radio2" />-->
-
-        <!--<com.expo.widget.MyRadioButton-->
-            <!--android:id="@+id/location_describe_radio2"-->
-            <!--style="@style/location_radio_style"-->
-            <!--android:text="@string/location_describe_radio3" />-->
-
-        <!--<com.expo.widget.MyRadioButton-->
-            <!--android:id="@+id/location_describe_radio3"-->
-            <!--style="@style/location_radio_style"-->
-            <!--android:text="@string/location_describe_radio4" />-->
-    <!--</LinearLayout>-->
-
     <com.hedan.textdrawablelibrary.TextViewDrawable
         style="@style/TextSizeBlack16"
         android:layout_height="@dimen/dms_80"

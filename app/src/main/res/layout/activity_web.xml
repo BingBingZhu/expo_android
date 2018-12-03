@@ -4,17 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/common_progress"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_4"
-        android:progressDrawable="@drawable/html_progress_drawable"
-        android:visibility="gone" />
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/common_progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_4"
+            android:progressDrawable="@drawable/html_progress_drawable"
+            android:visibility="gone" />
 
-    <com.expo.widget.X5WebView
-        android:id="@+id/common_x5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.expo.widget.X5WebView
+            android:id="@+id/common_x5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
 </LinearLayout>

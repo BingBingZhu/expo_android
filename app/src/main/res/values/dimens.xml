@@ -81,6 +81,7 @@
     <dimen name="dms_424">212dp</dimen>
 
     <dimen name="dms_minus_10">-5dp</dimen>
+    <dimen name="dms_minus_14">-7dp</dimen>
     <dimen name="dms_minus_30">-15dp</dimen>
     <dimen name="dms_minus_44">-22dp</dimen>
     <dimen name="dms_minus_70">-35dp</dimen>

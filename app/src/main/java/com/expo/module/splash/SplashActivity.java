@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
+import com.baidu.mobstat.SendStrategyEnum;
+import com.baidu.mobstat.StatService;
 import com.expo.BuildConfig;
 import com.expo.R;
 import com.expo.base.BaseActivity;
@@ -38,6 +40,8 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
         setDoubleTapToExit(false);
         mHandler.postDelayed(this::next, 3000);
         mPresenter.loadInitData();
+//        StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
+        StatService.start(this);
     }
 
     @Override

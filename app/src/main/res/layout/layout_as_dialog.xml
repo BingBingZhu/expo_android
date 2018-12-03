@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_14"
-                android:text="语音解说"/>
+                android:text="@string/phonetic_explaining"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -41,8 +41,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="visible"
                 android:textSize="@dimen/font_16"
-                android:textColor="@color/white"
-                android:text="预约时间：2018.6.30 8：30（pm）"/>
+                android:textColor="@color/white"/>
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,8 +74,7 @@
             android:layout_marginTop="@dimen/dms_18"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_16"
-            android:text="中国馆当前人数较多请合理安排规划路线。"/>
+            android:textSize="@dimen/font_16"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

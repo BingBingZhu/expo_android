@@ -27,7 +27,7 @@
         android:layout_above="@+id/iv_distinguish_take_picture"
         android:textColor="@color/white"
         android:textSize="@dimen/font_30"
-        android:text="请正对需要识别的植物"/>
+        android:text="@string/please_direct_the_plant_to_be_identified"/>
     <ImageView
         android:id="@+id/iv_distinguish_take_picture"
         android:layout_width="wrap_content"
@@ -36,5 +36,4 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dms_120"
         android:src="@mipmap/ico_take_picture"/>
-    <!--android:id="@+id/cb_distinguish_torch手电筒"-->
 </RelativeLayout>

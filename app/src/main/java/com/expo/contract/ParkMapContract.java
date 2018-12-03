@@ -37,6 +37,9 @@ public interface ParkMapContract {
         public abstract Encyclopedias getEncy(String wikiId);
 
         public abstract List<Venue> getActualScenes(ArrayList<Integer> ids);
+
+        public abstract List<Venue> selectVenueByCaption(String caption);
+
     }
 
     interface View extends IView {

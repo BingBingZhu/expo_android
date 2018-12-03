@@ -5,10 +5,12 @@ import android.text.TextUtils;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.SplashContract;
+import com.expo.entity.Badge;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
+import com.expo.entity.RouteHotInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Subject;
 import com.expo.entity.TopLineInfo;
@@ -19,10 +21,12 @@ import com.expo.entity.VenuesType;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.AllTypeResp;
+import com.expo.network.response.BadgeResp;
 import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.ParkResp;
+import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.SubjectResp;
 import com.expo.network.response.TopLineResp;
@@ -36,6 +40,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -60,6 +66,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         RequestBody emptyBody = Http.buildRequestBody( Http.getBaseParams() );
         checkUpdateDate( emptyBody );
         copyAMapStyleToSDCard();
+        getRouterHotCountList();
     }
 
     private void checkUpdateDate(RequestBody emptyBody) {
@@ -128,6 +135,12 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                         loadParksList();
                     }
                 }
+                if (!TextUtils.isEmpty( rsp.badge )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_BADGE_UPDATE_TIME, null );
+                    if (!rsp.badge.equals( updateTime )) {
+                        loadBadgeInfo();
+                    }
+                }
             }
 
             @Override
@@ -180,6 +193,29 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 PrefsHelper.setString( Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( TouristType.class );
                 mDao.saveOrUpdateAll( rsp.touristTypes );
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable );
+        addNetworkRecord();
+    }
+
+    /**
+     * 加载徽章列表
+     */
+    private void loadBadgeInfo() {
+        Observable<BadgeResp> observable = Http.getServer().getBadgeList( Http.buildRequestBody( Http.getBaseParams() ) );
+        isRequest = Http.request( new ResponseCallback<BadgeResp>() {
+            @Override
+            protected void onResponse(BadgeResp rsp) {
+                PrefsHelper.setString( Constants.Prefs.KEY_BADGE_UPDATE_TIME, rsp.updatetime );
+                mDao.clear( Badge.class );
+                List<Badge> badges = rsp.badges;
+                Collections.sort(badges);
+                mDao.saveOrUpdateAll( badges );
             }
 
             @Override
@@ -380,6 +416,36 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 PrefsHelper.setString( Constants.Prefs.KEY_ROUTES_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( RouteInfo.class );
                 mDao.saveOrUpdateAll( rsp.routeList );
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable );
+        addNetworkRecord();
+    }
+
+    /**
+     * 获取路线热度列表
+     */
+    private void getRouterHotCountList() {
+        Map<String, Object> params = Http.getBaseParams();
+        params.put("parkid", "1");
+        RequestBody requestBody = Http.buildRequestBody(params);
+        Observable<RouteHotCountResp> observable = Http.getServer().getRouterHotCountList(requestBody);
+        isRequest = Http.request( new ResponseCallback<RouteHotCountResp>() {
+            @Override
+            protected void onResponse(RouteHotCountResp rsp) {
+                if (rsp == null || rsp.routeHots == null || rsp.routeHots.size() == 0) return;
+                for (int i = 0; i < rsp.routeHots.size(); i++) {
+                    RouteHotInfo hotInfo = rsp.routeHots.get(i);
+                    RouteInfo routeInfo = mDao.queryById(RouteInfo.class, hotInfo.element);
+                    if (routeInfo != null) {
+                        routeInfo.hotCount = hotInfo.score;
+                        mDao.saveOrUpdate(routeInfo);
+                    }
+                }
             }
 
             @Override

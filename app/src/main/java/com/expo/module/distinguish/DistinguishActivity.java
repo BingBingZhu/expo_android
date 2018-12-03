@@ -149,7 +149,7 @@ public class DistinguishActivity extends BaseActivity<DistinguishContract.Presen
             in.putExtra( MediaStore.EXTRA_OUTPUT, Uri.fromFile( file ) );
             startActivityForResult( in, Constants.RequestCode.REQ_CROP );
         } else {
-            ToastHelper.showShort( "编辑图片失败" );
+            ToastHelper.showShort( R.string.failed_to_edit_image );
         }
     }
 
@@ -261,7 +261,7 @@ public class DistinguishActivity extends BaseActivity<DistinguishContract.Presen
         TextView btnContinue = v.findViewById( R.id.distinguish_result_continue );
         btnContinue.setOnClickListener( this );
         imageView.setImageURI( plant.baike_info.image_url );
-        tvName.setText( plant.name + "   准确度:" + (int) (plant.score * 100) + "%" );
+        tvName.setText( plant.name + getString(R.string.degree_of_accuracy) + (int) (plant.score * 100) + "%" );
         tvIntro.setText( plant.baike_info.description );
         //将布局设置给Dialog
         dialog.setContentView( v );
@@ -288,7 +288,7 @@ public class DistinguishActivity extends BaseActivity<DistinguishContract.Presen
             Plant plant = plants.get( 0 );
 //            showDistinguishResult(plant);
         } else {
-            ToastHelper.showShort( "识别失败" );
+            ToastHelper.showShort( R.string.identification_of_failure );
             restartPreview();
         }
         hideLoadingView();
@@ -297,11 +297,11 @@ public class DistinguishActivity extends BaseActivity<DistinguishContract.Presen
     @Override
     public void onBaiduDistinguishComplete(GetBaiduDisting_Rsb plant) {     // 百度云接口返回
         if (null == plant) {
-            ToastHelper.showShort( "识别失败" );
+            ToastHelper.showShort( R.string.identification_of_failure );
             restartPreview();
             return;
         } else if (plant.name.equals( "非植物" )) {
-            ToastHelper.showShort( "您识别的不是植物哦" );
+            ToastHelper.showShort( R.string.you_are_not_identifying_a_plant);
             restartPreview();
             return;
         }

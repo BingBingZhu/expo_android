@@ -91,6 +91,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     TextureView mTextureView;
     @BindView(R.id.gt_navi_tips)
     TextView mTvTips;
+    @BindView(R.id.img_module_show)
+    ImageView mImgModuleShow;
+
     public AMapNavi mAMapNavi;
     private AMap mMap;
     private Venue virtualScene;
@@ -131,6 +134,11 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false)) {
+            mImgModuleShow.setVisibility(View.GONE);
+        }
+        mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
+                true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
         StatusBarUtils.setStatusBarLight(this, true);
         mMapView.onCreate(savedInstanceState);
         //地图中心点
@@ -157,15 +165,15 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     }
 
     private void initWebView() {
-//        mWebView.loadUrl("file:///android_asset/newWebAr/liveNav.html");
-//        mWebView.loadUrl("http://192.168.6.129/sever/dist/index.html#/navigation");
-        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
+        mWebView.loadUrl("file:///android_asset/web/merge.html");
+        mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
+//        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
 
     private void endNavigation() {
-        ToastHelper.showShort("到达目的地附近喽，导航结束");
-        mTvTips.setText("到达目的地附近喽，导航结束");
+        ToastHelper.showShort(R.string.end_of_the_navigation);
+        mTvTips.setText(R.string.end_of_the_navigation);
         if (mSlidingDrawerView.isOpened()) {
             changeAnimation("endPoint");
         } else {
@@ -364,7 +372,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mTo = new NaviLatLng(virtualScene.getLat(), virtualScene.getLng());
         boolean isSuccess = mAMapNavi.calculateWalkRoute(mFrom, mTo);
         if (!isSuccess) {
-            ToastHelper.showShort("路线规划失败");
+            ToastHelper.showShort(R.string.route_planning_failure);
             Log.d("NaviManager=======", "路线计算失败,检查参数情况");
         }
     }
@@ -452,7 +460,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onStartNavi(int i) {
             // 启动导航后的回调函数
-//            ToastHelper.showLong("启动导航");
+            ToastHelper.showLong(R.string.start_the_navigation);
             mStartTime = TimeUtils.getNowMills();
             mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_START));
         }
@@ -476,7 +484,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onGpsOpenStatus(boolean b) {
             // 用户手机GPS设置是否开启的回调函数。
-            ToastHelper.showLong("手机GPS设置是否开启" + b);
+            if (!b){
+                ToastHelper.showLong(R.string.the_phone_is_gps_settings_are_not_on);
+            }
         }
 
         @Override
@@ -531,9 +541,19 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         }
     };
 
-    @OnClick(R.id.gt_navi_back)
+    @OnClick({R.id.gt_navi_back, R.id.img_module_show})
     public void onClick(View v) {
-        finish();
+        switch (v.getId()){
+            case R.id.gt_navi_back:
+                finish();
+                break;
+            case R.id.img_module_show:
+                PrefsHelper.setBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, ! PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true));
+                mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
+                        true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
+                mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
+                break;
+        }
     }
 
     //提供给网络端的回调方法

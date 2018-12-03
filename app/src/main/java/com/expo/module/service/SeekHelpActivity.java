@@ -233,7 +233,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
         if (null == mLocation || mLocation.getLatitude() == 0){
-            ToastHelper.showShort("光团儿正在努力定位，请您稍等片刻！");
+            ToastHelper.showShort(R.string.trying_to_locate);
             return;
         }
         mPresenter.getServerPoint(mLocation);

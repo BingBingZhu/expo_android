@@ -158,7 +158,7 @@
         批准、国际展览局认可，由中国政府主办、北京市承办的最高级别的世界园艺博览会，其主题为“绿色生
         活美丽家园”，将成为中国加强生态文明建设、构筑绿色产业体系、推动绿色优势向经济优势转变、体现
         人与自然和谐共生的集中展示。本届世园会将于2019年4月至10月在北京市延庆区举行，规划总面积960公
-        顷。园区选址距离八达岭长城10公里，被称为“长城脚下的世园会”。\n
+        顷。园区选址距离八达岭长城10公里，被称为“长城脚下的世园会”。\n\n
         \t\t\t\t2019年中国北京世界园艺博览会是经国际园艺生产者协会批准、国际展览局认可，由中国政府主
         办、北京市承办的最高级别的世界园艺博览会，其主题为“绿色生活美丽家园”，将成为中国加强生态文
         明建设、构筑绿色产业体系、推动绿色优势向经济优势转变、体现人与自然和谐共生的集中展示。本届世
@@ -175,7 +175,6 @@
     <string name="active_message">活动消息</string>
     <string name="feedback_on_tourist_service">游客服务反馈</string>
     <string name="to_make_an_appointment_to_remind">预约提醒</string>
-    <string name="the_guide_tour">导游导览</string>
     <string name="no_scene">没有数据</string>
     <string name="bind_phone">绑定</string>
     <string name="please_enter_your_search_terms">请输入搜索的关键词</string>
@@ -211,4 +210,72 @@
     <string name="the_current_integral">当前积分：0分</string>
     <string name="title_routest_detail">路线详情</string>
     <string name="the_account_is_abnormal_please_log_in_again">账号异常，请重新登录！</string>
+    <string name="your_account_is_logged_in_on_another_device">您的账号在其他设备登录</string>
+    <string name="history">历史记录</string>
+    <string name="please_direct_the_plant_to_be_identified">请正对需要识别的植物</string>
+
+    <string name="language_ch">中文</string>
+    <string name="language_en">English</string>
+    <string name="select_language">请选择语言 Select language</string>
+    <string name="search_for_destinations_attractions_venues">搜索目的地/景点/场馆</string>
+    <string name="language_selector_page">语言选择页</string>
+    <string name="download_the_new_version">下载新版本</string>
+    <string name="talk_to_you_later">下次再说</string>
+    <string name="phonetic_explaining">语音解说</string>
+    <string name="find_out_details">了解详情</string>
+    <string name="check_the_route">查看路线</string>
+    <string name="please_enter_the_scenic_spot_you_want_to_search">请输入您想搜索的景区</string>
+    <string name="search">搜索</string>
+    <string name="missing_gyro_assembly">缺少陀螺仪组件，部分功能无法使用</string>
+    <string name="identify_the_result">识别结果</string>
+    <string name="continue_to_identify">继续识别</string>
+    <string name="pause_to_download">暂停下载</string>
+    <string name="failed_to_edit_image">编辑图片失败</string>
+    <string name="identification_of_failure">识别失败</string>
+    <string name="non_plant">非植物</string>
+    <string name="create_an_account">创建账号</string>
+    <string name="not_free_wifi">没有免费wifi</string>
+    <string name="trying_to_locate">光团儿正在努力定位，请您稍等片刻！</string>
+    <string name="no_introduction">无介绍</string>
+    <string name="heat">热度</string>
+    <string name="wechat_is_not_installed">未安装微信</string>
+    <string name="qq_space_is_not_installed">未安装QQ空间</string>
+    <string name="cache_cleared">缓存已清除</string>
+    <string name="degree_of_accuracy">准确度:</string>
+    <string name="you_are_not_identifying_a_plant">您识别的不是植物哦</string>
+    <string name="not_locate">未定位</string>
+    <string name="end_of_the_navigation">到达目的地附近喽，导航结束</string>
+    <string name="failed_to_turn_on_the_camera">打开摄像头失败</string>
+    <string name="cannot_be_displayed">Vew未依附在Window,无法显示</string>
+    <string name="start_the_navigation">启动导航</string>
+    <string name="the_phone_is_gps_settings_are_not_on">手机GPS设置未开启</string>
+    <string name="route_planning_failure">路线规划失败</string>
+    <string name="store_permissions">存储权限</string>
+    <string name="change_network_permissions">修改网络</string>
+    <string name="network_access_permissions">网络访问</string>
+    <string name="camera_permissions">相机权限</string>
+    <string name="the_recording_permissions">录音权限</string>
+    <string name="get_wifi_information_permission">WIFI信息</string>
+    <string name="phone_privileges">电话权限</string>
+    <string name="location_permissions">定位权限</string>
+    <string name="get_wifi_state_permission">WIFI状态</string>
+    <string name="bluetooth_permissions">蓝牙权限</string>
+    <string name="address_book_permissions">通讯录</string>
+    <string name="second">秒</string>
+    <string name="there_is_no_audio_at_this_scenic_spot">该景点暂无音频</string>
+    <string name="please_finish_recording_first">请先结束录像</string>
+    <string name="no_details_are_available">暂无详情信息</string>
+    <string name="wechat">微信</string>
+    <string name="qq">QQ</string>
+    <string name="sina_microblog">新浪微博</string>
+    <string name="east">东</string>
+    <string name="south">南</string>
+    <string name="west">西</string>
+    <string name="north">北</string>
+    <string name="south_east">东南</string>
+    <string name="north_east">东北</string>
+    <string name="south_west">西南</string>
+    <string name="north_west">西北</string>
+    <string name="welcome_to_the_beijing_world_expo">北京世园会欢迎您</string>
+    <string name="baidu_navi">百度导航</string>
 </resources>

@@ -53,5 +53,12 @@
             android:layout_marginLeft="@dimen/dms_40"
             android:layout_marginBottom="@dimen/dms_40"
             android:src="@mipmap/ico_park_map_location"/>
+        <ImageView
+            android:id="@+id/map_pattern_chanage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/map_pattern_chanage"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 </LinearLayout>

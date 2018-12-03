@@ -2,7 +2,9 @@ package com.expo.module.webview;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -11,10 +13,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebContract;
@@ -26,6 +31,9 @@ import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import butterknife.BindView;
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -63,6 +71,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             setTitleVisibility( View.GONE );
         }
         getTitleView().setOnClickListener( (v) -> {
+            mX5View.loadUrl("javascript:isclose()");
             if (mX5View.canGoBack()) {
                 mX5View.goBack();
                 return;
@@ -116,6 +125,16 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        mX5View.loadUrl("javascript:isclose()");
+        if (mX5View.canGoBack()) {
+            mX5View.goBack();
+            return;
+        }
+        super.onBackPressed();
+    }
+
     public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title) {
         Intent in = new Intent( context, WebActivity.class );
         in.putExtra( Constants.EXTRAS.EXTRA_TITLE, title == null ? "" : title );
@@ -142,11 +161,11 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     @Override
     public void returnRichText(RichText richText) {
         String content = "<html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body><div>" + richText.getContent() + "</div></body>";
-        mX5View.loadData( content, "text/html;charset=utf8", "UTF-8" );
+        mX5View.loadData(content, "text/html;charset=utf8", "UTF-8");
     }
 
     @Override
-    public void logout() {
+    public void logoutResp() {
         LoginActivity.startActivity( getContext() );
     }
 
@@ -171,9 +190,28 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
         @JavascriptInterface
         public void unLogin() {
-            ToastHelper.showShort( "账号异常，请重新登录！" );
-            mPresenter.logout();
+            showForceSingOutDialog();
         }
+
+        @JavascriptInterface
+        public void close(){
+            finish();
+        }
+    }
+
+    private void showForceSingOutDialog() {
+        new AlertDialog.Builder(ExpoApp.getApplication().getTopActivity())
+            .setMessage(R.string.the_account_is_abnormal_please_log_in_again)
+            .setCancelable(false)
+            .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mPresenter.logout();
+//                    ExpoApp.getApplication().setUser(null);
+//                    LoginActivity.startActivity(ExpoApp.getApplication().getTopActivity());
+                }
+            })
+            .show();
     }
 
     private void share(String name) {
