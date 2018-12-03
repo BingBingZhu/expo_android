@@ -40,6 +40,8 @@ public class PickActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvPick.setLayoutManager(manager);
         rvPick.setAdapter(adapter);
+        TitleItemDecoration decoration = new TitleItemDecoration(this, adapter.getEntityList());
+        rvPick.addItemDecoration(decoration);
         rvPick.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override

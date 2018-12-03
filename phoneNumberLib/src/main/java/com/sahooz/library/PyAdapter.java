@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
@@ -25,6 +27,7 @@ public abstract class PyAdapter<VH extends RecyclerView.ViewHolder> extends Recy
     private WeakHashMap<View, VH> holders = new WeakHashMap<>();
     public final ArrayList<PyEntity> entityList = new ArrayList<>();
     public final HashSet<LetterEntity> letterSet = new HashSet<>();
+    public final Map<String, Integer> letterPosition = new HashMap<>();
     private OnItemClickListener listener = (entity, position) -> {
 
     };
@@ -39,16 +42,16 @@ public abstract class PyAdapter<VH extends RecyclerView.ViewHolder> extends Recy
         entityList.clear();
         entityList.addAll(entities);
         letterSet.clear();
-        for (PyEntity entity : entities) {
-            String pinyin = entity.getPy();
-            if (!TextUtils.isEmpty(pinyin)) {
-                char letter = pinyin.charAt(0);
-                if (!isLetter(letter))
-                    letter = 35;
-                letterSet.add(new LetterEntity(letter + ""));
-            }
-        }
-        entityList.addAll(0, letterSet);
+//        for (PyEntity entity : entities) {
+//            String pinyin = entity.getPy();
+//            if (!TextUtils.isEmpty(pinyin)) {
+//                char letter = pinyin.charAt(0);
+//                if (!isLetter(letter))
+//                    letter = 35;
+//                letterSet.add(new LetterEntity(letter + ""));
+//            }
+//        }
+//        entityList.addAll(0, letterSet);
         Collections.sort(entityList, (o1, o2) -> {
             String pinyin = o1.getPy().toLowerCase();
             String anotherPinyin = o2.getPy().toLowerCase();
@@ -66,7 +69,14 @@ public abstract class PyAdapter<VH extends RecyclerView.ViewHolder> extends Recy
                 else return pinyin.compareTo(anotherPinyin);
             }
         });
-        notifyDataSetChanged();
+        String pyf = "";
+        for (int i = 0; i < entityList.size(); i++) {
+            PyEntity pe = entityList.get(i);
+            if (!pyf.equals(pe.getPy())) {
+                pyf = pe.getPy();
+                letterPosition.put(pyf, i);
+            }
+        }
     }
 
     private boolean isLetter(char letter) {
@@ -100,8 +110,12 @@ public abstract class PyAdapter<VH extends RecyclerView.ViewHolder> extends Recy
     public abstract VH onCreateHolder(ViewGroup parent, int viewType);
 
     public int getLetterPosition(String letter) {
-        LetterEntity entity = new LetterEntity(letter);
-        return entityList.indexOf(entity);
+//        LetterEntity entity = new LetterEntity(letter);
+//        return entityList.indexOf(entity);
+        if (letterPosition.containsKey(letter))
+            return letterPosition.get(letter);
+        else
+            return -1;
     }
 
     @Override
@@ -150,6 +164,10 @@ public abstract class PyAdapter<VH extends RecyclerView.ViewHolder> extends Recy
         int position = holder.getAdapterPosition();
         PyEntity pyEntity = entityList.get(position);
         listener.onItemClick(pyEntity, position);
+    }
+
+    public ArrayList<PyEntity> getEntityList() {
+        return entityList;
     }
 
     public static final class LetterEntity implements PyEntity {
