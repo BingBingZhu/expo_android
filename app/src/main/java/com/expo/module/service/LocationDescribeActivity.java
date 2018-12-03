@@ -17,6 +17,7 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.utils.Constants;
@@ -37,6 +38,8 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
     EditText mEdit;
 
     View mSelectView;
+    String mPoiId = "";
+    boolean isHavePoiId = false;
 
     @Override
 
@@ -55,6 +58,9 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
         poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(getIntent().getDoubleExtra(Constants.EXTRAS.EXTRA_LATITUDE, 0),
                 getIntent().getDoubleExtra(Constants.EXTRAS.EXTRA_LONGITUDE, 0)), 100));//设置周边搜索的中心点以及半径
 
+        mEdit.setText(getIntent().getStringExtra(Constants.EXTRAS.EXTRAS));
+        mPoiId = getIntent().getStringExtra(Constants.EXTRAS.EXTRA_ID);
+
         poiSearch.searchPOIAsyn();
     }
 
@@ -71,10 +77,12 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
      * @param lng      当前定位位置的经度
      * @return RequestCode 请求码
      */
-    public static void startActivityForResult(@NonNull Activity activity, double lat, double lng) {
+    public static void startActivityForResult(@NonNull Activity activity, double lat, double lng, String poiId, String coordinateAssist) {
         Intent in = new Intent(activity, LocationDescribeActivity.class);
         in.putExtra(Constants.EXTRAS.EXTRA_LONGITUDE, lng);
         in.putExtra(Constants.EXTRAS.EXTRA_LATITUDE, lat);
+        in.putExtra(Constants.EXTRAS.EXTRA_ID, poiId);
+        in.putExtra(Constants.EXTRAS.EXTRAS, coordinateAssist);
         activity.startActivityForResult(in, Constants.RequestCode.REQ_GET_LOCAL);
     }
 
@@ -89,6 +97,7 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
             result.putExtra(Constants.EXTRAS.EXTRA_LATITUDE, lat);
             result.putExtra(Constants.EXTRAS.EXTRA_LONGITUDE, lng);
             result.putExtra(Constants.EXTRAS.EXTRAS, content);
+            result.putExtra(Constants.EXTRAS.EXTRA_ID, mPoiId);
             setResult(RESULT_OK, result);
         }
     }
@@ -111,10 +120,19 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
     public void onPoiSearched(PoiResult poiResult, int i) {
         View headView = initItemView();
         mLayout.addView(headView);
-        for (PoiItem item : poiResult.getPois()) {
-            mLayout.addView(initItemView(item));
-        }
         headView.performClick();
+        headView.setOnClickListener(v -> mPoiId = "");
+        for (PoiItem item : poiResult.getPois()) {
+            MyRadioButton view = (MyRadioButton) initItemView(item);
+            mLayout.addView(view);
+            if (StringUtils.equals(mPoiId, item.getPoiId())) {
+                view.setChecked(true);
+                isHavePoiId = true;
+            }
+            view.setOnClickListener(v -> mPoiId = item.getPoiId());
+        }
+        if (!isHavePoiId)
+            mPoiId = "";
     }
 
     @Override

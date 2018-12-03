@@ -82,11 +82,11 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
      */
     private boolean handleMessage(Message message) {
         if (message == null) return false;
-        message.setUid( ExpoApp.getApplication().getUser().getUid() );
-        if ("3".equals( message.getType() )) {
-            if ("relogin".equals( message.getCommand() ) && message.getParams() != null) {
-                mDao.clear( User.class );
-                ExpoApp.getApplication().setUser( null );
+        if ("3".equals(message.getType())) {
+            String currUkey = ExpoApp.getApplication().getUser().getUkey();
+            if ("relogin".equals(message.getCommand())) {// && message.getParams() != null  && currUkey.equals(message.getParams().get("ukey"))
+                mDao.clear(User.class);
+                ExpoApp.getApplication().setUser(null);
                 Intent intent = new Intent();
                 intent.putExtra( Constants.EXTRAS.EXTRA_LOGIN_STATE, false );
                 LocalBroadcastUtil.sendBroadcast( mView.getContext(), intent, Constants.Action.LOGIN_CHANGE_OF_STATE_ACTION );

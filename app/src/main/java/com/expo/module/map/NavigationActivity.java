@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -40,6 +42,7 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.NavigationContract;
+import com.expo.entity.Destination;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TouristType;
@@ -126,6 +129,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     long mStartTime;
 
     boolean isBackStage = false;
+
+    Location mLocation;
 
     @Override
     protected int getContentView() {
@@ -258,6 +263,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private AMap.OnMyLocationChangeListener mOnLocationChangeListener = new AMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
+            mLocation = location;
             if (isFirst) {//第一次定位成功后移动到地图中心
                 isFirst = false;
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 20));
@@ -274,7 +280,17 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private DeviceRotateManager.OnOrientationChangedListener mOnOrientationChangedListener = new DeviceRotateManager.OnOrientationChangedListener() {
         @Override
         public void onChanged(float azimuth, float pitch, float roll) {
-            if (!mUseDeviceRotate) return;
+            if (mLocation == null) return;
+            Destination des = new Destination();
+            des.content = LanguageUtil.chooseTest(mActualScene.getCaption(), mActualScene.getEnCaption());
+            des.distance = AMapUtils.calculateLineDistance(
+                    new LatLng(mActualScene.getLat(), mActualScene.getLng()),
+                    new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
+            if (!mUseDeviceRotate) {
+                des.angle = "";
+                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,%.2f)"));
+                return;
+            }
             //计算角度以通知HTML页面使用
             float degrees;
             if (mCalculateDirection >= 0) {
@@ -283,7 +299,11 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 degrees = azimuth - mRouteDirection;
             }
             if (mJsCanSend && mSlidingDrawerView.isOpened()) {
-                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:getAzimuthInfo(%.2f,%.2f)", degrees, azimuth));
+                //degrees 当前方向和路的夹角
+                //azimuth 陀螺仪和正北方夹角
+//                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:getAzimuthInfo(%.2f,%.2f)", degrees, azimuth));
+                des.angle = degrees + "";
+                mWebView.loadUrl("javascript:setMarker('1','" + Http.getGsonInstance().toJson(des) + "')");
             }
             if (mNaviRouteOverlay == null || !mNaviRouteOverlay.isAnimating()) {
                 if (pitch < 0 && pitch > -60) {
@@ -364,7 +384,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         TouristType touristType = mPresenter.getTourist();
         if (touristType != null)
             mWebView.loadUrl(String.format("javascript:setTourist('%s')", touristType.getUnZipPath()));
-//            mWebView.loadUrl(touristType.getLocalPath());
+//        mHandler.sendEmptyMessageDelayed(0, 5000);
+        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "1", "callstart/callstart"));
     }
 
     private void startCalculateTheRoad(LatLng startLatLng, Venue virtualScene) {
@@ -405,6 +426,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             for (int i = 0; i < mVenuesDistance.size(); i++) {
                 VenuesDistance vd = mVenuesDistance.get(i);
                 if (vd.distance >= 20.0f) break;
+                mWebView.loadUrl("javascript:nearWiki('" + vd.title + "', '" + vd.voice + "')");
                 if (mMarker.containsKey(vd.id)) {
                     tem.put(vd.id, mMarker.get(vd.id));
                     mMarker.remove(vd.id);
@@ -417,13 +439,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 tem.put(vd.id, mMarker.get(vd.id));
                 mMarker.remove(vd.id);
 
-//                mWebView.loadUrl(String.format("javascript:tipTips('%d', '%s')", 0, "调用成功了"));
-//                mWebView.loadUrl(String.format("javascript:tipTips('%d', '%s')", 0, "调用成功了"));
-                mWebView.loadUrl("javascript:setMarker('1', '" + Http.getGsonInstance().toJson(vd) + "')");
             }
             for (Marker marker : mMarker.values()) {
                 marker.remove();
-                mWebView.loadUrl("javascript:setMarker('0', '" + marker + "')");
             }
             mMarker.clear();
             mMarker.putAll(tem);
@@ -477,7 +495,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             } else if (s.startsWith("前方直行")) {
                 changeAnimation("forward");
             } else if (s.indexOf("偏离") != -1) {
-                mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_DIVERGE));
+                mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_GPS_DIVERGE));
             }
         }
 
@@ -545,7 +563,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.gt_navi_back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.img_module_show:
                 PrefsHelper.setBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, ! PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true));

@@ -21,6 +21,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.TileOverlayOptions;
 import com.amap.api.maps.model.UrlTileProvider;
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseApplication;
 import com.expo.base.ExpoApp;
@@ -73,14 +74,14 @@ public class MapUtils {
      * @param park 园区
      */
     public void setLimits(Park park) {
-        map.setMapStatusLimits( getBoundsBuilder( park ) );
+        map.setMapStatusLimits(getBoundsBuilder(park));
     }
 
     private LatLngBounds getBoundsBuilder(Park park) {
         ArrayList<double[]> electronicFenceList = park.getElectronicFenceList();
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
         for (double[] lngLat : electronicFenceList) {
-            boundsBuilder.include( new LatLng( lngLat[1], lngLat[0] ) );
+            boundsBuilder.include(new LatLng(lngLat[1], lngLat[0]));
         }
         return boundsBuilder.build();
     }
@@ -97,7 +98,7 @@ public class MapUtils {
 
     public float setMapMinZoom() {
         float zoom = map.getCameraPosition().zoom;
-        map.setMinZoomLevel( zoom );
+        map.setMinZoomLevel(zoom);
         return zoom;
     }
 
@@ -206,11 +207,17 @@ public class MapUtils {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_as_icon, null);
         TextView tv = view.findViewById(R.id.as_ico_text);
         ImageView img = view.findViewById(R.id.icon_center_img);
+        TextView ctv = view.findViewById(R.id.icon_center_text);
         tv.setText(text);
-        if (null == bitmap) {
+        if (null == bitmap && StringUtils.isEmpty(centerText)) {
             bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.test_1);
+            img.setImageBitmap(bitmap);
+        } else if (!StringUtils.isEmpty(centerText)) {
+            img.setImageResource(0);
+            tv.setVisibility(View.GONE);
+            ctv.setVisibility(View.VISIBLE);
+            ctv.setText(centerText);
         }
-        img.setImageBitmap(bitmap);
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
         return bitmapDescriptor;
     }
@@ -225,25 +232,25 @@ public class MapUtils {
     public void useTile(String baseUrl) {
         final String url = baseUrl + "/tiles/%d/%d_%d.png";
         TileOverlayOptions tileOverlayOptions =
-                new TileOverlayOptions().tileProvider( new UrlTileProvider( 256, 256 ) {
+                new TileOverlayOptions().tileProvider(new UrlTileProvider(256, 256) {
                     @Override
                     public URL getTileUrl(int x, int y, int zoom) {
                         try {
-                            return new URL( String.format( url, zoom, x, y ) );
+                            return new URL(String.format(url, zoom, x, y));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         return null;
                     }
-                } );
-        tileOverlayOptions.diskCacheEnabled( true )
-                .diskCacheDir( "/storage/emulated/0/amap/tilecache" )
-                .diskCacheSize( 100000 )
-                .memoryCacheEnabled( true )
-                .memCacheSize( 100000 )
-                .zIndex( -10 );
+                });
+        tileOverlayOptions.diskCacheEnabled(true)
+                .diskCacheDir("/storage/emulated/0/amap/tilecache")
+                .diskCacheSize(100000)
+                .memoryCacheEnabled(true)
+                .memCacheSize(100000)
+                .zIndex(-10);
         /*TileOverlay mtileOverlay = */
-        map.addTileOverlay( tileOverlayOptions );
+        map.addTileOverlay(tileOverlayOptions);
     }
 
 }

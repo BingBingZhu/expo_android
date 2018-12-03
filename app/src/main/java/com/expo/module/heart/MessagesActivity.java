@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,11 +17,13 @@ import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MessagesContract;
-import com.expo.db.QueryParams;
 import com.expo.entity.Message;
 import com.expo.module.heart.adapter.MessageAdapter;
+import com.expo.module.heart.message.MessageTypeAppointment;
+import com.expo.module.heart.message.MessageType;
+import com.expo.module.heart.message.MessageTypeSystem;
+import com.expo.module.heart.message.MessageTypeTourist;
 import com.expo.utils.Constants;
-import com.expo.widget.decorations.SpaceDecoration;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -45,11 +46,12 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     SwipeMenuRecyclerView mSwipeMenuRecyclerView;
 
     MessageAdapter mAdapter;
+    MessageType mMessageType;
 
     BaseAdapterItemClickListener mListener = new BaseAdapterItemClickListener() {
         @Override
         public void itemClick(View view, int position, Object o) {
-
+            mMessageType.itemClick(MessagesActivity.this, (Message) o);
         }
     };
 
@@ -61,20 +63,21 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         String type = getIntent().getStringExtra(Constants.EXTRAS.EXTRAS);
-        initTitle(type);
+        initMessageType(type);
+
+        setTitle(0, mMessageType.getTitle());
         initRecyclerView(type);
 
         mPresenter.getMessage(type);
-
     }
 
-    private void initTitle(String type) {
+    private void initMessageType(String type) {
         if (StringUtils.equals("1", type)) {
-            setTitle(0, R.string.title_message_system_ac);
+            mMessageType = new MessageTypeSystem();
         } else if (StringUtils.equals("4", type)) {
-            setTitle(0, R.string.title_message_tourist_ac);
+            mMessageType = new MessageTypeTourist();
         } else if (StringUtils.equals("5", type)) {
-            setTitle(0, R.string.title_message_appointment_ac);
+            mMessageType = new MessageTypeAppointment();
         }
     }
 
@@ -91,13 +94,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
 
         mAdapter = new MessageAdapter(this);
 
-        if (StringUtils.equals("1", type)) {
-            mAdapter.setLayoutId(R.layout.item_message_system);
-        } else if (StringUtils.equals("4", type)) {
-            mAdapter.setLayoutId(R.layout.item_message_tourist);
-        } else if (StringUtils.equals("5", type)) {
-            mAdapter.setLayoutId(R.layout.item_message_appointment);
-        }
+        mAdapter.setLayoutId(mMessageType.getItemRes());
         mAdapter.setListener(mListener);
         mSwipeMenuRecyclerView.setAdapter(mAdapter);
     }
@@ -121,7 +118,6 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
 
     @Override
     public void onItemClick(View itemView, int position) {
-        LogUtils.d("", "点击了第" + position + "条");
         mAdapter.mData.get(position).readMessage();
     }
 

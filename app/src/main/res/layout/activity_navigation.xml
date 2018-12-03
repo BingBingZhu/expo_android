@@ -51,10 +51,11 @@
         android:layout_marginTop="@dimen/dms_140"
         android:layout_marginRight="@dimen/dms_70"
         android:background="@drawable/navigation_bg1"
-        android:padding="@dimen/dms_20"
         android:ellipsize="marquee"
         android:focusableInTouchMode="true"
-        android:marqueeRepeatLimit="2"
         android:gravity="center"
-        android:singleLine="true" />
+        android:marqueeRepeatLimit="2"
+        android:padding="@dimen/dms_20"
+        android:singleLine="true"
+        android:visibility="gone" />
 </FrameLayout>

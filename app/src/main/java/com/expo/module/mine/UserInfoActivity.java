@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.UriUtils;
@@ -31,12 +32,17 @@ import com.expo.base.BaseEventMessage;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.UserInfoContract;
 import com.expo.entity.User;
+import com.expo.module.mine.adapter.WorkAdapter;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.PickerViewUtils;
 import com.expo.widget.AppBarView;
 import com.expo.widget.MyUserInfoView;
 import com.facebook.common.util.UriUtil;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ListHolder;
+import com.orhanobut.dialogplus.OnItemClickListener;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
@@ -48,6 +54,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,6 +72,10 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     MyUserInfoView mUserSex;
     @BindView(R.id.user_age)
     MyUserInfoView mUserAge;
+    @BindView(R.id.user_email)
+    MyUserInfoView mUserEmail;
+    @BindView(R.id.user_work)
+    MyUserInfoView mUserWork;
 
     RadioButton mRadioMale;
     RadioButton mRadioFemale;
@@ -75,6 +86,9 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     boolean mChangeImg = false;
     private boolean isUpdateInfo;
     private TextView mSaveBtn;
+
+    WorkAdapter mWorkAdapter;
+    List<String> mWorkList = new ArrayList<String>();
 
     OnTimeSelectListener mListener = new OnTimeSelectListener() {
         @Override
@@ -97,6 +111,10 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         initUserNameView();
         initUserAgeView();
         initUserSexView();
+        initUserEmailView();
+        initUserWorkView();
+
+        initWorkAdapter();
 
         mPresenter.loadUser();
     }
@@ -179,6 +197,67 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         mUserAge.addRightView(textView);
     }
 
+    public void initUserEmailView() {
+        EditText editText = new EditText(this);
+        editText.setBackgroundResource(0);
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_28));
+        editText.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mUser.setNick(s.toString().trim());
+                showSaveBtn(mUser);
+            }
+        });
+        mUserEmail.addRightView(editText);
+    }
+
+    public void initUserWorkView() {
+        TextView textView = new TextView(this);
+        textView.setBackgroundResource(0);
+        textView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        textView.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+        mUserWork.addRightView(textView);
+    }
+
+    public void initWorkAdapter() {
+        mWorkAdapter = new WorkAdapter(this);
+        mWorkList.add("IT/互联网");
+        mWorkList.add("销售");
+        mWorkList.add("专员");
+        mWorkList.add("电商");
+        mWorkList.add("教育");
+        mWorkList.add("医生");
+        mWorkList.add("教师");
+        mWorkList.add("公务员");
+        mWorkList.add("IT/互联网");
+        mWorkList.add("销售");
+        mWorkList.add("专员");
+        mWorkList.add("电商");
+        mWorkList.add("教育");
+        mWorkList.add("医生");
+        mWorkList.add("教师");
+        mWorkList.add("公务员");
+        mWorkList.add("IT/互联网");
+        mWorkList.add("销售");
+        mWorkList.add("专员");
+        mWorkList.add("电商");
+        mWorkList.add("教育");
+        mWorkList.add("医生");
+        mWorkList.add("教师");
+        mWorkList.add("公务员");
+        mWorkAdapter.setData(mWorkList);
+        mWorkAdapter.notifyDataSetChanged();
+    }
+
     @OnClick(R.id.user_img)
     public void clickImg(View view) {
         ImageSelector.builder()
@@ -193,6 +272,27 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     public void clickAge(View view) {
         CommUtils.hideKeyBoard(this, view);
         PickerViewUtils.showTimePickView(this, mUser.getBirthDay(), mListener).show();
+    }
+
+    @OnClick(R.id.user_work)
+    public void changeWork(View view) {
+        CommUtils.hideKeyBoard(this, view);
+        DialogPlus dialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ListHolder())
+                .setAdapter(mWorkAdapter)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+//                        ((TextView) mUserWork.getRightView()).setText();
+                        dialog.dismiss();
+                    }
+                })
+                .setGravity(Gravity.BOTTOM)
+                .setExpanded(false)  // This will enable the expand feature, (similar to android L share dialog)
+                .setContentHeight(SizeUtils.dp2px(300))
+                .create();
+
+        dialog.show();
     }
 
     @Override

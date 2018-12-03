@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
+import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.LoginContract;
 import com.expo.module.login.BindPhoneActivity;
 import com.expo.module.login.LoginActivity;
@@ -24,6 +26,8 @@ import butterknife.OnClick;
 
 public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
+    @BindView(R.id.language_layout)
+    View mLayout;
     @BindView(R.id.language_create_btn)
     TextView mTvCreate;
     @BindView(R.id.languane_login)
@@ -43,7 +47,7 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setDoubleTapToExit( true );
+        setDoubleTapToExit(true);
 //        mLanguage = PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null);
 //        if (mLanguage == null) {
 //            mLanguageCn.performClick();
@@ -56,7 +60,7 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
             mLanguageCn.performClick();
         else
             mLanguageEn.performClick();
-
+        mLayout.setPadding(0, StatusBarUtils.getStatusBarHeight(this), 0, 0);
     }
 
     @Override

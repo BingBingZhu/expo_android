@@ -32,6 +32,7 @@ public class Country implements PyEntity {
         this.py = py;
         this.flag = flag;
         this.locale = locale;
+        System.out.println("app country: " + toString());
     }
 
     @Override
@@ -40,6 +41,7 @@ public class Country implements PyEntity {
                 "code='" + code + '\'' +
                 "flag='" + flag + '\'' +
                 ", name='" + name + '\'' +
+                ", py='" + py + '\'' +
                 '}';
     }
 
@@ -126,6 +128,6 @@ public class Country implements PyEntity {
     @NonNull
     @Override
     public String getPy() {
-        return py;
+        return py.substring(0, 1).toUpperCase();
     }
 }

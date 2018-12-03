@@ -7,6 +7,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
 import com.expo.entity.DownloadInfo;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.FootPrint;
 import com.expo.entity.Message;
 import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
@@ -113,7 +114,7 @@ public interface Constants {
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class,
-                TopLineInfo.class, VenuesType.class, Park.class, Badge.class };
+                TopLineInfo.class, VenuesType.class, Park.class, Badge.class, FootPrint.class };
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }
@@ -173,15 +174,15 @@ public interface Constants {
      *
      */
     class NaviTip {
-//        public static final String TO_JS_NAVI_FILE_PATH = Config.IMAGE_PATH + "navi/";//文件包路径
-        public static final String TO_JS_NAVI_TIP_TYPE = "0";//向js提示使用光团gif图片
+        //        public static final String TO_JS_NAVI_FILE_PATH = Config.IMAGE_PATH + "navi/";//文件包路径
+        public static final String TO_JS_NAVI_TIP_TYPE = "1";//向js提示使用光团gif图片
 
         public static final String TO_JS_NAVI_TIP_START = "callstart/callstart";//出场问好（导航路线规划完成）
-        public static final String TO_JS_NAVI_TIP_DIVERGE = "calldiverge/calldiverge";//偏离线路提示（自动重新规划时）
+        public static final String TO_JS_NAVI_TIP_GPS_DIVERGE = "callGPSdiverge/callGPSdiverge";//偏离线路提示（自动重新规划时）
         public static final String TO_JS_NAVI_TIP_LONG_MUSIC_START = "callmusic/callmusic_start";//戴耳机听音乐-长时间等待（原地停留超过5分钟）
         public static final String TO_JS_NAVI_TIP_LONG_MUSIC_END = "callmusic/callmusic_end";//戴耳机听音乐-长时间等待（原地停留超过5分钟）
-        public static final String TO_JS_NAVI_TIP_GPA_WEAK = "callGPSweak/callGPSweak";//GPS信号弱或丢失（GPS信号弱）
-        public static final String TO_JS_NAVI_TIP_GPA_LOST = "callGPSlost/callGPSlost";//GPS信号弱或丢失（GPS信号弱）
+        public static final String TO_JS_NAVI_TIP_GPS_LOW = "callGPSlow/callGPSlow";//GPS信号弱或丢失（GPS信号弱）
+        public static final String TO_JS_NAVI_TIP_GPS_LOST = "callGPSlost/callGPSlost";//GPS信号弱或丢失（GPS信号弱）
         public static final String TO_JS_NAVI_TIP_WAKE = "callwake/callwake";//姿势夸张睡觉
         public static final String TO_JS_NAVI_TIP_LEAVE = "callleave/callleave";//结束导航，抽泣、哭泣（要离开我吗）真的要离开我吗(人为点返回键）
         public static final String TO_JS_NAVI_TIP_END = "callend/callend";//到达终点，庆祝

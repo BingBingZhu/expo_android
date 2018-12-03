@@ -66,6 +66,7 @@
 
     <string name="main_home">首页</string>
     <string name="main_panorama">全景</string>
+    <string name="main_find">发现</string>
     <string name="main_encyclopedias">百科</string>
     <string name="main_mine">我的</string>
 
@@ -89,11 +90,14 @@
 
     <string name="feed_back_tips">衷心的感谢您对我们的信任和支持。为了不断提高我们的服务质量,完善 我们的工作,为了给您提供更加优质的服务，欢迎您提出合理的评介与意见！</string>
     <string name="comment_content">评价内容</string>
+    <string name="short_content">请输入十个字符以上</string>
 
     <string name="item_user_img">修改头像</string>
     <string name="item_user_name">昵称</string>
     <string name="item_user_sex">性别</string>
     <string name="item_user_age">年龄</string>
+    <string name="item_user_email">邮箱</string>
+    <string name="item_user_work">工作行业</string>
 
     <string name="item_setting_language">语言设置</string>
     <string name="item_setting_cache">清除缓存</string>
@@ -126,6 +130,7 @@
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
+    <string name="check_string_empty_report_content">评论内容不能为空</string>
     <string name="check_string_empty_localtion_descriptiong">情况描述不能为空</string>
     <string name="please_enter_keywords">请输入关键字</string>
 
@@ -149,6 +154,13 @@
 
     <string name="navigationg_arrive">到达目的地</string>
     <string name="navigationg_back">返回导航</string>
+
+    <string name="message_kind_system_title">系统消息</string>
+    <string name="message_kind_system_content">系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息</string>
+    <string name="message_kind_appointment_title">预约提醒</string>
+    <string name="message_kind_appointment_content">预约提醒预约提醒预约提醒预约提醒预约提醒预约提醒预约提醒预约提醒</string>
+    <string name="message_kind_tourist_title">游客服务反馈</string>
+    <string name="message_kind_tourist_content">游客服务反馈游客服务反馈游客服务反馈游客服务反馈游客服务反馈游客服务反馈游客服务反馈</string>
 
     <string name="wifi_state_init">请点击按钮开启WLAN</string>
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -24,6 +25,7 @@ import com.sahooz.library.LetterHolder;
 import com.sahooz.library.PyAdapter;
 import com.sahooz.library.PyEntity;
 import com.sahooz.library.SideBar;
+import com.sahooz.library.TitleItemDecoration;
 import com.sahooz.library.VH;
 
 import java.util.ArrayList;
@@ -67,11 +69,12 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
         mSelectedCountries.clear();
         mSelectedCountries.addAll(mAllCountries);
         final NationalSmsCodeActivity.CAdapter adapter = new NationalSmsCodeActivity.CAdapter(mSelectedCountries);
-        mRvPick.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRvPick.setLayoutManager(manager);
         mRvPick.setAdapter(adapter);
-//        mRvPick.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        TitleItemDecoration decoration = new TitleItemDecoration(this, adapter.getEntityList());
+        mRvPick.addItemDecoration(decoration);
+        mRvPick.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mEtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

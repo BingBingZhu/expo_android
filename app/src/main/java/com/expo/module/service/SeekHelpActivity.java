@@ -83,6 +83,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     Double mLng, mLat;
     String mCoordinateAssist = "";
+    String mPoiId = "";
 
     boolean mIsLocation;
 
@@ -213,6 +214,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                 mCoordinateAssist = data.getStringExtra(Constants.EXTRAS.EXTRAS);
                 mLat = data.getDoubleExtra(Constants.EXTRAS.EXTRA_LATITUDE, 0);
                 mLng = data.getDoubleExtra(Constants.EXTRAS.EXTRA_LONGITUDE, 0);
+                mPoiId = data.getStringExtra(Constants.EXTRAS.EXTRA_ID);
                 if (mLat == -1 && mLng == -1) mIsLocation = true;
                 else mIsLocation = false;
             } else if (requestCode == Constants.RequestCode.REQ_TO_CAMERA) {
@@ -249,7 +251,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         showLoadingView();
         if (mLocation != null) {
             hideLoadingView();
-            LocationDescribeActivity.startActivityForResult(this, mLocation.getLatitude(), mLocation.getLongitude());
+            LocationDescribeActivity.startActivityForResult(this, mLocation.getLatitude(), mLocation.getLongitude(), mPoiId, mCoordinateAssist);
         } else
             mHandler.sendEmptyMessageDelayed(1, 1000);
     }

@@ -16,6 +16,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.module.main.encyclopedia.EncyclopediaFragment;
+import com.expo.module.main.find.FindFragment;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
@@ -31,17 +32,19 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_host)
     FragmentTabHost mTabHostView;
 
-    private String[] tabTags = {"home", "encyclopedias", "panorama", "mine"};
-    private int[] tabTitles = {R.string.main_home, R.string.main_encyclopedias, R.string.main_panorama, R.string.main_mine};
+    private String[] tabTags = {"home", "panorama", "find", "encyclopedias", "mine"};
+    private int[] tabTitles = {R.string.main_home, R.string.main_panorama, R.string.main_find, R.string.main_encyclopedias, R.string.main_mine};
     private int mImages[] = {
             R.drawable.selector_tab_home,
             R.drawable.selector_tab_panorama,
             R.drawable.selector_tab_encyclopedia,
+            R.drawable.selector_tab_encyclopedia,
             R.drawable.selector_tab_mine};
     private Class[] fragments = new Class[]{
             HomeFragment.class,
-            EncyclopediaFragment.class,
             PanoramaFragment.class,
+            FindFragment.class,
+            EncyclopediaFragment.class,
             MineFragment.class};
 
     @Override
@@ -52,17 +55,18 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setDoubleTapToExit( true );
-        mTabHostView.setup( this, getSupportFragmentManager(), R.id.container );
-        mTabHostView.getTabWidget().setDividerDrawable( null ); // 去掉分割线
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mTabHostView.getTabWidget().setElevation( 5f );
-        }
+        mTabHostView.setup(this, getSupportFragmentManager(), R.id.container);
+        mTabHostView.getTabWidget().setDividerDrawable(null); // 去掉分割线
         for (int i = 0; i < tabTags.length; i++) {
             TabHost.TabSpec tabSpec = mTabHostView.newTabSpec( tabTags[i] ).setIndicator( getView( i ) );
             mTabHostView.addTab( tabSpec, fragments[i], null );
         }
-//        StatusBarUtils.cancelStatusBarFullTransparent( MainActivity.this );//加上4.4系统会出现不能沉浸式，不要加
+        mTabHostView.setOnTabChangedListener(mTabChangeListener);
     }
+
+    private TabHost.OnTabChangeListener mTabChangeListener = tabId -> {
+
+    };
 
     @Override
     protected boolean hasPresenter() {

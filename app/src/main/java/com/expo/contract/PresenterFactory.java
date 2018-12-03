@@ -8,6 +8,7 @@ import com.expo.contract.presenter.DistinguishPresenterImpl;
 import com.expo.contract.presenter.EncyclopediaSearchPresenterImpl;
 import com.expo.contract.presenter.EncyclopediasPresenterImpl;
 import com.expo.contract.presenter.FeedbackPresenterImpl;
+import com.expo.contract.presenter.FindPresenterImpl;
 import com.expo.contract.presenter.FreeWifiPresenterImpl;
 import com.expo.contract.presenter.HeartBeatPresenterImpl;
 import com.expo.contract.presenter.HomePresenterImpl;
@@ -86,6 +87,8 @@ public class PresenterFactory {
             return new PanoramaPresenterImpl( (PanoramaContract.View) view );
         } else if (view instanceof BadgeContract.View) {
             return new BadgePresenterImpl( (BadgeContract.View) view );
+        } else if (view instanceof FindContract.View) {
+            return new FindPresenterImpl( (FindContract.View) view );
         }
         throw new UnsupportedOperationException();
     }

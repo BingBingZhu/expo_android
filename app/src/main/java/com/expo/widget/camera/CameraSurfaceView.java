@@ -17,11 +17,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.expo.R;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.expo.base.utils.FileUtils;
 import com.expo.utils.Constants;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static android.hardware.Camera.Parameters.FOCUS_MODE_AUTO;
 
@@ -105,13 +107,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             mCameraId = 0;
         }
         try {
-            mCamera = Camera.open( mCameraId );
-            Camera.Parameters params = mCamera.getParameters();
-            if (params.getSupportedFocusModes().contains( Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE )) {
-                params.setFocusMode( Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE );
-            }
-            mCamera.setParameters( params );
-//            mCamera.autoFocus(this);
+            mCamera = Camera.open(mCameraId);
         } catch (Exception ee) {
             mCamera = null;
             cameraState = CameraState.ERROR;
@@ -220,19 +216,27 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         if (mCamera == null) return;
         try {
             mParam = mCamera.getParameters();
-            mParam.setPreviewFormat( previewformat );
-            mParam.setRotation( 0 );
-            Camera.Size previewSize = CamParaUtil.getSize( mParam.getSupportedPreviewSizes(), 1000,
-                    mCamera.new Size( VIDEO_720[0], VIDEO_720[1] ) );
-            mParam.setPreviewSize( previewSize.width, previewSize.height );
-            int yuv_buffersize = previewSize.width * previewSize.height * ImageFormat.getBitsPerPixel( previewformat ) / 8;
+            mParam.setPreviewFormat(previewformat);
+            mParam.setRotation(0);
+
+//            Camera.Size previewSize = CamParaUtil.getSize(mParam.getSupportedPreviewSizes(), 1000,
+//                    mCamera.new Size(VIDEO_720[0], VIDEO_720[1]));
+//            previewSize.width = this.getWidth();
+//            previewSize.height = this.getHeight();
+//            mParam.setPreviewSize(previewSize.width, previewSize.height);
+            List<Camera.Size> sizeList = mParam.getSupportedPreviewSizes();//获取所有支持的camera尺寸
+            Camera.Size pictureSize = getOptimalPreviewSize(sizeList, this.getWidth(), this.getHeight());//获取一个最为适配的camera.size
+            mParam.setPictureSize(pictureSize.width, pictureSize.height);//把camera.size赋值到parameters
+            int yuv_buffersize = pictureSize.width * pictureSize.height * ImageFormat.getBitsPerPixel(previewformat) / 8;
             previewBuffer = new byte[yuv_buffersize];
-            Camera.Size pictureSize = CamParaUtil.getSize( mParam.getSupportedPictureSizes(), 1500,
-                    mCamera.new Size( VIDEO_1080[0], VIDEO_1080[1] ) );
-            mParam.setPictureSize( pictureSize.width, pictureSize.height );
-            if (CamParaUtil.isSupportedFormats( mParam.getSupportedPictureFormats(), ImageFormat.JPEG )) {
-                mParam.setPictureFormat( ImageFormat.JPEG );
-                mParam.setJpegQuality( 100 );
+//            Camera.Size pictureSize = CamParaUtil.getSize(mParam.getSupportedPictureSizes(), 1500,
+//                    mCamera.new Size(VIDEO_1080[0], VIDEO_1080[1]));
+//            mParam.setPictureSize(pictureSize.width, pictureSize.height);
+//            mParam.setPreviewSize(this.getWidth(), this.getHeight());//把camera.size赋值到parameters
+//            mParam.setPreviewSize(previewSize.width, previewSize.height);//把camera.size赋值到parameters
+            if (CamParaUtil.isSupportedFormats(mParam.getSupportedPictureFormats(), ImageFormat.JPEG)) {
+                mParam.setPictureFormat(ImageFormat.JPEG);
+                mParam.setJpegQuality(100);
             }
             if (CamParaUtil.isSupportedFocusMode( mParam.getSupportedFocusModes(), FOCUS_MODE_AUTO )) {
                 mParam.setFocusMode( FOCUS_MODE_AUTO );
@@ -384,11 +388,10 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
      **/
     public void capture() {
         if (mCamera == null) return;
-        FileUtils.createFile( String.format( "%s/%s", Environment.getExternalStorageDirectory().getAbsolutePath(),
-                Constants.Config.TEMP_PATH ) );
+//        FileUtils.createFile(String.format("%s/%s", Environment.getExternalStorageDirectory().getAbsolutePath(),
+//                Constants.Config.TEMP_PATH));
         mType = 1;
-        mCamera.autoFocus( this );
-
+        mCamera.autoFocus(this);
     }
 
     @Override
@@ -396,35 +399,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         if (success) {
             if (mType == 1)
                 takePicture();
-//            try {
-//                mCamera.takePicture(null, null, new Camera.PictureCallback() {
-//                    @Override
-//                    public void onPictureTaken(byte[] data, Camera camera) {
-//                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-//                        Matrix matrix = new Matrix();
-//                        if (mOpenBackCamera) {
-//                            matrix.setRotate(90);
-//                        } else {
-//                            matrix.setRotate(270);
-//                            matrix.postScale(-1, 1);
-//                        }
-//                        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-//
-//                        String picPath = newOutFilePath("jpg");
-//                        FileUtils.saveBitmap(picPath, bitmap);
-////                        Toast.makeText(context, "拍照成功", Toast.LENGTH_SHORT).show();
-////                        startPreview();
-//                        if (mListener != null)
-//                            mListener.complete();
-//                    }
-//                });
-//            } catch (Exception e) {
-//                if (isRecording) {
-//                    Toast.makeText(context, "请先结束录像", Toast.LENGTH_SHORT).show();
-//                }
-//            }
             else if (mType == 2)
-                startRecord( true );
+                startRecord(true);
         }
     }
 
@@ -446,7 +422,6 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
                     String picPath = newOutFilePath( "jpg" );
                     FileUtils.saveBitmap( picPath, bitmap );
 //                        Toast.makeText(context, "拍照成功", Toast.LENGTH_SHORT).show();
-//                        startPreview();
                     if (mListener != null)
                         mListener.complete();
                 }
@@ -544,10 +519,11 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
 
     private String newOutFilePath(String type) {
-        mOutFilePath = String.format( "%s/%s%s." + type, Constants.Config.ROOT_PATH,
-                Constants.Config.TEMP_PATH, String.valueOf( System.currentTimeMillis() ) );
-        boolean isExist = com.blankj.utilcode.util.FileUtils.createOrExistsFile( mOutFilePath );
-        new File( mOutFilePath ).exists();
+        mOutFilePath = String.format("%s/%s%s." + type, Constants.Config.ROOT_PATH,
+                Constants.Config.TEMP_PATH, String.valueOf(System.currentTimeMillis()));
+        FileUtils.createFile(mOutFilePath);
+//        boolean isExist = com.blankj.utilcode.util.FileUtils.createOrExistsDir(mOutFilePath);
+        new File(mOutFilePath).exists();
         return mOutFilePath;
     }
 
@@ -562,6 +538,33 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     public interface CameraSurfaceViewListener {
         void complete();
+    }
+
+    private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
+        final double ASPECT_TOLERANCE = 0.1;
+        double targetRatio = (double) w / h;
+        if (sizes == null) return null;
+        Camera.Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+        int targetHeight = h;         // Try to find an size match aspect ratio and size
+        for (Camera.Size size : sizes) {
+            double ratio = (double) size.width / size.height;
+            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
+            if (Math.abs(size.height - targetHeight) < minDiff) {
+                optimalSize = size;
+                minDiff = Math.abs(size.height - targetHeight);
+            }
+        }         // Cannot find the one match the aspect ratio, ignore the requirement
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Camera.Size size : sizes) {
+                if (Math.abs(size.height - targetHeight) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs(size.height - targetHeight);
+                }
+            }
+        }
+        return optimalSize;
     }
 
 }

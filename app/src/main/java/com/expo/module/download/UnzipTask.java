@@ -1,6 +1,7 @@
 package com.expo.module.download;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 
 import com.expo.base.ExpoApp;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -30,7 +32,12 @@ public class UnzipTask extends AsyncTask<File, Void, Void> {
         FileOutputStream fos;
         for (File file : files) {
             try {
-                ZipFile zipFile = new ZipFile(file);
+                ZipFile zipFile;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    zipFile = new ZipFile(file, Charset.forName("GBK"));
+                } else {
+                    zipFile = new ZipFile(file);
+                }
                 Enumeration<? extends ZipEntry> entries = zipFile.entries();
                 File f = new File(Environment.getExternalStorageDirectory(),
                         Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName() + File.separator + file.getName().substring(0, file.getName().indexOf(".")));
@@ -39,9 +46,11 @@ public class UnzipTask extends AsyncTask<File, Void, Void> {
                 }
                 while (entries.hasMoreElements()) {
                     zipEntry = entries.nextElement();
+                    String filePath =Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName()
+                            + File.separator + file.getName().substring(0, file.getName().indexOf(".")) + File.separator + zipEntry.getName();
+                    filePath = new String(filePath.getBytes("utf-8"), "GB2312");
                     target = new File(Environment.getExternalStorageDirectory(),
-                            Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName()
-                                    + File.separator + file.getName().substring(0, file.getName().indexOf(".")) + File.separator + zipEntry.getName());
+                            filePath);
                     if (zipEntry.isDirectory() && !target.exists()) {
                         target.mkdirs();
                     } else {
