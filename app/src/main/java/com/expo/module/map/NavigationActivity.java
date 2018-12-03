@@ -517,6 +517,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 mAMapNavi.startNavi(NaviType.GPS);
                 mAMapNavi.startNavi(NaviType.EMULATOR);     // 模拟导航
                 hideLoadingView();
+
             } else {
                 LatLng startLatLng = LocationManager.getInstance().getCurrentLocationLatLng();
                 mFrom = new NaviLatLng(startLatLng.latitude, startLatLng.longitude);

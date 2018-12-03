@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
             TabHost.TabSpec tabSpec = mTabHostView.newTabSpec( tabTags[i] ).setIndicator( getView( i ) );
             mTabHostView.addTab( tabSpec, fragments[i], null );
         }
-        StatusBarUtils.cancelStatusBarFullTransparent( MainActivity.this );
+//        StatusBarUtils.cancelStatusBarFullTransparent( MainActivity.this );//加上4.4系统会出现不能沉浸式，不要加
     }
 
     @Override
