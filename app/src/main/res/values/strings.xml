@@ -22,7 +22,7 @@
     <string name="language_select">请选择语言</string>
     <string name="bj_world_horticultural_exposition">International Horticultural Exhibition 2019 Beijing</string>
     <string name="within_minutes">%d minutes</string>
-    <string name="time_leng">time:</string>
+    <string name="time_leng">flag:</string>
 
     <string name="ukey_error">用户数据错误，请重新登录</string>
     <string name="unlogin">请先登录</string>
@@ -290,5 +290,6 @@
     <string name="welcome_to_the_beijing_world_expo">Welcome to the Beijing world expo</string>
     <string name="baidu_navi">百度导航</string>
     <string name="autonavi_navi">高德导航</string>
+    <string name="pilot_switch">辅助开关</string>
 
 </resources>

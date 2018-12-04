@@ -3,6 +3,7 @@ package com.expo.base;
 import android.graphics.Bitmap;
 
 import com.expo.base.utils.LogUtils;
+import com.expo.base.utils.PrefsHelper;
 import com.expo.db.DBUtil;
 import com.expo.entity.User;
 import com.expo.map.LocationManager;
@@ -27,6 +28,7 @@ public class ExpoApp extends BaseApplication {
         MobSDK.init( this );
         initX5WebView();
         Fresco.initialize( this );
+        PrefsHelper.setLong(Constants.Prefs.KEY_RUN_UP_COUNT, PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, -1)+1);
     }
 
     private void initX5WebView() {
