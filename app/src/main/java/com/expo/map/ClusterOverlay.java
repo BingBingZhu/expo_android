@@ -1,21 +1,16 @@
 package com.expo.map;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.util.LruCache;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.BitmapDescriptor;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
@@ -45,8 +40,8 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private List<Marker> mAddMarkers = new ArrayList<Marker>();
     private double mClusterDistance;
     private LruCache<Integer, BitmapDescriptor> mLruCache;
-    private HandlerThread mMarkerHandlerThread = new HandlerThread("addMarker");
-    private HandlerThread mSignClusterThread = new HandlerThread("calculateCluster");
+    private HandlerThread mMarkerHandlerThread = new HandlerThread( "addMarker" );
+    private HandlerThread mSignClusterThread = new HandlerThread( "calculateCluster" );
     private Handler mMarkerhandler;
     private Handler mSignClusterHandler;
     private float mPXInMeters;
@@ -61,7 +56,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
      * @param context
      */
     public ClusterOverlay(AMap amap, int clusterSize, Context context) {
-        this(amap, null, clusterSize, context);
+        this( amap, null, clusterSize, context );
 
 
     }
@@ -77,7 +72,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     public ClusterOverlay(AMap amap, List<ClusterItem> clusterItems,
                           int clusterSize, Context context) {
 //默认最多会缓存80张图片作为聚合显示元素图片,根据自己显示需求和app使用内存情况,可以修改数量
-        mLruCache = new LruCache<Integer, BitmapDescriptor>(80) {
+        mLruCache = new LruCache<Integer, BitmapDescriptor>( 80 ) {
             protected void entryRemoved(boolean evicted, Integer key, BitmapDescriptor oldValue, BitmapDescriptor newValue) {
                 oldValue.getBitmap().recycle();
             }
@@ -90,12 +85,12 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         mContext = context;
         mClusters = new ArrayList<Cluster>();
         this.mAMap = amap;
-        mMapUtils = new MapUtils(mAMap);
+        mMapUtils = new MapUtils( mAMap );
         mClusterSize = clusterSize;
         mPXInMeters = mAMap.getScalePerPixel();
         mClusterDistance = mPXInMeters * mClusterSize;
-        amap.setOnCameraChangeListener(this);
-        amap.setOnMarkerClickListener(this);
+        amap.setOnCameraChangeListener( this );
+        amap.setOnMarkerClickListener( this );
         initThreadHandler();
         assignClusters();
     }
@@ -119,7 +114,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         Message message = Message.obtain();
         message.what = SignClusterHandler.CALCULATE_SINGLE_CLUSTER;
         message.obj = item;
-        mSignClusterHandler.sendMessage(message);
+        mSignClusterHandler.sendMessage( message );
     }
 
     /**
@@ -133,8 +128,8 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 
     public void onDestroy() {
         mIsCanceled = true;
-        mSignClusterHandler.removeCallbacksAndMessages(null);
-        mMarkerhandler.removeCallbacksAndMessages(null);
+        mSignClusterHandler.removeCallbacksAndMessages( null );
+        mMarkerhandler.removeCallbacksAndMessages( null );
         mSignClusterThread.quit();
         mMarkerHandlerThread.quit();
         for (Marker marker : mAddMarkers) {
@@ -149,8 +144,8 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private void initThreadHandler() {
         mMarkerHandlerThread.start();
         mSignClusterThread.start();
-        mMarkerhandler = new MarkerHandler(mMarkerHandlerThread.getLooper());
-        mSignClusterHandler = new SignClusterHandler(mSignClusterThread.getLooper());
+        mMarkerhandler = new MarkerHandler( mMarkerHandlerThread.getLooper() );
+        mSignClusterHandler = new SignClusterHandler( mSignClusterThread.getLooper() );
     }
 
     @Override
@@ -174,7 +169,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         }
         Cluster cluster = (Cluster) arg0.getObject();
         if (cluster != null) {
-            mClusterClickListener.onClick(arg0, cluster.getClusterItems());
+            mClusterClickListener.onClick( arg0, cluster.getClusterItems() );
             return true;
         }
         return false;
@@ -187,21 +182,21 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private void addClusterToMap(List<Cluster> clusters) {
 
         ArrayList<Marker> removeMarkers = new ArrayList<>();
-        removeMarkers.addAll(mAddMarkers);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-        MyAnimationListener myAnimationListener = new MyAnimationListener(removeMarkers);
+        removeMarkers.addAll( mAddMarkers );
+        AlphaAnimation alphaAnimation = new AlphaAnimation( 1, 0 );
+        MyAnimationListener myAnimationListener = new MyAnimationListener( removeMarkers );
         for (Marker marker : removeMarkers) {
-            marker.setAnimation(alphaAnimation);
-            marker.setAnimationListener(myAnimationListener);
+            marker.setAnimation( alphaAnimation );
+            marker.setAnimationListener( myAnimationListener );
             marker.startAnimation();
         }
 
         for (Cluster cluster : clusters) {
-            addSingleClusterToMap(cluster);
+            addSingleClusterToMap( cluster );
         }
     }
 
-    private AlphaAnimation mADDAnimation = new AlphaAnimation(0, 1);
+    private AlphaAnimation mADDAnimation = new AlphaAnimation( 0, 1 );
 
     /**
      * 将单个聚合元素添加至地图显示
@@ -212,20 +207,20 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         LatLng latlng = cluster.getCenterLatLng();
         MarkerOptions markerOptions = new MarkerOptions();
         if (cluster.getClusterCount() > 1)
-            markerOptions.anchor(0.5f, 0.5f)
-                    .icon(getBitmapDes(cluster.getClusterCount())).position(latlng);
+            markerOptions.anchor( 0.5f, 0.5f )
+                    .icon( getBitmapDes( cluster.getClusterCount() ) ).position( latlng );
         else {
-            RegionItem ri = (RegionItem) cluster.getClusterItems().get(0);
-            markerOptions.anchor(0.5F, 0.90F).icon(mMapUtils.setMarkerIconDrawable(mContext, ri.venuesType.getMarkBitmap(),
-                    LanguageUtil.chooseTest(ri.actualScene.getCaption(), ri.actualScene.getEnCaption()))).position(latlng);
+            RegionItem ri = (RegionItem) cluster.getClusterItems().get( 0 );
+            markerOptions.anchor( 0.5F, 0.90F ).icon( mMapUtils.setMarkerIconDrawable( mContext, ri.venuesType.getMarkBitmap(),
+                    LanguageUtil.chooseTest( ri.actualScene.getCaption(), ri.actualScene.getEnCaption() ) ) ).position( latlng );
         }
-        Marker marker = mAMap.addMarker(markerOptions);
-        marker.setAnimation(mADDAnimation);
-        marker.setObject(cluster);
+        Marker marker = mAMap.addMarker( markerOptions );
+        marker.setAnimation( mADDAnimation );
+        marker.setObject( cluster );
 
         marker.startAnimation();
-        cluster.setMarker(marker);
-        mAddMarkers.add(marker);
+        cluster.setMarker( marker );
+        mAddMarkers.add( marker );
 
     }
 
@@ -239,14 +234,14 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
                 return;
             }
             LatLng latlng = clusterItem.getPosition();
-            if (visibleBounds.contains(latlng)) {
-                Cluster cluster = getCluster(latlng, mClusters);
+            if (visibleBounds.contains( latlng )) {
+                Cluster cluster = getCluster( latlng, mClusters );
                 if (cluster != null) {
-                    cluster.addClusterItem(clusterItem);
+                    cluster.addClusterItem( clusterItem );
                 } else {
-                    cluster = new Cluster(latlng);
-                    mClusters.add(cluster);
-                    cluster.addClusterItem(clusterItem);
+                    cluster = new Cluster( latlng );
+                    mClusters.add( cluster );
+                    cluster.addClusterItem( clusterItem );
                 }
 
             }
@@ -254,14 +249,14 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 
         //复制一份数据，规避同步
         List<Cluster> clusters = new ArrayList<Cluster>();
-        clusters.addAll(mClusters);
+        clusters.addAll( mClusters );
         Message message = Message.obtain();
         message.what = MarkerHandler.ADD_CLUSTER_LIST;
         message.obj = clusters;
         if (mIsCanceled) {
             return;
         }
-        mMarkerhandler.sendMessage(message);
+        mMarkerhandler.sendMessage( message );
     }
 
     /**
@@ -269,8 +264,8 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
      */
     private void assignClusters() {
         mIsCanceled = true;
-        mSignClusterHandler.removeMessages(SignClusterHandler.CALCULATE_CLUSTER);
-        mSignClusterHandler.sendEmptyMessage(SignClusterHandler.CALCULATE_CLUSTER);
+        mSignClusterHandler.removeMessages( SignClusterHandler.CALCULATE_CLUSTER );
+        mSignClusterHandler.sendEmptyMessage( SignClusterHandler.CALCULATE_CLUSTER );
     }
 
     /**
@@ -281,29 +276,29 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private void calculateSingleCluster(ClusterItem clusterItem) {
         LatLngBounds visibleBounds = mAMap.getProjection().getVisibleRegion().latLngBounds;
         LatLng latlng = clusterItem.getPosition();
-        if (!visibleBounds.contains(latlng)) {
+        if (!visibleBounds.contains( latlng )) {
             return;
         }
-        Cluster cluster = getCluster(latlng, mClusters);
+        Cluster cluster = getCluster( latlng, mClusters );
         if (cluster != null) {
-            cluster.addClusterItem(clusterItem);
+            cluster.addClusterItem( clusterItem );
             Message message = Message.obtain();
             message.what = MarkerHandler.UPDATE_SINGLE_CLUSTER;
 
             message.obj = cluster;
-            mMarkerhandler.removeMessages(MarkerHandler.UPDATE_SINGLE_CLUSTER);
-            mMarkerhandler.sendMessageDelayed(message, 5);
+            mMarkerhandler.removeMessages( MarkerHandler.UPDATE_SINGLE_CLUSTER );
+            mMarkerhandler.sendMessageDelayed( message, 5 );
 
 
         } else {
 
-            cluster = new Cluster(latlng);
-            mClusters.add(cluster);
-            cluster.addClusterItem(clusterItem);
+            cluster = new Cluster( latlng );
+            mClusters.add( cluster );
+            cluster.addClusterItem( clusterItem );
             Message message = Message.obtain();
             message.what = MarkerHandler.ADD_SINGLE_CLUSTER;
             message.obj = cluster;
-            mMarkerhandler.sendMessage(message);
+            mMarkerhandler.sendMessage( message );
 
         }
     }
@@ -317,7 +312,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private Cluster getCluster(LatLng latLng, List<Cluster> clusters) {
         for (Cluster cluster : clusters) {
             LatLng clusterCenterPoint = cluster.getCenterLatLng();
-            double distance = AMapUtils.calculateLineDistance(latLng, clusterCenterPoint);
+            double distance = AMapUtils.calculateLineDistance( latLng, clusterCenterPoint );
             if (distance < mClusterDistance && mAMap.getCameraPosition().zoom < 19) {
                 return cluster;
             }
@@ -331,7 +326,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
      * 获取每个聚合点的绘制样式
      */
     private BitmapDescriptor getBitmapDes(int num) {
-        return mMapUtils.setMarkerIconDrawable(mContext, null, null, num + "");
+        return mMapUtils.setMarkerIconDrawable( mContext, null, null, num + "" );
 //        BitmapDescriptor bitmapDescriptor = mLruCache.get(num);
 //        if (bitmapDescriptor == null) {
 //            TextView textView = new TextView(mContext);
@@ -360,7 +355,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private void updateCluster(Cluster cluster) {
 
         Marker marker = cluster.getMarker();
-        marker.setIcon(getBitmapDes(cluster.getClusterCount()));
+        marker.setIcon( getBitmapDes( cluster.getClusterCount() ) );
 
 
     }
@@ -404,7 +399,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         static final int UPDATE_SINGLE_CLUSTER = 2;
 
         MarkerHandler(Looper looper) {
-            super(looper);
+            super( looper );
         }
 
         public void handleMessage(Message message) {
@@ -412,15 +407,15 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
             switch (message.what) {
                 case ADD_CLUSTER_LIST:
                     List<Cluster> clusters = (List<Cluster>) message.obj;
-                    addClusterToMap(clusters);
+                    addClusterToMap( clusters );
                     break;
                 case ADD_SINGLE_CLUSTER:
                     Cluster cluster = (Cluster) message.obj;
-                    addSingleClusterToMap(cluster);
+                    addSingleClusterToMap( cluster );
                     break;
                 case UPDATE_SINGLE_CLUSTER:
                     Cluster updateCluster = (Cluster) message.obj;
-                    updateCluster(updateCluster);
+                    updateCluster( updateCluster );
                     break;
             }
         }
@@ -434,7 +429,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         static final int CALCULATE_SINGLE_CLUSTER = 1;
 
         SignClusterHandler(Looper looper) {
-            super(looper);
+            super( looper );
         }
 
         public void handleMessage(Message message) {
@@ -444,9 +439,9 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
                     break;
                 case CALCULATE_SINGLE_CLUSTER:
                     ClusterItem item = (ClusterItem) message.obj;
-                    mClusterItems.add(item);
-                    Log.i("yiyi.qi", "calculate single cluster");
-                    calculateSingleCluster(item);
+                    mClusterItems.add( item );
+                    Log.i( "yiyi.qi", "calculate single cluster" );
+                    calculateSingleCluster( item );
                     break;
             }
         }
