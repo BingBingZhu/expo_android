@@ -2,9 +2,11 @@ package com.expo.contract.presenter;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.expo.R;
 import com.expo.base.ExpoApp;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.LoginContract;
 import com.expo.db.QueryParams;
@@ -61,6 +63,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
         Http.request(new ResponseCallback<VerifyCodeLoginResp>() {
             @Override
             protected void onResponse(VerifyCodeLoginResp rsp) {
+                LogUtils.e("====user=======", "uid: "+rsp.getId()+"   ukey: "+rsp.getKey());
                 setAppUserInfo(rsp);
                 mView.verifyCodeLogin();
             }

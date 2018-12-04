@@ -26,6 +26,7 @@ import com.expo.contract.presenter.SeekHelpPresenterImpl;
 import com.expo.contract.presenter.SettingPresenterImpl;
 import com.expo.contract.presenter.SplashPresenterImpl;
 import com.expo.contract.presenter.TouristServicePresenterImpl;
+import com.expo.contract.presenter.TrackPresenterImpl;
 import com.expo.contract.presenter.UserInfoPresenterImpl;
 import com.expo.contract.presenter.WebPresenterImpl;
 import com.expo.contract.presenter.WebTemplatePresenterImpl;
@@ -86,6 +87,8 @@ public class PresenterFactory {
             return new PanoramaPresenterImpl( (PanoramaContract.View) view );
         } else if (view instanceof BadgeContract.View) {
             return new BadgePresenterImpl( (BadgeContract.View) view );
+        } else if (view instanceof TrackContract.View) {
+            return new TrackPresenterImpl( (TrackContract.View) view );
         }
         throw new UnsupportedOperationException();
     }

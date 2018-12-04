@@ -80,28 +80,41 @@ public class BadgeActivity extends BaseActivity<BadgeContract.Presenter> impleme
 
     @Override
     public void loadBadgeDataRes(List<Badge> badges) {
+        boolean[] isExists = new boolean[5];
         int score = getIntent().getIntExtra(Constants.EXTRAS.EXTRA_USER_SCORE, 0);
         int index = -1;
         for ( int i = 0; i < badges.size(); i++ ){
+            isExists[i] = true;
             if (score >= badges.get(i).getScore()){
                 index = i;
             }
         }
-        Badge b = badges.get(0);
-        tvNameLv1.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
-        tvScoreLv1.setText(b.getScore()+"积分");
-        b = badges.get(1);
-        tvNameLv2.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
-        tvScoreLv2.setText(b.getScore()+"积分");
-        b = badges.get(2);
-        tvNameLv3.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
-        tvScoreLv3.setText(b.getScore()+"积分");
-        b = badges.get(3);
-        tvNameLv4.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
-        tvScoreLv4.setText(b.getScore()+"积分");
-        b = badges.get(4);
-        tvNameLv5.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
-        tvScoreLv5.setText(b.getScore()+"积分");
+        Badge b;
+        if (isExists[0]) {
+            b = badges.get(0);
+            tvNameLv1.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
+            tvScoreLv1.setText(b.getScore() + "积分");
+        }
+        if (isExists[1]) {
+            b = badges.get(1);
+            tvNameLv2.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
+            tvScoreLv2.setText(b.getScore() + "积分");
+        }
+        if (isExists[2]) {
+            b = badges.get(2);
+            tvNameLv3.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
+            tvScoreLv3.setText(b.getScore() + "积分");
+        }
+        if (isExists[3]) {
+            b = badges.get(3);
+            tvNameLv4.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
+            tvScoreLv4.setText(b.getScore() + "积分");
+        }
+        if (isExists[4]) {
+            b = badges.get(4);
+            tvNameLv5.setText(LanguageUtil.chooseTest(b.getCaption(), b.getCaptionEn()));
+            tvScoreLv5.setText(b.getScore() + "积分");
+        }
         if (index < 0){
             tvMyBadgeName.setVisibility(View.GONE);
             imgMyBadgeIco.setVisibility(View.GONE);

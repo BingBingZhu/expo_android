@@ -197,6 +197,12 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         public void close(){
             finish();
         }
+
+        @JavascriptInterface
+        public void setTitleText(String titleText){
+
+        }
+
     }
 
     private void showForceSingOutDialog() {
