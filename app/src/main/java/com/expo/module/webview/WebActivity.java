@@ -93,10 +93,11 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             if (!url.startsWith("http") && !url.startsWith("https")
                     && !url.startsWith("file") && !url.startsWith("javascript:")
                     && !url.startsWith("www")) {
-                url = Constants.URL.FILE_BASE_URL + url;
+//                url = Constants.URL.FILE_BASE_URL + url;
+                url = "http://192.168.1.13:8888/res/" + url;
+
             }
-//            mX5View.loadUrl(url);
-            mX5View.loadUrl("http://192.168.1.13:8888");
+            mX5View.loadUrl(url);
         }
     }
 
