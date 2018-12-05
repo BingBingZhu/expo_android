@@ -190,14 +190,13 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         removeMarkers.addAll(mAddMarkers);
         AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
         MyAnimationListener myAnimationListener = new MyAnimationListener(removeMarkers);
+        for (Cluster cluster : clusters) {
+            addSingleClusterToMap(cluster);
+        }
         for (Marker marker : removeMarkers) {
             marker.setAnimation(alphaAnimation);
             marker.setAnimationListener(myAnimationListener);
             marker.startAnimation();
-        }
-
-        for (Cluster cluster : clusters) {
-            addSingleClusterToMap(cluster);
         }
     }
 
@@ -222,6 +221,9 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         Marker marker = mAMap.addMarker(markerOptions);
         marker.setAnimation(mADDAnimation);
         marker.setObject(cluster);
+        if (cluster.getClusterCount() == 1) {
+            marker.setTitle(((RegionItem) cluster.getClusterItems().get(0)).getTitle());
+        }
 
         marker.startAnimation();
         cluster.setMarker(marker);

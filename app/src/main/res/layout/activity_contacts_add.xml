@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_50"
+        android:background="@color/color_EEE" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dms_34"
+        android:paddingRight="@dimen/dms_34"
+        android:orientation="vertical">
+
+        <com.expo.widget.MyUserInfoView
+            android:id="@+id/contacts_add_type"
+            style="@style/item_user_info"
+            app:rightDrawable="@mipmap/country_more"
+            app:text="@string/item_contacts_identify_type" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <com.expo.widget.MyContactsInfoView
+            android:id="@+id/contacts_add_name"
+            style="@style/item_contacts_info"
+            app:lefttext="@string/item_contacts_name" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <com.expo.widget.MyContactsInfoView
+            android:id="@+id/contacts_add_id"
+            style="@style/item_contacts_info"
+            app:lefttext="@string/item_contacts_identify_id" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <TextView
+            android:id="@+id/contacts_add_ok"
+            style="@style/TextSizeWhite15"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_100"
+            android:layout_marginTop="@dimen/dms_72"
+            android:background="@color/green_02cd9b"
+            android:gravity="center"
+            android:text="@string/complete" />
+    </LinearLayout>
+</LinearLayout>

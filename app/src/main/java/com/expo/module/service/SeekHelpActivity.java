@@ -46,10 +46,6 @@ import com.expo.module.camera.CameraActivity;
 import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.DialogPlusBuilder;
-import com.orhanobut.dialogplus.OnItemClickListener;
-import com.orhanobut.dialogplus.ViewHolder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -234,7 +230,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
-        if (null == mLocation || mLocation.getLatitude() == 0){
+        if (null == mLocation || mLocation.getLatitude() == 0) {
             ToastHelper.showShort(R.string.trying_to_locate);
             return;
         }
@@ -258,11 +254,10 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_phone)
     public void phone(View view) {
-        Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+"400 818 6666"));
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400 818 6666"));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
 
 
     @Override
@@ -270,8 +265,13 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         switch (v.getId()) {
             case R.id.image_record:
             case R.id.image_record_explain:
-                startActivityForResult(new Intent(SeekHelpActivity.this, CameraActivity.class), Constants.RequestCode.REQ_TO_CAMERA);
                 dialog.dismiss();
+                int count =  mImageList.size();
+                if (count >= 3) {
+                    ToastHelper.showShort(getString(R.string.max_images, 3));
+                    break;
+                }
+                startActivityForResult(new Intent(SeekHelpActivity.this, CameraActivity.class), Constants.RequestCode.REQ_TO_CAMERA);
                 break;
             case R.id.image_album:
                 goImageSelector();
@@ -282,6 +282,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                 break;
         }
     }
+
     private Dialog dialog;
 
     private void showImgSelectDialog() {
@@ -301,7 +302,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         dialog.setContentView(v);
         //获取当前Activity所在的窗体
         Window dialogWindow = dialog.getWindow();
-        if(dialogWindow == null){
+        if (dialogWindow == null) {
             return;
         }
         //设置Dialog从窗体底部弹出
@@ -317,7 +318,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     private void goImageSelector() {
         int count = getCameraImageCount();
         if (count >= 3)
-            ToastHelper.showShort(R.string.today);
+            ToastHelper.showShort(getString(R.string.max_images, 3));
         else
             ImageSelector.builder()
                     .useCamera(true) // 设置是否使用拍照

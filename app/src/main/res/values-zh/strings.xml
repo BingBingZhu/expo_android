@@ -87,6 +87,7 @@
     <string name="item_mine_message">我的消息</string>
     <string name="item_mine_about">关于</string>
     <string name="item_mine_setting">设置</string>
+    <string name="item_mine_contacts">常用联系人</string>
 
     <string name="feed_back_tips">衷心的感谢您对我们的信任和支持。为了不断提高我们的服务质量,完善 我们的工作,为了给您提供更加优质的服务，欢迎您提出合理的评介与意见！</string>
     <string name="comment_content">评价内容</string>
@@ -104,6 +105,12 @@
     <string name="item_setting_update">检查更新</string>
     <string name="item_setting_guide">用户指南</string>
     <string name="item_setting_policy">法律条款与政策</string>
+
+    <string name="item_contacts_identify_type">证件类型</string>
+    <string name="item_contacts_name">姓\t\t\t\t名</string>
+    <string name="item_contacts_identify_id">证件号码</string>
+    <string name="item_contacts_name_hint">请输入真实姓名</string>
+    <string name="item_contacts_identify_id_hint">请正确填写证件号码</string>
 
     <string name="location_describe_radio1">当前位置</string>
     <string name="location_describe_radio2">餐厅</string>
@@ -127,12 +134,16 @@
     <string name="title_message_appointment_ac">预约提醒</string>
     <string name="title_routest_ac">游玩路线</string>
     <string name="title_home">北京世界园艺博览会</string>
+    <string name="title_contacts_ac">预约联系人</string>
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
+    <string name="check_string_empty_name">姓名不能为空</string>
     <string name="check_string_empty_report_content">评论内容不能为空</string>
     <string name="check_string_empty_localtion_descriptiong">情况描述不能为空</string>
     <string name="please_enter_keywords">请输入关键字</string>
+    <string name="check_string_id_card">身份证错误</string>
+    <string name="check_string_id_type">证件号码不能为空</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
 
@@ -290,4 +301,8 @@
     <string name="north_west">西北</string>
     <string name="welcome_to_the_beijing_world_expo">北京世园会欢迎您</string>
     <string name="baidu_navi">百度导航</string>
+    <string name="complete">完成</string>
+    <string name="add">添加</string>
+    <string name="max_select">最多只能选择%d个</string>
+    <string name="max_images">最多只能选择%d张照片</string>
 </resources>

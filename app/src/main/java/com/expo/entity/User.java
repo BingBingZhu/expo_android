@@ -45,6 +45,12 @@ public class User extends BaseResponse implements Parcelable {
     @DatabaseField(columnName = "city")
     @SerializedName("city")
     private String city;
+    @DatabaseField(columnName = "email")
+    @SerializedName(value = "email")
+    private String email;
+    @DatabaseField(columnName = "work")
+    @SerializedName(value = "work")
+    private String work;
     @DatabaseField(columnName = "photo_url")
     @SerializedName(value = "PhotoUrl", alternate = {"picUrl"})
     private String photoUrl;
@@ -93,6 +99,8 @@ public class User extends BaseResponse implements Parcelable {
         dest.writeString(score);
         dest.writeString(sex);
         dest.writeString(city);
+        dest.writeString(email);
+        dest.writeString(work);
         dest.writeString(photoUrl);
     }
 
@@ -184,6 +192,22 @@ public class User extends BaseResponse implements Parcelable {
         this.city = city;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWork() {
+        return work;
+    }
+
+    public void setWork(String work) {
+        this.work = work;
+    }
+
     public String getPhotoUrl() {
         return photoUrl;
     }
@@ -237,6 +261,8 @@ public class User extends BaseResponse implements Parcelable {
         if (score != null ? !score.equals(user.score) : user.score != null) return false;
         if (sex != null ? !sex.equals(user.sex) : user.sex != null) return false;
         if (city != null ? !city.equals(user.city) : user.city != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (work != null ? !work.equals(user.work) : user.work != null) return false;
         return photoUrl != null ? photoUrl.equals(user.photoUrl) : user.photoUrl == null;
     }
 
@@ -251,6 +277,8 @@ public class User extends BaseResponse implements Parcelable {
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (work != null ? work.hashCode() : 0);
         result = 31 * result + (photoUrl != null ? photoUrl.hashCode() : 0);
         return result;
     }
@@ -266,6 +294,8 @@ public class User extends BaseResponse implements Parcelable {
         user.score = this.score;
         user.sex = this.sex;
         user.city = this.city;
+        user.email = this.email;
+        user.work = this.work;
         user.photoUrl = this.photoUrl;
         return user;
     }

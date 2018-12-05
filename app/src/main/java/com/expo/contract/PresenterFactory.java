@@ -4,6 +4,8 @@ import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.contract.presenter.BadgePresenterImpl;
 import com.expo.contract.presenter.BindPhonePresenterImpl;
+import com.expo.contract.presenter.ContactsAddPresenterImpl;
+import com.expo.contract.presenter.ContactsPresenterImpl;
 import com.expo.contract.presenter.DistinguishPresenterImpl;
 import com.expo.contract.presenter.EncyclopediaSearchPresenterImpl;
 import com.expo.contract.presenter.EncyclopediasPresenterImpl;
@@ -89,6 +91,10 @@ public class PresenterFactory {
             return new BadgePresenterImpl( (BadgeContract.View) view );
         } else if (view instanceof FindContract.View) {
             return new FindPresenterImpl( (FindContract.View) view );
+        } else if (view instanceof ContactsContract.View) {
+            return new ContactsPresenterImpl( (ContactsContract.View) view );
+        } else if (view instanceof ContactsAddContract.View) {
+            return new ContactsAddPresenterImpl( (ContactsAddContract.View) view );
         }
         throw new UnsupportedOperationException();
     }
