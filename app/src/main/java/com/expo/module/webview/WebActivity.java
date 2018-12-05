@@ -204,6 +204,11 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         public void selectContext(int count) {
             ContactsActivity.startActivity(WebActivity.this, true, count);
         }
+
+        public void setTitleText(String titleText){
+
+        }
+
     }
 
     private void showForceSingOutDialog() {

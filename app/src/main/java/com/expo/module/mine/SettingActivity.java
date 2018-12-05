@@ -28,6 +28,7 @@ import com.expo.module.login.LoginActivity;
 import com.expo.module.webview.WebActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
+import com.expo.utils.LocalBroadcastUtil;
 import com.expo.widget.AppBarView;
 import com.expo.widget.MySettingView;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -59,7 +60,9 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     @BindView(R.id.logout)
     TextView mTvLogout;
     @BindView(R.id.setting_map_on_off)
-    ImageView imgON_OFF;
+    ImageView imgMapON_OFF;
+    @BindView(R.id.setting_track_on_off)
+    ImageView imgTrackON_OFF;
 
     boolean mIsCn;//现在是否是汉语
     boolean mSelectCn;//现在是否是选择了汉语
@@ -109,7 +112,8 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle( 0, R.string.title_setting_ac );
-        imgON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
+        imgMapON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
+        imgTrackON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
         mTvCache.setRightText(DataCleanUtil.getCacheSize());
         mTvLanguage.setRightText( R.string.language );
         mTvUpdate.setRightText( "v" + AppUtils.getAppVersionName() );
@@ -203,10 +207,19 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     }
 
     @OnClick(R.id.setting_map_on_off)
-    public void onOFF(View v){
+    public void mapOnOFF(View v){
         PrefsHelper.setBoolean(Constants.Prefs.KEY_MAP_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false));
         // 设置图片
-        imgON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
+        imgMapON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
+    }
+
+    @OnClick(R.id.setting_track_on_off)
+    public void trackOnOFF(View v){
+        PrefsHelper.setBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false));
+        // 设置图片
+        imgMapON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
+        LocalBroadcastUtil.sendBroadcast(getContext(), new Intent().putExtra(Constants.EXTRAS.EXTRA_TRACK_CHANAGE,
+                PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false)), Constants.Action.ACTION_TRACK_CHANAGE);
     }
 
     @Override

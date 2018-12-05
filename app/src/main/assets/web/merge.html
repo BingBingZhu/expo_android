@@ -74,7 +74,7 @@
             <img src="way_guide.png" alt="" class="img">
             <p>{{bourn}}</p>
             <p>距离{{distance}}</p>
-            <p>预计时间{{time}}</p>
+            <p>预计时间{{flag}}</p>
         </div>
         <div class="nav_voice">
           <img src="way_voice.png" alt="" class="img">
@@ -97,7 +97,7 @@
         path:'.',
         bourn:'中国馆',
         distance:'500m',
-        time:'10:00',
+        flag:'10:00',
         imgsrc:'',
         audiosrc:'',
         audioTime:'',
@@ -119,7 +119,7 @@
           this.haha = data;
           this.bourn = data.title;
           this.distance = data.distance.toFixed(0)+'m';
-          this.time = '未定';
+          this.flag = '未定';
         },
         //后台调取动画
         tipTips:function(I,tip){
@@ -232,7 +232,7 @@
 
 		function reqPath (path,callback){
 	        console.log('开始');
-	        var _this = this,index = 0,time=95;
+	        var _this = this,index = 0,flag=95;
 	        // var init = 1;
 	        function f () {
 	          setTimeout(()=>{
@@ -243,14 +243,14 @@
 	              var a = path+index+'.png'
 	              CheckImgExists(a,function (res) {
 	              	_$('nav_btm_img').src = path+index+'.png';
-	              	setTimeout(f,time);
+	              	setTimeout(f,flag);
 	              },function (res) {
 	              	callback();
 	              })
 	            // }else{
 	              // setTimeout(f);
 	            // }
-	          },time)
+	          },flag)
 	        }
 	        f();
 	    }

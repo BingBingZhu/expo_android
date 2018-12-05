@@ -15,6 +15,7 @@ import com.expo.entity.RouteInfo;
 import com.expo.entity.Subject;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.TouristType;
+import com.expo.entity.Track;
 import com.expo.entity.User;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
@@ -50,8 +51,10 @@ public interface Constants {
         public static final String KEY_VENUES_UPDATE_TIME = "key_venues_update_time";
         public static final String KEY_ROUTES_UPDATE_TIME = "key_routes_update_time";
         public static final String KEY_MAP_ON_OFF = "key_map_on_off";
+        public static final String KEY_TRACK_ON_OFF = "key_track_on_off";
         public static final String KEY_MAP_PATTERN = "key_map_pattern";
         public static final String KEY_MODULE_ON_OFF = "key_module_on_off ";
+        public static final String KEY_RUN_UP_COUNT = "key_run_up_count";
     }
 
     /**
@@ -73,6 +76,7 @@ public interface Constants {
         public static final String EXTRA_USER_SCORE = "extra_user_score";
         public static final String EXTRA_SELECT_CONTACTS = "extra_select_contacts";
         public static final String EXTRA_SELECT_CONTACTS_MAX_COUNT = "extra_select_contacts_max_count";
+        public static final String EXTRA_TRACK_CHANAGE = "extra_track_chanage";
     }
 
     /**
@@ -120,7 +124,7 @@ public interface Constants {
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class,
-                TopLineInfo.class, VenuesType.class, Park.class, Badge.class, FootPrint.class, Contacts.class};
+                TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, Contacts.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }
@@ -143,6 +147,7 @@ public interface Constants {
         public static final String ACTION_RECEIVE_MESSAGE = "action_receive_message";
         public static final String ACTION_CHANGE_LANGUAGE = "action_change_language";
         public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
+        public static final String ACTION_TRACK_CHANAGE = "action_track_chanage";
         public static final String ACTION_LOCATION_CHANGED_IN_SCENES = "action_location_changed_in_scenes";
     }
 

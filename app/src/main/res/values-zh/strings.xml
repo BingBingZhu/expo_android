@@ -230,7 +230,7 @@
     <string name="disconnect">断开连接</string>
     <string name="personal_center">个人中心</string>
     <string name="badge">徽章</string>
-    <string name="the_current_integral">当前积分：0分</string>
+    <string name="the_current_integral">当前积分：%d分</string>
     <string name="title_routest_detail">路线详情</string>
     <string name="the_account_is_abnormal_please_log_in_again">账号异常，请重新登录！</string>
     <string name="your_account_is_logged_in_on_another_device">您的账号在其他设备登录</string>
@@ -305,4 +305,7 @@
     <string name="add">添加</string>
     <string name="max_select">最多只能选择%d个</string>
     <string name="max_images">最多只能选择%d张照片</string>
+    <string name="autonavi_navi">高德导航</string>
+    <string name="the_guide_tour">导游导览</string>
+    <string name="pilot_switch">辅助开关</string>
 </resources>

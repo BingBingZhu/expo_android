@@ -22,6 +22,7 @@ import com.expo.module.mine.AboutActivity;
 import com.expo.module.mine.FeedbackActivity;
 import com.expo.module.mine.SettingActivity;
 import com.expo.module.mine.UserInfoActivity;
+import com.expo.module.track.TrackActivity;
 import com.expo.module.webview.WebActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
@@ -98,8 +99,9 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     }
 
     @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name, R.id.item_mine_bespeak,
-            R.id.item_mine_comment_report, R.id.item_mine_message, R.id.item_mine_about,
-            R.id.item_mine_setting, R.id.mine_integral, R.id.mine_badge, R.id.item_mine_contacts})
+            R.id.item_mine_comment_report, R.id.item_mine_message, R.id.item_mine_track,
+            R.id.item_mine_about, R.id.item_mine_setting, R.id.mine_integral, R.id.mine_badge,
+            R.id.item_mine_contacts})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mine_edit_info:
@@ -116,6 +118,9 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
             case R.id.item_mine_message:
                 MessageKindActivity.startActivity(getContext());
                 break;
+            case R.id.item_mine_track:
+                TrackActivity.startActivity( getContext() );
+                break;
             case R.id.item_mine_about:
                 AboutActivity.startActivity(getContext());
                 break;
@@ -123,7 +128,10 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
                 SettingActivity.startActivity(getContext());
                 break;
             case R.id.mine_integral:    // 积分
-
+                String url = "http://192.168.1.13:8080";
+                WebActivity.startActivity(getContext(), url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
+                        + "&integral=" + score
+                        + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), "我的积分", false);
                 break;
             case R.id.mine_badge:       // 徽章
                 BadgeActivity.startActivity(getContext(), score);
