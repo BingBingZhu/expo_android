@@ -40,7 +40,7 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
     @BindView(R.id.find_pager)
     ViewPager mPagerView;
 
-    private TabPagerAdapter mAdapter;
+    private FindTabPagerAdapter mAdapter;
 
     @Override
     public int getContentView() {
@@ -51,7 +51,7 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
     protected void onInitView(Bundle savedInstanceState) {
         mTopView.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
         initTabLayout();
-        mAdapter = new TabPagerAdapter(getFragmentManager());
+        mAdapter = new FindTabPagerAdapter(getFragmentManager());
         mPagerView.setAdapter(mAdapter);
         mPagerView.addOnPageChangeListener(mOnPageChangeListener);
         mPresenter.loadTabs();

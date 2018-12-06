@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ency_item_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dms_20"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <org.raphets.roundimageview.RoundImageView
+        android:id="@+id/find_list_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:leftBottom_corner_radius="@dimen/dms_10"
+        app:leftTop_corner_radius="@dimen/dms_10"
+        app:rightBottom_corner_radius="@dimen/dms_10"
+        app:rightTop_corner_radius="@dimen/dms_10"
+        app:type="round" />
+
+    <TextView
+        android:id="@+id/find_list_content"
+        style="@style/TextSizeBlack12"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dms_10"
+        android:lines="2" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_10"
+        android:orientation="vertical">
+
+        <org.raphets.roundimageview.RoundImageView
+            android:id="@+id/find_list_head"
+            android:layout_width="@dimen/dms_30"
+            android:layout_height="@dimen/dms_30"
+            android:layout_centerVertical="true"
+            app:type="circle" />
+
+        <TextView
+            android:id="@+id/find_list_name"
+            style="@style/TextSizeBlack12"
+            android:layout_width="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dms_10"
+            android:layout_toRightOf="@id/find_list_head" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/find_list_count"
+            style="@style/TextSizeBlack12"
+            android:layout_width="@dimen/dms_100"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dms_10"
+            android:drawableLeft="@mipmap/hot"
+            android:singleLine="true" />
+
+    </RelativeLayout>
+</LinearLayout>

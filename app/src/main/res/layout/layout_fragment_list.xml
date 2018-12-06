@@ -4,16 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/ptr_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:ptr_mode="loadMore">
-        <com.expo.widget.SimpleRecyclerView
-            android:id="@+id/recycler_view"
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            android:scrollbars="none">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.expo.widget.SimpleRecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never" />
+
+                <include
+                    android:id="@+id/empty_layout"
+                    layout="@layout/layout_empty" />
+            </FrameLayout>
+        </ScrollView>
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
 </LinearLayout>

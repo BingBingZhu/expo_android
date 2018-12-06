@@ -291,5 +291,10 @@
     <string name="baidu_navi">百度导航</string>
     <string name="autonavi_navi">高德导航</string>
     <string name="pilot_switch">辅助开关</string>
+    <string name="publish">发布</string>
+    <string name="category">类别</string>
+    <string name="img_limit">最多只能发布9张图片或一个视频</string>
+    <string name="publish_edit_hint">给你的作品起个标题吧</string>
+    <string name="publish_rule_description">《用户发布规则说明》</string>
 
 </resources>

@@ -22,6 +22,7 @@ import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -94,6 +95,7 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
             }
             return false;
         } else {
+            message.setUid(ExpoApp.getApplication().getUser().getUid());
             mDao.saveOrUpdate( message );
             checkMessage( message );
             LocalBroadcastUtil.sendBroadcast( mView.getContext(), null, Constants.Action.ACTION_RECEIVE_MESSAGE );

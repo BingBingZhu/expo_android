@@ -1,0 +1,23 @@
+package com.expo.contract;
+
+import com.expo.base.IPresenter;
+import com.expo.base.IView;
+import com.expo.entity.Encyclopedias;
+
+import java.util.List;
+
+public interface FindListContract {
+
+    abstract class Presenter extends IPresenter<FindListContract.View> {
+
+        public Presenter(FindListContract.View view) {
+            super(view);
+        }
+
+        public abstract void loadEncyByType(Long tabId, int page);
+    }
+
+    interface View extends IView {
+        void addEncysToList(List<Encyclopedias> data);
+    }
+}
