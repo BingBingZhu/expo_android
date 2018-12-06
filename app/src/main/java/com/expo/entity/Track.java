@@ -17,6 +17,8 @@ public class Track implements Parcelable {
     private double lng;
     @DatabaseField(columnName = "flag")
     private Long flag;
+    @DatabaseField(columnName = "uid")
+    private String uid;
 
     public Long getId() {
         return id;
@@ -53,10 +55,11 @@ public class Track implements Parcelable {
     public Track() {
     }
 
-    public Track(double lat, double lng, Long flag) {
+    public Track(double lat, double lng, Long flag, String uid) {
         this.lat = lat;
         this.lng = lng;
         this.flag = flag;
+        this.uid = uid;
     }
 
     protected Track(Parcel in) {
@@ -64,6 +67,7 @@ public class Track implements Parcelable {
         lat = in.readInt();
         lng = in.readInt();
         flag = in.readLong();
+        uid = in.readString();
     }
 
     public static final Creator<Track> CREATOR = new Creator<Track>() {
@@ -89,5 +93,6 @@ public class Track implements Parcelable {
         dest.writeDouble(lat);
         dest.writeDouble(lng);
         dest.writeLong(flag);
+        dest.writeString(uid);
     }
 }

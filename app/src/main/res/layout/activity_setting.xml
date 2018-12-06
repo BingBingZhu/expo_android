@@ -79,6 +79,10 @@
                 android:layout_marginRight="@dimen/dms_40"/>
         </FrameLayout>
 
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_100">
@@ -96,6 +100,15 @@
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="@dimen/dms_40"/>
         </FrameLayout>
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
+        <com.expo.widget.MySettingView
+            android:id="@+id/setting_prompt_tone"
+            style="@style/item_setting"
+            app:textLeft="@string/notification_sound" />
 
         <TextView
             style="@style/LineHorizontal"

@@ -156,11 +156,11 @@
     <string name="navigationg_back">返回导航</string>
 
     <string name="message_kind_system_title">系统消息</string>
-    <string name="message_kind_system_content">系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息</string>
+    <string name="message_kind_system_content">接收到的系统消息</string>
     <string name="message_kind_appointment_title">预约提醒</string>
-    <string name="message_kind_appointment_content">预约提醒预约提醒预约提醒预约提醒预约提醒预约提醒预约提醒预约提醒</string>
+    <string name="message_kind_appointment_content">预约通知消息</string>
     <string name="message_kind_tourist_title">游客服务反馈</string>
-    <string name="message_kind_tourist_content">游客服务反馈游客服务反馈游客服务反馈游客服务反馈游客服务反馈游客服务反馈游客服务反馈</string>
+    <string name="message_kind_tourist_content">游客提交服务后的反馈信息</string>
 
     <string name="wifi_state_init">请点击按钮开启WLAN</string>
 
@@ -293,4 +293,5 @@
     <string name="autonavi_navi">高德导航</string>
     <string name="the_guide_tour">导游导览</string>
     <string name="pilot_switch">辅助开关</string>
+    <string name="notification_sound">通知提示音</string>
 </resources>

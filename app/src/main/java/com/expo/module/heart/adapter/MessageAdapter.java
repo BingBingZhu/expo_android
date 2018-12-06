@@ -21,14 +21,17 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
+public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    public enum ITEM_TYPE {
+        ITEM_TYPE_DATA,
+        ITEM_TYPE_DATE
+    }
 
     Context mContext;
     public List<Message> mData;
     BaseAdapterItemClickListener mListener;
     int mLayoutId;
-
-    String mDate;
 
     public MessageAdapter(Context context) {
         mContext = context;
@@ -48,25 +51,39 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @NonNull
     @Override
-    public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(mLayoutId, null));
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == ITEM_TYPE.ITEM_TYPE_DATA.ordinal()){
+            return new ViewHolder(LayoutInflater.from(mContext).inflate(mLayoutId, parent, false));
+        }else{
+            return new DateViewHolder(LayoutInflater.from(mContext).inflate(R.layout.layout_message_date, null));
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder Iholder, int position) {
         Message message = mData.get(position);
-        setText(holder.mName, message.getCaption());
-        setText(holder.mTime, message.getCreateTime());
-        setText(holder.mContent, message.getContent());
+        if (Iholder instanceof ViewHolder) {
+            ViewHolder holder = (ViewHolder) Iholder;
+            setText(holder.mName, message.getCaption());
+            setText(holder.mTime, message.getCreateTime());
+            setText(holder.mContent, message.getContent());
+            if (holder.itemView != null) {
+                holder.itemView.setOnClickListener(v -> {
+                    if (mListener != null)
+                        mListener.itemClick(v, position, message);
+                });
+            }
+        }else if (Iholder instanceof DateViewHolder){
+            DateViewHolder holder = (DateViewHolder) Iholder;
+            holder.tvDate.setText(message.getCreateTime());
+        }
+    }
 
-        if (holder.mMore != null)
-            holder.mMore.setOnClickListener(v -> {
-                if (mListener != null)
-                    mListener.itemClick(v, position, message);
-            });
-
-        initView(holder);
-        setDate(holder, message);
+    @Override
+    public int getItemViewType(int position) {
+        return null == mData.get(position).getUid() || mData.get(position).getUid().isEmpty()
+                ? MessageAdapter.ITEM_TYPE.ITEM_TYPE_DATE.ordinal()
+                : MessageAdapter.ITEM_TYPE.ITEM_TYPE_DATA.ordinal();
     }
 
     @Override
@@ -75,46 +92,33 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return mData.size();
     }
 
-    private void initView(MessageAdapter.ViewHolder holder) {
-        CommUtils.hideView(holder.mDate);
-        if (mLayoutId == R.layout.item_message_tourist) {
-            CommUtils.hideView(holder.mImg);
-        }
-    }
-
-    private void setDate(MessageAdapter.ViewHolder holder, Message message) {
-        if (holder.mDate == null) return;
-        String day = TimeUtils.millis2String(TimeUtils.string2Millis(message.getCreateTime()), new SimpleDateFormat(Constants.TimeFormat.TYPE_SIMPLE));
-        if (!StringUtils.equals(mDate, day)) {
-            mDate = day;
-            holder.mDate.setVisibility(View.VISIBLE);
-            holder.mDate.setText(day);
-        }
-    }
-
     private void setText(TextView textView, String content) {
         if (textView != null)
             textView.setText(content);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView mDate;
+//        TextView mDate;
         ImageView mImg;
         TextView mName;
         TextView mTime;
         TextView mContent;
         TextView mMore;
-
         public ViewHolder(View itemView) {
             super(itemView);
-            mDate = itemView.findViewById(R.id.message_date);
             mImg = itemView.findViewById(R.id.message_img);
             mName = itemView.findViewById(R.id.message_name);
             mTime = itemView.findViewById(R.id.message_time);
             mContent = itemView.findViewById(R.id.message_content);
             mMore = itemView.findViewById(R.id.message_more);
         }
+    }
 
+    class DateViewHolder extends RecyclerView.ViewHolder {
+        TextView tvDate;
+        public DateViewHolder(View itemView) {
+            super(itemView);
+            tvDate = itemView.findViewById(R.id.message_date);
+        }
     }
 }

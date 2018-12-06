@@ -2,6 +2,7 @@ package com.expo.utils;
 
 import android.os.Environment;
 
+import com.expo.R;
 import com.expo.entity.Badge;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.DataType;
@@ -51,6 +52,7 @@ public interface Constants {
         public static final String KEY_MAP_PATTERN = "key_map_pattern";
         public static final String KEY_MODULE_ON_OFF = "key_module_on_off ";
         public static final String KEY_RUN_UP_COUNT = "key_run_up_count";
+        public static final String KEY_RAW_SELECTOR_POSITION = "key_raw_selector_position";
     }
 
     /**
@@ -191,8 +193,11 @@ public interface Constants {
         public static final String TO_JS_NAVI_TIP_WAKE = "callwake/callwake";//姿势夸张睡觉
         public static final String TO_JS_NAVI_TIP_LEAVE = "callleave/callleave";//结束导航，抽泣、哭泣（要离开我吗）真的要离开我吗(人为点返回键）
         public static final String TO_JS_NAVI_TIP_END = "callend/callend";//到达终点，庆祝
+    }
 
-
+    class RawResource {
+        public static final int[] resourceIds = new int[]{0, R.raw.a10534, R.raw.b10629, R.raw.c10859, R.raw.d10875, R.raw.e10879, R.raw.f10880, R.raw.g10881};
+        public static final String[] rawName = new String[]{"跟随系统", "a10534", "b10629", "c10859", "d10875", "e10879", "f10880", "g10881"};
     }
 
 }
