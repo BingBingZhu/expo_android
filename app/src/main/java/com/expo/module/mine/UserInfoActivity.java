@@ -238,22 +238,6 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         mWorkList.add("医生");
         mWorkList.add("教师");
         mWorkList.add("公务员");
-        mWorkList.add("IT/互联网");
-        mWorkList.add("销售");
-        mWorkList.add("专员");
-        mWorkList.add("电商");
-        mWorkList.add("教育");
-        mWorkList.add("医生");
-        mWorkList.add("教师");
-        mWorkList.add("公务员");
-        mWorkList.add("IT/互联网");
-        mWorkList.add("销售");
-        mWorkList.add("专员");
-        mWorkList.add("电商");
-        mWorkList.add("教育");
-        mWorkList.add("医生");
-        mWorkList.add("教师");
-        mWorkList.add("公务员");
         mWorkAdapter.setData(mWorkList);
         mWorkAdapter.notifyDataSetChanged();
     }
@@ -283,7 +267,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
-//                        ((TextView) mUserWork.getRightView()).setText();
+                        ((TextView) mUserWork.getRightView()).setText(mWorkList.get(position));
                         dialog.dismiss();
                     }
                 })

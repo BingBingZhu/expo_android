@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.BitmapDescriptor;
@@ -33,6 +34,9 @@ import com.expo.entity.Park;
 import com.expo.network.Http;
 import com.expo.widget.ImageViewPlus;
 
+import org.apache.log4j.chainsaw.Main;
+
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -246,6 +250,56 @@ public class MapUtils {
                 .zIndex(-10);
         /*TileOverlay mtileOverlay = */
         map.addTileOverlay(tileOverlayOptions);
+    }
+
+    /**
+     * 计算两点连线和正北方的角度
+     *
+     * @return
+     */
+    public double getAngle(MyLatLng A, MyLatLng B) {
+        double dx = (B.m_RadLo - A.m_RadLo) * A.Ed;
+        double dy = (B.m_RadLa - A.m_RadLa) * A.Ec;
+        double angle = 0.0;
+        angle = Math.atan(Math.abs(dx / dy)) * 180. / Math.PI;
+        double dLo = B.m_Longitude - A.m_Longitude;
+        double dLa = B.m_Latitude - A.m_Latitude;
+        if (dLo > 0 && dLa <= 0) {
+            angle = (90. - angle) + 90;
+        } else if (dLo <= 0 && dLa < 0) {
+            angle = angle + 180.;
+        } else if (dLo < 0 && dLa >= 0) {
+            angle = (90. - angle) + 270;
+        }
+        return angle;
+    }
+
+    public static class MyLatLng {
+        final static double Rc = 6378137;
+        final static double Rj = 6356725;
+        double m_LoDeg, m_LoMin, m_LoSec;
+        double m_LaDeg, m_LaMin, m_LaSec;
+        double m_Longitude, m_Latitude;
+        double m_RadLo, m_RadLa;
+        double Ec;
+        double Ed;
+
+        public MyLatLng(double longitude, double latitude) {
+            m_LoDeg = (int) longitude;
+            m_LoMin = (int) ((longitude - m_LoDeg) * 60);
+            m_LoSec = (longitude - m_LoDeg - m_LoMin / 60.) * 3600;
+
+            m_LaDeg = (int) latitude;
+            m_LaMin = (int) ((latitude - m_LaDeg) * 60);
+            m_LaSec = (latitude - m_LaDeg - m_LaMin / 60.) * 3600;
+
+            m_Longitude = longitude;
+            m_Latitude = latitude;
+            m_RadLo = longitude * Math.PI / 180.;
+            m_RadLa = latitude * Math.PI / 180.;
+            Ec = Rj + (Rc - Rj) * (90. - m_Latitude) / 90.;
+            Ed = Ec * Math.cos(m_RadLa);
+        }
     }
 
 }

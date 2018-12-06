@@ -171,7 +171,10 @@ public interface Constants {
         public static final String TO_JS_NAVI_TIP_WAKE = "callwake/callwake";//姿势夸张睡觉
         public static final String TO_JS_NAVI_TIP_LEAVE = "callleave/callleave";//结束导航，抽泣、哭泣（要离开我吗）真的要离开我吗(人为点返回键）
         public static final String TO_JS_NAVI_TIP_END = "callend/callend";//到达终点，庆祝
+    }
 
+    class HandlerMsg{
+        public static final int NAVI_NEAR_WIKI = 0;//附近景点
 
     }
 
