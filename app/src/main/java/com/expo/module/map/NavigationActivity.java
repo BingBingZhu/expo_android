@@ -65,6 +65,7 @@ import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -127,11 +128,23 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     final Object LOCK = new Object();
 
     long mStartTime;
+    int mRouteTime;
 
     boolean isBackStage = false;
 
     Location mLocation;
-
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case Constants.HandlerMsg.NAVI_NEAR_WIKI:
+                    String nearWikeStr = (String) msg.obj;
+                    mWebView.loadUrl("javascript:nearWiki('" + nearWikeStr + "')");
+                    break;
+            }
+        }
+    };
     @Override
     protected int getContentView() {
         return R.layout.activity_navigation;
@@ -280,19 +293,22 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private DeviceRotateManager.OnOrientationChangedListener mOnOrientationChangedListener = new DeviceRotateManager.OnOrientationChangedListener() {
         @Override
         public void onChanged(float azimuth, float pitch, float roll) {
+            //azimuth 手机与正北方夹角
             if (mLocation == null) return;
             Destination des = new Destination();
             des.content = LanguageUtil.chooseTest(mVenue.getCaption(), mVenue.getEnCaption());
             des.distance = AMapUtils.calculateLineDistance(
                     new LatLng(mVenue.getLat(), mVenue.getLng()),
                     new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
+            des.angle = mMapUtils.getAngle(new MapUtils.MyLatLng(mLocation.getLongitude(), mLocation.getLatitude()), new MapUtils.MyLatLng(mVenue.getLng(), mVenue.getLat()));
+            des.routeTime = mRouteTime;
+            System.out.println("angle: " + des.angle);
             if (!mUseDeviceRotate) {
-                des.angle = "";
-                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,%.2f)"));
+                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,'" + Http.getGsonInstance().toJson(des) + "')"));
                 return;
             }
             //计算角度以通知HTML页面使用
-            float degrees;
+            float degrees; // 当前方向与路的夹角
             if (mCalculateDirection >= 0) {
                 degrees = azimuth - mCalculateDirection;
             } else {
@@ -302,7 +318,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 //degrees 当前方向和路的夹角
                 //azimuth 陀螺仪和正北方夹角
 //                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:getAzimuthInfo(%.2f,%.2f)", degrees, azimuth));
-                des.angle = degrees + "";
                 mWebView.loadUrl("javascript:setMarker('1','" + Http.getGsonInstance().toJson(des) + "')");
             }
             if (mNaviRouteOverlay == null || !mNaviRouteOverlay.isAnimating()) {
@@ -353,6 +368,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mMythredFresh.exit();
         if (mMythredcCalculate != null)
             mMythredcCalculate.exit();
+        mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 
@@ -384,7 +400,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         TouristType touristType = mPresenter.getTourist();
         if (touristType != null)
             mWebView.loadUrl(String.format("javascript:setTourist('%s')", touristType.getUnZipPath()));
-//        mHandler.sendEmptyMessageDelayed(0, 5000);
         mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "1", "callstart/callstart"));
     }
 
@@ -421,12 +436,14 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     }
 
     public void freshMarker() {
+        List<VenuesDistance> venuesDistanceList = new ArrayList<>();
         if (mMap != null) {
             Map<String, Marker> tem = new HashMap<>();
             for (int i = 0; i < mVenuesDistance.size(); i++) {
                 VenuesDistance vd = mVenuesDistance.get(i);
-                if (vd.distance >= 20.0f) break;
-                mWebView.loadUrl("javascript:nearWiki('" + vd.title + "', '" + vd.voice + "')");
+                if (vd.distance >= 2000.0f) break;
+                vd.voice = "http://39.105.120.171/res/0339f8f92e8a483fb6ef5aad9b1b7b6e.mp3";
+                venuesDistanceList.add(vd);
                 if (mMarker.containsKey(vd.id)) {
                     tem.put(vd.id, mMarker.get(vd.id));
                     mMarker.remove(vd.id);
@@ -443,6 +460,12 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             for (Marker marker : mMarker.values()) {
                 marker.remove();
             }
+
+            Message message = new Message();
+            message.what = Constants.HandlerMsg.NAVI_NEAR_WIKI;
+            message.obj = Http.getGsonInstance().toJson(venuesDistanceList);
+            mHandler.sendMessage(message);
+
             mMarker.clear();
             mMarker.putAll(tem);
         }
@@ -556,6 +579,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onNaviInfoUpdate(NaviInfo naviInfo) {
             mRouteDirection = naviInfo.getDirection();
+            mRouteTime = naviInfo.getPathRetainTime();
         }
     };
 
@@ -644,22 +668,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                     for (VenuesDistance vd : mVenuesDistance) {
                         vd.distance = AMapUtils.calculateLineDistance(
                                 new LatLng(lat, lon), new LatLng(vd.lat, vd.lon));
-                        double angle = 0;
-                        double jd = vd.lat - lat;
-                        if (jd == 0)
-                            angle = 90.0d;
-                        else
-                            angle = Math.atan(Math.abs((vd.lon - lon) / jd)) * 180 / Math.PI;
-                        if (vd.lat < lat) {
-                            angle += 180;
-                            if (vd.lon < lon)
-                                angle += 90;
-
-                        } else {
-                            if (vd.lon > lon)
-                                angle += 90;
-                        }
-                        vd.angle = new BigDecimal(angle).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+                        vd.angle = mMapUtils.getAngle(new MapUtils.MyLatLng(mLocation.getLongitude(), mLocation.getLatitude()), new MapUtils.MyLatLng(lon, lat));
                     }
                     Collections.sort(mVenuesDistance, new Comparator<VenuesDistance>() {
                         @Override
