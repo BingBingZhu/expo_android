@@ -12,9 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
@@ -50,7 +47,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,21 +114,21 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mSvScroll.setOnScrollListener(mScrollListener);
+        mSvScroll.setOnScrollListener( mScrollListener );
 
-        mHtTitle.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
+        mHtTitle.setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
 
         initRecyclerTop();
         initRecyclerExhibit();
         initRecyclerExhibitGarden();
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register( this );
 
         mPresenter.setMessageCount();
         mPresenter.setTopLine();
         mPresenter.setVenue();
         mPresenter.setExhibit();
         mPresenter.setExhibitGarden();
-        mPresenter.startHeartService(getContext());
+        mPresenter.startHeartService( getContext() );
     }
 
     @Override
@@ -192,14 +188,15 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 break;
             case R.id.home_func_2:
                 String url = mPresenter.loadBuyTicketsUrl();
-                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, getString( R.string.buy_tickets ) );
+                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
+                        (url + "?phone=" + ExpoApp.getApplication().getUser().getMobile()), getString( R.string.buy_tickets ) );
                 break;
             case R.id.home_func_3:
                 url = mPresenter.loadVenueBespeakUrl();
 //                url = "http://192.168.1.13:8888/";
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                         url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
-                        + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_appointment ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
+                                + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_appointment ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
                 break;
             case R.id.home_func_4:
                 TouristServiceActivity.startActivity( getContext() );
