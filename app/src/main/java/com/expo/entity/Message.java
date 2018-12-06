@@ -42,8 +42,8 @@ public class Message implements Parcelable {
     @DatabaseField(columnName = "create_time")
     @SerializedName("createtime")
     private String createTime;
-    @DatabaseField(columnName = "_id", allowGeneratedIdInsert = true, generatedId = true)
-    @SerializedName("id")
+    @DatabaseField(columnName = "_id", generatedId = true, allowGeneratedIdInsert = true)
+//    @SerializedName("id")
     private Long id;
     @DatabaseField(columnName = "link_id")
     @SerializedName("linkid")
@@ -56,7 +56,7 @@ public class Message implements Parcelable {
     private String mobile;
     @DatabaseField(columnName = "msg_kind")
     @SerializedName("msgkind")
-    private String msgKind;//消息方式 1 站内消息  2 手机短信 3 app消息推送
+    private String msgKind;     // 消息选项11111 1、是否发送海外用户 2 是否是app内消息 3 是否在app弹出消息 4 apns消息 5 短信 ,
     @DatabaseField(columnName = "params")
     @SerializedName("params")
     private String params;

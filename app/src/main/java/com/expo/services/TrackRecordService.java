@@ -15,6 +15,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.trace.LBSTraceClient;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceStatusListener;
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.db.dao.BaseDao;
@@ -45,7 +46,7 @@ public class TrackRecordService extends Service {
     public void onCreate() {
         super.onCreate();
         LocalBroadcastUtil.registerReceiver(getApplicationContext(), receiver, Constants.Action.ACTION_TRACK_CHANAGE);
-        if (PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false))
+        if (PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true))
             startTrace();
     }
 
@@ -89,13 +90,15 @@ public class TrackRecordService extends Service {
                 oldLatLng = null;
                 for (LatLng latLng : list1) {
                     tracks.add(new Track(latLng.latitude, latLng.longitude,
-                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0)));
+                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
+                            ExpoApp.getApplication().getUser().getUid()));
                 }
             } else if (s.equals(LBSTraceClient.MIN_GRASP_POINT_ERROR) && !list.isEmpty()) {
                 latLng = new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
                 if (isLocationChanage()) {
                     tracks.add(new Track(list.get(0).getLatitude(), list.get(0).getLongitude(),
-                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0)));
+                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
+                            ExpoApp.getApplication().getUser().getUid()));
                     oldLatLng = latLng;
                 }
             }

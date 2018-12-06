@@ -18,6 +18,7 @@ public interface MessagesContract {
 
         public abstract void delMessage(long id, int position);
 
+        public abstract void setMessageRead(Message message);
     }
 
     interface View extends IView {

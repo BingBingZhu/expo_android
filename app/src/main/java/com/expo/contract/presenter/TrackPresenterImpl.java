@@ -1,5 +1,6 @@
 package com.expo.contract.presenter;
 
+import com.expo.base.ExpoApp;
 import com.expo.contract.TrackContract;
 import com.expo.contract.TrackContract.Presenter;
 import com.expo.db.QueryParams;
@@ -20,7 +21,8 @@ public class TrackPresenterImpl extends Presenter {
     public void queryTrack() {
         Map<Long, List<Track>> map = new HashMap<>();
         List<Track> itemTracks = new ArrayList<>();
-        List<Track> tracks = mDao.query(Track.class, new QueryParams());
+        List<Track> tracks = mDao.query(Track.class, new QueryParams()
+                .add("eq", "uid", ExpoApp.getApplication().getUser().getUid()));
         Long flag = -1L;
         for (int i = 0; i < tracks.size(); i++){
             if (flag == -1L || flag == tracks.get(i).getFlag()){

@@ -1,5 +1,6 @@
 package com.expo.module.heart;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +14,13 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.BaseAdapterItemClickListener;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MessageKindContract;
 import com.expo.entity.Message;
 import com.expo.module.heart.adapter.MessageKindAdapter;
+import com.expo.utils.Constants;
+import com.expo.utils.LocalBroadcastUtil;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -49,6 +54,7 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
         setTitle(1, R.string.title_message_kind_ac);
         initSwipeMenuRecyclerView();
         mPresenter.getMessage();
+        LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_RECEIVE_MESSAGE);
     }
 
     @Override
@@ -62,7 +68,6 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
     }
 
     private void initSwipeMenuRecyclerView() {
-
         mSwipeMenuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSwipeMenuRecyclerView.setSwipeItemClickListener(this);
         mSwipeMenuRecyclerView.setSwipeMenuCreator(this);
@@ -113,6 +118,20 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
         if (!StringUtils.equals("3", message.getType())) {
             MessagesActivity.startActivity(this, mAdapter.mData.get(position).getType());
         } else {
+
         }
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mPresenter.getMessage();
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastUtil.unregisterReceiver(getContext(), receiver);
     }
 }

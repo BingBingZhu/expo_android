@@ -1,10 +1,18 @@
 package com.expo.module.mine;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -12,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -25,6 +34,8 @@ import com.expo.contract.SettingContract;
 import com.expo.entity.AppInfo;
 import com.expo.entity.CommonInfo;
 import com.expo.module.login.LoginActivity;
+import com.expo.module.main.MainActivity;
+import com.expo.module.prompt.PromptActivity;
 import com.expo.module.webview.WebActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -63,6 +74,8 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     ImageView imgMapON_OFF;
     @BindView(R.id.setting_track_on_off)
     ImageView imgTrackON_OFF;
+    @BindView(R.id.setting_prompt_tone)
+    MySettingView mTvPromptTone;
 
     boolean mIsCn;//现在是否是汉语
     boolean mSelectCn;//现在是否是选择了汉语
@@ -113,11 +126,17 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     protected void onInitView(Bundle savedInstanceState) {
         setTitle( 0, R.string.title_setting_ac );
         imgMapON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
-        imgTrackON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
+        imgTrackON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true) ? R.mipmap.ico_on : R.mipmap.ico_off );
         mTvCache.setRightText(DataCleanUtil.getCacheSize());
         mTvLanguage.setRightText( R.string.language );
         mTvUpdate.setRightText( "v" + AppUtils.getAppVersionName() );
         mSelectCn = mIsCn = StringUtils.equals( PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ), LanguageUtil.LANGUAGE_CN );
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mTvPromptTone.setRightText(Constants.RawResource.rawName[PrefsHelper.getInt(Constants.Prefs.KEY_RAW_SELECTOR_POSITION, 0)]);
     }
 
     @Override
@@ -186,6 +205,11 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
                 .show();
     }
 
+    @OnClick(R.id.setting_prompt_tone)
+    public void promptTone(View v){
+        PromptActivity.startActivity(getContext());
+    }
+
     @OnClick(R.id.setting_update)
     public void clickUpdate(MySettingView view) {
         mPresenter.checkUpdate();
@@ -215,11 +239,11 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_track_on_off)
     public void trackOnOFF(View v){
-        PrefsHelper.setBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false));
+        PrefsHelper.setBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true));
         // 设置图片
-        imgMapON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
+        imgTrackON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true) ? R.mipmap.ico_on : R.mipmap.ico_off );
         LocalBroadcastUtil.sendBroadcast(getContext(), new Intent().putExtra(Constants.EXTRAS.EXTRA_TRACK_CHANAGE,
-                PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false)), Constants.Action.ACTION_TRACK_CHANAGE);
+                PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true)), Constants.Action.ACTION_TRACK_CHANAGE);
     }
 
     @Override

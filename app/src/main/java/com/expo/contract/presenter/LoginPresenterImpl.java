@@ -14,6 +14,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.User;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
+import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
@@ -65,9 +66,20 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
             protected void onResponse(VerifyCodeLoginResp rsp) {
                 LogUtils.e("====user=======", "uid: "+rsp.getId()+"   ukey: "+rsp.getKey());
                 setAppUserInfo(rsp);
+                appRun();
                 mView.verifyCodeLogin();
             }
         }, verifyCodeLoginObservable);
+    }
+
+    private void appRun(){
+        Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( Http.getBaseParams() ) );
+        Http.request( new ResponseCallback<BaseResponse>() {
+            @Override
+            protected void onResponse(BaseResponse rsp) {
+            }
+
+        }, observable );
     }
 
     /**
@@ -189,6 +201,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
                 rsp.setUid(uid);
                 rsp.setUkey(ukey);
                 rsp.saveOnDb(mDao);
+                appRun();
                 mView.verifyCodeLogin();
             }
         }, verifyCodeLoginObservable);

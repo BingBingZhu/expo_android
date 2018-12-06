@@ -1,6 +1,7 @@
 package com.expo.contract.presenter;
 
 import com.expo.base.ExpoApp;
+import com.expo.base.utils.LogUtils;
 import com.expo.contract.MineContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.CommonInfo;
@@ -27,6 +28,7 @@ public class MinePresenterImpl extends MineContract.Presenter {
             protected void onResponse(User rsp) {
                 rsp.setUid(ExpoApp.getApplication().getUser().getUid());
                 rsp.setUkey(ExpoApp.getApplication().getUser().getUkey());
+                LogUtils.e("========user", "id:"+ExpoApp.getApplication().getUser().getUid()+" key:"+ExpoApp.getApplication().getUser().getUkey());
                 rsp.saveOnDb(mDao);
                 mView.freshUser(rsp);
             }

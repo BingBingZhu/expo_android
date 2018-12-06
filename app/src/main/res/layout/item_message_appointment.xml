@@ -2,40 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/dms_30"
     android:background="@drawable/bg_white_r5"
     android:orientation="vertical"
-    android:padding="@dimen/dms_30">
+    android:paddingLeft="@dimen/dms_26"
+    android:paddingTop="@dimen/dms_36"
+    android:paddingRight="@dimen/dms_26"
+    android:paddingBottom="@dimen/dms_24">
 
     <TextView
         android:id="@+id/message_name"
         style="@style/TextSize15"
-        android:textColor="@color/gray_32" />
+        android:textColor="@color/gray_32"
+        android:text="预约成功"/>
 
     <TextView
         android:id="@+id/message_time"
         style="@style/TextSize15"
         android:layout_alignParentRight="true"
-        android:textColor="@color/gray_32" />
+        android:textColor="@color/gray_32"
+        android:text="2018-11-10 13：10:10"/>
 
     <TextView
         android:id="@+id/message_content"
         style="@style/TextSizeWhite14"
         android:layout_below="@id/message_name"
-        android:layout_marginTop="@dimen/dms_30"
-        android:textColor="@color/gray_99" />
+        android:layout_marginTop="@dimen/dms_40"
+        android:textColor="@color/gray_99"
+        android:text="尊敬的用户您好：
+你预约的场馆“中国馆”预约时间为：8：00-10：00；已到达预
+约时间；可以凭借预约劵进入场馆"/>
 
     <TextView
         android:id="@+id/message_more"
         style="@style/TextSizeWhite14"
         android:layout_below="@id/message_content"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/dms_20"
+        android:layout_marginTop="@dimen/dms_4"
         android:background="@drawable/bg_frame_white_00cb99_r2_w2px"
-        android:paddingLeft="@dimen/dms_30"
-        android:paddingTop="@dimen/dms_10"
-        android:paddingRight="@dimen/dms_30"
-        android:paddingBottom="@dimen/dms_10"
+        android:paddingLeft="@dimen/dms_36"
+        android:paddingTop="@dimen/dms_14"
+        android:paddingRight="@dimen/dms_36"
+        android:paddingBottom="@dimen/dms_14"
         android:text="@string/see_detail"
         android:textColor="@color/colorAccent" />
 
