@@ -210,6 +210,9 @@
         <activity
             android:name=".module.main.find.examine.FindExamineActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.main.find.detail.FindDetailActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".module.track.TrackActivity"

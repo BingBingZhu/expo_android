@@ -2,12 +2,14 @@ package com.expo.module.main.find.publish;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.idst.nls.internal.protocol.Content;
 import com.baidu.speech.EventManager;
+import com.blankj.utilcode.util.SizeUtils;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
@@ -26,10 +30,16 @@ import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FindPublishContract;
 import com.expo.module.camera.CameraActivity;
+import com.expo.module.mine.adapter.WorkAdapter;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ListHolder;
+import com.orhanobut.dialogplus.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,9 +53,16 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
     RecyclerView mRecycler;
     @BindView(R.id.find_publish_edit)
     EditText mEtEdit;
+    @BindView(R.id.edit_count)
+    TextView mTvEditCount;
+    @BindView(R.id.find_publish_type_text)
+    TextView mTvTypeText;
 
     ArrayList<String> mImageList;
     FindPublishAdapter mAdapter;
+
+    WorkAdapter mWorkAdapter;
+    List<String> mWorkList = new ArrayList<String>();
 
     boolean mIsImage = false;
 
@@ -75,8 +92,26 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(0, getIntent().getStringExtra(Constants.EXTRAS.EXTRA_TITLE));
+        setTitle(1, R.string.publish);
         initRecyclerView();
+        initWorkAdapter();
+        mEtEdit.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mTvEditCount.setText(s.length() + "/50");
+            }
+        });
     }
 
     @Override
@@ -86,7 +121,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     private void initRecyclerView() {
         mAdapter = new FindPublishAdapter(this);
-        mRecycler.setLayoutManager(new GridLayoutManager(this, 4));
+        mRecycler.setLayoutManager(new GridLayoutManager(this, 3));
         mRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_10)));
         mRecycler.setAdapter(mAdapter);
 
@@ -96,13 +131,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     }
 
-    /**
-     * 启动游客服务求助界面
-     *
-     * @param context
-     * @param type    求助类型
-     */
-    public static void startActivity(@NonNull Activity context, int type) {
+    public static void startActivity(@NonNull Context context, int type) {
         Intent in = new Intent(context, FindPublishActivity.class);
         in.putExtra(EXTRAS, type);
         context.startActivity(in);
@@ -129,6 +158,38 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
             }
     }
 
+    public void initWorkAdapter() {
+        mWorkAdapter = new WorkAdapter(this);
+        mWorkList.add("景点");
+        mWorkList.add("场馆");
+        mWorkList.add("美食");
+        mWorkList.add("植物");
+        mWorkList.add("其他");
+        mWorkAdapter.setData(mWorkList);
+        mWorkAdapter.notifyDataSetChanged();
+    }
+
+    @OnClick(R.id.find_publish_type)
+    public void clickType(View view) {
+        CommUtils.hideKeyBoard(this, view);
+        DialogPlus dialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ListHolder())
+                .setAdapter(mWorkAdapter)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+                        mTvTypeText.setText(mWorkList.get(position));
+                        dialog.dismiss();
+                    }
+                })
+                .setGravity(Gravity.BOTTOM)
+                .setExpanded(false)  // This will enable the expand feature, (similar to android L share dialog)
+                .setContentHeight(SizeUtils.dp2px(250))
+                .create();
+
+        dialog.show();
+    }
+
     @OnClick(R.id.find_publish_ok)
     public void submit(View view) {
     }
@@ -137,12 +198,20 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_record_explain:
-                startActivityForResult(new Intent(FindPublishActivity.this, CameraActivity.class), Constants.RequestCode.REQ_TO_CAMERA);
                 dialog.dismiss();
+                if (isMp4()) {
+                    ToastHelper.showShort(R.string.img_limit);
+                    break;
+                }
+                startActivityForResult(new Intent(FindPublishActivity.this, CameraActivity.class), Constants.RequestCode.REQ_TO_CAMERA);
                 break;
             case R.id.image_album:
-                goImageSelector();
                 dialog.dismiss();
+                if (isMp4()) {
+                    ToastHelper.showShort(R.string.img_limit);
+                    break;
+                }
+                goImageSelector();
                 break;
             case R.id.cancle:
                 dialog.dismiss();
@@ -151,6 +220,13 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
     }
 
     private Dialog dialog;
+
+    private boolean isMp4() {
+        if (mImageList.size() == 1) {
+            return mImageList.get(0).endsWith("mp4");
+        }
+        return false;
+    }
 
     private void showImgSelectDialog() {
         dialog = new Dialog(this, R.style.BottomActionSheetDialogStyle);

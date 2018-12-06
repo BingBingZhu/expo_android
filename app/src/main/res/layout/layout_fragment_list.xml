@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
 
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/ptr_view"
@@ -14,17 +13,17 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:scrollbars="none">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <com.expo.widget.SimpleRecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:overScrollMode="never" />
 
                 <include
@@ -34,4 +33,14 @@
         </ScrollView>
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/find_add"
+        android:layout_width="@dimen/dms_100"
+        android:layout_height="@dimen/dms_100"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dms_4"
+        android:layout_marginBottom="@dimen/dms_68"
+        android:src="@mipmap/find_add" />
+
+</RelativeLayout>

@@ -81,7 +81,7 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
         // 设置分割线
         LinearLayout linearLayout = (LinearLayout) mTabView.getChildAt(0);
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-        linearLayout.setDividerDrawable(ContextCompat.getDrawable(getContext(), R.drawable.shape_tab_divide_line));
+//        linearLayout.setDividerDrawable(ContextCompat.getDrawable(getContext(), R.drawable.shape_tab_divide_line));
         linearLayout.setDividerPadding(8);
         mTabView.addOnTabSelectedListener(mTabSelectedListener);
     }

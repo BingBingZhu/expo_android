@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.contract.ExamineContract;
+import com.expo.entity.Find;
 import com.expo.entity.RouteInfo;
 import com.expo.module.routes.RouteDetailActivity;
 import com.expo.utils.CommUtils;
@@ -34,14 +36,14 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
 
     @BindView(R.id.recycler)
     RecyclerView mRecyclerView;
-    List<RouteInfo> mData;
+    List<Find> mData;
     CommonAdapter mAdapter;
+    boolean mIsExamine = false;
 
     BaseAdapterItemClickListener<Long> mListener = new BaseAdapterItemClickListener<Long>() {
 
         @Override
         public void itemClick(View view, int position, Long aLong) {
-
             mPresenter.clickRoute(String.valueOf(aLong));
             RouteDetailActivity.startActivity(FindExamineActivity.this, aLong);
         }
@@ -62,15 +64,26 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
         mRecyclerView.setAdapter(mAdapter = new CommonAdapter(this, R.layout.item_examine, mData) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
-                RouteInfo info = mData.get(position);
-                Picasso.with(FindExamineActivity.this).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.icon_center_img));
-                holder.setText(R.id.item_examine_content, LanguageUtil.chooseTest(info.caption, info.captionen));
-                holder.setText(R.id.item_examine_time, "2017-1-1");
-                holder.setText(R.id.item_examine_state, "审核中");
-                holder.setText(R.id.item_examine_reason, "内容不符合发布规定");
+                Find find = mData.get(position);
+                Picasso.with(FindExamineActivity.this).load(CommUtils.getFullUrl(find.picUrl.get(0))).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.icon_center_img));
+                holder.setText(R.id.item_examine_time, find.time);
+                holder.setText(R.id.item_examine_content, find.content);
+                holder.setText(R.id.item_examine_state, find.time);
+                holder.setVisible(R.id.item_examine_state_layout, mIsExamine);
+                if (mIsExamine) {
+                    if (find.state == -1) {
+                        holder.getView(R.id.item_examine_state_layout).setSelected(false);
+                        holder.setText(R.id.item_examine_state, "审核失败");
+                        holder.setText(R.id.item_examine_reason, "内容不符合发布规定");
+                    } else {
+                        holder.setText(R.id.item_examine_state, "待审核");
+                        holder.setText(R.id.item_examine_reason, "");
+                        holder.getView(R.id.item_examine_state_layout).setSelected(true);
+                    }
+                }
 
                 holder.itemView.setOnClickListener(v -> {
-                    mListener.itemClick(v, position, Long.valueOf(info.id));
+                    mListener.itemClick(v, position, Long.valueOf(find.id));
                 });
             }
         });

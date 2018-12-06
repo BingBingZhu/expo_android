@@ -161,8 +161,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':phoneNumberLib')
-    implementation project(path: ':ptr-lib')
     implementation files('libs/aip-java-sdk-4.2.0.jar')
     implementation files('libs/log4j-1.2.17.jar')
     implementation files('libs/baidu-speech.jar')
+    implementation project(':ptr-lib')
 }

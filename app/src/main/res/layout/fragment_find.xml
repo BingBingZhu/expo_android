@@ -9,7 +9,7 @@
         android:id="@+id/find_top_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green_02cd9b"
+        android:background="@color/white_f7"
         android:orientation="vertical">
 
         <LinearLayout
@@ -19,7 +19,7 @@
             android:layout_marginLeft="@dimen/dms_72"
             android:layout_marginTop="@dimen/dms_20"
             android:layout_marginRight="@dimen/dms_140"
-            android:background="@drawable/shape_ency_search_bar_bg"
+            android:background="@color/white_f7"
             android:orientation="horizontal">
 
             <ImageView
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dms_20"
-                android:src="@mipmap/ico_ency_search" />
+                android:src="@mipmap/ico_search" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -36,31 +36,29 @@
                 android:paddingTop="@dimen/dms_20"
                 android:paddingBottom="@dimen/dms_20"
                 android:text="搜索目的地/景点/场馆"
-                android:textColor="@color/color_white_50diaphaneity"
+                android:textColor="@color/gray_85"
                 android:textSize="12sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_2"
-            android:layout_marginTop="@dimen/dms_14"
-            android:background="#00C897" />
+            android:layout_marginTop="@dimen/dms_14" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/find_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="center"
-            app:tabIndicatorColor="@color/color_ency_tab"
+            app:tabIndicatorColor="@color/green_02cd9b"
             app:tabIndicatorHeight="@dimen/dms_4"
             app:tabMinWidth="@dimen/dms_200"
             app:tabMode="scrollable"
             app:tabPaddingBottom="@dimen/dms_28"
             app:tabPaddingTop="@dimen/dms_28"
-            app:tabSelectedTextColor="@color/color_ency_tab"
+            app:tabSelectedTextColor="@color/black_333333"
             app:tabTextAppearance="@style/tab_text_appearance"
-
-            app:tabTextColor="@android:color/white" />
+            app:tabTextColor="@color/gray_66" />
     </LinearLayout>
 
     <android.support.v4.view.ViewPager
@@ -68,4 +66,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never" />
+
 </LinearLayout>

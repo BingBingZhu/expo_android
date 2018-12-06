@@ -1,100 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/dms_30"
     android:paddingBottom="@dimen/dms_30">
 
     <LinearLayout
+        android:id="@+id/find_publish_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dms_30"
-        android:layout_marginRight="@dimen/dms_30"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/dms_30"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dms_30"
+        android:paddingRight="@dimen/dms_30">
+
+        <EditText
+            android:id="@+id/find_publish_edit"
+            style="@style/TextSizeBlack13"
+            android:layout_width="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/seek_help_speech"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="@string/publish_edit_hint"
+            android:lines="4"
+            android:maxLength="50"
+            android:padding="@dimen/dms_10"
+            android:textColor="@color/gray_99"
+            android:textColorHint="@color/gray_99" />
+
+        <TextView
+            android:id="@+id/edit_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/dms_10"
+            android:layout_marginBottom="@dimen/dms_10"
+            android:gravity="right|center_vertical"
+            android:text="0/50" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/seek_help_layout" />
+            android:layout_below="@id/seek_help_layout"
+            android:layout_marginTop="@dimen/dms_26" />
 
-        <TextView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             style="@style/TextSizeBlack13"
-            android:layout_width="match_parent"
-            android:layout_below="@id/seek_help_text1"
-            android:layout_marginTop="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_34"
+            android:drawableLeft="@mipmap/reminder_black"
             android:text="@string/img_limit"
-            android:textColor="@color/gray_99" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dms_30"
-            android:background="@drawable/bg_frame_32_r2_w1px"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/find_publish_edit"
-                style="@style/TextSizeBlack13"
-                android:layout_width="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@id/seek_help_speech"
-                android:background="@null"
-                android:gravity="top"
-                android:hint="@string/publish_edit_hint"
-                android:lines="3"
-                android:maxLength="20"
-                android:padding="@dimen/dms_10"
-                android:textColor="@color/gray_99"
-                android:textColorHint="@color/gray_99" />
-
-            <TextView
-                android:id="@+id/edit_count"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:layout_marginRight="@dimen/dms_10"
-                android:layout_marginBottom="@dimen/dms_10"
-                android:text="0/20" />
-        </LinearLayout>
+            app:drawableLeftHeight="@dimen/dms_34"
+            app:drawableLeftWidth="@dimen/dms_34" />
 
         <FrameLayout
+            android:id="@+id/find_publish_type"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dms_96"
             android:layout_marginTop="@dimen/dms_30">
 
             <TextView
-                style="@style/TextSizeBlack13"
-                android:layout_width="match_parent"
-                android:text="@string/category"
-                android:textColor="@color/gray_99" />
-        </FrameLayout>
+                style="@style/TextSizeBlack14"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/category" />
 
-        <TextView
-            style="@style/LineHorizontal"
-            android:layout_marginTop="@dimen/dms_10" />
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/find_publish_type_text"
+                style="@style/TextSizeBlack14"
+                android:drawableRight="@mipmap/arrow_down"
+                android:layout_gravity="center_vertical|right" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/find_publish_submit"
             style="@style/TextSizeWhite16"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/dms_30"
+            android:layout_height="@dimen/dms_88"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginRight="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_154"
             android:background="@drawable/selector_login_correlation_btn_bg"
             android:gravity="center"
-            android:paddingTop="@dimen/dms_24"
-            android:paddingBottom="@dimen/dms_24"
             android:text="@string/publish" />
 
+        <TextView
+            android:id="@+id/find_publish_ok"
+            style="@style/TextSizeBlack13"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dms_54"
+            android:layout_marginBottom="@dimen/dms_112"
+            android:text="@string/publish_rule_description"
+            android:textColor="@color/gray_99" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/find_publish_ok"
-        style="@style/TextSizeBlack12"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dms_50"
-        android:text="@string/publish_rule_description"
-        android:textColor="@color/color_666"
-        android:textSize="@dimen/font_26" />
 </RelativeLayout>

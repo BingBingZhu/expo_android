@@ -11,6 +11,7 @@ import com.expo.contract.presenter.ExaminePresenterImpl;
 import com.expo.contract.presenter.FeedbackPresenterImpl;
 import com.expo.contract.presenter.FindListPresenterImpl;
 import com.expo.contract.presenter.FindPresenterImpl;
+import com.expo.contract.presenter.FindPublishPresenterImpl;
 import com.expo.contract.presenter.FreeWifiPresenterImpl;
 import com.expo.contract.presenter.HeartBeatPresenterImpl;
 import com.expo.contract.presenter.HomePresenterImpl;
@@ -33,6 +34,7 @@ import com.expo.contract.presenter.TrackPresenterImpl;
 import com.expo.contract.presenter.UserInfoPresenterImpl;
 import com.expo.contract.presenter.WebPresenterImpl;
 import com.expo.contract.presenter.WebTemplatePresenterImpl;
+import com.expo.module.main.find.publish.FindPublishActivity;
 
 public class PresenterFactory {
     public static IPresenter getPresenter(IView view) {
@@ -98,6 +100,8 @@ public class PresenterFactory {
             return new FindListPresenterImpl((FindListContract.View) view);
         } else if (view instanceof ExamineContract.View) {
             return new ExaminePresenterImpl((ExamineContract.View) view);
+        } else if (view instanceof FindPublishContract.View) {
+            return new FindPublishPresenterImpl((FindPublishContract.View) view);
         }
         throw new UnsupportedOperationException();
     }

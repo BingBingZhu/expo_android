@@ -11,9 +11,9 @@
 
     <ImageView
         android:id="@+id/find_detail_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dms_36"
+        android:layout_height="@dimen/dms_30"
         android:layout_margin="@dimen/dms_30"
-        android:src="@mipmap/ico_close_park_dialog" />
+        android:src="@mipmap/icon_navbar_back_white" />
 
 </RelativeLayout>
