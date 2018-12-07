@@ -208,7 +208,7 @@
     <string name="dialog_image_record">拍摄</string>
     <string name="dialog_image_image_video">照片或者视频</string>
     <string name="dialog_image_album">从手机相册选择</string>
-    <string name="buy_tickets">购票</string>
+    <string name="buy_tickets">门票预订</string>
     <string name="clear_cache_msg">确定要清除缓存吗？</string>
     <string name="leave_navi">确定要离开导航吗？</string>
     <string name="sence_introduction">景点介绍</string>
