@@ -2,7 +2,10 @@ package com.expo.module.main.find.examine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.ImageUtils;
 import com.expo.contract.ExamineContract;
 import com.expo.entity.Find;
 import com.expo.utils.CommUtils;
@@ -28,9 +32,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/*
- * 推荐路线列表
- */
 public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter> implements ExamineContract.View {
 
     @BindView(R.id.recycler)
@@ -38,6 +39,7 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
     List<Find> mData;
     CommonAdapter mAdapter;
     boolean mIsShowRight = false;
+    Handler mHandler = new Handler();
 
     @Override
     protected int getContentView() {
@@ -58,8 +60,15 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
                 Find find = mData.get(position);
-                if (!StringUtils.isEmpty(find.upic))
-                    CommUtils.setImgPic(FindExamineActivity.this, find.url1, (ImageView) holder.getView(R.id.item_examine_img));
+                if (!StringUtils.isEmpty(find.url1))
+                    if (find.url1.endsWith(".mp4"))
+                        new Thread(() -> {
+                            Bitmap bitmap = ImageUtils.createVideoThumbnail(CommUtils.getFullUrl(find.url1), MediaStore.Images.Thumbnails.MINI_KIND);
+                            if (mHandler != null)
+                                mHandler.post(() -> ((ImageView) holder.getView(R.id.item_examine_img)).setImageBitmap(bitmap));
+                        }).start();
+                    else
+                        CommUtils.setImgPic(FindExamineActivity.this, CommUtils.getFullUrl(find.url1), (ImageView) holder.getView(R.id.item_examine_img));
 
                 holder.setText(R.id.item_examine_time, find.createtime);
                 holder.setText(R.id.item_examine_content, find.caption);
@@ -118,5 +127,11 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
         mSaveBtn.setOnClickListener(v -> {
             FindExamineActivity.startActivity(FindExamineActivity.this, R.string.examine_wait, false);
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacksAndMessages(null);
+        super.onDestroy();
     }
 }

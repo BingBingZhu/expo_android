@@ -22,9 +22,11 @@ import android.widget.VideoView;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.ImageUtils;
 import com.expo.contract.FindDetailContract;
 import com.expo.contract.presenter.FindDetailPresenterImpl;
 import com.expo.entity.Find;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -58,6 +60,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
     TextView mTvViews;
 
     VideoView mVideo;
+    ImageView mVideoImg;
     ImageView mVideoControl;
 
     Find mFind;
@@ -79,6 +82,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
         mList = mFind.getUrlList();
         setFindInfo();
         mPresenter.addViews(mFind.id + "");
+        mFind.url1 = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 ";
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -89,12 +93,21 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
                 @Override
                 protected void convert(ViewHolder holder, Object o, int position) {
                     mVideo = ((VideoView) holder.getView(R.id.item_find_video));
+                    mVideoImg = ((ImageView) holder.getView(R.id.item_find_video_img));
                     mVideoControl = ((ImageView) holder.getView(R.id.item_find_video_control));
-                    mVideo.setVideoURI(Uri.parse(mFind.url1));
+                    mVideo.setVideoURI(Uri.parse(CommUtils.getFullUrl(mFind.url1)));
                     holder.setOnClickListener(R.id.item_find_video, v -> videoChangeState());
                     holder.setOnClickListener(R.id.item_find_video_control, v -> videoStart());
                     mVideo.setOnCompletionListener(mp -> videoComplete());
                     mTvPosition.setText((position + 1) + "/" + mFind.getResCount());
+
+                    new Thread(() -> {
+                        Bitmap bitmap = ImageUtils.createVideoThumbnail(CommUtils.getFullUrl(mFind.url1), MediaStore.Images.Thumbnails.MINI_KIND);
+                        if (mHandler != null)
+                            mHandler.post(() -> mVideoImg.setImageBitmap(bitmap));
+                    }).start();
+
+                    mTvPosition.setText((position + 1) + "/" + mList.size());
                     videoStart();
                 }
 
@@ -148,21 +161,24 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
         if (mVideo != null) {
             Picasso.with(this).load(R.mipmap.video_restart).into(mVideoControl);
             mVideoControl.setVisibility(View.VISIBLE);
+            mVideoImg.setVisibility(View.VISIBLE);
         }
     }
 
     private void videoPause() {
         if (mVideo != null) {
-            mVideo.pause();
+            mVideoImg.setVisibility(View.GONE);
             Picasso.with(this).load(R.mipmap.video_start).into(mVideoControl);
             mVideoControl.setVisibility(View.VISIBLE);
+            mVideo.pause();
         }
     }
 
     private void videoStart() {
         if (mVideo != null) {
-            mVideo.start();
+            mVideoImg.setVisibility(View.GONE);
             mVideoControl.setVisibility(View.GONE);
+            mVideo.start();
         }
     }
 
@@ -176,4 +192,9 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
 
     }
 
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacksAndMessages(null);
+        super.onDestroy();
+    }
 }

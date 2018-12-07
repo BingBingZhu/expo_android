@@ -1,6 +1,9 @@
 package com.expo.module.main.find;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,10 +14,10 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
+import com.expo.base.utils.ImageUtils;
 import com.expo.entity.Find;
 import com.expo.module.main.find.detail.FindDetailActivity;
 import com.expo.utils.CommUtils;
-import com.expo.utils.media.Common;
 import com.squareup.picasso.Picasso;
 
 import org.raphets.roundimageview.RoundImageView;
@@ -29,14 +32,16 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
 
     private List<Find> mData;
     private Context mContext;
+    private Handler mHandler;
 
-    public FindListAdapter(Context context, List<Find> data) {
+    public FindListAdapter(Context context, Handler handler, List<Find> data) {
         this.mContext = context;
         if (null == data) {
             this.mData = new ArrayList<>();
         } else {
             this.mData = data;
         }
+        this.mHandler = handler;
     }
 
     @NonNull
@@ -52,7 +57,11 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Find find = mData.get(position);
         if (find.url1.endsWith(".mp4")) {
-
+            new Thread(() -> {
+                Bitmap bitmap = ImageUtils.createVideoThumbnail(CommUtils.getFullUrl(find.url1), MediaStore.Images.Thumbnails.MINI_KIND);
+                if (mHandler != null)
+                    mHandler.post(() -> holder.img.setImageBitmap(bitmap));
+            }).start();
         } else
             Picasso.with(mContext).load(CommUtils.getFullUrl(find.url1)).into(holder.img);
         if ((position + 1) % 4 > 1) {

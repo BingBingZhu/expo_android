@@ -2,22 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ency_item_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/gray_99"
     android:orientation="vertical">
 
     <VideoView
         android:id="@+id/item_find_video"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:foregroundGravity="center" />
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:id="@+id/item_find_video_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_find_video"
+        android:layout_alignBottom="@id/item_find_video"
+        />
 
     <ImageView
         android:id="@+id/item_find_video_control"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:src="@mipmap/video_start" />
 
 </RelativeLayout>

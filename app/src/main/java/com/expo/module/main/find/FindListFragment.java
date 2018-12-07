@@ -1,6 +1,7 @@
 package com.expo.module.main.find;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
@@ -35,6 +36,7 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
     private FindListAdapter mAdapter;
     private int page = 0;
     private List<Find> mFindList = null;
+    Handler mHandler = new Handler();
 
     @Override
     public int getContentView() {
@@ -50,7 +52,7 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
     protected void onInitView(Bundle savedInstanceState) {
         mTab = getArguments().getParcelable("tab");
         mFindList = new ArrayList<>();
-        mAdapter = new FindListAdapter(getContext(), mFindList);
+        mAdapter = new FindListAdapter(getContext(), mHandler, mFindList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new SpaceDecoration(0, getResources().getDimensionPixelSize(R.dimen.dms_4)));
         StaggeredGridLayoutManager recyclerViewLayoutManager =
