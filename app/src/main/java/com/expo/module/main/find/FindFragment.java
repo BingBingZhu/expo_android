@@ -19,6 +19,7 @@ import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.EncyclopediasContract;
 import com.expo.contract.FindContract;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
+import com.expo.module.main.find.examine.FindExamineActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
@@ -116,7 +117,7 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
     }
 
     @Override
-    public void setTabData(List<Tab> tabs) {
+    public void setTabData(List<FindTab> tabs) {
         if (tabs == null || tabs.isEmpty()) {
             mTabView.setVisibility(View.GONE);
             return;
@@ -124,16 +125,21 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
         mAdapter.setTabs(tabs);
         mTabView.setVisibility(View.VISIBLE);
         mTabView.setTabMode(TabLayout.MODE_SCROLLABLE);
-        for (Tab type : tabs) {
-            mTabView.addTab(mTabView.newTab().setText(LanguageUtil.chooseTest(type.getTab(), type.getEnTab())));
+        for (FindTab type : tabs) {
+            mTabView.addTab(mTabView.newTab().setText(type.tab));
         }
         mAdapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.find_search)
+    @OnClick(R.id.find_my_find)
     public void onClick(View v) {
-        EncyclopediaSearchActivity.startActivity(getContext());
+        FindExamineActivity.startActivity(getContext(), R.string.examine, true);
     }
+
+//    @OnClick(R.id.find_search)
+//    public void onClick(View v) {
+//        EncyclopediaSearchActivity.startActivity(getContext());
+//    }
 
     @Override
     public void onDestroy() {

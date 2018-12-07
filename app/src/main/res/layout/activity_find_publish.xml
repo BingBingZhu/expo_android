@@ -42,7 +42,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dms_220"
             android:layout_below="@id/seek_help_layout"
             android:layout_marginTop="@dimen/dms_26" />
 
@@ -69,31 +69,33 @@
             <com.hedan.textdrawablelibrary.TextViewDrawable
                 android:id="@+id/find_publish_type_text"
                 style="@style/TextSizeBlack14"
-                android:drawableRight="@mipmap/arrow_down"
-                android:layout_gravity="center_vertical|right" />
+                android:layout_gravity="center_vertical|right"
+                android:drawableRight="@mipmap/arrow_down" />
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/find_publish_submit"
-            style="@style/TextSizeWhite16"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dms_88"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/dms_30"
-            android:layout_marginRight="@dimen/dms_30"
-            android:layout_marginTop="@dimen/dms_154"
-            android:background="@drawable/selector_login_correlation_btn_bg"
-            android:gravity="center"
-            android:text="@string/publish" />
-
-        <TextView
-            android:id="@+id/find_publish_ok"
-            style="@style/TextSizeBlack13"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dms_54"
-            android:layout_marginBottom="@dimen/dms_112"
-            android:text="@string/publish_rule_description"
-            android:textColor="@color/gray_99" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/find_publish_ok"
+        style="@style/TextSizeBlack13"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dms_54"
+        android:layout_marginBottom="@dimen/dms_112"
+        android:text="@string/publish_rule_description"
+        android:textColor="@color/gray_99" />
+
+    <TextView
+        android:id="@+id/find_publish_submit"
+        style="@style/TextSizeWhite16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_88"
+        android:layout_above="@id/find_publish_ok"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
+        android:background="@drawable/selector_login_correlation_btn_bg"
+        android:gravity="center"
+        android:text="@string/publish" />
 </RelativeLayout>

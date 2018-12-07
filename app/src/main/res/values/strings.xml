@@ -132,6 +132,10 @@
     <string name="check_string_empty_content">内容不能为空</string>
     <string name="check_string_empty_report_content">评论内容不能为空</string>
     <string name="check_string_empty_localtion_descriptiong">情况描述不能为空</string>
+    <string name="check_string_empty_title">标题不能为空</string>
+    <string name="check_string_empty_category">类别不能为空</string>
+    <string name="check_string_empty_image_video">图片或视频不能为空</string>
+
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
 
@@ -296,5 +300,18 @@
     <string name="img_limit">最多只能发布9张图片或一个视频</string>
     <string name="publish_edit_hint">给你的作品起个标题吧</string>
     <string name="publish_rule_description">《用户发布规则说明》</string>
+    <string name="examine_pass">审核通过</string>
+    <string name="examine_unpass">审核未通过</string>
+    <string name="examine_not">未审核</string>
+    <string name="my_find">我的发现</string>
+    <string name="examine">审核</string>
+    <string name="examine_unpass_reason">内容不符合发布规定</string>
+    <string name="examine_wait">待审核</string>
+
+    <string name="find_tab_scenic">风景</string>
+    <string name="find_tab_venue">场馆</string>
+    <string name="find_tab_food">美食</string>
+    <string name="find_tab_botany">植物</string>
+    <string name="find_tab_other">其他</string>
 
 </resources>

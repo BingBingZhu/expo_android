@@ -5,7 +5,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.expo.R;
-import com.expo.adapters.Tab;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FindListContract;
@@ -25,7 +24,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class FindListFragment extends BaseFragment<FindListContract.Presenter> implements FindListContract.View {
 
-    private Tab mTab;
+    private FindTab mTab;
     @BindView(R.id.ptr_view)
     PtrClassicFrameLayout mPtrView;
     @BindView(R.id.recycler_view)
@@ -33,7 +32,7 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
     @BindView(R.id.empty_layout)
     View mEmptyView;
 
-    private FindListAdapter adapter;
+    private FindListAdapter mAdapter;
     private int page = 0;
     private List<Find> mFindList = null;
 
@@ -51,15 +50,15 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
     protected void onInitView(Bundle savedInstanceState) {
         mTab = getArguments().getParcelable("tab");
         mFindList = new ArrayList<>();
-        adapter = new FindListAdapter(getContext(), mFindList);
-        mRecyclerView.setAdapter(adapter);
+        mAdapter = new FindListAdapter(getContext(), mFindList);
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new SpaceDecoration(0, getResources().getDimensionPixelSize(R.dimen.dms_4)));
         StaggeredGridLayoutManager recyclerViewLayoutManager =
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(recyclerViewLayoutManager);
 
         initLoadMore();
-        mPresenter.fresh(mTab.getId(), page);
+        mPresenter.getSocietyListFilter(page, true);
     }
 
     private void initLoadMore() {
@@ -68,13 +67,13 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
                 page++;
-                mPresenter.load(mTab.getId(), page);
+                mPresenter.getSocietyListFilter(page, false);
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 page = 0;
-                mPresenter.fresh(mTab.getId(), page);
+                mPresenter.getSocietyListFilter(page, true);
             }
         });
     }
@@ -105,6 +104,7 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
             mRecyclerView.setVisibility(View.VISIBLE);
 
         }
+        mAdapter.notifyDataSetChanged();
         mPtrView.refreshComplete();
     }
 

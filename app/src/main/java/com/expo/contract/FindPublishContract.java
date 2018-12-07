@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.Find;
 import com.expo.entity.VisitorService;
 
 public interface FindPublishContract {
@@ -13,9 +14,8 @@ public interface FindPublishContract {
             super(view);
         }
 
-        public abstract void addVisitorService(VisitorService visitorService);
+        public abstract void addSociety(Find find);
 
-        public abstract void getServerPoint(Location mLocation);
     }
 
     interface View extends IView {

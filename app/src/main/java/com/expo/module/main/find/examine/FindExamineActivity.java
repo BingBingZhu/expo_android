@@ -6,19 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.view.Gravity;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.contract.ExamineContract;
 import com.expo.entity.Find;
-import com.expo.entity.RouteInfo;
-import com.expo.module.routes.RouteDetailActivity;
 import com.expo.utils.CommUtils;
-import com.expo.utils.LanguageUtil;
+import com.expo.utils.Constants;
+import com.expo.widget.AppBarView;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -38,16 +37,7 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
     RecyclerView mRecyclerView;
     List<Find> mData;
     CommonAdapter mAdapter;
-    boolean mIsExamine = false;
-
-    BaseAdapterItemClickListener<Long> mListener = new BaseAdapterItemClickListener<Long>() {
-
-        @Override
-        public void itemClick(View view, int position, Long aLong) {
-            mPresenter.clickRoute(String.valueOf(aLong));
-            RouteDetailActivity.startActivity(FindExamineActivity.this, aLong);
-        }
-    };
+    boolean mIsShowRight = false;
 
     @Override
     protected int getContentView() {
@@ -56,40 +46,42 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(1, R.string.title_routest_ac);
+        setTitle(1, getIntent().getIntExtra(Constants.EXTRAS.EXTRA_TITLE, 0));
+        mIsShowRight = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRAS, false);
+        if (mIsShowRight)
+            initTitleRightTextView();
 
         mData = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_20)));
+        mRecyclerView.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_4)));
         mRecyclerView.setAdapter(mAdapter = new CommonAdapter(this, R.layout.item_examine, mData) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
                 Find find = mData.get(position);
-                Picasso.with(FindExamineActivity.this).load(CommUtils.getFullUrl(find.picUrl.get(0))).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.icon_center_img));
-                holder.setText(R.id.item_examine_time, find.time);
-                holder.setText(R.id.item_examine_content, find.content);
-                holder.setText(R.id.item_examine_state, find.time);
-                holder.setVisible(R.id.item_examine_state_layout, mIsExamine);
-                if (mIsExamine) {
-                    if (find.state == -1) {
-                        holder.getView(R.id.item_examine_state_layout).setSelected(false);
-                        holder.setText(R.id.item_examine_state, "审核失败");
-                        holder.setText(R.id.item_examine_reason, "内容不符合发布规定");
-                    } else {
-                        holder.setText(R.id.item_examine_state, "待审核");
-                        holder.setText(R.id.item_examine_reason, "");
+                if (!StringUtils.isEmpty(find.upic))
+                    CommUtils.setImgPic(FindExamineActivity.this, find.url1, (ImageView) holder.getView(R.id.item_examine_img));
+
+                holder.setText(R.id.item_examine_time, find.createtime);
+                holder.setText(R.id.item_examine_content, find.caption);
+                holder.setText(R.id.item_examine_state, getString(find.getStateRes()));
+                holder.setVisible(R.id.item_examine_state_layout, !mIsShowRight);
+                holder.setVisible(R.id.item_examine_reason, false);
+                if (!mIsShowRight) {
+                    holder.setText(R.id.item_examine_state, getString(find.getStateRes()));
+                    if (find.state == 1) {
                         holder.getView(R.id.item_examine_state_layout).setSelected(true);
+                    } else if (find.state == 1) {
+                    } else {
+                        holder.setVisible(R.id.item_examine_reason, true);
+                        holder.getView(R.id.item_examine_state_layout).setSelected(false);
                     }
                 }
 
-                holder.itemView.setOnClickListener(v -> {
-                    mListener.itemClick(v, position, Long.valueOf(find.id));
-                });
             }
         });
 
-        mPresenter.getRoutesData();
-        mPresenter.getRouterHotCount();
+        mPresenter.getMySocietyList(mIsShowRight);
+
     }
 
     @Override
@@ -102,16 +94,29 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
      *
      * @param context
      */
-    public static void startActivity(@NonNull Context context) {
+    public static void startActivity(@NonNull Context context, int title, boolean showRight) {
         Intent in = new Intent(context, FindExamineActivity.class);
+        in.putExtra(Constants.EXTRAS.EXTRA_TITLE, title);
+        in.putExtra(Constants.EXTRAS.EXTRAS, showRight);
         context.startActivity(in);
     }
 
     @Override
-    public void freshRoutes(List list) {
+    public void freshFind(List<Find> list) {
         if (mData == null) mData = new ArrayList();
         mData.clear();
         if (list != null) mData.addAll(list);
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void initTitleRightTextView() {
+        TextView mSaveBtn = new TextView(this);
+        ((AppBarView) getTitleView()).setRightView(mSaveBtn);
+        mSaveBtn.setTextAppearance(this, R.style.TextSizeBlack13);
+        mSaveBtn.setText(R.string.examine_wait);
+        mSaveBtn.setGravity(Gravity.CENTER);
+        mSaveBtn.setOnClickListener(v -> {
+            FindExamineActivity.startActivity(FindExamineActivity.this, R.string.examine_wait, false);
+        });
     }
 }

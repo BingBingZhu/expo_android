@@ -15,9 +15,8 @@ public interface FindListContract {
             super(view);
         }
 
-        public abstract void fresh(Long tabId, int page);
+        public abstract void getSocietyListFilter(int page, boolean fresh);
 
-        public abstract void load(Long tabId, int page);
     }
 
     interface View extends IView {

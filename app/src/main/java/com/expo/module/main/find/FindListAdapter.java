@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
-import com.expo.adapters.ListItemData;
 import com.expo.entity.Find;
 import com.expo.module.main.find.detail.FindDetailActivity;
 import com.expo.utils.CommUtils;
-import com.expo.utils.LanguageUtil;
+import com.expo.utils.media.Common;
 import com.squareup.picasso.Picasso;
 
 import org.raphets.roundimageview.RoundImageView;
@@ -51,17 +51,21 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Find find = mData.get(position);
-        Picasso.with(mContext).load(CommUtils.getFullUrl(find.picUrl.get(0))).into(holder.img);
+        if (find.url1.endsWith(".mp4")) {
+
+        } else
+            Picasso.with(mContext).load(CommUtils.getFullUrl(find.url1)).into(holder.img);
         if ((position + 1) % 4 > 1) {
             holder.img.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen.dms_468);
         } else {
             holder.img.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen.dms_344);
         }
-        holder.content.setText(find.content);
-        Picasso.with(mContext).load(find.head).into(holder.head);
-        holder.name.setText(find.name);
-        holder.scans.setText(find.scans);
-        holder.like.setText(find.like);
+        holder.content.setText(find.remark);
+        if (!StringUtils.isEmpty(find.upic))
+            CommUtils.setImgPic(mContext, find.upic, holder.head);
+        holder.name.setText(find.caption);
+        holder.scans.setText(find.views);
+        holder.like.setText(find.enjoys);
         holder.itemView.setOnClickListener(v -> FindDetailActivity.startActivity(mContext, find));
     }
 

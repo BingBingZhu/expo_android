@@ -52,18 +52,19 @@ public class LanguageUtil {
     }
 
     public static boolean isCN() {
-        if (StringUtils.equals(LANGUAGE_CN, PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null)))
+        if (!StringUtils.isEmpty(PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null))
+                && StringUtils.equals(LANGUAGE_CN, PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null)))
             return true;
         // 下方代码注释掉吧，不然存在问题
-//        Locale locale;
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            locale = ExpoApp.getApplication().getResources().getConfiguration().getLocales().get(0);
-//        } else {
-//            locale = ExpoApp.getApplication().getResources().getConfiguration().locale;
-//        }
-//        String language = locale.getLanguage();
-//        if (language.endsWith("zh"))
-//            return true;
+        Locale locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            locale = ExpoApp.getApplication().getResources().getConfiguration().getLocales().get(0);
+        } else {
+            locale = ExpoApp.getApplication().getResources().getConfiguration().locale;
+        }
+        String language = locale.getLanguage();
+        if (language.endsWith("zh"))
+            return true;
         return false;
     }
 
@@ -87,7 +88,7 @@ public class LanguageUtil {
      * @return
      */
     public static int chooseImg(int cnImgId, int enImgId) {
-        if (isCN())  return cnImgId;
+        if (isCN()) return cnImgId;
         else return enImgId;
     }
 

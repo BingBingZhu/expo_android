@@ -117,6 +117,15 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         mSignClusterHandler.sendMessage( message );
     }
 
+    public void clearClusterItem(){
+        for (Marker marker : mAddMarkers) {
+            marker.remove();
+        }
+        mAddMarkers.clear();
+        mClusterItems.clear();
+        mClusters.clear();
+    }
+
     /**
      * 设置聚合元素的渲染样式，不设置则默认为气泡加数字形式进行渲染
      *

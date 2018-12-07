@@ -1,12 +1,11 @@
 package com.expo.module.main.find.publish;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,19 +15,21 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.idst.nls.internal.protocol.Content;
-import com.baidu.speech.EventManager;
 import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
+import com.expo.base.ExpoApp;
+import com.expo.base.utils.CheckUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FindPublishContract;
+import com.expo.entity.Find;
 import com.expo.module.camera.CameraActivity;
 import com.expo.module.mine.adapter.WorkAdapter;
 import com.expo.utils.CommUtils;
@@ -38,6 +39,7 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnItemClickListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +65,6 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     WorkAdapter mWorkAdapter;
     List<String> mWorkList = new ArrayList<String>();
-
-    boolean mIsImage = false;
 
     int mCameraPosition = 0;
 
@@ -121,7 +121,9 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     private void initRecyclerView() {
         mAdapter = new FindPublishAdapter(this);
-        mRecycler.setLayoutManager(new GridLayoutManager(this, 3));
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayout.HORIZONTAL);
+        mRecycler.setLayoutManager(manager);
         mRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_10)));
         mRecycler.setAdapter(mAdapter);
 
@@ -190,8 +192,11 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         dialog.show();
     }
 
-    @OnClick(R.id.find_publish_ok)
+    @OnClick(R.id.find_publish_submit)
     public void submit(View view) {
+        Find find = getFindPublish();
+        if (find != null)
+            mPresenter.addSociety(find);
     }
 
     @Override
@@ -260,7 +265,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     private void goImageSelector() {
         int count = getCameraImageCount();
-        if (count >= 3)
+        if (count >= 9)
             ToastHelper.showShort(R.string.today);
         else
             ImageSelector.builder()
@@ -312,6 +317,34 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private Find getFindPublish() {
+        if (CheckUtils.isEmtpy(mEtEdit.getText().toString(), R.string.check_string_empty_title, true))
+            return null;
+        if (mImageList.size() == 0) {
+            ToastHelper.showShort(R.string.check_string_empty_image_video);
+            return null;
+        }
+        if (CheckUtils.isEmtpy(mTvTypeText.getText().toString(), R.string.check_string_empty_category, true))
+            return null;
+
+        Find find = new Find();
+        find.caption = mEtEdit.getText().toString();
+        find.subtime = TimeUtils.getNowMills() + "";
+        find.createtime = TimeUtils.millis2String(TimeUtils.getNowMills(), new SimpleDateFormat(Constants.TimeFormat.TYPE_ALL));
+        find.mobile = ExpoApp.getApplication().getUser().getMobile();
+        find.uid = ExpoApp.getApplication().getUser().getUid();
+        find.uname = ExpoApp.getApplication().getUser().getNick();
+        find.upic = ExpoApp.getApplication().getUser().getPhotoUrl();
+        find.kind = mTvTypeText.getText().toString();
+        if (mImageList.size() == 1 && mImageList.get(0).endsWith(".mp4")) find.type = 1;
+        else find.type = 0;
+        for (int i = 0; i < mImageList.size(); i++) {
+            find.setUrl(i, mImageList.get(i));
+        }
+
+        return find;
     }
 
 }

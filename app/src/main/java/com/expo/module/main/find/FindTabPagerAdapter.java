@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FindTabPagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<Tab> tabs;
+    private List<FindTab> tabs;
     private Bundle bundle;
 
     public FindTabPagerAdapter(FragmentManager fm) {
@@ -35,7 +35,7 @@ public class FindTabPagerAdapter extends FragmentStatePagerAdapter {
         return count;
     }
 
-    public void setTabs(List<Tab> tabs) {
+    public void setTabs(List<FindTab> tabs) {
         this.tabs = tabs;
         notifyDataSetChanged();
     }

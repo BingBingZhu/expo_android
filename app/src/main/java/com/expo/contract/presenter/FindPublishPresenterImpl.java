@@ -5,6 +5,7 @@ import android.location.Location;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.contract.FindPublishContract;
 import com.expo.contract.SeekHelpContract;
+import com.expo.entity.Find;
 import com.expo.entity.VisitorService;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
@@ -25,20 +26,14 @@ public class FindPublishPresenterImpl extends FindPublishContract.Presenter {
     }
 
     @Override
-    public void addVisitorService(VisitorService visitorService) {
+    public void addSociety(Find find) {
         mView.showLoadingView();
-        upLoadImgFile(visitorService, visitorService.img_url1, 0);
-        upLoadImgFile(visitorService, visitorService.img_url2, 1);
-        upLoadImgFile(visitorService, visitorService.img_url3, 2);
+        for (int i = 0; i < 9; i++) {
+            upLoadImgFile(find, find.getUrl(i), i);
+        }
     }
 
-    @Override
-    public void getServerPoint(Location mLocation) {
-//        List<Venue> facilities = mDao.query(Venue.class, new QueryParams()
-//                .add("eq", "is_enable", 1));
-    }
-
-    public void upLoadImgFile(VisitorService visitorService, String filePath, int positon) {
+    public void upLoadImgFile(Find find, String filePath, int positon) {
         if (!StringUtils.isEmpty(filePath)) {
             File file = new File(filePath);
             String fileType = "";
@@ -47,36 +42,33 @@ public class FindPublishPresenterImpl extends FindPublishContract.Presenter {
             else
                 fileType = "image.png";
             RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            ;
             Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile(MultipartBody.Part.createFormData("file", fileType, requestBody));
             Http.request(new ResponseCallback<UploadRsp>() {
                 @Override
                 protected void onResponse(UploadRsp rsp) {
-                    if (positon == 0) visitorService.img_url1 = rsp.shortUrl;
-                    else if (positon == 1) visitorService.img_url2 = rsp.shortUrl;
-                    else if (positon == 2) visitorService.img_url3 = rsp.shortUrl;
-                    submitVisitorService(visitorService);
+                    find.setUrl(positon, rsp.shortUrl);
+                    submitSociety(find);
                 }
             }, verifyCodeLoginObservable);
         } else {
-            submitVisitorService(visitorService);
+            submitSociety(find);
         }
     }
 
-    private synchronized void submitVisitorService(VisitorService visitorService) {
-        visitorService.addTimes();
-        if (visitorService.getTimes() < 3) return;
+    private synchronized void submitSociety(Find find) {
+        find.times++;
+        if (find.times < 9) return;
         Map<String, Object> params = Http.getBaseParams();
-        params.put("Obj", visitorService.toJson());
+        params.put("obj", find.toJson());
         RequestBody requestBody = Http.buildRequestBody(params);
-        Observable<BaseResponse> verifyCodeLoginObservable = Http.getServer().addVisitorService(requestBody);
+        Observable<BaseResponse> addSociety = Http.getServer().addSociety(requestBody);
         Http.request(new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
                 mView.hideLoadingView();
                 mView.complete();
             }
-        }, verifyCodeLoginObservable);
+        }, addSociety);
 
     }
 

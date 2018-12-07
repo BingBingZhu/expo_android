@@ -12,6 +12,7 @@ import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RichTextRsp;
 import com.expo.network.response.RouteInfoResp;
+import com.expo.network.response.SocietyListResp;
 import com.expo.network.response.VenueResp;
 import com.expo.network.response.SubjectResp;
 import com.expo.network.response.TopLineResp;
@@ -355,5 +356,53 @@ public interface DataServer {
     @POST("Terminal/GetRichText")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<RichTextRsp> getRichText(@Body RequestBody requestBody);
+
+    /**
+     * 获取社交圈数据
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetMySocietyList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<SocietyListResp> getMySocietyList(@Body RequestBody requestBody);
+
+    /**
+     * 获取社交圈数据
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetSocietyListFilter")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<SocietyListResp> getSocietyListFilter(@Body RequestBody requestBody);
+
+    /**
+     * 新增一个圈
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("manage/AddSociety")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> addSociety(@Body RequestBody requestBody);
+
+    /**
+     * 为某个圈点赞
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/SetEnjoySociety")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> setEnjoySociety(@Body RequestBody requestBody);
+
+    /**
+     * 为某个圈增加观看数
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/SetSocietyViews")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> setSocietyViews(@Body RequestBody requestBody);
 
 }

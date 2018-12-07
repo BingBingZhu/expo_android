@@ -9,6 +9,7 @@ import com.expo.contract.presenter.EncyclopediaSearchPresenterImpl;
 import com.expo.contract.presenter.EncyclopediasPresenterImpl;
 import com.expo.contract.presenter.ExaminePresenterImpl;
 import com.expo.contract.presenter.FeedbackPresenterImpl;
+import com.expo.contract.presenter.FindDetailPresenterImpl;
 import com.expo.contract.presenter.FindListPresenterImpl;
 import com.expo.contract.presenter.FindPresenterImpl;
 import com.expo.contract.presenter.FindPublishPresenterImpl;
@@ -102,6 +103,8 @@ public class PresenterFactory {
             return new ExaminePresenterImpl((ExamineContract.View) view);
         } else if (view instanceof FindPublishContract.View) {
             return new FindPublishPresenterImpl((FindPublishContract.View) view);
+        } else if (view instanceof FindDetailContract.View) {
+            return new FindDetailPresenterImpl((FindDetailContract.View) view);
         }
         throw new UnsupportedOperationException();
     }
