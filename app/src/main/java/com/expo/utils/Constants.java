@@ -87,8 +87,8 @@ public interface Constants {
     class URL {
         public static final String ALI_BASE_URL = "http://47.95.215.6:8080/Api/";    //阿里云(识花)
         //IP
-//        public static final String IP = "39.105.120.171";
-        public static final String IP = "47.92.250.179";
+        public static final String IP = "39.105.120.171";
+//        public static final String IP = "47.92.250.179";
         //自己服务器基本请求用到的URL
         public static final String BASE_URL = "http://" + IP + ":8080/Api/";
         //自己服务器文件资源请求用到的URL
@@ -100,6 +100,7 @@ public interface Constants {
         public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
         //        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce";
         public static final String HTML_404 = "file:///android_asset/web/404.html";
+        public static final String UPPAY_APP_DOWNLOAD_URL = "http://www.toolsmi.com/UPPayPluginEx.apk";
     }
 
     /**
@@ -220,7 +221,7 @@ public interface Constants {
         };//向js提示使用光团gif图片
     }
 
-    class HandlerMsg{
+    class HandlerMsg {
         public static final int NAVI_NEAR_WIKI = 0;//附近景点
 
     }

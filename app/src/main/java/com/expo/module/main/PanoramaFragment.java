@@ -35,7 +35,7 @@ public class PanoramaFragment extends BaseFragment<PanoramaContract.Presenter> i
     protected void onInitView(Bundle savedInstanceState) {
         mX5View.setWebChromeClient( webChromeClient );
         String url = mPresenter.loadPanoramaUrl();
-        mX5View.loadUrl( TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url );
+        mX5View.loadUrl( url );
     }
 
     @Override

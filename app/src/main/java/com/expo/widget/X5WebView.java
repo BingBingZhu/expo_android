@@ -4,15 +4,16 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.expo.BuildConfig;
-import com.expo.base.ExpoApp;
 import com.expo.base.utils.ToastHelper;
-import com.expo.map.LocationManager;
-import com.expo.module.webview.WebTemplateActivity;
 import com.tencent.smtt.export.external.interfaces.JsResult;
+import com.tencent.smtt.export.external.interfaces.WebResourceError;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 
 public class X5WebView extends WebView {
     private static final String APP_NAME_UA = "LUCASPARK";
+    private String mUrl;
     private WebViewClient client = new WebViewClient() {
         /**
          * 防止加载网页时调起系统浏览器
@@ -30,7 +32,45 @@ public class X5WebView extends WebView {
             view.loadUrl( url );
             return true;
         }
+
+        @Override
+        public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
+            if (!error404( webResourceRequest.getUrl().toString(), webResourceError.getErrorCode() )) {
+                super.onReceivedError( webView, webResourceRequest, webResourceError );
+            }
+        }
+
+        @Override
+        public void onReceivedHttpError(WebView webView, WebResourceRequest webResourceRequest, WebResourceResponse webResourceResponse) {
+            if (!error404( webResourceRequest.getUrl().toString(), webResourceResponse.getStatusCode() )) {
+                super.onReceivedHttpError( webView, webResourceRequest, webResourceResponse );
+            }
+        }
+
+        private boolean error404(String path, int code) {
+            if (code == 404 && path.startsWith( mUrl )) {
+                stopLoading();
+                clearView();
+                load404Page();
+                return true;
+            }
+            return false;
+        }
     };
+
+    @Override
+    public void loadUrl(String s) {
+        if (TextUtils.isEmpty( s )) {
+            load404Page();
+            return;
+        }
+        mUrl = s;
+        super.loadUrl( s );
+    }
+
+    private void load404Page() {
+        loadUrl( "file:///android_asset/web/404.html" );
+    }
 
     private WebChromeClient chromeClient = new WebChromeClient() {
 
@@ -76,7 +116,7 @@ public class X5WebView extends WebView {
         webSetting.setSupportMultipleWindows( true );
         // webSetting.setLoadWithOverviewMode(true);
         webSetting.setAppCacheEnabled( true );
-         webSetting.setDatabaseEnabled(true);
+        webSetting.setDatabaseEnabled( true );
         webSetting.setDomStorageEnabled( true );
         webSetting.setGeolocationEnabled( true );
         webSetting.setAppCacheMaxSize( Long.MAX_VALUE );
