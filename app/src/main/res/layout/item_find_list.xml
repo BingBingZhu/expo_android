@@ -9,11 +9,14 @@
     android:orientation="vertical"
     android:padding="@dimen/dms_10">
 
-    <ImageView
+    <org.raphets.roundimageview.RoundImageView
         android:id="@+id/find_list_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        app:leftTop_corner_radius="@dimen/dms_4"
+        app:rightTop_corner_radius="@dimen/dms_4"
+        app:type="round" />
 
     <TextView
         android:id="@+id/find_list_content"

@@ -63,14 +63,18 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
             protected void convert(ViewHolder holder, Object o, int position) {
                 Find find = mData.get(position);
                 if (!StringUtils.isEmpty(find.url1))
-                    if (find.url1.endsWith(".mp4"))
+                    if (find.url1.endsWith(".mp4")) {
+                        holder.setVisible(R.id.item_find_video_control, true);
                         new Thread(() -> {
                             Bitmap bitmap = ImageUtils.createVideoThumbnail(CommUtils.getFullUrl(find.url1), MediaStore.Images.Thumbnails.MINI_KIND);
                             if (mHandler != null)
                                 mHandler.post(() -> ((ImageView) holder.getView(R.id.item_examine_img)).setImageBitmap(bitmap));
                         }).start();
-                    else
+
+                    } else {
+                        holder.setVisible(R.id.item_find_video_control, true);
                         CommUtils.setImgPic(FindExamineActivity.this, CommUtils.getFullUrl(find.url1), (ImageView) holder.getView(R.id.item_examine_img));
+                    }
 
                 holder.setText(R.id.item_examine_time, find.createtime);
                 holder.setText(R.id.item_examine_content, find.caption);
