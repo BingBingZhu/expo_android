@@ -40,8 +40,7 @@ public class NavigationPresenterImpl extends NavigationContract.Presenter {
             }
             vd.title = LanguageUtil.chooseTest( v.getCaption(), v.getEnCaption() );
             vd.content = LanguageUtil.chooseTest( v.getRemark(), v.getEnRemark() );
-            vd.voice = new ArrayList<>();
-            vd.voice.add( LanguageUtil.chooseTest( v.getVoiceUrl(), v.getVoiceUrlEn() ) );
+            vd.voice = LanguageUtil.chooseTest(v.getVoiceUrl(), v.getVoiceUrlEn());
             list.add( vd );
         }
         return list;

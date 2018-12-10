@@ -16,7 +16,6 @@
 		}
 		#nav .nav_guide{
             top: 30%;
-            left: 1rem;
             position: absolute;
             width: 3.36rem;
             height: 2.25rem;
@@ -26,12 +25,11 @@
         #nav .nav_guide p{
         	color: #19503F;
         	font-size: .24rem;
-        	line-height: .4rem;
+        	line-height: .45rem;
         }
-        #nav .nav_guide p:nth-child(1){
+        #nav .nav_guide p:nth-child(2){
         	font-size: .4rem;
         	text-align: center;
-        	line-height: .4rem;
         }
         #nav .nav_voice{
             position: absolute;
@@ -41,8 +39,6 @@
             height:1.6rem;
             box-sizing: border-box;
             padding: .47rem;
-
-
         }
         #nav .nav_voice .img_left{
             width:.5rem;
@@ -67,27 +63,31 @@
         }
 	</style>
 </head>
+<script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
 <body>
 	<div id="nav">
         <p style="font-size: .4rem;">{{haha}}</p>
-        <div class="nav_guide">
+        <p>----------------------------------</p>
+        <p style="font-size: .4rem;">{{haha1}}</p>
+        <div class="nav_guide" :style="{left:left}">
             <img src="way_guide.png" alt="" class="img">
-            <p>{{bourn}}</p>
-            <p>距离{{distance}}</p>
-            <p>预计时间{{time}}</p>
+            <p>{{goal.bourn}}</p>
+            <p>距离{{goal.distance}}</p>
+            <p>预计时间{{goal.time}}</p>
         </div>
-        <div class="nav_voice">
-          <img src="way_voice.png" alt="" class="img">
-          <!-- <img src="way_right.png" alt="" class="img_left"> -->
-          <span class="nav_voice_p">植物园</span>
-          <!--<audio src=""></audio>-->
+        <div class="nav_right">
+            <div class="nav_voice">
+                <img src="way_voice.png" alt="" class="img">
+                <!-- <img src="way_right.png" alt="" class="img_left"> -->
+                <span class="nav_voice_p">植物园</span>
+                <!--<audio src="" preload="none"></audio>-->
+            </div>
         </div>
-      <div class="nav_btm">
-        <img :src="imgsrc" alt="" class="nav_btm_img" @click="imgClick">
-        <audio :src="audiosrc"  autoplay id="audio"></audio>
-        <!--<img src="file:///storage/emulated/0/expo/unzip/com.expo/1543297121596/光团/callstart/callstart/start2.png" alt="">-->
-      </div>
-
+        <div class="nav_btm">
+          <img :src="imgsrc" alt="" class="nav_btm_img" @click="imgClick" v-if="imgShow">
+          <audio :src="audiosrc"  autoplay id="audio"></audio>
+          <!--<img src="file:///storage/emulated/0/expo/unzip/com.expo/1543297121596/光团/callstart/callstart/start2.png" alt="">-->
+        </div>
     </div>
 </body>
 <script>
@@ -95,104 +95,168 @@
       el:'#nav',
       data:{
         path:'.',
-        bourn:'中国馆',
-        distance:'500m',
-        time:'10:00',
+        goal:{
+          bourn:'中国馆',
+          distance:'500m',
+          time:'10:00',
+        },
         imgsrc:'',
         audiosrc:'',
-        audioTime:'',
-        next:true,
-        state:'1',
-        haha:''
+        state:'',//当前状态
+        imgShow:true,
+        left:'1rem',
+        timer:'',
+        interval:'',
+        haha:'展示后台内容',
+        haha1:';'
       },
       mounted:function () {
+        var vConsole = new VConsole();
         this.register();
       },
       methods:{
         //后台设置主位置
         setMarker:function (init,marker){
+          init.toString().length>3 ? marker = init:'';
           var data = typeof marker == 'object'? marker : JSON.parse(marker);
           this.haha = data;
-          this.bourn = data.title;
-          this.distance = data.distance.toFixed(0)+'m';
-          this.time = '未定';
+          // console.log(data)
+          this.goal.bourn = data.title;
+          this.goal.distance = data.distance.toFixed(0)+'m';
+          this.goal.time = '未定';
+        },
+        //右侧附近景点
+        nearWiki (res){
+          console.log(res);
+          this.haha1 = res;
+          var data = typeof res == 'object'? res : JSON.parse(res);
         },
         //后台调取动画
         tipTips:function(I,tip){
-          var _this = this;
-          var rootPath = this.path+'/'+tip;
+          I.toString().length>3 ? tip = I : '';
+          if(this.state == 'bike'){
+            this.state = 'other';
+            this.tipTips(tip);
+          }else{
+            this.state = 'other';
+          }
+          var _this = this,
+              rootPath = this.path+'/'+tip;
+          clearTimeout(_this.timer);
           this.imgsrc = rootPath+'.gif';
           this.audiosrc = rootPath+'.wav';
-          // alert(rootPath)
+          console.log(rootPath)
           var audio = new Audio(this.audiosrc);
           // var audio = new Audio('file:///Library/WebServer/Documents/sever/nav'+rootPath.replace('.',"")+'.wav');
           audio.load();
           audio.oncanplay = function () {
-            this.audioTime = audio.duration;
+            var audioTime = audio.duration;
             // console.log('file:///Library/WebServer/Documents/sever/nav'+rootPath.replace('.',"")+'.wav')
-            setTimeout(()=>{
-              this.state = '1';
+            _this.timer = setTimeout(()=>{
+              this.state = 'fly';
               _this.imgsrc = _this.path+'/fly.gif';
-              alert('初始化'+ _this.imgsrc )
-              _this.audiosrc = '';
-            },this.audioTime*1000)
-            console.log(this.audioTime)
+              alert('初始化'+ _this.imgsrc)
+              // _this.audiosrc = '';
+            },audioTime*1000)
+            console.log(audioTime)
           }
         },
-        imgClick: function (){
-
+        circle (){
+          this.state == 'bike'
+          var time = ((Math.random()*3+3)*6e4).toFixed(0);
+          setTimeout(()=>{
+            this.tipTips('jsreset/jsreset')
+          },time)
+          setTimeout(this.circle,time)
+        },
+        //画面点击
+        imgClick (){
+            if(this.state == 'fly'){
+              this.tipTips('click/click'+parseInt(Math.random()*3+1));
+            }
+        },
+        //控制图片的显示隐藏
+        toggleImg (bol){
+          this.imgShow = bol
         },
         //后台返回主路径
-        setTourist:function(res) { this.path = res; },
+        setTourist (res) { this.path = res; },
         //后台传递定位
-        getAzimuthInfo: function(lat,lon) {/* console.log(lat,lon);*/},
+        getAzimuthInfo (lat,lon) {/* console.log(lat,lon);*/},
+        //不知道干啥的
+        responseCallback (res){/* console.log(res)*/},
         //android方法注册
-        register:function () {
-          window.setMarker = this.setMarker;
-          window.tipTips = this.tipTips;
-          window.setTourist = this.setTourist;
-          window.getAzimuthInfo = this.getAzimuthInfo;
+        android () {
+          window.tipTips = this.tipTips;//后台调取动画
+          window.nearWiki = this.nearWiki;//附近景点介绍
+          window.setMarker = this.setMarker;//后台设置主位置
+          window.toggleImg = this.toggleImg;//控制图片的显隐
+          window.setTourist = this.setTourist;//后台返回主路径
+          window.getAzimuthInfo = this.getAzimuthInfo;//后台传递定位
           try {
-            window.Terminal_Interface.canCallJS(true);//加载完成后调用
-          }catch (e) {
-
-          }
+            window.Terminal_Interface.canCallJS(true);//页面加载完成
+          }catch (e) { }
         },
+        //IOS方法注册
+        IOS (){
+          //后台调取动画
+          this.registerhandler('tipTips',(tip)=>{this.tipTips(tip);});
+          //附近景点介绍
+          this.registerhandler('nearWiki',(data)=>{this.nearWiki(data);});
+          //控制图片显隐
+          this.registerhandler('toggleImg',(bol)=>{this.toggleImg(bol);})
+          //后台返回主路径
+          this.registerhandler('setTourist',(path)=>{this.setTourist(path);});
+          //后台设置主位置
+          this.registerhandler('setMarker',(marker)=>{this.setMarker(marker);});
+          //后台传递定位
+          this.registerhandler('getAzimuthInfo',(latlon)=>{this.getAzimuthInfo(latlon);});
+          //不知道干啥的
+          this.registerhandler('responseCallback',(latlon)=>{this.responseCallback(res);});
+          //页面加载完成
+          this.callhandler('canCallJS',{},(res)=>{console.error(res);});
+        },
+        //注册方法
+        register (){
+          var u = navigator.userAgent;
+          // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android
+          var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+          isIOS ? this.IOS() : this.android();
+        },
+        //IOS方法封装
+        callhandler (name, data, callback) {
+          this.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler(name, data, callback)
+          })
+        },
+        registerhandler (name,callback){
+          this.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.registerHandler(name, function(data, responseCallback) {
+              callback(data)//处理oc给的传参
+              var responseData = { 'result':'handle success' }
+              //回调传值给oc
+              responseCallback(responseData)
+            })
+          })
+        },
+        setupWebViewJavascriptBridge (callback) {
+          if (window.WebViewJavascriptBridge) {
+            return callback(window.WebViewJavascriptBridge)
+          }
+          if (window.WVJBCallbacks) {
+            return window.WVJBCallbacks.push(callback)
+          }
+          window.WVJBCallbacks = [callback]
+          let WVJBIframe = document.createElement('iframe')
+          WVJBIframe.style.display = 'none'
+          WVJBIframe.src = 'https://__bridge_loaded__'
+          document.documentElement.appendChild(WVJBIframe)
+          setTimeout(() => {
+            document.documentElement.removeChild(WVJBIframe)
+          }, 0)
+        }
       }
     });
-		// reqPath('./chuchang.',function (res) {
-		// 	console.log(res);
-		// })
-		var path = '.';
-
-		function reqPath (path,callback){
-	        console.log('开始');
-	        var _this = this,index = 0,time=95;
-	        // var init = 1;
-	        function f () {
-	          setTimeout(()=>{
-	            // init++;
-	            // if(init % 5 == 0){
-	              index++;
-	              index = dataNum(index,6)
-	              var a = path+index+'.png'
-	              CheckImgExists(a,function (res) {
-	              	_$('nav_btm_img').src = path+index+'.png';
-	              	setTimeout(f,time);
-	              },function (res) {
-	              	callback();
-	              })
-	            // }else{
-	              // setTimeout(f);
-	            // }
-	          },time)
-	        }
-	        f();
-	    }
-		//数字前面补零
-		function dataNum(num, n) {
-            return (Array(n).join(0) + num).slice(-n);
-        }
 </script>
 <script>
 //兼容手机端的rem

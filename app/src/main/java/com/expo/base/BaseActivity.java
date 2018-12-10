@@ -33,7 +33,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     private View mLoadingMaskView;
     protected P mPresenter;
 
-    RootView mRootView;
+    public RootView mRootView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

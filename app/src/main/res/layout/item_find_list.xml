@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ency_item_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:clickable="false"
+    android:orientation="vertical"
+    android:padding="@dimen/dms_10">
+
+    <org.raphets.roundimageview.RoundImageView
+        android:id="@+id/find_list_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:leftTop_corner_radius="@dimen/dms_4"
+        app:rightTop_corner_radius="@dimen/dms_4"
+        app:type="round" />
+
+    <TextView
+        android:id="@+id/find_list_content"
+        style="@style/TextSizeBlack12"
+        android:layout_width="match_parent"
+        android:layout_below="@id/find_list_img"
+        android:layout_marginTop="@dimen/dms_20"
+        android:maxLines="2"
+        android:textSize="@dimen/font_22" />
+
+    <com.hedan.textdrawablelibrary.TextViewDrawable
+        android:id="@+id/find_list_scans"
+        style="@style/TextSizeBlack12"
+        android:layout_width="@dimen/dms_100"
+        android:layout_below="@id/find_list_content"
+        android:layout_marginTop="@dimen/dms_10"
+        android:drawableLeft="@mipmap/find_scans_small_black"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="@color/gray_66"
+        android:textSize="@dimen/font_22"
+        app:drawableLeftHeight="@dimen/dms_30"
+        app:drawableLeftWidth="@dimen/dms_30" />
+
+    <com.hedan.textdrawablelibrary.TextViewDrawable
+        android:id="@+id/find_list_like"
+        style="@style/TextSizeBlack12"
+        android:layout_width="@dimen/dms_100"
+        android:layout_alignBottom="@id/find_list_scans"
+        android:layout_marginLeft="@dimen/dms_10"
+        android:layout_toRightOf="@id/find_list_scans"
+        android:drawableLeft="@mipmap/find_like_small_black"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="@color/gray_66"
+        android:textSize="@dimen/font_22"
+        app:drawableLeftHeight="@dimen/dms_30"
+        app:drawableLeftWidth="@dimen/dms_30" />
+
+    <org.raphets.roundimageview.RoundImageView
+        android:id="@+id/find_list_head"
+        android:layout_width="@dimen/dms_30"
+        android:layout_height="@dimen/dms_30"
+        android:layout_below="@id/find_list_scans"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/dms_34"
+        app:type="circle" />
+
+    <TextView
+        android:id="@+id/find_list_name"
+        style="@style/TextSizeBlack12"
+        android:layout_alignBottom="@id/find_list_head"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dms_10"
+        android:layout_toRightOf="@id/find_list_head" />
+
+</RelativeLayout>

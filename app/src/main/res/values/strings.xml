@@ -87,7 +87,7 @@
     <string name="item_mine_message">My News</string>
     <string name="item_mine_about">关于</string>
     <string name="item_mine_setting">设置</string>
-    <string name="item_mine_contacts">常用联系人</string>
+    <string name="item_mine_contacts">预约联系人</string>
 
     <string name="feed_back_tips">衷心的感谢您对我们的信任和支持。为了不断提高我们的服务质量,完善 我们的工作,为了给您提供更加优质的服务，欢迎您提出合理的评介与意见！</string>
     <string name="comment_content">评价内容</string>
@@ -134,13 +134,16 @@
     <string name="title_message_appointment_ac">预约提醒</string>
     <string name="title_routest_ac">游玩路线</string>
     <string name="title_home">北京世界展览会</string>
-    <string name="title_contacts_ac">预约联系人</string>
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
     <string name="check_string_empty_name">姓名不能为空</string>
     <string name="check_string_empty_report_content">评论内容不能为空</string>
     <string name="check_string_empty_localtion_descriptiong">情况描述不能为空</string>
+    <string name="check_string_empty_title">标题不能为空</string>
+    <string name="check_string_empty_category">类别不能为空</string>
+    <string name="check_string_empty_image_video">图片或视频不能为空</string>
+
     <string name="check_string_id_card">身份证错误</string>
     <string name="check_string_id_type">证件号码不能为空</string>
 
@@ -307,5 +310,23 @@
     <string name="max_images">最多只能选择%d张照片</string>
     <string name="pilot_switch">辅助开关</string>
     <string name="notification_sound">通知提示音</string>
+    <string name="publish">发布</string>
+    <string name="category">类别</string>
+    <string name="img_limit">最多只能发布9张图片或一个视频</string>
+    <string name="publish_edit_hint">给你的作品起个标题吧</string>
+    <string name="publish_rule_description">《用户发布规则说明》</string>
+    <string name="examine_pass">审核通过</string>
+    <string name="examine_unpass">审核未通过</string>
+    <string name="examine_not">未审核</string>
+    <string name="my_find">我的发现</string>
+    <string name="examine">审核</string>
+    <string name="examine_unpass_reason">内容不符合发布规定</string>
+    <string name="examine_wait">待审核</string>
+
+    <string name="find_tab_scenic">风景</string>
+    <string name="find_tab_venue">场馆</string>
+    <string name="find_tab_food">美食</string>
+    <string name="find_tab_botany">植物</string>
+    <string name="find_tab_other">其他</string>
 
 </resources>

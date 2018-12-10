@@ -58,7 +58,7 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 //        }
         if (LanguageUtil.isCN())
             mLanguageCn.performClick();
-        else
+        else if (StringUtils.equals(LanguageUtil.LANGUAGE_EN, mLanguage))
             mLanguageEn.performClick();
         mLayout.setPadding(0, StatusBarUtils.getStatusBarHeight(this), 0, 0);
     }

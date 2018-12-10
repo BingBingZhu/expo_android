@@ -9,8 +9,12 @@ import com.expo.contract.presenter.ContactsPresenterImpl;
 import com.expo.contract.presenter.DistinguishPresenterImpl;
 import com.expo.contract.presenter.EncyclopediaSearchPresenterImpl;
 import com.expo.contract.presenter.EncyclopediasPresenterImpl;
+import com.expo.contract.presenter.ExaminePresenterImpl;
 import com.expo.contract.presenter.FeedbackPresenterImpl;
+import com.expo.contract.presenter.FindDetailPresenterImpl;
+import com.expo.contract.presenter.FindListPresenterImpl;
 import com.expo.contract.presenter.FindPresenterImpl;
+import com.expo.contract.presenter.FindPublishPresenterImpl;
 import com.expo.contract.presenter.FreeWifiPresenterImpl;
 import com.expo.contract.presenter.HeartBeatPresenterImpl;
 import com.expo.contract.presenter.HomePresenterImpl;
@@ -33,6 +37,7 @@ import com.expo.contract.presenter.TrackPresenterImpl;
 import com.expo.contract.presenter.UserInfoPresenterImpl;
 import com.expo.contract.presenter.WebPresenterImpl;
 import com.expo.contract.presenter.WebTemplatePresenterImpl;
+import com.expo.module.main.find.publish.FindPublishActivity;
 
 public class PresenterFactory {
     public static IPresenter getPresenter(IView view) {
@@ -98,6 +103,14 @@ public class PresenterFactory {
             return new ContactsPresenterImpl( (ContactsContract.View) view );
         } else if (view instanceof ContactsAddContract.View) {
             return new ContactsAddPresenterImpl( (ContactsAddContract.View) view );
+        } else if (view instanceof FindListContract.View) {
+            return new FindListPresenterImpl((FindListContract.View) view);
+        } else if (view instanceof ExamineContract.View) {
+            return new ExaminePresenterImpl((ExamineContract.View) view);
+        } else if (view instanceof FindPublishContract.View) {
+            return new FindPublishPresenterImpl((FindPublishContract.View) view);
+        } else if (view instanceof FindDetailContract.View) {
+            return new FindDetailPresenterImpl((FindDetailContract.View) view);
         }
         throw new UnsupportedOperationException();
     }

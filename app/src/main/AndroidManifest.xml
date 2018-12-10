@@ -216,6 +216,16 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
+            android:name=".module.main.find.publish.FindPublishActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.main.find.examine.FindExamineActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.main.find.detail.FindDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".module.track.TrackActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

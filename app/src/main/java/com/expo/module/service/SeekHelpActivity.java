@@ -1,5 +1,6 @@
 package com.expo.module.service;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -186,7 +187,11 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
      * @param context
      * @param type    求助类型
      */
-    public static void startActivity(@NonNull Context context, int type) {
+    public static void startActivity(@NonNull Activity context, int type) {
+        if (!GpsUtil.isOPen(context)) {
+            GpsUtil.openGPSSettings(context);
+            return;
+        }
         Intent in = new Intent(context, SeekHelpActivity.class);
         in.putExtra(EXTRAS, type);
         context.startActivity(in);
@@ -238,12 +243,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     }
 
     @OnClick(R.id.seek_help_text4)
-
     public void location(View view) {
-        if (!GpsUtil.isOPen(this)) {
-            GpsUtil.openGPSSettings(this);
-            return;
-        }
         showLoadingView();
         if (mLocation != null) {
             hideLoadingView();

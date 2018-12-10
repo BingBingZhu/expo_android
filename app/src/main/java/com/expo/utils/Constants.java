@@ -172,7 +172,7 @@ public interface Constants {
      *
      */
     class TimeFormat {
-        public static final String TYPE_ALL = "yyyy-MM-dd hh:mm";
+        public static final String TYPE_ALL = "yyyy-MM-dd hh:mm:ss";
         public static final String TYPE_SIMPLE = "yyyy-MM-dd";
         public static final String TYPE_YEAR = "yyyy";
     }
@@ -218,6 +218,10 @@ public interface Constants {
                 put( "4", "台胞证" );
             }
         };//向js提示使用光团gif图片
+    }
+
+    class HandlerMsg{
+        public static final int NAVI_NEAR_WIKI = 0;//附近景点
 
     }
 
