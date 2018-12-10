@@ -72,7 +72,7 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(1, R.string.title_contacts_ac);
+        setTitle(1, R.string.item_mine_contacts);
 
         initContactsType();
         initContactsName();
