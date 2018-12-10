@@ -8,57 +8,57 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.expo.R;
 
-public class MyUserInfoView extends FrameLayout {
+public class MyContactsInfoView extends LinearLayout {
 
     TextView mTvText;
     View mRightView;
 
-    public MyUserInfoView(Context context) {
+    public MyContactsInfoView(Context context) {
         this(context, null);
     }
 
-    public MyUserInfoView(Context context, AttributeSet attrs) {
+    public MyContactsInfoView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MyUserInfoView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyContactsInfoView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(attrs);
     }
 
     private void initView(AttributeSet attrs) {
+        setOrientation(LinearLayout.HORIZONTAL);
+        setGravity(Gravity.CENTER_VERTICAL);
         if (mTvText == null) initTextView();
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.MyUserInfoView);
-            mTvText.setTextColor(a.getColor(R.styleable.MyUserInfoView_textColor, Color.RED));
-            mTvText.setTextSize(TypedValue.COMPLEX_UNIT_PX, a.getDimension(R.styleable.MyUserInfoView_textSize, 18));
-            mTvText.setText(a.getString(R.styleable.MyUserInfoView_text));
-            int resourceId = a.getResourceId(R.styleable.MyUserInfoView_rightDrawable, 0);
-            if (resourceId != 0) {
-                mTvText.setCompoundDrawablePadding((int) getContext().getResources().getDimension(R.dimen.dms_10));
-                mTvText.setCompoundDrawablesWithIntrinsicBounds(0, 0, resourceId, 0);
-            }
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.MyContactsInfoView);
+            mTvText.setTextColor(a.getColor(R.styleable.MyContactsInfoView_lefttextColor, Color.RED));
+            mTvText.setTextSize(TypedValue.COMPLEX_UNIT_PX, a.getDimension(R.styleable.MyContactsInfoView_lefttextSize, 32));
+            mTvText.setText(a.getString(R.styleable.MyContactsInfoView_lefttext));
+            mTvText.setCompoundDrawablesWithIntrinsicBounds(0, 0, a.getResourceId(R.styleable.MyContactsInfoView_lefttextrightDrawable, 0), 0);
             a.recycle();
         }
     }
 
     private void initTextView() {
         mTvText = new TextView(getContext());
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(-2, -2);
+        LayoutParams layoutParams = new LayoutParams((int) getContext().getResources().getDimension(R.dimen.dms_150), -2);
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
 
         mTvText.setLayoutParams(layoutParams);
+        mTvText.setSingleLine();
         addView(mTvText);
     }
 
     public void addRightView(View view, int width, int height) {
         mRightView = view;
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
-        layoutParams.rightMargin = (int) getResources().getDimension(R.dimen.dms_30);
+        LayoutParams layoutParams = new LayoutParams(width, height);
+        layoutParams.leftMargin = (int) getResources().getDimension(R.dimen.dms_60);
         layoutParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
 
         mRightView.setLayoutParams(layoutParams);
@@ -67,7 +67,7 @@ public class MyUserInfoView extends FrameLayout {
     }
 
     public void addRightView(View view) {
-        addRightView(view, -2, -2);
+        addRightView(view, -1, -2);
     }
 
     public View getRightView() {

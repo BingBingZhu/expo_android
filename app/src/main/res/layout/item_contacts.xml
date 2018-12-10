@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dms_100"
+    android:paddingLeft="@dimen/dms_34"
+    android:paddingRight="@dimen/dms_24">
+
+    <CheckBox
+        android:id="@+id/item_contacts_check"
+        style="@style/TextSizeBlack14"
+        android:layout_width="@dimen/dms_70"
+        android:layout_height="@dimen/dms_70"
+        android:layout_centerVertical="true"
+        android:button="@null"
+        android:drawableLeft="@drawable/selector_check_box"
+        android:drawablePadding="@dimen/dms_20"
+        android:gravity="center"
+        android:padding="@dimen/dms_20" />
+
+    <TextView
+        android:id="@+id/item_contacts_name"
+        style="@style/TextSizeBlack14"
+        android:layout_below="@id/item_route_img"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/dms_30"
+        android:layout_toRightOf="@id/item_contacts_check" />
+
+    <TextView
+        android:id="@+id/item_contacts_number"
+        style="@style/TextSizeBlack13"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>

@@ -51,6 +51,7 @@
     <declare-styleable name="MyUserInfoView">
         <attr name="textColor" format="color" />
         <attr name="textSize" format="dimension" />
+        <attr name="rightDrawable" format="reference" />
         <attr name="text" format="string" />
     </declare-styleable>
 
@@ -95,5 +96,12 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <declare-styleable name="MyContactsInfoView">
+        <attr name="lefttextColor" format="color" />
+        <attr name="lefttextSize" format="dimension" />
+        <attr name="lefttextrightDrawable" format="reference" />
+        <attr name="lefttext" format="string" />
+    </declare-styleable>
 
 </resources>

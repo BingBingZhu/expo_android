@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/contacts_ok"
+        style="@style/TextSizeWhite15"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_100"
+        android:layout_alignParentBottom="true"
+        android:background="@color/green_02cd9b"
+        android:gravity="center"
+        android:visibility="gone" />
+
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptr_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/contacts_ok"
+        app:ptr_mode="loadMore">
+
+        <com.expo.widget.SimpleRecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+</RelativeLayout>

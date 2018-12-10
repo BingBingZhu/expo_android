@@ -284,6 +284,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
                     @Override
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
 //                        ((TextView) mUserWork.getRightView()).setText();
+                        ((TextView) mUserWork.getRightView()).setText(mWorkList.get(position));
                         dialog.dismiss();
                     }
                 })
@@ -361,6 +362,9 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         } else if (StringUtils.equals("1", mUser.getSex())) {
             mRadioFemale.setChecked(true);
         }
+        ((EditText) mUserEmail.getRightView()).setText(mUser.getEmail());
+        ((TextView) mUserWork.getRightView()).setText(mUser.getWork());
+
         mPresenter.setAge(mUser.getBirthDay());
     }
 

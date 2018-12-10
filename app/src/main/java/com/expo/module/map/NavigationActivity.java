@@ -143,7 +143,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mImgModuleShow.setVisibility(View.GONE);
         }
         mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
-                true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
+                true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off);
         StatusBarUtils.setStatusBarLight(this, true);
         mMapView.onCreate(savedInstanceState);
         //地图中心点
@@ -171,7 +171,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     private void initWebView() {
         mWebView.loadUrl("file:///android_asset/web/merge.html");
-        mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
+        mWebView.loadUrl("javascript:toggleImg(" + PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true) + ")");
 //        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
@@ -288,7 +288,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                     new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
             if (!mUseDeviceRotate) {
                 des.angle = "";
-                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,%.2f)"));
+                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,'" + Http.getGsonInstance().toJson(des) + "')"));
                 return;
             }
             //计算角度以通知HTML页面使用
@@ -502,7 +502,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onGpsOpenStatus(boolean b) {
             // 用户手机GPS设置是否开启的回调函数。
-            if (!b){
+            if (!b) {
                 ToastHelper.showLong(R.string.the_phone_is_gps_settings_are_not_on);
             }
         }
@@ -561,15 +561,15 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     @OnClick({R.id.gt_navi_back, R.id.img_module_show})
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.gt_navi_back:
                 onBackPressed();
                 break;
             case R.id.img_module_show:
-                PrefsHelper.setBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, ! PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true));
+                PrefsHelper.setBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true));
                 mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
-                        true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
-                mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
+                        true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off);
+                mWebView.loadUrl("javascript:toggleImg(" + PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true) + ")");
                 break;
         }
     }

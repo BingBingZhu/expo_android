@@ -126,6 +126,12 @@
             android:name=".module.mine.UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".module.contacts.ContactsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.contacts.ContactsAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".module.mine.AboutActivity"
             android:screenOrientation="portrait" />
         <activity

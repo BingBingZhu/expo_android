@@ -5,6 +5,7 @@ import android.os.Environment;
 import com.expo.R;
 import com.expo.entity.Badge;
 import com.expo.entity.CommonInfo;
+import com.expo.entity.Contacts;
 import com.expo.entity.DataType;
 import com.expo.entity.DownloadInfo;
 import com.expo.entity.Encyclopedias;
@@ -19,6 +20,9 @@ import com.expo.entity.Track;
 import com.expo.entity.User;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public interface Constants {
     /**
@@ -72,6 +76,8 @@ public interface Constants {
         public static final String EXTRA_SHOW_TITLE = "extra_show_title";
         public static final String EXTRA_TITLE_COLOR_STYLE = "extra_title_color_style";
         public static final String EXTRA_USER_SCORE = "extra_user_score";
+        public static final String EXTRA_SELECT_CONTACTS = "extra_select_contacts";
+        public static final String EXTRA_SELECT_CONTACTS_MAX_COUNT = "extra_select_contacts_max_count";
         public static final String EXTRA_TRACK_CHANAGE = "extra_track_chanage";
     }
 
@@ -90,8 +96,8 @@ public interface Constants {
         public static final String ACTUAL_SCENES = "GetVenuesList";
         //植物识别地址
         public static final String DISTINGUISH_PLANT = "http://plantgw.nongbangzhu.cn/plant/recognize";
-                public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
-//        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce";
+        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
+        //        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce";
         public static final String HTML_404 = "file:///android_asset/web/404.html";
     }
 
@@ -120,7 +126,7 @@ public interface Constants {
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class,
-                TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class};
+                TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, Contacts.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }
@@ -158,6 +164,7 @@ public interface Constants {
         public static final int REQ_OPEN_GPS = 126;
         public static final int REQ_GET_LOCAL = 127;
         public static final int REQ_TO_CAMERA = 128;
+        public static final int REQ_TO_CONTACTS = 129;
     }
 
     /**
@@ -193,11 +200,21 @@ public interface Constants {
         public static final String TO_JS_NAVI_TIP_WAKE = "callwake/callwake";//姿势夸张睡觉
         public static final String TO_JS_NAVI_TIP_LEAVE = "callleave/callleave";//结束导航，抽泣、哭泣（要离开我吗）真的要离开我吗(人为点返回键）
         public static final String TO_JS_NAVI_TIP_END = "callend/callend";//到达终点，庆祝
-    }
 
     class RawResource {
         public static final int[] resourceIds = new int[]{0, R.raw.a10534, R.raw.b10629, R.raw.c10859, R.raw.d10875, R.raw.e10879, R.raw.f10880, R.raw.g10881};
         public static final String[] rawName = new String[]{"跟随系统", "a10534", "b10629", "c10859", "d10875", "e10879", "f10880", "g10881"};
+    class ContactsType {
+
+        public static final Map<String, String> CONTACTS_TYPE_MAP = new HashMap<String, String>() {
+            {
+                put("1", "居民身份证");
+                put("2", "护照");
+                put("3", "回乡证");
+                put("4", "台胞证");
+            }
+        };//向js提示使用光团gif图片
+
     }
 
 }

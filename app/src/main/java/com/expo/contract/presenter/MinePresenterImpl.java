@@ -45,5 +45,6 @@ public class MinePresenterImpl extends MineContract.Presenter {
     public void clickPolicy(String type) {
         CommonInfo commonInfo = mDao.unique(CommonInfo.class, new QueryParams().add("eq", "type", type));
         mView.returnCommonInfo(commonInfo);
+
     }
 }

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class CheckUtils {
 
     public static boolean isEmail(String email, boolean showToast) {
-        if (TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             return true;
         }
         String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
@@ -29,5 +29,17 @@ public class CheckUtils {
             ToastHelper.showShort(resId);
 
         return isEmpty;
+    }
+
+    public static boolean isIDCard(String IDCard, boolean showToast) {
+        if (IDCard != null) {
+            String IDCardRegex = "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x|Y|y)$)";
+            if(IDCard.matches(IDCardRegex)){
+                return true;
+            }
+        }
+        if (showToast)
+            ToastHelper.showShort(R.string.check_string_id_card);
+        return false;
     }
 }

@@ -163,6 +163,17 @@
                 android:layout_marginLeft="@dimen/dms_30"
                 android:layout_marginRight="@dimen/dms_30"
                 android:background="@color/gray_ca"/>
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_mine_contacts"
+                style="@style/item_mine_entry"
+                android:drawableLeft="@mipmap/setting"
+                android:text="@string/item_mine_contacts" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginRight="@dimen/dms_30"
+                android:background="@color/gray_ca"/>
         </LinearLayout>
     </ScrollView>
 
