@@ -87,7 +87,8 @@ public interface Constants {
     class URL {
         public static final String ALI_BASE_URL = "http://47.95.215.6:8080/Api/";    //阿里云(识花)
         //IP
-        public static final String IP = "39.105.120.171";
+//        public static final String IP = "39.105.120.171";
+        public static final String IP = "47.92.250.179";
         //自己服务器基本请求用到的URL
         public static final String BASE_URL = "http://" + IP + ":8080/Api/";
         //自己服务器文件资源请求用到的URL
@@ -200,18 +201,21 @@ public interface Constants {
         public static final String TO_JS_NAVI_TIP_WAKE = "callwake/callwake";//姿势夸张睡觉
         public static final String TO_JS_NAVI_TIP_LEAVE = "callleave/callleave";//结束导航，抽泣、哭泣（要离开我吗）真的要离开我吗(人为点返回键）
         public static final String TO_JS_NAVI_TIP_END = "callend/callend";//到达终点，庆祝
+    }
 
     class RawResource {
         public static final int[] resourceIds = new int[]{0, R.raw.a10534, R.raw.b10629, R.raw.c10859, R.raw.d10875, R.raw.e10879, R.raw.f10880, R.raw.g10881};
         public static final String[] rawName = new String[]{"跟随系统", "a10534", "b10629", "c10859", "d10875", "e10879", "f10880", "g10881"};
+    }
+
     class ContactsType {
 
         public static final Map<String, String> CONTACTS_TYPE_MAP = new HashMap<String, String>() {
             {
-                put("1", "居民身份证");
-                put("2", "护照");
-                put("3", "回乡证");
-                put("4", "台胞证");
+                put( "1", "居民身份证" );
+                put( "2", "护照" );
+                put( "3", "回乡证" );
+                put( "4", "台胞证" );
             }
         };//向js提示使用光团gif图片
 

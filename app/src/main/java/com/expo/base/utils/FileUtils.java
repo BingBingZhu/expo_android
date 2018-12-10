@@ -80,10 +80,10 @@ public class FileUtils {
     }
 
     public static void write(File file, String text) {
+        if (file == null)
+            return;
         FileWriter writer = null;
         try {
-            if (file == null)
-                throw new IllegalArgumentException( "The file can not be null" );
             if (TextUtils.isEmpty( text ))
                 return;
             writer = new FileWriter( file );
@@ -204,7 +204,7 @@ public class FileUtils {
         }.start();
     }
 
-    public static String saveScreenShot(Bitmap bmp){
+    public static String saveScreenShot(Bitmap bmp) {
         File file = new File( Environment.getExternalStorageDirectory(), Constants.Config.SCREEN_SAVE_PATH + System.currentTimeMillis() + ".jpg" );
         file = FileUtils.createFile( file );
         FileUtils.saveBitmap( file, bmp );
