@@ -112,6 +112,8 @@ public class UserInfoPresenterImpl extends UserInfoContract.Presenter {
         params.put("caption", user.getNick());
         params.put("picUrl", user.getPhotoUrl());
         params.put("sex", user.getSex());
+        params.put("email", user.getEmail());
+        params.put("worktype", user.getWork());
         RequestBody requestBody = Http.buildRequestBody(params);
         Observable<BaseResponse> verifyCodeLoginObservable = Http.getServer().setUserInfo(requestBody);
         Http.request(new ResponseCallback<BaseResponse>() {
@@ -119,6 +121,10 @@ public class UserInfoPresenterImpl extends UserInfoContract.Presenter {
             protected void onResponse(BaseResponse rsp) {
                 user.saveOnDb(mDao);
                 mView.saveUserInfo();
+            }
+
+            @Override
+            public void onComplete() {
                 mView.hideLoadingView();
             }
         }, verifyCodeLoginObservable);

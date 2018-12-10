@@ -49,7 +49,7 @@ public class User extends BaseResponse implements Parcelable {
     @SerializedName(value = "email")
     private String email;
     @DatabaseField(columnName = "work")
-    @SerializedName(value = "work")
+    @SerializedName(value = "worktype")
     private String work;
     @DatabaseField(columnName = "photo_url")
     @SerializedName(value = "PhotoUrl", alternate = {"picUrl"})
