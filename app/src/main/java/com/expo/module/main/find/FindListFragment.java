@@ -40,7 +40,7 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
 
     @Override
     public int getContentView() {
-        return R.layout.layout_fragment_list;
+        return R.layout.layout_fragment_find_list;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity {
     private int mImages[] = {
             R.drawable.selector_tab_home,
             R.drawable.selector_tab_panorama,
-            R.drawable.selector_tab_encyclopedia,
+            R.drawable.selector_tab_find,
             R.drawable.selector_tab_encyclopedia,
             R.drawable.selector_tab_mine};
     private Class[] fragments = new Class[]{

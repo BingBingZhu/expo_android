@@ -82,7 +82,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
         mList = mFind.getUrlList();
         setFindInfo();
         mPresenter.addViews(mFind.id + "");
-        mFind.url1 = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 ";
+//        mFind.url1 = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 ";
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -99,7 +99,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
                     holder.setOnClickListener(R.id.item_find_video, v -> videoChangeState());
                     holder.setOnClickListener(R.id.item_find_video_control, v -> videoStart());
                     mVideo.setOnCompletionListener(mp -> videoComplete());
-                    mTvPosition.setText((position + 1) + "/" + mFind.getResCount());
+                    mTvPosition.setVisibility(View.VISIBLE);
 
                     new Thread(() -> {
                         Bitmap bitmap = ImageUtils.createVideoThumbnail(CommUtils.getFullUrl(mFind.url1), MediaStore.Images.Thumbnails.MINI_KIND);
@@ -107,30 +107,39 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
                             mHandler.post(() -> mVideoImg.setImageBitmap(bitmap));
                     }).start();
 
-                    mTvPosition.setText((position + 1) + "/" + mList.size());
                     videoStart();
                 }
 
             });
-        else
+        else {
+            mTvPosition.setText("1/" + mList.size());
+            mRecycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    LinearLayoutManager l = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    mTvPosition.setText((l.findFirstVisibleItemPosition() + 1) + "/" + mList.size());
+                }
+            });
             mRecycler.setAdapter(mAdapter = new CommonAdapter(this, R.layout.item_find_detail, mList) {
                 @Override
                 protected void convert(ViewHolder holder, Object o, int position) {
-                    Picasso.with(FindDetailActivity.this).load(mList.get(position)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_find_img));
-                    mTvPosition.setText((position + 1) + "/" + mList.size());
+                    Picasso.with(FindDetailActivity.this).load(CommUtils.getFullUrl(mList.get(position))).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_find_img));
+                    mTvPosition.setVisibility(View.VISIBLE);
                 }
 
             });
+        }
     }
 
     private void setFindInfo() {
         if (!StringUtils.isEmpty(mFind.upic))
             Picasso.with(FindDetailActivity.this).load(mFind.upic).placeholder(R.drawable.image_default).error(R.drawable.image_default).into(mRvHead);
-        mTvName.setText(mFind.caption);
-        mTvContent.setText(mFind.remark);
+        mTvName.setText(mFind.uname);
+        mTvContent.setText(mFind.caption);
         mTvEnjoy.setText(mFind.enjoys);
         mTvViews.setText(mFind.views);
-
+        mTvPosition.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -18,7 +18,9 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ImageUtils;
 import com.expo.contract.ExamineContract;
+import com.expo.contract.FindDetailContract;
 import com.expo.entity.Find;
+import com.expo.module.main.find.detail.FindDetailActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.widget.AppBarView;
@@ -86,6 +88,7 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
                     }
                 }
 
+                holder.itemView.setOnClickListener(v -> FindDetailActivity.startActivity(FindExamineActivity.this, find));
             }
         });
 

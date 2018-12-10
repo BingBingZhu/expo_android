@@ -5,10 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
+import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +89,20 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         }
     };
 
+    private void initEditText() {
+        String token = "<image>";
+        ImageSpan span = new ImageSpan(this, R.mipmap.snow, 1);
+        SpannableStringBuilder spanStr = new SpannableStringBuilder();
+        spanStr.append(token);
+        spanStr.append(getResources().getString(R.string.publish_edit_hint));
+
+        spanStr.setSpan(span, 0, token.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        mEtEdit.setHint(spanStr);
+
+        mEtEdit.setSelection(mEtEdit.getText().length());
+    }
+
     @Override
     protected int getContentView() {
         return R.layout.activity_find_publish;
@@ -95,6 +113,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         setTitle(1, R.string.publish);
         initRecyclerView();
         initWorkAdapter();
+        initEditText();
         mEtEdit.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -121,9 +140,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     private void initRecyclerView() {
         mAdapter = new FindPublishAdapter(this);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayout.HORIZONTAL);
-        mRecycler.setLayoutManager(manager);
+        mRecycler.setLayoutManager(new GridLayoutManager(this, 3));
         mRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_10)));
         mRecycler.setAdapter(mAdapter);
 

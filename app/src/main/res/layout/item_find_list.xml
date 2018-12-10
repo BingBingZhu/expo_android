@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_below="@id/find_list_img"
         android:layout_marginTop="@dimen/dms_20"
-        android:lines="2"
+        android:maxLines="2"
         android:textSize="@dimen/font_22" />
 
     <com.hedan.textdrawablelibrary.TextViewDrawable

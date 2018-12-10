@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/dms_30">
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/dms_30"
+    android:scrollbars="none">
 
     <LinearLayout
         android:id="@+id/find_publish_layout"
@@ -42,9 +43,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dms_220"
-            android:layout_below="@id/seek_help_layout"
-            android:layout_marginTop="@dimen/dms_26" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_26"
+            android:nestedScrollingEnabled="false" />
 
         <com.hedan.textdrawablelibrary.TextViewDrawable
             style="@style/TextSizeBlack13"
@@ -60,10 +61,11 @@
             android:layout_height="@dimen/dms_96"
             android:layout_marginTop="@dimen/dms_30">
 
-            <TextView
+            <com.hedan.textdrawablelibrary.TextViewDrawable
                 style="@style/TextSizeBlack14"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:drawableLeft="@mipmap/snow"
                 android:text="@string/category" />
 
             <com.hedan.textdrawablelibrary.TextViewDrawable
@@ -73,29 +75,27 @@
                 android:drawableRight="@mipmap/arrow_down" />
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/find_publish_submit"
+            style="@style/TextSizeWhite16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_88"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_76"
+            android:layout_marginRight="@dimen/dms_30"
+            android:background="@drawable/selector_login_correlation_btn_bg"
+            android:gravity="center"
+            android:text="@string/publish" />
+
+        <TextView
+            android:id="@+id/find_publish_ok"
+            style="@style/TextSizeBlack13"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dms_46"
+            android:layout_marginBottom="@dimen/dms_46"
+            android:text="@string/publish_rule_description"
+            android:textColor="@color/gray_99" />
+
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/find_publish_ok"
-        style="@style/TextSizeBlack13"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dms_54"
-        android:layout_marginBottom="@dimen/dms_112"
-        android:text="@string/publish_rule_description"
-        android:textColor="@color/gray_99" />
-
-    <TextView
-        android:id="@+id/find_publish_submit"
-        style="@style/TextSizeWhite16"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_88"
-        android:layout_above="@id/find_publish_ok"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/dms_30"
-        android:layout_marginRight="@dimen/dms_30"
-        android:background="@drawable/selector_login_correlation_btn_bg"
-        android:gravity="center"
-        android:text="@string/publish" />
-</RelativeLayout>
+</ScrollView>
