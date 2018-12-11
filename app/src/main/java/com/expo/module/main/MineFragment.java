@@ -18,7 +18,6 @@ import com.expo.entity.User;
 import com.expo.module.badge.BadgeActivity;
 import com.expo.module.contacts.ContactsActivity;
 import com.expo.module.heart.MessageKindActivity;
-import com.expo.module.mine.AboutActivity;
 import com.expo.module.mine.FeedbackActivity;
 import com.expo.module.mine.SettingActivity;
 import com.expo.module.mine.UserInfoActivity;
@@ -27,7 +26,6 @@ import com.expo.module.webview.WebActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,13 +59,13 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mPresenter.loadUser();
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register( this );
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister( this );
     }
 
     @Override
@@ -79,12 +77,12 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     @Override
     public void freshUser(User user) {
         if (user == null) return;
-        if (!StringUtils.isEmpty(user.getPhotoUrl()))
-            CommUtils.setImgPic(getContext(), user.getPhotoUrl(), mImageView);
-        mTvMineName.setText(user.getNick());
-        String scores = getResources().getString(R.string.the_current_integral);
+        if (!StringUtils.isEmpty( user.getPhotoUrl() ))
+            CommUtils.setImgPic( getContext(), user.getPhotoUrl(), mImageView );
+        mTvMineName.setText( user.getNick() );
+        String scores = getResources().getString( R.string.the_current_integral );
         score = user.getIntTotscores();
-        mTvIntegral.setText(String.format(scores, score));
+        mTvIntegral.setText( String.format( scores, score ) );
     }
 
     @Override
@@ -93,9 +91,9 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
 //                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn(), BaseActivity.TITLE_COLOR_STYLE_WHITE );
 //        String url = "http://192.168.1.13:8080/#/myOrder";
         String url = commonInfo.getLinkUrl();
-        WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 :
+        WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                 url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
-                        + "&lan=" + LanguageUtil.chooseTest("zh", "en"), getString(R.string.home_func_item_appointment), BaseActivity.TITLE_COLOR_STYLE_WHITE);
+                        + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_my_bespeak ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
     }
 
     @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name, R.id.item_mine_bespeak,
@@ -106,34 +104,34 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
             case R.id.mine_edit_info:
             case R.id.mine_img:
             case R.id.mine_name:
-                UserInfoActivity.startActivity(getContext());
+                UserInfoActivity.startActivity( getContext() );
                 break;
-            case R.id.item_mine_bespeak:
-                mPresenter.clickPolicy("9");
+            case R.id.item_mine_bespeak://预约
+                mPresenter.clickPolicy( "9" );
                 break;
-            case R.id.item_mine_comment_report:
-                FeedbackActivity.startActivity(getContext());
+            case R.id.item_mine_comment_report://反馈
+                FeedbackActivity.startActivity( getContext() );
                 break;
-            case R.id.item_mine_message:
-                MessageKindActivity.startActivity(getContext());
+            case R.id.item_mine_message://消息
+                MessageKindActivity.startActivity( getContext() );
                 break;
-            case R.id.item_mine_track:
-                TrackActivity.startActivity(getContext());
+            case R.id.item_mine_track://足迹
+                TrackActivity.startActivity( getContext() );
                 break;
-            case R.id.item_mine_setting:
-                SettingActivity.startActivity(getContext());
+            case R.id.item_mine_setting://设置
+                SettingActivity.startActivity( getContext() );
                 break;
             case R.id.mine_integral:    // 积分
                 String url = "http://192.168.1.13:8080";
-                WebActivity.startActivity(getContext(), url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
+                WebActivity.startActivity( getContext(), url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
                         + "&integral=" + score
-                        + "&lan=" + LanguageUtil.chooseTest("zh", "en"), "我的积分", false);
+                        + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), "我的积分", false );
                 break;
             case R.id.mine_badge:       // 徽章
-                BadgeActivity.startActivity(getContext(), score);
+                BadgeActivity.startActivity( getContext(), score );
                 break;
-            case R.id.item_mine_contacts:       // 徽章
-                ContactsActivity.startActivity(getActivity(), false, 0);
+            case R.id.item_mine_contacts:       // 预约联系人
+                ContactsActivity.startActivity( getActivity(), false, 0 );
                 break;
         }
     }
