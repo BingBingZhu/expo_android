@@ -94,13 +94,16 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
         if (message == null) return false;
         if ("3".equals(message.getType())) {
 //            String currUkey = ExpoApp.getApplication().getUser().getUkey();
-            if ("relogin".equals(message.getCommand())) {// && message.getParams() != null  && currUkey.equals(message.getParams().get("ukey"))
+            if ("relogin".equals(message.getCommand()) || "logout".equals(message.getCommand())) {// && message.getParams() != null  && currUkey.equals(message.getParams().get("ukey"))
                 mDao.clear(User.class);
                 ExpoApp.getApplication().setUser(null);
                 Intent intent = new Intent();
                 intent.putExtra(Constants.EXTRAS.EXTRA_LOGIN_STATE, false);
                 LocalBroadcastUtil.sendBroadcast(mView.getContext(), intent, Constants.Action.LOGIN_CHANGE_OF_STATE_ACTION);
-                showForceSingOutDialog();
+                if ("relogin".equals(message.getCommand()))
+                    showForceSingOutDialog(R.string.your_account_is_logged_in_on_another_device);
+                else
+                    showForceSingOutDialog(R.string.your_account_is_locked_you_can_not_login);
             }
             return false;
         } else {
@@ -112,9 +115,9 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
         }
     }
 
-    private void showForceSingOutDialog() {
+    private void showForceSingOutDialog(int textRes) {
         new AlertDialog.Builder(ExpoApp.getApplication().getTopActivity())
-                .setMessage(R.string.your_account_is_logged_in_on_another_device)
+                .setMessage(textRes)
                 .setCancelable(false)
                 .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
