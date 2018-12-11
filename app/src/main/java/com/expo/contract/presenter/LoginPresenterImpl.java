@@ -48,7 +48,12 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
             protected void onResponse(VerificationCodeResp rsp) {
                 mView.returnRequestVerifyCodeResult(rsp.verificationCode);
                 PrefsHelper.setString(Constants.Prefs.KEY_COUNTRY_CODE, countryCode);
+            }
+
+            @Override
+            public void onComplete() {
                 mView.hideLoadingView();
+                super.onComplete();
             }
         }, observable);
     }

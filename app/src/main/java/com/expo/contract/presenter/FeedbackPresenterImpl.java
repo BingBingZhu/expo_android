@@ -36,7 +36,12 @@ public class FeedbackPresenterImpl extends FeedbackContract.Presenter {
             @Override
             protected void onResponse(BaseResponse rsp) {
                 mView.submitComplete(rsp.msg);
+            }
+
+            @Override
+            public void onComplete() {
                 mView.hideLoadingView();
+                super.onComplete();
             }
         }, observable);
     }

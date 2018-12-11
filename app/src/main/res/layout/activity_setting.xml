@@ -113,6 +113,14 @@
         <TextView
             style="@style/LineHorizontal"
             android:background="@color/white_e6" />
+
+        <com.expo.widget.MySettingView
+            android:id="@+id/setting_about"
+            style="@style/item_setting"
+            app:textLeft="@string/item_mine_about" />
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
     </LinearLayout>
 
     <TextView

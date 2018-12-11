@@ -9,20 +9,33 @@
     android:orientation="vertical"
     android:padding="@dimen/dms_10">
 
-    <org.raphets.roundimageview.RoundImageView
-        android:id="@+id/find_list_img"
+    <FrameLayout
+        android:id="@+id/find_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        app:leftTop_corner_radius="@dimen/dms_4"
-        app:rightTop_corner_radius="@dimen/dms_4"
-        app:type="round" />
+        android:layout_height="wrap_content">
+
+        <org.raphets.roundimageview.RoundImageView
+            android:id="@+id/find_list_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:leftTop_corner_radius="@dimen/dms_4"
+            app:rightTop_corner_radius="@dimen/dms_4"
+            app:type="round" />
+
+        <ImageView
+            android:id="@+id/item_find_video_control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/video_start" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/find_list_content"
         style="@style/TextSizeBlack12"
         android:layout_width="match_parent"
-        android:layout_below="@id/find_list_img"
+        android:layout_below="@id/find_list_layout"
         android:layout_marginTop="@dimen/dms_20"
         android:maxLines="2"
         android:textSize="@dimen/font_22" />

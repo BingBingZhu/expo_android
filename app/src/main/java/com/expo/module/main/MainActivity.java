@@ -47,19 +47,19 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_host)
     FragmentTabHost mTabHostView;
 
-    private String[] tabTags = {"home", "panorama", "find", "encyclopedias", "mine"};
-    private int[] tabTitles = {R.string.main_home, R.string.main_panorama, R.string.main_find, R.string.main_encyclopedias, R.string.main_mine};
+    private String[] tabTags = {"home", "encyclopedias", "find", "mine"};//"panorama",
+    private int[] tabTitles = {R.string.main_home, R.string.main_encyclopedias, R.string.main_find, R.string.main_encyclopedias, R.string.main_mine};//R.string.main_panorama,
     private int mImages[] = {
             R.drawable.selector_tab_home,
-            R.drawable.selector_tab_panorama,
-            R.drawable.selector_tab_find,
+//            R.drawable.selector_tab_panorama,
             R.drawable.selector_tab_encyclopedia,
+            R.drawable.selector_tab_find,
             R.drawable.selector_tab_mine};
     private Class[] fragments = new Class[]{
             HomeFragment.class,
-            PanoramaFragment.class,
-            FindFragment.class,
+//            PanoramaFragment.class,
             EncyclopediaFragment.class,
+            FindFragment.class,
             MineFragment.class};
     private ServiceConnection conn;
 
@@ -70,12 +70,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setDoubleTapToExit( true );
+        setDoubleTapToExit(true);
         mTabHostView.setup(this, getSupportFragmentManager(), R.id.container);
         mTabHostView.getTabWidget().setDividerDrawable(null); // 去掉分割线
         for (int i = 0; i < tabTags.length; i++) {
-            TabHost.TabSpec tabSpec = mTabHostView.newTabSpec( tabTags[i] ).setIndicator( getView( i ) );
-            mTabHostView.addTab( tabSpec, fragments[i], null );
+            TabHost.TabSpec tabSpec = mTabHostView.newTabSpec(tabTags[i]).setIndicator(getView(i));
+            mTabHostView.addTab(tabSpec, fragments[i], null);
         }
         TrackRecordService.startService(getContext());
 //        StatusBarUtils.cancelStatusBarFullTransparent( MainActivity.this );//加上4.4系统会出现不能沉浸式，不要加
@@ -88,30 +88,30 @@ public class MainActivity extends BaseActivity {
 
     // 获得tab视图
     private View getView(int index) {
-        View view = getLayoutInflater().inflate( R.layout.layout_tab, null );
-        ImageView tabImage = view.findViewById( R.id.tab_img );
-        TextView tbaTv = view.findViewById( R.id.tab_tv );
-        tabImage.setImageResource( mImages[index] );
-        tbaTv.setText( tabTitles[index] );
+        View view = getLayoutInflater().inflate(R.layout.layout_tab, null);
+        ImageView tabImage = view.findViewById(R.id.tab_img);
+        TextView tbaTv = view.findViewById(R.id.tab_tv);
+        tabImage.setImageResource(mImages[index]);
+        tbaTv.setText(tabTitles[index]);
         return view;
     }
 
     public static void startActivity(Context context) {
-        Intent in = new Intent( context, MainActivity.class );
-        if (PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ) != null) {
-            LanguageUtil.changeAppLanguage( context, PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ) );
-            in.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        Intent in = new Intent(context, MainActivity.class);
+        if (PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null) != null) {
+            LanguageUtil.changeAppLanguage(context, PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null));
+            in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
-        context.startActivity( in );
+        context.startActivity(in);
     }
 
     public static void startActivityFromSplash(Context context) {
-        Intent in = new Intent( context, MainActivity.class );
-        if (PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ) != null) {
-            LanguageUtil.changeAppLanguage( context, PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ) );
-            in.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        Intent in = new Intent(context, MainActivity.class);
+        if (PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null) != null) {
+            LanguageUtil.changeAppLanguage(context, PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null));
+            in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
-        context.startActivity( in );
+        context.startActivity(in);
     }
 
     @Override

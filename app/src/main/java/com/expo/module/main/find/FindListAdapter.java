@@ -75,6 +75,11 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
         holder.name.setText(find.caption);
         holder.scans.setText(find.views);
         holder.like.setText(find.enjoys);
+        if (find.type == 1) {
+            holder.videoImg.setVisibility(View.VISIBLE);
+        } else {
+            holder.videoImg.setVisibility(View.GONE);
+        }
         holder.itemView.setOnClickListener(v -> FindDetailActivity.startActivity(mContext, find));
     }
 
@@ -87,6 +92,8 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
 
         @BindView(R.id.find_list_img)
         ImageView img;
+        @BindView(R.id.item_find_video_control)
+        ImageView videoImg;
         @BindView(R.id.find_list_content)
         TextView content;
         @BindView(R.id.find_list_name)

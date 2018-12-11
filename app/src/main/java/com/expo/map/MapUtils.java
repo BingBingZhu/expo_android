@@ -3,6 +3,7 @@ package com.expo.map;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.MainThread;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -310,5 +311,12 @@ public class MapUtils {
             Ed = Ec * Math.cos(m_RadLa);
         }
     }
+
+//    public static void main(String args[]){
+//        MapUtils mu = new MapUtils(null);
+//        System.out.println(mu.getAngle
+//                (new MyLatLng(40.440568, 115.948273),
+//                        new MyLatLng(40.446240, 115.960676)));
+//    }
 
 }

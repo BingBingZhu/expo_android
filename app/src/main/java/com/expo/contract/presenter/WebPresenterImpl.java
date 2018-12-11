@@ -28,7 +28,12 @@ public class WebPresenterImpl extends WebContract.Presenter {
             @Override
             protected void onResponse(RichTextRsp rsp) {
                 mView.returnRichText( rsp.richText );
+            }
+
+            @Override
+            public void onComplete() {
                 mView.hideLoadingView();
+                super.onComplete();
             }
         }, observable );
     }
@@ -45,9 +50,14 @@ public class WebPresenterImpl extends WebContract.Presenter {
         Http.request(new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
-                mView.hideLoadingView();
                 user.deleteOnDb(mDao);
                 mView.logoutResp();
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideLoadingView();
+                super.onComplete();
             }
         }, observable);
     }

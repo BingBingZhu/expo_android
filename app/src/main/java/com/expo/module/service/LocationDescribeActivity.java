@@ -50,18 +50,24 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, R.string.title_location_describe_ac);
+
+        mEdit.setText(getIntent().getStringExtra(Constants.EXTRAS.EXTRAS));
+        mPoiId = getIntent().getStringExtra(Constants.EXTRAS.EXTRA_ID);
+        searchPoi(getIntent().getDoubleExtra(Constants.EXTRAS.EXTRA_LATITUDE, 0),
+                getIntent().getDoubleExtra(Constants.EXTRAS.EXTRA_LONGITUDE, 0));
+    }
+
+    private void searchPoi(double lat, double lon) {
+        if (lat == 0 || lon == 0) return;
+
         PoiSearch.Query query = new PoiSearch.Query("", "", "010");
         query.setPageSize(3);
         query.setCityLimit(true);
         PoiSearch poiSearch = new PoiSearch(this, query);
         poiSearch.setOnPoiSearchListener(this);
-        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(getIntent().getDoubleExtra(Constants.EXTRAS.EXTRA_LATITUDE, 0),
-                getIntent().getDoubleExtra(Constants.EXTRAS.EXTRA_LONGITUDE, 0)), 100));//设置周边搜索的中心点以及半径
-
-        mEdit.setText(getIntent().getStringExtra(Constants.EXTRAS.EXTRAS));
-        mPoiId = getIntent().getStringExtra(Constants.EXTRAS.EXTRA_ID);
-
+        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(lat, lon), 100));//设置周边搜索的中心点以及半径
         poiSearch.searchPOIAsyn();
+
     }
 
     @Override

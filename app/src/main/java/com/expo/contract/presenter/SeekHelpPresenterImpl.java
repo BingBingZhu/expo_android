@@ -64,6 +64,12 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
                         else if (positon == 2) visitorService.img_url3 = rsp.shortUrl;
                         submitVisitorService(visitorService);
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.hideLoadingView();
+                        super.onError(e);
+                    }
                 }, verifyCodeLoginObservable);
             } else {
                 Luban.with(ExpoApp.getApplication())
@@ -110,6 +116,12 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
                                     }
 
                                     @Override
+                                    public void onError(Throwable e) {
+                                        mView.hideLoadingView();
+                                        super.onError(e);
+                                    }
+
+                                    @Override
                                     public void onComplete() {
                                         if (!StringUtils.equals(file.getPath(), filePath))
                                             file.delete();
@@ -136,6 +148,11 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
                                         submitVisitorService(visitorService);
                                     }
 
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        mView.hideLoadingView();
+                                        super.onError(e);
+                                    }
                                 }, verifyCodeLoginObservable);
                             }
                         }).launch();
@@ -178,8 +195,13 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
         Http.request(new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
-                mView.hideLoadingView();
                 mView.complete();
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideLoadingView();
+                super.onComplete();
             }
         }, verifyCodeLoginObservable);
 

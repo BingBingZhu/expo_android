@@ -38,8 +38,13 @@ public class FindListPresenterImpl extends FindListContract.Presenter {
         Http.request(new ResponseCallback<SocietyListResp>() {
             @Override
             protected void onResponse(SocietyListResp rsp) {
-                mView.hideLoadingView();
                 mView.addFindList(rsp.finds, fresh);
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideLoadingView();
+                super.onComplete();
             }
         }, observable);
 

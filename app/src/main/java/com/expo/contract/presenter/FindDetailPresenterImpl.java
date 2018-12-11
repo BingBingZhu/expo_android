@@ -27,7 +27,12 @@ public class FindDetailPresenterImpl extends FindDetailContract.Presenter {
         Http.request(new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
+            }
+
+            @Override
+            public void onComplete() {
                 mView.hideLoadingView();
+                super.onComplete();
             }
         }, observable);
     }

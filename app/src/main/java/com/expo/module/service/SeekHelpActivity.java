@@ -90,21 +90,6 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     int mCameraPosition = 0;
 
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    if (2 == (mOpenGPSTimes = (mOpenGPSTimes + 1) % 3)) {
-                        hideLoadingView();
-                        ToastHelper.showShort(R.string.gps_open_weak);
-                    } else location(null);
-                    break;
-            }
-        }
-    };
-
     BaseAdapterItemClickListener<Integer> mClickListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
         public void itemClick(View view, int position, Integer o) {
@@ -244,12 +229,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_text4)
     public void location(View view) {
-        showLoadingView();
-        if (mLocation != null) {
-            hideLoadingView();
-            LocationDescribeActivity.startActivityForResult(this, mLocation.getLatitude(), mLocation.getLongitude(), mPoiId, mCoordinateAssist);
-        } else
-            mHandler.sendEmptyMessageDelayed(1, 1000);
+        LocationDescribeActivity.startActivityForResult(this, mLocation.getLatitude(), mLocation.getLongitude(), mPoiId, mCoordinateAssist);
     }
 
     @OnClick(R.id.seek_help_phone)
@@ -266,7 +246,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
             case R.id.image_record:
             case R.id.image_record_explain:
                 dialog.dismiss();
-                int count =  mImageList.size();
+                int count = mImageList.size();
                 if (count >= 3) {
                     ToastHelper.showShort(getString(R.string.max_images, 3));
                     break;
@@ -364,6 +344,10 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         if (CheckUtils.isEmtpy(mEtEdit.getText().toString(), R.string.check_string_empty_localtion_descriptiong, true)) {
             return null;
         }
+
+        if (mIsLocation && mLocation == null)
+            if (CheckUtils.isEmtpy(mCoordinateAssist, R.string.check_string_no_gps_empty_localtion, true))
+                return null;
 
         VisitorService visitorService = new VisitorService();
         User user = ExpoApp.getApplication().getUser();

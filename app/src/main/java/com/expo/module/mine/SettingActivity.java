@@ -224,6 +224,10 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     public void clickPolicy(MySettingView view) {
         mPresenter.clickPolicy( "1" );
     }
+    @OnClick(R.id.setting_about)
+    public void clickAbout(MySettingView view) {
+        AboutActivity.startActivity(getContext());
+    }
 
     @OnClick(R.id.logout)
     public void logout(View view) {
