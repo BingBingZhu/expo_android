@@ -66,8 +66,8 @@ MobSDK {
     appKey "276c7e46241c8"
     appSecret "75922db60cfed64fbb2f410613cc6ae8"
     ShareSDK {
-        //不引入一键分享
-        gui false
+        //引入一键分享
+        gui true
         devInfo {
             Wechat {
                 id 1

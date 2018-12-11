@@ -8,7 +8,7 @@
         android:id="@+id/ptr_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:ptr_mode="loadMore">
+        app:ptr_mode="both">
         <com.expo.widget.SimpleRecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"

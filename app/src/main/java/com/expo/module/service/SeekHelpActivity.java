@@ -385,10 +385,10 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
             case 2:
                 visitorService.servicetype = "5";
                 break;
-            case 3:
+            case 4:
                 visitorService.servicetype = "4";
                 break;
-            case 4:
+            case 5:
                 visitorService.servicetype = "2";
                 break;
         }
