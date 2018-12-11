@@ -1,6 +1,7 @@
 package com.expo.contract.presenter;
 
 import com.expo.contract.WebContract;
+import com.expo.entity.Coupon;
 import com.expo.entity.User;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
@@ -52,6 +53,28 @@ public class WebPresenterImpl extends WebContract.Presenter {
             protected void onResponse(BaseResponse rsp) {
                 user.deleteOnDb(mDao);
                 mView.logoutResp();
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideLoadingView();
+                super.onComplete();
+            }
+        }, observable);
+    }
+
+    @Override
+    public void setUsedCoupon(Coupon coupon) {
+        mView.showLoadingView();
+        Map<String, Object> params = Http.getBaseParams();
+        params.put("UserCouponId", coupon.couponId);
+        params.put("vrcode", coupon.vrCode);
+        RequestBody requestBody = Http.buildRequestBody(params);
+        Observable<BaseResponse> observable = Http.getServer().setUsedCoupon(requestBody);
+        Http.request(new ResponseCallback<BaseResponse>() {
+            @Override
+            protected void onResponse(BaseResponse rsp) {
+                mView.useCoupon();
             }
 
             @Override

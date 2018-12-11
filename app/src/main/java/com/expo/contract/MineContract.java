@@ -17,6 +17,8 @@ public interface MineContract {
         public abstract void loadUser();
 
         public abstract void clickPolicy(String s);
+
+        public abstract String getIntegralUrl();
     }
 
     interface View extends IView {

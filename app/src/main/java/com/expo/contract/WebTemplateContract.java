@@ -21,6 +21,8 @@ public interface WebTemplateContract {
         public abstract String toJson(Object obj);
 
         public abstract List<Encyclopedias> loadNeayByVenues(Venue as);
+
+        public abstract void scoreChange(String type, String wikiId);
     }
 
     interface View extends IView {

@@ -3,10 +3,12 @@ package com.expo.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class MD5Util {
     protected static char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
@@ -69,10 +71,10 @@ public class MD5Util {
     }
 
     public static void main(String[] args) throws IOException {
-        String filePath = "C:\\Users\\user4\\Downloads\\首页_slices (9)\\mipmap-xxhdpi\\banner1.png";
-        long fileBegin = System.currentTimeMillis();
-        System.out.println("文件加密结果为：" + getFileMD5String(new File(filePath)));
-        long fileEnd = System.currentTimeMillis();
-        System.out.println("文件加密耗时:" + ((fileEnd - fileBegin)) + "ms");
+//        String filePath = "C:\\Users\\user4\\Downloads\\首页_slices (9)\\mipmap-xxhdpi\\banner1.png";
+//        long fileBegin = System.currentTimeMillis();
+//        System.out.println("文件加密结果为：" + getFileMD5String(new File(filePath)));
+//        long fileEnd = System.currentTimeMillis();
+//        System.out.println("文件加密耗时:" + ((fileEnd - fileBegin)) + "ms");
     }
 }

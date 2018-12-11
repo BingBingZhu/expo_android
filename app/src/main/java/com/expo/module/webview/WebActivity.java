@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -17,25 +18,27 @@ import android.webkit.ValueCallback;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebContract;
+import com.expo.entity.Coupon;
 import com.expo.entity.RichText;
 import com.expo.module.contacts.ContactsActivity;
 import com.expo.module.login.LoginActivity;
 import com.expo.module.share.ShareUtil;
 import com.expo.pay.JsMethod;
 import com.expo.utils.Constants;
+import com.expo.utils.MD5Util;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import com.yzq.zxinglibrary.android.CaptureActivity;
+import com.yzq.zxinglibrary.common.Constant;
 
 import butterknife.BindView;
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -54,6 +57,10 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     private String mUrl;
     private String mTitle;
     private ShareUtil mShareUtil;
+
+    Coupon mCoupon;
+
+    Handler mHandler = new Handler();
 
     @Override
     protected int getContentView() {
@@ -82,7 +89,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         });
         mX5View.setWebChromeClient(webChromeClient);
         mX5View.addJavascriptInterface(new WebActivity.JsHook(), "hook");
-        mX5View.addJavascriptInterface( new JsMethod( this, mX5View ), "androidFunction" );
+        mX5View.addJavascriptInterface(new JsMethod(this, mX5View), "androidFunction");
         loadUrl(mUrl);
         mShareUtil = new ShareUtil(this);
     }
@@ -173,6 +180,11 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         LoginActivity.startActivity(getContext());
     }
 
+    @Override
+    public void useCoupon() {
+        mX5View.loadUrl("javascript:useCouponId()");
+    }
+
     /**
      * JavascriptInterface
      */
@@ -194,7 +206,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
         @JavascriptInterface
         public void unLogin() {
-            showForceSingOutDialog();
+            mHandler.post(() -> showForceSingOutDialog());
         }
 
         @JavascriptInterface
@@ -207,8 +219,16 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             ContactsActivity.startActivity(WebActivity.this, true, count);
         }
 
-        public void setTitleText(String titleText){
+        public void setTitleText(String titleText) {
 
+        }
+
+        @JavascriptInterface
+        public void setCouponId(String couponId) {
+            if (mCoupon == null) mCoupon = new Coupon();
+            mCoupon.couponId = couponId;
+            Intent intent = new Intent(WebActivity.this, CaptureActivity.class);
+            startActivityForResult(intent, Constants.RequestCode.REQ_TO_QRCODE);
         }
 
     }
@@ -261,7 +281,21 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         if (resultCode == RESULT_OK) {
             if (requestCode == Constants.RequestCode.REQ_TO_CONTACTS) {
                 mX5View.loadUrl("javascript:setContext('" + data.getStringExtra(Constants.EXTRAS.EXTRAS) + "')");
+            } else if (requestCode == Constants.RequestCode.REQ_TO_QRCODE) {
+                String str[] = data.getStringExtra(Constant.CODED_CONTENT).split(":");
+                if (str.length == 3 && StringUtils.equals("buss", str[0])) {
+                    mCoupon.vrCode = str[2];
+                    mPresenter.setUsedCoupon(mCoupon);
+                } else {
+                    ToastHelper.showShort(R.string.error_qrcode);
+                }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacksAndMessages(null);
+        super.onDestroy();
     }
 }

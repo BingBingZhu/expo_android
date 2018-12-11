@@ -405,4 +405,24 @@ public interface DataServer {
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<BaseResponse> setSocietyViews(@Body RequestBody requestBody);
 
+    /**
+     * 使用优惠卷
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/SetUsedCoupon")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> setUsedCoupon(@Body RequestBody requestBody);
+
+    /**
+     * 增加积分（1查看百科详情 2 分享百科）
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/UserScoreChange")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> userScoreChange(@Body RequestBody requestBody);
+
 }
