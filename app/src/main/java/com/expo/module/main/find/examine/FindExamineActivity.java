@@ -68,7 +68,10 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
                         new Thread(() -> {
                             Bitmap bitmap = ImageUtils.createVideoThumbnail(CommUtils.getFullUrl(find.url1), MediaStore.Images.Thumbnails.MINI_KIND);
                             if (mHandler != null)
-                                mHandler.post(() -> ((ImageView) holder.getView(R.id.item_examine_img)).setImageBitmap(bitmap));
+                                mHandler.post(() -> {
+                                    if (bitmap != null && holder.getView(R.id.item_examine_img) != null)
+                                        ((ImageView) holder.getView(R.id.item_examine_img)).setImageBitmap(bitmap);
+                                });
                         }).start();
 
                     } else {

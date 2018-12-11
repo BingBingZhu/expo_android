@@ -114,7 +114,10 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
                     new Thread(() -> {
                         Bitmap bitmap = ImageUtils.createVideoThumbnail(CommUtils.getFullUrl(mFind.url1), MediaStore.Images.Thumbnails.MINI_KIND);
                         if (mHandler != null)
-                            mHandler.post(() -> mVideoImg.setImageBitmap(bitmap));
+                            mHandler.post(() -> {
+                                if (bitmap != null && mVideoImg != null)
+                                    mVideoImg.setImageBitmap(bitmap);
+                            });
                     }).start();
 
                     videoStart();
@@ -134,7 +137,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
             mRecycler.setAdapter(mAdapter = new CommonAdapter(this, R.layout.item_find_detail, mList) {
                 @Override
                 protected void convert(ViewHolder holder, Object o, int position) {
-                    Picasso.with(FindDetailActivity.this).load(CommUtils.getFullUrl(mList.get(position))).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_find_img));
+                    CommUtils.setImgPic(FindDetailActivity.this, CommUtils.getFullUrl(mList.get(position)), (ImageView) holder.getView(R.id.item_find_img));
                     mTvPosition.setVisibility(View.VISIBLE);
                 }
 
