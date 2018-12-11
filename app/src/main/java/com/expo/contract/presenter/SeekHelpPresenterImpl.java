@@ -8,11 +8,7 @@ import com.blankj.utilcode.util.TimeUtils;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.contract.SeekHelpContract;
-import com.expo.db.QueryParams;
 import com.expo.entity.Park;
-import com.expo.entity.RouteInfo;
-import com.expo.entity.Venue;
-import com.expo.entity.VenuesType;
 import com.expo.entity.VisitorService;
 import com.expo.map.MapUtils;
 import com.expo.network.Http;
@@ -35,15 +31,15 @@ import top.zibin.luban.OnRenameListener;
 
 public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
     public SeekHelpPresenterImpl(SeekHelpContract.View view) {
-        super(view);
+        super( view );
     }
 
     @Override
     public void addVisitorService(VisitorService visitorService) {
         mView.showLoadingView();
-        upLoadImgFile(visitorService, visitorService.getImgUrl1(), 0);
-        upLoadImgFile(visitorService, visitorService.getImgUrl2(), 1);
-        upLoadImgFile(visitorService, visitorService.getImgUrl3(), 2);
+        upLoadImgFile( visitorService, visitorService.getImgUrl1(), 0 );
+        upLoadImgFile( visitorService, visitorService.getImgUrl2(), 1 );
+        upLoadImgFile( visitorService, visitorService.getImgUrl3(), 2 );
     }
 
     @Override
@@ -53,48 +49,48 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
     }
 
     public void upLoadImgFile(VisitorService visitorService, String filePath, int positon) {
-        if (!StringUtils.isEmpty(filePath)) {
-            if (filePath.endsWith("mp4")) {
-                File file = new File(filePath);
-                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile(MultipartBody.Part.createFormData("file", "video.mp4", requestBody));
-                Http.request(new ResponseCallback<UploadRsp>() {
+        if (!StringUtils.isEmpty( filePath )) {
+            if (filePath.endsWith( "mp4" )) {
+                File file = new File( filePath );
+                RequestBody requestBody = RequestBody.create( MediaType.parse( "multipart/form-data" ), file );
+                Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile( MultipartBody.Part.createFormData( "file", "video.mp4", requestBody ) );
+                Http.request( new ResponseCallback<UploadRsp>() {
                     @Override
                     protected void onResponse(UploadRsp rsp) {
-                        if (positon == 0) visitorService.img_url1 = rsp.shortUrl;
-                        else if (positon == 1) visitorService.img_url2 = rsp.shortUrl;
-                        else if (positon == 2) visitorService.img_url3 = rsp.shortUrl;
-                        submitVisitorService(visitorService);
+                        if (positon == 0) visitorService.setImgUrl1( rsp.shortUrl );
+                        else if (positon == 1) visitorService.setImgUrl2( rsp.shortUrl );
+                        else if (positon == 2) visitorService.setImgUrl3( rsp.shortUrl );
+                        submitVisitorService( visitorService );
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mView.hideLoadingView();
-                        super.onError(e);
+                        super.onError( e );
                     }
-                }, verifyCodeLoginObservable);
+                }, verifyCodeLoginObservable );
             } else {
-                Luban.with(ExpoApp.getApplication())
-                        .load(filePath)
-                        .ignoreBy(200)
-                        .setTargetDir(new File(filePath).getParentFile().getPath())
-                        .filter(new CompressionPredicate() {
+                Luban.with( ExpoApp.getApplication() )
+                        .load( filePath )
+                        .ignoreBy( 200 )
+                        .setTargetDir( new File( filePath ).getParentFile().getPath() )
+                        .filter( new CompressionPredicate() {
                             @Override
                             public boolean apply(String path) {
-                                return !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"));
+                                return !(TextUtils.isEmpty( path ) || path.toLowerCase().endsWith( ".gif" ));
                             }
-                        })
-                        .setRenameListener(new OnRenameListener() {
+                        } )
+                        .setRenameListener( new OnRenameListener() {
                             @Override
                             public String rename(String filePath) {
                                 String newName = TimeUtils.getNowMills() + ".jpg";
-                                filePath = new File(filePath).getParent() + File.separator + newName;
-                                FileUtils.createFile(filePath);
+                                filePath = new File( filePath ).getParent() + File.separator + newName;
+                                FileUtils.createFile( filePath );
 
                                 return newName;
                             }
-                        })
-                        .setCompressListener(new OnCompressListener() {
+                        } )
+                        .setCompressListener( new OnCompressListener() {
                             @Override
                             public void onStart() {
                                 // TODO 压缩开始前调用，可以在方法内启动 loading UI
@@ -103,64 +99,64 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
                             @Override
                             public void onSuccess(File file) {
                                 // TODO 压缩成功后调用，返回压缩后的图片文件
-                                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                                RequestBody requestBody = RequestBody.create( MediaType.parse( "multipart/form-data" ), file );
                                 Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile(
-                                        MultipartBody.Part.createFormData("file", "image.png", requestBody));
-                                Http.request(new ResponseCallback<UploadRsp>() {
+                                        MultipartBody.Part.createFormData( "file", "image.png", requestBody ) );
+                                Http.request( new ResponseCallback<UploadRsp>() {
                                     @Override
                                     protected void onResponse(UploadRsp rsp) {
-                                        if (positon == 0) visitorService.img_url1 = rsp.shortUrl;
+                                        if (positon == 0) visitorService.setImgUrl1( rsp.shortUrl );
                                         else if (positon == 1)
-                                            visitorService.img_url2 = rsp.shortUrl;
+                                            visitorService.setImgUrl2( rsp.shortUrl );
                                         else if (positon == 2)
-                                            visitorService.img_url3 = rsp.shortUrl;
-                                        submitVisitorService(visitorService);
+                                            visitorService.setImgUrl3( rsp.shortUrl );
+                                        submitVisitorService( visitorService );
                                     }
 
                                     @Override
                                     public void onError(Throwable e) {
                                         mView.hideLoadingView();
-                                        super.onError(e);
+                                        super.onError( e );
                                     }
 
                                     @Override
                                     public void onComplete() {
-                                        if (!StringUtils.equals(file.getPath(), filePath))
+                                        if (!StringUtils.equals( file.getPath(), filePath ))
                                             file.delete();
                                         super.onComplete();
                                     }
-                                }, verifyCodeLoginObservable);
+                                }, verifyCodeLoginObservable );
                             }
 
                             @Override
                             public void onError(Throwable e) {
                                 // TODO 当压缩过程出现问题时调用
-                                File file = new File(filePath);
-                                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                                File file = new File( filePath );
+                                RequestBody requestBody = RequestBody.create( MediaType.parse( "multipart/form-data" ), file );
                                 Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile(
-                                        MultipartBody.Part.createFormData("file", "image.png", requestBody));
-                                Http.request(new ResponseCallback<UploadRsp>() {
+                                        MultipartBody.Part.createFormData( "file", "image.png", requestBody ) );
+                                Http.request( new ResponseCallback<UploadRsp>() {
                                     @Override
                                     protected void onResponse(UploadRsp rsp) {
-                                        if (positon == 0) visitorService.img_url1 = rsp.shortUrl;
+                                        if (positon == 0) visitorService.setImgUrl1( rsp.shortUrl );
                                         else if (positon == 1)
-                                            visitorService.img_url2 = rsp.shortUrl;
+                                            visitorService.setImgUrl2( rsp.shortUrl );
                                         else if (positon == 2)
-                                            visitorService.img_url3 = rsp.shortUrl;
-                                        submitVisitorService(visitorService);
+                                            visitorService.setImgUrl3( rsp.shortUrl );
+                                        submitVisitorService( visitorService );
                                     }
 
                                     @Override
                                     public void onError(Throwable e) {
                                         mView.hideLoadingView();
-                                        super.onError(e);
+                                        super.onError( e );
                                     }
-                                }, verifyCodeLoginObservable);
+                                }, verifyCodeLoginObservable );
                             }
-                        }).launch();
+                        } ).launch();
             }
         } else {
-            submitVisitorService(visitorService);
+            submitVisitorService( visitorService );
         }
     }
 
@@ -176,10 +172,10 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
         visitorService.addTimes();
         if (visitorService.getTimes() < 3) return;
         Map<String, Object> params = Http.getBaseParams();
-        params.put("Obj", visitorService.toJson());
-        RequestBody requestBody = Http.buildRequestBody(params);
-        Observable<BaseResponse> verifyCodeLoginObservable = Http.getServer().addVisitorService(requestBody);
-        Http.request(new ResponseCallback<BaseResponse>() {
+        params.put( "Obj", visitorService.toJson() );
+        RequestBody requestBody = Http.buildRequestBody( params );
+        Observable<BaseResponse> verifyCodeLoginObservable = Http.getServer().addVisitorService( requestBody );
+        Http.request( new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
                 mView.complete();
@@ -190,7 +186,7 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
                 mView.hideLoadingView();
                 super.onComplete();
             }
-        }, verifyCodeLoginObservable);
+        }, verifyCodeLoginObservable );
 
     }
 

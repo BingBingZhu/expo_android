@@ -2,13 +2,10 @@ package com.expo.module.service;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,10 +13,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -101,9 +96,9 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     BaseAdapterItemClickListener<Integer> mDeleteListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
         public void itemClick(View view, int position, Integer o) {
-            removeCameraPosition(position);
-            mImageList.remove(position);
-            mAdapter.refresh(mImageList);
+            removeCameraPosition( position );
+            mImageList.remove( position );
+            mAdapter.refresh( mImageList );
         }
     };
 
@@ -121,9 +116,9 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(0, getIntent().getStringExtra(Constants.EXTRAS.EXTRA_TITLE));
-        if (getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0) != 0) {
-            mPhone.setVisibility(View.GONE);
+        setTitle( 0, getIntent().getStringExtra( Constants.EXTRAS.EXTRA_TITLE ) );
+        if (getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 ) != 0) {
+            mPhone.setVisibility( View.GONE );
         }
         initRecord();
         initRecyclerView();
@@ -137,10 +132,10 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     }
 
     private void initRecord() {
-        asr = EventManagerFactory.create(this, "asr");
-        asr.registerListener(mListener); //  EventListener 中 onEvent方法\
-        mSpeech.setOnTouchListener((v, event) -> {
-            LogUtils.d("Action", event.getAction() + "");
+        asr = EventManagerFactory.create( this, "asr" );
+        asr.registerListener( mListener ); //  EventListener 中 onEvent方法\
+        mSpeech.setOnTouchListener( (v, event) -> {
+            LogUtils.d( "Action", event.getAction() + "" );
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     startRecord();
@@ -150,19 +145,19 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                     break;
             }
             return true;
-        });
+        } );
     }
 
     private void initRecyclerView() {
-        mAdapter = new SeekHelpAdapter(this);
-        mRecycler.setLayoutManager(new GridLayoutManager(this, 4));
-        mRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_10)));
-        mRecycler.setAdapter(mAdapter);
+        mAdapter = new SeekHelpAdapter( this );
+        mRecycler.setLayoutManager( new GridLayoutManager( this, 4 ) );
+        mRecycler.addItemDecoration( new SpaceDecoration( (int) getResources().getDimension( R.dimen.dms_10 ) ) );
+        mRecycler.setAdapter( mAdapter );
 
         mImageList = new ArrayList<>();
-        mAdapter.setClickListener(mClickListener);
-        mAdapter.setDeleteListener(mDeleteListener);
-        LocationManager.getInstance().registerLocationListener(mLocationChangeListener);
+        mAdapter.setClickListener( mClickListener );
+        mAdapter.setDeleteListener( mDeleteListener );
+        LocationManager.getInstance().registerLocationListener( mLocationChangeListener );
 
     }
 
@@ -173,41 +168,41 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
      * @param type    求助类型
      */
     public static void startActivity(@NonNull Activity context, int type) {
-        if (!GpsUtil.isOPen(context)) {
-            GpsUtil.openGPSSettings(context);
+        if (!GpsUtil.isOPen( context )) {
+            GpsUtil.openGPSSettings( context );
             return;
         }
-        Intent in = new Intent(context, SeekHelpActivity.class);
-        in.putExtra(EXTRAS, type);
-        context.startActivity(in);
+        Intent in = new Intent( context, SeekHelpActivity.class );
+        in.putExtra( EXTRAS, type );
+        context.startActivity( in );
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult( requestCode, resultCode, data );
         if (requestCode == Constants.RequestCode.REQ_OPEN_GPS) {
-            if (GpsUtil.isOPen(this))
-                location(null);
+            if (GpsUtil.isOPen( this ))
+                location( null );
         }
         if (resultCode == RESULT_OK)
             if (requestCode == Constants.RequestCode.REQUEST111 && data != null) {
 //                mImageList.clear();
                 resetCameraPosition();
-                mImageList.addAll(data.getStringArrayListExtra(
-                        ImageSelectorUtils.SELECT_RESULT));
-                mAdapter.refresh(mImageList);
+                mImageList.addAll( data.getStringArrayListExtra(
+                        ImageSelectorUtils.SELECT_RESULT ) );
+                mAdapter.refresh( mImageList );
             } else if (requestCode == Constants.RequestCode.REQ_GET_LOCAL && data != null) {
-                mCoordinateAssist = data.getStringExtra(Constants.EXTRAS.EXTRAS);
-                mLat = data.getDoubleExtra(Constants.EXTRAS.EXTRA_LATITUDE, 0);
-                mLng = data.getDoubleExtra(Constants.EXTRAS.EXTRA_LONGITUDE, 0);
-                mPoiId = data.getStringExtra(Constants.EXTRAS.EXTRA_ID);
+                mCoordinateAssist = data.getStringExtra( Constants.EXTRAS.EXTRAS );
+                mLat = data.getDoubleExtra( Constants.EXTRAS.EXTRA_LATITUDE, 0 );
+                mLng = data.getDoubleExtra( Constants.EXTRAS.EXTRA_LONGITUDE, 0 );
+                mPoiId = data.getStringExtra( Constants.EXTRAS.EXTRA_ID );
                 if (mLat == -1 && mLng == -1) mIsLocation = true;
                 else mIsLocation = false;
             } else if (requestCode == Constants.RequestCode.REQ_TO_CAMERA) {
-                String path = data.getStringExtra(Constants.EXTRAS.EXTRAS);
+                String path = data.getStringExtra( Constants.EXTRAS.EXTRAS );
                 mCameraPosition = mCameraPosition | 1 << mImageList.size();
-                mImageList.add(path);
-                mAdapter.refresh(mImageList);
+                mImageList.add( path );
+                mAdapter.refresh( mImageList );
             }
     }
 
@@ -232,22 +227,22 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
         if (null == mLocation || mLocation.getLatitude() == 0) {
-            ToastHelper.showShort(R.string.trying_to_locate);
+            ToastHelper.showShort( R.string.trying_to_locate );
             return;
         }
-        mPresenter.getServerPoint(mLocation);
+        mPresenter.getServerPoint( mLocation );
     }
 
     @OnClick(R.id.seek_help_text4)
     public void location(View view) {
-        LocationDescribeActivity.startActivityForResult(this, mLocation.getLatitude(), mLocation.getLongitude(), mPoiId, mCoordinateAssist);
+        LocationDescribeActivity.startActivityForResult( this, mLocation.getLatitude(), mLocation.getLongitude(), mPoiId, mCoordinateAssist );
     }
 
     @OnClick(R.id.seek_help_phone)
     public void phone(View view) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400 818 6666"));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        Intent intent = new Intent( Intent.ACTION_DIAL, Uri.parse( "tel:" + "400 818 6666" ) );
+        intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
+        startActivity( intent );
     }
 
 
@@ -259,10 +254,10 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                 dialog.dismiss();
                 int count = mImageList.size();
                 if (count >= 3) {
-                    ToastHelper.showShort(getString(R.string.max_images, 3));
+                    ToastHelper.showShort( getString( R.string.max_images, 3 ) );
                     break;
                 }
-                startActivityForResult(new Intent(SeekHelpActivity.this, CameraActivity.class), Constants.RequestCode.REQ_TO_CAMERA);
+                startActivityForResult( new Intent( SeekHelpActivity.this, CameraActivity.class ), Constants.RequestCode.REQ_TO_CAMERA );
                 break;
             case R.id.image_album:
                 goImageSelector();
@@ -277,47 +272,47 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     private Dialog dialog;
 
     private void showImgSelectDialog() {
-        dialog = new Dialog(this, R.style.BottomActionSheetDialogStyle);
+        dialog = new Dialog( this, R.style.BottomActionSheetDialogStyle );
         //填充对话框的布局
-        View v = LayoutInflater.from(this).inflate(R.layout.dialog_image_select, null);
+        View v = LayoutInflater.from( this ).inflate( R.layout.dialog_image_select, null );
         //初始化控件
-        TextView tvCamera1 = v.findViewById(R.id.image_record);
-        TextView tvCamera2 = v.findViewById(R.id.image_record_explain);
-        TextView tvPhoto = v.findViewById(R.id.image_album);
-        TextView tvCancle = v.findViewById(R.id.cancle);
-        tvCamera1.setOnClickListener(this);
-        tvCamera2.setOnClickListener(this);
-        tvPhoto.setOnClickListener(this);
-        tvCancle.setOnClickListener(this);
+        TextView tvCamera1 = v.findViewById( R.id.image_record );
+        TextView tvCamera2 = v.findViewById( R.id.image_record_explain );
+        TextView tvPhoto = v.findViewById( R.id.image_album );
+        TextView tvCancle = v.findViewById( R.id.cancle );
+        tvCamera1.setOnClickListener( this );
+        tvCamera2.setOnClickListener( this );
+        tvPhoto.setOnClickListener( this );
+        tvCancle.setOnClickListener( this );
         //将布局设置给Dialog
-        dialog.setContentView(v);
+        dialog.setContentView( v );
         //获取当前Activity所在的窗体
         Window dialogWindow = dialog.getWindow();
         if (dialogWindow == null) {
             return;
         }
         //设置Dialog从窗体底部弹出
-        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setGravity( Gravity.BOTTOM );
         //获得窗体的属性
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.y = 20;//设置Dialog距离底部的距离
         //将属性设置给窗体
-        dialogWindow.setAttributes(lp);
+        dialogWindow.setAttributes( lp );
         dialog.show();//显示对话框
     }
 
     private void goImageSelector() {
         int count = getCameraImageCount();
         if (count >= 3)
-            ToastHelper.showShort(getString(R.string.max_images, 3));
+            ToastHelper.showShort( getString( R.string.max_images, 3 ) );
         else
             ImageSelector.builder()
-                    .useCamera(true) // 设置是否使用拍照
-                    .setSingle(false)  //设置是否单选
-                    .setMaxSelectCount(Constants.Config.IMAGE_MAX_COUNT - count) // 图片的最大选择数量，小于等于0时，不限数量。
-                    .setSelected(mImageList) // 把已选的图片传入默认选中。
-                    .setViewImage(true) //是否点击放大图片查看,，默认为true
-                    .start(SeekHelpActivity.this, Constants.RequestCode.REQUEST111); // 打开相册
+                    .useCamera( true ) // 设置是否使用拍照
+                    .setSingle( false )  //设置是否单选
+                    .setMaxSelectCount( Constants.Config.IMAGE_MAX_COUNT - count ) // 图片的最大选择数量，小于等于0时，不限数量。
+                    .setSelected( mImageList ) // 把已选的图片传入默认选中。
+                    .setViewImage( true ) //是否点击放大图片查看,，默认为true
+                    .start( SeekHelpActivity.this, Constants.RequestCode.REQUEST111 ); // 打开相册
     }
 
     private int getCameraImageCount() {
@@ -335,7 +330,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     private void resetCameraPosition() {
         for (int i = mImageList.size() - 1; i >= 0; i--) {
             if ((mCameraPosition | 1 << i) != mCameraPosition)
-                mImageList.remove(i);
+                mImageList.remove( i );
         }
 
         mCameraPosition = 0;
@@ -352,62 +347,62 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     }
 
     private VisitorService initSubmitData() {
-        if (CheckUtils.isEmtpy(mEtEdit.getText().toString(), R.string.check_string_empty_localtion_descriptiong, true)) {
+        if (CheckUtils.isEmtpy( mEtEdit.getText().toString(), R.string.check_string_empty_localtion_descriptiong, true )) {
             return null;
         }
 
         if (mIsLocation && mLocation == null)
-            if (CheckUtils.isEmtpy(mCoordinateAssist, R.string.check_string_no_gps_empty_localtion, true))
+            if (CheckUtils.isEmtpy( mCoordinateAssist, R.string.check_string_no_gps_empty_localtion, true ))
                 return null;
 
         VisitorService visitorService = new VisitorService();
         User user = ExpoApp.getApplication().getUser();
         switch (mImageList.size()) {
             case 3:
-                visitorService.setImgUrl3(mImageList.get(2));
+                visitorService.setImgUrl3( mImageList.get( 2 ) );
             case 2:
-                visitorService.setImgUrl2(mImageList.get(1));
+                visitorService.setImgUrl2( mImageList.get( 1 ) );
             case 1:
-                visitorService.setImgUrl1(mImageList.get(0));
+                visitorService.setImgUrl1( mImageList.get( 0 ) );
         }
-        switch (getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0)) {
+        switch (getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 )) {
             case 0:
-                visitorService.setServiceType("1");
+                visitorService.setServiceType( "1" );
                 break;
             case 1:
-                visitorService.setServiceType("3");
+                visitorService.setServiceType( "3" );
                 break;
             case 2:
-                visitorService.setServiceType("5");
+                visitorService.setServiceType( "5" );
                 break;
             case 4:
-                visitorService.servicetype = "4";
+                visitorService.setServiceType( "4" );
                 break;
             case 5:
-                visitorService.servicetype = "2";
+                visitorService.setServiceType( "2" );
                 break;
         }
 
-        visitorService.coordinate_assist = mCoordinateAssist;
-        visitorService.counttrycode = PrefsHelper.getString(Constants.Prefs.KEY_COUNTRY_CODE, "+86");
-        visitorService.gps_latitude = String.valueOf( mLat );
-        visitorService.gps_longitude = String.valueOf( mLng );
-        visitorService.phone = user.getMobile();
-        visitorService.situation = mEtEdit.getText().toString();
-        visitorService.userid = user.getUid();
-        visitorService.username = user.getNick();
+        visitorService.setCoordinateAssist( mCoordinateAssist );
+        visitorService.setCounttryCode( PrefsHelper.getString( Constants.Prefs.KEY_COUNTRY_CODE, "+86" ) );
+        visitorService.setGpsLatitude( String.valueOf( mLat ) );
+        visitorService.setGpsLongitude( String.valueOf( mLng ) );
+        visitorService.setPhone( user.getMobile() );
+        visitorService.setSituation( mEtEdit.getText().toString() );
+        visitorService.setUserId( user.getUid() );
+        visitorService.setUserName( user.getNick() );
         return visitorService;
     }
 
     @Override
     public void complete() {
-        ToastHelper.showShort(getResources().getString(R.string.submit_success));
+        ToastHelper.showShort( getResources().getString( R.string.submit_success ) );
         finish();
     }
 
     @Override
     protected void onDestroy() {
-        LocationManager.getInstance().unregisterLocationListener(mLocationChangeListener);
+        LocationManager.getInstance().unregisterLocationListener( mLocationChangeListener );
         super.onDestroy();
     }
 
@@ -417,10 +412,10 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         String event = null;
         event = SpeechConstant.ASR_START; // 替换成测试的event
 
-        params.put(SpeechConstant.DECODER, 2);
-        params.put(SpeechConstant.VAD, SpeechConstant.VAD_DNN);
-        params.put(SpeechConstant.VAD_ENDPOINT_TIMEOUT, 15000);
-        params.put(SpeechConstant.ACCEPT_AUDIO_VOLUME, false);
+        params.put( SpeechConstant.DECODER, 2 );
+        params.put( SpeechConstant.VAD, SpeechConstant.VAD_DNN );
+        params.put( SpeechConstant.VAD_ENDPOINT_TIMEOUT, 15000 );
+        params.put( SpeechConstant.ACCEPT_AUDIO_VOLUME, false );
         // params.put(SpeechConstant.NLU, "enable");
         // params.put(SpeechConstant.VAD_ENDPOINT_TIMEOUT, 0); // 长语音
         // params.put(SpeechConstant.IN_FILE, "res:///com/baidu/android/voicedemo/16k_test.pcm");
@@ -430,23 +425,23 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         // 请先使用如‘在线识别’界面测试和生成识别参数。 params同ActivityRecog类中myRecognizer.start(params);
         // 复制此段可以自动检测错误
         String json = null; // 可以替换成自己的json
-        json = new JSONObject(params).toString(); // 这里可以替换成你需要测试的json
-        asr.send(event, json, null, 0, 0);
+        json = new JSONObject( params ).toString(); // 这里可以替换成你需要测试的json
+        asr.send( event, json, null, 0, 0 );
     }
 
     private void stopRecord() {
-        asr.send(SpeechConstant.ASR_STOP, null, null, 0, 0); //
+        asr.send( SpeechConstant.ASR_STOP, null, null, 0, 0 ); //
     }
 
     EventListener mListener = new EventListener() {
         @Override
         public void onEvent(String name, String params, byte[] data, int offset, int length) {
-            if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL)) {
+            if (name.equals( SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL )) {
 //                if (params.contains("\"nlu_result\"")) {
-                if (params.contains("\"final_result\"")) {
+                if (params.contains( "\"final_result\"" )) {
                     try {
-                        JSONObject gson = new JSONObject(params);
-                        mEtEdit.setText(mEtEdit.getText().toString() + gson.optString("best_result"));
+                        JSONObject gson = new JSONObject( params );
+                        mEtEdit.setText( mEtEdit.getText().toString() + gson.optString( "best_result" ) );
 //                        mEtEdit.setText(mEtEdit.getText().toString() + new String(data, offset, length));
                     } catch (JSONException e) {
                         e.printStackTrace();
