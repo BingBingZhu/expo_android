@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@mipmap/bg_trans2"
+        android:background="@drawable/bg_trans2"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dms_46"
         android:paddingTop="@dimen/dms_22"
@@ -31,7 +31,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dms_80"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
             <org.raphets.roundimageview.RoundImageView
@@ -53,14 +53,13 @@
             style="@style/TextSizeWhite13"
             android:layout_marginTop="@dimen/dms_16"
             android:gravity="left|top"
-            android:lines="3" />
+            android:maxLines="3" />
 
         <TextView
             android:id="@+id/find_detail_position"
             style="@style/TextSizeWhite15"
             android:layout_gravity="right"
-            android:layout_marginTop="@dimen/dms_36"
-            android:layout_marginBottom="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_16"
             android:gravity="center_vertical"
             android:lines="1"
             android:singleLine="true" />

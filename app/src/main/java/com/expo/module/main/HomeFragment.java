@@ -12,12 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.StatusBarUtils;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.HomeContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
@@ -181,34 +183,36 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     public void clickFunc(View view) {
         switch (view.getId()) {
             case R.id.home_func_0:
-                ParkMapActivity.startActivity( getContext(), null );
-                break;
-            case R.id.home_func_1:
                 FreeWiFiActivity.startActivity( getContext() );
                 break;
-            case R.id.home_func_2:
+            case R.id.home_func_1:
                 String url = mPresenter.loadBuyTicketsUrl();
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                         (url + "?phone=" + ExpoApp.getApplication().getUser().getMobile()), getString( R.string.buy_tickets ) );
                 break;
-            case R.id.home_func_3:
+            case R.id.home_func_2:
                 url = mPresenter.loadVenueBespeakUrl();
 //                url = "http://192.168.1.13:8888/";
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                         url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
                                 + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_appointment ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
                 break;
-            case R.id.home_func_4:
+            case R.id.home_func_3:
                 TouristServiceActivity.startActivity( getContext() );
                 break;
-            case R.id.home_func_5:
+            case R.id.home_func_4:
                 RoutesActivity.startActivity( getContext() );
                 break;
+            case R.id.home_func_5:
+                ParkMapActivity.startActivity( getContext(), null );
+                break;
             case R.id.home_func_6:
-                DistinguishActivity.startActivity( getContext() );
+//                DistinguishActivity.startActivity( getContext() );
+                ToastHelper.showShort("微观世界，还不清楚地址");
                 break;
             case R.id.home_func_7:
-                WebActivity.startActivity( getContext(), "http://www.changchengneiwai.com/wap/index.htm", "周边服务" );
+//                WebActivity.startActivity( getContext(), "http://www.changchengneiwai.com/wap/index.htm", "周边服务" );
+                PanoramaActivity.startActivity(getContext());
                 break;
             case R.id.home_navigation_item:
                 ParkMapActivity.startActivity( getContext(), null );

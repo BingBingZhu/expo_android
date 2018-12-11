@@ -1,11 +1,15 @@
 package com.expo.module.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.expo.R;
+import com.expo.base.BaseActivity;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.PanoramaContract;
@@ -20,7 +24,7 @@ import butterknife.BindView;
 /*
  * 全景页
  */
-public class PanoramaFragment extends BaseFragment<PanoramaContract.Presenter> implements PanoramaContract.View {
+public class PanoramaActivity extends BaseActivity<PanoramaContract.Presenter> implements PanoramaContract.View {
     @BindView(R.id.common_x5)
     X5WebView mX5View;
     @BindView(R.id.common_progress)
@@ -33,14 +37,13 @@ public class PanoramaFragment extends BaseFragment<PanoramaContract.Presenter> i
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mX5View.setWebChromeClient( webChromeClient );
+        mX5View.setWebChromeClient(webChromeClient);
         String url = mPresenter.loadPanoramaUrl();
-        mX5View.loadUrl( url );
+        mX5View.loadUrl(TextUtils.isEmpty(url) ? Constants.URL.HTML_404 : url);
     }
 
-    @Override
-    public boolean isNeedPaddingTop() {
-        return false;
+    public static void startActivity(@NonNull Context context) {
+        context.startActivity(new Intent(context, PanoramaActivity.class));
     }
 
     @Override
@@ -51,19 +54,19 @@ public class PanoramaFragment extends BaseFragment<PanoramaContract.Presenter> i
     private WebChromeClient webChromeClient = new WebChromeClient() {
         @Override
         public boolean onJsAlert(WebView webView, String s, String s1, JsResult jsResult) {
-            ToastHelper.showShort( s1 );
+            ToastHelper.showShort(s1);
             jsResult.confirm();
             return true;
         }
 
         @Override
         public void onProgressChanged(WebView webView, int i) {                                     //加载进度条处理
-            super.onProgressChanged( webView, i );
+            super.onProgressChanged(webView, i);
             if (i == 100) {
-                mProgressView.setVisibility( View.GONE );
+                mProgressView.setVisibility(View.GONE);
             } else {
-                mProgressView.setVisibility( View.VISIBLE );
-                mProgressView.setProgress( i );
+                mProgressView.setVisibility(View.VISIBLE);
+                mProgressView.setProgress(i);
             }
         }
     };

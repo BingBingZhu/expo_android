@@ -51,6 +51,12 @@ public class FindPublishPresenterImpl extends FindPublishContract.Presenter {
                         find.setUrl(positon, rsp.shortUrl);
                         submitSociety(find);
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.hideLoadingView();
+                        super.onError(e);
+                    }
                 }, verifyCodeLoginObservable);
             } else {
                 Luban.with(ExpoApp.getApplication())
@@ -92,6 +98,12 @@ public class FindPublishPresenterImpl extends FindPublishContract.Presenter {
                                     }
 
                                     @Override
+                                    public void onError(Throwable e) {
+                                        mView.hideLoadingView();
+                                        super.onError(e);
+                                    }
+
+                                    @Override
                                     public void onComplete() {
                                         if (!StringUtils.equals(file.getPath(), filePath))
                                             file.delete();
@@ -113,6 +125,11 @@ public class FindPublishPresenterImpl extends FindPublishContract.Presenter {
                                         submitSociety(find);
                                     }
 
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        mView.hideLoadingView();
+                                        super.onError(e);
+                                    }
                                 }, verifyCodeLoginObservable);
                             }
                         }).launch();
@@ -152,8 +169,13 @@ public class FindPublishPresenterImpl extends FindPublishContract.Presenter {
         Http.request(new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
-                mView.hideLoadingView();
                 mView.complete();
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideLoadingView();
+                super.onComplete();
             }
         }, addSociety);
 

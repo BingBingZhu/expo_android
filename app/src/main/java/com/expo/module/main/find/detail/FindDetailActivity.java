@@ -16,6 +16,7 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -23,6 +24,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ImageUtils;
+import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.FindDetailContract;
 import com.expo.contract.presenter.FindDetailPresenterImpl;
 import com.expo.entity.Find;
@@ -46,6 +48,8 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
 
     @BindView(R.id.recycler)
     RecyclerView mRecycler;
+    @BindView(R.id.find_detail_close)
+    View mImClose;
     @BindView(R.id.find_detail_head)
     RoundImageView mRvHead;
     @BindView(R.id.find_detail_name)
@@ -77,7 +81,13 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
     @Override
     protected void onInitView(Bundle savedInstanceState) {
 
-        mRootView.setTopPadding();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(-2, -2);
+        params.topMargin = (int) (StatusBarUtils.getStatusBarHeight(getContext()) + getResources().getDimension(R.dimen.dms_30));
+        params.leftMargin = (int) getResources().getDimension(R.dimen.dms_30);
+
+        mImClose.setLayoutParams(params);
+
+//        mRootView.setTopPadding();
         mFind = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
         mList = mFind.getUrlList();
         setFindInfo();

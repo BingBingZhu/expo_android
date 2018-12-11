@@ -348,8 +348,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
         Find find = new Find();
         find.caption = mEtEdit.getText().toString();
-        find.subtime = TimeUtils.getNowMills() + "";
-        find.createtime = TimeUtils.millis2String(TimeUtils.getNowMills(), new SimpleDateFormat(Constants.TimeFormat.TYPE_ALL));
+        find.subtime = TimeUtils.millis2String(TimeUtils.getNowMills(), new SimpleDateFormat(Constants.TimeFormat.TYPE_ALL));
         find.mobile = ExpoApp.getApplication().getUser().getMobile();
         find.uid = ExpoApp.getApplication().getUser().getUid();
         find.uname = ExpoApp.getApplication().getUser().getNick();

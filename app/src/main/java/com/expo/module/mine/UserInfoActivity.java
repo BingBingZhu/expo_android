@@ -29,6 +29,7 @@ import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
+import com.expo.base.utils.CheckUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.UserInfoContract;
 import com.expo.entity.User;
@@ -144,7 +145,12 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         mSaveBtn.setGravity(Gravity.CENTER);
         mSaveBtn.setVisibility(isShow ? View.VISIBLE : View.GONE);
         mSaveBtn.setOnClickListener(v -> {
+            if (CheckUtils.isEmtpy(((TextView) mUserName.getRightView()).getText().toString(), R.string.check_string_empty_name, true))
+                return;
+            if (!CheckUtils.isEmail(((TextView) mUserEmail.getRightView()).getText().toString(), true))
+                return;
             mUser.setNick(((TextView) mUserName.getRightView()).getText().toString());
+            mUser.setEmail(((TextView) mUserEmail.getRightView()).getText().toString());
             mPresenter.saveUserInfo(mChangeImg, mUser);
         });
     }
@@ -269,6 +275,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
                         ((TextView) mUserWork.getRightView()).setText(mWorkList.get(position));
                         dialog.dismiss();
+                        mUser.setWorkType(mWorkList.get(position));
                     }
                 })
                 .setGravity(Gravity.BOTTOM)
@@ -346,7 +353,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
             mRadioFemale.setChecked(true);
         }
         ((EditText) mUserEmail.getRightView()).setText(mUser.getEmail());
-        ((TextView) mUserWork.getRightView()).setText(mUser.getWork());
+        ((TextView) mUserWork.getRightView()).setText(mUser.getWorkType());
 
         mPresenter.setAge(mUser.getBirthDay());
     }

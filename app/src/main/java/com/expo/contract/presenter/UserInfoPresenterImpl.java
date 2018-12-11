@@ -1,11 +1,7 @@
 package com.expo.contract.presenter;
 
-import android.content.Context;
-import android.support.v4.math.MathUtils;
-
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
-import com.expo.base.ExpoApp;
 import com.expo.contract.UserInfoContract;
 import com.expo.entity.User;
 import com.expo.network.Http;
@@ -99,6 +95,12 @@ public class UserInfoPresenterImpl extends UserInfoContract.Presenter {
                     user.setPhotoUrl(rsp.fullUrl);
                     saveUserInfoOnLine(user);
                 }
+
+                @Override
+                public void onError(Throwable e) {
+                    mView.hideLoadingView();
+                    super.onError(e);
+                }
             }, verifyCodeLoginObservable);
         }
 
@@ -113,7 +115,7 @@ public class UserInfoPresenterImpl extends UserInfoContract.Presenter {
         params.put("picUrl", user.getPhotoUrl());
         params.put("sex", user.getSex());
         params.put("email", user.getEmail());
-        params.put("worktype", user.getWork());
+        params.put("worktype", user.getWorkType());
         RequestBody requestBody = Http.buildRequestBody(params);
         Observable<BaseResponse> verifyCodeLoginObservable = Http.getServer().setUserInfo(requestBody);
         Http.request(new ResponseCallback<BaseResponse>() {
@@ -126,6 +128,7 @@ public class UserInfoPresenterImpl extends UserInfoContract.Presenter {
             @Override
             public void onComplete() {
                 mView.hideLoadingView();
+                super.onComplete();
             }
         }, verifyCodeLoginObservable);
     }

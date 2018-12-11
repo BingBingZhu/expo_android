@@ -41,7 +41,6 @@ public class SettingPresenterImpl extends SettingContract.Presenter {
         Http.request( new ResponseCallback<VersionInfoResp>() {
             @Override
             protected void onResponse(VersionInfoResp rsp) {
-                mView.hideLoadingView();
                 if (StringUtils.equals( AppUtils.getAppVersionCode() + "", rsp.ver )) {
                     ToastHelper.showShort( R.string.latest_app_version );
                 } else {
@@ -52,6 +51,12 @@ public class SettingPresenterImpl extends SettingContract.Presenter {
                         }
                     }
                 }
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideLoadingView();
+                super.onComplete();
             }
         }, observable );
     }

@@ -37,8 +37,13 @@ public class ExaminePresenterImpl extends ExamineContract.Presenter {
                         rsp.finds.remove(i);
                     }
                 }
-                mView.hideLoadingView();
                 mView.freshFind(rsp.finds);
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideLoadingView();
+                super.onComplete();
             }
         }, observable);
 

@@ -72,7 +72,7 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
                         }).start();
 
                     } else {
-                        holder.setVisible(R.id.item_find_video_control, true);
+                        holder.setVisible(R.id.item_find_video_control, false);
                         CommUtils.setImgPic(FindExamineActivity.this, CommUtils.getFullUrl(find.url1), (ImageView) holder.getView(R.id.item_examine_img));
                     }
 

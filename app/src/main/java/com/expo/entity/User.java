@@ -48,9 +48,9 @@ public class User extends BaseResponse implements Parcelable {
     @DatabaseField(columnName = "email")
     @SerializedName(value = "email")
     private String email;
-    @DatabaseField(columnName = "work")
+    @DatabaseField(columnName = "work_type")
     @SerializedName(value = "worktype")
-    private String work;
+    private String workType;
     @DatabaseField(columnName = "photo_url")
     @SerializedName(value = "PhotoUrl", alternate = {"picUrl"})
     private String photoUrl;
@@ -69,6 +69,8 @@ public class User extends BaseResponse implements Parcelable {
         sex = in.readString();
         city = in.readString();
         photoUrl = in.readString();
+        email = in.readString();
+        workType = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -100,7 +102,7 @@ public class User extends BaseResponse implements Parcelable {
         dest.writeString(sex);
         dest.writeString(city);
         dest.writeString(email);
-        dest.writeString(work);
+        dest.writeString(workType);
         dest.writeString(photoUrl);
     }
 
@@ -200,12 +202,12 @@ public class User extends BaseResponse implements Parcelable {
         this.email = email;
     }
 
-    public String getWork() {
-        return work;
+    public String getWorkType() {
+        return workType;
     }
 
-    public void setWork(String work) {
-        this.work = work;
+    public void setWorkType(String workType) {
+        this.workType = workType;
     }
 
     public String getPhotoUrl() {
@@ -262,7 +264,8 @@ public class User extends BaseResponse implements Parcelable {
         if (sex != null ? !sex.equals(user.sex) : user.sex != null) return false;
         if (city != null ? !city.equals(user.city) : user.city != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (work != null ? !work.equals(user.work) : user.work != null) return false;
+        if (workType != null ? !workType.equals(user.workType) : user.workType != null)
+            return false;
         return photoUrl != null ? photoUrl.equals(user.photoUrl) : user.photoUrl == null;
     }
 
@@ -278,7 +281,7 @@ public class User extends BaseResponse implements Parcelable {
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (work != null ? work.hashCode() : 0);
+        result = 31 * result + (workType != null ? workType.hashCode() : 0);
         result = 31 * result + (photoUrl != null ? photoUrl.hashCode() : 0);
         return result;
     }
@@ -295,7 +298,7 @@ public class User extends BaseResponse implements Parcelable {
         user.sex = this.sex;
         user.city = this.city;
         user.email = this.email;
-        user.work = this.work;
+        user.workType = this.workType;
         user.photoUrl = this.photoUrl;
         return user;
     }
