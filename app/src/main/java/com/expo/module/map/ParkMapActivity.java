@@ -33,6 +33,7 @@ import com.amap.api.fence.GeoFenceClient;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
@@ -51,6 +52,7 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.base.utils.ViewUtils;
 import com.expo.contract.ParkMapContract;
+import com.expo.entity.CustomRoute;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
@@ -535,6 +537,14 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     @Override
     public void loadRoute(List<RouteInfo> routeInfos) {
         this.mRouteInfos = routeInfos;
+    }
+
+    @Override
+    public void loadCustomRoute(List<CustomRoute> customRoutes) {
+        for (CustomRoute cr : customRoutes) {
+            mAMap.addPolyline(new PolylineOptions().
+                    addAll(cr.getPoints()).setCustomTexture(BitmapDescriptorFactory.fromResource(R.mipmap.ico_route_item)));
+        }
     }
 
     @Override

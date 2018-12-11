@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/as_ico_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ico_park_map_marker_top_bg"
+        android:gravity="center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ico_frame"
+        android:layout_marginTop="-4dp"
+        android:src="@mipmap/ico_marker_selected_bottom"/>
+
+    <FrameLayout
+        android:id="@+id/ico_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/as_ico_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dms_minus_10"
+        android:background="@mipmap/ico_marker_selected_bg">
+
+        <ImageView
+            android:id="@+id/icon_center_img"
+            android:layout_width="@dimen/dms_34"
+            android:layout_height="@dimen/dms_34"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dms_12"
+            android:src="@mipmap/test_1" />
+    </FrameLayout>
+</RelativeLayout>

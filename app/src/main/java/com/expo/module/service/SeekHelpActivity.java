@@ -368,45 +368,45 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         User user = ExpoApp.getApplication().getUser();
         switch (mImageList.size()) {
             case 3:
-                visitorService.img_url3 = mImageList.get(2);
+                visitorService.setImgUrl3(mImageList.get(2));
             case 2:
-                visitorService.img_url2 = mImageList.get(1);
+                visitorService.setImgUrl2(mImageList.get(1));
             case 1:
-                visitorService.img_url1 = mImageList.get(0);
+                visitorService.setImgUrl1(mImageList.get(0));
         }
         switch (getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0)) {
             case 0:
-                visitorService.servicetype = "1";
+                visitorService.setServiceType("1");
                 break;
             case 1:
-                visitorService.servicetype = "3";
+                visitorService.setServiceType("3");
                 break;
             case 2:
-                visitorService.servicetype = "5";
+                visitorService.setServiceType("5");
                 break;
             case 3:
-                visitorService.servicetype = "4";
+                visitorService.setServiceType("4");
                 break;
             case 4:
-                visitorService.servicetype = "2";
+                visitorService.setServiceType("2");
                 break;
         }
 
-        visitorService.coordinate_assist = mCoordinateAssist;
-        visitorService.counttrycode = PrefsHelper.getString(Constants.Prefs.KEY_COUNTRY_CODE, "+86");
+        visitorService.setCoordinateAssist(mCoordinateAssist);
+        visitorService.setCounttryCode(PrefsHelper.getString(Constants.Prefs.KEY_COUNTRY_CODE, "+86"));
         if (mIsLocation) {
             if (mLocation != null) {
-                visitorService.gps_latitude = mLocation.getLatitude() + "";
-                visitorService.gps_longitude = mLocation.getLongitude() + "";
+                visitorService.setGpsLatitude(mLocation.getLatitude() + "");
+                visitorService.setGpsLongitude(mLocation.getLongitude() + "");
             }
         } else {
-            visitorService.gps_latitude = mLat + "";
-            visitorService.gps_longitude = mLng + "";
+            visitorService.setGpsLatitude(mLat + "");
+            visitorService.setGpsLongitude(mLng + "");
         }
-        visitorService.phone = user.getMobile();
-        visitorService.situation = mEtEdit.getText().toString();
-        visitorService.userid = user.getUid();
-        visitorService.username = user.getNick();
+        visitorService.setPhone(user.getMobile());
+        visitorService.setSituation(mEtEdit.getText().toString());
+        visitorService.setUserId(user.getUid());
+        visitorService.setUserName(user.getNick());
         return visitorService;
     }
 

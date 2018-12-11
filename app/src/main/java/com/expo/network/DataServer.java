@@ -1,6 +1,7 @@
 package com.expo.network;
 
 import com.expo.entity.User;
+import com.expo.entity.VisitorService;
 import com.expo.network.response.AllTypeResp;
 import com.expo.network.response.BadgeResp;
 import com.expo.network.response.BaseResponse;
@@ -23,6 +24,7 @@ import com.expo.network.response.VenuesTypeResp;
 import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.network.response.VersionInfoResp;
+import com.expo.network.response.VisitorServiceResp;
 
 import java.util.Map;
 
@@ -356,4 +358,12 @@ public interface DataServer {
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<RichTextRsp> getRichText(@Body RequestBody requestBody);
 
+    /**
+     * 获取游客服务列表
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/findVisitorServiceList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<VisitorServiceResp> findVisitorServiceList(@Body RequestBody requestBody);
 }

@@ -3,6 +3,7 @@ package com.expo.map;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import com.expo.base.ExpoApp;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.entity.Park;
 import com.expo.network.Http;
+import com.expo.utils.BitmapUtils;
 import com.expo.utils.Constants;
 import com.expo.widget.ImageViewPlus;
 
@@ -49,13 +51,13 @@ public class MapUtils {
     public void settingMap(AMap.OnMapTouchListener onMapTouchListener, AMap.OnMarkerClickListener onMarkerClickListener) {
 //        map.setMaxZoomLevel( 12F );
 //        map.setMinZoomLevel( 10.5F );
-        map.getUiSettings().setRotateGesturesEnabled( false );
-        map.getUiSettings().setTiltGesturesEnabled( false );
-        map.getUiSettings().setZoomControlsEnabled( false );
-        map.setMyLocationEnabled( true );
-        map.setOnMapTouchListener( onMapTouchListener );
-        map.setOnMarkerClickListener( onMarkerClickListener );
-        map.setMapType( (int) PrefsHelper.getLong( Constants.Prefs.KEY_MAP_PATTERN, 1 ) );
+        map.getUiSettings().setRotateGesturesEnabled(false);
+        map.getUiSettings().setTiltGesturesEnabled(false);
+        map.getUiSettings().setZoomControlsEnabled(false);
+        map.setMyLocationEnabled(true);
+        map.setOnMapTouchListener(onMapTouchListener);
+        map.setOnMarkerClickListener(onMarkerClickListener);
+        map.setMapType((int) PrefsHelper.getLong(Constants.Prefs.KEY_MAP_PATTERN, 1));
         setNotFollow();
     }
 
@@ -74,14 +76,14 @@ public class MapUtils {
      * @param park 园区
      */
     public void setLimits(Park park) {
-        map.setMapStatusLimits( getBoundsBuilder( park ) );
+        map.setMapStatusLimits(getBoundsBuilder(park));
     }
 
     private LatLngBounds getBoundsBuilder(Park park) {
         ArrayList<double[]> electronicFenceList = park.getElectronicFenceList();
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
         for (double[] lngLat : electronicFenceList) {
-            boundsBuilder.include( new LatLng( lngLat[1], lngLat[0] ) );
+            boundsBuilder.include(new LatLng(lngLat[1], lngLat[0]));
         }
         return boundsBuilder.build();
     }
@@ -91,14 +93,14 @@ public class MapUtils {
         ArrayList<double[]> electronicFenceList = park.getElectronicFenceList();
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
         for (double[] lngLat : electronicFenceList) {
-            dPoints.add( new DPoint( lngLat[1], lngLat[0] ) );
+            dPoints.add(new DPoint(lngLat[1], lngLat[0]));
         }
         return dPoints;
     }
 
     public float setMapMinZoom() {
         float zoom = map.getCameraPosition().zoom;
-        map.setMinZoomLevel( zoom );
+        map.setMinZoomLevel(zoom);
         return zoom;
     }
 
@@ -108,20 +110,20 @@ public class MapUtils {
      * @param aMapLocation
      */
     public void setFollow(AMapLocation aMapLocation) {
-        mapGoto( aMapLocation );
-        settingLocationStylePattern( MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE );
+        mapGoto(aMapLocation);
+        settingLocationStylePattern(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
     }
 
     public void setFollow(LatLng latLng) {
-        mapGoto( latLng );
-        settingLocationStylePattern( MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE );
+        mapGoto(latLng);
+        settingLocationStylePattern(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
     }
 
     /**
      * 地图不跟随定位点移动
      */
     public void setNotFollow() {
-        settingLocationStylePattern( MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER );
+        settingLocationStylePattern(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);
     }
 
 
@@ -133,8 +135,8 @@ public class MapUtils {
      */
     public void settingLocationStylePattern(int locationStyle) {
         getMyLocationStyle();
-        myLocationStyle.myLocationType( locationStyle );
-        map.setMyLocationStyle( myLocationStyle );//设置定位蓝点的Style
+        myLocationStyle.myLocationType(locationStyle);
+        map.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
     }
 
     MyLocationStyle myLocationStyle = null;
@@ -142,29 +144,29 @@ public class MapUtils {
     public void getMyLocationStyle() {
         if (null == myLocationStyle) {
             myLocationStyle = new MyLocationStyle();
-            myLocationStyle.interval( 2000 );
-            myLocationStyle.strokeColor( BaseApplication.getApplication().getResources().getColor( R.color.color_local_stork ) );//设置定位蓝点精度圆圈的边框颜色的方法。
-            myLocationStyle.radiusFillColor( BaseApplication.getApplication().getResources().getColor( R.color.color_local ) );//设置定位蓝点精度圆圈的填充颜色的方法。
+            myLocationStyle.interval(2000);
+            myLocationStyle.strokeColor(BaseApplication.getApplication().getResources().getColor(R.color.color_local_stork));//设置定位蓝点精度圆圈的边框颜色的方法。
+            myLocationStyle.radiusFillColor(BaseApplication.getApplication().getResources().getColor(R.color.color_local));//设置定位蓝点精度圆圈的填充颜色的方法。
             BitmapDescriptor bitmapDescriptor;
-            View view = LayoutInflater.from( BaseApplication.getApplication() ).inflate( R.layout.layout_local_icon, null );
+            View view = LayoutInflater.from(BaseApplication.getApplication()).inflate(R.layout.layout_local_icon, null);
             if (null != ExpoApp.getApplication().getUser() && !ExpoApp.getApplication().getUser().getPhotoUrl().isEmpty()) {
-                Http.loadBitmap( ExpoApp.getApplication().getUser().getPhotoUrl(), (url, bitmap, obj) -> {
-                    settingLocalImage( bitmap );
-                    ExpoApp.getApplication().setUserHandBitmap( bitmap );
-                }, ExpoApp.getApplication() );
+                Http.loadBitmap(ExpoApp.getApplication().getUser().getPhotoUrl(), (url, bitmap, obj) -> {
+                    settingLocalImage(bitmap);
+                    ExpoApp.getApplication().setUserHandBitmap(bitmap);
+                }, ExpoApp.getApplication());
             }
-            bitmapDescriptor = BitmapDescriptorFactory.fromView( view );
-            myLocationStyle.myLocationIcon( bitmapDescriptor );
+            bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
+            myLocationStyle.myLocationIcon(bitmapDescriptor);
         }
     }
 
     private void settingLocalImage(Bitmap bitmap) {
-        View view = LayoutInflater.from( ExpoApp.getApplication() ).inflate( R.layout.layout_local_icon, null );
-        ImageViewPlus img = view.findViewById( R.id.local_icon_img );
-        img.setImageBitmap( bitmap );
-        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromView( view );
-        myLocationStyle.myLocationIcon( bitmapDescriptor );
-        map.setMyLocationStyle( myLocationStyle );//设置定位蓝点的Style
+        View view = LayoutInflater.from(ExpoApp.getApplication()).inflate(R.layout.layout_local_icon, null);
+        ImageViewPlus img = view.findViewById(R.id.local_icon_img);
+        img.setImageBitmap(bitmap);
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
+        myLocationStyle.myLocationIcon(bitmapDescriptor);
+        map.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
     }
 
     /**
@@ -175,17 +177,17 @@ public class MapUtils {
     public void mapGoto(LatLng latLng) {
         if (null == latLng || latLng.latitude == 0)
             return;
-        CameraUpdate cameraUpdate = CameraUpdateFactory.changeLatLng( latLng );
-        map.animateCamera( cameraUpdate );
+        CameraUpdate cameraUpdate = CameraUpdateFactory.changeLatLng(latLng);
+        map.animateCamera(cameraUpdate);
     }
 
     public void mapGoto(double lat, double lng) {
-        LatLng latLng = new LatLng( lat, lng );
-        mapGoto( latLng );
+        LatLng latLng = new LatLng(lat, lng);
+        mapGoto(latLng);
     }
 
     public void mapGoto(AMapLocation aMapLocation) {
-        mapGoto( aMapLocation.getLatitude(), aMapLocation.getLongitude() );
+        mapGoto(aMapLocation.getLatitude(), aMapLocation.getLongitude());
     }
 
     /**
@@ -198,31 +200,43 @@ public class MapUtils {
             return;
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
         for (int i = 0; i < markers.size(); i++) {
-            boundsBuilder.include( markers.get( i ).getPosition() );
+            boundsBuilder.include(markers.get(i).getPosition());
         }
-        map.animateCamera( CameraUpdateFactory.newLatLngBounds( boundsBuilder.build(), 260 ) );
+        map.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 260));
     }
 
     public BitmapDescriptor setMarkerIconDrawable(Context context, Bitmap bitmap, String text) {
-        return setMarkerIconDrawable( context, bitmap, text, null );
+        return setMarkerIconDrawable(context, bitmap, text, null, false);
     }
 
-    public BitmapDescriptor setMarkerIconDrawable(Context context, Bitmap bitmap, String text, String centerText) {
-        View view = LayoutInflater.from( context ).inflate( R.layout.layout_as_icon, null );
-        TextView tv = view.findViewById( R.id.as_ico_text );
-        ImageView img = view.findViewById( R.id.icon_center_img );
-        TextView ctv = view.findViewById( R.id.icon_center_text );
-        tv.setText( text );
-        if (null == bitmap && StringUtils.isEmpty( centerText )) {
-            bitmap = BitmapFactory.decodeResource( context.getResources(), R.mipmap.test_1 );
-            img.setImageBitmap( bitmap );
-        } else if (!StringUtils.isEmpty( centerText )) {
-            img.setImageResource( 0 );
-            tv.setVisibility( View.GONE );
-            ctv.setVisibility( View.VISIBLE );
-            ctv.setText( centerText );
+    public BitmapDescriptor setSelectedMarkerIcon(Context context, Bitmap bitmap, String text) {
+        return setMarkerIconDrawable(context, bitmap, text, null, true);
+    }
+
+    public BitmapDescriptor setMarkerIconDrawable(Context context, Bitmap bitmap, String text, String centerText, boolean isSelected) {
+        View view;
+        if (isSelected) {
+            view = LayoutInflater.from(context).inflate(R.layout.layout_as_selcted_icon, null);
+            if (null == bitmap)
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.test_1);
+            bitmap = BitmapUtils.convertToBlackWhite(bitmap, Color.WHITE);  // 渲染图片非透明区域为白色
+        } else
+            view = LayoutInflater.from(context).inflate(R.layout.layout_as_icon, null);
+        TextView tv = view.findViewById(R.id.as_ico_text);
+        ImageView img = view.findViewById(R.id.icon_center_img);
+        TextView ctv = view.findViewById(R.id.icon_center_text);
+        tv.setText(text);
+        if (StringUtils.isEmpty(centerText)) {
+            img.setImageBitmap(bitmap);
+        } else {
+            if (!isSelected) {
+                img.setImageResource(0);
+                tv.setVisibility(View.GONE);
+                ctv.setVisibility(View.VISIBLE);
+                ctv.setText(centerText);
+            }
         }
-        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromView( view );
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
         return bitmapDescriptor;
     }
 
@@ -236,25 +250,25 @@ public class MapUtils {
     public void useTile(String baseUrl) {
         final String url = baseUrl + "/tiles/%d/%d_%d.png";
         TileOverlayOptions tileOverlayOptions =
-                new TileOverlayOptions().tileProvider( new UrlTileProvider( 256, 256 ) {
+                new TileOverlayOptions().tileProvider(new UrlTileProvider(256, 256) {
                     @Override
                     public URL getTileUrl(int x, int y, int zoom) {
                         try {
-                            return new URL( String.format( url, zoom, x, y ) );
+                            return new URL(String.format(url, zoom, x, y));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         return null;
                     }
-                } );
-        tileOverlayOptions.diskCacheEnabled( true )
-                .diskCacheDir( "/storage/emulated/0/amap/tilecache" )
-                .diskCacheSize( 100000 )
-                .memoryCacheEnabled( true )
-                .memCacheSize( 100000 )
-                .zIndex( -10 );
+                });
+        tileOverlayOptions.diskCacheEnabled(true)
+                .diskCacheDir("/storage/emulated/0/amap/tilecache")
+                .diskCacheSize(100000)
+                .memoryCacheEnabled(true)
+                .memCacheSize(100000)
+                .zIndex(-10);
         /*TileOverlay mtileOverlay = */
-        map.addTileOverlay( tileOverlayOptions );
+        map.addTileOverlay(tileOverlayOptions);
     }
 
 }

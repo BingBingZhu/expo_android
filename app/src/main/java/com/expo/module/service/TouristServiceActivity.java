@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.expo.R;
@@ -17,6 +19,7 @@ import com.expo.contract.TouristServiceContract;
 import com.expo.module.service.adapter.TouristServiceAdapter;
 import com.expo.module.webview.WebActivity;
 import com.expo.utils.Constants;
+import com.expo.widget.AppBarView;
 import com.expo.widget.decorations.SpaceDecoration;
 
 import butterknife.BindView;
@@ -72,7 +75,7 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
     protected void onInitView(Bundle savedInstanceState) {
 
         setTitle( 0, R.string.home_func_item_tourist_service );
-
+        initTitleRightTextView(R.string.service_log, R.color.white, v -> ServiceHistoryActivity.startActivity(getContext()));
         mAdapter = new TouristServiceAdapter( this );
         mAdapter.setListener( mListener );
 

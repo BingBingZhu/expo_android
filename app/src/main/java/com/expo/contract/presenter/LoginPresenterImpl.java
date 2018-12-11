@@ -23,6 +23,7 @@ import com.expo.utils.Constants;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
@@ -59,7 +60,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
         params.put("Mobile", mobile);
         params.put("countrycode", countryCode);
         params.put("VerifyCode", verifyCode);
-        RequestBody requestBody = Http.buildRequestBody(params);
+        RequestBody requestBody = Http.buildRequestBody( params );
         Observable<VerifyCodeLoginResp> verifyCodeLoginObservable = Http.getServer().verifyCodeLogin(requestBody);
         Http.request(new ResponseCallback<VerifyCodeLoginResp>() {
             @Override
@@ -73,7 +74,9 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
     }
 
     private void appRun(){
-        Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( Http.getBaseParams() ) );
+        Map<String, Object> params = Http.getBaseParams();
+        params.put("jgid", JPushInterface.getRegistrationID(ExpoApp.getApplication()));
+        Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( params ) );
         Http.request( new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {

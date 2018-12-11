@@ -5,6 +5,7 @@ import android.os.Environment;
 import com.expo.R;
 import com.expo.entity.Badge;
 import com.expo.entity.CommonInfo;
+import com.expo.entity.CustomRoute;
 import com.expo.entity.DataType;
 import com.expo.entity.DownloadInfo;
 import com.expo.entity.Encyclopedias;
@@ -19,6 +20,7 @@ import com.expo.entity.Track;
 import com.expo.entity.User;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
+import com.expo.entity.VisitorService;
 
 public interface Constants {
     /**
@@ -53,6 +55,8 @@ public interface Constants {
         public static final String KEY_MODULE_ON_OFF = "key_module_on_off ";
         public static final String KEY_RUN_UP_COUNT = "key_run_up_count";
         public static final String KEY_RAW_SELECTOR_POSITION = "key_raw_selector_position";
+        public static final String KEY_ROUTE_INDEX = "key_route_index";
+        public static final String KEY_TRACK_UPDATE_TIME = "key_track_update_time";
     }
 
     /**
@@ -119,8 +123,8 @@ public interface Constants {
         public static final String UNZIP_PATH = BASE_FILE_PATH + "unzip/";
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
-                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class,
-                TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class};
+                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class,CustomRoute.class,
+                TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, VisitorService.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }

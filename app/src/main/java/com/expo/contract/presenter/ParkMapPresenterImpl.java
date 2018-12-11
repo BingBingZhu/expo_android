@@ -8,6 +8,7 @@ import com.expo.adapters.DownloadData;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ParkMapContract;
 import com.expo.db.QueryParams;
+import com.expo.entity.CustomRoute;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
@@ -56,6 +57,7 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                 List<TouristType> touristTypes = mDao.query(TouristType.class, new QueryParams().add("eq", "is_enable", 1));
                 int tabPosition = 0;
                 Venue as = mDao.queryById(Venue.class, asId);
+                List<CustomRoute> customRoutes = mDao.query(CustomRoute.class, new QueryParams());
                 if (asId != 0 && null != as) {
                     for (int i = 0; i < venuesTypes.size(); i++) {
                         if (venuesTypes.get(i).getId() == as.getType()) {
@@ -70,8 +72,8 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                             mView.loadFacilityRes(facilities, as);
                             mView.loadTouristTypeRes(touristTypes);
                             mView.loadRoute(routeInfos);
+                            mView.loadCustomRoute(customRoutes);
                             mView.hideLoadingView();
-
                             loadSubjectImages(venuesTypes);
                         });
             }

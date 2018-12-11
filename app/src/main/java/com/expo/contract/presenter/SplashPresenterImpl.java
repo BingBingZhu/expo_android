@@ -2,6 +2,7 @@ package com.expo.contract.presenter;
 
 import android.text.TextUtils;
 
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.SplashContract;
@@ -45,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qq.QQ;
@@ -276,8 +278,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
     @Override
     public void appRun(String uId, String uKey) {
         Map<String, Object> params = Http.getBaseParams();
-        params.put( "Uid", uId );
-        params.put( "Ukey", uKey );
+        params.put("jgid", JPushInterface.getRegistrationID(ExpoApp.getApplication()));
         Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( params ) );
         Http.request( new ResponseCallback<BaseResponse>() {
             @Override

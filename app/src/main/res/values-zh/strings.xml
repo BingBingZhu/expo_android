@@ -294,4 +294,15 @@
     <string name="the_guide_tour">导游导览</string>
     <string name="pilot_switch">辅助开关</string>
     <string name="notification_sound">通知提示音</string>
+    <string name="item_tourist_service_text_9">投诉受理</string>
+    <string name="unknown_type">未知类型</string>
+    <string name="waiting_process">等待处理</string>
+    <string name="being_processed">正在处理</string>
+    <string name="has_been_sent">已发送综管平台</string>
+    <string name="tackle_end">处理完毕</string>
+    <string name="closed">已关闭</string>
+    <string name="service_log">服务记录</string>
+    <string name="custom_route">自定义</string>
+    <string name="reset_the_route">重置路线</string>
+    <string name="clear_track">清除足迹</string>
 </resources>
