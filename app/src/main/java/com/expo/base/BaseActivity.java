@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.utils.ActivityHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.PresenterFactory;
+import com.expo.module.service.ServiceHistoryActivity;
+import com.expo.widget.AppBarView;
 import com.expo.widget.RootView;
 
 import butterknife.ButterKnife;
@@ -50,6 +54,22 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         if (hasPresenter())
             mPresenter = (P) PresenterFactory.getPresenter( this );
         onInitView( savedInstanceState );
+    }
+
+    private TextView titleRightView;
+
+    public void initTitleRightTextView(int textId, int colorId, View.OnClickListener clickListener) {
+        if (null == titleRightView) {
+            titleRightView = new TextView(this);
+            ((AppBarView) getTitleView()).setRightView(titleRightView);
+        }
+        titleRightView.setTextAppearance(this, R.style.TextSizeWhite14);
+        titleRightView.setText(getContext().getResources().getString(textId));
+        titleRightView.setGravity(Gravity.CENTER);
+        int padding = (int) getResources().getDimension(R.dimen.dms_10);
+        titleRightView.setPadding(padding, padding, padding, padding);
+        titleRightView.setTextColor(getContext().getResources().getColor(colorId));
+        titleRightView.setOnClickListener(clickListener);
     }
 
     private void initRootView() {

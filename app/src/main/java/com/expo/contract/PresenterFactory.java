@@ -6,6 +6,7 @@ import com.expo.contract.presenter.BadgePresenterImpl;
 import com.expo.contract.presenter.BindPhonePresenterImpl;
 import com.expo.contract.presenter.ContactsAddPresenterImpl;
 import com.expo.contract.presenter.ContactsPresenterImpl;
+import com.expo.contract.presenter.CustomRoutePresenterImpl;
 import com.expo.contract.presenter.DistinguishPresenterImpl;
 import com.expo.contract.presenter.EncyclopediaSearchPresenterImpl;
 import com.expo.contract.presenter.EncyclopediasPresenterImpl;
@@ -30,6 +31,7 @@ import com.expo.contract.presenter.ParkMapPresenterImpl;
 import com.expo.contract.presenter.RouteDetailPresenterImpl;
 import com.expo.contract.presenter.RoutesPresenterImpl;
 import com.expo.contract.presenter.SeekHelpPresenterImpl;
+import com.expo.contract.presenter.ServiceHistoryPresenterImpl;
 import com.expo.contract.presenter.SettingPresenterImpl;
 import com.expo.contract.presenter.SplashPresenterImpl;
 import com.expo.contract.presenter.TouristServicePresenterImpl;
@@ -111,6 +113,10 @@ public class PresenterFactory {
             return new FindPublishPresenterImpl((FindPublishContract.View) view);
         } else if (view instanceof FindDetailContract.View) {
             return new FindDetailPresenterImpl((FindDetailContract.View) view);
+        } else if (view instanceof ServiceHistoryContract.View) {
+            return new ServiceHistoryPresenterImpl( (ServiceHistoryContract.View) view );
+        } else if (view instanceof CustomRouteContract.View) {
+            return new CustomRoutePresenterImpl( (CustomRouteContract.View) view );
         }
         throw new UnsupportedOperationException();
     }

@@ -6,16 +6,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.contract.RoutesContract;
 import com.expo.entity.RouteInfo;
+import com.expo.module.service.ServiceHistoryActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.LanguageUtil;
+import com.expo.widget.AppBarView;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -54,7 +58,7 @@ public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> imple
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(1, R.string.title_routest_ac);
-
+        initTitleRightTextView(R.string.custom_route, R.color.green_02cd9b, v -> CustomRouteActivity.startActivity(getContext()));
         mData = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_20)));

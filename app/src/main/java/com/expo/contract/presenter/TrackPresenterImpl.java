@@ -40,4 +40,10 @@ public class TrackPresenterImpl extends Presenter {
         if (!map.isEmpty())
             mView.loadTrackRsp(map);
     }
+
+    @Override
+    public void clearTrack() {
+        mDao.clear(Track.class);
+        mView.clearTrackRes();
+    }
 }

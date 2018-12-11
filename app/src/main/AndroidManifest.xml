@@ -250,6 +250,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
+        <activity
+            android:name=".module.service.ServiceHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".module.routes.CustomRouteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <!--心跳连接服务-->
         <service android:name=".module.heart.HeartBeatService" />
         <service android:name=".services.TrackRecordService" />
@@ -269,11 +279,13 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-        <service
-            android:name="cn.jpush.android.service.PushService"
+        
+        
+        <!--极光推送配置-->
+        <service android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
             tools:node="replace" />
+
         <receiver
             android:name=".pay.DownloadListener"
             android:exported="true">

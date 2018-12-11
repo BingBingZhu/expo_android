@@ -2,7 +2,9 @@ package com.expo.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
+import com.amap.api.maps.model.LatLng;
 import com.expo.network.Http;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
@@ -12,7 +14,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.ArrayList;
 
 @DatabaseTable(tableName = "venue")
-public class Venue implements Parcelable {
+public class Venue implements Parcelable, Comparable<Venue> {
     @DatabaseField(columnName = "_id", id = true)
     @SerializedName("id")
     private Long id;
@@ -91,6 +93,10 @@ public class Venue implements Parcelable {
     @DatabaseField(columnName = "pic_url_en")
     @SerializedName("picurlen")
     public String picUrlEn;
+    @DatabaseField(columnName = "is_selected")
+    private boolean isSelected;
+    @DatabaseField(columnName = "route_index")
+    private long routeIndex;
 
     public Venue() {
     }
@@ -369,6 +375,26 @@ public class Venue implements Parcelable {
         this.picUrlEn = picUrlEn;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public long getRouteIndex() {
+        return routeIndex;
+    }
+
+    public void setRouteIndex(long routeIndex) {
+        this.routeIndex = routeIndex;
+    }
+
+    public LatLng getLatLng(){
+        return new LatLng(this.getLat(), this.getLng());
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -412,5 +438,25 @@ public class Venue implements Parcelable {
         dest.writeString( parkId );
         dest.writeString( parkName );
         dest.writeString( picUrlEn );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Venue venue = (Venue) o;
+
+        return id.equals(venue.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public int compareTo(@NonNull Venue o) {
+        return (int) (this.getRouteIndex() - o.getRouteIndex());
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:drawable="@drawable/bg_white_ccc_r5_w1" />
+    <item android:state_pressed="true" >
+        <shape>
+            <solid android:color="#02CC9A" />
+            <corners android:radius="@dimen/dms_50" />
+        </shape>
+    </item>
+    <item android:state_pressed="false" >
+        <shape>
+            <gradient android:startColor="#02CC9A" android:endColor="#39EFC2" />
+            <corners android:radius="@dimen/dms_50" />
+        </shape>
+    </item>
+</selector>

@@ -41,9 +41,9 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
     @Override
     public void addVisitorService(VisitorService visitorService) {
         mView.showLoadingView();
-        upLoadImgFile(visitorService, visitorService.img_url1, 0);
-        upLoadImgFile(visitorService, visitorService.img_url2, 1);
-        upLoadImgFile(visitorService, visitorService.img_url3, 2);
+        upLoadImgFile(visitorService, visitorService.getImgUrl1(), 0);
+        upLoadImgFile(visitorService, visitorService.getImgUrl2(), 1);
+        upLoadImgFile(visitorService, visitorService.getImgUrl3(), 2);
     }
 
     @Override
@@ -162,29 +162,6 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
         } else {
             submitVisitorService(visitorService);
         }
-
-
-//        if (!StringUtils.isEmpty(filePath)) {
-//            File file = new File(filePath);
-//            String fileType = "";
-//            if (filePath.endsWith("mp4"))
-//                fileType = "video.mp4";
-//            else
-//                fileType = "image.png";
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//            Observable<UploadRsp> verifyCodeLoginObservable = Http.getServer().uploadFile(MultipartBody.Part.createFormData("file", fileType, requestBody));
-//            Http.request(new ResponseCallback<UploadRsp>() {
-//                @Override
-//                protected void onResponse(UploadRsp rsp) {
-//                    if (positon == 0) visitorService.img_url1 = rsp.shortUrl;
-//                    else if (positon == 1) visitorService.img_url2 = rsp.shortUrl;
-//                    else if (positon == 2) visitorService.img_url3 = rsp.shortUrl;
-//                    submitVisitorService(visitorService);
-//                }
-//            }, verifyCodeLoginObservable);
-//        } else {
-//            submitVisitorService(visitorService);
-//        }
     }
 
     @Override

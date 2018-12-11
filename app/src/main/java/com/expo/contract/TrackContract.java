@@ -14,9 +14,13 @@ public interface TrackContract {
         }
 
         public abstract void queryTrack();
+
+        public abstract void clearTrack();
     }
 
     interface View extends IView {
         void loadTrackRsp(Map<Long, List<Track>> map);
+
+        void clearTrackRes();
     }
 }

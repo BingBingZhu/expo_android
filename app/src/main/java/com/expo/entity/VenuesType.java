@@ -190,6 +190,10 @@ public class VenuesType implements Parcelable {
         return null != lstBitmap && null != markBitmap;
     }
 
+    public boolean mapPicIsFinished(){
+        return null != markBitmap;
+    }
+
     protected VenuesType(Parcel in) {
         if (in.readByte() == 0) {
             id = null;

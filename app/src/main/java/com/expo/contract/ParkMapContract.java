@@ -3,6 +3,7 @@ package com.expo.contract;
 import com.expo.adapters.DownloadData;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.CustomRoute;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
@@ -58,5 +59,7 @@ public interface ParkMapContract {
         void showParkScope(Park park);
 
         void loadRoute(List<RouteInfo> routeInfos);
+
+        void loadCustomRoute(List<CustomRoute> customRoutes);
     }
 }

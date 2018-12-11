@@ -25,8 +25,11 @@ import com.expo.module.heart.HeartBeatService;
 import com.expo.utils.Constants;
 import com.expo.utils.LocalBroadcastUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TrackRecordService extends Service {
 
@@ -103,10 +106,13 @@ public class TrackRecordService extends Service {
                 }
             }
             if (!tracks.isEmpty()) {
+                PrefsHelper.setString(Constants.Prefs.KEY_TRACK_UPDATE_TIME, "最后更新足迹 " + sdf.format(new Date()));
                 mDao.saveOrUpdateAll(tracks);
             }
         }
     };
+
+    public static SimpleDateFormat sdf = new SimpleDateFormat( Constants.TimeFormat.TYPE_ALL, Locale.getDefault() );
 
     private boolean isLocationChanage() {
         if (null == oldLatLng) {
