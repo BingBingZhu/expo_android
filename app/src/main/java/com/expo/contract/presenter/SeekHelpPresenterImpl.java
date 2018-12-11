@@ -9,10 +9,12 @@ import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.contract.SeekHelpContract;
 import com.expo.db.QueryParams;
+import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.entity.VisitorService;
+import com.expo.map.MapUtils;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
@@ -166,6 +168,14 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
 //        } else {
 //            submitVisitorService(visitorService);
 //        }
+    }
+
+    @Override
+    public boolean checkInPark(double lat, double lng) {
+        Park park = mDao.unique( Park.class, null );
+        if (park == null) return false;
+        List<double[]> bounds = park.getElectronicFenceList();
+        return MapUtils.ptInPolygon( lat, lng, bounds );
     }
 
     private synchronized void submitVisitorService(VisitorService visitorService) {

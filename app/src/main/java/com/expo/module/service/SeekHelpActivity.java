@@ -228,9 +228,20 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_submit)
     public void submit(View view) {
-        VisitorService visitorService = initSubmitData();
-        if (visitorService != null)
-            mPresenter.addVisitorService(visitorService);
+        if (mIsLocation) {
+            if (mLocation != null) {
+                mLat = mLocation.getLatitude();
+                mLng = mLocation.getLongitude();
+            }
+        }
+        if (mPresenter.checkInPark( mLat, mLng )) {
+            VisitorService visitorService = initSubmitData();
+            if (visitorService != null) {
+                mPresenter.addVisitorService( visitorService );
+            }
+        } else {
+            ToastHelper.showShort( R.string.unable_to_provide_service );
+        }
     }
 
     @OnClick(R.id.seek_help_navigation)
@@ -395,15 +406,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
         visitorService.coordinate_assist = mCoordinateAssist;
         visitorService.counttrycode = PrefsHelper.getString(Constants.Prefs.KEY_COUNTRY_CODE, "+86");
-        if (mIsLocation) {
-            if (mLocation != null) {
-                visitorService.gps_latitude = mLocation.getLatitude() + "";
-                visitorService.gps_longitude = mLocation.getLongitude() + "";
-            }
-        } else {
-            visitorService.gps_latitude = mLat + "";
-            visitorService.gps_longitude = mLng + "";
-        }
+        visitorService.gps_latitude = String.valueOf( mLat );
+        visitorService.gps_longitude = String.valueOf( mLng );
         visitorService.phone = user.getMobile();
         visitorService.situation = mEtEdit.getText().toString();
         visitorService.userid = user.getUid();

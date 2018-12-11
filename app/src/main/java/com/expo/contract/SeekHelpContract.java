@@ -16,6 +16,8 @@ public interface SeekHelpContract {
         public abstract void addVisitorService(VisitorService visitorService);
 
         public abstract void getServerPoint(Location mLocation);
+
+        public abstract boolean checkInPark(double mLat, double mLng);
     }
 
     interface View extends IView {
