@@ -57,13 +57,17 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Find find = mData.get(position);
         if (find.url1.endsWith(".mp4")) {
+            CommUtils.setImgPic(mContext, "", holder.img);
             new Thread(() -> {
                 Bitmap bitmap = ImageUtils.createVideoThumbnail(CommUtils.getFullUrl(find.url1), MediaStore.Images.Thumbnails.MINI_KIND);
                 if (mHandler != null)
-                    mHandler.post(() -> holder.img.setImageBitmap(bitmap));
+                    mHandler.post(() -> {
+                        if (bitmap != null &&  holder.img != null)
+                            holder.img.setImageBitmap(bitmap);
+                    });
             }).start();
         } else
-            Picasso.with(mContext).load(CommUtils.getFullUrl(find.url1)).into(holder.img);
+            CommUtils.setImgPic(mContext, CommUtils.getFullUrl(find.url1), holder.img);
         if ((position + 1) % 4 > 1) {
             holder.img.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen.dms_468);
         } else {

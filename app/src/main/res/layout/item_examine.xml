@@ -28,6 +28,7 @@
             android:layout_height="@dimen/dms_310"
             android:layout_marginTop="@dimen/dms_38"
             android:scaleType="centerCrop"
+            android:src="@drawable/image_default"
             app:leftBottom_corner_radius="@dimen/dms_4"
             app:leftTop_corner_radius="@dimen/dms_4"
             app:rightBottom_corner_radius="@dimen/dms_4"
