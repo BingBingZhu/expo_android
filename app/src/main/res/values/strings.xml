@@ -331,5 +331,8 @@
     <string name="find_tab_food">美食</string>
     <string name="find_tab_botany">植物</string>
     <string name="find_tab_other">其他</string>
+    <string name="wx_is_not_installed">未安装微信客户端！</string>
+    <string name="alipay_is_not_installed">未安装支付宝客户端！</string>
+    <string name="start_download">开始下载</string>
 
 </resources>

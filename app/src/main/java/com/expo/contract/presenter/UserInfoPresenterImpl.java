@@ -1,11 +1,7 @@
 package com.expo.contract.presenter;
 
-import android.content.Context;
-import android.support.v4.math.MathUtils;
-
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
-import com.expo.base.ExpoApp;
 import com.expo.contract.UserInfoContract;
 import com.expo.entity.User;
 import com.expo.network.Http;

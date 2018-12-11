@@ -27,6 +27,7 @@ import com.expo.entity.RichText;
 import com.expo.module.contacts.ContactsActivity;
 import com.expo.module.login.LoginActivity;
 import com.expo.module.share.ShareUtil;
+import com.expo.pay.JsMethod;
 import com.expo.utils.Constants;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
@@ -81,6 +82,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         });
         mX5View.setWebChromeClient(webChromeClient);
         mX5View.addJavascriptInterface(new WebActivity.JsHook(), "hook");
+        mX5View.addJavascriptInterface( new JsMethod( this, mX5View ), "androidFunction" );
         loadUrl(mUrl);
         mShareUtil = new ShareUtil(this);
     }

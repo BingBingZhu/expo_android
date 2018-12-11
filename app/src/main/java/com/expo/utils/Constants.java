@@ -100,6 +100,7 @@ public interface Constants {
         public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
         //        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce";
         public static final String HTML_404 = "file:///android_asset/web/404.html";
+        public static final String UPPAY_APP_DOWNLOAD_URL = "http://www.toolsmi.com/UPPayPluginEx.apk";
     }
 
     /**
@@ -220,7 +221,7 @@ public interface Constants {
         };//向js提示使用光团gif图片
     }
 
-    class HandlerMsg{
+    class HandlerMsg {
         public static final int NAVI_NEAR_WIKI = 0;//附近景点
 
     }
