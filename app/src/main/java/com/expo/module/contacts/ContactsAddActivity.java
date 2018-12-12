@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
@@ -147,8 +148,17 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
         if (CheckUtils.isEmtpy(mIdType, R.string.check_string_id_type, true)) return;
         if (CheckUtils.isEmtpy(((EditText) mMvName.getRightView()).getText().toString(), R.string.check_string_empty_name, true))
             return;
-        if (!CheckUtils.isIDCard(((EditText) mMvId.getRightView()).getText().toString(), true))
-            return;
+        if (StringUtils.equals("1", mIdType)) {
+            if (!CheckUtils.isIDCard(((EditText) mMvId.getRightView()).getText().toString(), true))
+                return;
+        } else if (StringUtils.equals("2", mIdType)) {
+            if (!CheckUtils.isPassport(((EditText) mMvId.getRightView()).getText().toString(), true))
+                return;
+        } else if (StringUtils.equals("3", mIdType)) {
+        } else if (StringUtils.equals("4", mIdType)) {
+            if (!CheckUtils.isTWCard(((EditText) mMvId.getRightView()).getText().toString(), true))
+                return;
+        }
         mPresenter.updateContactsData(initContacts());
     }
 
