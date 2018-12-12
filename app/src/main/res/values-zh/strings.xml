@@ -353,6 +353,7 @@
     <string name="clear_track">清除足迹</string>
     <string name="error_qrcode">错误的二维码</string>
     <string name="confirm">确定</string>
+    <string name="set_tourist_first">请先选择导游</string>
 
     <string name="card_type_shenfen">居民身份证</string>
     <string name="card_type_huzhao">护照</string>

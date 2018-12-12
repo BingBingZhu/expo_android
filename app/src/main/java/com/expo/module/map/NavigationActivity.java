@@ -64,7 +64,6 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -133,6 +132,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     boolean isBackStage = false;
 
     Location mLocation;
+
+    String mTouristPath;
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -152,6 +153,13 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        TouristType touristType = mPresenter.getTourist();
+        if(touristType == null || StringUtils.isEmpty(touristType.getUnZipPath())){
+            ToastHelper.showShort(R.string.set_tourist_first);
+            finish();
+            return;
+        }
+
         if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false)) {
             mImgModuleShow.setVisibility(View.GONE);
         }

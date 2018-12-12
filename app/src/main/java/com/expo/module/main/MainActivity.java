@@ -48,11 +48,11 @@ public class MainActivity extends BaseActivity {
     FragmentTabHost mTabHostView;
 
     private String[] tabTags = {"home", "encyclopedias", "find", "mine"};//"panorama",
-    private int[] tabTitles = {R.string.main_home, R.string.main_encyclopedias, R.string.main_find, R.string.main_encyclopedias, R.string.main_mine};//R.string.main_panorama,
+    private int[] tabTitles = {R.string.main_home, R.string.main_encyclopedias, R.string.main_find, R.string.main_mine};//R.string.main_panorama,
     private int mImages[] = {
             R.drawable.selector_tab_home,
-//            R.drawable.selector_tab_panorama,
-            R.drawable.selector_tab_encyclopedia,
+            R.drawable.selector_tab_panorama,
+//            R.drawable.selector_tab_encyclopedia,
             R.drawable.selector_tab_find,
             R.drawable.selector_tab_mine};
     private Class[] fragments = new Class[]{

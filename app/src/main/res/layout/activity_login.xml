@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@color/white"
     tools:context=".module.login.LoginActivity">
 
 
@@ -30,11 +30,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_top"
         android:layout_above="@+id/login_bottom"
-        android:orientation="vertical"
-        android:gravity="top"
+        android:layout_below="@id/login_top"
         android:background="@drawable/bg_login_center"
+        android:gravity="top"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/dms_60"
         android:paddingRight="@dimen/dms_60">
 
@@ -53,6 +53,7 @@
                 android:layout_marginLeft="@dimen/dms_20"
                 android:drawableRight="@mipmap/country_more"
                 android:gravity="center"
+                android:singleLine="true"
                 android:text="+86" />
 
             <EditText
