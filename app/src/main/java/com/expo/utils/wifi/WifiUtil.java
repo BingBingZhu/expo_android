@@ -38,6 +38,11 @@ public class WifiUtil {
         wifiManager.setWifiEnabled(isOpen); //打开或关闭
     }
 
+    public static void disconnectWifi(Context context){
+        initWifiManager(context);
+        wifiManager.disconnect();
+    }
+
     public static void connectWifi(Context context, String wifiname, String pwd) {//第二个参数是账号名称，也就是我们WiFi列表里所看到的名字
         initWifiManager(context);
         int wifiId = -1;//自己定义的数值，判断用

@@ -37,6 +37,8 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
     TextView tvState;
 
     private String[] wifi;
+    private boolean isConnect;
+    private String wifiSSID;
 
     @Override
     protected int getContentView() {
@@ -93,8 +95,13 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
 
     @OnClick(R.id.wifi_btn)
     public void onClick(View v) {
-        setWifiView(STATE_CONNECTING);
-        WifiUtil.changeWifiState(getContext(), true);
+        if (isConnect){
+            setWifiView(STATE_UNUNITED);
+            WifiUtil.disconnectWifi(getContext());
+        }else {
+            setWifiView(STATE_CONNECTING);
+            WifiUtil.changeWifiState(getContext(), true);
+        }
     }
 
     public void setWifiView(int state) {
@@ -106,21 +113,25 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
                 imgId = R.mipmap.ico_connect_not;
                 stateStr = getString(R.string.please_click_the_button_to_open_wlan);
                 isEnable = true;
+                isConnect = false;
                 break;
             case STATE_CONNECTING:
                 imgId = R.mipmap.ico_connecting;
                 stateStr = getString(R.string.connecting);
                 isEnable = false;
+                isConnect = false;
                 break;
             case STATE_SUCCESSFU_LCONNECTION:
                 imgId = R.mipmap.ico_connect_un_success;
                 stateStr = getString(R.string.successfu_lconnection);
-                isEnable = false;
+                isEnable = true;
+                isConnect = true;
                 break;
             case STATE_CONNECTION_FAIL:
                 imgId = R.mipmap.ico_connect_off;
                 stateStr = getString(R.string.disconnect);
                 isEnable = true;
+                isConnect = false;
                 break;
         }
         imgView.setImageResource(imgId);
@@ -132,6 +143,7 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
         @Override
         public void onWifiConnected(WifiInfo wifiInfo) {
             setWifiView(STATE_SUCCESSFU_LCONNECTION);
+            wifiSSID = wifiInfo.getSSID();
 //            ToastHelper.showShort( "已连接至 " + wifiInfo.getSSID() );
         }
 

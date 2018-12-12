@@ -3,6 +3,7 @@ package com.expo.module.main.find;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -79,11 +80,8 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
     }
 
     private void initTabLayout() {
-        // 设置分割线
-        LinearLayout linearLayout = (LinearLayout) mTabView.getChildAt(0);
-        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-//        linearLayout.setDividerDrawable(ContextCompat.getDrawable(getContext(), R.drawable.shape_tab_divide_line));
-        linearLayout.setDividerPadding(8);
+        mTabView.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mTabView.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         mTabView.addOnTabSelectedListener(mTabSelectedListener);
     }
 
