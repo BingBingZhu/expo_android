@@ -194,7 +194,7 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
                 })
                 .setGravity(Gravity.BOTTOM)
                 .setExpanded(false)  // This will enable the expand feature, (similar to android L share dialog)
-                .setContentHeight(SizeUtils.dp2px(300))
+//                .setContentHeight(SizeUtils.dp2px(300))
                 .create();
 
         dialog.show();

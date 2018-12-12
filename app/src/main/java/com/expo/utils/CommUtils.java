@@ -25,6 +25,15 @@ public class CommUtils {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    /**
+     * 显示键盘     *     * @param et 输入焦点
+     */
+    public static void showInput(Context context, EditText et) {
+        et.requestFocus();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
+    }
+
     public static void hideView(View... view) {
         for (int i = 0; i < view.length; i++)
             if (view[i] != null)
@@ -50,9 +59,9 @@ public class CommUtils {
         textView.setText(LanguageUtil.chooseTest(cn, en));
     }
 
-    public static boolean isLocationEquals(Location l1, Location l2){
-        if(l1 == null || l2 == null) return false;
-       return l1.getLatitude() == l2.getLatitude() && l1.getLongitude() == l2.getLongitude();
+    public static boolean isLocationEquals(Location l1, Location l2) {
+        if (l1 == null || l2 == null) return false;
+        return l1.getLatitude() == l2.getLatitude() && l1.getLongitude() == l2.getLongitude();
     }
 
 }

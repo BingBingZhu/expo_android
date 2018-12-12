@@ -264,6 +264,13 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         PickerViewUtils.showTimePickView(this, mUser.getBirthDay(), mListener).show();
     }
 
+    @OnClick(R.id.user_email)
+    public void clickEmail(View view) {
+//        mUserEmail.getRightView().requestFocus();
+        CommUtils.showInput(this, (EditText) mUserEmail.getRightView());
+    }
+
+
     @OnClick(R.id.user_work)
     public void changeWork(View view) {
         CommUtils.hideKeyBoard(this, view);
