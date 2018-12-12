@@ -300,10 +300,21 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             des.distance = AMapUtils.calculateLineDistance(
                     new LatLng(mVenue.getLat(), mVenue.getLng()),
                     new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
-            des.angle = mMapUtils.getAngle(new MapUtils.MyLatLng(mLocation.getLongitude(), mLocation.getLatitude()), new MapUtils.MyLatLng(mVenue.getLng(), mVenue.getLat()));
+            double angle2P = mMapUtils.getAngle(new MapUtils.MyLatLng(mLocation.getLongitude(), mLocation.getLatitude()), new MapUtils.MyLatLng(mVenue.getLng(), mVenue.getLat()));
+            double angle = azimuth + 360 - angle2P;
+            if (angle <= 180 && angle >= 0) {
+                des.angle = angle + "";
+            } else if (angle > 180 && angle >= 0) {
+                des.angle = angle - 360 + "";
+            } else if (angle > -180 && angle < 0) {
+                des.angle = -angle + "";
+            } else {
+                des.angle = 360 - angle + "";
+            }
             des.routeTime = mRouteTime;
             System.out.println("angle: " + des.angle);
             if (!mUseDeviceRotate) {
+                des.angle =  "";
                 mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,'" + Http.getGsonInstance().toJson(des) + "')"));
                 return;
             }
