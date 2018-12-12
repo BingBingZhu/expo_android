@@ -201,7 +201,8 @@ public interface Constants {
         public static final String TO_JS_NAVI_TIP_GPS_LOW = "callGPSlow/callGPSlow";//GPS信号弱或丢失（GPS信号弱）
         public static final String TO_JS_NAVI_TIP_GPS_LOST = "callGPSlost/callGPSlost";//GPS信号弱或丢失（GPS信号弱）
         public static final String TO_JS_NAVI_TIP_WAKE = "callwake/callwake";//姿势夸张睡觉
-        public static final String TO_JS_NAVI_TIP_LEAVE = "callleave/callleave";//结束导航，抽泣、哭泣（要离开我吗）真的要离开我吗(人为点返回键）
+        public static final String TO_JS_NAVI_TIP_LEAVE_START = "callleave/callleave_start";//结束导航，抽泣、哭泣（要离开我吗）真的要离开我吗(人为点返回键）
+        public static final String TO_JS_NAVI_TIP_LEAVE_END = "callleave/callleave_end";//回到导航
         public static final String TO_JS_NAVI_TIP_END = "callend/callend";//到达终点，庆祝
     }
 
