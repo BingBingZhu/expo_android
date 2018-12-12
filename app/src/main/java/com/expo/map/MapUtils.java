@@ -56,18 +56,18 @@ public class MapUtils {
         int nCross = 0;
         double[] p = null;
         for (int i = 0; i < points.size(); i++) {
-            p = points.get( i );
-            LatLng p1 = new LatLng( p[1], p[0] );
-            p = points.get( (i + 1) % points.size() );
-            LatLng p2 = new LatLng( p[1], p[0] );
+            p = points.get(i);
+            LatLng p1 = new LatLng(p[1], p[0]);
+            p = points.get((i + 1) % points.size());
+            LatLng p2 = new LatLng(p[1], p[0]);
             // 求解 y=p.y 与 p1p2 的交点
             if (p1.longitude == p2.longitude) {                                                     // p1p2 与 y=p0.y平行
                 continue;
             }
-            if (lng < Math.min( p1.longitude, p2.longitude )) {                           // 交点在p1p2延长线上
+            if (lng < Math.min(p1.longitude, p2.longitude)) {                           // 交点在p1p2延长线上
                 continue;
             }
-            if (lng >= Math.max( p1.longitude, p2.longitude )) {                          // 交点在p1p2延长线上
+            if (lng >= Math.max(p1.longitude, p2.longitude)) {                          // 交点在p1p2延长线上
                 continue;
             }
             // 求交点的 X 坐标 --------------------------------------------------------------
@@ -315,7 +315,7 @@ public class MapUtils {
         double dx = (B.m_RadLo - A.m_RadLo) * A.Ed;
         double dy = (B.m_RadLa - A.m_RadLa) * A.Ec;
         double angle = 0.0;
-        angle = Math.atan( Math.abs( dx / dy ) ) * 180. / Math.PI;
+        angle = Math.atan(Math.abs(dx / dy)) * 180. / Math.PI;
         double dLo = B.m_Longitude - A.m_Longitude;
         double dLa = B.m_Latitude - A.m_Latitude;
         if (dLo > 0 && dLa <= 0) {
@@ -352,15 +352,15 @@ public class MapUtils {
             m_RadLo = longitude * Math.PI / 180.;
             m_RadLa = latitude * Math.PI / 180.;
             Ec = Rj + (Rc - Rj) * (90. - m_Latitude) / 90.;
-            Ed = Ec * Math.cos( m_RadLa );
+            Ed = Ec * Math.cos(m_RadLa);
         }
     }
 
-//    public static void main(String args[]){
-//        MapUtils mu = new MapUtils(null);
-//        System.out.println(mu.getAngle
-//                (new MyLatLng(40.440568, 115.948273),
-//                        new MyLatLng(40.446240, 115.960676)));
-//    }
+    public static void main(String args[]) {
+        MapUtils mu = new MapUtils(null);
+        System.out.println(mu.getAngle
+                (new MyLatLng(115.953532, 40.444582),
+                        new MyLatLng(115.950105, 40.440931)));
+    }
 
 }

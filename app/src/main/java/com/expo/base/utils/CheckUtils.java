@@ -31,15 +31,55 @@ public class CheckUtils {
         return isEmpty;
     }
 
+    /**
+     * 身份证验证
+     *
+     * @param IDCard
+     * @param showToast
+     * @return
+     */
     public static boolean isIDCard(String IDCard, boolean showToast) {
+        int textRes = 0;
+        if (showToast)
+            textRes = R.string.check_string_id_card;
+        return isIDCard(IDCard, "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x|Y|y)$)", textRes);
+    }
+
+    /**
+     * 身份证验证
+     *
+     * @param IDCard
+     * @param showToast
+     * @return
+     */
+    public static boolean isPassport (String IDCard, boolean showToast) {
+//        return isIDCard(IDCard, "^1[45][0-9]{7}|G[0-9]{8}|P[0-9]{7}|S[0-9]{7,8}|D[0-9]$", textRes);
+        boolean result = isIDCard(IDCard, "^[a-zA-Z]{5,17}$", 0) || isIDCard(IDCard, "^[a-zA-Z0-9]{5,17}", 0);
+        if(!result && showToast)
+            ToastHelper.showShort(R.string.check_string_passport);
+        return result;
+    }
+
+    public static boolean isTWCard (String IDCard, boolean showToast) {
+//        return isIDCard(IDCard, "^1[45][0-9]{7}|G[0-9]{8}|P[0-9]{7}|S[0-9]{7,8}|D[0-9]$", textRes);
+        boolean result = isIDCard(IDCard, "^[0-9]{8}$", 0) || isIDCard(IDCard, "^[0-9]{10}$", 0);
+        if(!result && showToast)
+            ToastHelper.showShort(R.string.check_string_tw_card);
+        return result;
+    }
+
+    public static boolean isIDCard(String IDCard, String IDCardRegex, int textRes) {
         if (IDCard != null) {
-            String IDCardRegex = "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x|Y|y)$)";
-            if(IDCard.matches(IDCardRegex)){
+            if (IDCard.matches(IDCardRegex)) {
                 return true;
             }
         }
-        if (showToast)
-            ToastHelper.showShort(R.string.check_string_id_card);
+        if (textRes != 0)
+            ToastHelper.showShort(textRes);
         return false;
+    }
+
+    public static void main(String args[]) {
+        System.out.println(isPassport("B17672342", false));
     }
 }

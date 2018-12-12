@@ -144,9 +144,11 @@
     <string name="check_string_empty_category">类别不能为空</string>
     <string name="check_string_empty_image_video">图片或视频不能为空</string>
     <string name="please_enter_keywords">请输入关键字</string>
-    <string name="check_string_id_card">身份证错误</string>
     <string name="check_string_id_type">证件号码不能为空</string>
     <string name="check_string_no_gps_empty_localtion">由于GPS信号无法准确定位，请填写位置描述</string>
+    <string name="check_string_id_card">身份证格式错误</string>
+    <string name="check_string_passport">护照格式错误</string>
+    <string name="check_string_tw_card">台湾通行证格式不正确</string>
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
 
