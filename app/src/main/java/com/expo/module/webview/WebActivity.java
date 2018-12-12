@@ -282,9 +282,9 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             if (requestCode == Constants.RequestCode.REQ_TO_CONTACTS) {
                 mX5View.loadUrl("javascript:setContext('" + data.getStringExtra(Constants.EXTRAS.EXTRAS) + "')");
             } else if (requestCode == Constants.RequestCode.REQ_TO_QRCODE) {
-                String str[] = data.getStringExtra(Constant.CODED_CONTENT).split(":");
-                if (str.length == 3 && StringUtils.equals("buss", str[0])) {
-                    mCoupon.vrCode = str[2];
+                String str = data.getStringExtra(Constant.CODED_CONTENT);
+                if (str.startsWith("buss:")) {
+                    mCoupon.vrCode = str;
                     mPresenter.setUsedCoupon(mCoupon);
                 } else {
                     ToastHelper.showShort(R.string.error_qrcode);
