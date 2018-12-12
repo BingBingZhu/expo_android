@@ -29,7 +29,6 @@ public class FindListPresenterImpl extends FindListContract.Presenter {
 
     @Override
     public void getSocietyListFilter(int page, boolean fresh) {
-        mView.showLoadingView();
         Map<String, Object> params = Http.getBaseParams();
         params.put("Count", 10);
         params.put("Pageidx", page);
@@ -43,7 +42,6 @@ public class FindListPresenterImpl extends FindListContract.Presenter {
 
             @Override
             public void onComplete() {
-                mView.hideLoadingView();
                 super.onComplete();
             }
         }, observable);
