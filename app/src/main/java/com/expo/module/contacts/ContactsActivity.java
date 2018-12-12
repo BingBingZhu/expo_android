@@ -31,9 +31,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/*
- * 推荐路线列表
- */
 public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> implements ContactsContract.View {
 
     @BindView(R.id.recycler)
