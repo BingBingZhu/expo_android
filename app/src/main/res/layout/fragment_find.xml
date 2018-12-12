@@ -63,21 +63,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_2"
             android:layout_marginTop="@dimen/dms_14" />
-
         <android.support.design.widget.TabLayout
             android:id="@+id/find_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="center"
-            app:tabIndicatorColor="@color/green_02cd9b"
-            app:tabIndicatorHeight="@dimen/dms_4"
-            app:tabMinWidth="@dimen/dms_200"
-            app:tabMode="scrollable"
-            app:tabPaddingBottom="@dimen/dms_28"
-            app:tabPaddingTop="@dimen/dms_28"
-            app:tabSelectedTextColor="@color/black_333333"
-            app:tabTextAppearance="@style/tab_text_appearance"
-            app:tabTextColor="@color/gray_66" />
+            app:tabBackground="@android:color/transparent"
+            app:tabTextColor="@color/color_666"
+            app:tabSelectedTextColor="@color/color_333"/>
     </LinearLayout>
 
     <android.support.v4.view.ViewPager

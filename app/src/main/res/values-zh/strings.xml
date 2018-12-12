@@ -107,7 +107,7 @@
     <string name="item_setting_policy">法律条款与政策</string>
 
     <string name="item_contacts_identify_type">证件类型</string>
-    <string name="item_contacts_name">姓\t\t\t\t\t名</string>
+    <string name="item_contacts_name">姓\t\t\t名</string>
     <string name="item_contacts_identify_id">证件号码</string>
     <string name="item_contacts_name_hint">请输入真实姓名</string>
     <string name="item_contacts_identify_id_hint">请正确填写证件号码</string>
@@ -359,4 +359,7 @@
     <string name="card_type_huzhao">护照</string>
     <string name="card_type_huixiang">回乡证</string>
     <string name="card_type_taibao">台胞证</string>
+    <string name="alipay_is_not_installed">未安装支付宝客户端！</string>
+    <string name="start_download">开始下载</string>
+    <string name="open_the_footprint_record">您还未记录过足迹,去设置里打开足迹记录吧！</string>
 </resources>

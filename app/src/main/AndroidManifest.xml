@@ -6,7 +6,7 @@
     <uses-sdk tools:overrideLibrary="com.geejoe.drawabletextview,org.raphets.roundimageview" />
 
     <permission
-        android:name=" ${applicationId}.permission.JPUSH_MESSAGE"
+        android:name="${applicationId}.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
