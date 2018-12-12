@@ -348,4 +348,7 @@
     <string name="reset_the_route">重置路线</string>
     <string name="clear_track">清除足迹</string>
     <string name="error_qrcode">错误的二维码</string>
+    <string name="alipay_is_not_installed">未安装支付宝客户端！</string>
+    <string name="start_download">开始下载</string>
+    <string name="open_the_footprint_record">您还未记录过足迹,去设置里打开足迹记录吧！</string>
 </resources>
