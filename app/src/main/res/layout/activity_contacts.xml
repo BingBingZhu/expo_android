@@ -4,6 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/contacts_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_50"
+        android:background="@color/color_EEE" />
+
     <TextView
         android:id="@+id/contacts_ok"
         style="@style/TextSizeWhite15"
@@ -14,18 +20,15 @@
         android:gravity="center"
         android:visibility="gone" />
 
-    <in.srain.cube.views.ptr.PtrClassicFrameLayout
-        android:id="@+id/ptr_view"
+
+    <com.expo.widget.SimpleRecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/contacts_ok"
-        app:ptr_mode="loadMore">
-
-        <com.expo.widget.SimpleRecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+        android:layout_below="@id/contacts_top"
+        android:overScrollMode="never"
+        app:hasDivide="true"
+        android:paddingLeft="@dimen/dms_34"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 </RelativeLayout>

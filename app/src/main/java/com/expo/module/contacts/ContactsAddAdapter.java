@@ -54,7 +54,7 @@ public class ContactsAddAdapter extends BaseAdapter {
         } else {
             holderView = (HolderView) convertView.getTag();
         }
-        holderView.text.setText(mData.get(position).name);
+        holderView.text.setText(mData.get(position).nameRes);
         return convertView;
     }
 

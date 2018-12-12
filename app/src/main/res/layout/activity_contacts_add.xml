@@ -22,7 +22,6 @@
         <com.expo.widget.MyUserInfoView
             android:id="@+id/contacts_add_type"
             style="@style/item_user_info"
-            app:rightDrawable="@mipmap/country_more"
             app:text="@string/item_contacts_identify_type" />
 
         <TextView

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/TextSizeBlack16"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/user_work"
@@ -10,4 +11,6 @@
         android:layout_width="match_parent"
         android:gravity="center"
         android:padding="@dimen/dms_30" />
-</FrameLayout>
+
+    <TextView style="@style/LineHorizontal" />
+</LinearLayout>

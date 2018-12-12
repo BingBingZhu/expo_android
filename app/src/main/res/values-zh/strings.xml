@@ -107,7 +107,7 @@
     <string name="item_setting_policy">法律条款与政策</string>
 
     <string name="item_contacts_identify_type">证件类型</string>
-    <string name="item_contacts_name">姓\t\t\t\t名</string>
+    <string name="item_contacts_name">姓\t\t\t\t\t名</string>
     <string name="item_contacts_identify_id">证件号码</string>
     <string name="item_contacts_name_hint">请输入真实姓名</string>
     <string name="item_contacts_identify_id_hint">请正确填写证件号码</string>
@@ -134,6 +134,8 @@
     <string name="title_message_appointment_ac">预约提醒</string>
     <string name="title_routest_ac">游玩路线</string>
     <string name="title_home">北京世界园艺博览会</string>
+    <string name="title_contact_appointment">预约联系人</string>
+    <string name="title_contact_add">添加联系人</string>
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
@@ -350,4 +352,10 @@
     <string name="reset_the_route">重置路线</string>
     <string name="clear_track">清除足迹</string>
     <string name="error_qrcode">错误的二维码</string>
+    <string name="confirm">确定</string>
+
+    <string name="card_type_shenfen">居民身份证</string>
+    <string name="card_type_huzhao">护照</string>
+    <string name="card_type_huixiang">回乡证</string>
+    <string name="card_type_taibao">台胞证</string>
 </resources>

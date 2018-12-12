@@ -47,7 +47,7 @@ public class MyContactsInfoView extends LinearLayout {
 
     private void initTextView() {
         mTvText = new TextView(getContext());
-        LayoutParams layoutParams = new LayoutParams((int) getContext().getResources().getDimension(R.dimen.dms_150), -2);
+        LayoutParams layoutParams = new LayoutParams((int) getContext().getResources().getDimension(R.dimen.dms_120), -2);
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
 
         mTvText.setLayoutParams(layoutParams);
@@ -63,7 +63,7 @@ public class MyContactsInfoView extends LinearLayout {
 
         mRightView.setLayoutParams(layoutParams);
         addView(mRightView);
-        mRightView.setMinimumWidth((int) getContext().getResources().getDimension(R.dimen.dms_50));
+        mRightView.setMinimumWidth((int) getContext().getResources().getDimension(R.dimen.dms_40));
     }
 
     public void addRightView(View view) {
