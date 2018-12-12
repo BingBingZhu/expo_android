@@ -13,7 +13,7 @@ import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
 public class ShareUtils {
 
-    public static void showShare(Context context, String title, String text, String imageUrl, String shareUrl) {
+    public static void showShare(Context context, String title, String text, String imageUrl, String shareUrl, PlatformActionListener listener) {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
@@ -39,21 +39,8 @@ public class ShareUtils {
                 }
             }
         });
-        oks.setCallback(new PlatformActionListener() {
-            @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                platform.getName();
-            }
-
-            @Override
-            public void onError(Platform platform, int i, Throwable throwable) {
-                throwable.printStackTrace();
-            }
-
-            @Override
-            public void onCancel(Platform platform, int i) {
-            }
-        });
+        if(listener != null)
+        oks.setCallback(listener);
         oks.show(context);
 
     }

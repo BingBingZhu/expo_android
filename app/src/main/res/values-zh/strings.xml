@@ -347,4 +347,5 @@
     <string name="custom_route">自定义</string>
     <string name="reset_the_route">重置路线</string>
     <string name="clear_track">清除足迹</string>
+    <string name="error_qrcode">错误的二维码</string>
 </resources>

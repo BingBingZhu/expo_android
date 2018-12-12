@@ -2,6 +2,7 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.Coupon;
 import com.expo.entity.RichText;
 
 public interface WebContract {
@@ -14,6 +15,8 @@ public interface WebContract {
         public abstract void getUrlById(int rulId);
 
         public abstract void logout();
+
+        public abstract void setUsedCoupon(Coupon coupon);
     }
 
     interface View extends IView{
@@ -21,5 +24,7 @@ public interface WebContract {
         void returnRichText(RichText richText);
 
         void logoutResp();
+
+        void useCoupon();
     }
 }

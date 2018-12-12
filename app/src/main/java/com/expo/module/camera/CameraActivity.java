@@ -81,6 +81,7 @@ public class CameraActivity extends BaseActivity {
     @OnClick(R.id.camera_btn)
     public void cameraClick(View view) {
         mCarmer.capture();
+        view.setEnabled(false);
     }
 
     @OnLongClick(R.id.camera_btn)

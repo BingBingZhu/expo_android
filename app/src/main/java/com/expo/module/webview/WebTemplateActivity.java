@@ -31,10 +31,12 @@ import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 
 public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presenter> implements WebTemplateContract.View {
 
@@ -51,6 +53,23 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     private List<Encyclopedias> mNearByVenues;
     private ShareUtil mShareUtil;
 
+    PlatformActionListener mPlatformActionListener = new PlatformActionListener() {
+        @Override
+        public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+            mPresenter.scoreChange(Constants.ScoreType.TYPE_SHARE, id + "");
+        }
+
+        @Override
+        public void onError(Platform platform, int i, Throwable throwable) {
+
+        }
+
+        @Override
+        public void onCancel(Platform platform, int i) {
+
+        }
+    };
+
     @Override
     protected int getContentView() {
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
@@ -61,6 +80,9 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     protected void onInitView(Bundle savedInstanceState) {
         mUrl = getIntent().getStringExtra(Constants.EXTRAS.EXTRA_URL);
         id = getIntent().getLongExtra(Constants.EXTRAS.EXTRA_DATA_ID, 0);
+
+//        mPresenter.scoreChange(Constants.ScoreType.TYPE_ENCYCLOPEDIAS, id + "");
+
         mEncyclopedias = mPresenter.loadEncyclopediaById(id);
         mVenue = mPresenter.loadSceneByWikiId(id);
         if (mVenue != null) {
@@ -80,14 +102,15 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     public void initTitleRightTextView() {
         ImageView shareView = new ImageView(this);
         ((AppBarView) getTitleView()).setRightView(shareView);
-        shareView.setImageResource(R.mipmap.share_icon_delete);
+        shareView.setImageResource(R.mipmap.share_icon);
         shareView.setOnClickListener(v -> {
 //            ShareUtil.doShare("", mUrl);
             ShareUtils.showShare(WebTemplateActivity.this,
                     LanguageUtil.chooseTest(mEncyclopedias.caption, mEncyclopedias.captionEn),
                     LanguageUtil.chooseTest(mEncyclopedias.remark, mEncyclopedias.remarkEn),
                     CommUtils.getFullUrl(mEncyclopedias.picUrl),
-                    mUrl + "&data_type=0");
+                    mUrl + "&data_type=0",
+                    mPlatformActionListener);
 //            mEncyclopedias
 //            mShareUtil.setTitle(LanguageUtil.chooseTest(mEncyclopedias.caption, mEncyclopedias.captionEn));
 //            mShareUtil.setImageUrl(CommUtils.getFullUrl(mEncyclopedias.picUrl));

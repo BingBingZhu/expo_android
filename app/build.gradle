@@ -170,6 +170,8 @@ dependencies {
     implementation 'com.orhanobut:dialogplus:1.11@aar'
     //图片压缩
     implementation 'top.zibin:Luban-turbo:1.0.0'
+    //扫码二维码
+    implementation 'com.github.yuzhiqiang1993:zxing:2.2.4'
     implementation 'com.yanzhenjie:permission:2.0.0-rc12'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

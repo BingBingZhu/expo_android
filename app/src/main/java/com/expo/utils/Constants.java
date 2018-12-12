@@ -171,6 +171,7 @@ public interface Constants {
         public static final int REQ_GET_LOCAL = 127;
         public static final int REQ_TO_CAMERA = 128;
         public static final int REQ_TO_CONTACTS = 129;
+        public static final int REQ_TO_QRCODE = 130;
     }
 
     /**
@@ -229,5 +230,9 @@ public interface Constants {
         public static final int NAVI_NEAR_WIKI = 0;//附近景点
 
     }
+    class ScoreType {
+        public static final String TYPE_ENCYCLOPEDIAS = "1";//附近景点
+        public static final String TYPE_SHARE = "2";//附近景点
 
+    }
 }
