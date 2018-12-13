@@ -321,7 +321,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 des.angle = 360 - angle + "";
             }
             des.routeTime = mRouteTime;
-            System.out.println("angle: " + des.angle);
             if (!mUseDeviceRotate) {
                 des.angle = "";
                 mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,'" + Http.getGsonInstance().toJson(des) + "')"));
@@ -352,7 +351,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private void changeAnimation(String action) {
         if (mJsCanSend && mSlidingDrawerView.isOpened()) {
             mWebView.loadUrl(String.format("javascript:getActionState('%s')", action));
-            //mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "0", action));
         }
     }
 
@@ -395,12 +393,15 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE));
+        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_START));
         new AlertDialog.Builder(this)
                 .setMessage(R.string.leave_navi)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok, (dialog, which) -> finish())
-                .setNegativeButton(R.string.cancel, null)
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_END));
+                    dialog.dismiss();
+                })
                 .show();
 
     }

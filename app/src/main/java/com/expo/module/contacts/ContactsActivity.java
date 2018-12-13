@@ -102,11 +102,11 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
                                 ToastHelper.showShort(String.format(getResources().getString(R.string.max_select), mMaxCount));
                             } else {
                                 mMap.put(contacts.ids, contacts);
-                                Math.min(++mSelectCount, Math.min(mMaxCount, mData.size()));
+                                setConfirmText(++mSelectCount, mMaxCount);
                             }
                         } else {
                             mMap.remove(contacts.ids);
-                            Math.min(--mSelectCount, Math.min(mMaxCount, mData.size()));
+                            setConfirmText(--mSelectCount, mMaxCount);
                         }
                     });
                 }
@@ -134,7 +134,7 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
             mData.addAll(list);
         }
         mAdapter.notifyDataSetChanged();
-        getConfirmText(mSelectCount, Math.min(mMaxCount, mData.size()));
+        setConfirmText(mSelectCount, mMaxCount);
     }
 
     @OnClick(R.id.contacts_ok)
@@ -172,7 +172,7 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
         }
     }
 
-    private void getConfirmText(int first, int second) {
+    private void setConfirmText(int first, int second) {
         mTvOk.setText(getResources().getString(R.string.confirm) + " (" + first + "/" + second + ")");
     }
 

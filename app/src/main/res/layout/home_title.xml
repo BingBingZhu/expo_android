@@ -32,6 +32,7 @@
             android:layout_height="@dimen/dms_10"
             android:layout_alignTop="@id/title_home_msg"
             android:layout_alignRight="@id/title_home_msg"
+            android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/dms_10"
             android:background="@drawable/red_pot"
             android:visibility="gone" />
@@ -42,6 +43,7 @@
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@id/title_home_msg"
             android:layout_toRightOf="@id/title_home_icon"
+            android:background="@drawable/bg_white_r90"
             android:drawableLeft="@mipmap/ico_search"
             android:drawablePadding="@dimen/dms_20"
             android:gravity="center_vertical"
