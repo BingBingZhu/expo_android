@@ -44,7 +44,6 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListItemData ency = mEncyList.get( position );
-//        holder.img.setBackground(mContext.getResources().getDrawable(R.drawable.ico_def));
         holder.img.setImageURI( Constants.URL.FILE_BASE_URL + ency.getPicUrl() );
         holder.tvName.setText( LanguageUtil.chooseTest( ency.getCaption(), ency.getEnCaption() ) );
         holder.tvRecommend.setVisibility( ency.getRecommend() == 1 ? View.VISIBLE : View.GONE );

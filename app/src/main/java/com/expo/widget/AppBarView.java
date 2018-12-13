@@ -3,6 +3,7 @@ package com.expo.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -29,6 +30,7 @@ public class AppBarView extends FrameLayout {
     private float mTitleSize;
     private int mTitleSizeUnit;
     private int mTitleColor;
+    private int mBackgroundColor;
 
     public AppBarView(Context context) {
         this( context, null );
@@ -54,6 +56,7 @@ public class AppBarView extends FrameLayout {
         mTitleSizeUnit = TypedValue.COMPLEX_UNIT_PX;
         mTitle = a.getString( R.styleable.AppBarView_title );
         mTitleColor = a.getColor( R.styleable.AppBarView_titleColor, getContext().getResources().getColor( R.color.caption_color ) );
+        mBackgroundColor = a.getColor( R.styleable.AppBarView_backgroundColor, getContext().getResources().getColor( R.color.green_00cb99 ) );
         mShowBackButton = a.getBoolean( R.styleable.AppBarView_showBack, true );
         a.recycle();
 
@@ -76,7 +79,7 @@ public class AppBarView extends FrameLayout {
     }
 
     @Override
-    protected void onFinishInflate() {
+    public void onFinishInflate() {
         super.onFinishInflate();
         if (mShowBackButton) {
             mBackView.setVisibility( VISIBLE );
@@ -86,7 +89,7 @@ public class AppBarView extends FrameLayout {
         if (!TextUtils.isEmpty( mTitle )) {
             mTitleView.setText( mTitle );
         }
-        this.setBackgroundColor( getResources().getColor( R.color.green_00cb99 ) );
+        setBackgroundColor( mBackgroundColor );
         mTitleView.setTextSize( mTitleSizeUnit, mTitleSize );
         mTitleView.setTextColor( mTitleColor );
         mBackView.setImageDrawable( mBackImage );
@@ -144,11 +147,15 @@ public class AppBarView extends FrameLayout {
         }
     }
 
-    public void setBackImageResource(@DrawableRes int resId) {
+    public void setBackImageResource(int resId) {
         this.mBackImage = getContext().getResources().getDrawable( resId );
         if (this.mBackView != null) {
             this.mBackView.setImageDrawable( mBackImage );
         }
+    }
+
+    public void setmBackgroundColor(int colorId){
+        this.mBackgroundColor = colorId;
     }
 
     public void setRightView(View view) {

@@ -65,6 +65,7 @@ public class BadgeActivity extends BaseActivity<BadgeContract.Presenter> impleme
     TextView tvNameLv5;
 
     private List<Bitmap> bitmaps;
+    private List<Bitmap> bitmapsGra;
     private List<TextView> scoreTVs;
     private List<TextView> nameTVs;
     private List<ImageView> imgs;
@@ -88,6 +89,12 @@ public class BadgeActivity extends BaseActivity<BadgeContract.Presenter> impleme
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.mipmap.ico_badge_lv3));
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.mipmap.ico_badge_lv4));
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.mipmap.ico_badge_lv5));
+        bitmapsGra = new ArrayList<>();
+        bitmapsGra.add(BitmapFactory.decodeResource(getResources(), R.mipmap.ico_badge_lv1_gra));
+        bitmapsGra.add(BitmapFactory.decodeResource(getResources(), R.mipmap.ico_badge_lv2_gra));
+        bitmapsGra.add(BitmapFactory.decodeResource(getResources(), R.mipmap.ico_badge_lv3_gra));
+        bitmapsGra.add(BitmapFactory.decodeResource(getResources(), R.mipmap.ico_badge_lv4_gra));
+        bitmapsGra.add(BitmapFactory.decodeResource(getResources(), R.mipmap.ico_badge_lv5_gra));
         scoreTVs = new ArrayList<>();
         scoreTVs.add(tvScoreLv1);
         scoreTVs.add(tvScoreLv2);
@@ -131,7 +138,8 @@ public class BadgeActivity extends BaseActivity<BadgeContract.Presenter> impleme
             }
         }
         for (int i = index+1; i < badges.size() ; i++){
-            imgs.get(i).setImageBitmap(BitmapUtils.convertToBlackWhite(bitmaps.get(i), 0));
+            imgs.get(i).setImageBitmap(bitmapsGra.get(i));
+//            imgs.get(i).setImageBitmap(BitmapUtils.convertToBlackWhite(bitmaps.get(i), 0));
         }
         for (int i = 0; i < badges.size(); i++){
             if (isExists[i]){
