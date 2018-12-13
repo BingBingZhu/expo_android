@@ -12,18 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.StatusBarUtils;
-import com.expo.base.utils.ToastHelper;
 import com.expo.contract.HomeContract;
+import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
-import com.expo.module.distinguish.DistinguishActivity;
 import com.expo.module.freewifi.FreeWiFiActivity;
 import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.main.adapter.HomeExhibitAdapter;
@@ -186,12 +184,12 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 FreeWiFiActivity.startActivity( getContext() );
                 break;
             case R.id.home_func_1:
-                String url = mPresenter.loadBuyTicketsUrl();
+                String url = mPresenter.loadCommonInfo( CommonInfo.BUY_TICKETS );
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                         (url + "?phone=" + ExpoApp.getApplication().getUser().getMobile()), getString( R.string.buy_tickets ) );
                 break;
             case R.id.home_func_2:
-                url = mPresenter.loadVenueBespeakUrl();
+                url = mPresenter.loadCommonInfo( CommonInfo.VENUE_BESPEAK );
 //                url = "http://192.168.1.13:8888/";
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                         url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
@@ -207,12 +205,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 ParkMapActivity.startActivity( getContext(), null );
                 break;
             case R.id.home_func_6:
-//                DistinguishActivity.startActivity( getContext() );
-                ToastHelper.showShort("微观世界，还不清楚地址");
+                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PORTAL_WEBSITE_INTEGRATION ),
+                        getString( R.string.home_func_item_panorama ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
                 break;
             case R.id.home_func_7:
-//                WebActivity.startActivity( getContext(), "http://www.changchengneiwai.com/wap/index.htm", "周边服务" );
-                PanoramaActivity.startActivity(getContext());
+                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PANORAMA ), null, false );
                 break;
             case R.id.home_navigation_item:
                 ParkMapActivity.startActivity( getContext(), null );

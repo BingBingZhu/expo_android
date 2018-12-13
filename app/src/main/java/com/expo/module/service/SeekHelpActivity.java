@@ -11,7 +11,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,7 +30,6 @@ import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.CheckUtils;
 import com.expo.base.utils.GpsUtil;
-import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SeekHelpContract;
@@ -68,6 +66,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     View mPhone;
     @BindView(R.id.seek_help_speech)
     View mSpeech;
+    @BindView(R.id.seek_help_text2)
+    TextView mTvKindly;
 
     ArrayList<String> mImageList;
     SeekHelpAdapter mAdapter;
@@ -84,6 +84,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     private EventManager asr;
 
     int mCameraPosition = 0;
+    private String mServiceType;
+    private SpeakInputHintDialog mInputDialog;
 
     BaseAdapterItemClickListener<Integer> mClickListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
@@ -120,6 +122,28 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         if (getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 ) != 0) {
             mPhone.setVisibility( View.GONE );
         }
+        switch (getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 )) {
+            case 0:
+                mServiceType = "1";
+                mTvKindly.setText( R.string.kindly_reminder_medical );
+                break;
+            case 1:
+                mServiceType = "3";
+                mTvKindly.setText( R.string.kindly_reminder_report );
+                break;
+            case 2:
+                mServiceType = "5";
+                mTvKindly.setText( R.string.kindly_reminder_look_for );
+                break;
+            case 4:
+                mServiceType = "4";
+                mTvKindly.setText( R.string.kindly_reminder_inquiry );
+                break;
+            case 5:
+                mServiceType = "2";
+                mTvKindly.setText( R.string.kindly_reminder_lost );
+                break;
+        }
         initRecord();
         initRecyclerView();
 
@@ -134,18 +158,18 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     private void initRecord() {
         asr = EventManagerFactory.create( this, "asr" );
         asr.registerListener( mListener ); //  EventListener 中 onEvent方法\
-        mSpeech.setOnTouchListener( (v, event) -> {
-            LogUtils.d( "Action", event.getAction() + "" );
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    startRecord();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    stopRecord();
-                    break;
-            }
-            return true;
-        } );
+    }
+
+    @OnClick(R.id.seek_help_speech)
+    public void record(View v) {
+        if (mInputDialog == null) {
+            mInputDialog = new SpeakInputHintDialog( getContext() );
+            mInputDialog.setOnCloseListener( (view) -> stopRecord() );
+        }
+        if (!mInputDialog.isShowing()) {
+            mInputDialog.show();
+            startRecord();
+        }
     }
 
     private void initRecyclerView() {
@@ -214,7 +238,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                 mLng = mLocation.getLongitude();
             }
         }
-        if (mPresenter.checkInPark( mLat, mLng )) {
+        if (mPresenter.checkInPark( mLocation.getLatitude(), mLocation.getLongitude() )) {
             VisitorService visitorService = initSubmitData();
             if (visitorService != null) {
                 mPresenter.addVisitorService( visitorService );
@@ -365,24 +389,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
             case 1:
                 visitorService.setImgUrl1( mImageList.get( 0 ) );
         }
-        switch (getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 )) {
-            case 0:
-                visitorService.setServiceType( "1" );
-                break;
-            case 1:
-                visitorService.setServiceType( "3" );
-                break;
-            case 2:
-                visitorService.setServiceType( "5" );
-                break;
-            case 4:
-                visitorService.setServiceType( "4" );
-                break;
-            case 5:
-                visitorService.setServiceType( "2" );
-                break;
-        }
-
+        visitorService.setServiceType( mServiceType );
         visitorService.setCoordinateAssist( mCoordinateAssist );
         visitorService.setCounttryCode( PrefsHelper.getString( Constants.Prefs.KEY_COUNTRY_CODE, "+86" ) );
         visitorService.setGpsLatitude( String.valueOf( mLat ) );

@@ -159,7 +159,7 @@
     <string name="home_func_item_tickets">园区购票</string>
     <string name="home_func_item_appointment">场馆预约</string>
     <string name="home_func_item_tourist_service">游客服务</string>
-    <string name="home_func_item_line">游玩路线</string>
+    <string name="home_func_item_line">游园路线</string>
     <string name="home_func_item_distinguish">光影森林</string>
     <string name="home_func_item_periphery">周边服务</string>
     <string name="home_func_item_microcosmic">微观世界</string>
@@ -361,5 +361,16 @@
     <string name="card_type_huzhao">护照</string>
     <string name="card_type_huixiang">回乡证</string>
     <string name="card_type_taibao">台胞证</string>
+    <string name="home_func_item_panorama">微观世界</string>
+    <string name="score">我的积分</string>
+    <string name="message_get_error">获取消息错误！</string>
+    <string name="title_detail">消息详情</string>
+    <string name="im_hear">请说话，我在听</string>
+    <string name="im_cancel_input">点击波形完成输入</string>
+    <string name="kindly_reminder_medical">请在下方填入患者的年龄、症状、病史等情况和影像。信息描述的准确能够帮助救助人员进行施救。如遇昏厥、出血过多等严重情况请拨打120急救电话。</string>
+    <string name="kindly_reminder_lost">请在下方填入走失人员的年龄、性别、身高、特征等情况和影像。信息描述的准确能够帮助救助人员进行搜寻。</string>
+    <string name="kindly_reminder_report">请在下方填入事件发生的地点、人员、事件过程，并上传影像资料。</string>
+    <string name="kindly_reminder_inquiry">请在下方填入您需要咨询的内容。</string>
+    <string name="kindly_reminder_look_for">请在下方填入遗失物品的信息。如有丢失物品照片请上传。</string>
 
 </resources>

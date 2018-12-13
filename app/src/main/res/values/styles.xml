@@ -241,4 +241,13 @@
         <item name="android:windowEnterAnimation">@anim/anim_dialog_top_in_scale</item>
         <item name="android:windowExitAnimation">@anim/anim_dialog_top_out_scale</item>
     </style>
+
+    <style name="SpeakInputDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 </resources>

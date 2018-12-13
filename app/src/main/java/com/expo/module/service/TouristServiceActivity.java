@@ -7,19 +7,17 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.contract.TouristServiceContract;
+import com.expo.entity.CommonInfo;
 import com.expo.module.service.adapter.TouristServiceAdapter;
 import com.expo.module.webview.WebActivity;
 import com.expo.utils.Constants;
-import com.expo.widget.AppBarView;
 import com.expo.widget.decorations.SpaceDecoration;
 
 import butterknife.BindView;
@@ -50,13 +48,13 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
                 intent.putExtra( Constants.EXTRAS.EXTRAS, position );
                 startActivity( intent );
             } else if (position == 3) {
-                toWebView( "4", title, TITLE_COLOR_STYLE_GREEN );
+                toWebView( CommonInfo.BARRIER_FREE_SERVICE, title, TITLE_COLOR_STYLE_GREEN );
             } else if (position == 6) {
-                toWebView( "6", title, TITLE_COLOR_STYLE_GREEN );
+                toWebView( CommonInfo.NOTICE_OF_BUY_TICKETS, title, TITLE_COLOR_STYLE_GREEN );
             } else if (position == 7) {
-                toWebView( "3", title, TITLE_COLOR_STYLE_GREEN );
+                toWebView( CommonInfo.NOTICE_OF_GARDEN, title, TITLE_COLOR_STYLE_GREEN );
             } else if (position == 8) {
-                toWebView( "5", title, TITLE_COLOR_STYLE_WHITE );
+                toWebView( CommonInfo.VENUE_BESPEAK, title, TITLE_COLOR_STYLE_WHITE );
             }
         }
     };
@@ -75,7 +73,7 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
     protected void onInitView(Bundle savedInstanceState) {
 
         setTitle( 0, R.string.home_func_item_tourist_service );
-        initTitleRightTextView(R.string.service_log, R.color.white, v -> ServiceHistoryActivity.startActivity(getContext()));
+        initTitleRightTextView( R.string.service_log, R.color.white, v -> ServiceHistoryActivity.startActivity( getContext() ) );
         mAdapter = new TouristServiceAdapter( this );
         mAdapter.setListener( mListener );
 

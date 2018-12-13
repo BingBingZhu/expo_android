@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,15 +19,20 @@ import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MessagesContract;
+import com.expo.entity.CommonInfo;
 import com.expo.entity.Message;
+import com.expo.entity.User;
 import com.expo.module.heart.adapter.MessageAdapter;
 import com.expo.module.heart.message.MessageTypeAppointment;
 import com.expo.module.heart.message.MessageType;
 import com.expo.module.heart.message.MessageTypeSystem;
 import com.expo.module.heart.message.MessageTypeTourist;
+import com.expo.module.login.LoginActivity;
+import com.expo.module.webview.WebActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LocalBroadcastUtil;
 import com.expo.widget.decorations.SpaceDecoration;
@@ -62,7 +68,18 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
         if (message.getType().equals("1")) {
 
         } else if (message.getType().equals("4")) {
-
+            User user = ExpoApp.getApplication().getUser();
+            if (user == null) {
+                LoginActivity.startActivity( getContext() );
+                return;
+            }
+            if (message == null) {
+                ToastHelper.showShort( R.string.message_get_error );
+            }
+            String url = mPresenter.loadCommonInfo( CommonInfo.VISITOR_SERVICE_DETAILS );
+            WebActivity.startActivity( getContext(),
+                    TextUtils.isEmpty( url ) ? url : (url + String.format( "?Uid=%s&Ukey=%s&id=%s", user.getUid(), user.getUkey(), message.getLinkId() )),
+                    getString( R.string.title_detail ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
         } else if (message.getType().equals("5")) {
 
         }

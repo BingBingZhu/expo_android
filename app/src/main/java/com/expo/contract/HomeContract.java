@@ -30,9 +30,8 @@ public interface HomeContract {
 
         public abstract void stopHeartService(Context context);
 
-        public abstract String loadBuyTicketsUrl();
+        public abstract String loadCommonInfo(String type);
 
-        public abstract String loadVenueBespeakUrl();
     }
 
     interface View extends IView {

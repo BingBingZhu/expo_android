@@ -26,7 +26,6 @@ import com.expo.contract.presenter.MessagesPresenterImpl;
 import com.expo.contract.presenter.MinePresenterImpl;
 import com.expo.contract.presenter.NationalSmsCodePresenterImpl;
 import com.expo.contract.presenter.NavigationPresenterImpl;
-import com.expo.contract.presenter.PanoramaPresenterImpl;
 import com.expo.contract.presenter.ParkMapPresenterImpl;
 import com.expo.contract.presenter.RouteDetailPresenterImpl;
 import com.expo.contract.presenter.RoutesPresenterImpl;
@@ -39,7 +38,6 @@ import com.expo.contract.presenter.TrackPresenterImpl;
 import com.expo.contract.presenter.UserInfoPresenterImpl;
 import com.expo.contract.presenter.WebPresenterImpl;
 import com.expo.contract.presenter.WebTemplatePresenterImpl;
-import com.expo.module.main.find.publish.FindPublishActivity;
 
 public class PresenterFactory {
     public static IPresenter getPresenter(IView view) {
@@ -93,8 +91,6 @@ public class PresenterFactory {
             return new WebPresenterImpl( (WebContract.View) view );
         } else if (view instanceof TouristServiceContract.View) {
             return new TouristServicePresenterImpl( (TouristServiceContract.View) view );
-        } else if (view instanceof PanoramaContract.View) {
-            return new PanoramaPresenterImpl( (PanoramaContract.View) view );
         } else if (view instanceof BadgeContract.View) {
             return new BadgePresenterImpl( (BadgeContract.View) view );
         } else if (view instanceof TrackContract.View) {

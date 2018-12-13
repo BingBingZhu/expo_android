@@ -12,7 +12,6 @@ import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.ExpoApp;
-import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MineContract;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.User;
@@ -60,13 +59,13 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mPresenter.loadUser();
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register( this );
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister( this );
     }
 
     @Override
@@ -78,23 +77,12 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     @Override
     public void freshUser(User user) {
         if (user == null) return;
-        if (!StringUtils.isEmpty(user.getPhotoUrl()))
-            CommUtils.setImgPic(getContext(), user.getPhotoUrl(), mImageView);
-        mTvMineName.setText(user.getNick());
-        String scores = getResources().getString(R.string.the_current_integral);
+        if (!StringUtils.isEmpty( user.getPhotoUrl() ))
+            CommUtils.setImgPic( getContext(), user.getPhotoUrl(), mImageView );
+        mTvMineName.setText( user.getNick() );
+        String scores = getResources().getString( R.string.the_current_integral );
         score = user.getIntTotscores();
-        mTvIntegral.setText(String.format(scores, score));
-    }
-
-    @Override
-    public void returnCommonInfo(CommonInfo commonInfo) {
-//        WebActivity.startActivity( getContext(), commonInfo.getLinkUrl(),
-//                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn(), BaseActivity.TITLE_COLOR_STYLE_WHITE );
-//        String url = "http://192.168.1.13:8080/#/myOrder";
-        String url = commonInfo.getLinkUrl();
-        WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 :
-                url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
-                        + "&lan=" + LanguageUtil.chooseTest("zh", "en"), getString(R.string.home_func_item_my_bespeak), BaseActivity.TITLE_COLOR_STYLE_WHITE);
+        mTvIntegral.setText( String.format( scores, score ) );
     }
 
     @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name, R.id.item_mine_bespeak,
@@ -105,38 +93,40 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
             case R.id.mine_edit_info:
             case R.id.mine_img:
             case R.id.mine_name:
-                UserInfoActivity.startActivity(getContext());
+                UserInfoActivity.startActivity( getContext() );
                 break;
             case R.id.item_mine_bespeak://预约
-                mPresenter.clickPolicy("9");
+                String url = mPresenter.loadCommonInfo( CommonInfo.MY_BESPEAK );
+                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
+                        url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
+                                + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_my_bespeak ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
                 break;
             case R.id.item_mine_comment_report://反馈
-                FeedbackActivity.startActivity(getContext());
+                FeedbackActivity.startActivity( getContext() );
                 break;
             case R.id.item_mine_message://消息
-                MessageKindActivity.startActivity(getContext());
+                MessageKindActivity.startActivity( getContext() );
                 break;
             case R.id.item_mine_track://足迹
-                TrackActivity.startActivity(getContext());
+                TrackActivity.startActivity( getContext() );
                 break;
             case R.id.item_mine_setting://设置
-                SettingActivity.startActivity(getContext());
+                SettingActivity.startActivity( getContext() );
                 break;
             case R.id.mine_integral:    // 积分
-//                String url = "http://192.168.1.13:8080";
-                String url = mPresenter.getIntegralUrl();
-                if (StringUtils.isEmpty(url))
+                url = mPresenter.loadCommonInfo( CommonInfo.SCORE );
+                if (StringUtils.isEmpty( url ))
                     return;
                 else
-                    WebActivity.startActivity(getContext(), url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
+                    WebActivity.startActivity( getContext(), url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
                             + "&integral=" + score
-                            + "&lan=" + LanguageUtil.chooseTest("zh", "en"), "我的积分", false);
+                            + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.score ), false );
                 break;
             case R.id.mine_badge:       // 徽章
-                BadgeActivity.startActivity(getContext(), score);
+                BadgeActivity.startActivity( getContext(), score );
                 break;
             case R.id.item_mine_contacts:       // 预约联系人
-                ContactsActivity.startActivity(getActivity(), false, 0);
+                ContactsActivity.startActivity( getActivity(), false, 0 );
                 break;
         }
     }

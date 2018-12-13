@@ -73,17 +73,8 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     }
 
     @Override
-    public String loadBuyTicketsUrl() {
-        CommonInfo info = mDao.unique( CommonInfo.class, new QueryParams().add( "eq", "type", "6" ) );
-        if (info != null) {
-            return info.getLinkUrl();
-        }
-        return null;
-    }
-
-    @Override
-    public String loadVenueBespeakUrl() {
-        CommonInfo info = mDao.unique( CommonInfo.class, new QueryParams().add( "eq", "type", "5" ) );
+    public String loadCommonInfo(String type) {
+        CommonInfo info = mDao.unique( CommonInfo.class, new QueryParams().add( "eq", "type", type ) );
         if (info != null) {
             return info.getLinkUrl();
         }

@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/dms_30"
-    android:paddingBottom="@dimen/dms_30">
+    android:paddingTop="@dimen/dms_30">
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         android:id="@+id/seek_help_text1"
@@ -19,21 +18,21 @@
         android:id="@+id/seek_help_text2"
         style="@style/TextSizeBlack13"
         android:layout_width="match_parent"
-        android:lineSpacingMultiplier="1.5"
         android:layout_below="@id/seek_help_text1"
         android:layout_marginLeft="@dimen/dms_30"
         android:layout_marginTop="@dimen/dms_30"
         android:layout_marginRight="@dimen/dms_30"
-        android:text="@string/kindly_reminder_info"
+        android:lineSpacingMultiplier="1.5"
+        android:text="@string/kindly_reminder_medical"
         android:textColor="@color/gray_99" />
 
     <TextView
         android:id="@+id/line1"
         style="@style/LineHorizontal"
         android:layout_height="@dimen/dms_8"
-        android:background="@color/translucent_per_5"
         android:layout_below="@id/seek_help_text2"
-        android:layout_marginTop="@dimen/dms_26" />
+        android:layout_marginTop="@dimen/dms_26"
+        android:background="@color/translucent_per_5" />
 
     <RelativeLayout
         android:id="@+id/seek_help_layout"
@@ -96,63 +95,42 @@
     <TextView
         android:id="@+id/line2"
         style="@style/LineHorizontal"
-        android:background="@color/translucent_per_5"
         android:layout_height="@dimen/dms_8"
         android:layout_below="@id/seek_help_text4"
-        android:layout_marginTop="@dimen/dms_14" />
+        android:layout_marginTop="@dimen/dms_45"
+        android:background="@color/translucent_per_5" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/seek_help_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/line2"
-        android:layout_marginLeft="@dimen/dms_30"
-        android:layout_marginTop="@dimen/dms_80"
-        android:layout_marginRight="@dimen/dms_30">
+        android:layout_alignParentBottom="true"
+        android:background="@color/green_02cd9b"
+        android:gravity="center"
+        android:paddingTop="@dimen/dms_30"
+        android:paddingBottom="@dimen/dms_30"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_30" />
 
-        <TextView
-            android:id="@+id/seek_help_submit"
-            style="@style/TextSizeWhite14"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dms_80"
-            android:layout_weight="1"
-            android:background="@drawable/bg_02cd9b_r5"
-            android:gravity="center"
-            android:text="@string/submit" />
-
-        <RelativeLayout
-            android:id="@+id/seek_help_navigation"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dms_80"
-            android:layout_marginLeft="@dimen/dms_100"
-            android:layout_weight="1"
-            android:background="@drawable/bg_02cd9b_r5">
-
-            <TextView
-                android:id="@+id/seek_help_text5"
-                style="@style/TextSizeWhite14"
-                android:layout_height="@dimen/dms_80"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="@string/navigation" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dms_20"
-                android:layout_toLeftOf="@id/seek_help_text5"
-                android:src="@mipmap/navigation" />
-        </RelativeLayout>
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/seek_help_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/seek_help_submit"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dms_38"
+        android:layout_marginBottom="@dimen/dms_44"
+        android:layout_weight="1"
+        android:src="@mipmap/seek_navigation" />
 
     <ImageView
         android:id="@+id/seek_help_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@id/seek_help_navigation"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/dms_50"
-        android:layout_marginBottom="@dimen/dms_80"
+        android:layout_marginRight="@dimen/dms_38"
+        android:layout_marginBottom="@dimen/dms_20"
         android:src="@mipmap/seek_phone" />
 </RelativeLayout>

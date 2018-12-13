@@ -219,8 +219,9 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             ContactsActivity.startActivity( WebActivity.this, true, count );
         }
 
-        public void setTitleText(String titleText) {
-
+        @JavascriptInterface
+        public void setTitle(String title) {
+//            runOnUiThread( () -> WebActivity.this.setTitle( title ) );
         }
 
         @JavascriptInterface

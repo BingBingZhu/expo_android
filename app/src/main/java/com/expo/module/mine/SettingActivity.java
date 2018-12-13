@@ -217,12 +217,12 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_guide)
     public void clickGuide(MySettingView view) {
-        mPresenter.clickPolicy( "0" );
+        mPresenter.clickPolicy( CommonInfo.USER_GUIDE );
     }
 
     @OnClick(R.id.setting_policy)
     public void clickPolicy(MySettingView view) {
-        mPresenter.clickPolicy( "1" );
+        mPresenter.clickPolicy( CommonInfo.USER_PROTOCOL );
     }
     @OnClick(R.id.setting_about)
     public void clickAbout(MySettingView view) {
@@ -262,12 +262,12 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @Override
     public void returnCommonInfo(CommonInfo commonInfo) {
-        if (commonInfo.getType().equals( "0" )) {
+        if (commonInfo.getType().equals( CommonInfo.USER_GUIDE )) {
             if (null == commonInfo || TextUtils.isEmpty( commonInfo.getLinkUrl() )) {
                 ToastHelper.showLong( R.string.there_is_no_user_guidance );
                 return;
             }
-        } else if (commonInfo.getType().equals( "1" )) {
+        } else if (commonInfo.getType().equals( CommonInfo.USER_PROTOCOL )) {
             if (null == commonInfo || TextUtils.isEmpty( commonInfo.getLinkUrl() )) {
                 ToastHelper.showLong( R.string.there_is_no_user_protocol );
                 return;

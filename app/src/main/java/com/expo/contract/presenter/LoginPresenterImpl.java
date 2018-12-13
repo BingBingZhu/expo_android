@@ -2,7 +2,6 @@ package com.expo.contract.presenter;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.expo.R;
 import com.expo.base.ExpoApp;
@@ -32,23 +31,23 @@ import okhttp3.RequestBody;
 
 public class LoginPresenterImpl extends LoginContract.Presenter implements PlatformActionListener {
     public LoginPresenterImpl(LoginContract.View view) {
-        super(view);
+        super( view );
     }
 
     @Override
     public void getCode(String mobile, String countryCode, String guestId) {
         mView.showLoadingView();
         Map<String, Object> params = Http.getBaseParams();
-        params.put("Mobile", mobile);
-        params.put("countrycode", countryCode);
-        params.put("guestid", guestId);
-        RequestBody requestBody = Http.buildRequestBody(params);
-        Observable<VerificationCodeResp> observable = Http.getServer().getVerificationCode(requestBody);
-        Http.request(new ResponseCallback<VerificationCodeResp>() {
+        params.put( "Mobile", mobile );
+        params.put( "countrycode", countryCode );
+        params.put( "guestid", guestId );
+        RequestBody requestBody = Http.buildRequestBody( params );
+        Observable<VerificationCodeResp> observable = Http.getServer().getVerificationCode( requestBody );
+        Http.request( new ResponseCallback<VerificationCodeResp>() {
             @Override
             protected void onResponse(VerificationCodeResp rsp) {
-                mView.returnRequestVerifyCodeResult(rsp.verificationCode);
-                PrefsHelper.setString(Constants.Prefs.KEY_COUNTRY_CODE, countryCode);
+                mView.returnRequestVerifyCodeResult( rsp.verificationCode );
+                PrefsHelper.setString( Constants.Prefs.KEY_COUNTRY_CODE, countryCode );
             }
 
             @Override
@@ -56,31 +55,31 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
                 mView.hideLoadingView();
                 super.onComplete();
             }
-        }, observable);
+        }, observable );
     }
 
     @Override
     public void verifyCodeLogin(String mobile, String countryCode, String verifyCode) {
         Map<String, Object> params = Http.getBaseParams();
-        params.put("Mobile", mobile);
-        params.put("countrycode", countryCode);
-        params.put("VerifyCode", verifyCode);
+        params.put( "Mobile", mobile );
+        params.put( "countrycode", countryCode );
+        params.put( "VerifyCode", verifyCode );
         RequestBody requestBody = Http.buildRequestBody( params );
-        Observable<VerifyCodeLoginResp> verifyCodeLoginObservable = Http.getServer().verifyCodeLogin(requestBody);
-        Http.request(new ResponseCallback<VerifyCodeLoginResp>() {
+        Observable<VerifyCodeLoginResp> verifyCodeLoginObservable = Http.getServer().verifyCodeLogin( requestBody );
+        Http.request( new ResponseCallback<VerifyCodeLoginResp>() {
             @Override
             protected void onResponse(VerifyCodeLoginResp rsp) {
-                LogUtils.e("====user=======", "uid: "+rsp.getId()+"   ukey: "+rsp.getKey());
-                setAppUserInfo(rsp);
+                LogUtils.e( "====user=======", "uid: " + rsp.getId() + "   ukey: " + rsp.getKey() );
+                setAppUserInfo( rsp );
                 appRun();
                 mView.verifyCodeLogin();
             }
-        }, verifyCodeLoginObservable);
+        }, verifyCodeLoginObservable );
     }
 
-    private void appRun(){
+    private void appRun() {
         Map<String, Object> params = Http.getBaseParams();
-        params.put("jgid", JPushInterface.getRegistrationID(ExpoApp.getApplication()));
+        params.put( "jgid", JPushInterface.getRegistrationID( ExpoApp.getApplication() ) );
         Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( params ) );
         Http.request( new ResponseCallback<BaseResponse>() {
             @Override
@@ -97,16 +96,16 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
      */
     @Override
     public void threeLogin(String name) {
-        Platform plat = ShareSDK.getPlatform(name);
+        Platform plat = ShareSDK.getPlatform( name );
         if (plat == null) {
             return;
         }
-        plat.removeAccount(true); //移除授权状态和本地缓存，下次授权会重新授权
-        plat.SSOSetting(false); //SSO授权，传false默认是客户端授权，没有客户端授权或者不支持客户端授权会跳web授权
-        plat.setPlatformActionListener(this);
+        plat.removeAccount( true ); //移除授权状态和本地缓存，下次授权会重新授权
+        plat.SSOSetting( false ); //SSO授权，传false默认是客户端授权，没有客户端授权或者不支持客户端授权会跳web授权
+        plat.setPlatformActionListener( this );
         //关闭SSO授权
 //        plat.SSOSetting(true);
-        plat.showUser(null);
+        plat.showUser( null );
     }
 
     /**
@@ -116,7 +115,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
     @Override
     public void onCancel(Platform platform, int action) {
         if (action == Platform.ACTION_USER_INFOR) {
-            handler.sendEmptyMessage(MSG_AUTH_CANCEL);
+            handler.sendEmptyMessage( MSG_AUTH_CANCEL );
         }
     }
 
@@ -126,14 +125,14 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
             Message msg = new Message();
             msg.what = MSG_AUTH_COMPLETE;
             msg.obj = new Object[]{platform.getName(), res};
-            handler.sendMessage(msg);
+            handler.sendMessage( msg );
         }
     }
 
     @Override
     public void onError(Platform arg0, int action, Throwable t) {
         if (action == Platform.ACTION_USER_INFOR) {
-            handler.sendEmptyMessage(MSG_AUTH_ERROR);
+            handler.sendEmptyMessage( MSG_AUTH_ERROR );
         }
         t.printStackTrace();
     }
@@ -141,96 +140,96 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
     private static final int MSG_AUTH_CANCEL = 1;
     private static final int MSG_AUTH_ERROR = 2;
     private static final int MSG_AUTH_COMPLETE = 3;
-    private Handler handler = new Handler(msg -> {
+    private Handler handler = new Handler( msg -> {
         switch (msg.what) {
             case MSG_AUTH_CANCEL:
                 //取消授权
-                mView.showShort(R.string.cancel_the_login);
+                mView.showShort( R.string.cancel_the_login );
                 break;
             case MSG_AUTH_ERROR:
                 //授权失败
-                mView.showShort(R.string.authorization_failure);
+                mView.showShort( R.string.authorization_failure );
                 break;
             case MSG_AUTH_COMPLETE:
                 //授权成功
-                mView.showShort(R.string.authorization_success);
+                mView.showShort( R.string.authorization_success );
                 Object[] objs = (Object[]) msg.obj;
                 String platform = (String) objs[0];
-                verifyThirdState(platform);
+                verifyThirdState( platform );
                 break;
         }
         return true;
-    });
+    } );
 
     private void verifyThirdState(String platform) {
-        Platform mPlatform = ShareSDK.getPlatform(platform);
+        Platform mPlatform = ShareSDK.getPlatform( platform );
         if (platform == null) {
             return;
         }
         String thirdtype = "0";
-        if (platform.equals("Wechat")) {
+        if (platform.equals( "Wechat" )) {
             thirdtype = "1";
-        } else if (platform.equals("QQ")) {
+        } else if (platform.equals( "QQ" )) {
             thirdtype = "2";
         } else {
             thirdtype = "3";
         }
         // 网络请求登录操作
         Map<String, Object> params = Http.getBaseParams();
-        params.put("Type", "1");
-        params.put("thirdid", mPlatform.getDb().getUserId());
-        params.put("thirdtype", thirdtype);
-        RequestBody requestBody = Http.buildRequestBody(params);
-        Observable<CheckThirdIdRegisterStateResp> verifyCodeLoginObservable = Http.getServer().checkThirdIdRegisterState(requestBody);
-        Http.request(new ResponseCallback<CheckThirdIdRegisterStateResp>() {
+        params.put( "Type", "1" );
+        params.put( "thirdid", mPlatform.getDb().getUserId() );
+        params.put( "thirdtype", thirdtype );
+        RequestBody requestBody = Http.buildRequestBody( params );
+        Observable<CheckThirdIdRegisterStateResp> verifyCodeLoginObservable = Http.getServer().checkThirdIdRegisterState( requestBody );
+        Http.request( new ResponseCallback<CheckThirdIdRegisterStateResp>() {
             @Override
             protected void onResponse(CheckThirdIdRegisterStateResp rsp) {
                 if (rsp.state == 0)//未注册过
-                    mView.toBindPhone(platform);
+                    mView.toBindPhone( platform );
                 else if (rsp.state == 1)//已注册过
-                    doThreeLogined(rsp.uid, rsp.ukey);
+                    doThreeLogined( rsp.uid, rsp.ukey );
             }
-        }, verifyCodeLoginObservable);
+        }, verifyCodeLoginObservable );
     }
 
     private void doThreeLogined(String uid, String ukey) {
         // 网络请求登录操作
         Map<String, Object> params = Http.getBaseParams();
-        params.put("Type", "1");
-        params.put("Uid", uid);
-        params.put("Ukey", ukey);
-        RequestBody requestBody = Http.buildRequestBody(params);
-        Observable<User> verifyCodeLoginObservable = Http.getServer().loadUserInfo(requestBody);
-        Http.request(new ResponseCallback<User>() {
+        params.put( "Type", "1" );
+        params.put( "Uid", uid );
+        params.put( "Ukey", ukey );
+        RequestBody requestBody = Http.buildRequestBody( params );
+        Observable<User> verifyCodeLoginObservable = Http.getServer().loadUserInfo( requestBody );
+        Http.request( new ResponseCallback<User>() {
             @Override
             protected void onResponse(User rsp) {
 //                setAppUserInfo(rsp);
 //                mView.verifyCodeLogin(rsp);
-                rsp.setUid(uid);
-                rsp.setUkey(ukey);
-                rsp.saveOnDb(mDao);
+                rsp.setUid( uid );
+                rsp.setUkey( ukey );
+                rsp.saveOnDb( mDao );
                 appRun();
                 mView.verifyCodeLogin();
             }
-        }, verifyCodeLoginObservable);
+        }, verifyCodeLoginObservable );
     }
 
     @Override
     public void loadUserProtocol() {
-        CommonInfo info = mDao.unique(CommonInfo.class, new QueryParams().add("eq", "type", "1"));
-        mView.toUserProtocol(info);
+        CommonInfo info = mDao.unique( CommonInfo.class, new QueryParams().add( "eq", "type", CommonInfo.USER_PROTOCOL ) );
+        mView.toUserProtocol( info );
     }
 
     private void setAppUserInfo(VerifyCodeLoginResp rsp) {
         User user = new User();
-        user.setNick(rsp.getCaption());
-        user.setCity(rsp.getCity());
-        user.setUid(rsp.getId());
-        user.setUkey(rsp.getKey());
-        user.setMobile(rsp.getMobile());
-        user.setPhotoUrl(rsp.getPhotoUrl());
-        user.setSex(rsp.getSex());
-        user.saveOnDb(mDao);
+        user.setNick( rsp.getCaption() );
+        user.setCity( rsp.getCity() );
+        user.setUid( rsp.getId() );
+        user.setUkey( rsp.getKey() );
+        user.setMobile( rsp.getMobile() );
+        user.setPhotoUrl( rsp.getPhotoUrl() );
+        user.setSex( rsp.getSex() );
+        user.saveOnDb( mDao );
     }
 
 }
