@@ -146,6 +146,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             }
         }
     };
+
     @Override
     protected int getContentView() {
         return R.layout.activity_navigation;
@@ -164,7 +165,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mImgModuleShow.setVisibility(View.GONE);
         }
         mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
-                true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
+                true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off);
         StatusBarUtils.setStatusBarLight(this, true);
         mMapView.onCreate(savedInstanceState);
         //地图中心点
@@ -192,7 +193,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     private void initWebView() {
         mWebView.loadUrl("file:///android_asset/web/merge.html");
-        mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
+        mWebView.loadUrl("javascript:toggleImg(" + PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true) + ")");
 //        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
@@ -322,7 +323,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             des.routeTime = mRouteTime;
             System.out.println("angle: " + des.angle);
             if (!mUseDeviceRotate) {
-                des.angle =  "";
+                des.angle = "";
                 mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,'" + Http.getGsonInstance().toJson(des) + "')"));
                 return;
             }
@@ -394,12 +395,15 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE));
+        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_START));
         new AlertDialog.Builder(this)
                 .setMessage(R.string.leave_navi)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok, (dialog, which) -> finish())
-                .setNegativeButton(R.string.cancel, null)
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_END));
+                    dialog.dismiss();
+                })
                 .show();
 
     }
@@ -609,10 +613,10 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 onBackPressed();
                 break;
             case R.id.img_module_show:
-                PrefsHelper.setBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, ! PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true));
+                PrefsHelper.setBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true));
                 mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
-                        true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off );
-                mWebView.loadUrl("javascript:toggleImg("+PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true)+")");
+                        true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off);
+                mWebView.loadUrl("javascript:toggleImg(" + PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true) + ")");
                 break;
         }
     }
