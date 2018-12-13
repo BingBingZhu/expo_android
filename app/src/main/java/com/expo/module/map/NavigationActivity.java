@@ -690,6 +690,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                     for (VenuesDistance vd : mVenuesDistance) {
                         vd.distance = AMapUtils.calculateLineDistance(
                                 new LatLng(lat, lon), new LatLng(vd.lat, vd.lon));
+                        vd.distance = mMapUtils.getDistance(new LatLng(lat, lon), new LatLng(vd.lat, vd.lon));
                         vd.angle = mMapUtils.getAngle(new MapUtils.MyLatLng(mLocation.getLongitude(), mLocation.getLatitude()), new MapUtils.MyLatLng(lon, lat));
                     }
                     Collections.sort(mVenuesDistance, new Comparator<VenuesDistance>() {

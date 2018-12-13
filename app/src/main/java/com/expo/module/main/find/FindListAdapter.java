@@ -73,10 +73,10 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
         } else {
             holder.img.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen.dms_344);
         }
-        holder.content.setText(find.remark);
+        holder.content.setText(find.caption);
         if (!StringUtils.isEmpty(find.upic))
             CommUtils.setImgPic(mContext, find.upic, holder.head);
-        holder.name.setText(find.caption);
+        holder.name.setText(find.uname);
         holder.scans.setText(find.views);
         holder.like.setText(find.enjoys);
         if (find.type == 1) {

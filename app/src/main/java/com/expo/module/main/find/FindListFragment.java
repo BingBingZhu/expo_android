@@ -30,8 +30,8 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
     PtrClassicFrameLayout mPtrView;
     @BindView(R.id.recycler_view)
     SimpleRecyclerView mRecyclerView;
-    @BindView(R.id.empty_layout)
-    View mEmptyView;
+//    @BindView(R.id.empty_layout)
+//    View mEmptyView;
 
     private FindListAdapter mAdapter;
     private int page = 0;
@@ -90,6 +90,7 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
         if (isFresh) {
             mFindList.clear();
         }
+        int start = mFindList.size();
         if (null == data || data.size() == 0) {
             if (page > 0) {
                 page--;
@@ -98,21 +99,16 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
         } else {
             mFindList.addAll(data);
         }
-        if (mFindList.size() == 0) {
-            mEmptyView.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(View.GONE);
-        } else {
-            mEmptyView.setVisibility(View.GONE);
-            mRecyclerView.setVisibility(View.VISIBLE);
-
-        }
-        mAdapter.notifyDataSetChanged();
+        int end = mFindList.size();
+//        if (mFindList.size() == 0) {
+////            mEmptyView.setVisibility(View.VISIBLE);
+//            mRecyclerView.setVisibility(View.GONE);
+//        } else {
+////            mEmptyView.setVisibility(View.GONE);
+//            mRecyclerView.setVisibility(View.VISIBLE);
+//        }
+        mAdapter.notifyItemChanged(start, end);
         mPtrView.refreshComplete();
-    }
-
-    @OnClick(R.id.find_add)
-    public void clickFindAdd(View view) {
-        FindPublishActivity.startActivity(getContext(), 0);
     }
 
 }

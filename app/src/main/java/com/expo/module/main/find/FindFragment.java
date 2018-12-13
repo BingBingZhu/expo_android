@@ -21,6 +21,7 @@ import com.expo.contract.EncyclopediasContract;
 import com.expo.contract.FindContract;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 import com.expo.module.main.find.examine.FindExamineActivity;
+import com.expo.module.main.find.publish.FindPublishActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
@@ -138,6 +139,11 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
 //    public void onClick(View v) {
 //        EncyclopediaSearchActivity.startActivity(getContext());
 //    }
+
+    @OnClick(R.id.find_add)
+    public void clickFindAdd(View view) {
+        FindPublishActivity.startActivity(getContext(), 0);
+    }
 
     @Override
     public void onDestroy() {

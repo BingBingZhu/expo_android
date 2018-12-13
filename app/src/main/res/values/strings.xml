@@ -332,6 +332,7 @@
     <string name="examine_unpass_reason">内容不符合发布规定</string>
     <string name="examine_wait">待审核</string>
 
+    <string name="find_tab_recommend">推荐</string>
     <string name="find_tab_scenic">风景</string>
     <string name="find_tab_venue">场馆</string>
     <string name="find_tab_food">美食</string>
