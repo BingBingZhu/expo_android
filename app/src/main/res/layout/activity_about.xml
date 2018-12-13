@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:scrollbars="none">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_60"
-        android:src="@mipmap/language_logo" />
-
-    <TextView
-        style="@style/TextSize15"
-        android:layout_marginTop="@dimen/dms_40"
-        android:text="@string/bj_world_horticultural_exposition"
-        android:textColor="@color/gray_66" />
-
-    <TextView
-        android:id="@+id/app_version_name"
-        style="@style/TextSize15"
-        android:layout_marginTop="@dimen/dms_10"
-        android:textColor="@color/gray_66" />
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dms_50"
-        android:layout_marginTop="@dimen/dms_60"
-        android:layout_marginRight="@dimen/dms_50">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_60"
+            android:src="@mipmap/language_logo" />
+
+        <TextView
+            style="@style/TextSize15"
+            android:layout_marginTop="@dimen/dms_40"
+            android:text="@string/bj_world_horticultural_exposition"
+            android:textColor="@color/gray_66" />
+
+        <TextView
+            android:id="@+id/app_version_name"
+            style="@style/TextSize15"
+            android:layout_marginTop="@dimen/dms_10"
+            android:textColor="@color/gray_66" />
+
         <TextView
             android:id="@+id/app_info"
             style="@style/TextSize13"
             android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/dms_50"
+            android:layout_marginTop="@dimen/dms_60"
+            android:layout_marginRight="@dimen/dms_50"
             android:lineSpacingMultiplier="1.5"
             android:textColor="@color/gray_66" />
-    </ScrollView>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
