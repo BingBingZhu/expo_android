@@ -359,8 +359,8 @@ public class MapUtils {
     public static void main(String args[]) {
         MapUtils mu = new MapUtils(null);
         System.out.println(mu.getAngle
-                (new MyLatLng(115.953532, 40.444582),
-                        new MyLatLng(115.950105, 40.440931)));
+                (new MyLatLng(116.331017,39.980113),
+                        new MyLatLng(115.955469,40.437795)));
     }
 
 }

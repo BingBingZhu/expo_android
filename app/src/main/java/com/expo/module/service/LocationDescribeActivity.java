@@ -95,7 +95,7 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
     /*
      * 设置返回数据结果
      */
-    private void setResult(Double lat, Double lng, String content) {
+    private void setResult(Double lat, Double lng, String locatName, String content) {
         if (lat == null || lng == null) {
             setResult(RESULT_CANCELED);
         } else {
@@ -104,6 +104,7 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
             result.putExtra(Constants.EXTRAS.EXTRA_LONGITUDE, lng);
             result.putExtra(Constants.EXTRAS.EXTRAS, content);
             result.putExtra(Constants.EXTRAS.EXTRA_ID, mPoiId);
+            result.putExtra(Constants.EXTRAS.EXTRA_TEXT1, locatName);
             setResult(RESULT_OK, result);
         }
     }
@@ -111,7 +112,7 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
     @OnClick(R.id.location_describe_save)
     public void clickSave(View view) {
         LatLonPoint point = (LatLonPoint) mSelectView.getTag();
-        setResult(point.getLatitude(), point.getLongitude(), mEdit.getText().toString());
+        setResult(point.getLatitude(), point.getLongitude(), ((MyRadioButton) mSelectView).getText().toString(), mEdit.getText().toString());
         finish();
     }
 
@@ -161,8 +162,8 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
         MyRadioButton textViewDrawable = new MyRadioButton(this);
         textViewDrawable.setLayoutParams(new LinearLayoutCompat.LayoutParams(-1, (int) getResources().getDimension(R.dimen.dms_110)));
         textViewDrawable.setText(text);
-        textViewDrawable.setOnClickListener(v -> {
-            mSelectView = v;
+        textViewDrawable.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) mSelectView = buttonView;
         });
         textViewDrawable.setTextAppearance(this, R.style.TextSize16);
         textViewDrawable.setTag(point);

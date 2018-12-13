@@ -423,7 +423,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         TouristType touristType = mPresenter.getTourist();
         if (touristType != null)
             mWebView.loadUrl(String.format("javascript:setTourist('%s')", touristType.getUnZipPath()));
-        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "1", "callstart/callstart"));
     }
 
     private void startCalculateTheRoad(LatLng startLatLng, Venue virtualScene) {
