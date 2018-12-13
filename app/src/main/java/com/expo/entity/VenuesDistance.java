@@ -11,6 +11,6 @@ public class VenuesDistance {
     public String title;
     public String content;
     public String voice;
-    public double angle;
+    public double angle = 0.0d;
 
 }

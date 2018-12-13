@@ -21,14 +21,13 @@
         android:visibility="gone" />
 
 
-    <com.expo.widget.SimpleRecyclerView
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/contacts_ok"
         android:layout_below="@id/contacts_top"
         android:overScrollMode="never"
-        app:hasDivide="true"
         android:paddingLeft="@dimen/dms_34"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 </RelativeLayout>

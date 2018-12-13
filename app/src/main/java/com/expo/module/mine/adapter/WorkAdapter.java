@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.expo.R;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,9 +19,14 @@ public class WorkAdapter extends BaseAdapter {
 
     Context mContext;
     List<String> mData;
+    Map<String, Integer> mDataSource;
 
     public WorkAdapter(Context context) {
         mContext = context;
+    }
+
+    public void setSource(Map<String, Integer> dataSource) {
+        this.mDataSource = dataSource;
     }
 
     public void setData(List<String> data) {
@@ -54,7 +60,7 @@ public class WorkAdapter extends BaseAdapter {
         } else {
             holderView = (HolderView) convertView.getTag();
         }
-        holderView.text.setText(mData.get(position));
+        holderView.text.setText(mDataSource.get(mData.get(position)));
         return convertView;
     }
 

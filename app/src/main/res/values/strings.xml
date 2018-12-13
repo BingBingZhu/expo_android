@@ -136,6 +136,7 @@
     <string name="title_home">北京世界展览会</string>
     <string name="title_contact_appointment">预约联系人</string>
     <string name="title_contact_add">添加联系人</string>
+    <string name="title_contact_edit">修改联系人</string>
 
     <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
@@ -336,6 +337,13 @@
     <string name="find_tab_food">美食</string>
     <string name="find_tab_botany">植物</string>
     <string name="find_tab_other">其他</string>
+
+    <string name="work_tab_it">IT/互联网</string>
+    <string name="work_tab_doctor">医生</string>
+    <string name="work_tab_commerce">电商</string>
+    <string name="work_tab_finance">金融/证券</string>
+    <string name="work_tab_sale">采购销售</string>
+
     <string name="wx_is_not_installed">未安装微信客户端！</string>
     <string name="alipay_is_not_installed">未安装支付宝客户端！</string>
     <string name="start_download">开始下载</string>
@@ -358,8 +366,8 @@
     <string name="set_tourist_first">请先选择导游</string>
 
     <string name="card_type_shenfen">居民身份证</string>
-    <string name="card_type_huzhao">护照</string>
     <string name="card_type_huixiang">回乡证</string>
     <string name="card_type_taibao">台胞证</string>
+    <string name="card_type_huzhao">护照</string>
 
 </resources>

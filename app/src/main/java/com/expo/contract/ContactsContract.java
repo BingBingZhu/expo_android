@@ -4,6 +4,7 @@ import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.Contacts;
 import com.expo.entity.RouteInfo;
+import com.expo.utils.Constants;
 
 import java.util.List;
 
@@ -16,9 +17,13 @@ public interface ContactsContract {
 
         public abstract void getContactsData();
 
+        public abstract void delContact(Contacts contacts, int position);
+
     }
 
     interface View extends IView {
         void freshContacts(List<Contacts> list);
+
+        void removeContact(int position);
     }
 }
