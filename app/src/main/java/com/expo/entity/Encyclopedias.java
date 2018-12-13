@@ -85,6 +85,9 @@ public class Encyclopedias implements Parcelable {
     @SerializedName("voiceurlen")
     public String voiceUrlEn;
 
+    @SerializedName("distance")
+    private String distance;
+
     public Encyclopedias() {
     }
 
@@ -347,6 +350,20 @@ public class Encyclopedias implements Parcelable {
 
     public void setVoiceUrlEn(String voiceUrlEn) {
         this.voiceUrlEn = voiceUrlEn;
+    }
+
+    public void setDistance(float distance) {
+        String distanceStr = "";
+        if (distance > 1000) {
+            distanceStr = (int) (distance / 1000) + "Km";
+        } else {
+            distanceStr = (int) distance + "m";
+        }
+        this.distance = "\u8ddd\u79bb" + distanceStr;
+    }
+
+    public String getDistance() {
+        return distance;
     }
 
     @Override

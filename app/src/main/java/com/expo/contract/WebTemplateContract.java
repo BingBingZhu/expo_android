@@ -23,6 +23,10 @@ public interface WebTemplateContract {
         public abstract List<Encyclopedias> loadNeayByVenues(Venue as);
 
         public abstract void scoreChange(String type, String wikiId);
+
+        public abstract List<Encyclopedias> loadRandomData(Long typeId, Long currId);
+
+        public abstract String loadCommonInfo(String type);
     }
 
     interface View extends IView {

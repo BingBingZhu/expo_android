@@ -9,6 +9,21 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "common_information")
 public class CommonInfo implements Parcelable {
+    public static final String USER_GUIDE = "0";//用户指南
+    public static final String USER_PROTOCOL = "1";//用户协议、法律条款与政策
+    public static final String NOTICE_OF_BUY_TICKETS = "2";//购票须知
+    public static final String NOTICE_OF_GARDEN = "3";//用户须知、游园须知
+    public static final String BARRIER_FREE_SERVICE = "4";//无障碍服务
+    public static final String VENUE_BESPEAK = "5";//场馆预约
+    public static final String BUY_TICKETS = "6";//购票
+    public static final String PANORAMA = "7";//全景、网上世园
+    public static final String NOTICE_OF_BESPEAK = "8";//预约须知
+    public static final String MY_BESPEAK = "9";//我的预约
+    public static final String SOCRE = "10";//积分
+    public static final String PORTAL_WEBSITE_INTEGRATION = "11";//门户网站、微观世界
+    public static final String VISITOR_SERVICE_DETAILS = "12";//游客服务详情
+    public static final String ENCYCLOPEDIAS_DETAIL_URL = "13";//百科详情
+
     @DatabaseField(columnName = "id", id = true)
     @SerializedName("id")
     private Integer id;

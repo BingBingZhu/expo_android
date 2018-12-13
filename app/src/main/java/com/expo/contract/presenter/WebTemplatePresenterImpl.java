@@ -1,7 +1,12 @@
 package com.expo.contract.presenter;
 
+import android.text.TextUtils;
+
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
 import com.expo.contract.WebTemplateContract;
 import com.expo.db.QueryParams;
+import com.expo.entity.CommonInfo;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.network.Http;
@@ -9,8 +14,11 @@ import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -38,16 +46,6 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
     }
 
     @Override
-    public List<Encyclopedias> loadNeayByVenues(Venue as) {
-        List<Venue> venues = mDao.query(Venue.class, null);
-        List<Long> ids = new ArrayList<>();
-        for (Venue venue : venues) {
-
-        }
-        return null;
-    }
-
-    @Override
     public void scoreChange(String type, String wikiId) {
         Map<String, Object> params = Http.getBaseParams();
         params.put("type", type);
@@ -60,5 +58,78 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
             }
 
         }, observable);
+    }
+
+    @Override
+    public List<Encyclopedias> loadNeayByVenues(Venue as) {
+        List<Venue> venues = mDao.query( Venue.class, new QueryParams()
+                .add( "notNull", "wiki_id" )
+                .add( "and" )
+                .add( "ne", "wiki_id", "" ) );
+        List<String> ids = new ArrayList<>();
+        Map<Float, Venue> venueMap = new HashMap<>();
+        LatLng latLng = new LatLng( as.getLat(), as.getLng() );
+        for (Venue venue : venues) {
+            if (venue.getId().equals( as.getId() ))
+                continue;
+            Float distance = AMapUtils.calculateLineDistance( latLng, new LatLng( venue.getLat(), venue.getLng() ) );
+            venueMap.put( distance, venue );
+        }
+        if (!venueMap.isEmpty()) {
+            Map<String, Float> distances = new HashMap<>();
+            if (venueMap.size() > 3) {
+                List<Float> sortKeys = new ArrayList<>( venueMap.keySet() );
+                Collections.sort( sortKeys );
+                int i = 0;
+                do {
+                    String wikiId = venueMap.get( sortKeys.get( i ) ).getWikiId();
+                    i++;
+                    if (!TextUtils.isEmpty( wikiId )) {
+                        ids.add( wikiId );
+                        distances.put( wikiId, sortKeys.get( i ) );
+                    }
+                } while (i <= venueMap.size() && ids.size() < 3);
+            } else {
+                for (Venue venue : venueMap.values()) {
+                    ids.add( venue.getWikiId() );
+                }
+            }
+            List<Encyclopedias> encyclopedias = mDao.query( Encyclopedias.class, new QueryParams().add( "in", "_id", ids ) );
+            for (Encyclopedias e : encyclopedias) {
+                e.setDistance( distances.get( String.valueOf( e.getId() ) ) );
+            }
+            return encyclopedias;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Encyclopedias> loadRandomData(Long typeId, Long currId) {
+        List<Encyclopedias> encyclopedias = mDao.query( Encyclopedias.class, new QueryParams()
+                .add( "eq", "type_id", typeId )
+                .add( "and" )
+                .add( "ne", "_id", currId ) );
+        List<Encyclopedias> result = new ArrayList<>();
+        if (encyclopedias != null) {
+            if (encyclopedias.size() > 3) {
+                Random random = new Random();
+                for (int i = 0; i < 3; i++) {
+                    result.add( encyclopedias.remove( (int) (random.nextFloat() * encyclopedias.size()) ) );
+                }
+                return result;
+            } else {
+                return encyclopedias;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String loadCommonInfo(String type) {
+        CommonInfo info = mDao.unique( CommonInfo.class, new QueryParams()
+                .add( "eq", "type", type ) );
+        if (info != null)
+            return info.getLinkUrl();
+        return null;
     }
 }
