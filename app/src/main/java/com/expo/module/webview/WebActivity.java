@@ -12,17 +12,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.TypedValue;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebContract;
 import com.expo.entity.Coupon;
@@ -33,6 +36,7 @@ import com.expo.module.share.ShareUtil;
 import com.expo.pay.JsMethod;
 import com.expo.utils.Constants;
 import com.expo.utils.MD5Util;
+import com.expo.widget.AppBarView;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -218,9 +222,11 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         public void selectContext(int count) {
             ContactsActivity.startActivity( WebActivity.this, true, count );
         }
-
-        public void setTitleText(String titleText) {
-
+        @JavascriptInterface
+        public void setTitle(String titleText, int color) {
+            runOnUiThread(()->{
+                WebActivity.this.setTitle(color,titleText);
+            });
         }
 
         @JavascriptInterface

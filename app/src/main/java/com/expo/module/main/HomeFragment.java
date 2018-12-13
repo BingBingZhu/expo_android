@@ -191,8 +191,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                         (url + "?phone=" + ExpoApp.getApplication().getUser().getMobile()), getString( R.string.buy_tickets ) );
                 break;
             case R.id.home_func_2:
-                url = mPresenter.loadVenueBespeakUrl();
-//                url = "http://192.168.1.13:8888/";
+//                url = mPresenter.loadVenueBespeakUrl();
+                url = "http://192.168.1.13:8888/";
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                         url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
                                 + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_appointment ), BaseActivity.TITLE_COLOR_STYLE_WHITE );

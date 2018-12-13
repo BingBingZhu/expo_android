@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FreeWiFiContract;
@@ -24,7 +25,7 @@ import com.expo.utils.wifi.WifiUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> implements FreeWiFiContract.View {
+public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> implements FreeWiFiContract.View, WifiUtil.OnConnectListener {
 
     private final static int STATE_UNUNITED = 0;            //未连接
     private final static int STATE_CONNECTING = 1;          //连接中
@@ -37,8 +38,8 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
     TextView tvState;
 
     private String[] wifi;
+    private boolean executeConnect;
     private boolean isConnect;
-    private String wifiSSID;
 
     @Override
     protected int getContentView() {
@@ -56,20 +57,12 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
             registerBroadcastReceiver();
             if (WifiUtil.isAtWifi(getContext(), wifi[0])) {
                 setWifiView(STATE_SUCCESSFU_LCONNECTION);
+                isConnect = true;
             } else {
                 setWifiView(STATE_UNUNITED);
             }
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (WifiUtil.isWiFiActive(getContext())) {
-            WifiUtil.connectWifi(getContext(), wifi[0], wifi[1]);
-        } else {
-            WifiUtil.changeWifiState(getContext(), true);
-        }
+        WifiUtil.setOnConnectListener(this);
     }
 
     private void registerBroadcastReceiver() {
@@ -96,10 +89,22 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
     @OnClick(R.id.wifi_btn)
     public void onClick(View v) {
         if (isConnect){
-            setWifiView(STATE_UNUNITED);
             WifiUtil.disconnectWifi(getContext());
-        }else {
-            setWifiView(STATE_CONNECTING);
+            setWifiView(STATE_UNUNITED);
+            isConnect = false;
+            return;
+        }
+        if (WifiUtil.isWiFiActive(getContext())){
+            if (WifiUtil.isAtWifi(getContext(), wifi[0])){
+                // 连接了世园wifi
+//                WifiUtil.connectWifi(getContext(), wifi[0], wifi[1]);
+            }else{
+                // 执行连接世园wifi
+                WifiUtil.connectWifi(getContext(), wifi[0], wifi[1]);
+            }
+        }else{
+            // 打开wifi开关
+            executeConnect = true;
             WifiUtil.changeWifiState(getContext(), true);
         }
     }
@@ -113,25 +118,22 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
                 imgId = R.mipmap.ico_connect_not;
                 stateStr = getString(R.string.please_click_the_button_to_open_wlan);
                 isEnable = true;
-                isConnect = false;
                 break;
             case STATE_CONNECTING:
                 imgId = R.mipmap.ico_connecting;
                 stateStr = getString(R.string.connecting);
                 isEnable = false;
-                isConnect = false;
                 break;
             case STATE_SUCCESSFU_LCONNECTION:
                 imgId = R.mipmap.ico_connect_un_success;
                 stateStr = getString(R.string.successfu_lconnection);
                 isEnable = true;
-                isConnect = true;
                 break;
             case STATE_CONNECTION_FAIL:
+                isConnect = false;
                 imgId = R.mipmap.ico_connect_off;
                 stateStr = getString(R.string.disconnect);
                 isEnable = true;
-                isConnect = false;
                 break;
         }
         imgView.setImageResource(imgId);
@@ -142,18 +144,16 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
     private WifiReceiverActionListener listener = new WifiReceiverActionListener() {
         @Override
         public void onWifiConnected(WifiInfo wifiInfo) {
-            setWifiView(STATE_SUCCESSFU_LCONNECTION);
-            wifiSSID = wifiInfo.getSSID();
-//            ToastHelper.showShort( "已连接至 " + wifiInfo.getSSID() );
+            if (WifiUtil.isAtWifi(getContext(), wifi[0])){
+                setWifiView(STATE_SUCCESSFU_LCONNECTION);
+                isConnect = true;
+            }
         }
 
         @Override
         public void onWifiOpened() {
-            // ToastHelper.showShort("wifi已经打开..");
-            WifiUtil.connectWifi(getContext(), wifi[0], wifi[1]);
-//            if (PrefsHelper.getBoolean( Constants.Prefs.KEY_IS_WIFI_OPEN, false )
-//                    && !LucasApp.getApplication().wifi.isEmpty())
-//                WifiUtil.connectWifi( getContext(), LucasApp.getApplication().wifi.get( 0 ), LucasApp.getApplication().wifi.get( 1 ) );
+            if (executeConnect)
+                WifiUtil.connectWifi(getContext(), wifi[0], wifi[1]);
         }
 
         @Override
@@ -172,4 +172,9 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
             // ToastHelper.showShort("wifi关闭中..");
         }
     };
+
+    @Override
+    public void onError() {
+        setWifiView(STATE_CONNECTION_FAIL);
+    }
 }
