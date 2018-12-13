@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.Spannable;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
@@ -71,6 +69,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
     List<String> mWorkList = new ArrayList<String>();
 
     int mCameraPosition = 0;
+    String mFindType;
 
     BaseAdapterItemClickListener<Integer> mClickListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
@@ -179,13 +178,16 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     public void initWorkAdapter() {
         mWorkAdapter = new WorkAdapter(this);
-        mWorkList.add("景点");
-        mWorkList.add("场馆");
-        mWorkList.add("美食");
-        mWorkList.add("植物");
-        mWorkList.add("其他");
+        mWorkAdapter.setSource(Constants.ContactsType.FIND_TYPE_MAP);
+        mWorkList.add("1");
+        mWorkList.add("2");
+        mWorkList.add("3");
+        mWorkList.add("4");
+        mWorkList.add("5");
         mWorkAdapter.setData(mWorkList);
         mWorkAdapter.notifyDataSetChanged();
+        mFindType = "3";
+        mTvTypeText.setText(Constants.ContactsType.FIND_TYPE_MAP.get(mFindType));
     }
 
     @OnClick(R.id.find_publish_type)
@@ -197,7 +199,8 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
-                        mTvTypeText.setText(mWorkList.get(position));
+                        mFindType = mWorkList.get(position);
+                        mTvTypeText.setText(Constants.ContactsType.FIND_TYPE_MAP.get(mFindType));
                         dialog.dismiss();
                     }
                 })

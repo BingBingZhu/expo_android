@@ -54,7 +54,7 @@ import butterknife.OnClick;
 public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presenter> implements ContactsAddContract.View {
 
     @BindView(R.id.contacts_add_type)
-    MyUserInfoView mMvType;
+    MyContactsInfoView mMvType;
     @BindView(R.id.contacts_add_name)
     MyContactsInfoView mMvName;
     @BindView(R.id.contacts_add_id)
@@ -63,8 +63,8 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
     Contacts mContacts;
     String mIdType;
 
-    ContactsAddAdapter mAdapter;
-    List<IdType> mList = new ArrayList<>();
+    WorkAdapter mAdapter;
+    List<String> mList = new ArrayList<>();
 
     @Override
     protected int getContentView() {
@@ -73,7 +73,7 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(0, R.string.title_contact_add);
+        setTitle(0, getIntent().getIntExtra(Constants.EXTRAS.EXTRA_TITLE, R.string.title_contact_add));
 
         initContactsType();
         initContactsName();
@@ -83,6 +83,11 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
         mContacts = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
         if (mContacts != null)
             freshContacts();
+        else {
+            mIdType = "1";
+            ((TextView) mMvType.getRightView()).setText(Constants.ContactsType.CONTACTS_TYPE_MAP.get(mIdType));
+        }
+
     }
 
     @Override
@@ -95,18 +100,18 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
      *
      * @param activity
      */
-    public static void startActivity(@NonNull Activity activity, Contacts contacts) {
+    public static void startActivity(@NonNull Activity activity, Contacts contacts, int titleRes) {
         Intent in = new Intent(activity, ContactsAddActivity.class);
         in.putExtra(Constants.EXTRAS.EXTRAS, contacts);
+        in.putExtra(Constants.EXTRAS.EXTRA_TITLE, titleRes);
         activity.startActivityForResult(in, Constants.RequestCode.REQUEST111);
     }
 
     public void initContactsType() {
         TextView textView = new TextView(this);
         textView.setBackgroundResource(0);
-        textView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-        textView.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-        textView.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.arrow_down,0);
+        textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+        textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrow_down, 0);
         mMvType.addRightView(textView);
     }
 
@@ -170,11 +175,12 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
     }
 
     public void initWorkAdapter() {
-        mAdapter = new ContactsAddAdapter(this);
-        mList.add(new IdType("1", R.string.card_type_shenfen));
-        mList.add(new IdType("2", R.string.card_type_huzhao));
-        mList.add(new IdType("3", R.string.card_type_huixiang));
-        mList.add(new IdType("4", R.string.card_type_taibao));
+        mAdapter = new WorkAdapter(this);
+        mAdapter.setSource(Constants.ContactsType.CONTACTS_TYPE_MAP);
+        mList.add("1");
+        mList.add("2");
+        mList.add("3");
+        mList.add("4");
         mAdapter.setData(mList);
         mAdapter.notifyDataSetChanged();
     }
@@ -188,8 +194,8 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
-                        ((TextView) mMvType.getRightView()).setText(mList.get(position).nameRes);
-                        mIdType = mList.get(position).id;
+                        mIdType = mList.get(position);
+                        ((TextView) mMvType.getRightView()).setText(Constants.ContactsType.CONTACTS_TYPE_MAP.get(mIdType));
                         dialog.dismiss();
                     }
                 })
@@ -201,13 +207,4 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
         dialog.show();
     }
 
-    class IdType {
-        String id;
-        int nameRes;
-
-        public IdType(String id, int nameRes) {
-            this.id = id;
-            this.nameRes = nameRes;
-        }
-    }
 }

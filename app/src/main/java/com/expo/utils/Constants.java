@@ -133,7 +133,7 @@ public interface Constants {
         public static final String UNZIP_PATH = BASE_FILE_PATH + "unzip/";
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
-                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class,CustomRoute.class,
+                Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class, CustomRoute.class,
                 TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, VisitorService.class, Contacts.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
@@ -219,20 +219,41 @@ public interface Constants {
 
     class ContactsType {
 
-        public static final Map<String, String> CONTACTS_TYPE_MAP = new HashMap<String, String>() {
+        public static final Map<String, Integer> CONTACTS_TYPE_MAP = new HashMap<String, Integer>() {
             {
-                put( "1", "居民身份证" );
-                put( "2", "护照" );
-                put( "3", "回乡证" );
-                put( "4", "台胞证" );
+                put("1", R.string.card_type_shenfen);
+                put("2", R.string.card_type_huixiang);
+                put("3", R.string.card_type_taibao);
+                put("4", R.string.card_type_huzhao);
             }
-        };//向js提示使用光团gif图片
+        };
+
+        public static final Map<String, Integer> FIND_TYPE_MAP = new HashMap<String, Integer>() {
+            {
+                put("1", R.string.find_tab_scenic);
+                put("2", R.string.find_tab_venue);
+                put("3", R.string.find_tab_food);
+                put("4", R.string.find_tab_botany);
+                put("5", R.string.find_tab_other);
+            }
+        };
+
+        public static final Map<String, Integer> WORK_TYPE_MAP = new HashMap<String, Integer>() {
+            {
+                put("1", R.string.work_tab_it);
+                put("2", R.string.work_tab_doctor);
+                put("3", R.string.work_tab_commerce);
+                put("4", R.string.work_tab_finance);
+                put("5", R.string.work_tab_sale);
+            }
+        };
     }
 
     class HandlerMsg {
         public static final int NAVI_NEAR_WIKI = 0;//附近景点
 
     }
+
     class ScoreType {
         public static final String TYPE_ENCYCLOPEDIAS = "1";//附近景点
         public static final String TYPE_SHARE = "2";//附近景点

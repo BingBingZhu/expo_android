@@ -229,6 +229,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     public void initUserWorkView() {
         TextView textView = new TextView(this);
         textView.setBackgroundResource(0);
+        textView.setTextAppearance(this, R.style.TextSizeBlack14);
         textView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         textView.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         mUserWork.addRightView(textView);
@@ -236,14 +237,12 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
 
     public void initWorkAdapter() {
         mWorkAdapter = new WorkAdapter(this);
-        mWorkList.add("IT/互联网");
-        mWorkList.add("销售");
-        mWorkList.add("专员");
-        mWorkList.add("电商");
-        mWorkList.add("教育");
-        mWorkList.add("医生");
-        mWorkList.add("教师");
-        mWorkList.add("公务员");
+        mWorkAdapter.setSource(Constants.ContactsType.WORK_TYPE_MAP);
+        mWorkList.add("1");
+        mWorkList.add("2");
+        mWorkList.add("3");
+        mWorkList.add("4");
+        mWorkList.add("5");
         mWorkAdapter.setData(mWorkList);
         mWorkAdapter.notifyDataSetChanged();
     }
@@ -284,9 +283,10 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
-                        ((TextView) mUserWork.getRightView()).setText(mWorkList.get(position));
+                        String workType = mWorkList.get(position);
+                        ((TextView) mUserWork.getRightView()).setText(Constants.ContactsType.WORK_TYPE_MAP.get(workType));
                         dialog.dismiss();
-                        mUser.setWorkType(mWorkList.get(position));
+                        mUser.setWorkType(workType);
                     }
                 })
                 .setGravity(Gravity.BOTTOM)
@@ -355,6 +355,10 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     public void refreshUserInfo(User user) {
         mUser = user;
         mOldUser = user.clone();
+
+        if (!StringUtils.isEmpty(mUser.getWorkType()))
+            ((TextView) mUserWork.getRightView()).setText(Constants.ContactsType.WORK_TYPE_MAP.get(mUser.getWorkType()));
+
         if (!StringUtils.isEmpty(mUser.getPhotoUrl()))
             Picasso.with(this).load(CommUtils.getFullUrl(mUser.getPhotoUrl())).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((RoundImageView) mUserImg.getRightView());
         ((TextView) mUserName.getRightView()).setText(mUser.getNick());
@@ -364,9 +368,9 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
             mRadioFemale.setChecked(true);
         }
         ((EditText) mUserEmail.getRightView()).setText(mUser.getEmail());
-        ((TextView) mUserWork.getRightView()).setText(mUser.getWorkType());
 
         mPresenter.setAge(mUser.getBirthDay());
+
     }
 
     @Override

@@ -1,81 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/find_top_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white_f7"
-        android:orientation="vertical">
-
-        <!--<LinearLayout-->
-        <!--android:id="@+id/find_search"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="@dimen/dms_72"-->
-        <!--android:layout_marginTop="@dimen/dms_20"-->
-        <!--android:layout_marginRight="@dimen/dms_140"-->
-        <!--android:background="@color/white_f7"-->
-        <!--android:orientation="horizontal">-->
-
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:layout_marginLeft="@dimen/dms_20"-->
-        <!--android:src="@mipmap/ico_search" />-->
-
-        <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="@dimen/dms_20"-->
-        <!--android:paddingTop="@dimen/dms_20"-->
-        <!--android:paddingBottom="@dimen/dms_20"-->
-        <!--android:text="搜索目的地/景点/场馆"-->
-        <!--android:textColor="@color/gray_85"-->
-        <!--android:textSize="12sp" />-->
-        <!--</LinearLayout>-->
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dms_86">
-
-            <TextView
-                style="@style/TextSizeBlack12"
-                android:layout_centerInParent="true"
-                android:text="@string/main_find"
-                android:textSize="@dimen/font_34" />
-
-            <TextView
-                android:id="@+id/find_my_find"
-                style="@style/TextSizeBlack13"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dms_30"
-                android:text="@string/my_find" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dms_2"
-            android:layout_marginTop="@dimen/dms_14" />
-        <android.support.design.widget.TabLayout
-            android:id="@+id/find_tab"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabBackground="@android:color/transparent"
-            app:tabTextColor="@color/color_666"
-            app:tabSelectedTextColor="@color/color_333"/>
-    </LinearLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/find_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never" />
+        android:orientation="vertical">
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/find_top_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white_f7"
+            android:orientation="vertical">
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/find_search"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dms_72"-->
+            <!--android:layout_marginTop="@dimen/dms_20"-->
+            <!--android:layout_marginRight="@dimen/dms_140"-->
+            <!--android:background="@color/white_f7"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="@dimen/dms_20"-->
+            <!--android:src="@mipmap/ico_search" />-->
+
+            <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dms_20"-->
+            <!--android:paddingTop="@dimen/dms_20"-->
+            <!--android:paddingBottom="@dimen/dms_20"-->
+            <!--android:text="搜索目的地/景点/场馆"-->
+            <!--android:textColor="@color/gray_85"-->
+            <!--android:textSize="12sp" />-->
+            <!--</LinearLayout>-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dms_86">
+
+                <TextView
+                    style="@style/TextSizeBlack12"
+                    android:layout_centerInParent="true"
+                    android:text="@string/main_find"
+                    android:textSize="@dimen/font_34" />
+
+                <TextView
+                    android:id="@+id/find_my_find"
+                    style="@style/TextSizeBlack13"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dms_30"
+                    android:text="@string/my_find" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dms_2"
+                android:layout_marginTop="@dimen/dms_14" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/find_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabBackground="@android:color/transparent"
+                app:tabSelectedTextColor="@color/color_333"
+                app:tabTextColor="@color/color_666" />
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/find_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/find_add"
+        android:layout_width="@dimen/dms_100"
+        android:layout_height="@dimen/dms_100"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dms_4"
+        android:layout_marginBottom="@dimen/dms_68"
+        android:src="@mipmap/find_add" />
+</RelativeLayout>

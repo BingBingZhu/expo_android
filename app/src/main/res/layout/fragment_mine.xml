@@ -136,7 +136,7 @@
             <com.hedan.textdrawablelibrary.TextViewDrawable
                 android:id="@+id/item_mine_track"
                 style="@style/item_mine_entry"
-                android:drawableLeft="@mipmap/remind"
+                android:drawableLeft="@mipmap/track"
                 android:text="我的足迹" />
 
             <View
@@ -149,7 +149,7 @@
             <com.hedan.textdrawablelibrary.TextViewDrawable
                 android:id="@+id/item_mine_contacts"
                 style="@style/item_mine_entry"
-                android:drawableLeft="@mipmap/setting"
+                android:drawableLeft="@mipmap/alert"
                 android:text="@string/item_mine_contacts" />
 
             <View

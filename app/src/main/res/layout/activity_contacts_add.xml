@@ -19,10 +19,10 @@
         android:paddingRight="@dimen/dms_34"
         android:orientation="vertical">
 
-        <com.expo.widget.MyUserInfoView
+        <com.expo.widget.MyContactsInfoView
             android:id="@+id/contacts_add_type"
-            style="@style/item_user_info"
-            app:text="@string/item_contacts_identify_type" />
+            style="@style/item_contacts_info"
+            app:lefttext="@string/item_contacts_identify_type" />
 
         <TextView
             style="@style/LineHorizontal"

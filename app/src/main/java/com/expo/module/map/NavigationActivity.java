@@ -155,7 +155,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         TouristType touristType = mPresenter.getTourist();
-        if(touristType == null || StringUtils.isEmpty(touristType.getUnZipPath())){
+        if (touristType == null || StringUtils.isEmpty(touristType.getUnZipPath())) {
             ToastHelper.showShort(R.string.set_tourist_first);
             finish();
             return;
@@ -321,7 +321,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 des.angle = 360 - angle + "";
             }
             des.routeTime = mRouteTime;
-            System.out.println("angle: " + des.angle);
             if (!mUseDeviceRotate) {
                 des.angle = "";
                 mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:setMarker(1,'" + Http.getGsonInstance().toJson(des) + "')"));
@@ -352,7 +351,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private void changeAnimation(String action) {
         if (mJsCanSend && mSlidingDrawerView.isOpened()) {
             mWebView.loadUrl(String.format("javascript:getActionState('%s')", action));
-            //mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", "0", action));
         }
     }
 
@@ -465,6 +463,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 VenuesDistance vd = mVenuesDistance.get(i);
                 if (vd.distance >= 2000.0f) break;
                 vd.voice = "http://39.105.120.171/res/0339f8f92e8a483fb6ef5aad9b1b7b6e.mp3";
+                vd.angle = mMapUtils.getAngle(new MapUtils.MyLatLng(mLocation.getLatitude(), mLocation.getLongitude()), new MapUtils.MyLatLng(vd.lat, vd.lon));
                 venuesDistanceList.add(vd);
                 if (mMarker.containsKey(vd.id)) {
                     tem.put(vd.id, mMarker.get(vd.id));
@@ -690,6 +689,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                     for (VenuesDistance vd : mVenuesDistance) {
                         vd.distance = AMapUtils.calculateLineDistance(
                                 new LatLng(lat, lon), new LatLng(vd.lat, vd.lon));
+                        vd.distance = mMapUtils.getDistance(new LatLng(lat, lon), new LatLng(vd.lat, vd.lon));
                         vd.angle = mMapUtils.getAngle(new MapUtils.MyLatLng(mLocation.getLongitude(), mLocation.getLatitude()), new MapUtils.MyLatLng(lon, lat));
                     }
                     Collections.sort(mVenuesDistance, new Comparator<VenuesDistance>() {

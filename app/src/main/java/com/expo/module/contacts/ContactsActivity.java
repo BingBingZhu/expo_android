@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
@@ -20,6 +21,13 @@ import com.expo.network.Http;
 import com.expo.utils.Constants;
 import com.expo.widget.AppBarView;
 import com.expo.widget.decorations.SpaceDecoration;
+import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -31,10 +39,11 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> implements ContactsContract.View {
+public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> implements
+        ContactsContract.View, SwipeItemClickListener, SwipeMenuCreator, SwipeMenuItemClickListener {
 
     @BindView(R.id.recycler)
-    RecyclerView mRecyclerView;
+    SwipeMenuRecyclerView mRecyclerView;
     @BindView(R.id.contacts_ok)
     TextView mTvOk;
     private TextView mAddBtn;
@@ -70,6 +79,11 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         SpaceDecoration spaceDecoration = new SpaceDecoration(0, getResources().getDimensionPixelSize(R.dimen.dms_4));
         mRecyclerView.addItemDecoration(spaceDecoration);
+
+        mRecyclerView.setSwipeItemClickListener(this);
+        mRecyclerView.setSwipeMenuCreator(this);
+        mRecyclerView.setSwipeMenuItemClickListener(this);
+
         mRecyclerView.setAdapter(mAdapter = new CommonAdapter(this, R.layout.item_contacts, mData) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
@@ -88,18 +102,14 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
                                 ToastHelper.showShort(String.format(getResources().getString(R.string.max_select), mMaxCount));
                             } else {
                                 mMap.put(contacts.ids, contacts);
-                                Math.min(++mSelectCount, Math.min(mMaxCount, mData.size()));
+                                setConfirmText(++mSelectCount, mMaxCount);
                             }
                         } else {
                             mMap.remove(contacts.ids);
-                            Math.min(--mSelectCount, Math.min(mMaxCount, mData.size()));
+                            setConfirmText(--mSelectCount, mMaxCount);
                         }
                     });
                 }
-
-                holder.itemView.setOnClickListener(v -> {
-                    ContactsAddActivity.startActivity(ContactsActivity.this, contacts);
-                });
             }
         });
         mPresenter.getContactsData();
@@ -124,7 +134,7 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
             mData.addAll(list);
         }
         mAdapter.notifyDataSetChanged();
-        getConfirmText(mSelectCount, Math.min(mMaxCount, mData.size()));
+        setConfirmText(mSelectCount, mMaxCount);
     }
 
     @OnClick(R.id.contacts_ok)
@@ -148,7 +158,7 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
         mAddBtn.setText(R.string.add);
         mAddBtn.setGravity(Gravity.CENTER);
         mAddBtn.setOnClickListener(v -> {
-            ContactsAddActivity.startActivity(ContactsActivity.this, null);
+            ContactsAddActivity.startActivity(ContactsActivity.this, null, R.string.title_contact_add);
         });
     }
 
@@ -162,7 +172,38 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
         }
     }
 
-    private void getConfirmText(int first, int second) {
+    private void setConfirmText(int first, int second) {
         mTvOk.setText(getResources().getString(R.string.confirm) + " (" + first + "/" + second + ")");
+    }
+
+    @Override
+    public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
+        int width = SizeUtils.dp2px(60);
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        SwipeMenuItem deleteItem = new SwipeMenuItem(this)
+                .setBackground(R.drawable.bg_gradient_y_fc2637_fc515e)
+                .setImage(R.mipmap.delete)
+                .setWidth(width)
+                .setHeight(height);
+        swipeRightMenu.addMenuItem(deleteItem); // 在Item右侧添加一个菜单。
+    }
+
+    @Override
+    public void onItemClick(SwipeMenuBridge menuBridge) {
+        menuBridge.closeMenu();
+        int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
+        mPresenter.delContact(mData.get(adapterPosition), adapterPosition);
+    }
+
+    @Override
+    public void removeContact(int position) {
+        mData.remove(position);
+        mAdapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onItemClick(View itemView, int position) {
+        ContactsAddActivity.startActivity(ContactsActivity.this, mData.get(position), R.string.title_contact_edit);
     }
 }
