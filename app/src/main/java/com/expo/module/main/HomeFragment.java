@@ -236,8 +236,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         if (isDataEmpty( mHomeVenue, list )) return;
         mListVenue = list;
         mLlVenue.removeAllViews();
+        int width = (ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension( R.dimen.dms_60 ) - (int) getContent().getResources().getDimension( R.dimen.dms_20 ) * (mListVenue.size() - 1)) / 3;
+        int height = (int) (width * 0.86f);
         for (int i = 0; i < 3; i++) {
-            addVenueView( i );
+            addVenueView( i, width, height );
         }
     }
 
@@ -275,14 +277,17 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         return empty;
     }
 
-    private void addVenueView(int position) {
+    private void addVenueView(int position, int width, int height) {
         View view = LayoutInflater.from( getContext() ).inflate( R.layout.item_home_venue, null );
         if (mListVenue.size() > position) {
             Encyclopedias encyclopedias = mListVenue.get( position );
+            ImageView imageView = view.findViewById( R.id.item_home_venue_img );
+            imageView.getLayoutParams().width = width;
+            imageView.getLayoutParams().height = height;
             Picasso.with( getContext() )
                     .load( CommUtils.getFullUrl( encyclopedias.picUrl ) )
                     .placeholder( R.drawable.image_default ).error( R.drawable.image_default )
-                    .resize( ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension( R.dimen.dms_60 ) - (int) getContent().getResources().getDimension( R.dimen.dms_20 ) * (mListVenue.size() - 1), (int) getContent().getResources().getDimension( R.dimen.dms_190 ) )
+                    .resize( width, height )
                     .centerInside()
                     .into( (ImageView) view.findViewById( R.id.item_home_venue_img ) );
             ((TextView) view.findViewById( R.id.item_home_venue_text )).setText( LanguageUtil.chooseTest( encyclopedias.caption, encyclopedias.captionEn ) );
