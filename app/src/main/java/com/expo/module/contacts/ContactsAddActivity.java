@@ -178,9 +178,9 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
         mAdapter = new WorkAdapter(this);
         mAdapter.setSource(Constants.ContactsType.CONTACTS_TYPE_MAP);
         mList.add("1");
-        mList.add("2");
         mList.add("3");
         mList.add("4");
+        mList.add("2");
         mAdapter.setData(mList);
         mAdapter.notifyDataSetChanged();
     }

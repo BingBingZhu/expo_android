@@ -27,12 +27,14 @@ public class MessageKindPresenterImpl extends MessageKindContract.Presenter {
                 sum += 1 << Integer.valueOf(list.get(i).getType().replace(" ", ""));
             }
         for (int i = 0; i < 6; i++) {
-            if(i != 1 && i != 4 && i != 5) continue;
+            if (i != 1 && i != 4 && i != 5) continue;
             if ((sum & (1 << i)) == 0) {
                 list.add(getDefaultMessage(i));
             }
         }
         Collections.sort(list, (o1, o2) -> o1.getType().compareTo(o2.getType()));
+        list.add(list.get(0));
+        list.remove(0);
         mView.freshMessageList(list);
     }
 

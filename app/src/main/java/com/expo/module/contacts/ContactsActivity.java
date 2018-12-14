@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.View;
@@ -76,9 +77,7 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
             mTvOk.setVisibility(View.VISIBLE);
         }
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        SpaceDecoration spaceDecoration = new SpaceDecoration(0, getResources().getDimensionPixelSize(R.dimen.dms_4));
-        mRecyclerView.addItemDecoration(spaceDecoration);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         mRecyclerView.setSwipeItemClickListener(this);
         mRecyclerView.setSwipeMenuCreator(this);
@@ -91,7 +90,12 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
 
                 holder.setVisible(R.id.item_contacts_check, isSelect);
                 holder.setText(R.id.item_contacts_name, contacts.name);
-                holder.setText(R.id.item_contacts_number, (contacts.ids + "").replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                if (contacts.ids.length() >= 10)
+                    holder.setText(R.id.item_contacts_number, (contacts.ids + "").replaceAll("(\\d{6})\\d{" + (contacts.ids.length() - 10) + "}(\\d{4})", "$1****$2"));
+                else if (contacts.ids.length() >= 6)
+                    holder.setText(R.id.item_contacts_number, (contacts.ids + "").replaceAll("(\\d{2})\\d{" + (contacts.ids.length() - 4) + "}(\\d{2})", "$1****$2"));
+                else
+                    holder.setText(R.id.item_contacts_number, (contacts.ids + "").replaceAll("(\\d{" + (contacts.ids.length() - 2) + "}(\\d{2})", "$1****$2"));
 
                 if (isSelect) {
                     holder.setChecked(R.id.item_contacts_check, mMap.containsKey(contacts.ids));

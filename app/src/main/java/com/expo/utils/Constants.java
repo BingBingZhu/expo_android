@@ -223,30 +223,30 @@ public interface Constants {
 
         public static final Map<String, Integer> CONTACTS_TYPE_MAP = new HashMap<String, Integer>() {
             {
-                put( "1", R.string.card_type_shenfen );
-                put( "2", R.string.card_type_huixiang );
-                put( "3", R.string.card_type_taibao );
-                put( "4", R.string.card_type_huzhao );
+                put("1", R.string.card_type_shenfen);
+                put("3", R.string.card_type_huixiang);
+                put("4", R.string.card_type_taibao);
+                put("2", R.string.card_type_huzhao);
             }
         };
 
         public static final Map<String, Integer> FIND_TYPE_MAP = new HashMap<String, Integer>() {
             {
-                put( "1", R.string.find_tab_scenic );
-                put( "2", R.string.find_tab_venue );
-                put( "3", R.string.find_tab_food );
-                put( "4", R.string.find_tab_botany );
-                put( "5", R.string.find_tab_other );
+                put("1", R.string.find_tab_scenic);
+                put("2", R.string.find_tab_venue);
+                put("3", R.string.find_tab_food);
+                put("4", R.string.find_tab_botany);
+                put("5", R.string.find_tab_other);
             }
         };
 
         public static final Map<String, Integer> WORK_TYPE_MAP = new HashMap<String, Integer>() {
             {
-                put( "1", R.string.work_tab_it );
-                put( "2", R.string.work_tab_doctor );
-                put( "3", R.string.work_tab_commerce );
-                put( "4", R.string.work_tab_finance );
-                put( "5", R.string.work_tab_sale );
+                put("1", R.string.work_tab_it);
+                put("2", R.string.work_tab_doctor);
+                put("3", R.string.work_tab_commerce);
+                put("4", R.string.work_tab_finance);
+                put("5", R.string.work_tab_sale);
             }
         };
     }
