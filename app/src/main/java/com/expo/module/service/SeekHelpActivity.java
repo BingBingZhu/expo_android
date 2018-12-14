@@ -40,6 +40,7 @@ import com.expo.module.camera.CameraActivity;
 import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
+import com.hedan.textdrawablelibrary.TextViewDrawable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,6 +69,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     View mSpeech;
     @BindView(R.id.seek_help_text2)
     TextView mTvKindly;
+    @BindView(R.id.seek_help_text4)
+    TextViewDrawable mTvLocationInfo;
 
     ArrayList<String> mImageList;
     SeekHelpAdapter mAdapter;
@@ -79,7 +82,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     boolean mIsLocation;
 
-    int mOpenGPSTimes;
+    private boolean isSettingPoiName = true;
 
     private EventManager asr;
 
@@ -108,6 +111,9 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         @Override
         public void onMyLocationChange(Location location) {
             mLocation = location;
+            if (!isNotLocation() && isSettingPoiName ){
+                mTvLocationInfo.setText(R.string.my_location);
+            }
         }
     };
 
@@ -220,6 +226,9 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                 mLat = data.getDoubleExtra( Constants.EXTRAS.EXTRA_LATITUDE, 0 );
                 mLng = data.getDoubleExtra( Constants.EXTRAS.EXTRA_LONGITUDE, 0 );
                 mPoiId = data.getStringExtra( Constants.EXTRAS.EXTRA_ID );
+                String poiName = data.getStringExtra( Constants.EXTRAS.EXTRA_SELECTED_POI_NAME );
+                mTvLocationInfo.setText( poiName );
+                isSettingPoiName = false;
                 if (mLat == -1 && mLng == -1) mIsLocation = true;
                 else mIsLocation = false;
             } else if (requestCode == Constants.RequestCode.REQ_TO_CAMERA) {
@@ -250,15 +259,23 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
-        if (null == mLocation || mLocation.getLatitude() == 0) {
+        if (isNotLocation()) {
             ToastHelper.showShort( R.string.trying_to_locate );
             return;
         }
         mPresenter.getServerPoint( mLocation );
     }
 
+    private boolean isNotLocation(){
+        return null == mLocation || mLocation.getLatitude() == 0;
+    }
+
     @OnClick(R.id.seek_help_text4)
     public void location(View view) {
+        if (isNotLocation()) {
+            ToastHelper.showShort( R.string.trying_to_locate );
+            return;
+        }
         LocationDescribeActivity.startActivityForResult( this, mLocation.getLatitude(), mLocation.getLongitude(), mPoiId, mCoordinateAssist );
     }
 

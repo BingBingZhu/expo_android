@@ -77,12 +77,9 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
 
         @Override
         public void setProgress(int seek) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mPbProgress.setProgress(seek);
-                    mTvCurrTime.setText(farmatTime(seek));
-                }
+            mHandler.post(() -> {
+                mPbProgress.setProgress(seek);
+                mTvCurrTime.setText(farmatTime(seek));
             });
         }
 
@@ -237,7 +234,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         Picasso.with(this).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into(mIvImg);
         mTvName.setText(LanguageUtil.chooseTest(info.caption, info.captionen));
         mTvHot.setText(getResources().getString(R.string.hot) + info.hotCount);
-        mTvTime.setText(info.updateTime);
+        mTvTime.setText(String.format(getString(R.string.expected_travel_time, info.playTime)));
         if (StringUtils.isEmpty(LanguageUtil.chooseTest(info.remark, info.remarken)))
             mPresenter.getRouteDetailFromency(info.wikiId);
         else

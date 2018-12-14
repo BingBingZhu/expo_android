@@ -131,6 +131,7 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
                 break;
             case STATE_CONNECTION_FAIL:
                 isConnect = false;
+                WifiUtil.removeWifi(getContext());
                 imgId = R.mipmap.ico_connect_off;
                 stateStr = getString(R.string.disconnect);
                 isEnable = true;

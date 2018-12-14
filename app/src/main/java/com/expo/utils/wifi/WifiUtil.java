@@ -8,6 +8,8 @@ import android.net.wifi.WifiManager;
 import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 
+import java.util.List;
+
 public class WifiUtil {
 
     private static WifiManager wifiManager;
@@ -45,6 +47,12 @@ public class WifiUtil {
     public static void disconnectWifi(Context context){
         initWifiManager(context);
         wifiManager.disconnect();
+    }
+
+    public static void removeWifi(Context context){
+        initWifiManager(context);
+        List<WifiConfiguration> conlist = wifiManager.getConfiguredNetworks();//获取保存的配置信息
+        wifiManager.removeNetwork(conlist.get(0).networkId);
     }
 
     public static void connectWifi(Context context, String wifiname, String pwd) {//第二个参数是账号名称，也就是我们WiFi列表里所看到的名字

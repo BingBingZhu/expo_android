@@ -44,10 +44,11 @@ public class ServiceHistoryAdapter extends RecyclerView.Adapter<ServiceHistoryAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         VisitorService vs = mData.get(position);
+        holder.tvCreateTime.setText(vs.getCreateTime());
         holder.img.setImageResource(getResourceId(vs.getServiceType()));
-        setImageUri(holder.simpleDraweeView1, vs.getImgUrl1());
-        setImageUri(holder.simpleDraweeView2, vs.getImgUrl2());
-        setImageUri(holder.simpleDraweeView3, vs.getImgUrl3());
+//        setImageUri(holder.simpleDraweeView1, vs.getImgUrl1());
+//        setImageUri(holder.simpleDraweeView2, vs.getImgUrl2());
+//        setImageUri(holder.simpleDraweeView3, vs.getImgUrl3());
         holder.tvType.setText(getTypeName(vs.getServiceType()));
         holder.tvContent.setText(vs.getSituation());
         holder.tvState.setText(getDisposeTypeName(vs.getDisposeType()));
@@ -74,20 +75,22 @@ public class ServiceHistoryAdapter extends RecyclerView.Adapter<ServiceHistoryAd
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        SimpleDraweeView simpleDraweeView1;
-        SimpleDraweeView simpleDraweeView2;
-        SimpleDraweeView simpleDraweeView3;
+//        SimpleDraweeView simpleDraweeView1;
+//        SimpleDraweeView simpleDraweeView2;
+//        SimpleDraweeView simpleDraweeView3;
         TextView tvType;
         TextView tvContent;
         TextView tvState;
         TextView tvMore;
+        TextView tvCreateTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            tvCreateTime = itemView.findViewById(R.id.service_history_item_time_tv);
             img = itemView.findViewById(R.id.service_history_item_img);
-            simpleDraweeView1 = itemView.findViewById(R.id.service_history_item_simple_drawee_view1);
-            simpleDraweeView2 = itemView.findViewById(R.id.service_history_item_simple_drawee_view2);
-            simpleDraweeView3 = itemView.findViewById(R.id.service_history_item_simple_drawee_view3);
+//            simpleDraweeView1 = itemView.findViewById(R.id.service_history_item_simple_drawee_view1);
+//            simpleDraweeView2 = itemView.findViewById(R.id.service_history_item_simple_drawee_view2);
+//            simpleDraweeView3 = itemView.findViewById(R.id.service_history_item_simple_drawee_view3);
             tvType = itemView.findViewById(R.id.service_history_item_type_tv);
             tvContent = itemView.findViewById(R.id.service_history_item_content_tv);
             tvState = itemView.findViewById(R.id.service_history_item_state_tv);

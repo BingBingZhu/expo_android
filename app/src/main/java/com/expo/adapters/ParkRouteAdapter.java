@@ -46,7 +46,7 @@ public class ParkRouteAdapter extends RecyclerView.Adapter<ParkRouteAdapter.View
         holder.imgIco.setImageBitmap(mVenuesType.getLstBitmap());
         holder.imgIsVoice.setEnabled(!TextUtils.isEmpty(routeInfo.voiceUrl));
         holder.tvName.setText(LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
-        holder.tvDistance.setText(""/*getDistance(routeInfo.getLat(), routeInfo.getLng())*/);
+        holder.tvDistance.setText(routeInfo.playTime + "min");
     }
 
     @Override

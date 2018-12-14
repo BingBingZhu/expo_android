@@ -80,17 +80,20 @@
 
     <com.hedan.textdrawablelibrary.TextViewDrawable
         android:id="@+id/seek_help_text4"
-        style="@style/TextSizeBlack16"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dms_10"
+        android:gravity="center_vertical"
         android:layout_below="@id/seek_help_image_selector"
-        android:layout_marginLeft="@dimen/dms_30"
-        android:layout_marginTop="@dimen/dms_40"
-        android:layout_marginRight="@dimen/dms_30"
+        android:layout_marginLeft="@dimen/dms_20"
+        android:layout_marginTop="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_20"
         android:drawableLeft="@mipmap/location"
         android:drawableRight="@mipmap/arrow_right"
-        android:drawablePadding="@dimen/dms_10"
-        android:text="@string/location"
-        android:textColor="@color/gray_32" />
+        android:drawablePadding="@dimen/dms_20"
+        android:text="@string/location_ing"
+        android:textSize="@dimen/font_24"
+        android:textColor="@color/color_999" />
 
     <TextView
         android:id="@+id/line2"

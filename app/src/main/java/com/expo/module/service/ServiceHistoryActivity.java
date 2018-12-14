@@ -12,6 +12,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ServiceHistoryContract;
 import com.expo.entity.VisitorService;
+import com.expo.widget.decorations.SpaceDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 游客服务记录
+ */
 public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.Presenter> implements ServiceHistoryContract.View {
 
     @BindView(R.id.ptr_view)
@@ -39,8 +43,12 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(0, "我的游客服务");
+        setTitle(0, R.string.my_tourist_service);
         visitorServices = new ArrayList<>();
+        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_30);
+        mRecyclerView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
+        mAdapter = new ServiceHistoryAdapter(getContext(), visitorServices);
+        mRecyclerView.setAdapter(mAdapter);
         initLoadMore();
         mPtrView.autoRefresh();
     }
@@ -75,8 +83,7 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
                 visitorServices.clear();
             }
             visitorServices.addAll(data);
-            mAdapter = new ServiceHistoryAdapter(getContext(), visitorServices);
-            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
         }
         mPtrView.refreshComplete();
     }

@@ -56,8 +56,7 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, R.string.title_contact_appointment);
-        initTitleRightTextView();
-
+        initTitleRightTextView(R.string.add, R.color.white, v -> ContactsAddActivity.startActivity(ContactsActivity.this, null));
         isSelect = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRA_SELECT_CONTACTS, false);
         mMaxCount = getIntent().getIntExtra(Constants.EXTRAS.EXTRA_SELECT_CONTACTS_MAX_COUNT, Integer.MAX_VALUE);
         mMap = new HashMap<>();
@@ -139,18 +138,18 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
         finish();
     }
 
-    public void initTitleRightTextView() {
-        if (null == mAddBtn) {
-            mAddBtn = new TextView(this);
-            ((AppBarView) getTitleView()).setRightView(mAddBtn);
-        }
-        mAddBtn.setTextAppearance(this, R.style.TextSizeWhite14);
-        mAddBtn.setText(R.string.add);
-        mAddBtn.setGravity(Gravity.CENTER);
-        mAddBtn.setOnClickListener(v -> {
-            ContactsAddActivity.startActivity(ContactsActivity.this, null);
-        });
-    }
+//    public void initTitleRightTextView(String s, int white, View.OnClickListener clickListener) {
+//        if (null == mAddBtn) {
+//            mAddBtn = new TextView(this);
+//            ((AppBarView) getTitleView()).setRightView(mAddBtn);
+//        }
+//        mAddBtn.setTextAppearance(this, R.style.TextSizeWhite14);
+//        mAddBtn.setText(R.string.add);
+//        mAddBtn.setGravity(Gravity.CENTER);
+//        mAddBtn.setOnClickListener(v -> {
+//            ContactsAddActivity.startActivity(ContactsActivity.this, null);
+//        });
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

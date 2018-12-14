@@ -37,6 +37,7 @@ import com.expo.module.login.LoginActivity;
 import com.expo.module.main.MainActivity;
 import com.expo.module.prompt.PromptActivity;
 import com.expo.module.webview.WebActivity;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
@@ -46,6 +47,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnClickListener;
+import com.orhanobut.dialogplus.OnItemClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.Locale;
@@ -160,7 +162,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
                     .setContentHolder( new ViewHolder( dv ) )
                     .setGravity( Gravity.BOTTOM )
                     .setOnClickListener( mLanguageClickListener )
-                    .setExpanded( true )  // This will enable the expand feature, (similar to android L share dialog)
+                    .setExpanded( false )  // This will enable the expand feature, (similar to android L share dialog)
                     .create();
         }
         mDialogLanguage.show();
