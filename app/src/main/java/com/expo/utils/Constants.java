@@ -106,7 +106,9 @@ public interface Constants {
         //        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
         //        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce";
         public static final String HTML_404 = "file:///android_asset/web/404.html";
-        public static final String UPPAY_APP_DOWNLOAD_URL = "http://www.toolsmi.com/UPPayPluginEx.apk";
+        public static final String UPPAY_APP_DOWNLOAD_URL = "http://47.92.247.143/res/static/UPPayPluginEx.apk";
+        //        public static final String MAP_TILES_BASE_URL = FILE_BASE_URL + "titlemap/tiles/%d/%d_%d.png";
+        public static final String MAP_TILES_BASE_URL = "http://39.105.120.171/res/titlemap/tiles/%d/%d_%d.png";
     }
 
     /**
@@ -221,30 +223,30 @@ public interface Constants {
 
         public static final Map<String, Integer> CONTACTS_TYPE_MAP = new HashMap<String, Integer>() {
             {
-                put("1", R.string.card_type_shenfen);
-                put("2", R.string.card_type_huixiang);
-                put("3", R.string.card_type_taibao);
-                put("4", R.string.card_type_huzhao);
+                put( "1", R.string.card_type_shenfen );
+                put( "2", R.string.card_type_huixiang );
+                put( "3", R.string.card_type_taibao );
+                put( "4", R.string.card_type_huzhao );
             }
         };
 
         public static final Map<String, Integer> FIND_TYPE_MAP = new HashMap<String, Integer>() {
             {
-                put("1", R.string.find_tab_scenic);
-                put("2", R.string.find_tab_venue);
-                put("3", R.string.find_tab_food);
-                put("4", R.string.find_tab_botany);
-                put("5", R.string.find_tab_other);
+                put( "1", R.string.find_tab_scenic );
+                put( "2", R.string.find_tab_venue );
+                put( "3", R.string.find_tab_food );
+                put( "4", R.string.find_tab_botany );
+                put( "5", R.string.find_tab_other );
             }
         };
 
         public static final Map<String, Integer> WORK_TYPE_MAP = new HashMap<String, Integer>() {
             {
-                put("1", R.string.work_tab_it);
-                put("2", R.string.work_tab_doctor);
-                put("3", R.string.work_tab_commerce);
-                put("4", R.string.work_tab_finance);
-                put("5", R.string.work_tab_sale);
+                put( "1", R.string.work_tab_it );
+                put( "2", R.string.work_tab_doctor );
+                put( "3", R.string.work_tab_commerce );
+                put( "4", R.string.work_tab_finance );
+                put( "5", R.string.work_tab_sale );
             }
         };
     }

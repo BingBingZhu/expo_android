@@ -191,6 +191,8 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         mMapUtils.settingMap(this, this);
         mPattern = PrefsHelper.getLong(Constants.Prefs.KEY_MAP_PATTERN, 1);
         mAMap.setOnMyLocationChangeListener(mLocationChangeListener);
+        mAMap.addTileOverlay( mMapUtils.getTileOverlayOptions(getContext()) );
+        mAMap.setMaxZoomLevel( 19 );
         mPresenter.loadParkMapData(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_SPOT_ID, 0));
         // 地理围栏
         mGeoFenceClient = new GeoFenceClient(getContext());
@@ -776,7 +778,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         for (MyLatLng mll : myLatLngs) {
             latLngs.add(mll.getLatLng());
         }
-        polylines.add(mAMap.addPolyline(new PolylineOptions().addAll(latLngs).width(10).
+        polylines.add(mAMap.addPolyline(new PolylineOptions().addAll(latLngs).zIndex( 10 ).width(15).
                 color(Color.argb(255, getRandColor(), getRandColor(), getRandColor()))));
     }
 
