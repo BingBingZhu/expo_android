@@ -69,6 +69,9 @@ public class RouteInfo implements Parcelable {
     @DatabaseField(columnName = "wiki_id")
     @SerializedName("wikiid")
     public String wikiId;
+    @DatabaseField(columnName = "play_time")
+    @SerializedName("playtime")
+    public String playTime;
 
     @DatabaseField(columnName = "hotCount", defaultValue = "0")
     public int hotCount;
@@ -141,5 +144,6 @@ public class RouteInfo implements Parcelable {
         dest.writeString(voiceUrlEn);
         dest.writeInt(hotCount);
         dest.writeString(wikiId);
+        dest.writeString(playTime);
     }
 }

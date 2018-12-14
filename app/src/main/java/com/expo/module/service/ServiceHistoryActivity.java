@@ -17,6 +17,7 @@ import com.expo.contract.ServiceHistoryContract;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.User;
 import com.expo.entity.VisitorService;
+import com.expo.widget.decorations.SpaceDecoration;
 import com.expo.module.webview.WebActivity;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 游客服务记录
+ */
 public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.Presenter> implements ServiceHistoryContract.View {
 
     @BindView(R.id.ptr_view)
@@ -45,19 +49,24 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle( 0, "我的游客服务" );
+        setTitle(0, R.string.my_tourist_service);
         visitorServices = new ArrayList<>();
+        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_30);
+        mRecyclerView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
+        mAdapter = new ServiceHistoryAdapter(getContext(), visitorServices);
+        mAdapter.setOnClickListener( mClickListener );
+        mRecyclerView.setAdapter(mAdapter);
         initLoadMore();
         mPtrView.autoRefresh();
     }
 
     private void initLoadMore() {
-        mPtrView.setMode( PtrFrameLayout.Mode.BOTH );
-        mPtrView.setPtrHandler( new PtrDefaultHandler2() {
+        mPtrView.setMode(PtrFrameLayout.Mode.BOTH);
+        mPtrView.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
                 page++;
-                mPresenter.loadMoreData( page );
+                mPresenter.loadMoreData(page);
             }
 
             @Override
@@ -65,25 +74,23 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
                 page = 0;
                 mPresenter.loadAllData();
             }
-        } );
+        });
     }
 
     @Override
-    public void addDataToList(List<VisitorService> data) {
+    public void addDataToList(List<VisitorService> data){
         // 加载到列表
         if (null == data || data.size() == 0) {
             if (page > 0) {
                 page--;
-                ToastHelper.showShort( R.string.no_more_data_available );
+                ToastHelper.showShort(R.string.no_more_data_available);
             }
         } else {
-            if (page == 0) {
+            if (page == 0){
                 visitorServices.clear();
             }
-            visitorServices.addAll( data );
-            mAdapter = new ServiceHistoryAdapter( getContext(), visitorServices );
-            mAdapter.setOnClickListener( mClickListener );
-            mRecyclerView.setAdapter( mAdapter );
+            visitorServices.addAll(data);
+            mAdapter.notifyDataSetChanged();
         }
         mPtrView.refreshComplete();
     }
@@ -110,12 +117,12 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
 
     @Override
     public void loadDataRes(boolean b) {
-        if (!b) {
-            ToastHelper.showShort( "刷新失败，请检查网络设置" );
+        if (!b){
+            ToastHelper.showShort("刷新失败，请检查网络设置");
         }
         mPtrView.refreshComplete();
         page = 0;
-        mPresenter.loadMoreData( page );
+        mPresenter.loadMoreData(page);
     }
 
     @Override

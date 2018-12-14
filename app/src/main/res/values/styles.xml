@@ -157,7 +157,7 @@
         <item name="drawableLeft">@drawable/selector_radio_location</item>
     </style>
 
-    <style name="item_mine_entry" parent="TextSizeBlack16">
+    <style name="item_mine_entry" parent="TextSizeBlack14">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <!--<item name="android:layout_weight">wrap_content</item>-->

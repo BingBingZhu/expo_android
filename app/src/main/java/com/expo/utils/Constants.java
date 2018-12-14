@@ -84,6 +84,7 @@ public interface Constants {
         public static final String EXTRA_SELECT_CONTACTS_MAX_COUNT = "extra_select_contacts_max_count";
         public static final String EXTRA_TRACK_CHANAGE = "extra_track_chanage";
         public static final String EXTRA_TEXT1 = "extra_text1";
+        public static final String EXTRA_SELECTED_POI_NAME = "extra_selected_poi_name";
     }
 
     /**

@@ -68,11 +68,11 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                 int finalTabPosition = tabPosition;
                 new Handler(Looper.getMainLooper())
                         .post(() -> {
+                            mView.loadCustomRoute(customRoutes);
                             mView.loadTabRes(venuesTypes, finalTabPosition);
                             mView.loadFacilityRes(facilities, as);
                             mView.loadTouristTypeRes(touristTypes);
                             mView.loadRoute(routeInfos);
-                            mView.loadCustomRoute(customRoutes);
                             mView.hideLoadingView();
                             loadSubjectImages(venuesTypes);
                         });

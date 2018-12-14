@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical">
     <TextView
@@ -20,61 +19,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dms_30"/>
+            android:layout_marginLeft="@dimen/dms_30"
+            android:src="@mipmap/tourist_service_0"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dms_minus_30"
+            android:paddingTop="@dimen/dms_32"
+            android:paddingBottom="@dimen/dms_24"
             android:layout_toRightOf="@id/service_history_item_img"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/service_history_item_type_tv"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dms_6"
-                android:layout_marginLeft="@dimen/dms_20"
-                android:textColor="@color/color_333"
-                android:textSize="@dimen/font_32"
-                android:textStyle="bold"/>
-                <LinearLayout
+                android:layout_marginLeft="@dimen/dms_54"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/service_history_item_type_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dms_90"
-                    android:layout_marginTop="@dimen/dms_20"
-                    android:orientation="horizontal">
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/service_history_item_simple_drawee_view1"
-                        android:layout_width="63dp"
-                        android:layout_height="match_parent"
-                        app:placeholderImage="@mipmap/ico_service_history_def" />
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/service_history_item_simple_drawee_view2"
-                        android:layout_width="@dimen/dms_124"
-                        android:layout_height="@dimen/dms_124"
-                        android:layout_marginLeft="@dimen/dms_34"
-                        app:placeholderImage="@mipmap/ico_service_history_def"/>
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/service_history_item_simple_drawee_view3"
-                        android:layout_width="@dimen/dms_124"
-                        android:layout_height="@dimen/dms_124"
-                        android:layout_marginLeft="@dimen/dms_34"
-                        app:placeholderImage="@mipmap/ico_service_history_def"/>
-                </LinearLayout>
+                    android:layout_marginTop="@dimen/dms_6"
+                    android:textColor="@color/color_333"
+                    android:textSize="@dimen/font_32"
+                    android:textStyle="bold"
+                    android:text="医疗救助"/>
                 <TextView
                     android:id="@+id/service_history_item_content_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dms_90"
-                    android:layout_marginTop="@dimen/dms_20"
+                    android:layout_marginTop="@dimen/dms_30"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:lines="2"
                     android:textColor="@color/color_666"
-                    android:textSize="@dimen/font_24"/>
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dms_2"
-                android:layout_marginTop="@dimen/dms_10"
-                android:background="@color/white_e6"/>
+                    android:textSize="@dimen/font_24"
+                    android:text="12月7日晚,在北京植物园万生苑温室举办
+的,“草木卿缘,世园有约”2019..."/>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dms_2"
+                    android:layout_marginTop="@dimen/dms_30"
+                    android:background="@color/white_e6"/>
+            </LinearLayout>
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,14 +73,14 @@
                     android:drawableLeft="@drawable/shape_small_green_dot"
                     android:drawablePadding="@dimen/dms_10"
                     android:padding="@dimen/dms_10"
-                    android:layout_marginLeft="@dimen/dms_16"
+                    android:layout_marginLeft="@dimen/dms_20"
                     android:textColor="@color/color_666"
                     android:textSize="@dimen/font_24"/>
                 <TextView
                     android:id="@+id/service_history_item_more_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dms_6"
+                    android:layout_marginRight="@dimen/dms_20"
                     android:layout_gravity="right"
                     android:padding="@dimen/dms_10"
                     android:textColor="@color/green_02cd9b"

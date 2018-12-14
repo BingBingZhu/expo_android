@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -33,7 +35,6 @@ import com.amap.api.fence.GeoFenceClient;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
@@ -123,6 +124,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     private List<TouristType> mTouristTypes;
     private List<VenuesType> mVenuesTypes;
     private List<RouteInfo> mRouteInfos;
+    private List<CustomRoute> mCustomRoutes;
     private TouristAdapter mTouristAdapter;
     private int mTabPosition = 0;
     private int mOldTabPosition = 0;
@@ -264,12 +266,28 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         mImgMenu.setSelected(true);
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_park_menu, null);
         RecyclerView recyclerView = contentView.findViewById(R.id.popup_recycler_view);
+        if (mCustomRoutes.size() > 1) {
+            RouteInfo routeInfo = new RouteInfo();
+            routeInfo.caption = getString(R.string.my_route);
+            routeInfo.voiceUrlEn = "";
+            routeInfo.voiceUrl = "";
+            routeInfo.typeId = atRouteInfos.get(0).typeId;
+            int duration = 0;
+            for (CustomRoute cr : mCustomRoutes) {
+                duration += cr.getDuration();
+            }
+            routeInfo.playTime = String.valueOf(( duration/60 ));
+            atRouteInfos.add(0, routeInfo);
+        }
         ParkRouteAdapter parkRouteAdapter = new ParkRouteAdapter(getContext(), atRouteInfos, mVenuesTypes.get(mTabPosition));
         recyclerView.setAdapter(parkRouteAdapter);
         parkRouteAdapter.setOnItemClickListener(v -> {
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
             int position = holder.getAdapterPosition();
-            showRouteInfoDialog(atRouteInfos.get(position));
+            if (mCustomRoutes.size() > 1 && position == 0)
+                drawCustomRoute();
+            else
+                showRouteInfoDialog(atRouteInfos.get(position));
         });
         setPopup(contentView);
     }
@@ -563,10 +581,36 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
 
     @Override
     public void loadCustomRoute(List<CustomRoute> customRoutes) {
-        for (CustomRoute cr : customRoutes) {
-            mAMap.addPolyline(new PolylineOptions().
-                    addAll(cr.getPoints()).setCustomTexture(BitmapDescriptorFactory.fromResource(R.mipmap.ico_route_item)));
+        mCustomRoutes = customRoutes;
+    }
+
+    private void drawCustomRoute() {
+        clearMap();
+        for (CustomRoute cr : mCustomRoutes) {
+            polylines.add(mAMap.addPolyline(new PolylineOptions().addAll(cr.getPoints()).width(10).
+                    color(getResources().getColor(R.color.orange_ff7342))));
         }
+        for (Venue venue : mFacilities) {
+            if (venue.isSelected()) {
+                Marker marker = mAMap.addMarker(new MarkerOptions()
+                        .icon(mMapUtils.setMarkerIconDrawable(getContext(), getMarkerBitmap(venue),
+                                LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption())))
+                        .anchor(0.5F, 0.90F).position(venue.getLatLng()));
+                marker.setObject(venue);
+                markers.add(marker);
+            }
+        }
+    }
+
+    private Bitmap getMarkerBitmap(Venue v) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.test_1);
+        for (VenuesType vt : mVenuesTypes) {
+            if (v.getType() == vt.getId()) {
+                bitmap = vt.getMarkBitmap();
+                break;
+            }
+        }
+        return bitmap;
     }
 
     @Override
@@ -727,9 +771,13 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 }
                 mOldTabPosition = mTabPosition;
                 clearMap();
+                mClusterOverlay.clearClusterItem();
                 mTabId = ParkMapActivity.this.mVenuesTypes.get(mTabPosition).getId();
                 if (isTabByCnName("路线")) {
-                    drawLineToMap("1", 0);
+                    if (mCustomRoutes.size() > 1)
+                        drawCustomRoute();
+                    else
+                        drawLineToMap("1", 0);
                 } else {
                     if (null != mFacilities) {
                         if (isTabByCnName("导览车")) {

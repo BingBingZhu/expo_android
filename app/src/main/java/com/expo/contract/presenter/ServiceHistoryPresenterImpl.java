@@ -27,7 +27,7 @@ public class ServiceHistoryPresenterImpl extends ServiceHistoryContract.Presente
         List<VisitorService> data = mDao.query( VisitorService.class, new QueryParams()
                 .add( "eq", "user_id", ExpoApp.getApplication().getUser().getUid() )
                 .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT )
-                .add( "orderBy", "update_time", "desc" ) );
+                .add( "orderBy", "create_time", "desc" ) );
         mView.addDataToList( data );
     }
 

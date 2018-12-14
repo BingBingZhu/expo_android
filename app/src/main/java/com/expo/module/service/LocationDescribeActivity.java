@@ -104,7 +104,7 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
             result.putExtra(Constants.EXTRAS.EXTRA_LONGITUDE, lng);
             result.putExtra(Constants.EXTRAS.EXTRAS, content);
             result.putExtra(Constants.EXTRAS.EXTRA_ID, mPoiId);
-            result.putExtra(Constants.EXTRAS.EXTRA_TEXT1, locatName);
+            result.putExtra(Constants.EXTRAS.EXTRA_SELECTED_POI_NAME, locatName);
             setResult(RESULT_OK, result);
         }
     }
@@ -149,7 +149,7 @@ public class LocationDescribeActivity extends BaseActivity implements PoiSearch.
 
     // 动态添加
     private View initItemView() {
-        View v = initItemView(getResources().getString(R.string.location_describe_radio1), new LatLonPoint(-1, -1));
+        View v = initItemView(getResources().getString(R.string.my_location), new LatLonPoint(-1, -1));
         mSelectView = v;
         return v;
     }

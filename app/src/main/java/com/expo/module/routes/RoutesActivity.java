@@ -40,14 +40,9 @@ public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> imple
     List<RouteInfo> mData;
     CommonAdapter mAdapter;
 
-    BaseAdapterItemClickListener<Long> mListener = new BaseAdapterItemClickListener<Long>() {
-
-        @Override
-        public void itemClick(View view, int position, Long aLong) {
-
-            mPresenter.clickRoute(String.valueOf(aLong));
-            RouteDetailActivity.startActivity(RoutesActivity.this, aLong);
-        }
+    BaseAdapterItemClickListener<Long> mListener = (view, position, aLong) -> {
+        mPresenter.clickRoute(String.valueOf(aLong));
+        RouteDetailActivity.startActivity(RoutesActivity.this, aLong);
     };
 
     @Override
@@ -69,7 +64,6 @@ public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> imple
                 Picasso.with(RoutesActivity.this).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
                 holder.setText(R.id.item_route_name, LanguageUtil.chooseTest(info.caption, info.captionen));
                 holder.setText(R.id.item_route_hot, getString(R.string.heat) + info.hotCount);
-
                 holder.itemView.setOnClickListener(v -> {
                     mListener.itemClick(v, position, Long.valueOf(info.id));
                 });

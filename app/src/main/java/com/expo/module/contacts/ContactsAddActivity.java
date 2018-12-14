@@ -49,7 +49,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /*
- * 推荐路线列表
+ * 添加联系人
  */
 public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presenter> implements ContactsAddContract.View {
 
