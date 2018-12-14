@@ -68,6 +68,7 @@ import com.expo.map.MapUtils;
 import com.expo.map.NaviManager;
 import com.expo.map.RegionItem;
 import com.expo.module.download.DownloadManager;
+import com.expo.module.routes.RouteDetailActivity;
 import com.expo.module.webview.WebActivity;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.network.Http;
@@ -506,7 +507,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             play( voiceUrl );
         } );
         asInfo.setOnClickListener( v12 -> {
-            WebActivity.startActivity( getContext(), routeInfo.linkH5Url, LanguageUtil.chooseTest( routeInfo.caption, routeInfo.captionen ) );
+            RouteDetailActivity.startActivity( getContext(), routeInfo.id );
             mRouteInfoDialog.dismiss();
         } );
         asLine.setOnClickListener( v13 -> {

@@ -83,9 +83,13 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         mUrl = mPresenter.loadCommonInfo( CommonInfo.ENCYCLOPEDIAS_DETAIL_URL );
         mUrl += "?id=" + id + "&lan=" + LanguageUtil.chooseTest( "zh", "en" );
         mEncyclopedias = mPresenter.loadEncyclopediaById( id );
+        if (mEncyclopedias==null){
+            ToastHelper.showShort( R.string.error_params );
+            finish();
+        }
         mVenue = mPresenter.loadSceneByWikiId( id );
         loadRecommends();
-        setTitle(BaseActivity.TITLE_COLOR_STYLE_WHITE, R.string.sence_introduction);
+        setTitle(BaseActivity.TITLE_COLOR_STYLE_WHITE, mEncyclopedias.caption);
         initTitleRightTextView();
 
         mX5View.setWebChromeClient(webChromeClient);
