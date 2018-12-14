@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.expo.network.Http;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -13,7 +14,9 @@ import java.util.ArrayList;
 
 @DatabaseTable(tableName = "contacts")
 public class Contacts implements Parcelable {
-    @DatabaseField(columnName = "_id", id = true)
+    @DatabaseField(columnName = "_id", dataType = DataType.INTEGER, generatedId = true)
+    public int id;
+    @DatabaseField(columnName = "ids")
     public String ids;
     @DatabaseField(columnName = "type")
     public String type;
@@ -28,6 +31,7 @@ public class Contacts implements Parcelable {
     }
 
     protected Contacts(Parcel in) {
+        id = in.readInt();
         ids = in.readString();
         type = in.readString();
         typeName = in.readString();
@@ -54,6 +58,7 @@ public class Contacts implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(ids);
         dest.writeString(type);
         dest.writeString(typeName);

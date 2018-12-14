@@ -158,11 +158,11 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
             if (!CheckUtils.isIDCard(((EditText) mMvId.getRightView()).getText().toString(), true))
                 return;
         } else if (StringUtils.equals("2", mIdType)) {
-        } else if (StringUtils.equals("3", mIdType)) {
-            if (!CheckUtils.isTWCard(((EditText) mMvId.getRightView()).getText().toString(), true))
-                return;
-        } else if (StringUtils.equals("4", mIdType)) {
             if (!CheckUtils.isPassport(((EditText) mMvId.getRightView()).getText().toString(), true))
+                return;
+        } else if (StringUtils.equals("3", mIdType)) {
+        } else if (StringUtils.equals("4", mIdType)) {
+            if (!CheckUtils.isTWCard(((EditText) mMvId.getRightView()).getText().toString(), true))
                 return;
         }
         mPresenter.updateContactsData(initContacts());
@@ -178,9 +178,9 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
         mAdapter = new WorkAdapter(this);
         mAdapter.setSource(Constants.ContactsType.CONTACTS_TYPE_MAP);
         mList.add("1");
-        mList.add("2");
         mList.add("3");
         mList.add("4");
+        mList.add("2");
         mAdapter.setData(mList);
         mAdapter.notifyDataSetChanged();
     }

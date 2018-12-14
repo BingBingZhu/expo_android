@@ -222,9 +222,9 @@ public interface Constants {
         public static final Map<String, Integer> CONTACTS_TYPE_MAP = new HashMap<String, Integer>() {
             {
                 put("1", R.string.card_type_shenfen);
-                put("3", R.string.card_type_taibao);
-                put("4", R.string.card_type_huzhao);
-                put("2", R.string.card_type_huixiang);
+                put("3", R.string.card_type_huixiang);
+                put("4", R.string.card_type_taibao);
+                put("2", R.string.card_type_huzhao);
             }
         };
 
