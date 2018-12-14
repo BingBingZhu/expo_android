@@ -48,7 +48,7 @@
         style="@style/TextSizeBlack16"
         android:layout_width="match_parent"
         android:layout_marginLeft="@dimen/dms_70"
-        android:layout_marginTop="@dimen/dms_140"
+        android:layout_marginTop="@dimen/dms_90"
         android:layout_marginRight="@dimen/dms_70"
         android:background="@drawable/navigation_bg1"
         android:ellipsize="marquee"
@@ -58,4 +58,13 @@
         android:padding="@dimen/dms_20"
         android:singleLine="true"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/navigation_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="@dimen/dms_30"
+        android:layout_marginBottom="@dimen/dms_30"
+        android:src="@mipmap/navigation_show" />
 </FrameLayout>

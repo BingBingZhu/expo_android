@@ -7,7 +7,6 @@ import com.expo.contract.FeedbackContract;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
-import com.expo.network.response.VerificationCodeResp;
 
 import java.util.Map;
 
@@ -21,10 +20,12 @@ public class FeedbackPresenterImpl extends FeedbackContract.Presenter {
 
     @Override
     public void submit(String opter, String email, String content) {
-//        if (CheckUtils.isEmtpy(email, R.string.check_string_empty_email, true)) return;
         if (!CheckUtils.isEmail(email, true)) return;
         if (CheckUtils.isEmtpy(content, R.string.check_string_empty_content, true)) return;
-
+        if (content.length() < 10) {
+            ToastHelper.showShort(R.string.short_content);
+            return;
+        }
         mView.showLoadingView();
         Map<String, Object> params = Http.getBaseParams();
         params.put("useropter", opter);

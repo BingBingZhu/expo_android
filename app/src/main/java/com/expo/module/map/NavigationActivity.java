@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -96,6 +97,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     TextView mTvTips;
     @BindView(R.id.img_module_show)
     ImageView mImgModuleShow;
+    @BindView(R.id.navigation_show)
+    ImageView mImgNavigationShow;
 
     public AMapNavi mAMapNavi;
     private AMap mMap;
@@ -132,8 +135,6 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     boolean isBackStage = false;
 
     Location mLocation;
-
-    String mTouristPath;
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -222,18 +223,24 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mSlidingDrawerView.open();
             mCameraManager.startPreview();
             updateMapStatue(true);
+            mImgNavigationShow.setVisibility( View.GONE );
         } else {
             updateMapStatue(false);
+            mImgNavigationShow.setVisibility( View.VISIBLE );
         }
         mSlidingDrawerView.setOnDrawerCloseListener(() -> {
             mCameraManager.stopPreview();
             PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false);
             updateMapStatue(false);
+            mImgNavigationShow.setVisibility( View.VISIBLE );
+            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
         });
         mSlidingDrawerView.setOnDrawerOpenListener(() -> {
             mCameraManager.startPreview();
             PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true);
             updateMapStatue(true);
+            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
+            mImgNavigationShow.setVisibility( View.GONE );
         });
     }
 
@@ -327,12 +334,12 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 return;
             }
             //计算角度以通知HTML页面使用
-            float degrees; // 当前方向与路的夹角
-            if (mCalculateDirection >= 0) {
-                degrees = azimuth - mCalculateDirection;
-            } else {
-                degrees = azimuth - mRouteDirection;
-            }
+//            float degrees; // 当前方向与路的夹角
+//            if (mCalculateDirection >= 0) {
+//                degrees = azimuth - mCalculateDirection;
+//            } else {
+//                degrees = azimuth - mRouteDirection;
+//            }
             if (mJsCanSend && mSlidingDrawerView.isOpened()) {
                 //degrees 当前方向和路的夹角
                 //azimuth 陀螺仪和正北方夹角
@@ -566,6 +573,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
         @Override
         public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
+            mTvTips.setVisibility( View.VISIBLE );
             // 算路返回结果
             AMapNaviPath naviPath = mAMapNavi.getNaviPath();
             if (mNaviRouteOverlay == null) {
@@ -604,7 +612,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         }
     };
 
-    @OnClick({R.id.gt_navi_back, R.id.img_module_show})
+    @OnClick({R.id.gt_navi_back, R.id.img_module_show, R.id.navigation_show})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.gt_navi_back:
@@ -615,6 +623,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
                         true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off);
                 mWebView.loadUrl("javascript:toggleImg(" + PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true) + ")");
+                break;
+            case R.id.navigation_show:
+                mSlidingDrawerView.animateOpen();
                 break;
         }
     }
