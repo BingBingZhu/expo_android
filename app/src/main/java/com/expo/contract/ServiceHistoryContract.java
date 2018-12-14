@@ -17,6 +17,7 @@ public interface ServiceHistoryContract {
 
         public abstract void loadAllData();
 
+        public abstract String loadCommonInfo(String type);
     }
 
     interface View extends IView {

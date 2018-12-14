@@ -84,13 +84,24 @@ public class Encyclopedias implements Parcelable {
     @DatabaseField(columnName = "voiceEurl_en")
     @SerializedName("voiceurlen")
     public String voiceUrlEn;
+    @DatabaseField(columnName = "estimated_tour_time")
+    @SerializedName("playtime")
+    public String estimatedTourTime;//预计游览时间
+    @DatabaseField(columnName = "exhibition")
+    @SerializedName("introduction")
+    public String exhibition;//展项介绍
+    @DatabaseField(columnName = "exhibition_en")
+    @SerializedName("introductionen")
+    public String exhibitionEn;//展项介绍 英文
+    @DatabaseField(columnName = "idx")
+    @SerializedName("idx")
+    public int idx;//排序
 
     @SerializedName("distance")
     private String distance;
 
     public Encyclopedias() {
     }
-
 
     protected Encyclopedias(Parcel in) {
         area = in.readString();
@@ -138,6 +149,11 @@ public class Encyclopedias implements Parcelable {
         updateTime = in.readString();
         voiceUrl = in.readString();
         voiceUrlEn = in.readString();
+        estimatedTourTime = in.readString();
+        exhibition = in.readString();
+        exhibitionEn = in.readString();
+        idx = in.readInt();
+        distance = in.readString();
     }
 
     public static final Creator<Encyclopedias> CREATOR = new Creator<Encyclopedias>() {
@@ -352,6 +368,38 @@ public class Encyclopedias implements Parcelable {
         this.voiceUrlEn = voiceUrlEn;
     }
 
+    public String getEstimatedTourTime() {
+        return estimatedTourTime;
+    }
+
+    public void setEstimatedTourTime(String estimatedTourTime) {
+        this.estimatedTourTime = estimatedTourTime;
+    }
+
+    public String getExhibition() {
+        return exhibition;
+    }
+
+    public void setExhibition(String exhibition) {
+        this.exhibition = exhibition;
+    }
+
+    public String getExhibitionEn() {
+        return exhibitionEn;
+    }
+
+    public void setExhibitionEn(String exhibitionEn) {
+        this.exhibitionEn = exhibitionEn;
+    }
+
+    public int getIdx() {
+        return idx;
+    }
+
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
+
     public void setDistance(float distance) {
         String distanceStr = "";
         if (distance > 1000) {
@@ -423,5 +471,10 @@ public class Encyclopedias implements Parcelable {
         dest.writeString( updateTime );
         dest.writeString( voiceUrl );
         dest.writeString( voiceUrlEn );
+        dest.writeString( estimatedTourTime );
+        dest.writeString( exhibition );
+        dest.writeString( exhibitionEn );
+        dest.writeInt( idx );
+        dest.writeString( distance );
     }
 }

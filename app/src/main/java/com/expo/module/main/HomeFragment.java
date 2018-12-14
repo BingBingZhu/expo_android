@@ -236,7 +236,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         if (isDataEmpty( mHomeVenue, list )) return;
         mListVenue = list;
         mLlVenue.removeAllViews();
-        int width = (ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension( R.dimen.dms_60 ) - (int) getContent().getResources().getDimension( R.dimen.dms_20 ) * (mListVenue.size() - 1)) / 3;
+        int width = (ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension( R.dimen.dms_60 ) - (int) getContent().getResources().getDimension( R.dimen.dms_20 ) * 3) / 3;
         int height = (int) (width * 0.86f);
         for (int i = 0; i < 3; i++) {
             addVenueView( i, width, height );

@@ -33,7 +33,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add( "eq", "recommend", 1 )
                 .add( "and" )
                 .add( "eq", "type_name", "场馆" )
-                .add( "orderBy", "recommended_idx", true );
+                .add( "orderBy", "idx", true );
         mView.showVenue( mDao.query( Encyclopedias.class, params ) );
     }
 
@@ -46,7 +46,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add( "eq", "recommend", 1 )
                 .add( "and" )
                 .add( "eq", "type_name", "展览" )
-                .add( "orderBy", "recommended_idx", true );
+                .add( "orderBy", "idx", true );
         mView.showExhibit( mDao.query( Encyclopedias.class, params ) );
     }
 
@@ -59,7 +59,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add( "eq", "recommend", 1 )
                 .add( "and" )
                 .add( "eq", "type_name", "展园" )
-                .add( "orderBy", "recommended_idx", true );
+                .add( "orderBy", "idx", true );
         mView.showExhibitGarden( mDao.query( Encyclopedias.class, params ) );
     }
 

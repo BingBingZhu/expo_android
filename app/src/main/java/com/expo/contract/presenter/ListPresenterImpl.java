@@ -22,7 +22,7 @@ public class ListPresenterImpl extends ListContract.Presenter {
                 .add( "eq", "enable", 1 )
                 .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT )
                 .add( "orderBy", "recommend", false )
-                .add( "orderBy", "py", true ) );
+                .add( "orderBy", "idx", true ) );
         mView.addEncysToList( data );
     }
 }

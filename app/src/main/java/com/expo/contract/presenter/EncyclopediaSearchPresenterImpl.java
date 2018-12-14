@@ -19,7 +19,8 @@ public class EncyclopediaSearchPresenterImpl extends EncyclopediaSearchContract.
                 .add( "or" )
                 .add( "like", "caption_en", "%" + searchContentStr + "%" )
                 .add( "and" )
-                .add( "eq", "enable", 1 ) );
+                .add( "eq", "enable", 1 )
+                .add( "orderBy", "idx", true ) );
         mView.getSearchResult( EncyclopediasAdapter.convertToTabList( encyclopedias ) );
     }
 }
