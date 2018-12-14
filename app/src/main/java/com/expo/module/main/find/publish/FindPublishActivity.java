@@ -185,8 +185,9 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         mWorkList.add("4");
         mWorkList.add("5");
         mWorkAdapter.setData(mWorkList);
-        mWorkAdapter.notifyDataSetChanged();
         mFindType = "3";
+        mWorkAdapter.mPosition = 2;
+        mWorkAdapter.notifyDataSetChanged();
         mTvTypeText.setText(Constants.ContactsType.FIND_TYPE_MAP.get(mFindType));
     }
 
@@ -201,6 +202,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
                         mFindType = mWorkList.get(position);
                         mTvTypeText.setText(Constants.ContactsType.FIND_TYPE_MAP.get(mFindType));
+                        mWorkAdapter.mPosition = position;
                         dialog.dismiss();
                     }
                 })
@@ -356,7 +358,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         find.uid = ExpoApp.getApplication().getUser().getUid();
         find.uname = ExpoApp.getApplication().getUser().getNick();
         find.upic = ExpoApp.getApplication().getUser().getPhotoUrl();
-        find.kind = mTvTypeText.getText().toString();
+        find.kind = mFindType;
         if (mImageList.size() == 1 && mImageList.get(0).endsWith(".mp4")) find.type = 1;
         else find.type = 0;
         for (int i = 0; i < mImageList.size(); i++) {

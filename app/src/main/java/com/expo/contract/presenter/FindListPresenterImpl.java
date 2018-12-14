@@ -28,10 +28,11 @@ public class FindListPresenterImpl extends FindListContract.Presenter {
     }
 
     @Override
-    public void getSocietyListFilter(int page, boolean fresh) {
+    public void getSocietyListFilter(int page, String type, boolean fresh) {
         Map<String, Object> params = Http.getBaseParams();
         params.put("Count", 10);
         params.put("Pageidx", page);
+        params.put("typename", type);
         RequestBody requestBody = Http.buildRequestBody(params);
         Observable<SocietyListResp> observable = Http.getServer().getSocietyListFilter(requestBody);
         Http.request(new ResponseCallback<SocietyListResp>() {

@@ -9,6 +9,7 @@
         android:id="@+id/user_work"
         style="@style/TextSizeBlack16"
         android:layout_width="match_parent"
+        android:textColor="@color/selector_99_32"
         android:gravity="center"
         android:padding="@dimen/dms_30" />
 

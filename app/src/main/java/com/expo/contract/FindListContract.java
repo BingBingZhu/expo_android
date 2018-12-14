@@ -15,7 +15,7 @@ public interface FindListContract {
             super(view);
         }
 
-        public abstract void getSocietyListFilter(int page, boolean fresh);
+        public abstract void getSocietyListFilter(int page, String type, boolean fresh);
 
     }
 

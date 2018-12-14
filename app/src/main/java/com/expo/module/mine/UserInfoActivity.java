@@ -283,6 +283,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+                        mWorkAdapter.mPosition = position;
                         String workType = mWorkList.get(position);
                         ((TextView) mUserWork.getRightView()).setText(Constants.ContactsType.WORK_TYPE_MAP.get(workType));
                         dialog.dismiss();
@@ -356,8 +357,14 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         mUser = user;
         mOldUser = user.clone();
 
-        if (!StringUtils.isEmpty(mUser.getWorkType()))
-            ((TextView) mUserWork.getRightView()).setText(Constants.ContactsType.WORK_TYPE_MAP.get(mUser.getWorkType()));
+        if (!StringUtils.isEmpty(mUser.getWorkType())) {
+            try {
+                ((TextView) mUserWork.getRightView()).setText(Constants.ContactsType.WORK_TYPE_MAP.get(mUser.getWorkType()));
+                mWorkAdapter.mPosition = Integer.valueOf(mUser.getWorkType()) - 1;
+            } catch (Exception e) {
+
+            }
+        }
 
         if (!StringUtils.isEmpty(mUser.getPhotoUrl()))
             Picasso.with(this).load(CommUtils.getFullUrl(mUser.getPhotoUrl())).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((RoundImageView) mUserImg.getRightView());

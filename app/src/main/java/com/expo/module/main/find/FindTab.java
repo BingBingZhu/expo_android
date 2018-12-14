@@ -5,20 +5,16 @@ import android.os.Parcelable;
 
 public class FindTab implements Parcelable {
 
-    public Long id;
+    public String id;
     public int tab;
 
-    public FindTab(Long id, int tab){
+    public FindTab(String id, int tab){
         this.id = id;
         this.tab = tab;
     }
 
     protected FindTab(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readLong();
-        }
+        id = in.readString();
         tab = in.readInt();
     }
 
@@ -41,12 +37,7 @@ public class FindTab implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(id);
-        }
+        dest.writeString(id);
         dest.writeInt(tab);
     }
 }

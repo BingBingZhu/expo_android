@@ -42,6 +42,7 @@
             android:layout_marginTop="@dimen/dms_8"
             android:layout_marginRight="@dimen/dms_28"
             android:gravity="left|top"
+            android:lineSpacingMultiplier="1.2"
             android:lines="2"
             android:textSize="@dimen/font_22" />
 
@@ -49,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dms_12"
-            android:layout_marginTop="@dimen/dms_4"
+            android:layout_marginTop="@dimen/dms_8"
             android:layout_marginRight="@dimen/dms_28"
             android:gravity="center_vertical">
 
@@ -63,8 +64,8 @@
                 android:singleLine="true"
                 android:textColor="@color/gray_66"
                 android:textSize="@dimen/font_22"
-                app:drawableLeftHeight="@dimen/dms_30"
-                app:drawableLeftWidth="@dimen/dms_30" />
+                app:drawableLeftHeight="@dimen/dms_36"
+                app:drawableLeftWidth="@dimen/dms_36" />
 
             <com.hedan.textdrawablelibrary.TextViewDrawable
                 android:id="@+id/find_list_like"
@@ -78,8 +79,8 @@
                 android:singleLine="true"
                 android:textColor="@color/gray_66"
                 android:textSize="@dimen/font_22"
-                app:drawableLeftHeight="@dimen/dms_30"
-                app:drawableLeftWidth="@dimen/dms_30" />
+                app:drawableLeftHeight="@dimen/dms_36"
+                app:drawableLeftWidth="@dimen/dms_36" />
         </LinearLayout>
 
         <TextView
@@ -89,16 +90,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dms_30"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dms_12"
             android:layout_marginTop="@dimen/dms_20"
-            android:layout_marginBottom="@dimen/dms_20"
-            android:layout_marginRight="@dimen/dms_28">
+            android:layout_marginRight="@dimen/dms_28"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/dms_20">
 
             <org.raphets.roundimageview.RoundImageView
                 android:id="@+id/find_list_head"
-                android:layout_width="@dimen/dms_30"
-                android:layout_height="@dimen/dms_30"
+                android:layout_width="@dimen/dms_36"
+                android:layout_height="@dimen/dms_36"
                 android:layout_below="@id/find_list_scans"
                 android:layout_centerVertical="true"
                 app:type="circle" />
