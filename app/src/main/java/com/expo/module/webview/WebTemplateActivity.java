@@ -213,7 +213,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         @JavascriptInterface
         public void gotoDataLocation(int id) {
             runOnUiThread(() -> {
-                NavigationActivity.startActivity(WebTemplateActivity.this, mVenue, LanguageUtil.chooseTest(mEncyclopedias.voiceUrl, mEncyclopedias.voiceUrlEn));
+                NavigationActivity.startActivity(WebTemplateActivity.this, mVenue);
             });
         }
     }

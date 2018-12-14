@@ -382,4 +382,5 @@
     <string name="kindly_reminder_report">请在下方填入事件发生的地点、人员、事件过程，并上传影像资料。</string>
     <string name="kindly_reminder_inquiry">请在下方填入您需要咨询的内容。</string>
     <string name="kindly_reminder_look_for">请在下方填入遗失物品的信息。如有丢失物品照片请上传。</string>
+    <string name="please_select_tourist">请先选择一个导游</string>
 </resources>

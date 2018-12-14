@@ -62,10 +62,10 @@ public class ViewUtils {
         }
         dialogWindow.setGravity(Gravity.CENTER);
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = windowManager.getDefaultDisplay();
+//        Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.height = (int) (display.getHeight() * 0.65);
+//        lp.height = (int) (display.getHeight() * 0.65);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             dialogWindow.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             dialogWindow.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);

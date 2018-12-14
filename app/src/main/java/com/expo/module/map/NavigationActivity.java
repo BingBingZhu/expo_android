@@ -638,14 +638,13 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
      *
      * @param context
      */
-    public static void startActivity(@NonNull Context context, Venue venue, String voiceUrl) {
+    public static void startActivity(@NonNull Context context, Venue venue) {
         if (venue.getId() <= 0) {
             ToastHelper.showShort(R.string.error_params);
             return;
         }
         Intent in = new Intent(context, NavigationActivity.class);
         in.putExtra(Constants.EXTRAS.EXTRAS, venue);
-        in.putExtra(Constants.EXTRAS.EXTRA_URL, voiceUrl);
         context.startActivity(in);
     }
 

@@ -421,8 +421,21 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             mActualSceneDialog.dismiss();
         });
         asLine.setOnClickListener(v13 -> {
-            if (mIsInPark)
-                NavigationActivity.startActivity(getContext(), venue, LanguageUtil.chooseTest(venue.getVoiceUrl(), venue.getVoiceUrlEn()));
+            mActualSceneDialog.dismiss();
+            if (mIsInPark) {
+                boolean haveSelected = false;
+                for (TouristType type : mTouristTypes) {
+                    if (type.isUsed()) {
+                        haveSelected = true;
+                    }
+                }
+                if (haveSelected) {
+                    NavigationActivity.startActivity( getContext(), venue );
+                } else {
+                    ToastHelper.showLong( R.string.please_select_tourist );
+                    showTouristTypeDialog();
+                }
+            }
             else
                 NaviManager.getInstance(getContext()).showSelectorNavi(venue);
         });
