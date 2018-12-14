@@ -40,14 +40,14 @@ public class ServiceHistoryAdapter extends RecyclerView.Adapter<ServiceHistoryAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        VisitorService vs = mData.get(position);
-        holder.img.setImageResource(getResourceId(vs.getServiceType()));
+        VisitorService vs = mData.get( position );
+        holder.img.setImageResource( getResourceId( vs.getServiceType() ) );
 //        setImageUri(holder.simpleDraweeView1, vs.getImgUrl1());
 //        setImageUri(holder.simpleDraweeView2, vs.getImgUrl2());
 //        setImageUri(holder.simpleDraweeView3, vs.getImgUrl3());
-        holder.tvType.setText(getTypeName(vs.getServiceType()));
-        holder.tvContent.setText(vs.getSituation());
-        holder.tvState.setText(getDisposeTypeName(vs.getDisposeType()));
+        holder.tvType.setText( getTypeName( vs.getServiceType() ) );
+        holder.tvContent.setText( vs.getSituation() );
+        holder.tvState.setText( getDisposeTypeName( vs.getDisposeType() ) );
     }
 
     private View.OnClickListener inernalClickListener = new View.OnClickListener() {
@@ -58,6 +58,10 @@ public class ServiceHistoryAdapter extends RecyclerView.Adapter<ServiceHistoryAd
             }
         }
     };
+
+    public void setOnClickListener(View.OnClickListener mOnClickListener) {
+        this.mOnClickListener = mOnClickListener;
+    }
 
     private void setImageUri(SimpleDraweeView view, String url) {
         if (null == url || url.isEmpty()) {
@@ -80,7 +84,7 @@ public class ServiceHistoryAdapter extends RecyclerView.Adapter<ServiceHistoryAd
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-//        SimpleDraweeView simpleDraweeView1;
+        //        SimpleDraweeView simpleDraweeView1;
 //        SimpleDraweeView simpleDraweeView2;
 //        SimpleDraweeView simpleDraweeView3;
         TextView tvType;
@@ -106,37 +110,37 @@ public class ServiceHistoryAdapter extends RecyclerView.Adapter<ServiceHistoryAd
 
 
     private int getResourceId(String serviceType) {
-        if (serviceType.equals("1")) {
+        if (serviceType.equals( "1" )) {
             return R.mipmap.tourist_service_0;
-        } else if (serviceType.equals("2")) {
+        } else if (serviceType.equals( "2" )) {
             return R.mipmap.tourist_service_5;
-        } else if (serviceType.equals("3")) {
+        } else if (serviceType.equals( "3" )) {
             return R.mipmap.tourist_service_1;
-        } else if (serviceType.equals("4")) {
+        } else if (serviceType.equals( "4" )) {
             return R.mipmap.tourist_service_4;
-        } else if (serviceType.equals("5")) {
+        } else if (serviceType.equals( "5" )) {
             return R.mipmap.tourist_service_2;
-        } else if (serviceType.equals("6")) {
+        } else if (serviceType.equals( "6" )) {
             return R.mipmap.tourist_service_6;      // 投诉受理   暂无图标
         }
         return R.mipmap.tourist_service_4;
     }
 
     private String getTypeName(String serviceType) {
-        if (serviceType.equals("1")) {
-            return mContext.getString(R.string.item_tourist_service_text_0);
-        } else if (serviceType.equals("2")) {
-            return mContext.getString(R.string.item_tourist_service_text_5);
-        } else if (serviceType.equals("3")) {
-            return mContext.getString(R.string.item_tourist_service_text_1);
-        } else if (serviceType.equals("4")) {
-            return mContext.getString(R.string.item_tourist_service_text_4);
-        } else if (serviceType.equals("5")) {
-            return mContext.getString(R.string.item_tourist_service_text_2);
-        } else if (serviceType.equals("6")) {
-            return mContext.getString(R.string.item_tourist_service_text_9);
+        if (serviceType.equals( "1" )) {
+            return mContext.getString( R.string.item_tourist_service_text_0 );
+        } else if (serviceType.equals( "2" )) {
+            return mContext.getString( R.string.item_tourist_service_text_5 );
+        } else if (serviceType.equals( "3" )) {
+            return mContext.getString( R.string.item_tourist_service_text_1 );
+        } else if (serviceType.equals( "4" )) {
+            return mContext.getString( R.string.item_tourist_service_text_4 );
+        } else if (serviceType.equals( "5" )) {
+            return mContext.getString( R.string.item_tourist_service_text_2 );
+        } else if (serviceType.equals( "6" )) {
+            return mContext.getString( R.string.item_tourist_service_text_9 );
         }
-        return mContext.getString(R.string.unknown_type);
+        return mContext.getString( R.string.unknown_type );
     }
 
 
