@@ -461,8 +461,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             Map<String, Marker> tem = new HashMap<>();
             for (int i = 0; i < mVenuesDistance.size(); i++) {
                 VenuesDistance vd = mVenuesDistance.get(i);
-                if (vd.distance >= 2000.0f) break;
-                vd.voice = "http://39.105.120.171/res/0339f8f92e8a483fb6ef5aad9b1b7b6e.mp3";
+                if (vd.distance >= 20.0f) break;
+//                vd.voice = "http://39.105.120.171/res/0339f8f92e8a483fb6ef5aad9b1b7b6e.mp3";
                 vd.angle = mMapUtils.getAngle(new MapUtils.MyLatLng(mLocation.getLatitude(), mLocation.getLongitude()), new MapUtils.MyLatLng(vd.lat, vd.lon));
                 venuesDistanceList.add(vd);
                 if (mMarker.containsKey(vd.id)) {

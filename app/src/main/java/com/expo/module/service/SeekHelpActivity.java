@@ -389,6 +389,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
             case 1:
                 visitorService.setImgUrl1( mImageList.get( 0 ) );
         }
+        visitorService.setDisposeType( "1" );
+        visitorService.setState( "1" );
         visitorService.setServiceType( mServiceType );
         visitorService.setCoordinateAssist( mCoordinateAssist );
         visitorService.setCounttryCode( PrefsHelper.getString( Constants.Prefs.KEY_COUNTRY_CODE, "+86" ) );
