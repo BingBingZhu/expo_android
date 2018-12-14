@@ -20,12 +20,12 @@ public class FindPresenterImpl extends FindContract.Presenter {
     @Override
     public void loadTabs() {
         List<FindTab> data = new ArrayList<>();
-        data.add(new FindTab(0L, R.string.find_tab_recommend));
-        data.add(new FindTab(1L, R.string.find_tab_scenic));
-        data.add(new FindTab(2L, R.string.find_tab_venue));
-        data.add(new FindTab(3L, R.string.find_tab_food));
-        data.add(new FindTab(4L, R.string.find_tab_botany));
-        data.add(new FindTab(5L, R.string.find_tab_other));
+        data.add(new FindTab("", R.string.find_tab_recommend));
+        data.add(new FindTab("1", R.string.find_tab_scenic));
+        data.add(new FindTab("2", R.string.find_tab_venue));
+        data.add(new FindTab("3", R.string.find_tab_food));
+        data.add(new FindTab("4", R.string.find_tab_botany));
+        data.add(new FindTab("5", R.string.find_tab_other));
         mView.setTabData(data);
     }
 }

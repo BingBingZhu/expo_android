@@ -85,6 +85,7 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
             freshContacts();
         else {
             mIdType = "1";
+            mAdapter.mPosition = 0;
             ((TextView) mMvType.getRightView()).setText(Constants.ContactsType.CONTACTS_TYPE_MAP.get(mIdType));
         }
 
@@ -195,6 +196,7 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
                     @Override
                     public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
                         mIdType = mList.get(position);
+                        mAdapter.mPosition = position;
                         ((TextView) mMvType.getRightView()).setText(Constants.ContactsType.CONTACTS_TYPE_MAP.get(mIdType));
                         dialog.dismiss();
                     }

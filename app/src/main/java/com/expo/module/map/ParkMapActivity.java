@@ -161,16 +161,21 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     ClusterClickListener mClusterClickListener = new ClusterClickListener() {
         @Override
         public void onClick(Marker marker, List<ClusterItem> clusterItems) {
-            if (clusterItems.size() == 1) {
-                showActualSceneDialog(((RegionItem) clusterItems.get(0)).actualScene);
-            } else if (clusterItems.size() > 1) {
-                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                for (ClusterItem clusterItem : clusterItems) {
-                    builder.include(clusterItem.getPosition());
+            if (clusterItems == null) {
+                if (marker.getObject() instanceof Venue)
+                    showActualSceneDialog((Venue) marker.getObject());
+            } else {
+                if (clusterItems.size() == 1) {
+                    showActualSceneDialog(((RegionItem) clusterItems.get(0)).actualScene);
+                } else if (clusterItems.size() > 1) {
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    for (ClusterItem clusterItem : clusterItems) {
+                        builder.include(clusterItem.getPosition());
+                    }
+                    LatLngBounds latLngBounds = builder.build();
+                    mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0)
+                    );
                 }
-                LatLngBounds latLngBounds = builder.build();
-                mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0)
-                );
             }
         }
     };

@@ -155,12 +155,12 @@
 
     <string name="toast_feed_back_success">感谢你的反馈</string>
 
-    <string name="home_func_item_navigation">导游导览</string>
+    <string name="home_func_item_navigation">导航导览</string>
     <string name="home_func_item_wifi">免费wifi</string>
     <string name="home_func_item_tickets">园区购票</string>
     <string name="home_func_item_appointment">场馆预约</string>
     <string name="home_func_item_tourist_service">游客服务</string>
-    <string name="home_func_item_line">游园路线</string>
+    <string name="home_func_item_line">游玩路线</string>
     <string name="home_func_item_distinguish">光影森林</string>
     <string name="home_func_item_periphery">周边服务</string>
     <string name="home_func_item_microcosmic">微观世界</string>

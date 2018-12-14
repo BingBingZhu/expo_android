@@ -19,8 +19,6 @@ public class ContactsPresenterImpl extends ContactsContract.Presenter {
 
     @Override
     public void delContact(Contacts contacts, int position) {
-        QueryParams params = new QueryParams()
-                .add("eq", "u_id", ExpoApp.getApplication().getUser().getUid());
         mDao.delete(contacts);
         mView.removeContact(position);
     }

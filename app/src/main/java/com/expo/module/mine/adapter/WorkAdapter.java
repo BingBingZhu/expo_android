@@ -20,6 +20,7 @@ public class WorkAdapter extends BaseAdapter {
     Context mContext;
     List<String> mData;
     Map<String, Integer> mDataSource;
+    public int mPosition = -1;
 
     public WorkAdapter(Context context) {
         mContext = context;
@@ -60,6 +61,10 @@ public class WorkAdapter extends BaseAdapter {
         } else {
             holderView = (HolderView) convertView.getTag();
         }
+        if (mPosition == position)
+            holderView.text.setSelected(true);
+        else
+            holderView.text.setSelected(false);
         holderView.text.setText(mDataSource.get(mData.get(position)));
         return convertView;
     }
