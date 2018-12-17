@@ -326,9 +326,19 @@ public class MapUtils {
         double dx = (B.m_RadLo - A.m_RadLo) * A.Ed;
         double dy = (B.m_RadLa - A.m_RadLa) * A.Ec;
         double angle = 0.0;
-        angle = Math.atan( Math.abs( dx / dy ) ) * 180. / Math.PI;
         double dLo = B.m_Longitude - A.m_Longitude;
         double dLa = B.m_Latitude - A.m_Latitude;
+        if (dy == 0) {
+            angle = Math.atan(Math.abs(dx / dy)) * 180. / Math.PI;
+        } else {
+            if (dLa < 0) {
+                return 90;
+            } else if (dLa > 0) {
+                return 270;
+            } else {
+                return 0;
+            }
+        }
         if (dLo > 0 && dLa <= 0) {
             angle = (90. - angle) + 90;
         } else if (dLo <= 0 && dLa < 0) {
