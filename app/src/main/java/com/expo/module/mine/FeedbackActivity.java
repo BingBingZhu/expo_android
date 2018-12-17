@@ -49,13 +49,6 @@ public class FeedbackActivity extends BaseActivity<FeedbackContract.Presenter> i
 
     @OnClick(R.id.submit)
     public void submit(View view) {
-        if (CheckUtils.isEmtpy(mEtEmail.getText().toString(), R.string.wrong_email, true)) return;
-        if (CheckUtils.isEmtpy(mEtComment.getText().toString(), R.string.check_string_empty_report_content, true))
-            return;
-        if (mEtComment.getText().toString().length() < 10) {
-            ToastHelper.showShort(R.string.short_content);
-            return;
-        }
         mPresenter.submit("", mEtEmail.getText().toString(), mEtComment.getText().toString());
     }
 

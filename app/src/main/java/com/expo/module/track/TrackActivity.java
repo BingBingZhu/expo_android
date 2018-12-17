@@ -46,6 +46,7 @@ public class TrackActivity extends BaseActivity<TrackContract.Presenter> impleme
             tvUpdateTime.setText(getString(R.string.open_the_footprint_record));
         }else{
             initTitleRightTextView(R.string.clear_track, R.color.green_02cd9b, v -> mPresenter.clearTrack());
+            tvUpdateTime.setText(updateTime);
         }
         mMapView.onCreate(savedInstanceState);
         mAMap = mMapView.getMap();
