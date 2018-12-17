@@ -45,36 +45,42 @@ public class UnzipTask extends AsyncTask<File, Void, Void> {
                     f.mkdirs();
                 }
                 while (entries.hasMoreElements()) {
-                    zipEntry = entries.nextElement();
-                    String filePath =Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName()
-                            + File.separator + file.getName().substring(0, file.getName().indexOf(".")) + File.separator + zipEntry.getName();
-                    filePath = new String(filePath.getBytes("utf-8"), "GB2312");
-                    target = new File(Environment.getExternalStorageDirectory(),
-                            filePath);
-                    if (zipEntry.isDirectory() && !target.exists()) {
-                        target.mkdirs();
-                    } else {
-                        if (target.exists()) {
-                            target.delete();
-                        }
-                        if (!target.getParentFile().exists()) {
-                            target.getParentFile().mkdirs();
-                        }
-                        if (!target.createNewFile()) {
+                    try {
+                        zipEntry = entries.nextElement();
+                        String filePath = Constants.Config.UNZIP_PATH + ExpoApp.getApplication().getPackageName()
+                                + File.separator + file.getName().substring(0, file.getName().indexOf(".")) + File.separator + zipEntry.getName();
+                        filePath = new String(filePath.getBytes("utf-8"), "GB2312");
+                        target = new File(Environment.getExternalStorageDirectory(),
+                                filePath);
+                        if (zipEntry.isDirectory() && !target.exists()) {
+                            target.mkdirs();
+                        } else {
+                            if (target.exists()) {
+                                target.delete();
+                            }
+                            if (!target.getParentFile().exists()) {
+                                target.getParentFile().mkdirs();
+                            }
+                            if (!target.createNewFile()) {
 //                            throw new RuntimeException( "can not create file on " + target.getPath() );
+                            }
+                            fos = new FileOutputStream(target);
+                            is = zipFile.getInputStream(zipEntry);
+                            FileUtils.copy(is, fos);
+                            if (fos != null) {
+                                fos.close();
+                            }
+                            if (is != null) {
+                                is.close();
+                            }
                         }
-                        fos = new FileOutputStream(target);
-                        is = zipFile.getInputStream(zipEntry);
-                        FileUtils.copy(is, fos);
-                        if (fos != null) {
-                            fos.close();
-                        }
-                        if (is != null) {
-                            is.close();
-                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
