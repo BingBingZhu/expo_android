@@ -9,26 +9,26 @@
         android:id="@+id/item_examine_time"
         style="@style/TextSize13_c333"
         android:layout_marginLeft="@dimen/dms_30"
-        android:text="2018年10月14日16：00"/>
+        android:text="2018年10月14日16：00" />
 
     <TextView
         android:id="@+id/item_examine_content"
         style="@style/TextSize13_c333"
-        android:layout_marginTop="@dimen/dms_20"
         android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginTop="@dimen/dms_20"
         android:layout_marginRight="@dimen/dms_30"
         android:layout_marginBottom="@dimen/dms_16"
         android:maxLines="3"
-        android:text="走走停停，街拍别有一番风趣体验！走走停停街拍别有一番风趣体验！走走停停，街拍别有一番风趣体验，走走停停体验！"/>
+        android:text="走走停停，街拍别有一番风趣体验！走走停停街拍别有一番风趣体验！走走停停，街拍别有一番风趣体验，走走停停体验！" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dms_2"
         android:layout_marginRight="@dimen/dms_2"
-        android:padding="@dimen/dms_22"
         android:background="@drawable/shape_find_item_bg"
-        android:elevation="@dimen/dms_4">
+        android:elevation="@dimen/dms_4"
+        android:padding="@dimen/dms_22">
 
         <org.raphets.roundimageview.RoundImageView
             android:id="@+id/item_examine_img"
@@ -56,8 +56,8 @@
             android:layout_below="@id/item_examine_img"
             android:layout_gravity="bottom"
             android:layout_marginLeft="@dimen/dms_6"
-            android:layout_marginRight="@dimen/dms_6"
             android:layout_marginTop="@dimen/dms_32"
+            android:layout_marginRight="@dimen/dms_6"
             android:layout_marginBottom="@dimen/dms_10"
             android:visibility="gone">
 
@@ -65,16 +65,47 @@
                 android:id="@+id/item_examine_state"
                 style="@style/TextSizeBlack13"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/selector_fe2121_02cd9b"/>
+                android:textColor="@color/selector_fe2121_02cd9b" />
 
             <TextView
                 android:id="@+id/item_examine_reason"
                 style="@style/TextSizeBlack15"
                 android:layout_gravity="right|center_vertical"
-                android:textColor="@color/selector_fe2121_02cd9b"/>
+                android:textColor="@color/selector_fe2121_02cd9b" />
         </FrameLayout>
-    </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/item_find_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_50"
+            android:layout_alignBottom="@id/item_examine_img"
+            android:background="@mipmap/bg_trans3"
+            android:gravity="center_vertical">
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_find_scans"
+                style="@style/TextSizeWhite12"
+                android:layout_width="@dimen/dms_100"
+                android:layout_marginLeft="@dimen/dms_34"
+                android:drawableLeft="@mipmap/find_scans_small_white"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                app:drawableLeftHeight="@dimen/dms_36"
+                app:drawableLeftWidth="@dimen/dms_36" />
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_find_like"
+                style="@style/TextSizeWhite12"
+                android:layout_width="@dimen/dms_100"
+                android:layout_alignBottom="@id/find_list_scans"
+                android:layout_marginLeft="@dimen/dms_20"
+                android:drawableLeft="@mipmap/find_like_small_white"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                app:drawableLeftHeight="@dimen/dms_36"
+                app:drawableLeftWidth="@dimen/dms_36" />
+        </LinearLayout>
+    </RelativeLayout>
 
 
     <TextView
