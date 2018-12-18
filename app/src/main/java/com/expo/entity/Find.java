@@ -140,6 +140,18 @@ public class Find implements Parcelable {
         return R.string.examine_pass;
     }
 
+    public int getStateColor(){
+        switch (state) {
+            case 0:
+            case 1:
+                return R.color.green_02cd9b;
+            case 2:
+                return R.color.red_fe2121;
+            default:
+                return R.color.green_02cd9b;
+        }
+    }
+
     public Map toJson() {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();

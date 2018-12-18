@@ -86,10 +86,12 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
                 holder.setText(R.id.item_examine_time, find.createtime);
                 holder.setText(R.id.item_examine_content, find.caption);
                 holder.setText(R.id.item_examine_state, getString(find.getStateRes()));
+                holder.setTextColor(R.id.item_examine_state, getResources().getColor(find.getStateColor()));
                 holder.setVisible(R.id.item_examine_state_layout, !mIsShowRight);
                 holder.setVisible(R.id.item_examine_reason, false);
                 if (!mIsShowRight) {
                     holder.setText(R.id.item_examine_state, getString(find.getStateRes()));
+                    holder.setTextColor(R.id.item_examine_state, getResources().getColor(find.getStateColor()));
                     if (find.state == 1) {
                         holder.getView(R.id.item_examine_state_layout).setSelected(true);
                     } else if (find.state == 1) {

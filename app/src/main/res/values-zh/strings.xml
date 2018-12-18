@@ -326,8 +326,8 @@
     <string name="publish_edit_hint">给你的作品起个标题吧</string>
     <string name="publish_rule_description">《用户发布规则说明》</string>
     <string name="examine_pass">审核通过</string>
-    <string name="examine_unpass">审核未通过</string>
-    <string name="examine_not">未审核</string>
+    <string name="examine_unpass">审核失败</string>
+    <string name="examine_not">待审核</string>
     <string name="my_find">我的发现</string>
     <string name="examine">审核</string>
     <string name="examine_unpass_reason">内容不符合发布规定</string>
