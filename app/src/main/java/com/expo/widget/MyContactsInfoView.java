@@ -40,7 +40,6 @@ public class MyContactsInfoView extends LinearLayout {
             mTvText.setTextColor(a.getColor(R.styleable.MyContactsInfoView_lefttextColor, Color.RED));
             mTvText.setTextSize(TypedValue.COMPLEX_UNIT_PX, a.getDimension(R.styleable.MyContactsInfoView_lefttextSize, 32));
             mTvText.setText(a.getString(R.styleable.MyContactsInfoView_lefttext));
-            mTvText.setCompoundDrawablesWithIntrinsicBounds(0, 0, a.getResourceId(R.styleable.MyContactsInfoView_lefttextrightDrawable, 0), 0);
             a.recycle();
         }
     }
@@ -49,7 +48,6 @@ public class MyContactsInfoView extends LinearLayout {
         mTvText = new TextView(getContext());
         LayoutParams layoutParams = new LayoutParams((int) getContext().getResources().getDimension(R.dimen.dms_120), -2);
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
-
         mTvText.setLayoutParams(layoutParams);
         mTvText.setSingleLine();
         addView(mTvText);

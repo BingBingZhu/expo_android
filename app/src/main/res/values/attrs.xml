@@ -101,7 +101,6 @@
     <declare-styleable name="MyContactsInfoView">
         <attr name="lefttextColor" format="color" />
         <attr name="lefttextSize" format="dimension" />
-        <attr name="lefttextrightDrawable" format="reference" />
         <attr name="lefttext" format="string" />
     </declare-styleable>
 

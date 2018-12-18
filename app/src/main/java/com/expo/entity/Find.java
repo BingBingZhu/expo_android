@@ -110,8 +110,9 @@ public class Find implements Parcelable {
             case 8:
                 url9 = url;
                 break;
+            default:
+                url1 = url;
         }
-        url1 = url;
     }
 
     public List<String> getUrlList() {

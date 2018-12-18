@@ -78,6 +78,13 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
                         holder.setVisible(R.id.item_find_video_control, false);
                         CommUtils.setImgPic(FindExamineActivity.this, CommUtils.getFullUrl(find.url1), (ImageView) holder.getView(R.id.item_examine_img));
                     }
+                if (mIsShowRight) {
+                    holder.setText(R.id.item_find_scans, find.views);
+                    holder.setText(R.id.item_find_like, find.enjoys);
+                    holder.setVisible(R.id.item_find_bottom_layout, true);
+                } else {
+                    holder.setVisible(R.id.item_find_bottom_layout, false);
+                }
 
                 holder.setText(R.id.item_examine_time, find.createtime);
                 holder.setText(R.id.item_examine_content, find.caption);

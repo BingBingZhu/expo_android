@@ -20,13 +20,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_310">
+        android:layout_height="@dimen/dms_310"
+        android:layout_marginTop="@dimen/dms_16">
 
         <org.raphets.roundimageview.RoundImageView
             android:id="@+id/item_examine_img"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_310"
-            android:layout_marginTop="@dimen/dms_38"
             android:scaleType="centerCrop"
             android:src="@drawable/image_default"
             app:leftBottom_corner_radius="@dimen/dms_4"
@@ -41,6 +41,39 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@mipmap/video_start" />
+
+        <LinearLayout
+            android:id="@+id/item_find_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_50"
+            android:layout_gravity="bottom"
+            android:background="@mipmap/bg_trans3"
+            android:gravity="center_vertical">
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_find_scans"
+                style="@style/TextSizeWhite12"
+                android:layout_width="@dimen/dms_100"
+                android:layout_marginLeft="@dimen/dms_34"
+                android:drawableLeft="@mipmap/find_scans_small_white"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                app:drawableLeftHeight="@dimen/dms_36"
+                app:drawableLeftWidth="@dimen/dms_36" />
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_find_like"
+                style="@style/TextSizeWhite12"
+                android:layout_width="@dimen/dms_100"
+                android:layout_alignBottom="@id/find_list_scans"
+                android:layout_marginLeft="@dimen/dms_20"
+                android:drawableLeft="@mipmap/find_like_small_white"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                app:drawableLeftHeight="@dimen/dms_36"
+                app:drawableLeftWidth="@dimen/dms_36" />
+        </LinearLayout>
+
     </FrameLayout>
 
     <FrameLayout

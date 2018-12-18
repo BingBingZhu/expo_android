@@ -223,24 +223,24 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mSlidingDrawerView.open();
             mCameraManager.startPreview();
             updateMapStatue(true);
-            mImgNavigationShow.setVisibility( View.GONE );
+            mImgNavigationShow.setVisibility(View.GONE);
         } else {
             updateMapStatue(false);
-            mImgNavigationShow.setVisibility( View.VISIBLE );
+            mImgNavigationShow.setVisibility(View.VISIBLE);
         }
         mSlidingDrawerView.setOnDrawerCloseListener(() -> {
             mCameraManager.stopPreview();
             PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false);
             updateMapStatue(false);
-            mImgNavigationShow.setVisibility( View.VISIBLE );
-            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
+            mImgNavigationShow.setVisibility(View.VISIBLE);
+            mImgNavigationShow.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_bottom));
         });
         mSlidingDrawerView.setOnDrawerOpenListener(() -> {
             mCameraManager.startPreview();
             PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true);
             updateMapStatue(true);
-            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
-            mImgNavigationShow.setVisibility( View.GONE );
+            mImgNavigationShow.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_bottom));
+            mImgNavigationShow.setVisibility(View.GONE);
         });
     }
 
@@ -404,7 +404,10 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         new AlertDialog.Builder(this)
                 .setMessage(R.string.leave_navi)
                 .setCancelable(false)
-                .setPositiveButton(R.string.ok, (dialog, which) -> finish())
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    mWebView.loadUrl("javascript:leavePage()");
+                    finish();
+                })
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {
                     mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_END));
                     dialog.dismiss();
@@ -573,7 +576,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
         @Override
         public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
-            mTvTips.setVisibility( View.VISIBLE );
+            mTvTips.setVisibility(View.VISIBLE);
             // 算路返回结果
             AMapNaviPath naviPath = mAMapNavi.getNaviPath();
             if (mNaviRouteOverlay == null) {

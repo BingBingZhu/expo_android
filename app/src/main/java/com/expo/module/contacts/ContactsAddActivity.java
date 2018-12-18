@@ -113,11 +113,13 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
         textView.setBackgroundResource(0);
         textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrow_down, 0);
+        textView.setPadding(0, 0, 0, 0);
         mMvType.addRightView(textView);
     }
 
     public void initContactsName() {
         EditText editText = new EditText(this);
+        editText.setPadding(0, 0, 0, 0);
         editText.setBackgroundResource(0);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_28));
         editText.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
@@ -127,6 +129,7 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
 
     public void initContactsId() {
         EditText editText = new EditText(this);
+        editText.setPadding(0, 0, 0, 0);
         editText.setBackgroundResource(0);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_28));
         editText.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
