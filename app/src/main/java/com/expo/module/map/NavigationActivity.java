@@ -194,7 +194,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     private void initWebView() {
         mWebView.loadUrl("file:///android_asset/web/merge.html");
-        mWebView.loadUrl("javascript:toggleImg(" + PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true) + ")");
+        mWebView.loadUrl("javascript:toggleImg(" + (PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true) ? 1 : 0) + ")");
 //        mWebView.loadUrl("http://192.168.1.143:8080/dist1/index.html#/navigation");
         mWebView.addJavascriptInterface(new TerminalInterface(), "Terminal_Interface");
     }
@@ -223,24 +223,24 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mSlidingDrawerView.open();
             mCameraManager.startPreview();
             updateMapStatue(true);
-            mImgNavigationShow.setVisibility(View.GONE);
+            mImgNavigationShow.setVisibility( View.GONE );
         } else {
             updateMapStatue(false);
-            mImgNavigationShow.setVisibility(View.VISIBLE);
+            mImgNavigationShow.setVisibility( View.VISIBLE );
         }
         mSlidingDrawerView.setOnDrawerCloseListener(() -> {
             mCameraManager.stopPreview();
             PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false);
             updateMapStatue(false);
-            mImgNavigationShow.setVisibility(View.VISIBLE);
-            mImgNavigationShow.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_bottom));
+            mImgNavigationShow.setVisibility( View.VISIBLE );
+            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
         });
         mSlidingDrawerView.setOnDrawerOpenListener(() -> {
             mCameraManager.startPreview();
             PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true);
             updateMapStatue(true);
-            mImgNavigationShow.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_bottom));
-            mImgNavigationShow.setVisibility(View.GONE);
+            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
+            mImgNavigationShow.setVisibility( View.GONE );
         });
     }
 
@@ -576,7 +576,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
         @Override
         public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
-            mTvTips.setVisibility(View.VISIBLE);
+            mTvTips.setVisibility( View.VISIBLE );
             // 算路返回结果
             AMapNaviPath naviPath = mAMapNavi.getNaviPath();
             if (mNaviRouteOverlay == null) {
@@ -625,7 +625,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 PrefsHelper.setBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true));
                 mImgModuleShow.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF,
                         true) ? R.mipmap.ico_module_on : R.mipmap.ico_module_off);
-                mWebView.loadUrl("javascript:toggleImg(" + PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true) + ")");
+                mWebView.loadUrl("javascript:toggleImg(" + (PrefsHelper.getBoolean(Constants.Prefs.KEY_MODULE_ON_OFF, true) ? 1 : 0) + ")");
                 break;
             case R.id.navigation_show:
                 mSlidingDrawerView.animateOpen();

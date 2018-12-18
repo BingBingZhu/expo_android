@@ -111,7 +111,8 @@ public class Find implements Parcelable {
                 url9 = url;
                 break;
             default:
-                url1 = url;
+
+                break;
         }
     }
 
@@ -137,6 +138,18 @@ public class Find implements Parcelable {
                 return R.string.examine_unpass;
         }
         return R.string.examine_pass;
+    }
+
+    public int getStateColor(){
+        switch (state) {
+            case 0:
+            case 1:
+                return R.color.green_02cd9b;
+            case 2:
+                return R.color.red_fe2121;
+            default:
+                return R.color.green_02cd9b;
+        }
     }
 
     public Map toJson() {

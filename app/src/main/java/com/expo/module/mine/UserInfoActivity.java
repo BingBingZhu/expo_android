@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -56,6 +58,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -168,6 +172,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         editText.setBackgroundResource(0);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_28));
         editText.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        editText.setFilters(new InputFilter[]{inputFilter,new InputFilter.LengthFilter(12)});
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -185,6 +190,20 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         });
         mUserName.addRightView(editText);
     }
+
+    InputFilter inputFilter= new InputFilter() {
+        Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+                Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Matcher emojiMatcher = emoji.matcher(source);
+            if (emojiMatcher.find()) {
+                ToastHelper.showShort("不支持输入表情");
+                return "";
+            }
+            return null;
+        }
+    };
 
     public void initUserSexView() {
         View view = LayoutInflater.from(this).inflate(R.layout.item_user_info_sex_view, null);

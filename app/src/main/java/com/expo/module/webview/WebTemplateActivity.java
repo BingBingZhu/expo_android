@@ -25,6 +25,7 @@ import com.expo.module.share.ShareUtil;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
+import com.expo.utils.LocalBroadcastUtil;
 import com.expo.utils.ShareUtils;
 import com.expo.widget.AppBarView;
 import com.expo.widget.X5WebView;
@@ -185,6 +186,13 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     @Override
     public void getActualSceneDataByIdRes(Venue venue) {
         ParkMapActivity.startActivity(getContext(), venue.getId());
+    }
+
+    @Override
+    public void addScore() {
+        Intent intent = new Intent();
+        intent.putExtra(Constants.EXTRAS.EXTRA_USER_POINTS, 0);
+        LocalBroadcastUtil.sendBroadcast(getContext(), intent, Constants.Action.ACTION_REDUCE_USER_POINTS);
     }
 
     private void loadRecommends() {

@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,11 +54,14 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
         setTitle(1, getIntent().getIntExtra(Constants.EXTRAS.EXTRA_TITLE, 0));
         mIsShowRight = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRAS, false);
         if (mIsShowRight)
-            initTitleRightTextView();
+            initTitleRightTextView(R.string.examine_wait, R.color.color_333,
+                    v -> FindExamineActivity.startActivity(FindExamineActivity.this, R.string.examine_wait, false));
 
         mData = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_4)));
+        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_68);
+        int lr = getResources().getDimensionPixelSize(R.dimen.dms_28);
+        mRecyclerView.addItemDecoration(new SpaceDecoration(lr, marginV, lr, 0, 0));
         mRecyclerView.setAdapter(mAdapter = new CommonAdapter(this, R.layout.item_examine, mData) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
@@ -89,10 +93,12 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
                 holder.setText(R.id.item_examine_time, find.createtime);
                 holder.setText(R.id.item_examine_content, find.caption);
                 holder.setText(R.id.item_examine_state, getString(find.getStateRes()));
+                holder.setTextColor(R.id.item_examine_state, getResources().getColor(find.getStateColor()));
                 holder.setVisible(R.id.item_examine_state_layout, !mIsShowRight);
                 holder.setVisible(R.id.item_examine_reason, false);
                 if (!mIsShowRight) {
                     holder.setText(R.id.item_examine_state, getString(find.getStateRes()));
+                    holder.setTextColor(R.id.item_examine_state, getResources().getColor(find.getStateColor()));
                     if (find.state == 1) {
                         holder.getView(R.id.item_examine_state_layout).setSelected(true);
                     } else if (find.state == 1) {
@@ -133,17 +139,6 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
         mData.clear();
         if (list != null) mData.addAll(list);
         mAdapter.notifyDataSetChanged();
-    }
-
-    public void initTitleRightTextView() {
-        TextView mSaveBtn = new TextView(this);
-        ((AppBarView) getTitleView()).setRightView(mSaveBtn);
-        mSaveBtn.setTextAppearance(this, R.style.TextSizeBlack13);
-        mSaveBtn.setText(R.string.examine_wait);
-        mSaveBtn.setGravity(Gravity.CENTER);
-        mSaveBtn.setOnClickListener(v -> {
-            FindExamineActivity.startActivity(FindExamineActivity.this, R.string.examine_wait, false);
-        });
     }
 
     @Override

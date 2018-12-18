@@ -30,6 +30,7 @@ import com.expo.module.login.LoginActivity;
 import com.expo.module.share.ShareUtil;
 import com.expo.pay.JsMethod;
 import com.expo.utils.Constants;
+import com.expo.utils.LocalBroadcastUtil;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -233,6 +234,17 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             mCoupon.couponId = couponId;
             Intent intent = new Intent( WebActivity.this, CaptureActivity.class );
             startActivityForResult( intent, Constants.RequestCode.REQ_TO_QRCODE );
+        }
+
+        /**
+         * 减少用户积分
+         * @param integral  减少的积分数
+         */
+        @JavascriptInterface
+        public void reduceUserPoints(int integral){
+            Intent intent = new Intent();
+            intent.putExtra(Constants.EXTRAS.EXTRA_USER_POINTS, integral);
+            LocalBroadcastUtil.sendBroadcast(getContext(), intent, Constants.Action.ACTION_REDUCE_USER_POINTS);
         }
 
     }

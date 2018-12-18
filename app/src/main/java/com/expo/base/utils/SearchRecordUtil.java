@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import com.expo.utils.Constants;
 
+import java.util.Arrays;
+
 /**
  * 搜索记录
  */
@@ -72,7 +74,13 @@ public class SearchRecordUtil {
     public String[] loadHistory() {
         String history = PrefsHelper.getString( Constants.Prefs.KEY_HISTORY, "" );
         if (!TextUtils.isEmpty( history )) {
-            return history.split( "," );
+            String[] his = history.split( "," );
+            String[] his10;
+            if (his.length > 10){
+                his10 = Arrays.copyOfRange(his, 0, 10);
+                return his10;
+            }
+            return his;
         }
         return new String[0];
     }

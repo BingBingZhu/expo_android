@@ -84,6 +84,10 @@
         <item name="android:textColor">@color/gray_32</item>
     </style>
 
+    <style name="TextSize13_c333" parent="TextSize13">
+        <item name="android:textColor">@color/color_333</item>
+    </style>
+
     <style name="TextSizeWhite13" parent="TextSize12">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -114,6 +118,10 @@
 
     <style name="TextSizeBlack15" parent="TextSize15">
         <item name="android:textColor">@color/gray_32</item>
+    </style>
+
+    <style name="TextSize666_15" parent="TextSize15">
+        <item name="android:textColor">@color/color_666</item>
     </style>
 
     <style name="TextSize16">

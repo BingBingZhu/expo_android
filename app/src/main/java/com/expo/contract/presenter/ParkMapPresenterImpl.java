@@ -18,6 +18,7 @@ import com.expo.entity.VenuesType;
 import com.expo.module.download.DownloadManager;
 import com.expo.network.Http;
 import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,13 +98,18 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                 .add("eq", "type_name", "景点")
                 .add("and")
                 .add("eq", "is_enable", 1));
-        List<Venue> venues = mDao.query(Venue.class, new QueryParams()
-                .add("eq", "type", venuesType.getId()).add("and")
-                .add("eq", "is_enable", 1).add("and")
-                .add("like", "caption", "%"+caption+"%"/*, "COLLATE NOCASE"*/).add("or")
-                .add("eq", "type", venuesType.getId()).add("and")
-                .add("eq", "is_enable", 1).add("and")
-                .add("like", "caption_en", "%"+caption+"%"/*, "COLLATE NOCASE"*/));
+
+        QueryParams queryParams = new QueryParams();
+        if (LanguageUtil.isCN()){
+            queryParams.add("eq", "type", venuesType.getId()).add("and")
+                    .add("eq", "is_enable", 1).add("and")
+                    .add("like", "caption", "%"+caption+"%");
+        }else{
+            queryParams.add("eq", "type", venuesType.getId()).add("and")
+                    .add("eq", "is_enable", 1).add("and")
+                    .add("like", "caption_en", "%"+caption+"%");
+        }
+        List<Venue> venues = mDao.query( Venue.class, queryParams );
         return venues;
     }
 

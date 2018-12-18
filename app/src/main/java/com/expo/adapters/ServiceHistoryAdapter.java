@@ -41,6 +41,7 @@ public class ServiceHistoryAdapter extends RecyclerView.Adapter<ServiceHistoryAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         VisitorService vs = mData.get( position );
+        holder.tvCreateTime.setText(vs.getCreateTime());
         holder.img.setImageResource( getResourceId( vs.getServiceType() ) );
 //        setImageUri(holder.simpleDraweeView1, vs.getImgUrl1());
 //        setImageUri(holder.simpleDraweeView2, vs.getImgUrl2());
@@ -95,6 +96,7 @@ public class ServiceHistoryAdapter extends RecyclerView.Adapter<ServiceHistoryAd
 
         public ViewHolder(View itemView) {
             super( itemView );
+            tvCreateTime = itemView.findViewById( R.id.service_history_item_time_tv );
             img = itemView.findViewById( R.id.service_history_item_img );
 //            simpleDraweeView1 = itemView.findViewById( R.id.service_history_item_simple_drawee_view1 );
 //            simpleDraweeView2 = itemView.findViewById( R.id.service_history_item_simple_drawee_view2 );
