@@ -85,6 +85,7 @@ public interface Constants {
         public static final String EXTRA_TRACK_CHANAGE = "extra_track_chanage";
         public static final String EXTRA_TEXT1 = "extra_text1";
         public static final String EXTRA_SELECTED_POI_NAME = "extra_selected_poi_name";
+        public static final String EXTRA_USER_POINTS = "extra_user_points";
     }
 
     /**
@@ -162,6 +163,7 @@ public interface Constants {
         public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
         public static final String ACTION_TRACK_CHANAGE = "action_track_chanage";
         public static final String ACTION_LOCATION_CHANGED_IN_SCENES = "action_location_changed_in_scenes";
+        public static final String ACTION_REDUCE_USER_POINTS = "action_reduce_user_points";
     }
 
     /**

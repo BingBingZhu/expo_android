@@ -100,10 +100,10 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
         List<Venue> venues = mDao.query(Venue.class, new QueryParams()
                 .add("eq", "type", venuesType.getId()).add("and")
                 .add("eq", "is_enable", 1).add("and")
-                .add("like", "caption", "%"+caption+"%"/*, "COLLATE NOCASE"*/).add("or")
+                .add("like", "caption", "%"+caption+"%").add("or")
                 .add("eq", "type", venuesType.getId()).add("and")
                 .add("eq", "is_enable", 1).add("and")
-                .add("like", "caption_en", "%"+caption+"%"/*, "COLLATE NOCASE"*/));
+                .add("like", "caption_en", "%"+caption+"%"));
         return venues;
     }
 

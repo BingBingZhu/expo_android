@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
@@ -185,15 +186,20 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         mWorkList.add("4");
         mWorkList.add("5");
         mWorkAdapter.setData(mWorkList);
-        mFindType = "3";
-        mWorkAdapter.mPosition = 2;
-        mWorkAdapter.notifyDataSetChanged();
-        mTvTypeText.setText(Constants.ContactsType.FIND_TYPE_MAP.get(mFindType));
+        // 默认不选择类别，合并代码时删除掉此处注释
+//        mFindType = "3";
+//        mWorkAdapter.mPosition = 2;
+//        mWorkAdapter.notifyDataSetChanged();
+//        mTvTypeText.setText(Constants.ContactsType.FIND_TYPE_MAP.get(mFindType));
     }
 
     @OnClick(R.id.find_publish_type)
     public void clickType(View view) {
         CommUtils.hideKeyBoard(this, view);
+        showTypeSelectorDialog();
+    }
+
+    private void showTypeSelectorDialog(){
         DialogPlus dialog = DialogPlus.newDialog(this)
                 .setContentHolder(new ListHolder())
                 .setAdapter(mWorkAdapter)
@@ -210,7 +216,6 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
                 .setExpanded(false)  // This will enable the expand feature, (similar to android L share dialog)
                 .setContentHeight(SizeUtils.dp2px(250))
                 .create();
-
         dialog.show();
     }
 
@@ -348,8 +353,10 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
             ToastHelper.showShort(R.string.check_string_empty_image_video);
             return null;
         }
-        if (CheckUtils.isEmtpy(mTvTypeText.getText().toString(), R.string.check_string_empty_category, true))
+        if (StringUtils.isEmpty(mTvTypeText.getText().toString())){
+            showTypeSelectorDialog();
             return null;
+        }
 
         Find find = new Find();
         find.caption = mEtEdit.getText().toString();

@@ -32,5 +32,7 @@ public interface WebTemplateContract {
     interface View extends IView {
 
         void getActualSceneDataByIdRes(Venue venue);
+
+        void addScore();
     }
 }

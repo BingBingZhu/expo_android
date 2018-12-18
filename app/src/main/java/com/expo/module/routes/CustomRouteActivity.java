@@ -300,6 +300,12 @@ public class CustomRouteActivity extends BaseActivity<CustomRouteContract.Presen
         addLines(mCustomRoutes);
     }
 
+    @Override
+    public void saveCustomRouteSuccess() {
+        mBottomView.setVisibility(View.GONE);
+        ToastHelper.showLong("路线保存成功");
+    }
+
     public void addLines(List<CustomRoute> customRoutes) {
         for (CustomRoute cr : customRoutes) {
             addCustomLine(cr);
@@ -310,16 +316,6 @@ public class CustomRouteActivity extends BaseActivity<CustomRouteContract.Presen
         Polyline p = mAMap.addPolyline(new PolylineOptions().
                 addAll(customRoute.getPoints()).setCustomTexture(BitmapDescriptorFactory.fromResource(R.mipmap.ico_route_item)));
         lineMap.put(customRoute, p);
-    }
-
-    /**
-     * 随机数生成（用于随机颜色）
-     *
-     * @return
-     */
-    public int getRandColor() {
-        Random random = new Random();
-        return random.nextInt(256);
     }
 
     private void addActualSceneMarker(List<Venue> venues) {

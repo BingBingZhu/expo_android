@@ -132,13 +132,8 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
 
     @OnClick(R.id.find_my_find)
     public void onClick(View v) {
-        FindExamineActivity.startActivity(getContext(), R.string.examine, true);
+        FindExamineActivity.startActivity(getContext(), R.string.i_found, true);
     }
-
-//    @OnClick(R.id.find_search)
-//    public void onClick(View v) {
-//        EncyclopediaSearchActivity.startActivity(getContext());
-//    }
 
     @OnClick(R.id.find_add)
     public void clickFindAdd(View view) {

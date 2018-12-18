@@ -107,6 +107,6 @@ public class CustomRoutePresenterImpl extends CustomRouteContract.Presenter {
         mDao.saveOrUpdateAll(venues);
         mDao.clear(CustomRoute.class);
         mDao.saveOrUpdateAll(customRoutes);
-        ToastHelper.showLong("路线保存成功");
+        mView.saveCustomRouteSuccess();
     }
 }

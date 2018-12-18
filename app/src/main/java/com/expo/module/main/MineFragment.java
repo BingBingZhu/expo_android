@@ -1,6 +1,9 @@
 package com.expo.module.main;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.expo.module.webview.WebActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
+import com.expo.utils.LocalBroadcastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +54,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     TextView mTvBadge;
 
     private int score;
+    private int totScores;
 
     @Override
     public int getContentView() {
@@ -60,12 +65,14 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     protected void onInitView(Bundle savedInstanceState) {
         mPresenter.loadUser();
         EventBus.getDefault().register( this );
+        LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_REDUCE_USER_POINTS);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister( this );
+        LocalBroadcastUtil.unregisterReceiver(getContext(), receiver);
     }
 
     @Override
@@ -80,9 +87,9 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         if (!StringUtils.isEmpty( user.getPhotoUrl() ))
             CommUtils.setImgPic( getContext(), user.getPhotoUrl(), mImageView );
         mTvMineName.setText( user.getNick() );
-        String scores = getResources().getString( R.string.the_current_integral );
-        score = user.getIntTotscores();
-        mTvIntegral.setText( String.format( scores, score ) );
+        totScores = user.getIntTotscores();
+        score = user.getIntScore();
+        mTvIntegral.setText( String.format( getResources().getString( R.string.the_current_integral ), score ) );
     }
 
     @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name, R.id.item_mine_bespeak,
@@ -123,13 +130,22 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
                             + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.score ), false );
                 break;
             case R.id.mine_badge:       // 徽章
-                BadgeActivity.startActivity( getContext(), score );
+                BadgeActivity.startActivity( getContext(), totScores );
                 break;
             case R.id.item_mine_contacts:       // 预约联系人
                 ContactsActivity.startActivity( getActivity(), false, 0 );
                 break;
         }
     }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            score-=intent.getIntExtra(Constants.EXTRAS.EXTRA_USER_POINTS, 0);
+            mTvIntegral.setText( String.format( getResources().getString( R.string.the_current_integral ), score ) );
+            mPresenter.loadUser();
+        }
+    };
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getEventBusMsgOnMainThread(BaseEventMessage baseEventMessage) {
@@ -139,4 +155,6 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
                 break;
         }
     }
+
+
 }

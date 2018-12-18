@@ -3,30 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/dms_50"
-    android:paddingTop="@dimen/dms_30"
-    android:paddingRight="@dimen/dms_50">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/item_examine_time"
-        style="@style/TextSizeBlack13" />
+        style="@style/TextSize13_c333"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:text="2018年10月14日16：00"/>
 
     <TextView
         android:id="@+id/item_examine_content"
-        style="@style/TextSizeBlack13"
-        android:layout_marginTop="@dimen/dms_38"
-        android:maxLines="3" />
+        style="@style/TextSize13_c333"
+        android:layout_marginTop="@dimen/dms_20"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
+        android:layout_marginBottom="@dimen/dms_16"
+        android:maxLines="3"
+        android:text="走走停停，街拍别有一番风趣体验！走走停停街拍别有一番风趣体验！走走停停，街拍别有一番风趣体验，走走停停体验！"/>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_310">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_2"
+        android:layout_marginRight="@dimen/dms_2"
+        android:padding="@dimen/dms_22"
+        android:background="@drawable/shape_find_item_bg"
+        android:elevation="@dimen/dms_4">
 
         <org.raphets.roundimageview.RoundImageView
             android:id="@+id/item_examine_img"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_310"
-            android:layout_marginTop="@dimen/dms_38"
             android:scaleType="centerCrop"
             android:src="@drawable/image_default"
             app:leftBottom_corner_radius="@dimen/dms_4"
@@ -39,29 +46,36 @@
             android:id="@+id/item_find_video_control"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:src="@mipmap/video_start" />
-    </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/item_examine_state_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_32"
-        android:visibility="gone">
+        <FrameLayout
+            android:id="@+id/item_examine_state_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_examine_img"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/dms_6"
+            android:layout_marginRight="@dimen/dms_6"
+            android:layout_marginTop="@dimen/dms_32"
+            android:layout_marginBottom="@dimen/dms_10"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/item_examine_state"
-            style="@style/TextSizeBlack13"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/selector_fe2121_02cd9b" />
+            <TextView
+                android:id="@+id/item_examine_state"
+                style="@style/TextSizeBlack13"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/selector_fe2121_02cd9b"/>
 
-        <TextView
-            android:id="@+id/item_examine_reason"
-            style="@style/TextSizeBlack15"
-            android:layout_gravity="right|center_vertical"
-            android:textColor="@color/selector_fe2121_02cd9b" />
-    </FrameLayout>
+            <TextView
+                android:id="@+id/item_examine_reason"
+                style="@style/TextSizeBlack15"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/selector_fe2121_02cd9b"/>
+        </FrameLayout>
+    </RelativeLayout>
+
+
 
     <TextView
         android:layout_width="0dp"

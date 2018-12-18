@@ -33,5 +33,8 @@ public interface CustomRouteContract {
         void updateMarkerPic(VenuesType vt);
 
         void loadCustomRoute(List<CustomRoute> customRoutes);
+
+        void saveCustomRouteSuccess();
+
     }
 }

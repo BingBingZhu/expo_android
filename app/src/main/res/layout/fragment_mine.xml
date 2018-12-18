@@ -49,10 +49,19 @@
             android:textColor="@color/color_999"
             android:textSize="@dimen/font_22" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_2"
+            android:layout_marginTop="@dimen/dms_20"
+            android:layout_below="@id/mine_edit_info"
+            android:background="@color/white_f4"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/mine_edit_info"
+            android:layout_marginLeft="@dimen/dms_28"
+            android:layout_marginRight="@dimen/dms_28"
             android:layout_marginTop="@dimen/dms_36"
             android:layout_marginBottom="@dimen/dms_26"
             android:gravity="center"
@@ -60,19 +69,27 @@
 
             <TextView
                 android:id="@+id/mine_integral"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/dms_20"
                 android:drawableLeft="@mipmap/ico_trophy"
                 android:gravity="center"
                 android:text="@string/the_current_integral"
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/font_30" />
 
+            <View
+                android:layout_width="@dimen/dms_2"
+                android:layout_height="match_parent"
+                android:background="@color/white_f4"/>
+
             <TextView
                 android:id="@+id/mine_badge"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dms_90"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/dms_20"
                 android:drawableLeft="@mipmap/ico_badge"
                 android:gravity="center"
                 android:text="@string/badge"

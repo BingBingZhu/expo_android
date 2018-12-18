@@ -12,20 +12,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.TypedValue;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.blankj.utilcode.util.SizeUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
-import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebContract;
 import com.expo.entity.Coupon;
@@ -35,8 +30,7 @@ import com.expo.module.login.LoginActivity;
 import com.expo.module.share.ShareUtil;
 import com.expo.pay.JsMethod;
 import com.expo.utils.Constants;
-import com.expo.utils.MD5Util;
-import com.expo.widget.AppBarView;
+import com.expo.utils.LocalBroadcastUtil;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -99,17 +93,21 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     }
 
     private void loadUrl(String url) {
-        try {
-            int rulId = Integer.parseInt( url );
-            mPresenter.getUrlById( rulId );
-        } catch (Exception e) {
-            if (!url.startsWith( "http" ) && !url.startsWith( "https" )
-                    && !url.startsWith( "file" ) && !url.startsWith( "javascript:" )
-                    && !url.startsWith( "www" )) {
-                url = Constants.URL.FILE_BASE_URL + url;
+        if (TextUtils.isEmpty( url )) {
+            mX5View.loadUrl( Constants.URL.HTML_404 );
+        } else {
+            if (url.matches( Constants.Exps.NUMBER )) {
+                int rulId = Integer.parseInt( url );
+                mPresenter.getUrlById( rulId );
+            } else {
+                if (!url.startsWith( "http" ) && !url.startsWith( "https" )
+                        && !url.startsWith( "file" ) && !url.startsWith( "javascript:" )
+                        && !url.startsWith( "www" )) {
+                    url = Constants.URL.FILE_BASE_URL + url;
 
+                }
+                mX5View.loadUrl( url );
             }
-            mX5View.loadUrl( url );
         }
     }
 
@@ -186,7 +184,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
     @Override
     public void useCoupon() {
-        mX5View.loadUrl("javascript:useCouponId()");
+        mX5View.loadUrl( "javascript:useCouponId()" );
     }
 
     /**
@@ -210,7 +208,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
         @JavascriptInterface
         public void unLogin() {
-            mHandler.post(() -> showForceSingOutDialog());
+            mHandler.post( () -> showForceSingOutDialog() );
         }
 
         @JavascriptInterface
@@ -222,19 +220,31 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         public void selectContext(int count) {
             ContactsActivity.startActivity( WebActivity.this, true, count );
         }
+
         @JavascriptInterface
         public void setTitle(String titleText, int color) {
-            runOnUiThread(()->{
-                WebActivity.this.setTitle(color,titleText);
-            });
+            runOnUiThread( () -> {
+                WebActivity.this.setTitle( color, titleText );
+            } );
         }
 
         @JavascriptInterface
         public void setCouponId(String couponId) {
             if (mCoupon == null) mCoupon = new Coupon();
             mCoupon.couponId = couponId;
-            Intent intent = new Intent(WebActivity.this, CaptureActivity.class);
-            startActivityForResult(intent, Constants.RequestCode.REQ_TO_QRCODE);
+            Intent intent = new Intent( WebActivity.this, CaptureActivity.class );
+            startActivityForResult( intent, Constants.RequestCode.REQ_TO_QRCODE );
+        }
+
+        /**
+         * 减少用户积分
+         * @param integral  减少的积分数
+         */
+        @JavascriptInterface
+        public void reduceUserPoints(int integral){
+            Intent intent = new Intent();
+            intent.putExtra(Constants.EXTRAS.EXTRA_USER_POINTS, integral);
+            LocalBroadcastUtil.sendBroadcast(getContext(), intent, Constants.Action.ACTION_REDUCE_USER_POINTS);
         }
 
     }
@@ -286,14 +296,14 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         super.onActivityResult( requestCode, resultCode, data );
         if (resultCode == RESULT_OK) {
             if (requestCode == Constants.RequestCode.REQ_TO_CONTACTS) {
-                mX5View.loadUrl("javascript:setContext('" + data.getStringExtra(Constants.EXTRAS.EXTRAS) + "')");
+                mX5View.loadUrl( "javascript:setContext('" + data.getStringExtra( Constants.EXTRAS.EXTRAS ) + "')" );
             } else if (requestCode == Constants.RequestCode.REQ_TO_QRCODE) {
-                String str = data.getStringExtra(Constant.CODED_CONTENT);
-                if (str.startsWith("buss:")) {
+                String str = data.getStringExtra( Constant.CODED_CONTENT );
+                if (str.startsWith( "buss:" )) {
                     mCoupon.vrCode = str;
-                    mPresenter.setUsedCoupon(mCoupon);
+                    mPresenter.setUsedCoupon( mCoupon );
                 } else {
-                    ToastHelper.showShort(R.string.error_qrcode);
+                    ToastHelper.showShort( R.string.error_qrcode );
                 }
             }
         }
@@ -301,7 +311,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
     @Override
     protected void onDestroy() {
-        mHandler.removeCallbacksAndMessages(null);
+        mHandler.removeCallbacksAndMessages( null );
         super.onDestroy();
     }
 }

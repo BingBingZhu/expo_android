@@ -1,6 +1,8 @@
 package com.expo.contract.presenter;
 
+import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
@@ -12,6 +14,8 @@ import com.expo.entity.Encyclopedias;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
+import com.expo.utils.Constants;
+import com.expo.utils.LocalBroadcastUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,6 +59,7 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
         Http.request(new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
+                mView.addScore();
             }
 
         }, observable);

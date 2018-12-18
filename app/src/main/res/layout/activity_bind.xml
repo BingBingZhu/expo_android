@@ -12,7 +12,7 @@
     tools:context=".module.login.BindPhoneActivity">
 
     <TextView
-        style="@style/TextSizeBlack16"
+        style="@style/TextSize666_15"
         android:layout_marginTop="@dimen/dms_40"
         android:gravity="center"
         android:text="@string/bind_phone_need_sms" />
