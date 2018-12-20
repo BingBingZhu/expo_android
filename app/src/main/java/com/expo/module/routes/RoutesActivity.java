@@ -42,7 +42,8 @@ public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> imple
 
     BaseAdapterItemClickListener<Long> mListener = (view, position, aLong) -> {
         mPresenter.clickRoute(String.valueOf(aLong));
-        RouteDetailActivity.startActivity(RoutesActivity.this, aLong);
+        RouteInfo routeInfo = mData.get(position);
+        RouteDetailActivity.startActivity(RoutesActivity.this, aLong, LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
     };
 
     @Override

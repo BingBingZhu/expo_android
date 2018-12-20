@@ -30,6 +30,7 @@ import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,6 +53,8 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     TextView mTvIntegral;
     @BindView(R.id.mine_badge)
     TextView mTvBadge;
+    @BindView(R.id.mine_badge_pic)
+    SimpleDraweeView mBadgePic;
 
     private int score;
     private int totScores;
@@ -90,11 +93,14 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         totScores = user.getIntTotscores();
         score = user.getIntScore();
         mTvIntegral.setText( String.format( getResources().getString( R.string.the_current_integral ), score ) );
+        String badgeCaption = LanguageUtil.chooseTest(user.getBadgeCaption(), user.getBadgeCaptionEn());
+        mTvBadge.setText((null == badgeCaption || badgeCaption.isEmpty()) ? "徽章" : badgeCaption);
+        mBadgePic.setImageURI(Constants.URL.FILE_BASE_URL + user.getBadgePicSmall());
     }
 
     @OnClick({R.id.mine_edit_info, R.id.mine_img, R.id.mine_name, R.id.item_mine_bespeak,
             R.id.item_mine_comment_report, R.id.item_mine_message, R.id.item_mine_track,
-            R.id.item_mine_setting, R.id.mine_integral, R.id.mine_badge, R.id.item_mine_contacts})
+            R.id.item_mine_setting, R.id.mine_integral, R.id.mine_badge_root, R.id.item_mine_contacts})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mine_edit_info:
@@ -129,7 +135,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
                             + "&integral=" + score
                             + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.score ), false );
                 break;
-            case R.id.mine_badge:       // 徽章
+            case R.id.mine_badge_root:       // 徽章
                 BadgeActivity.startActivity( getContext(), totScores );
                 break;
             case R.id.item_mine_contacts:       // 预约联系人

@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -50,6 +51,7 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
 //    private NationalSmsCode mNationalSmsCode;
     private ArrayList<Country> mSelectedCountries = new ArrayList<>();
     private ArrayList<Country> mAllCountries = new ArrayList<>();
+    private NationalSmsCodeActivity.CAdapter adapter;
 
 
     @Override
@@ -60,7 +62,6 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
     @Override
     protected void onInitView(Bundle savedInstanceState) {
 //        mNationalSmsCode = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
-
         setTitle(0, R.string.title_pick_ac);
         setDoubleTapToExit(false);
 
@@ -68,7 +69,7 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
         mAllCountries.addAll(Country.getAll(this, null));
         mSelectedCountries.clear();
         mSelectedCountries.addAll(mAllCountries);
-        final NationalSmsCodeActivity.CAdapter adapter = new NationalSmsCodeActivity.CAdapter(mSelectedCountries);
+        adapter = new CAdapter(mSelectedCountries);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRvPick.setLayoutManager(manager);
         mRvPick.setAdapter(adapter);
@@ -86,13 +87,8 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
 
             @Override
             public void afterTextChanged(Editable s) {
-                String string = s.toString();
-                mSelectedCountries.clear();
-                for (Country country : mAllCountries) {
-                    if (country.name.toLowerCase().contains(string.toLowerCase()))
-                        mSelectedCountries.add(country);
-                }
-                adapter.update(mSelectedCountries);
+                String string = s.toString().trim();
+                search(string);
             }
         });
 
@@ -113,6 +109,16 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
                 mTvLetter.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void search(String string) {
+        mSelectedCountries.clear();
+        for (Country country : mAllCountries) {
+            if (country.name.toLowerCase().contains(string.toLowerCase()))
+                mSelectedCountries.add(country);
+        }
+        adapter.update(mSelectedCountries);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

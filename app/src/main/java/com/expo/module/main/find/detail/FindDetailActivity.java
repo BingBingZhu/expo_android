@@ -219,4 +219,13 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
         mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
+
+    @Override
+    public void addEnjoyRes() {
+        // 点赞返回
+        int enjoys = Integer.parseInt(mFind.enjoys);
+        enjoys++;
+        mFind.enjoys = String.valueOf(enjoys);
+        mTvEnjoy.setText(mFind.enjoys);
+    }
 }

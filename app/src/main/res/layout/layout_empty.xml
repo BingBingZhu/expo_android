@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dms_90"
         android:layout_marginBottom="@dimen/dms_90"
-        android:text=""
+        android:text="没数据，这个文字暂时用"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/font_44" />
 

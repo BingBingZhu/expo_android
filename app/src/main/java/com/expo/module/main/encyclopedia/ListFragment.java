@@ -14,6 +14,7 @@ import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ListContract;
 import com.expo.entity.Encyclopedias;
+import com.expo.widget.RecycleViewDivider;
 import com.expo.widget.SimpleRecyclerView;
 import com.expo.widget.decorations.SpaceDecoration;
 
@@ -53,10 +54,8 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
         mEncyclopediasList = new ArrayList<>();
         adapter = new EncyAndSceneListAdapter(getContext(), mEncyclopediasList);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addItemDecoration( new SpaceDecoration( 0,getResources().getDimensionPixelSize( R.dimen.dms_4 ) ) );
-//        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_18);
-//        int space = getResources().getDimensionPixelSize(R.dimen.dms_18);
-//        mRecyclerView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
+        mRecyclerView.addItemDecoration( new RecycleViewDivider(
+                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor( R.color.white_f4 ) ) );
         mPresenter.loadEncyByType(mTab.getId(), page);
         initLoadMore();
     }

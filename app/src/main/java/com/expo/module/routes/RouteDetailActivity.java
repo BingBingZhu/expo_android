@@ -1,5 +1,6 @@
 package com.expo.module.routes;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -131,6 +132,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             MediaPlayerManager.getInstence().setSeek(seekBar.getProgress());
+            mBtPlayer.setImageResource(R.mipmap.player_playing);
         }
     };
 
@@ -143,7 +145,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle(1, R.string.title_routest_detail);
+        setTitle(1, getIntent().getStringExtra(Constants.EXTRAS.EXTRA_ROUTE_NAME));
         initRecyclerView();
 
         mPbProgress.setOnSeekBarChangeListener(mSeekListener);
@@ -166,9 +168,10 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
      * @param context
      * @param routeId
      */
-    public static void startActivity(@NonNull Context context, @NonNull Long routeId) {
+    public static void startActivity(@NonNull Context context, @NonNull Long routeId, String routeName) {
         Intent in = new Intent(context, RouteDetailActivity.class);
         in.putExtra(Constants.EXTRAS.EXTRA_ID, routeId);
+        in.putExtra(Constants.EXTRAS.EXTRA_ROUTE_NAME, routeName);
         context.startActivity(in);
     }
 
@@ -227,6 +230,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         }
     };
 
+    @SuppressLint("StringFormatMatches")
     @Override
     public void showRouteDetail(RouteInfo info) {
         mInfo = info;

@@ -169,6 +169,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
 
     public void initUserNameView() {
         EditText editText = new EditText(this);
+        editText.setHint(R.string.not_import);
         editText.setBackgroundResource(0);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_28));
         editText.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -224,6 +225,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
 
     public void initUserEmailView() {
         EditText editText = new EditText(this);
+        editText.setHint(R.string.not_import);
         editText.setBackgroundResource(0);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_28));
         editText.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);

@@ -1,13 +1,18 @@
 package com.expo.contract.presenter;
 
+import android.location.Location;
+
 import com.expo.contract.WebContract;
 import com.expo.entity.Coupon;
+import com.expo.entity.Park;
 import com.expo.entity.User;
+import com.expo.map.MapUtils;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
 import com.expo.network.response.RichTextRsp;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -83,5 +88,13 @@ public class WebPresenterImpl extends WebContract.Presenter {
                 super.onComplete();
             }
         }, observable);
+    }
+
+    @Override
+    public boolean checkInPark(Location location) {
+        Park park = mDao.unique( Park.class, null );
+        if (park == null) return false;
+        List<double[]> bounds = park.getElectronicFenceList();
+        return MapUtils.ptInPolygon( location.getLatitude(), location.getLongitude(), bounds );
     }
 }

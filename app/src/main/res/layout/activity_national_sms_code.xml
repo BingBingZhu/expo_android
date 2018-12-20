@@ -26,6 +26,8 @@
             android:hint="@string/please_enter_your_search_terms"
             android:imeOptions="actionSearch"
             android:maxLines="1"
+            android:singleLine="true"
+            android:lines="1"
             android:textSize="@dimen/font_26"
             android:textColor="@color/color_333"
             android:textColorHint="@color/color_999" />

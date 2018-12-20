@@ -32,7 +32,9 @@
         android:layout_marginTop="@dimen/dms_30"
         android:background="@drawable/bg_white_ccc_r5_w1"
         android:gravity="top|left"
-        android:lines="4"
+        android:hint="@string/position_description_hint"
+        android:maxLength="50"
+        android:textSize="@dimen/font_28"
         android:padding="@dimen/dms_10" />
 
     <TextView
