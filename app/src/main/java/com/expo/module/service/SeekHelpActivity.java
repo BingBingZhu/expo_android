@@ -34,9 +34,11 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SeekHelpContract;
 import com.expo.entity.User;
+import com.expo.entity.Venue;
 import com.expo.entity.VisitorService;
 import com.expo.map.LocationManager;
 import com.expo.module.camera.CameraActivity;
+import com.expo.module.map.NavigationActivity;
 import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
@@ -263,7 +265,16 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
             ToastHelper.showShort( R.string.trying_to_locate );
             return;
         }
-        mPresenter.getServerPoint( mLocation );
+        if (mPresenter.checkInPark( mLocation.getLatitude(), mLocation.getLongitude() )) {
+            Venue venue = mPresenter.getNearbyServiceCenter( mLocation );
+            if (venue != null) {
+                NavigationActivity.startActivity( getContext(), venue );
+            } else {
+                ToastHelper.showShort( R.string.no_service_agencies );
+            }
+        } else {
+            ToastHelper.showShort( R.string.unable_to_provide_service );
+        }
     }
 
     private boolean isNotLocation(){

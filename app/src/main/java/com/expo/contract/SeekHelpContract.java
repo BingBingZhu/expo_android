@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.Venue;
 import com.expo.entity.VisitorService;
 
 public interface SeekHelpContract {
@@ -18,6 +19,8 @@ public interface SeekHelpContract {
         public abstract void getServerPoint(Location mLocation);
 
         public abstract boolean checkInPark(double mLat, double mLng);
+
+        public abstract Venue getNearbyServiceCenter(Location mLocation);
     }
 
     interface View extends IView {

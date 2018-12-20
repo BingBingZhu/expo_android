@@ -3,12 +3,17 @@ package com.expo.contract.presenter;
 import android.location.Location;
 import android.text.TextUtils;
 
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.contract.SeekHelpContract;
+import com.expo.db.QueryParams;
 import com.expo.entity.Park;
+import com.expo.entity.Venue;
+import com.expo.entity.VenuesType;
 import com.expo.entity.VisitorService;
 import com.expo.map.MapUtils;
 import com.expo.network.Http;
@@ -166,6 +171,36 @@ public class SeekHelpPresenterImpl extends SeekHelpContract.Presenter {
         if (park == null) return false;
         List<double[]> bounds = park.getElectronicFenceList();
         return MapUtils.ptInPolygon( lat, lng, bounds );
+    }
+
+    @Override
+    public Venue getNearbyServiceCenter(Location location) {
+        VenuesType venuesType = mDao.unique( VenuesType.class, new QueryParams()
+                .add( "eq", "is_enable", 1 )
+                .add( "and" )
+                .add( "like", "type_name", "%\u670d\u52a1%" ) );//服务
+        if (venuesType != null) {
+            List<Venue> venues = mDao.query( Venue.class, new QueryParams()
+                    .add( "eq", "type", String.valueOf( venuesType.getId() ) ) );
+            if (venues != null) {
+                if (venues.size() > 1) {
+                    float minDistance = Float.MAX_VALUE;
+                    Venue result = null;
+                    LatLng loc = new LatLng( location.getLatitude(), location.getLongitude() );
+                    for (Venue venue : venues) {
+                        float distance = AMapUtils.calculateLineDistance( loc, new LatLng( venue.getLat(), venue.getLng() ) );
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            result = venue;
+                        }
+                    }
+                    return result;
+                } else {
+                    return venues.get( 0 );
+                }
+            }
+        }
+        return null;
     }
 
     private synchronized void submitVisitorService(VisitorService visitorService) {

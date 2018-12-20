@@ -390,4 +390,5 @@
     <string name="expected_travel_time">预计游玩时间：%s分钟</string>
     <string name="my_tourist_service">我的游客服务</string>
     <string name="i_found">我的发现</string>
+    <string name="no_service_agencies">抱歉暂时没有可提供服务的机构！</string>
 </resources>
