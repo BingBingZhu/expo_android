@@ -41,19 +41,19 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
+        super.onCreate(savedInstanceState);
         // 设置view中可以使用Vector图片资源
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled( true );
-        StatusBarUtils.setStatusBarFullTransparent( this );
-        StatusBarUtils.setStatusBarLight( this, true );
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        StatusBarUtils.setStatusBarFullTransparent(this);
+        StatusBarUtils.setStatusBarLight(this, true);
         initRootView();
-        setContentView( mRootView );
+        setContentView(mRootView);
         // Activity退出管理类添加开启的Activity
-        ActivityHelper.add( this );
-        ButterKnife.bind( this );
+        ActivityHelper.add(this);
+        ButterKnife.bind(this);
         if (hasPresenter())
-            mPresenter = (P) PresenterFactory.getPresenter( this );
-        onInitView( savedInstanceState );
+            mPresenter = (P) PresenterFactory.getPresenter(this);
+        onInitView(savedInstanceState);
     }
 
     private TextView titleRightView;
@@ -73,15 +73,15 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     }
 
     private void initRootView() {
-        mRootView = new RootView( this );
-        mRootView.setNormalView( getContentView() );
+        mRootView = new RootView(this);
+        mRootView.setNormalView(getContentView());
     }
 
 
     @Override
     protected void onDestroy() {
         // Activity销毁时移除此Activity
-        ActivityHelper.remove( this );
+        ActivityHelper.remove(this);
         super.onDestroy();
     }
 
@@ -121,10 +121,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     public void showLoadingView() {
         if (mLoadingMaskView == null) {
-            mLoadingMaskView = getLayoutInflater().inflate( R.layout.layout_progress, null );
+            mLoadingMaskView = getLayoutInflater().inflate(R.layout.layout_progress, null);
         }
         if (mLoadingMaskView.getParent() == null) {
-            ((ViewGroup) getWindow().getDecorView()).addView( mLoadingMaskView );
+            ((ViewGroup) getWindow().getDecorView()).addView(mLoadingMaskView);
         }
     }
 
@@ -134,7 +134,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     public void hideLoadingView() {
         if (mLoadingMaskView != null && mLoadingMaskView.getParent() != null) {
-            ((ViewGroup) mLoadingMaskView.getParent()).removeView( mLoadingMaskView );
+            ((ViewGroup) mLoadingMaskView.getParent()).removeView(mLoadingMaskView);
         }
     }
 
@@ -144,7 +144,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             BaseApplication.getApplication().appExit();
             return true;
         }
-        return super.onKeyDown( keyCode, event );
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -159,15 +159,15 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      * @param stringId layoutId为0或者1 有效
      */
     public void setTitle(int layoutId, int stringId) {
-        mRootView.setTitle( layoutId, getResources().getString( stringId ) );
+        mRootView.setTitle(layoutId, getResources().getString(stringId));
     }
 
     public void setTitle(int layoutId, String title) {
-        mRootView.setTitle( layoutId, title );
+        mRootView.setTitle(layoutId, title);
     }
 
     public void setTitleVisibility(int visibility) {
-        mRootView.setTitleVisibility( visibility );
+        mRootView.setTitleVisibility(visibility);
     }
 
     /**
@@ -175,6 +175,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      */
     public View getTitleView() {
         return mRootView.getTitle();
+    }
+
+    public void setEmptyFreshListener(int freshId, View.OnClickListener listener) {
+        mRootView.addFreshListener(freshId, listener);
     }
 
     public void showEmptyView() {

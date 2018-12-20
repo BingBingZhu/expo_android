@@ -54,10 +54,14 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
         int marginV = getResources().getDimensionPixelSize(R.dimen.dms_30);
         mRecyclerView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
         mAdapter = new ServiceHistoryAdapter(getContext(), visitorServices);
-        mAdapter.setOnClickListener( mClickListener );
+        mAdapter.setOnClickListener(mClickListener);
         mRecyclerView.setAdapter(mAdapter);
         initLoadMore();
         mPtrView.autoRefresh();
+        setEmptyFreshListener(0, v -> {
+            page = 0;
+            mPresenter.loadAllData();
+        });
     }
 
     private void initLoadMore() {
@@ -78,7 +82,7 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
     }
 
     @Override
-    public void addDataToList(List<VisitorService> data){
+    public void addDataToList(List<VisitorService> data) {
         // 加载到列表
         if (null == data || data.size() == 0) {
             if (page > 0) {
@@ -86,12 +90,14 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
                 ToastHelper.showShort(R.string.no_more_data_available);
             }
         } else {
-            if (page == 0){
+            if (page == 0) {
                 visitorServices.clear();
             }
             visitorServices.addAll(data);
             mAdapter.notifyDataSetChanged();
         }
+        if (visitorServices.size() == 0) showEmptyView();
+        else hideEmptyView();
         mPtrView.refreshComplete();
     }
 
@@ -102,13 +108,13 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
                 case R.id.service_history_item_more_tv:
                     RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
                     if (holder == null) return;
-                    VisitorService vs = mAdapter.getDataByPosition( holder.getAdapterPosition() );
+                    VisitorService vs = mAdapter.getDataByPosition(holder.getAdapterPosition());
                     User user = ExpoApp.getApplication().getUser();
                     if (vs != null && user != null) {
-                        String url = mPresenter.loadCommonInfo( CommonInfo.VISITOR_SERVICE_DETAILS );
-                        WebActivity.startActivity( getContext(),
-                                TextUtils.isEmpty( url ) ? url : (url + String.format( "?Uid=%s&Ukey=%s&id=%s", user.getUid(), user.getUkey(), vs.getId() )),
-                                getString( R.string.title_detail ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
+                        String url = mPresenter.loadCommonInfo(CommonInfo.VISITOR_SERVICE_DETAILS);
+                        WebActivity.startActivity(getContext(),
+                                TextUtils.isEmpty(url) ? url : (url + String.format("?Uid=%s&Ukey=%s&id=%s", user.getUid(), user.getUkey(), vs.getId())),
+                                getString(R.string.title_detail), BaseActivity.TITLE_COLOR_STYLE_WHITE);
                     }
                     break;
             }
@@ -117,7 +123,7 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
 
     @Override
     public void loadDataRes(boolean b) {
-        if (!b){
+        if (!b) {
             ToastHelper.showShort("刷新失败，请检查网络设置");
         }
         mPtrView.refreshComplete();
@@ -131,7 +137,7 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
     }
 
     public static void startActivity(@NonNull Context context) {
-        Intent in = new Intent( context, ServiceHistoryActivity.class );
-        context.startActivity( in );
+        Intent in = new Intent(context, ServiceHistoryActivity.class);
+        context.startActivity(in);
     }
 }
