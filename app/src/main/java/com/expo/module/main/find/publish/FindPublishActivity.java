@@ -167,7 +167,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
                 mAdapter.refresh(mImageList);
             } else if (requestCode == Constants.RequestCode.REQ_TO_CAMERA) {
                 String path = data.getStringExtra(Constants.EXTRAS.EXTRAS);
-                if (!path.endsWith(".mp4") || path.endsWith(".mp4") && mImageList.size() == 0) {
+                if ((!path.endsWith(".mp4") || (path.endsWith(".mp4") && mImageList.size() == 0)) && mImageList.size() < 9) {
                     mCameraPosition = mCameraPosition | 1 << mImageList.size();
                     mImageList.add(path);
                     mAdapter.refresh(mImageList);

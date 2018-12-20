@@ -54,6 +54,15 @@ public class User extends BaseResponse implements Parcelable {
     @DatabaseField(columnName = "photo_url")
     @SerializedName(value = "PhotoUrl", alternate = {"picUrl"})
     private String photoUrl;
+    @DatabaseField(columnName = "badge_caption")
+    @SerializedName(value = "BadgeCaption")
+    private String badgeCaption;
+    @DatabaseField(columnName = "badge_caption_en")
+    @SerializedName(value = "BadgeCaptionen")
+    private String badgeCaptionEn;
+    @DatabaseField(columnName = "badge_pic_small")
+    @SerializedName(value = "BadgePicsmall")
+    private String badgePicSmall;
 
     public User() {
     }
@@ -216,6 +225,30 @@ public class User extends BaseResponse implements Parcelable {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public String getBadgeCaption() {
+        return badgeCaption;
+    }
+
+    public void setBadgeCaption(String badgeCaption) {
+        this.badgeCaption = badgeCaption;
+    }
+
+    public String getBadgeCaptionEn() {
+        return badgeCaptionEn;
+    }
+
+    public void setBadgeCaptionEn(String badgeCaptionEn) {
+        this.badgeCaptionEn = badgeCaptionEn;
+    }
+
+    public String getBadgePicSmall() {
+        return badgePicSmall;
+    }
+
+    public void setBadgePicSmall(String badgePicSmall) {
+        this.badgePicSmall = badgePicSmall;
     }
 
     public void saveOnDb(BaseDao mDao) {

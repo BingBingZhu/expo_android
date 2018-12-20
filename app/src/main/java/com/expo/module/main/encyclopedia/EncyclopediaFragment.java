@@ -21,6 +21,7 @@ import com.expo.module.distinguish.DistinguishActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
+import com.expo.widget.DivideTabLayout;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     @BindView(R.id.ency_top_view)
     View mTopView;
     @BindView(R.id.ency_tab)
-    TabLayout mTabView;
+    DivideTabLayout mTabView;
     @BindView(R.id.ency_pager)
     ViewPager mPagerView;
 

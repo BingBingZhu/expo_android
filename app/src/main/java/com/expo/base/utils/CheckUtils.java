@@ -45,6 +45,26 @@ public class CheckUtils {
         return isIDCard(IDCard, "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x|Y|y)$)", textRes);
     }
 
+    public static boolean isCorrectPapersFormat(String papersNum, String type){
+        String regex = "";
+        if (type.equals("1")){
+            regex = "^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$";
+        } else if (type.equals("2")){
+            regex = "^1[45][0-9]{7}$|([P|p|S|s]\\d{7}$)|([Gg|Tt|Ss|Ll|Qq|Dd|Aa|Ee|Ff]\\d{8}$)|([H|h|M|m]\\d{8,10})$";
+        } else if (type.equals("3")){
+            regex = "^([H|h|M|m]\\d{8,10})$";
+        } else if (type.equals("4")){
+            regex = "^([0-9]{8}|[0-9]{10})$";
+        } else {
+            return false;
+        }
+        if (papersNum.matches(regex)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     /**
      * 身份证验证
      *

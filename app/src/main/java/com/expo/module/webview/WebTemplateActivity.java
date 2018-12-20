@@ -228,5 +228,12 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
                 NavigationActivity.startActivity(WebTemplateActivity.this, mVenue);
             });
         }
+
+        @JavascriptInterface
+        public void setTitle(String titleText) {
+            runOnUiThread( () -> {
+                WebTemplateActivity.this.setTitle( BaseActivity.TITLE_COLOR_STYLE_WHITE, titleText );
+            } );
+        }
     }
 }

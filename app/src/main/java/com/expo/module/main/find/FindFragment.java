@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.adapters.Tab;
@@ -26,13 +27,16 @@ import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 
+import org.apache.http.cookie.SM;
+
+import java.lang.reflect.Field;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /*
- * 百科页
+ * 发现页
  */
 public class FindFragment extends BaseFragment<FindContract.Presenter> implements FindContract.View {
 
@@ -81,9 +85,14 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
     }
 
     private void initTabLayout() {
-        mTabView.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabView.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         mTabView.addOnTabSelectedListener(mTabSelectedListener);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mTabView.setTabMode(TabLayout.MODE_FIXED);
     }
 
     private ViewPager.SimpleOnPageChangeListener mOnPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {

@@ -507,7 +507,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             play( voiceUrl );
         } );
         asInfo.setOnClickListener( v12 -> {
-            RouteDetailActivity.startActivity( getContext(), routeInfo.id );
+            RouteDetailActivity.startActivity( getContext(), routeInfo.id, LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen) );
             mRouteInfoDialog.dismiss();
         } );
         asLine.setOnClickListener( v13 -> {

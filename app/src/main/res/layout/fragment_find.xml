@@ -44,6 +44,7 @@
                 android:id="@+id/find_tab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:tabMode="fixed"
                 app:tabBackground="@android:color/white"
                 app:tabSelectedTextColor="@color/color_333"
                 app:tabTextColor="@color/color_666" />

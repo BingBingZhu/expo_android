@@ -1,5 +1,7 @@
 package com.expo.contract;
 
+import android.location.Location;
+
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.Coupon;
@@ -17,6 +19,8 @@ public interface WebContract {
         public abstract void logout();
 
         public abstract void setUsedCoupon(Coupon coupon);
+
+        public abstract boolean checkInPark(Location location);
     }
 
     interface View extends IView{

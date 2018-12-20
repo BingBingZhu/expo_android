@@ -72,7 +72,7 @@ public class LanguageUtil {
      */
     public static String chooseTest(String cn, String en) {
         if (isCN()) return cn;
-        else return en;
+        else return en.isEmpty() ? cn : en;
     }
 
     /**

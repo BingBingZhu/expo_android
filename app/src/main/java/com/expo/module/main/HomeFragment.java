@@ -177,14 +177,17 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         EncyclopediaSearchActivity.startActivity( getContext() );
     }
 
-    @OnClick({R.id.home_func_0, R.id.home_func_1, R.id.home_func_2, R.id.home_func_3, R.id.home_func_4, R.id.home_func_5, R.id.home_func_6, R.id.home_func_7, R.id.home_navigation_item})
+    @OnClick({R.id.home_func_0, R.id.home_func_1, R.id.home_func_2, R.id.home_func_3, R.id.home_func_4,
+            R.id.home_func_5, R.id.home_func_6, R.id.home_func_7, R.id.home_navigation_item,
+            R.id.title_home_icon, R.id.home_map_img })
     public void clickFunc(View view) {
+        String url;
         switch (view.getId()) {
             case R.id.home_func_0:
                 FreeWiFiActivity.startActivity( getContext() );
                 break;
             case R.id.home_func_1:
-                String url = mPresenter.loadCommonInfo( CommonInfo.BUY_TICKETS );
+                url = mPresenter.loadCommonInfo( CommonInfo.BUY_TICKETS );
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
                         (url + "?phone=" + ExpoApp.getApplication().getUser().getMobile()), getString( R.string.buy_tickets ) );
                 break;
@@ -213,6 +216,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 break;
             case R.id.home_navigation_item:
                 ParkMapActivity.startActivity( getContext(), null );
+                break;
+            case R.id.home_map_img:
+            case R.id.title_home_icon:
+                url = mPresenter.loadCommonInfo( CommonInfo.EXPO_BRIEF_INTRODUCTION );
+                WebActivity.startActivity(getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url , getString(R.string.beijing_world_expo_2019), 1);
                 break;
         }
     }

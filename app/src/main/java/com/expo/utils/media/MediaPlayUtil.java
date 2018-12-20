@@ -36,10 +36,8 @@ public class MediaPlayUtil {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setVolume(1, 1);
         mediaPlayer.reset();
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-            }
+        mediaPlayer.setOnCompletionListener(mediaPlayer -> {
+            // 播放结束
         });
         mediaPlayer.setOnPreparedListener(mp -> {
             mediaPlayer.start();

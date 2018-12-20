@@ -86,6 +86,7 @@ public interface Constants {
         public static final String EXTRA_TEXT1 = "extra_text1";
         public static final String EXTRA_SELECTED_POI_NAME = "extra_selected_poi_name";
         public static final String EXTRA_USER_POINTS = "extra_user_points";
+        public static final String EXTRA_ROUTE_NAME = "extra_route_name";
     }
 
     /**

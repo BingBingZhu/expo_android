@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ProgressBar;
 
+import com.amap.api.maps.AMap;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
@@ -25,6 +27,8 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebContract;
 import com.expo.entity.Coupon;
 import com.expo.entity.RichText;
+import com.expo.map.LocationManager;
+import com.expo.map.MapUtils;
 import com.expo.module.contacts.ContactsActivity;
 import com.expo.module.login.LoginActivity;
 import com.expo.module.share.ShareUtil;
@@ -247,7 +251,26 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             LocalBroadcastUtil.sendBroadcast(getContext(), intent, Constants.Action.ACTION_REDUCE_USER_POINTS);
         }
 
+        /**
+         * 用户是否在园区
+         * @return
+         */
+        @JavascriptInterface
+        public void isInPark(){
+            LocationManager.getInstance().registerLocationListener(locationChangeListener);
+        }
+
     }
+
+    private AMap.OnMyLocationChangeListener locationChangeListener = new AMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            if (null != location && location.getLatitude() != 0) {
+                mX5View.loadUrl( "javascript:gLocation("+mPresenter.checkInPark(location)+")" );
+                LocationManager.getInstance().unregisterLocationListener(locationChangeListener);
+            }
+        }
+    };
 
     private void showForceSingOutDialog() {
         new AlertDialog.Builder( ExpoApp.getApplication().getTopActivity() )

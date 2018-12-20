@@ -19,5 +19,7 @@ public interface FindDetailContract {
 
     interface View extends IView {
 
+        void addEnjoyRes();
+
     }
 }

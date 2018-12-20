@@ -390,4 +390,7 @@
     <string name="expected_travel_time">预计游玩时间：%s分钟</string>
     <string name="my_tourist_service">我的游客服务</string>
     <string name="i_found">我的发现</string>
+    <string name="beijing_world_expo_2019">2019北京世园会</string>
+    <string name="please_enter_the_correct_identification_number">请输入正确的证件号码</string>
+    <string name="not_import">未填写</string>
 </resources>

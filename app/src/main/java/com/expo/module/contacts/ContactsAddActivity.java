@@ -25,6 +25,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
 import com.expo.base.IPresenter;
 import com.expo.base.utils.CheckUtils;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ContactsAddContract;
 import com.expo.contract.ContactsContract;
 import com.expo.entity.Contacts;
@@ -158,17 +159,21 @@ public class ContactsAddActivity extends BaseActivity<ContactsAddContract.Presen
         if (CheckUtils.isEmtpy(mIdType, R.string.check_string_id_type, true)) return;
         if (CheckUtils.isEmtpy(((EditText) mMvName.getRightView()).getText().toString(), R.string.check_string_empty_name, true))
             return;
-        if (StringUtils.equals("1", mIdType)) {
-            if (!CheckUtils.isIDCard(((EditText) mMvId.getRightView()).getText().toString(), true))
-                return;
-        } else if (StringUtils.equals("2", mIdType)) {
-            if (!CheckUtils.isPassport(((EditText) mMvId.getRightView()).getText().toString(), true))
-                return;
-        } else if (StringUtils.equals("3", mIdType)) {
-        } else if (StringUtils.equals("4", mIdType)) {
-            if (!CheckUtils.isTWCard(((EditText) mMvId.getRightView()).getText().toString(), true))
-                return;
+        if (!CheckUtils.isCorrectPapersFormat(((EditText) mMvId.getRightView()).getText().toString(), mIdType)){
+            ToastHelper.showShort(R.string.please_enter_the_correct_identification_number);
+            return;
         }
+//        if (StringUtils.equals("1", mIdType)) {
+//            if (!CheckUtils.isIDCard(((EditText) mMvId.getRightView()).getText().toString(), true))
+//                return;
+//        } else if (StringUtils.equals("2", mIdType)) {
+//            if (!CheckUtils.isPassport(((EditText) mMvId.getRightView()).getText().toString(), true))
+//                return;
+//        } else if (StringUtils.equals("3", mIdType)) {
+//        } else if (StringUtils.equals("4", mIdType)) {
+//            if (!CheckUtils.isTWCard(((EditText) mMvId.getRightView()).getText().toString(), true))
+//                return;
+//        }
         mPresenter.updateContactsData(initContacts());
     }
 

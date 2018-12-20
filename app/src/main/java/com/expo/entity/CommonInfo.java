@@ -23,6 +23,7 @@ public class CommonInfo implements Parcelable {
     public static final String PORTAL_WEBSITE_INTEGRATION = "11";//门户网站、微观世界
     public static final String VISITOR_SERVICE_DETAILS = "12";//游客服务详情
     public static final String ENCYCLOPEDIAS_DETAIL_URL = "13";//百科详情
+    public static final String EXPO_BRIEF_INTRODUCTION = "14";//世园会简介
 
     @DatabaseField(columnName = "id", id = true)
     @SerializedName("id")

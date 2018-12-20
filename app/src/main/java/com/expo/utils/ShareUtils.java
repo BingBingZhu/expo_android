@@ -37,6 +37,9 @@ public class ShareUtils {
                 if ("QQ".equals(platform.getName())) {
                     paramsToShare.setTitleUrl(shareUrl);
                 }
+                if ("QZone".equals(platform.getName())) {
+                    paramsToShare.setTitleUrl(shareUrl);
+                }
             }
         });
         if(listener != null)

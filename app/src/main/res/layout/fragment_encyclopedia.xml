@@ -52,13 +52,12 @@
             android:layout_height="@dimen/dms_2"
             android:layout_marginTop="@dimen/dms_14"
             android:background="#00C897"/>
-        <android.support.design.widget.TabLayout
+        <com.expo.widget.DivideTabLayout
             android:id="@+id/ency_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabBackground="@android:color/transparent"
             app:tabMode="scrollable"
-            app:tabMinWidth="@dimen/dms_200"
             app:tabGravity="center"
             app:tabPaddingTop="@dimen/dms_28"
             app:tabPaddingBottom="@dimen/dms_28"
