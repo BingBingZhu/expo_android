@@ -45,10 +45,9 @@ public class RootView extends LinearLayoutCompat {
         setLayoutParams(new LinearLayoutCompat.LayoutParams(-1, -1));
         setOrientation(LinearLayoutCompat.VERTICAL);
 
-        initEmptyView();
         initBodyView();
-
         addView(mBodyView, new LinearLayoutCompat.LayoutParams(-1, -1));
+        initEmptyView();
     }
 
     private void addTitleView() {
@@ -110,14 +109,30 @@ public class RootView extends LinearLayoutCompat {
     }
 
     public void initEmptyView(int layoutId) {
-        mEmptyView = LayoutInflater.from(mActivity).inflate(layoutId, null);
-
+        initEmptyView(LayoutInflater.from(mActivity).inflate(layoutId, null));
     }
 
     public void initEmptyView(View view) {
-        mEmptyView = view;
+        initEmptyView(view, 0, null);
     }
 
+    public void initEmptyView(View view, int freshId, View.OnClickListener listener) {
+        mEmptyView = view;
+        mEmptyView.setVisibility(View.GONE);
+        if (freshId != 0 && listener != null)
+            mEmptyView.findViewById(freshId).setOnClickListener(listener);
+        mBodyView.addView(mEmptyView);
+    }
+
+    public void addFreshListener(int freshId, View.OnClickListener listener) {
+        if (listener == null) {
+            return;
+        } else if (freshId == 0) {
+            mEmptyView.findViewById(R.id.layout_empty_fresh).setOnClickListener(listener);
+        } else {
+            mEmptyView.findViewById(freshId).setOnClickListener(listener);
+        }
+    }
 
     public void setTopPadding() {
         setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);

@@ -3,6 +3,7 @@ package com.expo.module.main.find;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import com.expo.R;
 import com.expo.base.BaseFragment;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -27,8 +29,8 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
     PtrClassicFrameLayout mPtrView;
     @BindView(R.id.recycler_view)
     SimpleRecyclerView mRecyclerView;
-//    @BindView(R.id.empty_layout)
-//    View mEmptyView;
+    @BindView(R.id.empty_layout)
+    View mEmptyView;
 
     private FindListAdapter mAdapter;
     private int page = 0;
@@ -97,15 +99,20 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
             mFindList.addAll(data);
         }
         int end = mFindList.size();
-//        if (mFindList.size() == 0) {
-////            mEmptyView.setVisibility(View.VISIBLE);
-//            mRecyclerView.setVisibility(View.GONE);
-//        } else {
-////            mEmptyView.setVisibility(View.GONE);
-//            mRecyclerView.setVisibility(View.VISIBLE);
-//        }
+        if (mFindList.size() == 0) {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mPtrView.setVisibility(View.GONE);
+        } else {
+            mEmptyView.setVisibility(View.GONE);
+            mPtrView.setVisibility(View.VISIBLE);
+        }
         mAdapter.notifyItemChanged(start, end);
         mPtrView.refreshComplete();
     }
 
+    @OnClick(R.id.layout_empty_fresh)
+    public void clickFresh(View view) {
+        page = 0;
+        mPresenter.getSocietyListFilter(page, mTab.id, true);
+    }
 }

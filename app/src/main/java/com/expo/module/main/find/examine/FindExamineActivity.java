@@ -114,6 +114,8 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
 
         mPresenter.getMySocietyList(mIsShowRight);
 
+        setEmptyFreshListener(0, v -> mPresenter.getMySocietyList(mIsShowRight));
+
     }
 
     @Override
@@ -139,6 +141,8 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
         mData.clear();
         if (list != null) mData.addAll(list);
         mAdapter.notifyDataSetChanged();
+        if (mData.size() == 0) showEmptyView();
+        else hideEmptyView();
     }
 
     @Override

@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/guide_page_title"
+        android:id="@+id/layout_empty_text"
         android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dms_90"
         android:layout_marginBottom="@dimen/dms_90"
-        android:text="没数据，这个文字暂时用"
+        android:text="没有数据"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/font_44" />
 
     <ImageView
-        android:id="@+id/guide_page_content_img"
+        android:id="@+id/layout_empty_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_below="@id/layout_empty_text"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/layout_empty_fresh"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/layout_empty_img"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_90"
+        android:layout_marginBottom="@dimen/dms_90"
+        android:text="刷新"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_44" />
+</RelativeLayout>
