@@ -128,7 +128,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     protected void onInitView(Bundle savedInstanceState) {
         setTitle( 0, R.string.title_setting_ac );
         imgMapON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
-        imgTrackON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true) ? R.mipmap.ico_on : R.mipmap.ico_off );
+        imgTrackON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
         mTvCache.setRightText(DataCleanUtil.getCacheSize());
         mTvLanguage.setRightText( R.string.language );
         mTvUpdate.setRightText( "v" + AppUtils.getAppVersionName() );
@@ -245,11 +245,11 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_track_on_off)
     public void trackOnOFF(View v){
-        PrefsHelper.setBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true));
+        PrefsHelper.setBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false));
         // 设置图片
-        imgTrackON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true) ? R.mipmap.ico_on : R.mipmap.ico_off );
+        imgTrackON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
         LocalBroadcastUtil.sendBroadcast(getContext(), new Intent().putExtra(Constants.EXTRAS.EXTRA_TRACK_CHANAGE,
-                PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true)), Constants.Action.ACTION_TRACK_CHANAGE);
+                PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false)), Constants.Action.ACTION_TRACK_CHANAGE);
     }
 
     @Override

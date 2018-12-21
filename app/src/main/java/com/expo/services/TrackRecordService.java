@@ -49,7 +49,7 @@ public class TrackRecordService extends Service {
     public void onCreate() {
         super.onCreate();
         LocalBroadcastUtil.registerReceiver(getApplicationContext(), receiver, Constants.Action.ACTION_TRACK_CHANAGE);
-        if (PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true))
+        if (PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false))
             startTrace();
     }
 
