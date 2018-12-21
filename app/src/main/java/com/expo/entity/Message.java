@@ -18,6 +18,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -285,8 +286,14 @@ public class Message implements Parcelable {
     public void sendMessageCount(BaseDao dao) {
         if (dao == null)
             dao = new BaseDaoImpl();
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("4");
+        list.add("5");
         QueryParams params = new QueryParams()
                 .add("eq", "read", false)
+                .add("and")
+                .add("in", "type", list)
                 .add("and")
                 .add("eq", "uid", ExpoApp.getApplication().getUser().getUid());
         EventBus.getDefault().post(new BaseEventMessage(Constants.EventBusMessageId.EVENTBUS_ID_HEART_MESSAGE_UNREAD_COUNT, dao.count(Message.class, params)));

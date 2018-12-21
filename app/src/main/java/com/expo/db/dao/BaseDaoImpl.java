@@ -203,6 +203,10 @@ public class BaseDaoImpl implements BaseDao {
         for (T t : list) {
             delete(t);
         }
+
+
+
+
     }
 
     private <T, ID> void setQueryParams(StatementBuilder<T, ID> builder, QueryParams queryParams) throws SQLException {

@@ -85,6 +85,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
         }
         message.setRead(true);
         mPresenter.setMessageRead(message);
+        message.sendMessageCount(null);
         mAdapter.notifyDataSetChanged();
     };
 
