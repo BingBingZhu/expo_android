@@ -28,7 +28,7 @@ public class ExpoApp extends BaseApplication {
         MobSDK.init( this );
         initX5WebView();
         Fresco.initialize( this );
-        if (PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, true))
+        if (PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false))
             PrefsHelper.setLong(Constants.Prefs.KEY_RUN_UP_COUNT, PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, -1)+1);
     }
 

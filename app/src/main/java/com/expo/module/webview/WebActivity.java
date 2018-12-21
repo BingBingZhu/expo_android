@@ -27,10 +27,11 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebContract;
 import com.expo.entity.Coupon;
 import com.expo.entity.RichText;
+import com.expo.entity.Venue;
 import com.expo.map.LocationManager;
-import com.expo.map.MapUtils;
 import com.expo.module.contacts.ContactsActivity;
 import com.expo.module.login.LoginActivity;
+import com.expo.module.map.NavigationActivity;
 import com.expo.module.share.ShareUtil;
 import com.expo.pay.JsMethod;
 import com.expo.utils.Constants;
@@ -257,17 +258,45 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
          */
         @JavascriptInterface
         public void isInPark(){
-            LocationManager.getInstance().registerLocationListener(locationChangeListener);
+            LocationManager.getInstance().registerLocationListener(buyLocationChangeListener);
+        }
+
+        /**
+         * 无障碍服务 导航到服务中心
+         */
+        @JavascriptInterface
+        public void goToServiceCenter(){
+            LocationManager.getInstance().registerLocationListener(barrierLocationChangeListener);
+            ToastHelper.showShort( R.string.trying_to_locate );
         }
 
     }
 
-    private AMap.OnMyLocationChangeListener locationChangeListener = new AMap.OnMyLocationChangeListener() {
+    private AMap.OnMyLocationChangeListener barrierLocationChangeListener = new AMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            if (null != location && location.getLatitude() != 0) {
+                if (mPresenter.checkInPark( location )) {
+                    Venue venue = mPresenter.getNearbyServiceCenter( location );
+                    if (venue != null) {
+                        NavigationActivity.startActivity( getContext(), venue );
+                    } else {
+                        ToastHelper.showShort( R.string.no_service_agencies );
+                    }
+                } else {
+                    ToastHelper.showShort( R.string.unable_to_provide_service );
+                }
+                LocationManager.getInstance().unregisterLocationListener(barrierLocationChangeListener);
+            }
+        }
+    };
+
+    private AMap.OnMyLocationChangeListener buyLocationChangeListener = new AMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
             if (null != location && location.getLatitude() != 0) {
                 mX5View.loadUrl( "javascript:gLocation("+mPresenter.checkInPark(location)+")" );
-                LocationManager.getInstance().unregisterLocationListener(locationChangeListener);
+                LocationManager.getInstance().unregisterLocationListener(buyLocationChangeListener);
             }
         }
     };
