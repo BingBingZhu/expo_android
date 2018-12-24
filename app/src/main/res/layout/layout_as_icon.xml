@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dms_minus_10"
+        android:layout_marginTop="@dimen/dms_minus_8"
         android:background="@mipmap/ico_park_map_marker_main_bg">
 
         <ImageView
