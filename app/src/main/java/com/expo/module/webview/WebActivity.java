@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.location.Location;
@@ -243,33 +245,49 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
         /**
          * 减少用户积分
-         * @param integral  减少的积分数
+         *
+         * @param integral 减少的积分数
          */
         @JavascriptInterface
-        public void reduceUserPoints(int integral){
+        public void reduceUserPoints(int integral) {
             Intent intent = new Intent();
-            intent.putExtra(Constants.EXTRAS.EXTRA_USER_POINTS, integral);
-            LocalBroadcastUtil.sendBroadcast(getContext(), intent, Constants.Action.ACTION_REDUCE_USER_POINTS);
+            intent.putExtra( Constants.EXTRAS.EXTRA_USER_POINTS, integral );
+            LocalBroadcastUtil.sendBroadcast( getContext(), intent, Constants.Action.ACTION_REDUCE_USER_POINTS );
         }
 
         /**
          * 用户是否在园区
+         *
          * @return
          */
         @JavascriptInterface
-        public void isInPark(){
-            LocationManager.getInstance().registerLocationListener(buyLocationChangeListener);
+        public void isInPark() {
+            LocationManager.getInstance().registerLocationListener( buyLocationChangeListener );
         }
 
         /**
          * 无障碍服务 导航到服务中心
          */
         @JavascriptInterface
-        public void goToServiceCenter(){
-            LocationManager.getInstance().registerLocationListener(barrierLocationChangeListener);
+        public void goToServiceCenter() {
+            LocationManager.getInstance().registerLocationListener( barrierLocationChangeListener );
             ToastHelper.showShort( R.string.trying_to_locate );
         }
 
+        /**
+         * 设置横竖屏显示
+         *
+         * @Param orientation 1:竖屏   2:横屏
+         */
+        @JavascriptInterface
+        public void setOrientation(int orientation) {
+            if (orientation == getResources().getConfiguration().orientation) return;
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
+            } else {
+                setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
+            }
+        }
     }
 
     private AMap.OnMyLocationChangeListener barrierLocationChangeListener = new AMap.OnMyLocationChangeListener() {
@@ -286,7 +304,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 } else {
                     ToastHelper.showShort( R.string.unable_to_provide_service );
                 }
-                LocationManager.getInstance().unregisterLocationListener(barrierLocationChangeListener);
+                LocationManager.getInstance().unregisterLocationListener( barrierLocationChangeListener );
             }
         }
     };
@@ -295,8 +313,8 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         @Override
         public void onMyLocationChange(Location location) {
             if (null != location && location.getLatitude() != 0) {
-                mX5View.loadUrl( "javascript:gLocation("+mPresenter.checkInPark(location)+")" );
-                LocationManager.getInstance().unregisterLocationListener(buyLocationChangeListener);
+                mX5View.loadUrl( "javascript:gLocation(" + mPresenter.checkInPark( location ) + ")" );
+                LocationManager.getInstance().unregisterLocationListener( buyLocationChangeListener );
             }
         }
     };

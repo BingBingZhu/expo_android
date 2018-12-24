@@ -122,7 +122,8 @@
 
         <activity
             android:name=".module.webview.WebActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|keyboard|layoutDirection|screenSize|screenLayout"/>
 
         <activity
             android:name=".module.webview.WebTemplateActivity"
