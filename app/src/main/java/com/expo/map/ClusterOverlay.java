@@ -1,6 +1,8 @@
 package com.expo.map;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -18,7 +20,10 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.animation.AlphaAnimation;
 import com.amap.api.maps.model.animation.Animation;
+import com.expo.R;
 import com.expo.entity.Venue;
+import com.expo.entity.VenuesType;
+import com.expo.module.map.MarkerInfoInterface;
 import com.expo.utils.LanguageUtil;
 
 import java.util.ArrayList;
@@ -37,7 +42,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private List<Cluster> mClusters;
     private int mClusterSize;
     private ClusterClickListener mClusterClickListener;
-    private ClusterRender mClusterRender;
     private List<Marker> mAddMarkers = new ArrayList<Marker>();
     private double mClusterDistance;
     private LruCache<Integer, BitmapDescriptor> mLruCache;
@@ -48,6 +52,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private float mPXInMeters;
     private boolean mIsCanceled = false;
     private MapUtils mMapUtils;
+    MarkerInfoInterface mMarkerInfoInterface;
 
     /**
      * 构造函数
@@ -106,6 +111,10 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         mClusterClickListener = clusterClickListener;
     }
 
+    public void setMarkerInfoInterface(MarkerInfoInterface markerInfoInterface) {
+        this.mMarkerInfoInterface = markerInfoInterface;
+    }
+
     /**
      * 添加一个聚合点
      *
@@ -125,15 +134,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         mAddMarkers.clear();
         mClusterItems.clear();
         mClusters.clear();
-    }
-
-    /**
-     * 设置聚合元素的渲染样式，不设置则默认为气泡加数字形式进行渲染
-     *
-     * @param render
-     */
-    public void setClusterRenderer(ClusterRender render) {
-        mClusterRender = render;
     }
 
     public void onDestroy() {
@@ -225,7 +225,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
                     .icon(getBitmapDes(cluster.getClusterCount())).position(latlng);
         else {
             RegionItem ri = (RegionItem) cluster.getClusterItems().get(0);
-            markerOptions.anchor(0.5F, 0.90F).icon(mMapUtils.setMarkerIconDrawable(mContext, ri.venuesType.getMarkBitmap(),
+            markerOptions.anchor(0.5F, 0.90F).icon(mMapUtils.setMarkerIconDrawable(mContext, mMarkerInfoInterface.getMarkerBitmap(ri.actualScene),
                     LanguageUtil.chooseTest(ri.actualScene.getCaption(), ri.actualScene.getEnCaption()))).position(latlng);
         }
         Marker marker = mAMap.addMarker(markerOptions);
@@ -240,7 +240,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         mAddMarkers.add(marker);
 
     }
-
 
     private void calculateClusters() {
         mIsCanceled = false;
@@ -344,26 +343,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
      */
     private BitmapDescriptor getBitmapDes(int num) {
         return mMapUtils.setMarkerIconDrawable(mContext, null, null, num + "", false);
-//        BitmapDescriptor bitmapDescriptor = mLruCache.get(num);
-//        if (bitmapDescriptor == null) {
-//            TextView textView = new TextView(mContext);
-//            if (num > 1) {
-//                String tile = String.valueOf(num);
-//                textView.setText(tile);
-//            }
-//            textView.setGravity(Gravity.CENTER);
-//            textView.setTextColor(Color.BLACK);
-//            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-//            if (mClusterRender != null && mClusterRender.getDrawAble(num) != null) {
-//                textView.setBackgroundDrawable(mClusterRender.getDrawAble(num));
-//            } else {
-//                textView.setBackgroundResource(R.drawable.defaultcluster);
-//            }
-//            bitmapDescriptor = BitmapDescriptorFactory.fromView(textView);
-//            mLruCache.put(num, bitmapDescriptor);
-//
-//        }
-//        return bitmapDescriptor;
     }
 
     /**
