@@ -230,7 +230,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.main.find.detail.FindDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Black"/>
 
         <activity
             android:name=".module.track.TrackActivity"

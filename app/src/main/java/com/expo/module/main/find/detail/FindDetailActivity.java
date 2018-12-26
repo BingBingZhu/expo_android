@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -107,7 +108,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
                     mVideo = ((VideoView) holder.getView(R.id.item_find_video));
                     mVideoImg = ((ImageView) holder.getView(R.id.item_find_video_img));
                     mVideoControl = ((ImageView) holder.getView(R.id.item_find_video_control));
-                    mVideo.setVideoURI(Uri.parse(CommUtils.getFullUrl(mFind.url1)));
+                    mVideo.setVideoURI( Uri.parse( CommUtils.getFullUrl( mFind.url1 ) ) );
                     holder.setOnClickListener(R.id.item_find_video, v -> videoChangeState());
                     holder.setOnClickListener(R.id.item_find_video_control, v -> videoStart());
                     mVideo.setOnCompletionListener(mp -> videoComplete());

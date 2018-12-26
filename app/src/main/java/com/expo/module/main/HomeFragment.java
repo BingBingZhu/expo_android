@@ -150,8 +150,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         initRecyclerExhibit();
         initRecyclerExhibitGarden();
         EventBus.getDefault().register(this);
-
-        EventBus.getDefault().register( this );
         mPresenter.appRun( JPushInterface.getRegistrationID( ExpoApp.getApplication() ) );
         mPresenter.checkUpdate();
         mPresenter.setMessageCount();
