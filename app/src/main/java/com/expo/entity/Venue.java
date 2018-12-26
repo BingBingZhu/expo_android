@@ -12,6 +12,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @DatabaseTable(tableName = "venue")
 public class Venue implements Parcelable, Comparable<Venue> {
@@ -152,7 +153,7 @@ public class Venue implements Parcelable, Comparable<Venue> {
     };
 
     public ArrayList<double[]> getElectronicFenceList() {
-        return Http.getGsonInstance().fromJson( electronicFenceList, new TypeToken<double[]>() {
+        return Http.getGsonInstance().fromJson( electronicFenceList, new TypeToken<ArrayList<double[]>>() {
         }.getType() );
     }
 

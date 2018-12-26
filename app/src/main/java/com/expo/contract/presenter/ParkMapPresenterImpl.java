@@ -117,6 +117,8 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
 
     @Override
     public boolean checkInVenue(LatLng latLng, Venue venue) {
+        if (null == latLng || latLng.latitude == 0)
+            return false;
         List<double[]> bounds = venue.getElectronicFenceList();
         return MapUtils.ptInPolygon( latLng.latitude, latLng.longitude, bounds );
     }

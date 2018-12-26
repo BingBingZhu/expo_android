@@ -404,7 +404,6 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         if (null == venue) {
             return;
         }
-        stopPlay(TYPE_VENUE, venue.getId());
         mMapUtils.mapGoto( venue.getLat(), venue.getLng() );
         boolean isInVenue = mPresenter.checkInVenue(mLatLng, venue);
         mActualSceneDialog = new Dialog( getContext(), R.style.TopActionSheetDialogStyle );
@@ -420,6 +419,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         ImageView asInfo = v.findViewById( R.id.park_mark_dialog_info );
         ImageView asLine = v.findViewById( R.id.park_mark_dialog_line );
         ImageView dialogClose = v.findViewById( R.id.park_mark_dialog_close );
+        stopPlay(TYPE_VENUE, venue.getId(), imgVoice);
         asName.setText( LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption() ) );
         if (isTabByCnName( "美食" )) {
             pic.setImageResource( R.mipmap.ico_food_def_img );
@@ -486,8 +486,9 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         MediaPlayUtil.getInstence().startPlay( url, imgView );
     }
 
-    private void stopPlay(int type, long id){
+    private void stopPlay(int type, long id, ImageView imgView){
         if (lastType == type && lastId == id){
+            imgView.setImageResource(R.mipmap.ico_audio_play);
             return;
         }
         MediaPlayUtil.getInstence().stopMusic();
@@ -501,7 +502,6 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         if (null == routeInfo) {
             return;
         }
-        stopPlay(TYPE_ROUTE, routeInfo.id);
         mRouteInfoDialog = new Dialog( getContext(), R.style.TopActionSheetDialogStyle );
         if (mRouteInfoDialog.isShowing())
             return;
@@ -515,6 +515,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         ImageView asInfo = v.findViewById( R.id.park_mark_dialog_info );
         ImageView asLine = v.findViewById( R.id.park_mark_dialog_line );
         ImageView dialogClose = v.findViewById( R.id.park_mark_dialog_close );
+        stopPlay(TYPE_ROUTE, routeInfo.id, imgVoice);
         pic.setImageURI( Constants.URL.FILE_BASE_URL + routeInfo.picUrl );
         asName.setText( LanguageUtil.chooseTest( routeInfo.caption, routeInfo.captionen ) );
         voiceRoot.setOnClickListener( v14 -> {
