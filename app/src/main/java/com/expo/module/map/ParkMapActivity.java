@@ -385,31 +385,31 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         if (null == venue) {
             return;
         }
-        stopPlay(TYPE_VENUE, venue.getId());
         mMapUtils.mapGoto( venue.getLat(), venue.getLng() );
         boolean isInVenue = mPresenter.checkInVenue(mLatLng, venue);
         mActualSceneDialog = new Dialog( getContext(), R.style.TopActionSheetDialogStyle );
         if (mActualSceneDialog.isShowing())
             return;
-        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_as_dialog, null);
-        View voiceRoot = v.findViewById(R.id.park_mark_dialog_voice_root);
-        ImageView imgVoice = v.findViewById(R.id.park_mark_dialog_voice_img);   // 音频图片
-        TextView appointmentTime = v.findViewById(R.id.park_mark_dialog_appointment_time);  // 预约时间
-        SimpleDraweeView pic = v.findViewById(R.id.park_mark_dialog_pic);
-        TextView asName = v.findViewById(R.id.park_mark_dialog_name);
-        TextView asHint = v.findViewById(R.id.park_mark_dialog_hint);   // 场馆人多提示
-        ImageView asInfo = v.findViewById(R.id.park_mark_dialog_info);
-        ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
-        ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
-        asName.setText(LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption()));
-        if (isTabByCnName("美食")) {
-            pic.setImageResource(R.mipmap.ico_food_def_img);
-        } else if (isTabByCnName("卫生间")) {
-            pic.setImageResource(R.mipmap.ico_toilet_def_img);
-        } else if (isTabByCnName("导览车")) {
-            pic.setImageResource(R.mipmap.ico_car_def_img);
-        } else if (isTabByCnName("治安亭")) {
-            pic.setImageResource(R.mipmap.ico_public_security_def_img);
+        View v = LayoutInflater.from( getContext() ).inflate( R.layout.layout_as_dialog, null );
+        View voiceRoot = v.findViewById( R.id.park_mark_dialog_voice_root );
+        ImageView imgVoice = v.findViewById( R.id.park_mark_dialog_voice_img );   // 音频图片
+        TextView appointmentTime = v.findViewById( R.id.park_mark_dialog_appointment_time );  // 预约时间
+        SimpleDraweeView pic = v.findViewById( R.id.park_mark_dialog_pic );
+        TextView asName = v.findViewById( R.id.park_mark_dialog_name );
+        TextView asHint = v.findViewById( R.id.park_mark_dialog_hint );   // 场馆人多提示
+        ImageView asInfo = v.findViewById( R.id.park_mark_dialog_info );
+        ImageView asLine = v.findViewById( R.id.park_mark_dialog_line );
+        ImageView dialogClose = v.findViewById( R.id.park_mark_dialog_close );
+        stopPlay(TYPE_VENUE, venue.getId(), imgVoice);
+        asName.setText( LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption() ) );
+        if (isTabByCnName( "美食" )) {
+            pic.setImageResource( R.mipmap.ico_food_def_img );
+        } else if (isTabByCnName( "卫生间" )) {
+            pic.setImageResource( R.mipmap.ico_toilet_def_img );
+        } else if (isTabByCnName( "导览车" )) {
+            pic.setImageResource( R.mipmap.ico_car_def_img );
+        } else if (isTabByCnName( "治安亭" )) {
+            pic.setImageResource( R.mipmap.ico_public_security_def_img );
         }
         Encyclopedias wiki = mPresenter.getEncy(venue.getWikiId());
         if (wiki != null) {
@@ -467,8 +467,9 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         MediaPlayUtil.getInstence().startPlay( url, imgView );
     }
 
-    private void stopPlay(int type, long id){
+    private void stopPlay(int type, long id, ImageView imgView){
         if (lastType == type && lastId == id){
+            imgView.setImageResource(R.mipmap.ico_audio_play);
             return;
         }
         MediaPlayUtil.getInstence().stopMusic();
@@ -482,25 +483,25 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         if (null == routeInfo) {
             return;
         }
-        stopPlay(TYPE_ROUTE, routeInfo.id);
         mRouteInfoDialog = new Dialog( getContext(), R.style.TopActionSheetDialogStyle );
         if (mRouteInfoDialog.isShowing())
             return;
-        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_as_dialog, null);
-        View voiceRoot = v.findViewById(R.id.park_mark_dialog_voice_root);
-        ImageView imgVoice = v.findViewById(R.id.park_mark_dialog_voice_img);   // 音频图片
-        TextView appointmentTime = v.findViewById(R.id.park_mark_dialog_appointment_time);  // 预约时间
-        SimpleDraweeView pic = v.findViewById(R.id.park_mark_dialog_pic);
-        TextView asName = v.findViewById(R.id.park_mark_dialog_name);
-        TextView asHint = v.findViewById(R.id.park_mark_dialog_hint);   // 场馆人多提示
-        ImageView asInfo = v.findViewById(R.id.park_mark_dialog_info);
-        ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
-        ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
-        pic.setImageURI(Constants.URL.FILE_BASE_URL + routeInfo.picUrl);
-        asName.setText(LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
-        voiceRoot.setOnClickListener(v14 -> {
-            String voiceUrl = LanguageUtil.chooseTest(routeInfo.voiceUrl,
-                    routeInfo.voiceUrlEn.isEmpty() ? routeInfo.voiceUrl : routeInfo.voiceUrlEn);
+        View v = LayoutInflater.from( getContext() ).inflate( R.layout.layout_as_dialog, null );
+        View voiceRoot = v.findViewById( R.id.park_mark_dialog_voice_root );
+        ImageView imgVoice = v.findViewById( R.id.park_mark_dialog_voice_img );   // 音频图片
+        TextView appointmentTime = v.findViewById( R.id.park_mark_dialog_appointment_time );  // 预约时间
+        SimpleDraweeView pic = v.findViewById( R.id.park_mark_dialog_pic );
+        TextView asName = v.findViewById( R.id.park_mark_dialog_name );
+        TextView asHint = v.findViewById( R.id.park_mark_dialog_hint );   // 场馆人多提示
+        ImageView asInfo = v.findViewById( R.id.park_mark_dialog_info );
+        ImageView asLine = v.findViewById( R.id.park_mark_dialog_line );
+        ImageView dialogClose = v.findViewById( R.id.park_mark_dialog_close );
+        stopPlay(TYPE_ROUTE, routeInfo.id, imgVoice);
+        pic.setImageURI( Constants.URL.FILE_BASE_URL + routeInfo.picUrl );
+        asName.setText( LanguageUtil.chooseTest( routeInfo.caption, routeInfo.captionen ) );
+        voiceRoot.setOnClickListener( v14 -> {
+            String voiceUrl = LanguageUtil.chooseTest( routeInfo.voiceUrl,
+                    routeInfo.voiceUrlEn.isEmpty() ? routeInfo.voiceUrl : routeInfo.voiceUrlEn );
             if (voiceUrl.isEmpty()) {
                 ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
                 return;
