@@ -1,6 +1,7 @@
 package com.expo.contract.presenter;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -8,6 +9,8 @@ import com.expo.R;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.ToastHelper;
 import com.expo.base.utils.UpdateAppManager;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
 import com.expo.contract.HomeContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.AppInfo;
@@ -15,6 +18,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
 import com.expo.entity.TopLineInfo;
+import com.expo.entity.Venue;
 import com.expo.module.heart.HeartBeatService;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
@@ -26,6 +30,12 @@ import java.util.Map;
 import cn.jpush.android.api.JPushInterface;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HomePresenterImpl extends HomeContract.Presenter {
     public HomePresenterImpl(HomeContract.View view) {
@@ -136,5 +146,21 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     @Override
     public void update(Context context, AppInfo appInfo) {
         UpdateAppManager.getInstance( context ).showNoticeDialog( appInfo, false );
+    }
+
+    @Override
+    public Float getDistance(long id, LatLng latLng) {
+        QueryParams queryParams = new QueryParams()
+                .add("eq", "wiki_id", id);
+        List<Venue> venues = mDao.query(Venue.class, queryParams);
+        if (venues == null || venues.size() == 0) return 999999F;
+        Venue venue = venues.get(0);
+        Float distance = AMapUtils.calculateLineDistance(latLng, new LatLng(venue.getLat(), venue.getLng()));
+        return distance;
+    }
+
+    @Override
+    public void sortVenue(List<Encyclopedias> list) {
+        Collections.sort(list, (o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
     }
 }

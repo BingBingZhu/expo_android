@@ -3,6 +3,7 @@ package com.expo.module.main;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
@@ -26,6 +30,8 @@ import com.expo.entity.AppInfo;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
+import com.expo.map.LocationManager;
+import com.expo.map.MapUtils;
 import com.expo.module.freewifi.FreeWiFiActivity;
 import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.main.adapter.HomeExhibitAdapter;
@@ -97,6 +103,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     HomeExhibitAdapter mAdapterExhibit;
     CommonAdapter<Encyclopedias> mAdapterExhibitGarden;
 
+    boolean isLocation = false;
+
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
         TopLineInfo topLine = (TopLineInfo) obj;
         WebActivity.startActivity( getContext(),
@@ -113,6 +121,19 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         }
     };
 
+    private AMap.OnMyLocationChangeListener mOnLocationChangeListener = new AMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            if (isLocation) return;
+            isLocation = true;
+            sort(mListVenue, new LatLng(location.getLatitude(), location.getLongitude()));
+            showVenue(mListVenue);
+            sort(mListExhibit, new LatLng(location.getLatitude(), location.getLongitude()));
+            mAdapterExhibit.notifyDataSetChanged();
+            sort(mListExhibitGarden, new LatLng(location.getLatitude(), location.getLongitude()));
+            mAdapterExhibitGarden.notifyDataSetChanged();
+        }
+    };
 
     @Override
     public int getContentView() {
@@ -128,6 +149,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         initRecyclerTop();
         initRecyclerExhibit();
         initRecyclerExhibitGarden();
+        EventBus.getDefault().register(this);
+
         EventBus.getDefault().register( this );
         mPresenter.appRun( JPushInterface.getRegistrationID( ExpoApp.getApplication() ) );
         mPresenter.checkUpdate();
@@ -136,7 +159,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mPresenter.setVenue();
         mPresenter.setExhibit();
         mPresenter.setExhibitGarden();
-        mPresenter.startHeartService( getContext() );
+        mPresenter.startHeartService(getContext());
+
+        LocationManager.getInstance().registerLocationListener(mOnLocationChangeListener);//定位
     }
 
     @Override
@@ -257,6 +282,14 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         for (int i = 0; i < 3; i++) {
             addVenueView( i, width, height );
         }
+    }
+
+    public void sort(List<Encyclopedias> list, LatLng latLng) {
+        for (int i = 0; list != null && i < list.size(); i++) {
+            Encyclopedias venue = list.get(i);
+            venue.setDistance(mPresenter.getDistance(venue.id, latLng));
+        }
+        mPresenter.sortVenue(list);
     }
 
     @Override
