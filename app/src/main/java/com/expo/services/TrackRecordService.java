@@ -13,6 +13,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.trace.LBSTraceClient;
+import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceStatusListener;
 import com.expo.base.ExpoApp;
@@ -21,6 +22,7 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.db.dao.BaseDao;
 import com.expo.db.dao.BaseDaoImpl;
 import com.expo.entity.Track;
+import com.expo.map.LocationManager;
 import com.expo.module.heart.HeartBeatService;
 import com.expo.utils.Constants;
 import com.expo.utils.LocalBroadcastUtil;
@@ -36,8 +38,9 @@ public class TrackRecordService extends Service {
     private LBSTraceClient mLbsTraceClient;
     private BaseDao mDao;
     private List<Track> tracks;
-    private LatLng latLng;
-    private LatLng oldLatLng;
+//    private LatLng latLng;
+//    private LatLng oldLatLng;
+    private List<TraceLocation> mLocationList;
 
     @Nullable
     @Override
@@ -52,6 +55,48 @@ public class TrackRecordService extends Service {
         if (PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false))
             startTrace();
     }
+
+    private AMap.OnMyLocationChangeListener locationChangeListener = new AMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            if ( null != location && location.getLatitude() != 0 ){
+                TraceLocation traceLocation = new TraceLocation(location.getLatitude(), location.getLongitude(), location.getSpeed(), location.getBearing(), location.getTime());
+                mLocationList.add(traceLocation);
+                if ( mLocationList.size() >= 5 ){
+                    // 纠偏
+                    tracks.clear();
+                    mLbsTraceClient.queryProcessedTrace(0, mLocationList, LBSTraceClient.TYPE_AMAP, traceListener);
+                    mLocationList.clear();
+                }
+            }
+        }
+    };
+
+    // 自有轨迹纠偏回调
+    private TraceListener traceListener = new TraceListener() {
+        @Override
+        public void onRequestFailed(int i, String s) {
+            LogUtils.e("", "");
+        }
+
+        @Override
+        public void onTraceProcessing(int i, int i1, List<LatLng> list) {
+            LogUtils.e("", "");
+        }
+
+        @Override
+        public void onFinished(int i, List<LatLng> list, int i1, int i2) {
+            for (LatLng latLng : list) {
+                tracks.add(new Track(latLng.latitude, latLng.longitude,
+                        PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
+                        ExpoApp.getApplication().getUser().getUid()));
+            }
+            if (!tracks.isEmpty()) {
+                PrefsHelper.setString(Constants.Prefs.KEY_TRACK_UPDATE_TIME, "最后更新足迹 " + sdf.format(new Date()));
+                mDao.saveOrUpdateAll(tracks);
+            }
+        }
+    };
 
     /**
      * 记录开关
@@ -72,60 +117,67 @@ public class TrackRecordService extends Service {
      */
     private void startTrace() {
         tracks = new ArrayList<>();
+        mLocationList = new ArrayList<>();
         mDao = new BaseDaoImpl();
         mLbsTraceClient = LBSTraceClient.getInstance(getApplicationContext());
-        mLbsTraceClient.startTrace(traceStatusListener);
+//        mLbsTraceClient.startTrace(traceStatusListener);
+
+
+
+        LocationManager.getInstance().registerLocationListener(locationChangeListener);
     }
 
     /**
      * 停止记录
      */
     private void stopTrace() {
-        if (null != mLbsTraceClient)
-            mLbsTraceClient.stopTrace();
+//        if (null != mLbsTraceClient)
+//            mLbsTraceClient.stopTrace();
+        LocationManager.getInstance().unregisterLocationListener(locationChangeListener);
     }
 
-    private TraceStatusListener traceStatusListener = new TraceStatusListener() {
-        @Override
-        public void onTraceStatus(List<TraceLocation> list, List<LatLng> list1, String s) {
-            tracks.clear();
-            if (s.equals(LBSTraceClient.TRACE_SUCCESS)) {
-                oldLatLng = null;
-                for (LatLng latLng : list1) {
-                    tracks.add(new Track(latLng.latitude, latLng.longitude,
-                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
-                            ExpoApp.getApplication().getUser().getUid()));
-                }
-            } else if (s.equals(LBSTraceClient.MIN_GRASP_POINT_ERROR) && !list.isEmpty()) {
-                latLng = new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
-                if (isLocationChanage()) {
-                    tracks.add(new Track(list.get(0).getLatitude(), list.get(0).getLongitude(),
-                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
-                            ExpoApp.getApplication().getUser().getUid()));
-                    oldLatLng = latLng;
-                }
-            }
-            if (!tracks.isEmpty()) {
-                PrefsHelper.setString(Constants.Prefs.KEY_TRACK_UPDATE_TIME, "最后更新足迹 " + sdf.format(new Date()));
-                mDao.saveOrUpdateAll(tracks);
-            }
-        }
-    };
+    // 结合定位轨迹纠偏回调
+//    private TraceStatusListener traceStatusListener = new TraceStatusListener() {
+//        @Override
+//        public void onTraceStatus(List<TraceLocation> list, List<LatLng> list1, String s) {
+//            tracks.clear();
+//            if (s.equals(LBSTraceClient.TRACE_SUCCESS)) {
+//                oldLatLng = null;
+//                for (LatLng latLng : list1) {
+//                    tracks.add(new Track(latLng.latitude, latLng.longitude,
+//                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
+//                            ExpoApp.getApplication().getUser().getUid()));
+//                }
+//            } else if (s.equals(LBSTraceClient.MIN_GRASP_POINT_ERROR) && !list.isEmpty()) {
+//                latLng = new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
+//                if (isLocationChanage()) {
+//                    tracks.add(new Track(list.get(0).getLatitude(), list.get(0).getLongitude(),
+//                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
+//                            ExpoApp.getApplication().getUser().getUid()));
+//                    oldLatLng = latLng;
+//                }
+//            }
+//            if (!tracks.isEmpty()) {
+//                PrefsHelper.setString(Constants.Prefs.KEY_TRACK_UPDATE_TIME, "最后更新足迹 " + sdf.format(new Date()));
+//                mDao.saveOrUpdateAll(tracks);
+//            }
+//        }
+//    };
 
     public static SimpleDateFormat sdf = new SimpleDateFormat( Constants.TimeFormat.TYPE_ALL, Locale.getDefault() );
 
-    private boolean isLocationChanage() {
-        if (null == oldLatLng) {
-            return true;
-        } else {
-            float distance = AMapUtils.calculateLineDistance(latLng, oldLatLng);
-            if (distance >= 3) {
-                return true;
-            }else{
-                return false;
-            }
-        }
-    }
+//    private boolean isLocationChanage() {
+//        if (null == oldLatLng) {
+//            return true;
+//        } else {
+//            float distance = AMapUtils.calculateLineDistance(latLng, oldLatLng);
+//            if (distance >= 3) {
+//                return true;
+//            }else{
+//                return false;
+//            }
+//        }
+//    }
 
 
     /**

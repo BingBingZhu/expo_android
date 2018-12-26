@@ -25,6 +25,8 @@ import com.expo.module.mine.UserInfoActivity;
 import com.expo.module.routes.RoutesActivity;
 import com.expo.utils.Constants;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class SplashActivity extends BaseActivity<SplashContract.Presenter> implements SplashContract.View {
 
     private Handler mHandler = new Handler();
@@ -65,7 +67,8 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
                 } else {
                     ExpoApp.getApplication().setUser(user);
                     MainActivity.startActivity(this);
-                    mPresenter.appRun(user.getUid(), user.getUkey());
+                    JPushInterface.getRegistrationID( ExpoApp.getApplication() );
+//                    mPresenter.appRun(user.getUid(), user.getUkey());
                 }
                 finish();
             }

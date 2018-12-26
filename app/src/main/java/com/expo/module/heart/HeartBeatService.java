@@ -3,11 +3,18 @@ package com.expo.module.heart;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+
+import com.amap.api.maps.model.LatLng;
+import com.expo.base.utils.PrefsHelper;
+import com.expo.map.LocationManager;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import com.amap.api.maps.AMap;
 import com.expo.contract.HeartBeatContract;
 import com.expo.contract.presenter.HeartBeatPresenterImpl;
+import com.expo.utils.Constants;
 
 /**
  * Created by LS on 2017/11/13.
@@ -18,7 +25,8 @@ public class HeartBeatService extends Service implements HeartBeatContract.View 
     private boolean mExit;                                                               //结束心跳
     private HeartBeatContract.Presenter mPresenter;
     private int mTimes = 18;
-    private int mHeartInvTime = 60 * 1000;
+    private long mHeartInvTime = 60 * 1000;
+    private Location mLocation;
 
     @Nullable
     @Override
@@ -29,6 +37,8 @@ public class HeartBeatService extends Service implements HeartBeatContract.View 
     @Override
     public void onCreate() {
         super.onCreate();
+        mHeartInvTime = PrefsHelper.getLong(Constants.Prefs.KEY_HEART_INV_TIME, mHeartInvTime);
+        LocationManager.getInstance().registerLocationListener(locationChangeListener);
         mPresenter = new HeartBeatPresenterImpl(this);
         new Thread() {
             @Override
@@ -38,7 +48,7 @@ public class HeartBeatService extends Service implements HeartBeatContract.View 
                         if (mTimes * 3 * 1000 >= mHeartInvTime) {
                             mHeartInvTime = 60 * 1000;
                             mTimes = 0;
-                            mPresenter.sendHeartBeat();
+                            mPresenter.sendHeartBeat(mLocation);
                         }
                         mTimes++;
                         sleep(3 * 1000);
@@ -51,6 +61,7 @@ public class HeartBeatService extends Service implements HeartBeatContract.View 
 
     @Override
     public void onDestroy() {
+        LocationManager.getInstance().unregisterLocationListener(locationChangeListener);
         mExit = true;
         super.onDestroy();
     }
@@ -94,4 +105,12 @@ public class HeartBeatService extends Service implements HeartBeatContract.View 
     public void setHeartInvTime(int heartInvTime) {
         this.mHeartInvTime = heartInvTime;
     }
+
+    private AMap.OnMyLocationChangeListener locationChangeListener = new AMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            if (null != location && location.getLatitude() != 0)
+                mLocation = location;
+        }
+    };
 }

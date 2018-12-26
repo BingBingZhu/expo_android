@@ -2,13 +2,30 @@ package com.expo.contract.presenter;
 
 import android.content.Context;
 
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.expo.R;
+import com.expo.base.ExpoApp;
+import com.expo.base.utils.ToastHelper;
+import com.expo.base.utils.UpdateAppManager;
 import com.expo.contract.HomeContract;
 import com.expo.db.QueryParams;
+import com.expo.entity.AppInfo;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Message;
 import com.expo.entity.TopLineInfo;
 import com.expo.module.heart.HeartBeatService;
+import com.expo.network.Http;
+import com.expo.network.ResponseCallback;
+import com.expo.network.response.BaseResponse;
+import com.expo.network.response.VersionInfoResp;
+
+import java.util.Map;
+
+import cn.jpush.android.api.JPushInterface;
+import io.reactivex.Observable;
+import okhttp3.RequestBody;
 
 public class HomePresenterImpl extends HomeContract.Presenter {
     public HomePresenterImpl(HomeContract.View view) {
@@ -79,5 +96,45 @@ public class HomePresenterImpl extends HomeContract.Presenter {
             return info.getLinkUrl();
         }
         return null;
+    }
+
+    @Override
+    public void appRun(String jgId) {
+        Map<String, Object> params = Http.getBaseParams();
+        params.put( "jgid", jgId);
+        Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( params ) );
+        Http.request( new ResponseCallback<BaseResponse>() {
+            @Override
+            protected void onResponse(BaseResponse rsp) {
+            }
+
+        }, observable );
+    }
+
+    @Override
+    public void checkUpdate() {
+        Map<String, Object> params = Http.getBaseParams();
+        RequestBody requestBody = Http.buildRequestBody( params );
+        Observable<VersionInfoResp> observable = Http.getServer().getAppUpdateInfo( requestBody );
+        Http.request( new ResponseCallback<VersionInfoResp>() {
+            @Override
+            protected void onResponse(VersionInfoResp rsp) {
+                if (StringUtils.equals( AppUtils.getAppVersionCode() + "", rsp.ver )) {
+                    ToastHelper.showShort( R.string.latest_app_version );
+                } else {
+                    for (int i = 0; i < rsp.Objlst.size(); i++) {
+                        if (StringUtils.equals( "android", rsp.Objlst.get( i ).platformname.toLowerCase() )) {
+                            mView.appUpdate( rsp.Objlst.get( i ) );
+                            return;
+                        }
+                    }
+                }
+            }
+        }, observable );
+    }
+
+    @Override
+    public void update(Context context, AppInfo appInfo) {
+        UpdateAppManager.getInstance( context ).showNoticeDialog( appInfo, false );
     }
 }

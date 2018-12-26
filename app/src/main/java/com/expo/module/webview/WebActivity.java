@@ -160,6 +160,14 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         context.startActivity( in );
     }
 
+    public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title, String jsonData) {
+        Intent in = new Intent( context, WebActivity.class );
+        in.putExtra( Constants.EXTRAS.EXTRA_TITLE, title == null ? "" : title );
+        in.putExtra( Constants.EXTRAS.EXTRA_URL, url );
+        in.putExtra( Constants.EXTRAS.EXTRA_JSON_DATA, jsonData );
+        context.startActivity( in );
+    }
+
     public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title, boolean showTitle) {
         Intent in = new Intent( context, WebActivity.class );
         in.putExtra( Constants.EXTRAS.EXTRA_TITLE, title == null ? "" : title );
@@ -268,6 +276,15 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         public void goToServiceCenter(){
             LocationManager.getInstance().registerLocationListener(barrierLocationChangeListener);
             ToastHelper.showShort( R.string.trying_to_locate );
+        }
+
+        /**
+         * 获取订单信息
+         * @return
+         */
+        @JavascriptInterface
+        public String getOrderInfo(){
+            return getIntent().getStringExtra(Constants.EXTRAS.EXTRA_JSON_DATA);
         }
 
     }

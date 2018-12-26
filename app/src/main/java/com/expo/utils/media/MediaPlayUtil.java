@@ -1,14 +1,19 @@
 package com.expo.utils.media;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.widget.ImageView;
 
+import com.expo.R;
 import com.expo.utils.Constants;
 
 public class MediaPlayUtil {
 
     public static final int STATE_NORMAL = 0;
     public static final int STATE_PLAY = 1;
+
+    private Context mContext;
 
     public MediaPlayer mediaPlayer;
     public MediaPlayerProxy mediaPlayerHttpProxy;//当前播放器的在线播放代理（用于边播边存等处理）
@@ -32,7 +37,8 @@ public class MediaPlayUtil {
     /**
      * 初始化播放器
      */
-    public void initMediaPlayer() {
+    public void initMediaPlayer(Context context) {
+        mContext = context;
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setVolume(1, 1);
         mediaPlayer.reset();
@@ -70,13 +76,15 @@ public class MediaPlayUtil {
      * 开始播放
      * @param url
      */
-    public void startPlay(String url) {
+    public void startPlay(String url, ImageView imgView) {
         switch (currentState) {
             case STATE_NORMAL:
                 playMusic(url);
+                imgView.setImageResource(R.mipmap.ico_audio_play);
                 break;
             case STATE_PLAY:
                 stopMusic();
+                imgView.setImageResource(R.mipmap.ico_audio_pause);
                 break;
         }
     }
@@ -88,6 +96,7 @@ public class MediaPlayUtil {
         if (null != mediaPlayer) {
             currentState = STATE_NORMAL;
             mediaPlayer.pause();
+//            mediaPlayer.stop();
         }
     }
 

@@ -70,18 +70,18 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
         } else if (message.getType().equals("4")) {
             User user = ExpoApp.getApplication().getUser();
             if (user == null) {
-                LoginActivity.startActivity( getContext() );
+                LoginActivity.startActivity(getContext());
                 return;
             }
             if (message == null) {
-                ToastHelper.showShort( R.string.message_get_error );
+                ToastHelper.showShort(R.string.message_get_error);
             }
-            String url = mPresenter.loadCommonInfo( CommonInfo.VISITOR_SERVICE_DETAILS );
-            WebActivity.startActivity( getContext(),
-                    TextUtils.isEmpty( url ) ? url : (url + String.format( "?Uid=%s&Ukey=%s&id=%s", user.getUid(), user.getUkey(), message.getLinkId() )),
-                    getString( R.string.title_detail ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
+            String url = mPresenter.loadCommonInfo(CommonInfo.VISITOR_SERVICE_DETAILS);
+            WebActivity.startActivity(getContext(),
+                    TextUtils.isEmpty(url) ? url : (url + String.format("?Uid=%s&Ukey=%s&id=%s", user.getUid(), user.getUkey(), message.getLinkId())),
+                    getString(R.string.title_detail), BaseActivity.TITLE_COLOR_STYLE_WHITE);
         } else if (message.getType().equals("5")) {
-
+            mPresenter.getOrderInfo(message.getLinkId());
         }
         message.setRead(true);
         mPresenter.setMessageRead(message);
@@ -126,10 +126,10 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
         int v;
         if (type.equals("1"))
             mSwipeMenuRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));        // item分割线
-        else if (type.equals("4")){
+        else if (type.equals("4")) {
             v = (int) getResources().getDimension(R.dimen.dms_30);
             mSwipeMenuRecyclerView.addItemDecoration(new SpaceDecoration(leftRight, v, leftRight, v, 0));
-        }else if (type.equals("5")){
+        } else if (type.equals("5")) {
             v = (int) getResources().getDimension(R.dimen.dms_16);
             mSwipeMenuRecyclerView.setBackgroundResource(R.color.colorAccent);
             topLine.setVisibility(View.GONE);
@@ -137,14 +137,15 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
         }
         mSwipeMenuRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             Drawable drawable = getResources().getDrawable(R.mipmap.shape_new_msg_flag);
+
             @Override
             public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
                 super.onDrawOver(c, parent, state);
-                for (int i = 0; i < parent.getChildCount(); i++){
+                for (int i = 0; i < parent.getChildCount(); i++) {
                     View v = parent.getChildAt(i);
-                    if (!messages.get(i).isRead()){
-                        drawable.setBounds(v.getRight()-drawable.getIntrinsicWidth(),v.getTop(),
-                                v.getRight(),v.getTop()+drawable.getIntrinsicHeight());
+                    if (!messages.get(i).isRead()) {
+                        drawable.setBounds(v.getRight() - drawable.getIntrinsicWidth(), v.getTop(),
+                                v.getRight(), v.getTop() + drawable.getIntrinsicHeight());
                         drawable.draw(c);
                     }
                 }
@@ -214,6 +215,11 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     public void delMessage(int position) {
         mAdapter.mData.remove(position);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void gotoInfoPage(String data) {
+//        WebActivity.startActivity(getContext(), "url", "订单详情", data);
     }
 
     @Override

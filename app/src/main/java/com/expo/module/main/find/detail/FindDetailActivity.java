@@ -71,6 +71,8 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
     CommonAdapter mAdapter;
     List<String> mList;
 
+    private Intent mIntent;
+
     Handler mHandler = new Handler();
 
     @Override
@@ -146,6 +148,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
     }
 
     private void setFindInfo() {
+        mIntent = new Intent();
         if (!StringUtils.isEmpty(mFind.upic))
             Picasso.with(FindDetailActivity.this).load(mFind.upic).placeholder(R.drawable.image_default).error(R.drawable.image_default).into(mRvHead);
         mTvName.setText(mFind.uname);
@@ -227,5 +230,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
         enjoys++;
         mFind.enjoys = String.valueOf(enjoys);
         mTvEnjoy.setText(mFind.enjoys);
+        mIntent.putExtra(Constants.EXTRAS.EXTRA_ENJOYS, mFind.enjoys);
+        FindDetailActivity.this.setResult(RESULT_OK, mIntent);
     }
 }

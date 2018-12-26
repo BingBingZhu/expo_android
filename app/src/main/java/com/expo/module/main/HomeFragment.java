@@ -1,6 +1,8 @@
 package com.expo.module.main;
 
 import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +19,10 @@ import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.ExpoApp;
+import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.HomeContract;
+import com.expo.entity.AppInfo;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
@@ -35,6 +39,8 @@ import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
+import com.expo.utils.NotificationUtil;
+import com.expo.utils.NotifyHelper;
 import com.expo.widget.LimitScrollerView;
 import com.expo.widget.MyScrollView;
 import com.expo.widget.decorations.SpaceDecoration;
@@ -52,6 +58,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /*
  * 首页
@@ -122,7 +129,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         initRecyclerExhibit();
         initRecyclerExhibitGarden();
         EventBus.getDefault().register( this );
-
+        mPresenter.appRun( JPushInterface.getRegistrationID( ExpoApp.getApplication() ) );
+        mPresenter.checkUpdate();
         mPresenter.setMessageCount();
         mPresenter.setTopLine();
         mPresenter.setVenue();
@@ -267,6 +275,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mListExhibitGarden.clear();
         mListExhibitGarden.addAll( list );
         mAdapterExhibitGarden.notifyDataSetChanged();
+    }
+
+    @Override
+    public void appUpdate(AppInfo appInfo) {
+        mPresenter.update( getContext(), appInfo );
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -84,7 +84,7 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
         } else {
             holder.videoImg.setVisibility(View.GONE);
         }
-        holder.itemView.setOnClickListener(v -> FindDetailActivity.startActivity(mContext, find));
+        holder.itemView.setOnClickListener(onItemClickListener);
     }
 
     @Override
@@ -111,7 +111,14 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
 
         public ViewHolder(View v) {
             super(v);
+            v.setTag(this);
             ButterKnife.bind(this, v);
         }
+    }
+
+    private View.OnClickListener onItemClickListener;
+
+    public void setOnItemClickListener(View.OnClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
     }
 }

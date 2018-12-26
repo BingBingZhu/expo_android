@@ -1,5 +1,6 @@
 package com.expo.contract;
 
+import com.amap.api.maps.model.LatLng;
 import com.expo.adapters.DownloadData;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
@@ -41,6 +42,7 @@ public interface ParkMapContract {
 
         public abstract List<Venue> selectVenueByCaption(String caption);
 
+        public abstract boolean checkInVenue(LatLng latLng, Venue venue);
     }
 
     interface View extends IView {

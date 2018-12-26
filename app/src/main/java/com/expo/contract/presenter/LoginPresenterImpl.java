@@ -71,22 +71,9 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
             protected void onResponse(VerifyCodeLoginResp rsp) {
                 LogUtils.e( "====user=======", "uid: " + rsp.getId() + "   ukey: " + rsp.getKey() );
                 setAppUserInfo( rsp );
-                appRun();
                 mView.verifyCodeLogin();
             }
         }, verifyCodeLoginObservable );
-    }
-
-    private void appRun() {
-        Map<String, Object> params = Http.getBaseParams();
-        params.put( "jgid", JPushInterface.getRegistrationID( ExpoApp.getApplication() ) );
-        Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( params ) );
-        Http.request( new ResponseCallback<BaseResponse>() {
-            @Override
-            protected void onResponse(BaseResponse rsp) {
-            }
-
-        }, observable );
     }
 
     /**
@@ -208,7 +195,6 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
                 rsp.setUid( uid );
                 rsp.setUkey( ukey );
                 rsp.saveOnDb( mDao );
-                appRun();
                 mView.verifyCodeLogin();
             }
         }, verifyCodeLoginObservable );

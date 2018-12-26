@@ -394,4 +394,5 @@
     <string name="beijing_world_expo_2019">2019北京世园会</string>
     <string name="please_enter_the_correct_identification_number">请输入正确的证件号码</string>
     <string name="not_import">未填写</string>
+    <string name="no_navigation_required">%s就在附近，无需导航</string>
 </resources>

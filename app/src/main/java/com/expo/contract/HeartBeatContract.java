@@ -1,5 +1,7 @@
 package com.expo.contract;
 
+import android.location.Location;
+
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 
@@ -10,7 +12,7 @@ public interface HeartBeatContract {
             super(view);
         }
 
-        public abstract void sendHeartBeat();
+        public abstract void sendHeartBeat(Location location);
     }
 
     interface View extends IView {

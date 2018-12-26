@@ -1,12 +1,9 @@
 package com.expo.contract.presenter;
 
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.location.Location;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -27,9 +24,9 @@ import com.expo.network.response.UserHeartBeatResp;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
+import com.expo.utils.NotificationUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -37,15 +34,13 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
-
 public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
     public HeartBeatPresenterImpl(HeartBeatContract.View view) {
         super(view);
     }
 
     @Override
-    public void sendHeartBeat() {
+    public void sendHeartBeat(Location location) {
         Map<String, Object> params = Http.getBaseParams();
         if (!params.containsKey("Uid") || !params.containsKey("Ukey")) {
             return;
@@ -59,6 +54,10 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
             time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(calendar.getTime());
         }
         params.put("LastMessageTime", time);
+        if ( location != null ){
+            params.put("lat", location.getLatitude());
+            params.put("lon", location.getLongitude());
+        }
         Observable<UserHeartBeatResp> observable = Http.getServer().sendHeartBeat(Http.buildRequestBody(params));
         Http.request(new ResponseCallback<UserHeartBeatResp>() {
             @Override
@@ -133,9 +132,9 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
         if (isAPNS(message.getMsgKind())) {
             return;
         }
-        playNotificationSound();
         if (isAppInsideMsg(message.getMsgKind())) {
-            showNotificationMsg(message);
+            NotificationUtil.getInstance().show(LanguageUtil.chooseTest(message.getCaption(), message.getCaptionEn()),
+                    LanguageUtil.chooseTest(message.getContent(), message.getContentEn()), MessageKindActivity.class);
         }
         if (isAppAlert(message.getMsgKind())) {
             showAlertMsg(message);
@@ -167,31 +166,4 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
                 .setNegativeButton(R.string.ok, null)
                 .show();
     }
-
-    private void showNotificationMsg(Message message) {
-        NotificationManager nom = (NotificationManager) ExpoApp.getApplication().getSystemService(NOTIFICATION_SERVICE);
-        Intent intent = new Intent(ExpoApp.getApplication().getTopActivity(), MessageKindActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(ExpoApp.getApplication().getTopActivity(), 0, intent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        Notification notification = new Notification.Builder(ExpoApp.getApplication().getTopActivity())
-                .setContentTitle(LanguageUtil.chooseTest(message.getCaption(), message.getCaptionEn()))
-                .setContentText(LanguageUtil.chooseTest(message.getContent(), message.getContentEn()))
-                .setSmallIcon(R.mipmap.ic_launcher) // 设置图标
-                .setContentIntent(pi)
-                .build();
-        nom.notify(notifyId++, notification);
-    }
-
-    private void playNotificationSound() {
-        int id = PrefsHelper.getInt(Constants.Prefs.KEY_RAW_SELECTOR_POSITION, 0);
-        Uri uri;
-        if (id == 0)
-            uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        else
-            uri = Uri.parse("android.resource://" + ExpoApp.getApplication().getPackageName() + "/" + Constants.RawResource.resourceIds[id]);
-        Ringtone rt = RingtoneManager.getRingtone(ExpoApp.getApplication().getApplicationContext(), uri);
-        rt.play();
-    }
-
-    private int notifyId = 1;
 }

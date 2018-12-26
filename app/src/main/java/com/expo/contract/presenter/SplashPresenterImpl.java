@@ -275,18 +275,18 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         return mDao.unique( User.class, null );
     }
 
-    @Override
-    public void appRun(String uId, String uKey) {
-        Map<String, Object> params = Http.getBaseParams();
-        params.put("jgid", JPushInterface.getRegistrationID(ExpoApp.getApplication()));
-        Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( params ) );
-        Http.request( new ResponseCallback<BaseResponse>() {
-            @Override
-            protected void onResponse(BaseResponse rsp) {
-            }
-
-        }, observable );
-    }
+//    @Override
+//    public void appRun(String uId, String uKey) {
+//        Map<String, Object> params = Http.getBaseParams();
+//        params.put("jgid", JPushInterface.getRegistrationID(ExpoApp.getApplication()));
+//        Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( params ) );
+//        Http.request( new ResponseCallback<BaseResponse>() {
+//            @Override
+//            protected void onResponse(BaseResponse rsp) {
+//            }
+//
+//        }, observable );
+//    }
 
     /*
      * 复制地图样式文件到手机储存中
