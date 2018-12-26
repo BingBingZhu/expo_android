@@ -9,6 +9,8 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.LatLng;
 import com.expo.base.BaseApplication;
 import com.expo.base.utils.LogUtils;
+import com.expo.base.utils.PrefsHelper;
+import com.expo.utils.Constants;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class LocationManager implements AMapLocationListener {
     private static final String TAG = LocationManager.class.getSimpleName();
 
     private static LocationManager locationManager;
+    private long mHeartInvTime = 60 * 1000;
 
     /* 定位客服端  */
     private AMapLocationClient mLocationClient;
@@ -86,8 +89,9 @@ public class LocationManager implements AMapLocationListener {
         mLocationOption.setGpsFirst( true );
         // 设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setMockEnable( true );
-        // 设置定位间隔1秒钟定位一次
-        mLocationOption.setInterval( 1000 );
+        // 设置定位间隔跟随心跳时间
+        mHeartInvTime = PrefsHelper.getLong(Constants.Prefs.KEY_HEART_INV_TIME, mHeartInvTime);
+        mLocationOption.setInterval( mHeartInvTime );
         // 给定位客户端对象设置定位参数
         mLocationClient.setLocationOption( mLocationOption );
         listenerCount = new AtomicInteger();

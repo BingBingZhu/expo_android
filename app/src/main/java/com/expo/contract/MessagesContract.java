@@ -21,11 +21,15 @@ public interface MessagesContract {
         public abstract void setMessageRead(Message message);
 
         public abstract String loadCommonInfo(String type);
+
+        public abstract void getOrderInfo(String linkId);
     }
 
     interface View extends IView {
         void freshMessageList(List<Message> list);
 
         void delMessage(int position);
+
+        void gotoInfoPage(String data);
     }
 }

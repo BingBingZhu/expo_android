@@ -87,6 +87,8 @@ public interface Constants {
         public static final String EXTRA_SELECTED_POI_NAME = "extra_selected_poi_name";
         public static final String EXTRA_USER_POINTS = "extra_user_points";
         public static final String EXTRA_ROUTE_NAME = "extra_route_name";
+        public static final String EXTRA_JSON_DATA = "extra_json_data";
+        public static final String EXTRA_ENJOYS = "extra_enjoys";
     }
 
     /**
@@ -180,6 +182,7 @@ public interface Constants {
         public static final int REQ_TO_CAMERA = 128;
         public static final int REQ_TO_CONTACTS = 129;
         public static final int REQ_TO_QRCODE = 130;
+        public static final int REQ_TO_FIND_INFO = 131;
     }
 
     /**

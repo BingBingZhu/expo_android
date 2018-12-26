@@ -284,6 +284,8 @@ public class Message implements Parcelable {
     }
 
     public void sendMessageCount(BaseDao dao) {
+        if (null == ExpoApp.getApplication().getUser() || null == ExpoApp.getApplication().getUser().getUid())
+            return;
         if (dao == null)
             dao = new BaseDaoImpl();
         List<String> list = new ArrayList<>();

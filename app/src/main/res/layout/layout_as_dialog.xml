@@ -22,7 +22,7 @@
                 android:id="@+id/park_mark_dialog_voice_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ico_voice"/>
+                android:src="@mipmap/ico_audio_init"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

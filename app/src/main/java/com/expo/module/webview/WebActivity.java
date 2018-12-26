@@ -162,6 +162,14 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         context.startActivity( in );
     }
 
+    public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title, String jsonData) {
+        Intent in = new Intent( context, WebActivity.class );
+        in.putExtra( Constants.EXTRAS.EXTRA_TITLE, title == null ? "" : title );
+        in.putExtra( Constants.EXTRAS.EXTRA_URL, url );
+        in.putExtra( Constants.EXTRAS.EXTRA_JSON_DATA, jsonData );
+        context.startActivity( in );
+    }
+
     public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title, boolean showTitle) {
         Intent in = new Intent( context, WebActivity.class );
         in.putExtra( Constants.EXTRAS.EXTRA_TITLE, title == null ? "" : title );
@@ -257,20 +265,19 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
         /**
          * 用户是否在园区
-         *
          * @return
          */
         @JavascriptInterface
-        public void isInPark() {
-            LocationManager.getInstance().registerLocationListener( buyLocationChangeListener );
+        public void isInPark(){
+            LocationManager.getInstance().registerLocationListener(buyLocationChangeListener);
         }
 
         /**
          * 无障碍服务 导航到服务中心
          */
         @JavascriptInterface
-        public void goToServiceCenter() {
-            LocationManager.getInstance().registerLocationListener( barrierLocationChangeListener );
+        public void goToServiceCenter(){
+            LocationManager.getInstance().registerLocationListener(barrierLocationChangeListener);
             ToastHelper.showShort( R.string.trying_to_locate );
         }
 
@@ -288,6 +295,15 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
             }
         }
+        /**
+         * 获取订单信息
+         * @return
+         */
+        @JavascriptInterface
+        public String getOrderInfo(){
+            return getIntent().getStringExtra(Constants.EXTRAS.EXTRA_JSON_DATA);
+        }
+
     }
 
     private AMap.OnMyLocationChangeListener barrierLocationChangeListener = new AMap.OnMyLocationChangeListener() {
@@ -313,8 +329,8 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         @Override
         public void onMyLocationChange(Location location) {
             if (null != location && location.getLatitude() != 0) {
-                mX5View.loadUrl( "javascript:gLocation(" + mPresenter.checkInPark( location ) + ")" );
-                LocationManager.getInstance().unregisterLocationListener( buyLocationChangeListener );
+                mX5View.loadUrl( "javascript:gLocation("+mPresenter.checkInPark(location)+")" );
+                LocationManager.getInstance().unregisterLocationListener(buyLocationChangeListener);
             }
         }
     };

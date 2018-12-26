@@ -69,7 +69,6 @@ import com.expo.map.NaviManager;
 import com.expo.map.RegionItem;
 import com.expo.module.download.DownloadManager;
 import com.expo.module.routes.RouteDetailActivity;
-import com.expo.module.webview.WebActivity;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.network.Http;
 import com.expo.utils.Constants;
@@ -132,6 +131,12 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     private List<Venue> mAtVenue;   // 当前tab下的场馆
     private boolean mIsInPark;
     private long mPattern = 1;
+    private int playState;     // 音频播放状态
+    private final static int TYPE_ROUTE = 1;    // 音频播放类型
+    private final static int TYPE_VENUE = 2;    // 音频播放类型
+    private int lastType;
+    private long lastId;
+    private String mPlayUrl;
 
     private ClusterOverlay mClusterOverlay;
 
@@ -140,17 +145,17 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         public void onClick(Marker marker, List<ClusterItem> clusterItems) {
             if (clusterItems == null) {
                 if (marker.getObject() instanceof Venue)
-                    showActualSceneDialog((Venue) marker.getObject());
+                    showVenueDialog( (Venue) marker.getObject() );
             } else {
                 if (clusterItems.size() == 1) {
-                    showActualSceneDialog(((RegionItem) clusterItems.get(0)).actualScene);
+                    showVenueDialog( ((RegionItem) clusterItems.get( 0 )).actualScene );
                 } else if (clusterItems.size() > 1) {
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                     for (ClusterItem clusterItem : clusterItems) {
-                        builder.include(clusterItem.getPosition());
+                        builder.include( clusterItem.getPosition() );
                     }
                     LatLngBounds latLngBounds = builder.build();
-                    mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0)
+                    mAMap.animateCamera( CameraUpdateFactory.newLatLngBounds( latLngBounds, 0 )
                     );
                 }
             }
@@ -304,10 +309,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             // 单项点击事件
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
             int position = holder.getAdapterPosition();
-            Venue as = venues.get(position);
-            showActualSceneDialog(as);
-        });
-        searchContent.addTextChangedListener(new TextWatcher() {
+            Venue as = venues.get( position );
+            showVenueDialog( as );
+        } );
+        searchContent.addTextChangedListener( new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -370,18 +375,20 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         polylines = new ArrayList<>();
         addActualSceneMarker(mTabId, mFacilities, true);
         // 弹出marker提示框
-        showActualSceneDialog(as);
+        showVenueDialog( as );
     }
 
     /**
      * 设施信息弹出框
      */
-    private void showActualSceneDialog(Venue venue) {
+    private void showVenueDialog(Venue venue) {
         if (null == venue) {
             return;
         }
-        mMapUtils.mapGoto(venue.getLat(), venue.getLng());
-        mActualSceneDialog = new Dialog(getContext(), R.style.TopActionSheetDialogStyle);
+        stopPlay(TYPE_VENUE, venue.getId());
+        mMapUtils.mapGoto( venue.getLat(), venue.getLng() );
+        boolean isInVenue = mPresenter.checkInVenue(mLatLng, venue);
+        mActualSceneDialog = new Dialog( getContext(), R.style.TopActionSheetDialogStyle );
         if (mActualSceneDialog.isShowing())
             return;
         View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_as_dialog, null);
@@ -415,9 +422,9 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
                 return;
             }
-            play(voiceUrl);
-        });
-        asInfo.setOnClickListener(v12 -> {
+            play( voiceUrl, TYPE_VENUE, venue.getId(), imgVoice );
+        } );
+        asInfo.setOnClickListener( v12 -> {
             if (null == wiki) {
                 ToastHelper.showShort(R.string.no_details_are_available);
                 return;
@@ -428,17 +435,22 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         asLine.setOnClickListener(v13 -> {
             mActualSceneDialog.dismiss();
             if (mIsInPark) {
-                boolean haveSelected = false;
-                for (TouristType type : mTouristTypes) {
-                    if (type.isUsed()) {
-                        haveSelected = true;
+                if (!isInVenue) {
+                    boolean haveSelected = false;
+                    for (TouristType type : mTouristTypes) {
+                        if (type.isUsed()) {
+                            haveSelected = true;
+                        }
                     }
-                }
-                if (haveSelected) {
-                    NavigationActivity.startActivity(getContext(), venue);
-                } else {
-                    ToastHelper.showLong(R.string.please_select_tourist);
-                    showTouristTypeDialog();
+                    if (haveSelected) {
+                        NavigationActivity.startActivity(getContext(), venue);
+                    } else {
+                        ToastHelper.showLong(R.string.please_select_tourist);
+                        showTouristTypeDialog();
+                    }
+                }else{
+                    ToastHelper.showLong(String.format(getString(R.string.no_navigation_required),
+                            LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption())));
                 }
             } else
                 NaviManager.getInstance(getContext()).showSelectorNavi(venue);
@@ -449,11 +461,18 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         mActualSceneDialog.show();//显示对话框
     }
 
-    private void play(String url) {
-//        url = "4b74742e9ff342e8a870cc6268b6be78.mp3";
+    private void play(String url, int lastType, long lastId, ImageView imgView) {
+        this.lastType = lastType;
+        this.lastId = lastId;
+        MediaPlayUtil.getInstence().startPlay( url, imgView );
+    }
+
+    private void stopPlay(int type, long id){
+        if (lastType == type && lastId == id){
+            return;
+        }
         MediaPlayUtil.getInstence().stopMusic();
-        MediaPlayUtil.getInstence().initMediaPlayer();
-        MediaPlayUtil.getInstence().startPlay(url);
+        MediaPlayUtil.getInstence().initMediaPlayer(getContext());
     }
 
     /**
@@ -463,7 +482,8 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         if (null == routeInfo) {
             return;
         }
-        mRouteInfoDialog = new Dialog(getContext(), R.style.TopActionSheetDialogStyle);
+        stopPlay(TYPE_ROUTE, routeInfo.id);
+        mRouteInfoDialog = new Dialog( getContext(), R.style.TopActionSheetDialogStyle );
         if (mRouteInfoDialog.isShowing())
             return;
         View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_as_dialog, null);
@@ -485,10 +505,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
                 return;
             }
-            play(voiceUrl);
-        });
-        asInfo.setOnClickListener(v12 -> {
-            RouteDetailActivity.startActivity(getContext(), routeInfo.id, LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
+            play( voiceUrl, TYPE_ROUTE, routeInfo.id, imgVoice );
+        } );
+        asInfo.setOnClickListener( v12 -> {
+            RouteDetailActivity.startActivity( getContext(), routeInfo.id, LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen) );
             mRouteInfoDialog.dismiss();
         });
         asLine.setOnClickListener(v13 -> {
@@ -874,7 +894,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     public boolean onMarkerClick(Marker marker) {
         Venue venue = (Venue) marker.getObject();
         // 显示marker弹窗
-        showActualSceneDialog(venue);
+        showVenueDialog( venue );
         return false;
     }
 

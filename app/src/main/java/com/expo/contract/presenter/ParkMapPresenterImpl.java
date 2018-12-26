@@ -3,6 +3,7 @@ package com.expo.contract.presenter;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.amap.api.maps.model.LatLng;
 import com.expo.R;
 import com.expo.adapters.DownloadData;
 import com.expo.base.utils.ToastHelper;
@@ -15,6 +16,7 @@ import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.VenuesType;
+import com.expo.map.MapUtils;
 import com.expo.module.download.DownloadManager;
 import com.expo.network.Http;
 import com.expo.utils.Constants;
@@ -111,6 +113,12 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
         }
         List<Venue> venues = mDao.query( Venue.class, queryParams );
         return venues;
+    }
+
+    @Override
+    public boolean checkInVenue(LatLng latLng, Venue venue) {
+        List<double[]> bounds = venue.getElectronicFenceList();
+        return MapUtils.ptInPolygon( latLng.latitude, latLng.longitude, bounds );
     }
 
     private void loadSubjectImages(List<VenuesType> venuesTypes) {

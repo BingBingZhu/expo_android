@@ -105,6 +105,8 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService( INPUT_METHOD_SERVICE );
         inputMethodManager.hideSoftInputFromWindow( getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS );
         showLoadingView();
+        mSearchContent.setText(searchContent);
+        mSearchContent.clearFocus();
         mSearchRecordUtil.saveToHistory( searchContent );
         mPresenter.searchEncy( searchContent );
     }

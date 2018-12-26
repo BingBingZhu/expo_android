@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.AppInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
 
@@ -32,6 +33,11 @@ public interface HomeContract {
 
         public abstract String loadCommonInfo(String type);
 
+        public abstract void appRun(String jgId);
+
+        public abstract void checkUpdate();
+
+        public abstract void update(Context context, AppInfo appInfo);
     }
 
     interface View extends IView {
@@ -43,5 +49,6 @@ public interface HomeContract {
 
         void showExhibitGarden(List<Encyclopedias> list);
 
+        void appUpdate(AppInfo appInfo);
     }
 }
