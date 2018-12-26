@@ -187,6 +187,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 holder.setText(R.id.home_exhibit_garden_content, LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
                 holder.itemView.setOnClickListener(v -> WebTemplateActivity.startActivity(mContext, encyclopedias.getId()));
             }
+
+            @Override
+            public int getItemCount() {
+                return Math.min(super.getItemCount(), 2);
+            }
         });
     }
 
