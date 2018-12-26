@@ -2,6 +2,7 @@ package com.expo.contract;
 
 import android.content.Context;
 
+import com.amap.api.maps.model.LatLng;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.Encyclopedias;
@@ -31,6 +32,10 @@ public interface HomeContract {
         public abstract void stopHeartService(Context context);
 
         public abstract String loadCommonInfo(String type);
+
+        public abstract Float getDistance(long id, LatLng latLng);
+
+        public abstract void sortVenue(List<Encyclopedias> list);
 
     }
 
