@@ -92,17 +92,17 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
         TopLineInfo topLine = (TopLineInfo) obj;
-        WebActivity.startActivity( getContext(),
-                LanguageUtil.chooseTest( topLine.linkH5Url, topLine.linkH5UrlEn ),
-                LanguageUtil.chooseTest( topLine.caption, topLine.captionEn ) );
+        WebActivity.startActivity(getContext(),
+                LanguageUtil.chooseTest(topLine.linkH5Url, topLine.linkH5UrlEn),
+                LanguageUtil.chooseTest(topLine.caption, topLine.captionEn));
     };
 
     MyScrollView.OnScrollListener mScrollListener = new MyScrollView.OnScrollListener() {
         @Override
         public void onScroll(int scrollY) {
-            int color = Color.argb( (int) Math.min( 0xff,
-                    Math.max( Float.valueOf( scrollY ), 0.0f ) / 2 ), 0, 203, 153 );
-            mHtTitle.setBackgroundColor( color );
+            int color = Color.argb((int) Math.min(0xff,
+                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 0, 203, 153);
+            mHtTitle.setBackgroundColor(color);
         }
     };
 
@@ -114,21 +114,21 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mSvScroll.setOnScrollListener( mScrollListener );
+        mSvScroll.setOnScrollListener(mScrollListener);
 
-        mHtTitle.setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
+        mHtTitle.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
 
         initRecyclerTop();
         initRecyclerExhibit();
         initRecyclerExhibitGarden();
-        EventBus.getDefault().register( this );
+        EventBus.getDefault().register(this);
 
         mPresenter.setMessageCount();
         mPresenter.setTopLine();
         mPresenter.setVenue();
         mPresenter.setExhibit();
         mPresenter.setExhibitGarden();
-        mPresenter.startHeartService( getContext() );
+        mPresenter.startHeartService(getContext());
     }
 
     @Override
@@ -138,89 +138,94 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     private void initRecyclerTop() {
         mListTopLine = new ArrayList<>();
-        mLsvScroll.setDataAdapter( mAdapterTopLine = new HomeTopLineAdapter( getContext() ) );
-        mLsvScroll.setOnItemClickListener( mTopLineListener );
-        mAdapterTopLine.setDatas( mListTopLine );
+        mLsvScroll.setDataAdapter(mAdapterTopLine = new HomeTopLineAdapter(getContext()));
+        mLsvScroll.setOnItemClickListener(mTopLineListener);
+        mAdapterTopLine.setDatas(mListTopLine);
     }
 
     private void initRecyclerExhibit() {
         mListExhibit = new ArrayList<>();
-        mRvExhibit.setLayoutManager( new LinearLayoutManager( getContext(), RecyclerView.HORIZONTAL, false ) );
+        mRvExhibit.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 //        mRvExhibit.addItemDecoration(new SpaceDecoration(0, 0, 0, 0, (int) getContent().getResources().getDimension(R.dimen.dms_20), 0));
-        new FixLinearSnapHelper().attachToRecyclerView( mRvExhibit );
-        mRvExhibit.setAdapter( mAdapterExhibit = new HomeExhibitAdapter( getContext() ) );
-        mAdapterExhibit.setData( mListExhibit );
+        new FixLinearSnapHelper().attachToRecyclerView(mRvExhibit);
+        mRvExhibit.setAdapter(mAdapterExhibit = new HomeExhibitAdapter(getContext()));
+        mAdapterExhibit.setData(mListExhibit);
     }
 
     private void initRecyclerExhibitGarden() {
         mListExhibitGarden = new ArrayList<>();
-        mRvExhibitGarden.setLayoutManager( new LinearLayoutManager( getContext() ) );
-        mRvExhibitGarden.addItemDecoration( new SpaceDecoration( 0, 0, (int) getContent().getResources().getDimension( R.dimen.dms_4 ), (int) getContent().getResources().getDimension( R.dimen.dms_20 ), 0 ) );
-        mRvExhibitGarden.setAdapter( mAdapterExhibitGarden = new CommonAdapter<Encyclopedias>( getContext(), R.layout.item_home_exhibit_garden, mListExhibitGarden ) {
+        mRvExhibitGarden.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRvExhibitGarden.addItemDecoration(new SpaceDecoration(0, 0, (int) getContent().getResources().getDimension(R.dimen.dms_4), (int) getContent().getResources().getDimension(R.dimen.dms_20), 0));
+        mRvExhibitGarden.setAdapter(mAdapterExhibitGarden = new CommonAdapter<Encyclopedias>(getContext(), R.layout.item_home_exhibit_garden, mListExhibitGarden) {
             @Override
             protected void convert(ViewHolder holder, Encyclopedias encyclopedias, int position) {
-                Picasso.with( getContext() ).load( CommUtils.getFullUrl( encyclopedias.picUrl ) ).placeholder( R.drawable.image_default ).error( R.drawable.image_default ).into( (ImageView) holder.getView( R.id.home_exhibit_garden_img ) );
-                holder.setText( R.id.home_exhibit_garden_name, LanguageUtil.chooseTest( encyclopedias.caption, encyclopedias.captionEn ) );
-                holder.setText( R.id.home_exhibit_garden_content, LanguageUtil.chooseTest( encyclopedias.remark, encyclopedias.remarkEn ) );
-                holder.itemView.setOnClickListener( v -> WebTemplateActivity.startActivity( mContext, encyclopedias.getId() ) );
+                Picasso.with(getContext()).load(CommUtils.getFullUrl(encyclopedias.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.home_exhibit_garden_img));
+                holder.setText(R.id.home_exhibit_garden_name, LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+                holder.setText(R.id.home_exhibit_garden_content, LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
+                holder.itemView.setOnClickListener(v -> WebTemplateActivity.startActivity(mContext, encyclopedias.getId()));
             }
-        } );
+
+            @Override
+            public int getItemCount() {
+                return Math.min(2, super.getItemCount());
+            }
+        });
     }
 
     @OnClick(R.id.title_home_msg)
     public void clickTitleMsg(View view) {
-        MessageKindActivity.startActivity( getContext() );
+        MessageKindActivity.startActivity(getContext());
     }
 
     @OnClick(R.id.home_title_text)
     public void clickTitleText(View view) {
-        EncyclopediaSearchActivity.startActivity( getContext() );
+        EncyclopediaSearchActivity.startActivity(getContext());
     }
 
     @OnClick({R.id.home_func_0, R.id.home_func_1, R.id.home_func_2, R.id.home_func_3, R.id.home_func_4,
             R.id.home_func_5, R.id.home_func_6, R.id.home_func_7, R.id.home_navigation_item,
-            R.id.title_home_icon, R.id.home_map_img })
+            R.id.title_home_icon, R.id.home_map_img})
     public void clickFunc(View view) {
         String url;
         switch (view.getId()) {
             case R.id.home_func_0:
-                FreeWiFiActivity.startActivity( getContext() );
+                FreeWiFiActivity.startActivity(getContext());
                 break;
             case R.id.home_func_1:
-                url = mPresenter.loadCommonInfo( CommonInfo.BUY_TICKETS );
-                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
-                        (url + "?phone=" + ExpoApp.getApplication().getUser().getMobile()), getString( R.string.buy_tickets ) );
+                url = mPresenter.loadCommonInfo(CommonInfo.BUY_TICKETS);
+                WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 :
+                        (url + "?phone=" + ExpoApp.getApplication().getUser().getMobile()), getString(R.string.buy_tickets));
                 break;
             case R.id.home_func_2:
-                url = mPresenter.loadCommonInfo( CommonInfo.VENUE_BESPEAK );
+                url = mPresenter.loadCommonInfo(CommonInfo.VENUE_BESPEAK);
 //                url = "http://192.168.1.13:8888/";
-                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
+                WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 :
                         url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
-                                + "&lan=" + LanguageUtil.chooseTest( "zh", "en" ), getString( R.string.home_func_item_appointment ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
+                                + "&lan=" + LanguageUtil.chooseTest("zh", "en"), getString(R.string.home_func_item_appointment), BaseActivity.TITLE_COLOR_STYLE_WHITE);
                 break;
             case R.id.home_func_3:
-                TouristServiceActivity.startActivity( getContext() );
+                TouristServiceActivity.startActivity(getContext());
                 break;
             case R.id.home_func_4:
-                RoutesActivity.startActivity( getContext() );
+                RoutesActivity.startActivity(getContext());
                 break;
             case R.id.home_func_5:
-                ParkMapActivity.startActivity( getContext(), null );
+                ParkMapActivity.startActivity(getContext(), null);
                 break;
             case R.id.home_func_6:
-                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PORTAL_WEBSITE_INTEGRATION ),
-                        getString( R.string.home_func_item_panorama ), BaseActivity.TITLE_COLOR_STYLE_WHITE );
+                WebActivity.startActivity(getContext(), mPresenter.loadCommonInfo(CommonInfo.PORTAL_WEBSITE_INTEGRATION),
+                        getString(R.string.home_func_item_panorama), BaseActivity.TITLE_COLOR_STYLE_WHITE);
                 break;
             case R.id.home_func_7:
-                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PANORAMA ), null, false );
+                WebActivity.startActivity(getContext(), mPresenter.loadCommonInfo(CommonInfo.PANORAMA), null, false);
                 break;
             case R.id.home_navigation_item:
-                ParkMapActivity.startActivity( getContext(), null );
+                ParkMapActivity.startActivity(getContext(), null);
                 break;
             case R.id.home_map_img:
             case R.id.title_home_icon:
-                url = mPresenter.loadCommonInfo( CommonInfo.EXPO_BRIEF_INTRODUCTION );
-                WebActivity.startActivity(getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url , getString(R.string.beijing_world_expo_2019), 1);
+                url = mPresenter.loadCommonInfo(CommonInfo.EXPO_BRIEF_INTRODUCTION);
+                WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 : url, getString(R.string.beijing_world_expo_2019), 1);
                 break;
         }
     }
@@ -232,40 +237,40 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     public void showTopLine(List<TopLineInfo> list) {
-        if (isDataEmpty( mHomeAd, list )) return;
+        if (isDataEmpty(mHomeAd, list)) return;
         mListTopLine.clear();
-        mListTopLine.addAll( list );
+        mListTopLine.addAll(list);
         mAdapterExhibit.notifyDataSetChanged();
         mLsvScroll.startScroll();
     }
 
     @Override
     public void showVenue(List<Encyclopedias> list) {
-        if (isDataEmpty( mHomeVenue, list )) return;
+        if (isDataEmpty(mHomeVenue, list)) return;
         mListVenue = list;
         mLlVenue.removeAllViews();
-        int width = (ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension( R.dimen.dms_60 ) - (int) getContent().getResources().getDimension( R.dimen.dms_20 ) * 3) / 3;
+        int width = (ScreenUtils.getScreenWidth() - (int) getContent().getResources().getDimension(R.dimen.dms_60) - (int) getContent().getResources().getDimension(R.dimen.dms_20) * 3) / 3;
         int height = (int) (width * 0.86f);
         for (int i = 0; i < 3; i++) {
-            addVenueView( i, width, height );
+            addVenueView(i, width, height);
         }
     }
 
     @Override
     public void showExhibit(List<Encyclopedias> list) {
-        if (isDataEmpty( mHomeExhibit, list )) return;
+        if (isDataEmpty(mHomeExhibit, list)) return;
         mListExhibit.clear();
-        mListExhibit.addAll( list );
+        mListExhibit.addAll(list);
         mAdapterExhibit.notifyDataSetChanged();
         if (mAdapterExhibit.getItemCount() > 1)
-            mRvExhibit.scrollToPosition( Integer.MAX_VALUE / 2 );
+            mRvExhibit.scrollToPosition(Integer.MAX_VALUE / 2);
     }
 
     @Override
     public void showExhibitGarden(List<Encyclopedias> list) {
-        if (isDataEmpty( mHomeExhibitGarden, list )) return;
+        if (isDataEmpty(mHomeExhibitGarden, list)) return;
         mListExhibitGarden.clear();
-        mListExhibitGarden.addAll( list );
+        mListExhibitGarden.addAll(list);
         mAdapterExhibitGarden.notifyDataSetChanged();
     }
 
@@ -273,51 +278,51 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     public void getEventBusMsgOnMainThread(BaseEventMessage baseEventMessage) {
         switch (baseEventMessage.id) {
             case Constants.EventBusMessageId.EVENTBUS_ID_HEART_MESSAGE_UNREAD_COUNT:
-                mMsgNote.setVisibility( ((Long) baseEventMessage.t) == 0L ? View.GONE : View.VISIBLE );
+                mMsgNote.setVisibility(((Long) baseEventMessage.t) == 0L ? View.GONE : View.VISIBLE);
                 break;
         }
     }
 
     private boolean isDataEmpty(View view, List list) {
         boolean empty = list == null || list.size() == 0;
-        if (empty) view.setVisibility( View.GONE );
-        else view.setVisibility( View.VISIBLE );
+        if (empty) view.setVisibility(View.GONE);
+        else view.setVisibility(View.VISIBLE);
         return empty;
     }
 
     private void addVenueView(int position, int width, int height) {
-        View view = LayoutInflater.from( getContext() ).inflate( R.layout.item_home_venue, null );
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.item_home_venue, null);
         if (mListVenue.size() > position) {
-            Encyclopedias encyclopedias = mListVenue.get( position );
-            ImageView imageView = view.findViewById( R.id.item_home_venue_img );
+            Encyclopedias encyclopedias = mListVenue.get(position);
+            ImageView imageView = view.findViewById(R.id.item_home_venue_img);
             imageView.getLayoutParams().width = width;
             imageView.getLayoutParams().height = height;
-            Picasso.with( getContext() )
-                    .load( CommUtils.getFullUrl( encyclopedias.picUrl ) )
-                    .placeholder( R.drawable.image_default ).error( R.drawable.image_default )
-                    .resize( width, height )
+            Picasso.with(getContext())
+                    .load(CommUtils.getFullUrl(encyclopedias.picUrl))
+                    .placeholder(R.drawable.image_default).error(R.drawable.image_default)
+                    .resize(width, height)
                     .centerInside()
-                    .into( (ImageView) view.findViewById( R.id.item_home_venue_img ) );
-            ((TextView) view.findViewById( R.id.item_home_venue_text )).setText( LanguageUtil.chooseTest( encyclopedias.caption, encyclopedias.captionEn ) );
-            view.setOnClickListener( v -> WebTemplateActivity.startActivity( getContext(), encyclopedias.getId() ) );
+                    .into((ImageView) view.findViewById(R.id.item_home_venue_img));
+            ((TextView) view.findViewById(R.id.item_home_venue_text)).setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+            view.setOnClickListener(v -> WebTemplateActivity.startActivity(getContext(), encyclopedias.getId()));
         }
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( 0, -2 );
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, -2);
         params.weight = 1;
         if (position != 0) {
-            params.leftMargin = (int) getContent().getResources().getDimension( R.dimen.dms_20 );
+            params.leftMargin = (int) getContent().getResources().getDimension(R.dimen.dms_20);
         }
-        view.setLayoutParams( params );
-        mLlVenue.addView( view );
+        view.setLayoutParams(params);
+        mLlVenue.addView(view);
 
     }
 
     @Override
     public void onDestroy() {
         if (null != mPresenter)
-            mPresenter.stopHeartService( getContext() );
+            mPresenter.stopHeartService(getContext());
         super.onDestroy();
-        EventBus.getDefault().unregister( this );
+        EventBus.getDefault().unregister(this);
     }
 
 }
