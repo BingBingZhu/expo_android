@@ -4,40 +4,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_f4"
+    android:background="@color/white"
     android:paddingBottom="@dimen/dms_30"
     android:scrollbars="none">
+
     <LinearLayout
         android:id="@+id/find_publish_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_999"/>
+            android:background="@color/color_999" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:paddingLeft="@dimen/dms_30"
             android:paddingRight="@dimen/dms_30">
+
             <EditText
                 android:id="@+id/find_publish_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/seek_help_speech"
+                android:background="@color/transparent"
                 android:gravity="top"
                 android:hint="@string/publish_edit_hint"
                 android:lines="4"
                 android:maxLength="50"
-                android:background="@color/transparent"
                 android:paddingTop="@dimen/dms_26"
                 android:paddingBottom="@dimen/dms_30"
-                android:textSize="@dimen/font_28"
                 android:textColor="@color/gray_66"
-                android:textColorHint="@color/gray_99" />
+                android:textColorHint="@color/gray_99"
+                android:textSize="@dimen/font_28" />
 
             <TextView
                 android:id="@+id/edit_count"
@@ -47,20 +51,21 @@
                 android:layout_marginRight="@dimen/dms_10"
                 android:layout_marginBottom="@dimen/dms_10"
                 android:gravity="right|center_vertical"
-                android:textSize="@dimen/font_28"
-                android:text="0/50" />
+                android:text="0/50"
+                android:textSize="@dimen/font_28" />
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_marginTop="@dimen/dms_26"
-            android:paddingTop="@dimen/dms_26"
-            android:paddingBottom="@dimen/dms_24"
+            android:background="@color/white"
+            android:orientation="vertical"
             android:paddingLeft="@dimen/dms_50"
+            android:paddingTop="@dimen/dms_26"
             android:paddingRight="@dimen/dms_50"
-            android:orientation="vertical">
+            android:paddingBottom="@dimen/dms_24">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
@@ -80,10 +85,10 @@
             android:id="@+id/find_publish_type"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_96"
-            android:paddingLeft="@dimen/dms_30"
-            android:paddingRight="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_30"
             android:background="@color/white"
-            android:layout_marginTop="@dimen/dms_30">
+            android:paddingLeft="@dimen/dms_30"
+            android:paddingRight="@dimen/dms_30">
 
             <com.hedan.textdrawablelibrary.TextViewDrawable
                 style="@style/TextSizeBlack14"
@@ -98,6 +103,15 @@
                 android:layout_gravity="center_vertical|right"
                 android:drawableRight="@mipmap/arrow_down" />
         </FrameLayout>
+
+        <TextView
+            android:id="@+id/find_publish_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_20"
+            android:drawableLeft="@mipmap/location"
+            android:drawablePadding="@dimen/dms_10" />
 
         <TextView
             android:id="@+id/find_publish_submit"

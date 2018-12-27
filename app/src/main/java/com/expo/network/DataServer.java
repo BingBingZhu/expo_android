@@ -391,7 +391,7 @@ public interface DataServer {
      * @param requestBody
      * @return
      */
-    @POST("manage/AddSociety")
+    @POST("Terminal/AddSociety")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<BaseResponse> addSociety(@Body RequestBody requestBody);
 

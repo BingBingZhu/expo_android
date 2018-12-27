@@ -3,6 +3,7 @@ package com.expo.module.main.find.publish;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -20,6 +21,9 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
@@ -33,6 +37,8 @@ import com.expo.base.utils.CheckUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FindPublishContract;
 import com.expo.entity.Find;
+import com.expo.map.LocationManager;
+import com.expo.map.MapUtils;
 import com.expo.module.camera.CameraActivity;
 import com.expo.module.mine.adapter.WorkAdapter;
 import com.expo.utils.CommUtils;
@@ -62,6 +68,8 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
     TextView mTvEditCount;
     @BindView(R.id.find_publish_type_text)
     TextView mTvTypeText;
+    @BindView(R.id.find_publish_location)
+    TextView mTvLocation;
 
     ArrayList<String> mImageList;
     FindPublishAdapter mAdapter;
@@ -71,6 +79,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     int mCameraPosition = 0;
     String mFindType;
+    String mLocation = "";
 
     BaseAdapterItemClickListener<Integer> mClickListener = new BaseAdapterItemClickListener<Integer>() {
         @Override
@@ -89,6 +98,14 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         }
     };
 
+    AMap.OnMyLocationChangeListener mLocationChangeListener = new AMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            mLocation = ((AMapLocation)location).getPoiName();
+            mTvLocation.setText(mLocation);
+        }
+    };
+
     private void initEditText() {
         String token = "<image>";
         ImageSpan span = new ImageSpan(this, R.mipmap.snow, 1);
@@ -101,6 +118,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         mEtEdit.setHint(spanStr);
 
         mEtEdit.setSelection(mEtEdit.getText().length());
+        LocationManager.getInstance().registerLocationListener(mLocationChangeListener);
     }
 
     @Override
@@ -199,7 +217,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         showTypeSelectorDialog();
     }
 
-    private void showTypeSelectorDialog(){
+    private void showTypeSelectorDialog() {
         DialogPlus dialog = DialogPlus.newDialog(this)
                 .setContentHolder(new ListHolder())
                 .setAdapter(mWorkAdapter)
@@ -222,8 +240,11 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
     @OnClick(R.id.find_publish_submit)
     public void submit(View view) {
         Find find = getFindPublish();
-        if (find != null)
+        if (find != null) {
+            find.location = mLocation;
             mPresenter.addSociety(find);
+        }
+
     }
 
     @Override
@@ -343,6 +364,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     @Override
     protected void onDestroy() {
+        LocationManager.getInstance().unregisterLocationListener(mLocationChangeListener);
         super.onDestroy();
     }
 
@@ -353,7 +375,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
             ToastHelper.showShort(R.string.check_string_empty_image_video);
             return null;
         }
-        if (StringUtils.isEmpty(mTvTypeText.getText().toString())){
+        if (StringUtils.isEmpty(mTvTypeText.getText().toString())) {
             showTypeSelectorDialog();
             return null;
         }

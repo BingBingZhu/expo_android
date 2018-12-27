@@ -56,14 +56,32 @@
             android:gravity="left|top"
             android:maxLines="3" />
 
-        <TextView
-            android:id="@+id/find_detail_position"
-            style="@style/TextSizeWhite15"
-            android:layout_gravity="right"
-            android:layout_marginTop="@dimen/dms_16"
-            android:gravity="center_vertical"
-            android:lines="1"
-            android:singleLine="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_16">
+
+            <TextView
+                android:id="@+id/find_detail_position"
+                style="@style/TextSizeWhite15"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/find_detail_location"
+                style="@style/TextSizeWhite15"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/find_detail_position"
+                android:drawableLeft="@mipmap/location_white"
+                android:drawablePadding="@dimen/dms_10"
+                android:gravity="center_vertical" />
+
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
