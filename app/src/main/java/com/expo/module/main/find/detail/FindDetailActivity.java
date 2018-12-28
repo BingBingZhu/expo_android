@@ -59,6 +59,8 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
     TextView mTvContent;
     @BindView(R.id.find_detail_position)
     TextView mTvPosition;
+    @BindView(R.id.find_detail_location)
+    TextView mTvLocation;
     @BindView(R.id.find_detail_enjoy)
     TextView mTvEnjoy;
     @BindView(R.id.find_detail_views)
@@ -157,6 +159,13 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
         mTvEnjoy.setText(mFind.enjoys);
         mTvViews.setText(mFind.views);
         mTvPosition.setVisibility(View.VISIBLE);
+        if (StringUtils.isEmpty(mFind.location)) {
+            mTvLocation.setVisibility(View.GONE);
+        } else {
+            mTvLocation.setVisibility(View.VISIBLE);
+            mTvLocation.setText(mFind.location);
+
+        }
     }
 
     @Override

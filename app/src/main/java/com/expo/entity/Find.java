@@ -40,6 +40,8 @@ public class Find implements Parcelable {
     public String url9 = "";
     public String views = "0";
     public String kind = "0";
+    public String location = "0";
+
 
     @Expose()
     public int times = 0;
@@ -185,6 +187,7 @@ public class Find implements Parcelable {
         url9 = in.readString();
         views = in.readString();
         kind = in.readString();
+        location = in.readString();
     }
 
     @Override
@@ -214,6 +217,7 @@ public class Find implements Parcelable {
         dest.writeString(url9);
         dest.writeString(views);
         dest.writeString(kind);
+        dest.writeString(location);
     }
 
     @Override

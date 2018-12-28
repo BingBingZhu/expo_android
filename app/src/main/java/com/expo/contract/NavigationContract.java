@@ -23,6 +23,8 @@ public interface NavigationContract {
         public abstract Encyclopedias getEncyclopedias(String id);
 
         public abstract TouristType getTourist();
+
+        public abstract void submitTouristRecord(double sx, double xy, double ex, double ey, float speed);
     }
 
     interface View extends IView {

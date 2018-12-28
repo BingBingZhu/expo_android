@@ -223,24 +223,24 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mSlidingDrawerView.open();
             mCameraManager.startPreview();
             updateMapStatue(true);
-            mImgNavigationShow.setVisibility( View.GONE );
+            mImgNavigationShow.setVisibility(View.GONE);
         } else {
             updateMapStatue(false);
-            mImgNavigationShow.setVisibility( View.VISIBLE );
+            mImgNavigationShow.setVisibility(View.VISIBLE);
         }
         mSlidingDrawerView.setOnDrawerCloseListener(() -> {
             mCameraManager.stopPreview();
             PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false);
             updateMapStatue(false);
-            mImgNavigationShow.setVisibility( View.VISIBLE );
-            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
+            mImgNavigationShow.setVisibility(View.VISIBLE);
+            mImgNavigationShow.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_bottom));
         });
         mSlidingDrawerView.setOnDrawerOpenListener(() -> {
             mCameraManager.startPreview();
             PrefsHelper.setBoolean(Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true);
             updateMapStatue(true);
-            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
-            mImgNavigationShow.setVisibility( View.GONE );
+            mImgNavigationShow.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_bottom));
+            mImgNavigationShow.setVisibility(View.GONE);
         });
     }
 
@@ -292,6 +292,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private AMap.OnMyLocationChangeListener mOnLocationChangeListener = new AMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
+            if (mLocation == null) {
+                mPresenter.submitTouristRecord(location.getLatitude(), location.getLongitude(), mVenue.getLat(), mVenue.getLng(), location.getSpeed());
+            }
             mLocation = location;
             if (isFirst) {//第一次定位成功后移动到地图中心
                 isFirst = false;
@@ -576,7 +579,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
         @Override
         public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
-            mTvTips.setVisibility( View.VISIBLE );
+            mTvTips.setVisibility(View.VISIBLE);
             // 算路返回结果
             AMapNaviPath naviPath = mAMapNavi.getNaviPath();
             if (mNaviRouteOverlay == null) {

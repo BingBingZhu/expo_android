@@ -391,7 +391,7 @@ public interface DataServer {
      * @param requestBody
      * @return
      */
-    @POST("manage/AddSociety")
+    @POST("Terminal/AddSociety")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<BaseResponse> addSociety(@Body RequestBody requestBody);
 
@@ -434,5 +434,15 @@ public interface DataServer {
     @POST("Terminal/UserScoreChange")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<BaseResponse> userScoreChange(@Body RequestBody requestBody);
+
+    /**
+     * 增加积分（1查看百科详情 2 分享百科）
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("/bigdataapi/submitTouristRecord")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> submitTouristRecord(@Body RequestBody requestBody);
 
 }
