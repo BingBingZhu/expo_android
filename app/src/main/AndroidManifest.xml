@@ -64,7 +64,7 @@
         <!--高德KEY-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="51b7af71356b15ac619a9682e7ea26a3" />
+            android:value="b3949e7fd600bfd0e278621a166e39b6" />
 
         <meta-data
             android:name="com.baidu.speech.APP_ID"

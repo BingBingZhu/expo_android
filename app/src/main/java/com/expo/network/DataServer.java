@@ -27,12 +27,14 @@ import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.network.response.VersionInfoResp;
 import com.expo.network.response.VisitorServiceResp;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
@@ -290,6 +292,7 @@ public interface DataServer {
 
     /**
      * 识花
+     *
      * @param url
      * @param params
      * @return
@@ -300,6 +303,7 @@ public interface DataServer {
     Observable<GetDistinguishPlantList_Rsb> distinguishPlant(@Url String url, @FieldMap Map<String, String> params);
 
     ////路线相关接口
+
     /**
      * 获取路线列表
      *
@@ -352,6 +356,7 @@ public interface DataServer {
 
     /**
      * 终端获取富文本根据id
+     *
      * @param requestBody
      * @return
      */
@@ -361,14 +366,17 @@ public interface DataServer {
 
     /**
      * 获取游客服务列表
+     *
      * @param requestBody
      * @return
      */
     @POST("Terminal/findVisitorServiceList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<VisitorServiceResp> findVisitorServiceList(@Body RequestBody requestBody);
+
     /**
      * 获取社交圈数据
+     *
      * @param requestBody
      * @return
      */
@@ -378,6 +386,7 @@ public interface DataServer {
 
     /**
      * 获取社交圈数据
+     *
      * @param requestBody
      * @return
      */
@@ -445,4 +454,15 @@ public interface DataServer {
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<BaseResponse> submitTouristRecord(@Body RequestBody requestBody);
 
+
+    /**
+     * 票务注册
+     *
+     * @param url
+     * @param phone
+     * @return
+     */
+    @FormUrlEncoded
+    @POST
+    Observable<HashMap<String, String>> registerTicket(@Url String url, @Field("phone") String phone, @Field("source") String source);
 }

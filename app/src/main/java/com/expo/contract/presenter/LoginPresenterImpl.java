@@ -4,8 +4,6 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.expo.R;
-import com.expo.base.ExpoApp;
-import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.LoginContract;
 import com.expo.db.QueryParams;
@@ -13,16 +11,15 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.User;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
-import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
+import com.expo.pay.RegisterCallback;
 import com.expo.utils.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
@@ -60,6 +57,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
 
     @Override
     public void verifyCodeLogin(String mobile, String countryCode, String verifyCode) {
+        mView.showLoadingView();
         Map<String, Object> params = Http.getBaseParams();
         params.put( "Mobile", mobile );
         params.put( "countrycode", countryCode );
@@ -69,11 +67,19 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
         Http.request( new ResponseCallback<VerifyCodeLoginResp>() {
             @Override
             protected void onResponse(VerifyCodeLoginResp rsp) {
-                LogUtils.e( "====user=======", "uid: " + rsp.getId() + "   ukey: " + rsp.getKey() );
                 setAppUserInfo( rsp );
                 mView.verifyCodeLogin();
             }
+
+            @Override
+            public void onComplete() {
+                mView.hideLoadingView();
+            }
         }, verifyCodeLoginObservable );
+
+        //注册票务
+        Observable<HashMap<String, String>> observable = Http.getServer().registerTicket( Constants.URL.REGISTER_TICKET, mobile, "1" );
+        Http.request( new RegisterCallback(), observable );
     }
 
     /**

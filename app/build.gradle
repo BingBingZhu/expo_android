@@ -63,8 +63,8 @@ android {
 }
 
 MobSDK {
-    appKey "276c7e46241c8"
-    appSecret "75922db60cfed64fbb2f410613cc6ae8"
+    appKey "2983c2073289a"
+    appSecret "2ff9f7698347daff6b9cdc8ca1292425"
     ShareSDK {
         //引入一键分享
         gui false
@@ -92,8 +92,8 @@ MobSDK {
             QQ {
                 id 3
                 sortId 3
-                appId "1106545497"
-                appKey "KEYAiRJjkxetdrbwk5u"
+                appId "101535503"
+                appKey "23bf623648e118cbe967a1dcaf27d4f8"
                 shareByAppClient true
                 bypassApproval false
                 enable true
@@ -101,8 +101,8 @@ MobSDK {
             QZone {
                 id 4
                 sortId 4
-                appId "1106545497"
-                appKey "KEYAiRJjkxetdrbwk5u"
+                appId "101535503"
+                appKey "23bf623648e118cbe967a1dcaf27d4f8"
                 shareByAppClient true
                 bypassApproval false
                 enable true
@@ -110,8 +110,8 @@ MobSDK {
             SinaWeibo {
                 id 5
                 sortId 5
-                appKey "888386000"
-                appSecret "7fdae1ac1a940d356889692f30f22c8e"
+                appKey "2008250939"
+                appSecret "0e1b88c3b07793a91bf527ca761b6336"
                 callbackUri "http://sns.whalecloud.com/sina2/callback"
                 shareByAppClient true
                 enable true

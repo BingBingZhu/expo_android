@@ -114,6 +114,7 @@ public interface Constants {
         public static final String UPPAY_APP_DOWNLOAD_URL = "http://47.92.247.143/res/static/UPPayPluginEx.apk";
         //        public static final String MAP_TILES_BASE_URL = FILE_BASE_URL + "titlemap/tiles/%d/%d_%d.png";
         public static final String MAP_TILES_BASE_URL = "http://39.105.120.171/res/titlemap/tiles/%d/%d_%d.png";
+        public static final String REGISTER_TICKET = "http://47.92.129.164:8890/ticketAppUser/appUserToOffWebUser";
     }
 
     /**
