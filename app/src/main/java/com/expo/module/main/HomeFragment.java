@@ -1,8 +1,6 @@
 package com.expo.module.main;
 
 import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.expo.R;
@@ -23,7 +20,6 @@ import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.ExpoApp;
-import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.HomeContract;
 import com.expo.entity.AppInfo;
@@ -31,7 +27,6 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
 import com.expo.map.LocationManager;
-import com.expo.map.MapUtils;
 import com.expo.module.freewifi.FreeWiFiActivity;
 import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.main.adapter.HomeExhibitAdapter;
@@ -123,11 +118,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         public void onMyLocationChange(Location location) {
             if (isLocation) return;
             isLocation = true;
-            sort(mListVenue, new LatLng(location.getLatitude(), location.getLongitude()));
-            showVenue(mListVenue);
-            sort(mListExhibit, new LatLng(location.getLatitude(), location.getLongitude()));
+            sort( mListVenue, new LatLng( location.getLatitude(), location.getLongitude() ) );
+            showVenue( mListVenue );
+            sort( mListExhibit, new LatLng( location.getLatitude(), location.getLongitude() ) );
             mAdapterExhibit.notifyDataSetChanged();
-            sort(mListExhibitGarden, new LatLng(location.getLatitude(), location.getLongitude()));
+            sort( mListExhibitGarden, new LatLng( location.getLatitude(), location.getLongitude() ) );
             mAdapterExhibitGarden.notifyDataSetChanged();
         }
     };
@@ -153,10 +148,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mPresenter.setVenue();
         mPresenter.setExhibit();
         mPresenter.setExhibitGarden();
-        mPresenter.startHeartService(getContext());
-        mPresenter.startHeartService(getContext());
+        mPresenter.startHeartService( getContext() );
+        mPresenter.startHeartService( getContext() );
 
-        LocationManager.getInstance().registerLocationListener(mOnLocationChangeListener);//定位
+        LocationManager.getInstance().registerLocationListener( mOnLocationChangeListener );//定位
     }
 
     @Override
@@ -195,9 +190,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
             @Override
             public int getItemCount() {
-                return Math.min(2, super.getItemCount());
+                return Math.min( 2, super.getItemCount() );
             }
-        });
+        } );
     }
 
     @OnClick(R.id.title_home_msg)
@@ -212,7 +207,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @OnClick({R.id.home_func_0, R.id.home_func_1, R.id.home_func_2, R.id.home_func_3, R.id.home_func_4,
             R.id.home_func_5, R.id.home_func_6, R.id.home_func_7, R.id.home_navigation_item,
-            R.id.title_home_icon, R.id.home_map_img })
+            R.id.title_home_icon, R.id.home_map_img})
     public void clickFunc(View view) {
         String url;
         switch (view.getId()) {
@@ -222,7 +217,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             case R.id.home_func_1:
                 url = mPresenter.loadCommonInfo( CommonInfo.BUY_TICKETS );
                 WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 :
-                        (url + "?phone=" + ExpoApp.getApplication().getUser().getMobile()), getString( R.string.buy_tickets ) );
+                        (url + "?phone=" + ExpoApp.getApplication().getUser().getMobile() + "&lang=" + LanguageUtil.chooseTest( "zh", "en" )), getString( R.string.buy_tickets ) );
                 break;
             case R.id.home_func_2:
                 url = mPresenter.loadCommonInfo( CommonInfo.VENUE_BESPEAK );
@@ -253,7 +248,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             case R.id.home_map_img:
             case R.id.title_home_icon:
                 url = mPresenter.loadCommonInfo( CommonInfo.EXPO_BRIEF_INTRODUCTION );
-                WebActivity.startActivity(getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url , getString(R.string.beijing_world_expo_2019), 1);
+                WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, getString( R.string.beijing_world_expo_2019 ), 1 );
                 break;
         }
     }
@@ -286,10 +281,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     public void sort(List<Encyclopedias> list, LatLng latLng) {
         for (int i = 0; list != null && i < list.size(); i++) {
-            Encyclopedias venue = list.get(i);
-            venue.setDistance(mPresenter.getDistance(venue.id, latLng));
+            Encyclopedias venue = list.get( i );
+            venue.setDistance( mPresenter.getDistance( venue.id, latLng ) );
         }
-        mPresenter.sortVenue(list);
+        mPresenter.sortVenue( list );
     }
 
     @Override
@@ -363,8 +358,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         if (null != mPresenter)
             mPresenter.stopHeartService( getContext() );
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
-        LocationManager.getInstance().unregisterLocationListener(mOnLocationChangeListener);
+        EventBus.getDefault().unregister( this );
+        LocationManager.getInstance().unregisterLocationListener( mOnLocationChangeListener );
     }
 
 }
