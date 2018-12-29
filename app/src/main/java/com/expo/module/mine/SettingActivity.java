@@ -1,18 +1,15 @@
 package com.expo.module.mine;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -20,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -30,14 +26,13 @@ import com.expo.base.utils.ActivityHelper;
 import com.expo.base.utils.DataCleanUtil;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
+import com.expo.upapp.UpdateAppManager;
 import com.expo.contract.SettingContract;
 import com.expo.entity.AppInfo;
 import com.expo.entity.CommonInfo;
 import com.expo.module.login.LoginActivity;
-import com.expo.module.main.MainActivity;
 import com.expo.module.prompt.PromptActivity;
 import com.expo.module.webview.WebActivity;
-import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
@@ -45,9 +40,7 @@ import com.expo.widget.AppBarView;
 import com.expo.widget.MySettingView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnClickListener;
-import com.orhanobut.dialogplus.OnItemClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.Locale;
@@ -215,6 +208,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     @OnClick(R.id.setting_update)
     public void clickUpdate(MySettingView view) {
         mPresenter.checkUpdate();
+        LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS, Constants.Action.ACTION_CANCEL_UPDATE);
     }
 
     @OnClick(R.id.setting_guide)
@@ -279,4 +273,44 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
                 LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn() );
     }
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS)){
+                LocalBroadcastUtil.unregisterReceiver(context, receiver);
+                installApp(getContext());
+            }
+            if (intent.getAction().equals(Constants.Action.ACTION_CANCEL_UPDATE)){
+                LocalBroadcastUtil.unregisterReceiver(context, receiver);
+            }
+        }
+    };
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void installApp(Context context){
+        if(!getPackageManager().canRequestPackageInstalls()){
+            Uri packageURI = Uri.parse("package:"+getPackageName());
+            Intent in = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageURI);
+            startActivityForResult(in, Constants.RequestCode.REQ_INSTALL_PERMISS_CODE);
+            return;
+        }
+        UpdateAppManager.getInstance(context).installApp();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.RequestCode.REQ_INSTALL_PERMISS_CODE){
+            if(getPackageManager().canRequestPackageInstalls()) {
+                UpdateAppManager.getInstance(getContext()).installApp();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastUtil.unregisterReceiver(getContext(), receiver);
+        super.onDestroy();
+    }
 }

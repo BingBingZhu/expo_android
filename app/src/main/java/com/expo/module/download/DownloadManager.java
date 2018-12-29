@@ -1,8 +1,12 @@
 package com.expo.module.download;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.text.TextUtils;
 
 import com.expo.adapters.DownloadData;
@@ -408,5 +412,51 @@ public class DownloadManager {
         void onProgressUpdate(DownloadData info);
 
         void onStatusChanged(DownloadData info);
+    }
+
+
+
+
+    public long download(Context context, String url, String title, String desc) {
+        Uri uri = Uri.parse(url);
+        LogUtils.e("aaaaaaaaaaaa   url", url);
+        android.app.DownloadManager.Request req = new android.app.DownloadManager.Request(uri);
+        //设置WIFI下进行更新
+        req.setAllowedNetworkTypes(android.app.DownloadManager.Request.NETWORK_WIFI);
+        //下载中和下载完后都显示通知栏
+        req.setNotificationVisibility( android.app.DownloadManager.Request.VISIBILITY_VISIBLE | android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        //使用系统默认的下载路径 此处为应用内 /android/data/packages ,所以兼容7.0
+        req.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS, title);
+        //7.0以上的系统适配
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            req.setRequiresDeviceIdle(false);
+            req.setRequiresCharging(false);
+        }
+        //通知栏标题
+        req.setTitle(title);
+        //通知栏描述信息
+        req.setDescription(desc);
+        //设置类型为.apk
+        req.setMimeType("application/vnd.android.package-archive");
+        //获取下载任务ID
+        android.app.DownloadManager dm = (android.app.DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            StrictMode.VmPolicy.Builder localBuilder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(localBuilder.build());
+        }
+        return dm.enqueue(req);
+    }
+
+    /**
+     * 下载前先移除前一个任务，防止重复下载
+     * @param downloadId
+     */
+    public void clearCurrentTask(Context context, long downloadId) {
+        android.app.DownloadManager dm = (android.app.DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        try {
+            dm.remove(downloadId);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
+        }
     }
 }

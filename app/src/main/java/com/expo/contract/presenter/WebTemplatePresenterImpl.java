@@ -1,29 +1,17 @@
 package com.expo.contract.presenter;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
-import com.expo.R;
-import com.expo.base.ExpoApp;
 import com.expo.contract.WebTemplateContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.CommonInfo;
-import com.expo.entity.Message;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
-import com.expo.module.heart.MessageKindActivity;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
-import com.expo.utils.Constants;
-import com.expo.utils.LanguageUtil;
-import com.expo.utils.LocalBroadcastUtil;
 import com.expo.utils.NotificationUtil;
 
 import java.util.ArrayList;
@@ -35,8 +23,6 @@ import java.util.Random;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
 
@@ -71,7 +57,7 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
             @Override
             protected void onResponse(BaseResponse rsp) {
                 mView.addScore();
-                NotificationUtil.getInstance().show("新增积分通知", "获取到新的积分，可在积分详情查看", null);
+                NotificationUtil.getInstance().showNotification("新增积分通知", "获取到新的积分，可在积分详情查看", null);
             }
         }, observable);
     }

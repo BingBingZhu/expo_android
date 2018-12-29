@@ -4,9 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.text.TextUtils;
 
 import com.expo.R;
@@ -133,7 +130,7 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
             return;
         }
         if (isAppInsideMsg(message.getMsgKind())) {
-            NotificationUtil.getInstance().show(LanguageUtil.chooseTest(message.getCaption(), message.getCaptionEn()),
+            NotificationUtil.getInstance().showNotification(LanguageUtil.chooseTest(message.getCaption(), message.getCaptionEn()),
                     LanguageUtil.chooseTest(message.getContent(), message.getContentEn()), MessageKindActivity.class);
         }
         if (isAppAlert(message.getMsgKind())) {

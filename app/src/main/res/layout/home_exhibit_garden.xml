@@ -11,22 +11,17 @@
         style="@style/TextSizeBlack15"
         android:drawableLeft="@mipmap/home_star"
         android:drawablePadding="@dimen/dms_10"
+        android:gravity="bottom"
         android:text="@string/home_func_title_exhibit_garden"
         android:textStyle="bold"
         android:textSize="@dimen/font_34" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_20">
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_exhibit_garden"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_20"
             android:descendantFocusability="blocksDescendants"
             android:nestedScrollingEnabled="false"
             android:overScrollMode="never" />
-    </RelativeLayout>
 
 </LinearLayout>

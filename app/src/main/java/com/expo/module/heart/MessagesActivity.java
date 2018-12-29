@@ -34,6 +34,7 @@ import com.expo.module.heart.message.MessageTypeTourist;
 import com.expo.module.login.LoginActivity;
 import com.expo.module.webview.WebActivity;
 import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
@@ -220,7 +221,11 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
 
     @Override
     public void gotoInfoPage(String data) {
-//        WebActivity.startActivity(getContext(), "url", "订单详情", data);
+//        String url = "http://192.168.1.13:8888/#/orderStatus";
+        String url = mPresenter.loadCommonInfo(CommonInfo.NOTICE_OF_BESPEAK);
+        url = url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
+                + "&lan=" + LanguageUtil.chooseTest( "zh", "en" );
+        WebActivity.startActivity(getContext(), url, "订单详情", data);
     }
 
     @Override

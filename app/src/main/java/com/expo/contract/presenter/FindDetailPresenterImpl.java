@@ -1,5 +1,6 @@
 package com.expo.contract.presenter;
 
+import com.expo.base.ExpoApp;
 import com.expo.contract.FindDetailContract;
 import com.expo.entity.Find;
 import com.expo.network.Http;
@@ -18,17 +19,21 @@ public class FindDetailPresenterImpl extends FindDetailContract.Presenter {
     }
 
     @Override
-    public void addEnjoy(String id) {
+    public void addEnjoy(Find find) {
+        if (find.uid.equals(String.valueOf(ExpoApp.getApplication().getUser().getUid()))){
+            mView.addEnjoyRes(true);
+            return;
+        }
         mView.showLoadingView();
         Map<String, Object> params = Http.getBaseParams();
-        params.put("id", id);
+        params.put("id", find.id);
         RequestBody requestBody = Http.buildRequestBody(params);
         Observable<BaseResponse> observable = Http.getServer().setEnjoySociety(requestBody);
         Http.request(new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
                 mView.hideLoadingView();
-                mView.addEnjoyRes();
+                mView.addEnjoyRes(false);
             }
 
             @Override

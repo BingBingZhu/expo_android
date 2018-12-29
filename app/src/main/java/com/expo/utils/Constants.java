@@ -89,6 +89,7 @@ public interface Constants {
         public static final String EXTRA_ROUTE_NAME = "extra_route_name";
         public static final String EXTRA_JSON_DATA = "extra_json_data";
         public static final String EXTRA_ENJOYS = "extra_enjoys";
+        public static final String EXTRA_IS_START_LOCATION = "extra_is_start_location";
     }
 
     /**
@@ -167,6 +168,7 @@ public interface Constants {
         public static final String ACTION_TRACK_CHANAGE = "action_track_chanage";
         public static final String ACTION_LOCATION_CHANGED_IN_SCENES = "action_location_changed_in_scenes";
         public static final String ACTION_REDUCE_USER_POINTS = "action_reduce_user_points";
+        public static final String ACTION_DOWNLOAD_APP_SUCCESS = "action_download_app_success";
     }
 
     /**
@@ -183,6 +185,7 @@ public interface Constants {
         public static final int REQ_TO_CONTACTS = 129;
         public static final int REQ_TO_QRCODE = 130;
         public static final int REQ_TO_FIND_INFO = 131;
+        public static final int REQ_INSTALL_PERMISS_CODE = 132;
     }
 
     /**

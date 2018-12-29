@@ -1,4 +1,4 @@
-package com.expo.base.utils;
+package com.expo.upapp;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
+import com.expo.base.utils.ToastHelper;
 import com.expo.entity.AppInfo;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -32,6 +33,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 public class UpdateAppManager {
 
@@ -49,10 +51,33 @@ public class UpdateAppManager {
         return mInstance;
     }
 
+    public static UpdateAppManager getInstance(){
+        if (mInstance == null) {
+            synchronized (UpdateAppManager.class) {
+                if (mInstance == null) {
+                    mInstance = new UpdateAppManager();
+                }
+            }
+        }
+        return mInstance;
+    }
+
+    public AppInfo isHaveUpdate(String appVersionName, List<AppInfo> infos){
+        AppInfo appInfo = null;
+        for (AppInfo info : infos){
+            if (info.platformname.equals("android")){
+                if (!info.ver.equals(appVersionName)){
+                    appInfo = info;
+                }
+            }
+        }
+        return appInfo;
+    }
+
     // 外存sdcard存放路径
     private static final String FILE_PATH = Environment.getExternalStorageDirectory() + "/";
     // 下载应用存放全路径
-    private static String FILE_NAME = FILE_PATH + AppUtils.getAppName();
+    public static String FILE_NAME = FILE_PATH + "expo_2019.apk";
     // 准备安装新版本应用标记
     private static final int INSTALL_TOKEN = 1;
     //Log日志打印标签
@@ -64,12 +89,15 @@ public class UpdateAppManager {
     private TextView tvFileSize;
     private TextView tvDownload;
     private TextView tvCancel;
+    private long downloadId;
+    DownloadManagerUtil downloadManagerUtil;
 
 
     /**
      * 显示提示更新对话框
      */
     public void showNoticeDialog(AppInfo versionInfo, boolean isInform) {
+        downloadManagerUtil = new DownloadManagerUtil(mContext);
         this.versionInfo = versionInfo;
         Dialog dialog = new Dialog(mContext, R.style.ApkDownloadDialogStyle);
         View v = LayoutInflater.from(mContext).inflate(R.layout.layout_dialog_update_version, null);
@@ -86,7 +114,19 @@ public class UpdateAppManager {
         tvRate.setVisibility(View.GONE);
         tvFileSize.setText(getDoubleFomat((Double.valueOf(versionInfo.apkfilesize)) / 1024 / 1024) + "M");
         tvDownload.setOnClickListener(v1 -> {
-            new DownloadAsyncTask().execute();
+//            new DownloadAsyncTask().execute();
+            //调起系统下载功能
+            if (downloadId != 0) {
+                downloadManagerUtil.clearCurrentTask(downloadId);
+            }
+            downloadId = downloadManagerUtil.download(Constants.URL.FILE_BASE_URL+versionInfo.apkurl,
+                    AppUtils.getAppName(), getDoubleFomat((Double.valueOf(versionInfo.apkfilesize)) / 1024 / 1024) + "M");
+            if (StringUtils.equals("1", versionInfo.isforce)) {
+
+            }else{
+                dialog.dismiss();
+                ToastHelper.showShort("已添加至下载列表");
+            }
         });
         if (StringUtils.equals("1", versionInfo.isforce)) {
             dialog.setCancelable(false);
@@ -139,7 +179,7 @@ public class UpdateAppManager {
             InputStream in = null;
             FileOutputStream out = null;
             try {
-                url = new URL(Constants.URL.FILE_BASE_URL + versionInfo.getResUrl());
+                url = new URL(Constants.URL.FILE_BASE_URL + versionInfo.apkurl);
                 connection = (HttpURLConnection) url.openConnection();
                 in = connection.getInputStream();
                 long fileLength = connection.getContentLength();
@@ -210,20 +250,20 @@ public class UpdateAppManager {
     /**
      * 安装新版本应用
      */
-    private void installApp() {
+    public void installApp() {
         File apkFile = new File(FILE_NAME);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(
-                    mContext
-                    , "com.expo.fileprovider"
-                    , apkFile);
-            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-        } else {
-            intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+        if (apkFile.exists()) {
+            Uri uri;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                uri = FileProvider.getUriForFile( mContext, mContext.getPackageName() + ".fileprovider", apkFile );
+            } else {
+                uri = Uri.fromFile( apkFile );
+            }
+            Intent in = new Intent( Intent.ACTION_VIEW );
+            in.setDataAndType( uri, "application/vnd.android.package-archive" );
+            in.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
+            in.addFlags( Intent.FLAG_GRANT_READ_URI_PERMISSION );
+            mContext.startActivity( in );
         }
-        mContext.startActivity(intent);
     }
 }

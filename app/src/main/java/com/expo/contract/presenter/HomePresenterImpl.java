@@ -1,14 +1,12 @@
 package com.expo.contract.presenter;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
-import com.expo.base.ExpoApp;
 import com.expo.base.utils.ToastHelper;
-import com.expo.base.utils.UpdateAppManager;
+import com.expo.upapp.UpdateAppManager;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.expo.contract.HomeContract;
@@ -27,15 +25,11 @@ import com.expo.network.response.VersionInfoResp;
 
 import java.util.Map;
 
-import cn.jpush.android.api.JPushInterface;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class HomePresenterImpl extends HomeContract.Presenter {
     public HomePresenterImpl(HomeContract.View view) {
@@ -129,15 +123,9 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         Http.request( new ResponseCallback<VersionInfoResp>() {
             @Override
             protected void onResponse(VersionInfoResp rsp) {
-                if (StringUtils.equals( AppUtils.getAppVersionCode() + "", rsp.ver )) {
-                    ToastHelper.showShort( R.string.latest_app_version );
-                } else {
-                    for (int i = 0; i < rsp.Objlst.size(); i++) {
-                        if (StringUtils.equals( "android", rsp.Objlst.get( i ).platformname.toLowerCase() )) {
-                            mView.appUpdate( rsp.Objlst.get( i ) );
-                            return;
-                        }
-                    }
+                AppInfo appInfo = UpdateAppManager.getInstance().isHaveUpdate(AppUtils.getAppVersionName(), rsp.Objlst);
+                if (null != appInfo) {
+                    mView.appUpdate( appInfo );
                 }
             }
         }, observable );

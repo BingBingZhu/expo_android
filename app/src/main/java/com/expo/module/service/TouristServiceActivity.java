@@ -48,20 +48,20 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
                 intent.putExtra( Constants.EXTRAS.EXTRAS, position );
                 startActivity( intent );
             } else if (position == 3) {
-                toWebView( CommonInfo.BARRIER_FREE_SERVICE, title, TITLE_COLOR_STYLE_GREEN );
+                toWebView( CommonInfo.BARRIER_FREE_SERVICE, title, TITLE_COLOR_STYLE_GREEN, true );
             } else if (position == 6) {
-                toWebView( CommonInfo.NOTICE_OF_BUY_TICKETS, title, TITLE_COLOR_STYLE_GREEN );
+                toWebView( CommonInfo.NOTICE_OF_BUY_TICKETS, title, TITLE_COLOR_STYLE_GREEN, false );
             } else if (position == 7) {
-                toWebView( CommonInfo.NOTICE_OF_GARDEN, title, TITLE_COLOR_STYLE_GREEN );
+                toWebView( CommonInfo.NOTICE_OF_GARDEN, title, TITLE_COLOR_STYLE_GREEN, false );
             } else if (position == 8) {
-                toWebView( CommonInfo.VENUE_BESPEAK, title, TITLE_COLOR_STYLE_WHITE );
+                toWebView( CommonInfo.VENUE_BESPEAK, title, TITLE_COLOR_STYLE_WHITE, false );
             }
         }
     };
 
-    private void toWebView(String type, String title, int titleStyle) {
+    private void toWebView(String type, String title, int titleStyle, boolean isStartLocation) {
         String url = mPresenter.loadCommonUrlByType( type );
-        WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, title, titleStyle );
+        WebActivity.startActivity( getContext(), TextUtils.isEmpty( url ) ? Constants.URL.HTML_404 : url, title, titleStyle, isStartLocation );
     }
 
     @Override
