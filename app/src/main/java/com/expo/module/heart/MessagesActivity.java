@@ -20,7 +20,6 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.base.ExpoApp;
-import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.MessagesContract;
 import com.expo.entity.CommonInfo;
@@ -37,7 +36,6 @@ import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 import com.expo.widget.decorations.SpaceDecoration;
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
@@ -222,7 +220,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     @Override
     public void gotoInfoPage(String data) {
 //        String url = "http://192.168.1.13:8888/#/orderStatus";
-        String url = mPresenter.loadCommonInfo(CommonInfo.NOTICE_OF_BESPEAK);
+        String url = mPresenter.loadCommonInfo(CommonInfo.ORDER_MESSAGE_INFO);
         url = url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
                 + "&lan=" + LanguageUtil.chooseTest( "zh", "en" );
         WebActivity.startActivity(getContext(), url, "订单详情", data);
