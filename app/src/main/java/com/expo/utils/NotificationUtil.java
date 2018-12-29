@@ -45,7 +45,7 @@ public class NotificationUtil {
     private static final String PUSH_CHANNEL_ID = "EXPO_PUSH_NOTIFY_ID";
     private static final String PUSH_CHANNEL_NAME = "EXPO_PUSH_NOTIFY_NAME";
 
-    public void show(String title, String content, Class<? extends Activity> activity) {
+    public void showNotification(String title, String content, Class<? extends Activity> activity) {
         NotificationManager notificationManager = (NotificationManager) ExpoApp.getApplication().getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(PUSH_CHANNEL_ID, PUSH_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
@@ -77,6 +77,39 @@ public class NotificationUtil {
             playSound();
         }
     }
+
+    /*public void showProgressNotification(){
+        NotificationManager notificationManager = (NotificationManager) ExpoApp.getApplication().getSystemService(NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(PUSH_CHANNEL_ID, PUSH_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ExpoApp.getApplication());
+        Intent notificationIntent;
+        if (null != activity)
+            notificationIntent = new Intent(ExpoApp.getApplication().getTopActivity(), activity);
+        else
+            notificationIntent = new Intent();
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(ExpoApp.getApplication().getTopActivity(), 0, notificationIntent, 0);
+        builder.setContentTitle(title)//设置通知栏标题
+                .setContentIntent(pendingIntent) //设置通知栏点击意图
+                .setContentText(content)
+                .setNumber(++pushNum)
+                .setTicker(content) //通知首次出现在通知栏，带上升动画效果的
+                .setWhen(System.currentTimeMillis())// 通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
+                .setSmallIcon(R.mipmap.ic_launcher)//设置通知小ICON
+                .setChannelId(PUSH_CHANNEL_ID);
+        Notification notification = builder.getNotification();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notification.defaults = Notification.DEFAULT_LIGHTS;
+        if (notificationManager != null) {
+            notificationManager.notify(pushNum, notification);
+            playSound();
+        }
+    }*/
 
     private Uri getSoundUri() {
         int id = PrefsHelper.getInt(Constants.Prefs.KEY_RAW_SELECTOR_POSITION, 0);

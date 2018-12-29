@@ -53,7 +53,7 @@
     <string name="female">女</string>
     <string name="save_user_info_success">您的信息已经保存成功</string>
     <string name="wrong_email">您的邮箱格式不正确，请重新输入</string>
-    <string name="latest_app_version">当前为最新版本</string>
+    <string name="latest_app_version">当前已经是最新版本</string>
     <string name="see_detail">查看详情</string>
     <string name="route_introduce">路线介绍</string>
     <string name="spot_introduce">景点介绍</string>
@@ -156,7 +156,7 @@
     <string name="toast_feed_back_success">感谢你的反馈</string>
 
     <string name="home_func_item_navigation">导航导览</string>
-    <string name="home_func_item_wifi">免费wifi</string>
+    <string name="home_func_item_wifi">免费WIFI</string>
     <string name="home_func_item_tickets">园区购票</string>
     <string name="home_func_item_appointment">场馆预约</string>
     <string name="home_func_item_tourist_service">游客服务</string>
@@ -269,7 +269,7 @@
     <string name="non_plant">非植物</string>
     <string name="create_an_account">创建账号</string>
     <string name="not_free_wifi">没有免费wifi</string>
-    <string name="trying_to_locate">光团儿正在努力定位，请您稍等片刻！</string>
+    <string name="trying_to_locate">正在努力定位，请您稍等片刻！</string>
     <string name="no_introduction">无介绍</string>
     <string name="heat">热度</string>
     <string name="wechat_is_not_installed">未安装微信</string>

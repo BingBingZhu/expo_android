@@ -17,13 +17,13 @@ public class CommonInfo implements Parcelable {
     public static final String VENUE_BESPEAK = "5";//场馆预约
     public static final String BUY_TICKETS = "6";//购票
     public static final String PANORAMA = "7";//全景、网上世园
-    public static final String NOTICE_OF_BESPEAK = "8";//预约须知
+    public static final String ORDER_MESSAGE_INFO = "8";//订单消息详情
     public static final String MY_BESPEAK = "9";//我的预约
     public static final String SCORE = "10";//积分
     public static final String PORTAL_WEBSITE_INTEGRATION = "11";//门户网站、微观世界
     public static final String VISITOR_SERVICE_DETAILS = "12";//游客服务详情
-    public static final String ENCYCLOPEDIAS_DETAIL_URL = "13";//百科详情
-    public static final String EXPO_BRIEF_INTRODUCTION = "14";//世园会简介
+    public static final String ENCYCLOPEDIAS_DETAIL_URL = "13";// 百科详情
+    public static final String EXPO_BRIEF_INTRODUCTION = "14";// 世园会简介
 
     @DatabaseField(columnName = "id", id = true)
     @SerializedName("id")

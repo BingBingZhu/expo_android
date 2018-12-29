@@ -5,16 +5,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_100"
-        android:paddingLeft="@dimen/dms_36"
-        android:paddingRight="@dimen/dms_36">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_20"
+        android:layout_marginBottom="@dimen/dms_20"
+        android:paddingLeft="@dimen/dms_38"
+        android:paddingRight="@dimen/dms_38">
 
         <ImageView
             android:id="@+id/title_home_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dms_30"
+            android:layout_marginRight="@dimen/dms_40"
             android:src="@mipmap/home_icon" />
 
         <ImageView
@@ -23,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginLeft="@dimen/dms_40"
             android:src="@mipmap/home_msg" />
 
         <TextView
@@ -39,18 +41,20 @@
 
         <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_title_text"
-            style="@style/TextSizeWhite14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@id/title_home_msg"
             android:layout_toRightOf="@id/title_home_icon"
             android:background="@drawable/bg_white_r90"
             android:drawableLeft="@mipmap/ico_search"
-            android:drawablePadding="@dimen/dms_20"
+            android:drawablePadding="@dimen/dms_16"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dms_10"
-            android:paddingTop="@dimen/dms_10"
-            android:paddingBottom="@dimen/dms_10"
+            android:paddingLeft="@dimen/dms_20"
+            android:paddingTop="@dimen/dms_12"
+            android:paddingBottom="@dimen/dms_12"
             android:text="@string/title_home"
-            android:textColor="@color/gray_99" />
+            android:textColor="@color/gray_99"
+            android:textSize="@dimen/font_24"/>
     </RelativeLayout>
 </FrameLayout>

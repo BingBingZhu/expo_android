@@ -11,6 +11,7 @@
         style="@style/TextSizeBlack15"
         android:drawableLeft="@mipmap/flame"
         android:textStyle="bold"
+        android:gravity="bottom"
         android:drawablePadding="@dimen/dms_10"
         android:text="@string/home_func_title_venue"
         android:textSize="@dimen/font_34" />

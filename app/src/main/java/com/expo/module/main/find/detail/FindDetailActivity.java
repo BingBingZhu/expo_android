@@ -26,6 +26,7 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ImageUtils;
 import com.expo.base.utils.StatusBarUtils;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FindDetailContract;
 import com.expo.contract.presenter.FindDetailPresenterImpl;
 import com.expo.entity.Find;
@@ -219,7 +220,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
 
     @OnClick(R.id.find_detail_enjoy_click)
     public void clickEnjoy(View view) {
-        mPresenter.addEnjoy(mFind.id + "");
+        mPresenter.addEnjoy(mFind);
     }
 
     @OnClick(R.id.find_detail_views_click)
@@ -234,7 +235,11 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
     }
 
     @Override
-    public void addEnjoyRes() {
+    public void addEnjoyRes(boolean isSelf) {
+        if (isSelf){
+            ToastHelper.showShort("自己不能点赞哦");
+            return;
+        }
         // 点赞返回
         int enjoys = Integer.parseInt(mFind.enjoys);
         enjoys++;

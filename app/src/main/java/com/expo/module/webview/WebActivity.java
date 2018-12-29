@@ -62,6 +62,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     private String mUrl;
     private String mTitle;
     private ShareUtil mShareUtil;
+    private Location mLocation;
 
     Coupon mCoupon;
 
@@ -75,6 +76,9 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        if (getIntent().getBooleanExtra(Constants.EXTRAS.EXTRA_IS_START_LOCATION, false)){
+            LocationManager.getInstance().registerLocationListener(barrierLocationChangeListener);
+        }
         mUrl = getIntent().getStringExtra( Constants.EXTRAS.EXTRA_URL );
         if (getIntent().getBooleanExtra( Constants.EXTRAS.EXTRA_SHOW_TITLE, true )) {
             mTitle = getIntent().getStringExtra( Constants.EXTRAS.EXTRA_TITLE );
@@ -186,6 +190,15 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         context.startActivity( in );
     }
 
+    public static void startActivity(@NonNull Context context, @NonNull String url, @Nullable String title, int titleColorStyle, boolean isStartLocation) {
+        Intent in = new Intent( context, WebActivity.class );
+        in.putExtra( Constants.EXTRAS.EXTRA_TITLE, title == null ? "" : title );
+        in.putExtra( Constants.EXTRAS.EXTRA_URL, url );
+        in.putExtra( Constants.EXTRAS.EXTRA_TITLE_COLOR_STYLE, titleColorStyle );
+        in.putExtra( Constants.EXTRAS.EXTRA_IS_START_LOCATION, isStartLocation );
+        context.startActivity( in );
+    }
+
     @Override
     public void returnRichText(RichText richText) {
         String content = "<html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body><div>" + richText.getContent() + "</div></body>";
@@ -277,8 +290,21 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
          */
         @JavascriptInterface
         public void goToServiceCenter(){
-            LocationManager.getInstance().registerLocationListener(barrierLocationChangeListener);
-            ToastHelper.showShort( R.string.trying_to_locate );
+            if (null == mLocation) {
+                ToastHelper.showShort(R.string.trying_to_locate);
+                return;
+            }else{
+                if (mPresenter.checkInPark( mLocation )) {
+                    Venue venue = mPresenter.getNearbyServiceCenter( mLocation );
+                    if (venue != null) {
+                        NavigationActivity.startActivity( getContext(), venue );
+                    } else {
+                        ToastHelper.showShort( R.string.no_service_agencies );
+                    }
+                } else {
+                    ToastHelper.showShort( R.string.unable_to_provide_service );
+                }
+            }
         }
 
         /**
@@ -310,17 +336,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         @Override
         public void onMyLocationChange(Location location) {
             if (null != location && location.getLatitude() != 0) {
-                if (mPresenter.checkInPark( location )) {
-                    Venue venue = mPresenter.getNearbyServiceCenter( location );
-                    if (venue != null) {
-                        NavigationActivity.startActivity( getContext(), venue );
-                    } else {
-                        ToastHelper.showShort( R.string.no_service_agencies );
-                    }
-                } else {
-                    ToastHelper.showShort( R.string.unable_to_provide_service );
-                }
-                LocationManager.getInstance().unregisterLocationListener( barrierLocationChangeListener );
+                mLocation = location;
             }
         }
     };
@@ -397,6 +413,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
     @Override
     protected void onDestroy() {
+        LocationManager.getInstance().unregisterLocationListener( barrierLocationChangeListener );
         mHandler.removeCallbacksAndMessages( null );
         super.onDestroy();
     }

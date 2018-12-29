@@ -50,9 +50,9 @@ public class AppBarView extends FrameLayout {
         TypedArray a = getContext().obtainStyledAttributes( attrs, R.styleable.AppBarView );
         mBackImage = a.getDrawable( R.styleable.AppBarView_backSrc );
         if (mBackImage == null) {
-            mBackImage = getContext().getResources().getDrawable( R.mipmap.ico_black_back );
+            mBackImage = getContext().getResources().getDrawable( R.mipmap.icon_navbar_back_black );
         }
-        mTitleSize = getResources().getDimensionPixelSize( R.dimen.font_40 );
+        mTitleSize = getResources().getDimensionPixelSize( R.dimen.font_36 );
         mTitleSizeUnit = TypedValue.COMPLEX_UNIT_PX;
         mTitle = a.getString( R.styleable.AppBarView_title );
         mTitleColor = a.getColor( R.styleable.AppBarView_titleColor, getContext().getResources().getColor( R.color.caption_color ) );
@@ -95,7 +95,7 @@ public class AppBarView extends FrameLayout {
         mBackView.setImageDrawable( mBackImage );
         mBackView.setId( R.id.title_back );
         mTitleView.setId( R.id.appbar_title );
-        int margin = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 12, getContext().getResources().getDisplayMetrics() );
+        int margin = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 11, getContext().getResources().getDisplayMetrics() );
         mBackView.setPadding( margin, margin, margin, margin );
         if (mClickListener != null) {
             mBackView.setOnClickListener( (v) -> mClickListener.onClick( v ) );

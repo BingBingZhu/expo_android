@@ -37,6 +37,7 @@
     <uses-permission android:name="com.casvd.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED" />
     <uses-permission android:name="com.casvd.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
     <uses-permission android:name="com.casvd.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -286,6 +287,14 @@
 
         <receiver
             android:name=".pay.DownloadListener"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".upapp.DownloadReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />

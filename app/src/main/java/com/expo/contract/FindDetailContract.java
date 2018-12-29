@@ -11,7 +11,7 @@ public interface FindDetailContract {
             super(view);
         }
 
-        public abstract void addEnjoy(String id);
+        public abstract void addEnjoy(Find find);
 
         public abstract void addViews(String id);
 
@@ -19,7 +19,7 @@ public interface FindDetailContract {
 
     interface View extends IView {
 
-        void addEnjoyRes();
+        void addEnjoyRes(boolean isSelf);
 
     }
 }

@@ -6,7 +6,7 @@ import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.utils.ToastHelper;
-import com.expo.base.utils.UpdateAppManager;
+import com.expo.upapp.UpdateAppManager;
 import com.expo.contract.SettingContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.AppInfo;
@@ -41,15 +41,11 @@ public class SettingPresenterImpl extends SettingContract.Presenter {
         Http.request( new ResponseCallback<VersionInfoResp>() {
             @Override
             protected void onResponse(VersionInfoResp rsp) {
-                if (StringUtils.equals( AppUtils.getAppVersionCode() + "", rsp.ver )) {
+                AppInfo appInfo = UpdateAppManager.getInstance().isHaveUpdate(AppUtils.getAppVersionName(), rsp.Objlst);
+                if (null == appInfo) {
                     ToastHelper.showShort( R.string.latest_app_version );
                 } else {
-                    for (int i = 0; i < rsp.Objlst.size(); i++) {
-                        if (StringUtils.equals( "android", rsp.Objlst.get( i ).platformname.toLowerCase() )) {
-                            mView.appUpdate( rsp.Objlst.get( i ) );
-                            return;
-                        }
-                    }
+                    mView.appUpdate( appInfo );
                 }
             }
 
