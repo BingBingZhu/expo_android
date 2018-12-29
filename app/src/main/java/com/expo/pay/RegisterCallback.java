@@ -16,7 +16,7 @@ public class RegisterCallback implements Observer<HashMap<String, String>> {
     @Override
     public void onNext(HashMap<String, String> result) {
         if ("0".equals( result.get( "code" ) )) {
-            NotificationUtil.getInstance().show( "网站购票登录密码", "你的官网购票登录的默认密码是" + result.get( "data" ), null );
+            NotificationUtil.getInstance().showNotification( "网站购票登录密码", "你的官网购票登录的默认密码是" + result.get( "data" ), null );
         }
     }
 
