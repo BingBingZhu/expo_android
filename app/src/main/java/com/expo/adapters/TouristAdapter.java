@@ -3,6 +3,7 @@ package com.expo.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.expo.R;
+import com.expo.base.utils.LogUtils;
 import com.expo.entity.TouristType;
 import com.expo.module.download.DownloadManager;
 import com.expo.utils.Constants;
@@ -84,7 +86,8 @@ public class TouristAdapter extends RecyclerView.Adapter<TouristAdapter.ViewHold
                 break;
         }
         holder.tvOperatingBtn.setText(downState);
-        holder.completedView.setProgress((int) tourist.getCurrPosition());
+        int progress = (int) ((double)tourist.getCurrPosition() / (double)tourist.getModelFileSize() * 100);
+        holder.completedView.setProgress(progress);
 
     }
 

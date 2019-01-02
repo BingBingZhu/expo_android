@@ -42,10 +42,10 @@ public class SettingPresenterImpl extends SettingContract.Presenter {
             @Override
             protected void onResponse(VersionInfoResp rsp) {
                 AppInfo appInfo = UpdateAppManager.getInstance().isHaveUpdate(AppUtils.getAppVersionName(), rsp.Objlst);
-                if (null == appInfo) {
-                    ToastHelper.showShort( R.string.latest_app_version );
-                } else {
+                if (null != appInfo) {
                     mView.appUpdate( appInfo );
+                } else {
+                    ToastHelper.showShort( R.string.latest_app_version );
                 }
             }
 

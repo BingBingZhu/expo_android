@@ -47,7 +47,7 @@
             android:layout_toLeftOf="@id/title_home_msg"
             android:layout_toRightOf="@id/title_home_icon"
             android:background="@drawable/bg_white_r90"
-            android:drawableLeft="@mipmap/ico_search"
+            android:drawableLeft="@mipmap/ico_home_search"
             android:drawablePadding="@dimen/dms_16"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dms_20"

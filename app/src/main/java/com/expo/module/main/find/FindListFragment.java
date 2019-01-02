@@ -83,9 +83,16 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.RequestCode.REQ_TO_FIND_INFO && resultCode == RESULT_OK) {
-            if (mFindList.size() >= position - 1)
-                mFindList.get(position).enjoys = data.getStringExtra(Constants.EXTRAS.EXTRA_ENJOYS);
+            if (mFindList.size() >= position - 1) {
+                String enjoys = data.getStringExtra(Constants.EXTRAS.EXTRA_ENJOYS);
+                String views = data.getStringExtra(Constants.EXTRAS.EXTRA_READ_COUNT);
+                if (null != enjoys && !enjoys.isEmpty())
+                mFindList.get(position).enjoys = enjoys;
+                if (null != views && !views.isEmpty())
+                mFindList.get(position).views = views;
+            }
             mAdapter.notifyDataSetChanged();
         }
     }

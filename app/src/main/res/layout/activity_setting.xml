@@ -45,6 +45,15 @@
             style="@style/LineHorizontal"
             android:background="@color/white_e6" />
 
+        <com.expo.widget.MySettingView
+            android:id="@+id/setting_location_pattern"
+            style="@style/item_setting"
+            app:textLeft="@string/item_setting_location" />
+
+        <TextView
+            style="@style/LineHorizontal"
+            android:background="@color/white_e6" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_100">

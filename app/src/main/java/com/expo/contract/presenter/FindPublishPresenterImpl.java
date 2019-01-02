@@ -7,6 +7,8 @@ import com.blankj.utilcode.util.TimeUtils;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.contract.FindPublishContract;
+import com.expo.db.QueryParams;
+import com.expo.entity.CommonInfo;
 import com.expo.entity.Find;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
@@ -37,6 +39,12 @@ public class FindPublishPresenterImpl extends FindPublishContract.Presenter {
         for (int i = 0; i < 9; i++) {
             upLoadImgFile(find, find.getUrl(i), i);
         }
+    }
+
+    @Override
+    public void clickPolicy(String userProtocol) {
+        CommonInfo commonInfo = mDao.unique( CommonInfo.class, new QueryParams().add( "eq", "type", userProtocol ) );
+        mView.returnCommonInfo( commonInfo );
     }
 
     public void upLoadImgFile(Find find, String filePath, int positon) {

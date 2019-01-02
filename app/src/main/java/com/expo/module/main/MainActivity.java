@@ -11,7 +11,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -33,6 +36,7 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.map.LocationManager;
 import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.module.main.find.FindFragment;
+import com.expo.module.main.find.FindListFragment;
 import com.expo.services.TrackRecordService;
 import com.expo.upapp.UpdateAppManager;
 import com.expo.utils.Constants;
@@ -148,11 +152,30 @@ public class MainActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.RequestCode.REQ_INSTALL_PERMISS_CODE){
             if(getPackageManager().canRequestPackageInstalls()) {
                 UpdateAppManager.getInstance(getContext()).installApp();
             }
         }
+        else if (requestCode == Constants.RequestCode.REQ_TO_FIND_INFO){
+            FindFragment f = (FindFragment) getFragment(2);
+            if (null != f) {
+                // 然后在碎片中调用重写的onActivityResult方法
+                f.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
+
+    private Fragment getFragment(int tabId) {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for(Fragment fragment : fragments) {
+            String str1 = fragment.getTag();
+            String str2 = String.valueOf(tabTags[tabId]);
+            if(str1 != null && str1.equals(str2)) // 最开始没有检查str1是否为空，导致crash！
+                return fragment;
+        }
+        return null;
     }
 
     @Override

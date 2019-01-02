@@ -1,5 +1,7 @@
 package com.expo.map;
 
+import android.content.Context;
+
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -7,6 +9,7 @@ import com.amap.api.location.AMapLocationClientOption.AMapLocationMode;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.LatLng;
+import com.expo.R;
 import com.expo.base.BaseApplication;
 import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
@@ -38,9 +41,53 @@ public class LocationManager implements AMapLocationListener {
      */
     private AMapLocation currentLocation;
 
+    public AMapLocationMode getLocationMode() {
+        AMapLocationMode mLocationMode;
+        int locationMode = PrefsHelper.getInt(Constants.Prefs.KEY_LOCATION_MODE, 0);
+        switch (locationMode) {
+            case 0:
+                mLocationMode = AMapLocationMode.Hight_Accuracy;    // 高精度
+                break;
+            case 1:
+                mLocationMode = AMapLocationMode.Device_Sensors;    // 仅GPRS
+                break;
+            case 2:
+                mLocationMode = AMapLocationMode.Battery_Saving;    // 低功耗
+                break;
+            default:
+                mLocationMode = AMapLocationMode.Hight_Accuracy;    // 高精度
+                break;
+        }
+        return mLocationMode;
+    }
 
-    /* 设置定位模式为高精度模式   使用网络与GPS进行定位*/
-    private static final AMapLocationMode mLocationMode = AMapLocationMode.Hight_Accuracy;
+    public String getLocationModeString(Context context){
+        String modeName;
+        int locationMode = PrefsHelper.getInt(Constants.Prefs.KEY_LOCATION_MODE, 0);
+        switch (locationMode) {
+            case 0:
+                modeName = context.getString(R.string.hight_accuracy);    // 高精度
+                break;
+            case 1:
+                modeName = context.getString(R.string.device_sensors);    // 仅GPRS
+                break;
+            case 2:
+                modeName = context.getString(R.string.battery_saving);    // 低功耗
+                break;
+            default:
+                modeName = context.getString(R.string.hight_accuracy);    // 高精度
+                break;
+        }
+        return modeName;
+    }
+
+    public int getLocationModePotion(){
+        return PrefsHelper.getInt(Constants.Prefs.KEY_LOCATION_MODE, 0);
+    }
+
+    public void setLocationModePotion(int modeCode){
+        PrefsHelper.setInt(Constants.Prefs.KEY_LOCATION_MODE, modeCode);
+    }
 
     /**
      * 对外回调接口 .
@@ -70,30 +117,30 @@ public class LocationManager implements AMapLocationListener {
     private void onCreate() {
         exists = true;
         // 初始化定位
-        mLocationClient = new AMapLocationClient( BaseApplication.getApplication() );
+        mLocationClient = new AMapLocationClient(BaseApplication.getApplication());
         // 设置定位回调监听
-        mLocationClient.setLocationListener( this );
+        mLocationClient.setLocationListener(this);
         // 配置定位参数
         mLocationOption = new AMapLocationClientOption();
         // 设置定位模式为高精度模式
-        mLocationOption.setLocationMode( mLocationMode );
+        mLocationOption.setLocationMode(getLocationMode());
         //是否使用传感器
-        mLocationOption.setSensorEnable( true );
+        mLocationOption.setSensorEnable(true);
         // 设置是否返回地址信息（默认返回地址信息）
-        mLocationOption.setNeedAddress( true );
+        mLocationOption.setNeedAddress(true);
         // 设置是否只定位一次,默认为false
-        mLocationOption.setOnceLocation( false );
+        mLocationOption.setOnceLocation(false);
         // 设置是否强制刷新WIFI，默认为强制刷新
 //		mLocationOption.setWifiActiveScan(true);
         // 设置首选gps
-        mLocationOption.setGpsFirst( true );
+        mLocationOption.setGpsFirst(true);
         // 设置是否允许模拟位置,默认为false，不允许模拟位置
-        mLocationOption.setMockEnable( true );
+        mLocationOption.setMockEnable(true);
         // 设置定位间隔跟随心跳时间
         mHeartInvTime = PrefsHelper.getLong(Constants.Prefs.KEY_HEART_INV_TIME, mHeartInvTime);
-        mLocationOption.setInterval( mHeartInvTime );
+        mLocationOption.setInterval(mHeartInvTime);
         // 给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption( mLocationOption );
+        mLocationClient.setLocationOption(mLocationOption);
         listenerCount = new AtomicInteger();
         listeners = new LinkedList<>();
     }
@@ -103,7 +150,7 @@ public class LocationManager implements AMapLocationListener {
      */
     private void start() {
         mLocationClient.startLocation();
-        LogUtils.d( TAG, "--started LocationServer---" );
+        LogUtils.d(TAG, "--started LocationServer---");
     }
 
     /**
@@ -111,7 +158,7 @@ public class LocationManager implements AMapLocationListener {
      */
     private void stop() {
         mLocationClient.stopLocation();
-        LogUtils.d( TAG, "--stoped LocationServer---" );
+        LogUtils.d(TAG, "--stoped LocationServer---");
     }
 
     /**
@@ -124,7 +171,7 @@ public class LocationManager implements AMapLocationListener {
             mLocationClient.onDestroy();
             mLocationClient = null;
             locationManager = null;
-            LogUtils.d( TAG, "--LocationManager destroyed---" );
+            LogUtils.d(TAG, "--LocationManager destroyed---");
         }
     }
 
@@ -140,14 +187,14 @@ public class LocationManager implements AMapLocationListener {
                 if (null == listeners || listeners.isEmpty())
                     return;
                 for (AMap.OnMyLocationChangeListener listener : listeners) {
-                    listener.onMyLocationChange( amapLocation );
+                    listener.onMyLocationChange(amapLocation);
                 }
             } else {
                 // 显示错误信息ErrCode是错误码，errInfo是错误信息，详见高德错误码表
-                LogUtils.d( TAG,
+                LogUtils.d(TAG,
                         "location Error, ErrCode:"
                                 + amapLocation.getErrorCode() + ", errInfo:"
-                                + amapLocation.getErrorInfo() );
+                                + amapLocation.getErrorInfo());
             }
         }
     }
@@ -158,8 +205,8 @@ public class LocationManager implements AMapLocationListener {
      * @param locationListener
      */
     public void registerLocationListener(AMap.OnMyLocationChangeListener locationListener) {
-        if (!this.listeners.contains( locationListener )) {
-            this.listeners.add( locationListener );
+        if (!this.listeners.contains(locationListener)) {
+            this.listeners.add(locationListener);
             if (listenerCount.incrementAndGet() == 1) {
                 start();
             }
@@ -172,7 +219,7 @@ public class LocationManager implements AMapLocationListener {
      * @param locationListener
      */
     public void unregisterLocationListener(AMap.OnMyLocationChangeListener locationListener) {
-        if (this.listeners.remove( locationListener )) {
+        if (this.listeners.remove(locationListener)) {
             if (listenerCount.decrementAndGet() <= 0) {
                 stop();
             }
@@ -195,7 +242,7 @@ public class LocationManager implements AMapLocationListener {
      */
     public LatLng getCurrentLocationLatLng() {
         if (currentLocation != null)
-            return new LatLng( currentLocation.getLatitude(), currentLocation.getLongitude() );
+            return new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         return null;
     }
 

@@ -257,6 +257,13 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         }
 
         @JavascriptInterface
+        public void setTitle(String titleText) {
+            runOnUiThread( () -> {
+                WebActivity.this.setTitle( BaseActivity.TITLE_COLOR_STYLE_WHITE, titleText );
+            } );
+        }
+
+        @JavascriptInterface
         public void setCouponId(String couponId) {
             if (mCoupon == null) mCoupon = new Coupon();
             mCoupon.couponId = couponId;

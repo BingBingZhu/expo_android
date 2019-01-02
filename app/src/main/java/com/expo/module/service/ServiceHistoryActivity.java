@@ -114,7 +114,7 @@ public class ServiceHistoryActivity extends BaseActivity<ServiceHistoryContract.
                         String url = mPresenter.loadCommonInfo(CommonInfo.VISITOR_SERVICE_DETAILS);
                         WebActivity.startActivity(getContext(),
                                 TextUtils.isEmpty(url) ? url : (url + String.format("?Uid=%s&Ukey=%s&id=%s", user.getUid(), user.getUkey(), vs.getId())),
-                                getString(R.string.title_detail), BaseActivity.TITLE_COLOR_STYLE_WHITE);
+                                getString(R.string.title_message_tourist_ac), BaseActivity.TITLE_COLOR_STYLE_GREEN);
                     }
                     break;
             }

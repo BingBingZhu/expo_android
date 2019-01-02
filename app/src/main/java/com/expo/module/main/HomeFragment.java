@@ -142,7 +142,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         initRecyclerExhibit();
         initRecyclerExhibitGarden();
         EventBus.getDefault().register( this );
-
+        mPresenter.checkUpdate();
         mPresenter.setMessageCount();
         mPresenter.setTopLine();
         mPresenter.setVenue();

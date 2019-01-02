@@ -47,7 +47,7 @@ public class TouristType implements Parcelable {
     private String modelFile;
     @DatabaseField(columnName = "model_file_size")
     @SerializedName("modelfilesize")
-    private Integer modelFileSize;
+    private Long modelFileSize;
     @DatabaseField(columnName = "packed_name")
     @SerializedName("packedname")
     private String packedName;
@@ -102,7 +102,7 @@ public class TouristType implements Parcelable {
         if (in.readByte() == 0) {
             modelFileSize = null;
         } else {
-            modelFileSize = in.readInt();
+            modelFileSize = in.readLong();
         }
         packedName = in.readString();
         picUrl = in.readString();
@@ -188,11 +188,11 @@ public class TouristType implements Parcelable {
         this.modelFile = modelFile;
     }
 
-    public Integer getModelFileSize() {
+    public Long getModelFileSize() {
         return modelFileSize;
     }
 
-    public void setModelFileSize(Integer modelFileSize) {
+    public void setModelFileSize(Long modelFileSize) {
         this.modelFileSize = modelFileSize;
     }
 
@@ -263,7 +263,7 @@ public class TouristType implements Parcelable {
         this.used = used;
     }
 
-    public long getCurrPosition() {
+    public Long getCurrPosition() {
         return currPosition;
     }
 
@@ -338,7 +338,7 @@ public class TouristType implements Parcelable {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(modelFileSize);
+            dest.writeLong(modelFileSize);
         }
         dest.writeString(packedName);
         dest.writeString(picUrl);

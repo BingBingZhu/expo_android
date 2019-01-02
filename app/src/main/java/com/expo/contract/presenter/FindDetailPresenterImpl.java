@@ -53,6 +53,7 @@ public class FindDetailPresenterImpl extends FindDetailContract.Presenter {
         Http.request(new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
+                mView.addViewsRes();
             }
         }, observable);
     }

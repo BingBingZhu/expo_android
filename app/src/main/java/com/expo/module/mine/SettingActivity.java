@@ -26,6 +26,7 @@ import com.expo.base.utils.ActivityHelper;
 import com.expo.base.utils.DataCleanUtil;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
+import com.expo.map.LocationManager;
 import com.expo.upapp.UpdateAppManager;
 import com.expo.contract.SettingContract;
 import com.expo.entity.AppInfo;
@@ -59,6 +60,8 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     MySettingView mTvCache;
     @BindView(R.id.setting_update)
     MySettingView mTvUpdate;
+    @BindView(R.id.setting_location_pattern)
+    MySettingView mTvLocationPattern;
     @BindView(R.id.setting_guide)
     MySettingView mTvGuide;
     @BindView(R.id.setting_policy)
@@ -76,9 +79,10 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     boolean mSelectCn;//现在是否是选择了汉语
 
     DialogPlus mDialogLanguage;
+    DialogPlus mDialogLocation;
 
     // 切换语言的监听
-    OnClickListener mLanguageClickListener = (d, v) -> {
+    OnClickListener mDialogClickListener = (d, v) -> {
         switch (v.getId()) {
             case R.id.language_cn:
                 changeLanguage( true, d );
@@ -86,10 +90,23 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
             case R.id.language_en:
                 changeLanguage( false, d );
                 break;
-            case R.id.cancle:
-                d.dismiss();
+//            case R.id.cancle:
+//                d.dismiss();
+//                break;
+            case R.id.location_mode_0:
+                LocationManager.getInstance().setLocationModePotion(0);
+                mTvLocationPattern.setRightText(getString(R.string.hight_accuracy));
+                break;
+            case R.id.location_mode_1:
+                LocationManager.getInstance().setLocationModePotion(1);
+                mTvLocationPattern.setRightText(getString(R.string.device_sensors));
+                break;
+            case R.id.location_mode_2:
+                LocationManager.getInstance().setLocationModePotion(2);
+                mTvLocationPattern.setRightText(getString(R.string.battery_saving));
                 break;
         }
+        d.dismiss();
     };
 
     private void changeLanguage(boolean selectCn, DialogPlus d) {
@@ -109,7 +126,6 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
             fresh();
             ActivityHelper.reCreateAll( SettingActivity.this );
         }
-        d.dismiss();
     }
 
     @Override
@@ -125,6 +141,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
         mTvCache.setRightText(DataCleanUtil.getCacheSize());
         mTvLanguage.setRightText( R.string.language );
         mTvUpdate.setRightText( "v" + AppUtils.getAppVersionName() );
+        mTvLocationPattern.setRightText(LocationManager.getInstance().getLocationModeString(getContext()));
         mSelectCn = mIsCn = StringUtils.equals( PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ), LanguageUtil.LANGUAGE_CN );
     }
 
@@ -154,7 +171,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
             mDialogLanguage = DialogPlus.newDialog( this )
                     .setContentHolder( new ViewHolder( dv ) )
                     .setGravity( Gravity.BOTTOM )
-                    .setOnClickListener( mLanguageClickListener )
+                    .setOnClickListener(mDialogClickListener)
                     .setExpanded( false )  // This will enable the expand feature, (similar to android L share dialog)
                     .create();
         }
@@ -210,6 +227,38 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
         mPresenter.checkUpdate();
         LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS, Constants.Action.ACTION_CANCEL_UPDATE);
     }
+
+    @OnClick(R.id.setting_location_pattern)
+    public void clickLocationMode(MySettingView view) {
+//        mTvLocationPattern.setRightText();
+        if (mDialogLocation == null) {
+            View dv = LayoutInflater.from( getContext() ).inflate( R.layout.dialog_location_select, null );
+            int viewId = 0;
+            int modePotion = LocationManager.getInstance().getLocationModePotion();
+            switch (modePotion){
+                case 0:
+                    viewId = R.id.location_mode_0;
+                    break;
+                case 1:
+                    viewId = R.id.location_mode_1;
+                    break;
+                case 2:
+                    viewId = R.id.location_mode_2;
+                    break;
+            }
+            dv.findViewById( viewId ).performClick();
+
+            mDialogLocation = DialogPlus.newDialog( this )
+                    .setContentHolder( new ViewHolder( dv ) )
+                    .setGravity( Gravity.BOTTOM )
+                    .setOnClickListener(mDialogClickListener)
+                    .setExpanded( false )  // This will enable the expand feature, (similar to android L share dialog)
+                    .create();
+        }
+        mDialogLocation.show();
+    }
+
+
 
     @OnClick(R.id.setting_guide)
     public void clickGuide(MySettingView view) {

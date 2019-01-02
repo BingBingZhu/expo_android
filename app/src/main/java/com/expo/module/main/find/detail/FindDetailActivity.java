@@ -248,4 +248,14 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
         mIntent.putExtra(Constants.EXTRAS.EXTRA_ENJOYS, mFind.enjoys);
         FindDetailActivity.this.setResult(RESULT_OK, mIntent);
     }
+
+    @Override
+    public void addViewsRes() {
+        int readCount = Integer.parseInt(mFind.views);
+        readCount++;
+        mFind.views = String.valueOf(readCount);
+        mTvViews.setText(mFind.views);
+        mIntent.putExtra(Constants.EXTRAS.EXTRA_READ_COUNT, mFind.views);
+        FindDetailActivity.this.setResult(RESULT_OK, mIntent);
+    }
 }

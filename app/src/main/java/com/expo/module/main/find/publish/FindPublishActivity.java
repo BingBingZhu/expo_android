@@ -36,13 +36,16 @@ import com.expo.base.ExpoApp;
 import com.expo.base.utils.CheckUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FindPublishContract;
+import com.expo.entity.CommonInfo;
 import com.expo.entity.Find;
 import com.expo.map.LocationManager;
 import com.expo.map.MapUtils;
 import com.expo.module.camera.CameraActivity;
 import com.expo.module.mine.adapter.WorkAdapter;
+import com.expo.module.webview.WebActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
@@ -247,9 +250,15 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     }
 
+    @OnClick(R.id.find_publish_ok)
+    public void releaseRules(View v){
+        mPresenter.clickPolicy( CommonInfo.USER_PROTOCOL );
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.image_record:
             case R.id.image_record_explain:
                 dialog.dismiss();
                 if (isMp4()) {
@@ -360,6 +369,12 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
     public void complete() {
         ToastHelper.showShort(getResources().getString(R.string.submit_success));
         finish();
+    }
+
+    @Override
+    public void returnCommonInfo(CommonInfo commonInfo) {
+        WebActivity.startActivity( getContext(), commonInfo.getLinkUrl(),
+                LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn() );
     }
 
     @Override

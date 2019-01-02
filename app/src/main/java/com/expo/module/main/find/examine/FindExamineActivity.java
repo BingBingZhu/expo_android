@@ -124,7 +124,7 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
     }
 
     /**
-     * 启动推荐路线列表页
+     * 我的发现/待审核页
      *
      * @param context
      */

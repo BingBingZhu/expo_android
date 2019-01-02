@@ -244,9 +244,12 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     @OnClick(R.id.seek_help_submit)
     public void submit(View view) {
         if (mIsLocation) {
-            if (mLocation != null) {
+            if (mLocation != null && mLocation.getLatitude() != 0) {
                 mLat = mLocation.getLatitude();
                 mLng = mLocation.getLongitude();
+            }else{
+                ToastHelper.showShort( R.string.trying_to_locate );
+                return;
             }
         }
         if (mPresenter.checkInPark( mLocation.getLatitude(), mLocation.getLongitude() )) {
@@ -428,6 +431,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         visitorService.setSituation( mEtEdit.getText().toString() );
         visitorService.setUserId( user.getUid() );
         visitorService.setUserName( user.getNick() );
+        visitorService.setPlatform("1");
         return visitorService;
     }
 

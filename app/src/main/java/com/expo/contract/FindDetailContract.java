@@ -21,5 +21,6 @@ public interface FindDetailContract {
 
         void addEnjoyRes(boolean isSelf);
 
+        void addViewsRes();
     }
 }

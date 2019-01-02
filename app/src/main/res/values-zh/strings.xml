@@ -278,6 +278,7 @@
     <string name="degree_of_accuracy">准确度:</string>
     <string name="you_are_not_identifying_a_plant">您识别的不是植物哦</string>
     <string name="not_locate">未定位</string>
+    <string name="item_setting_location">定位</string>
     <string name="end_of_the_navigation">到达目的地附近喽，导航结束</string>
     <string name="failed_to_turn_on_the_camera">打开摄像头失败</string>
     <string name="cannot_be_displayed">Vew未依附在Window,无法显示</string>
@@ -348,7 +349,7 @@
     <string name="work_tab_sale">采购销售</string>
 
     <string name="wx_is_not_installed">未安装微信客户端！</string>
-    <string name="unable_to_provide_service">你不再园区，无法为你提供服务哦！</string>
+    <string name="unable_to_provide_service">你不在园区，无法为你提供服务哦！</string>
     <string name="home_func_item_my_bespeak">我的预约</string>
     <string name="item_tourist_service_text_9">投诉受理</string>
     <string name="unknown_type">未知类型</string>
@@ -394,5 +395,9 @@
     <string name="beijing_world_expo_2019">2019北京世园会</string>
     <string name="please_enter_the_correct_identification_number">请输入正确的证件号码</string>
     <string name="not_import">未填写</string>
+    <string name="position_description_hint">位置描述信息 最多输入300字</string>
     <string name="no_navigation_required">%s就在附近，无需导航</string>
+    <string name="hight_accuracy">高精度模式</string>
+    <string name="device_sensors">仅GPRS</string>
+    <string name="battery_saving">低功耗</string>
 </resources>

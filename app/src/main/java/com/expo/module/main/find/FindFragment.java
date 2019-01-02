@@ -3,37 +3,28 @@ package com.expo.module.main.find;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.expo.R;
-import com.expo.adapters.Tab;
-import com.expo.adapters.TabPagerAdapter;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.StatusBarUtils;
-import com.expo.contract.EncyclopediasContract;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FindContract;
-import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 import com.expo.module.main.find.examine.FindExamineActivity;
 import com.expo.module.main.find.publish.FindPublishActivity;
 import com.expo.utils.Constants;
-import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 
-import org.apache.http.cookie.SM;
-
-import java.lang.reflect.Field;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 /*
  * 发现页
@@ -65,6 +56,11 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
         LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_CHANGE_LANGUAGE);
     }
 
+    private FindListFragment getCurrentFragment() {
+        FindListFragment fragment = ((FindListFragment)mAdapter.getItem(mPagerView.getCurrentItem()));
+        return fragment;
+    }
+
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -82,6 +78,12 @@ public class FindFragment extends BaseFragment<FindContract.Presenter> implement
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getCurrentFragment().onActivityResult(requestCode, resultCode, data);
     }
 
     private void initTabLayout() {

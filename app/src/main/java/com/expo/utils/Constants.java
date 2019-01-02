@@ -61,6 +61,8 @@ public interface Constants {
         public static final String KEY_RAW_SELECTOR_POSITION = "key_raw_selector_position";
         public static final String KEY_ROUTE_INDEX = "key_route_index";
         public static final String KEY_TRACK_UPDATE_TIME = "key_track_update_time";
+        // 定位模式（int） 0：高精度  1：仅GPRS  2：低功耗
+        public static final String KEY_LOCATION_MODE = "key_location_mode";
     }
 
     /**
@@ -89,6 +91,7 @@ public interface Constants {
         public static final String EXTRA_ROUTE_NAME = "extra_route_name";
         public static final String EXTRA_JSON_DATA = "extra_json_data";
         public static final String EXTRA_ENJOYS = "extra_enjoys";
+        public static final String EXTRA_READ_COUNT = "extra_read_count";
         public static final String EXTRA_IS_START_LOCATION = "extra_is_start_location";
     }
 
