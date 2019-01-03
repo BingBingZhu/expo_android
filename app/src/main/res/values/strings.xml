@@ -394,5 +394,7 @@
     <string name="not_import">未填写</string>
     <string name="position_description_hint">位置描述信息 最多输入300字</string>
     <string name="no_navigation_required">%s就在附近，无需导航</string>
+    <string name="navi_distance">距离：%dm</string>
+    <string name="delete_tips">确定要删除吗？</string>
 
 </resources>

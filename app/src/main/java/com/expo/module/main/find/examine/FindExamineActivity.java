@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -26,6 +27,7 @@ import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.widget.AppBarView;
 import com.expo.widget.decorations.SpaceDecoration;
+import com.orhanobut.dialogplus.DialogPlus;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -86,8 +88,12 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
                     holder.setText(R.id.item_find_scans, find.views);
                     holder.setText(R.id.item_find_like, find.enjoys);
                     holder.setVisible(R.id.item_find_bottom_layout, true);
+                    holder.setVisible(R.id.item_examine_delete, true);
+
+                    holder.setOnClickListener(R.id.item_examine_delete, v -> showDeleteDialog(find.id, find.type, position));
                 } else {
                     holder.setVisible(R.id.item_find_bottom_layout, false);
+                    holder.setVisible(R.id.item_examine_delete, false);
                 }
 
                 holder.setText(R.id.item_examine_time, find.createtime);
@@ -135,6 +141,14 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
         context.startActivity(in);
     }
 
+    private void showDeleteDialog(int id, int type, int positon) {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.delete_tips)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.ok, (dialog, which) -> mPresenter.deleteSociety(id, type, positon))
+                .show();
+    }
+
     @Override
     public void freshFind(List<Find> list) {
         if (mData == null) mData = new ArrayList();
@@ -143,6 +157,12 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
         mAdapter.notifyDataSetChanged();
         if (mData.size() == 0) showEmptyView();
         else hideEmptyView();
+    }
+
+    @Override
+    public void deleteSociety(int position) {
+        mData.remove(position);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
