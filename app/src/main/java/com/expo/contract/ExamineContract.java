@@ -15,10 +15,13 @@ public interface ExamineContract {
 
         public abstract void getMySocietyList(boolean isPass);
 
+        public abstract void deleteSociety(int id, int type, int position);
+
 
     }
 
     interface View extends IView {
         void freshFind(List<Find> list);
+        void deleteSociety(int position);
     }
 }
