@@ -228,7 +228,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 showTouristTypeDialog();
                 break;
             case R.id.park_map_menu:      // 菜单按钮
-                if (isTabByCnName("路线")) {
+                if (isTabByCnName("\u8def\u7ebf")) {
                     showLinePopup(mRouteInfos);
                 } else {
                     showPointPopup();
@@ -295,7 +295,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         mImgMenu.setSelected(true);
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_park_menu, null);
         View searchRoot = contentView.findViewById(R.id.popup_search_root);
-        if (isTabByCnName("景点")) {
+        if (isTabByCnName("\u666f\u70b9")) {
             searchRoot.setVisibility(View.VISIBLE);
         }
         EditText searchContent = contentView.findViewById(R.id.popup_search_edit);
@@ -402,13 +402,13 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         ImageView dialogClose = v.findViewById( R.id.park_mark_dialog_close );
         stopPlay(TYPE_VENUE, venue.getId(), imgVoice);
         asName.setText( LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption() ) );
-        if (isTabByCnName( "美食" )) {
+        if (isTabByCnName( "\u7f8e\u98df" )) {
             pic.setImageResource( R.mipmap.ico_food_def_img );
-        } else if (isTabByCnName( "卫生间" )) {
+        } else if (isTabByCnName( "\u536b\u751f\u95f4" )) {
             pic.setImageResource( R.mipmap.ico_toilet_def_img );
-        } else if (isTabByCnName( "导览车" )) {
+        } else if (isTabByCnName( "\u5bfc\u89c8\u8f66" )) {
             pic.setImageResource( R.mipmap.ico_car_def_img );
-        } else if (isTabByCnName( "治安亭" )) {
+        } else if (isTabByCnName( "\u6cbb\u5b89\u4ead" )) {
             pic.setImageResource( R.mipmap.ico_public_security_def_img );
         }
         Encyclopedias wiki = mPresenter.getEncy(venue.getWikiId());
@@ -416,6 +416,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             pic.setImageURI(Constants.URL.FILE_BASE_URL + wiki.getPicUrl());
         }
         voiceRoot.setOnClickListener(v14 -> {
+            if (null == wiki) {
+                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
+                return;
+            }
             String voiceUrl = LanguageUtil.chooseTest(wiki.getVoiceUrl(),
                     wiki.getVoiceUrlEn().isEmpty() ? wiki.getVoiceUrl() : wiki.getVoiceUrlEn());
             if (voiceUrl.isEmpty()) {
@@ -775,14 +779,14 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 clearMap();
                 mClusterOverlay.clearClusterItem();
                 mTabId = ParkMapActivity.this.mVenuesTypes.get(mTabPosition).getId();
-                if (isTabByCnName("路线")) {
+                if (isTabByCnName("\u8def\u7ebf")) {
                     if (mCustomRoutes.size() > 1)
                         drawCustomRoute();
                     else
                         drawLineToMap("1", 0);
                 } else {
                     if (null != mFacilities) {
-                        if (isTabByCnName("导览车")) {
+                        if (isTabByCnName("\u5bfc\u89c8\u8f66")) {
                             addActualSceneMarker(mTabId, mFacilities, true);
                             drawLineToMap("2", 0);
                         } else {
