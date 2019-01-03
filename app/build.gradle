@@ -26,7 +26,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME : "com.expo",
-                JPUSH_APPKEY : "0d85769088b6ff5b9b45a806", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_APPKEY : "a4cd5071645b42a5c596ce54", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
     }
@@ -84,8 +84,8 @@ MobSDK {
             WechatMoments {
                 id 2
                 sortId 1
-                appId "wxe65796b6debbdd53"
-                appSecret "707b360702f4dce69c231b7b5de6d98d"
+                appId "wx29bada6c98c75692"
+                appSecret "178dc9f0911a039f0675941369ca5555"
                 bypassApproval false
                 enable true
             }
@@ -112,7 +112,7 @@ MobSDK {
                 sortId 5
                 appKey "2008250939"
                 appSecret "0e1b88c3b07793a91bf527ca761b6336"
-                callbackUri "http://sns.whalecloud.com/sina2/callback"
+                callbackUri "http://toolsmi.com"
                 shareByAppClient true
                 enable true
             }
