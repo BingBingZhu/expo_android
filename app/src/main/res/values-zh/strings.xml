@@ -400,4 +400,6 @@
     <string name="hight_accuracy">高精度模式</string>
     <string name="device_sensors">仅GPRS</string>
     <string name="battery_saving">低功耗</string>
+    <string name="navi_distance">距离：%dm</string>
+    <string name="delete_tips">确定要删除吗？</string>
 </resources>

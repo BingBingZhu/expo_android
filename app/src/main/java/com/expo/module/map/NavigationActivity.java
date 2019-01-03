@@ -131,6 +131,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
 
     long mStartTime;
     int mRouteTime;
+    int mAllLength = 0;
 
     boolean isBackStage = false;
 
@@ -582,6 +583,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mTvTips.setVisibility(View.VISIBLE);
             // 算路返回结果
             AMapNaviPath naviPath = mAMapNavi.getNaviPath();
+            mAllLength = naviPath.getAllLength();
             if (mNaviRouteOverlay == null) {
                 mNaviRouteOverlay = new NaviRouteOverlay(mMap, naviPath, mFrom, mTo);
                 if (ExpoApp.getApplication().getUserHandBitmap() == null) {
@@ -674,7 +676,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_name), mVenue.getCaption(), mVenue.getEnCaption());
         CommUtils.setText(view.findViewById(R.id.dialog_navigation_end_content), mVenue.getRemark(), mVenue.getEnRemark());
         ((TextView) view.findViewById(R.id.dialog_navigation_end_duration)).setText(getResources().getString(R.string.time_leng) + getResources().getString(R.string.within_minutes, time));
-        ((TextView) view.findViewById(R.id.dialog_navigation_end_distance)).setText("");
+        if (mAllLength != 0 && mAllLength != -1)
+            ((TextView) view.findViewById(R.id.dialog_navigation_end_distance)).setText(getString(R.string.navi_distance, mAllLength));
 
         ViewHolder viewHolder = new ViewHolder(view);
         DialogPlus dialog = DialogPlus.newDialog(this)

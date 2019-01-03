@@ -49,4 +49,26 @@ public class ExaminePresenterImpl extends ExamineContract.Presenter {
 
     }
 
+    @Override
+    public void deleteSociety(int id, int type, int position) {
+        mView.showLoadingView();
+        Map<String, Object> params = Http.getBaseParams();
+        params.put("Societyid", id);
+        params.put("kind", type);
+        RequestBody requestBody = Http.buildRequestBody(params);
+        Observable<BaseResponse> observable = Http.getServer().deleteSociety(requestBody);
+        Http.request(new ResponseCallback<BaseResponse>() {
+            @Override
+            protected void onResponse(BaseResponse rsp) {
+                mView.deleteSociety(position);
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideLoadingView();
+                super.onComplete();
+            }
+        }, observable);
+    }
+
 }

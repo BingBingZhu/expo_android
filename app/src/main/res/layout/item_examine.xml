@@ -5,11 +5,25 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/item_examine_time"
-        style="@style/TextSize13_c333"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dms_30"
-        android:text="2018年10月14日16：00" />
+        android:layout_marginRight="@dimen/dms_30">
+
+        <TextView
+            android:id="@+id/item_examine_time"
+            style="@style/TextSize13_c333"
+            android:text="2018年10月14日16：00" />
+
+        <ImageView
+            android:id="@+id/item_examine_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:src="@mipmap/delete_small_black" />
+    </FrameLayout>
+
 
     <TextView
         android:id="@+id/item_examine_content"

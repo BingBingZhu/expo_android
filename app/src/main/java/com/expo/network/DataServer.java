@@ -410,6 +410,16 @@ public interface DataServer {
      * @param requestBody
      * @return
      */
+    @POST("Terminal/DeleteSociety")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> deleteSociety(@Body RequestBody requestBody);
+
+    /**
+     * 为某个圈点赞
+     *
+     * @param requestBody
+     * @return
+     */
     @POST("Terminal/SetEnjoySociety")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<BaseResponse> setEnjoySociety(@Body RequestBody requestBody);
