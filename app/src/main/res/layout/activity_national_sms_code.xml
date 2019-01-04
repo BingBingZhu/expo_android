@@ -4,19 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dms_46"
-            android:layout_marginBottom="@dimen/dms_46"
             android:layout_marginLeft="@dimen/dms_40"
+            android:layout_marginTop="@dimen/dms_46"
             android:layout_marginRight="@dimen/dms_34"
-            android:src="@mipmap/ico_search"/>
+            android:layout_marginBottom="@dimen/dms_46"
+            android:src="@mipmap/ico_search" />
+
         <EditText
             android:id="@+id/et_search"
             android:layout_width="match_parent"
@@ -25,42 +28,53 @@
             android:background="@color/transparent"
             android:hint="@string/please_enter_your_search_terms"
             android:imeOptions="actionSearch"
+            android:lines="1"
             android:maxLines="1"
             android:singleLine="true"
-            android:lines="1"
-            android:textSize="@dimen/font_26"
             android:textColor="@color/color_333"
-            android:textColorHint="@color/color_999" />
+            android:textColorHint="@color/color_999"
+            android:textSize="@dimen/font_26" />
     </LinearLayout>
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_pick"
+        <RelativeLayout
+            android:id="@+id/result_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-        <com.sahooz.library.SideBar
-            android:id="@+id/side"
-            android:layout_width="@dimen/dms_40"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            app:letterColor="#888"
-            app:letterSize="12sp"
-            app:selectColor="#3C3" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_pick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/tv_letter"
-            android:layout_width="@dimen/dms_120"
-            android:layout_height="@dimen/dms_120"
-            android:layout_centerInParent="true"
-            android:background="#80000000"
-            android:gravity="center"
-            android:textColor="#ffffffff"
-            android:textSize="24sp"
+            <com.sahooz.library.SideBar
+                android:id="@+id/side"
+                android:layout_width="@dimen/dms_40"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                app:letterColor="#888"
+                app:letterSize="12sp"
+                app:selectColor="#3C3" />
+
+            <TextView
+                android:id="@+id/tv_letter"
+                android:layout_width="@dimen/dms_120"
+                android:layout_height="@dimen/dms_120"
+                android:layout_centerInParent="true"
+                android:background="#80000000"
+                android:gravity="center"
+                android:textColor="#ffffffff"
+                android:textSize="24sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/empty_layout"
+            layout="@layout/layout_empty"
             android:visibility="gone" />
-    </RelativeLayout>
+    </FrameLayout>
 
 </LinearLayout>
