@@ -68,7 +68,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         RequestBody emptyBody = Http.buildRequestBody( Http.getBaseParams() );
         checkUpdateDate( emptyBody );
         copyAMapStyleToSDCard();
-        getRouterHotCountList();
+//        getRouterHotCountList();
     }
 
     private void checkUpdateDate(RequestBody emptyBody) {

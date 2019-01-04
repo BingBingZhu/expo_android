@@ -10,7 +10,7 @@ public class FreeWifiPresenterImpl extends FreeWiFiContract.Presenter {
 
     @Override
     public String[] queryWifi() {
-        Park park = mDao.queryById(Park.class, 1);
+        Park park = mDao.unique( Park.class, null );
         return new String[]{ park.getParkWifiId(), park.getParkWifiPsd() };
     }
 }

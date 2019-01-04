@@ -36,7 +36,7 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
         new Thread() {
             @Override
             public void run() {
-                Park park = mDao.queryById(Park.class, 1);
+                Park park = mDao.unique( Park.class, null );
                 if (park != null && park.getElectronicFenceList().size() >= 3) {
                     new Handler(Looper.getMainLooper())
                             .post(() -> {
