@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseFragment;
@@ -16,6 +18,7 @@ import com.expo.module.main.find.detail.FindDetailActivity;
 import com.expo.utils.Constants;
 import com.expo.widget.SimpleRecyclerView;
 import com.expo.widget.decorations.SpaceDecoration;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,12 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
     SimpleRecyclerView mRecyclerView;
     @BindView(R.id.empty_layout)
     View mEmptyView;
+    @BindView(R.id.layout_empty_img)
+    ImageView mEmptyImg;
+    @BindView(R.id.layout_empty_text)
+    TextView mEmptyText;
+    @BindView(R.id.layout_empty_fresh)
+    TextView mEmptyFresh;
 
     private FindListAdapter mAdapter;
     private int page = 0;
@@ -68,6 +77,10 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
 
         initLoadMore();
         mPresenter.getSocietyListFilter(page, mTab.id, true);
+        Picasso.with(getContext()).load(R.mipmap.empty_img2).into(mEmptyImg);
+        mEmptyText.setText(R.string.empty_content_2);
+        mEmptyFresh.setText(R.string.empty_fresh_2);
+        mEmptyFresh.setVisibility(View.VISIBLE);
     }
 
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
@@ -89,9 +102,9 @@ public class FindListFragment extends BaseFragment<FindListContract.Presenter> i
                 String enjoys = data.getStringExtra(Constants.EXTRAS.EXTRA_ENJOYS);
                 String views = data.getStringExtra(Constants.EXTRAS.EXTRA_READ_COUNT);
                 if (null != enjoys && !enjoys.isEmpty())
-                mFindList.get(position).enjoys = enjoys;
+                    mFindList.get(position).enjoys = enjoys;
                 if (null != views && !views.isEmpty())
-                mFindList.get(position).views = views;
+                    mFindList.get(position).views = views;
             }
             mAdapter.notifyDataSetChanged();
         }

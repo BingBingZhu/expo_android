@@ -46,7 +46,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         StatusBarUtils.setStatusBarFullTransparent(this);
         StatusBarUtils.setStatusBarLight(this, true);
-        initRootView();
+        if (isInitRootEmptyView())
+            initRootView();
         setContentView(mRootView);
         // Activity退出管理类添加开启的Activity
         ActivityHelper.add(this);
@@ -72,9 +73,16 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         titleRightView.setOnClickListener(clickListener);
     }
 
+    private boolean isInitRootEmptyView() {
+        return true;
+    }
+
     private void initRootView() {
         mRootView = new RootView(this);
         mRootView.setNormalView(getContentView());
+        if (isInitRootEmptyView()) {
+            mRootView.initEmptyView();
+        }
     }
 
 

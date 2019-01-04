@@ -135,6 +135,8 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
         }
         mAdapter.notifyDataSetChanged();
         setConfirmText( mSelectCount, mMaxCount );
+        if(mData == null || mData.size() == 0) showEmptyView();
+        else hideEmptyView();
     }
 
     @OnClick(R.id.contacts_ok)
@@ -187,6 +189,8 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
     public void removeContact(int position) {
         mData.remove( position );
         mAdapter.notifyItemRemoved( position );
+        if(mData == null || mData.size() == 0) showEmptyView();
+        else hideEmptyView();
     }
 
     @Override

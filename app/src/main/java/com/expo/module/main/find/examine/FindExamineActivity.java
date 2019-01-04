@@ -163,6 +163,8 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
     public void deleteSociety(int position) {
         mData.remove(position);
         mAdapter.notifyDataSetChanged();
+        if (mData.size() == 0) showEmptyView();
+        else hideEmptyView();
     }
 
     @Override

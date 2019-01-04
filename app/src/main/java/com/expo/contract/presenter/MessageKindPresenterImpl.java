@@ -67,4 +67,5 @@ public class MessageKindPresenterImpl extends MessageKindContract.Presenter {
         message.setContent(ExpoApp.getApplication().getString(content));
         message.setContentEn(ExpoApp.getApplication().getString(content));
     }
+
 }

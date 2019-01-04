@@ -183,6 +183,15 @@
     <string name="message_kind_tourist_title">游客服务反馈</string>
     <string name="message_kind_tourist_content">游客提交服务后的反馈信息</string>
 
+    <string name="empty_content_1">当前加载失败</string>
+    <string name="empty_content_2">暂时没有数据</string>
+    <string name="empty_content_3">暂时没有数据</string>
+    <string name="empty_content_4">暂时没有预约</string>
+    <string name="empty_fresh_1">重新加载</string>
+    <string name="empty_fresh_2">立即更新</string>
+    <string name="empty_fresh_3">立即开启</string>
+    <string name="empty_fresh_4">立即预约</string>
+
     <string name="wifi_state_init">请点击按钮开启WLAN</string>
 
     <integer name="video_time">60</integer>

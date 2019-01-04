@@ -10,10 +10,13 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
 import com.expo.base.utils.StatusBarUtils;
+import com.squareup.picasso.Picasso;
 
 public class RootView extends LinearLayoutCompat {
 
@@ -27,7 +30,6 @@ public class RootView extends LinearLayoutCompat {
     public RootView(@NonNull Context context) {
         super(context);
         initView(context);
-
     }
 
     public RootView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -47,7 +49,6 @@ public class RootView extends LinearLayoutCompat {
 
         initBodyView();
         addView(mBodyView, new LinearLayoutCompat.LayoutParams(-1, -1));
-        initEmptyView();
     }
 
     private void addTitleView() {
@@ -105,7 +106,14 @@ public class RootView extends LinearLayoutCompat {
     }
 
     public void initEmptyView() {
+        initEmptyView(R.mipmap.empty_img2, R.string.empty_content_2, R.string.empty_fresh_2);
+    }
+
+    public void initEmptyView(int imgRes, int content, int btn) {
         initEmptyView(R.layout.layout_empty);
+        Picasso.with(getContext()).load(imgRes).into((ImageView) mEmptyView.findViewById(R.id.layout_empty_img));
+        ((TextView) mEmptyView.findViewById(R.id.layout_empty_text)).setText(content);
+        ((TextView) mEmptyView.findViewById(R.id.layout_empty_fresh)).setText(btn);
     }
 
     public void initEmptyView(int layoutId) {
@@ -119,8 +127,7 @@ public class RootView extends LinearLayoutCompat {
     public void initEmptyView(View view, int freshId, View.OnClickListener listener) {
         mEmptyView = view;
         mEmptyView.setVisibility(View.GONE);
-        if (freshId != 0 && listener != null)
-            mEmptyView.findViewById(freshId).setOnClickListener(listener);
+        addFreshListener(freshId, listener);
         mBodyView.addView(mEmptyView);
     }
 
@@ -128,10 +135,15 @@ public class RootView extends LinearLayoutCompat {
         if (listener == null) {
             return;
         } else if (freshId == 0) {
+            mEmptyView.findViewById(R.id.layout_empty_fresh).setVisibility(View.VISIBLE);
             mEmptyView.findViewById(R.id.layout_empty_fresh).setOnClickListener(listener);
         } else {
             mEmptyView.findViewById(freshId).setOnClickListener(listener);
         }
+    }
+
+    public View getEmptyView() {
+        return mEmptyView;
     }
 
     public void setTopPadding() {
@@ -150,13 +162,17 @@ public class RootView extends LinearLayoutCompat {
     }
 
     public void showNormal() {
-        mNormalView.setVisibility(View.VISIBLE);
-        mEmptyView.setVisibility(View.GONE);
+        if (mNormalView != null)
+            mNormalView.setVisibility(View.VISIBLE);
+        if (mEmptyView != null)
+            mEmptyView.setVisibility(View.GONE);
     }
 
     public void showEmpty() {
-        mNormalView.setVisibility(View.GONE);
-        mEmptyView.setVisibility(View.VISIBLE);
+        if (mNormalView != null)
+            mNormalView.setVisibility(View.GONE);
+        if (mEmptyView != null)
+            mEmptyView.setVisibility(View.VISIBLE);
     }
 
     public void setTitleVisibility(int visibility) {

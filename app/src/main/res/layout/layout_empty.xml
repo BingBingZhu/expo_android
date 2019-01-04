@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/layout_empty_text"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_90"
-        android:layout_marginBottom="@dimen/dms_90"
-        android:text="没有数据"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/font_44" />
-
     <ImageView
         android:id="@+id/layout_empty_img"
-        android:layout_width="match_parent"
-        android:layout_below="@id/layout_empty_text"
+        android:layout_width="@dimen/dms_400"
+        android:layout_height="@dimen/dms_400"
+        android:layout_marginTop="@dimen/dms_154" />
+
+    <TextView
+        android:id="@+id/layout_empty_text"
+        style="@style/TextSizeBlack18"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_marginTop="@dimen/dms_84" />
 
     <TextView
         android:id="@+id/layout_empty_fresh"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
+        style="@style/TextSizeWhite18"
+        android:layout_width="@dimen/dms_404"
+        android:layout_height="@dimen/dms_76"
         android:layout_below="@id/layout_empty_img"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_90"
-        android:layout_marginBottom="@dimen/dms_90"
-        android:text="刷新"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/font_44" />
-</RelativeLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dms_110"
+        android:background="@drawable/bg_00e5ad_r90"
+        android:gravity="center"
+        android:visibility="gone" />
+</LinearLayout>

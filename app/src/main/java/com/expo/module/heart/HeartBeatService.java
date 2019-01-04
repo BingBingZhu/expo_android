@@ -8,6 +8,7 @@ import android.location.Location;
 import com.amap.api.maps.model.LatLng;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.map.LocationManager;
+
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -113,4 +114,5 @@ public class HeartBeatService extends Service implements HeartBeatContract.View 
                 mLocation = location;
         }
     };
+
 }
