@@ -97,13 +97,21 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="@dimen/dms_20">
 
-            <org.raphets.roundimageview.RoundImageView
+            <!--<org.raphets.roundimageview.RoundImageView-->
+                <!--android:id="@+id/find_list_head"-->
+                <!--android:layout_width="@dimen/dms_36"-->
+                <!--android:layout_height="@dimen/dms_36"-->
+                <!--android:layout_below="@id/find_list_scans"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--app:type="circle" />-->
+
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/find_list_head"
                 android:layout_width="@dimen/dms_36"
                 android:layout_height="@dimen/dms_36"
-                android:layout_below="@id/find_list_scans"
-                android:layout_centerVertical="true"
-                app:type="circle" />
+                app:roundAsCircle="true"
+                app:placeholderImage="@mipmap/ico_mine_def_photo"/>
+
 
             <TextView
                 android:id="@+id/find_list_name"

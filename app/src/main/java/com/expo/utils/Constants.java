@@ -102,7 +102,8 @@ public interface Constants {
         public static final String ALI_BASE_URL = "http://47.95.215.6:8080/Api/";    //阿里云(识花)
         //IP
 //        public static final String IP = "39.105.120.171";
-        public static final String IP = "47.92.250.179";
+//        public static final String IP = "47.92.250.179";
+        public static final String IP = "47.92.247.143";
         //自己服务器基本请求用到的URL
         public static final String BASE_URL = "http://" + IP + ":8080/Api/";
         //自己服务器文件资源请求用到的URL

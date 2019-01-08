@@ -362,15 +362,11 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         new AlertDialog.Builder( ExpoApp.getApplication().getTopActivity() )
                 .setMessage( R.string.the_account_is_abnormal_please_log_in_again )
                 .setCancelable( false )
-                .setNegativeButton( R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        runOnUiThread( () -> mPresenter.logout() );
+                .setNegativeButton( R.string.ok, (dialog, which) -> {
+                    runOnUiThread( () -> mPresenter.logout() );
 //                    ExpoApp.getApplication().setUser(null);
 //                    LoginActivity.startActivity(ExpoApp.getApplication().getTopActivity());
-                    }
-                } )
-                .show();
+                }).show();
     }
 
     private void share(String name) {

@@ -18,6 +18,7 @@ import com.expo.base.utils.ImageUtils;
 import com.expo.entity.Find;
 import com.expo.module.main.find.detail.FindDetailActivity;
 import com.expo.utils.CommUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 
 import org.raphets.roundimageview.RoundImageView;
@@ -75,7 +76,8 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
         }
         holder.content.setText(find.caption);
         if (!StringUtils.isEmpty(find.upic))
-            CommUtils.setImgPic(mContext, find.upic, holder.head);
+            holder.head.setImageURI(find.upic);
+//            CommUtils.setImgPic(mContext, find.upic, holder.head);
         holder.name.setText(find.uname);
         holder.scans.setText(find.views);
         holder.like.setText(find.enjoys);
@@ -103,7 +105,7 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
         @BindView(R.id.find_list_name)
         TextView name;
         @BindView(R.id.find_list_head)
-        RoundImageView head;
+        SimpleDraweeView head;
         @BindView(R.id.find_list_scans)
         TextView scans;
         @BindView(R.id.find_list_like)

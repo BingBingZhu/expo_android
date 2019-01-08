@@ -32,6 +32,7 @@ import com.expo.contract.presenter.FindDetailPresenterImpl;
 import com.expo.entity.Find;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -53,7 +54,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
     @BindView(R.id.find_detail_close)
     View mImClose;
     @BindView(R.id.find_detail_head)
-    RoundImageView mRvHead;
+    SimpleDraweeView mRvHead;
     @BindView(R.id.find_detail_name)
     TextView mTvName;
     @BindView(R.id.find_detail_content)
@@ -154,7 +155,8 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
     private void setFindInfo() {
         mIntent = new Intent();
         if (!StringUtils.isEmpty(mFind.upic))
-            Picasso.with(FindDetailActivity.this).load(mFind.upic).placeholder(R.drawable.image_default).error(R.drawable.image_default).into(mRvHead);
+            mRvHead.setImageURI(mFind.upic);
+//            Picasso.with(FindDetailActivity.this).load(mFind.upic).placeholder(R.drawable.image_default).error(R.drawable.image_default).into(mRvHead);
         mTvName.setText(mFind.uname);
         mTvContent.setText(mFind.caption);
         mTvEnjoy.setText(mFind.enjoys);

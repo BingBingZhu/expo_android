@@ -11,15 +11,20 @@ package cn.sharesdk.onekeyshare.themes.classic;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -79,7 +84,23 @@ public abstract class PlatformPage extends OnekeySharePage {
         lp = new LinearLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         llPage.addView(llPanel, lp);
-
+        /* 增加分享到 */
+        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,130);
+        lp.setMargins(0,0,0,0);
+        LinearLayout buttonLayout = new LinearLayout(activity);
+        buttonLayout.setBackgroundColor(Color.WHITE);
+        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,110);
+        lp2.setMargins(40, 50, 20, 0);
+        TextView tv = new TextView(activity);
+//        tv.setGravity(Gravity.CENTER);
+        tv.setText("分享到");
+        tv.setTextSize(15);
+        tv.setTextColor(getContext().getResources().getColor(R.color.color_333));
+        tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tv.setBackgroundColor(Color.WHITE);
+        buttonLayout.addView(tv,lp2);
+        llPanel.addView(buttonLayout,lp);
+        /* 增加分享到 */
         MobViewPager mvp = new MobViewPager(activity);
         ArrayList<Object> cells = collectCells();
         PlatformPageAdapter adapter = newAdapter(cells);
@@ -94,7 +115,30 @@ public abstract class PlatformPage extends OnekeySharePage {
         vInd.onScreenChange(0, 0);
         adapter.setIndicator(vInd);
         mvp.setAdapter(adapter);
+        /* 增加取消分享按钮 */
+        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,150);
+        lp.setMargins(0,0,0,0);
+        LinearLayout buttonLayout2 = new LinearLayout(activity);
+        buttonLayout2.setBackgroundColor(Color.WHITE);
+        LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,110);
+        lp22.setMargins(20, 20, 20, 20);
+        Button button2 = new Button(activity);
+        button2.setText("取消分享");
+        button2.setTextSize(15);
+        button2.setTextColor(getContext().getResources().getColor(R.color.color_333));
+        button2.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        button2.setBackgroundColor(Color.WHITE);
+        button2.setOnClickListener(new OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                finish();
+            }
+        });
+        buttonLayout2.addView(button2,lp22);
+        llPanel.addView(buttonLayout2,lp);
+        /* 增加取消分享按钮 */
     }
 
     protected abstract PlatformPageAdapter newAdapter(ArrayList<Object> cells);

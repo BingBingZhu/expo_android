@@ -409,5 +409,9 @@
     <string name="battery_saving">低功耗</string>
     <string name="navi_distance">距离：%dm</string>
     <string name="delete_tips">确定要删除吗？</string>
+    <string name="expo_headline">世园头条</string>
+    <string name="track_open_hint">足迹功能较消耗电量，是否开启~</string>
+    <string name="open_track">开启</string>
+    <string name="think_again_track">再想想</string>
 
 </resources>

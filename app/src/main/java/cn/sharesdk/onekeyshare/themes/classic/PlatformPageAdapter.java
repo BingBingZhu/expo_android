@@ -99,7 +99,7 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 	private View createPanel(Context context) {
 		LinearLayout llPanel = new LinearLayout(context);
 		llPanel.setOrientation(LinearLayout.VERTICAL);
-		llPanel.setBackgroundColor(0xfff2f2f2);
+		llPanel.setBackgroundColor(0xffffffff);
 
 		int lineCount = panelHeight / cellHeight;
 		LinearLayout[] llCells = new LinearLayout[lineCount * lineSize];
@@ -133,18 +133,21 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 
 		for (LinearLayout llCell : llCells) {
 			ImageView ivLogo = new ImageView(context);
-			ivLogo.setScaleType(ScaleType.CENTER_INSIDE);
-			lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, logoHeight);
+			ivLogo.setScaleType(ScaleType.CENTER);
+			lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			lp.topMargin = paddingTop;
+			lp.weight = 1;
+			lp.gravity = Gravity.CENTER;
 			llCell.addView(ivLogo, lp);
 
-			TextView tvName = new TextView(context);
-			tvName.setTextColor(0xff646464);
-			tvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-			tvName.setGravity(Gravity.CENTER);
-			lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-			lp.weight = 1;
-			llCell.addView(tvName, lp);
+//			TextView tvName = new TextView(context);
+//			tvName.setTextColor(0xff646464);
+//			tvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+//			tvName.setGravity(Gravity.CENTER);
+//			tvName.setVisibility(View.GONE);
+//			lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+//			lp.weight = 1;
+//			llCell.addView(tvName, lp);
 		}
 
 		return llPanel;
@@ -155,17 +158,17 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 		int disableBack = ResHelper.getBitmapRes(page.getContext(), "ssdk_oks_classic_platfrom_cell_back_nor");
 		for (int i = 0; i < logos.length; i++) {
 			ImageView ivLogo = ResHelper.forceCast(llCells[i].getChildAt(0));
-			TextView tvName = ResHelper.forceCast(llCells[i].getChildAt(1));
+//			TextView tvName = ResHelper.forceCast(llCells[i].getChildAt(1));
 			if (logos[i] == null) {
 				ivLogo.setVisibility(View.INVISIBLE);
-				tvName.setVisibility(View.INVISIBLE);
+//				tvName.setVisibility(View.INVISIBLE);
 				llCells[i].setBackgroundResource(disableBack);
 				llCells[i].setOnClickListener(null);
 			} else {
 				ivLogo.setVisibility(View.VISIBLE);
-				tvName.setVisibility(View.VISIBLE);
+//				tvName.setVisibility(View.VISIBLE);
 				ivLogo.requestLayout();
-				tvName.requestLayout();
+//				tvName.requestLayout();
 				llCells[i].setBackgroundResource(cellBack);
 				llCells[i].setOnClickListener(this);
 				llCells[i].setTag(logos[i]);
@@ -177,11 +180,11 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 					} else {
 						ivLogo.setImageBitmap(null);
 					}
-					if (logo.label != null) {
-						tvName.setText(logo.label);
-					} else {
-						tvName.setText("");
-					}
+//					if (logo.label != null) {
+//						tvName.setText(logo.label);
+//					} else {
+//						tvName.setText("");
+//					}
 				} else {
 					Platform plat = ResHelper.forceCast(logos[i]);
 					String name = plat.getName().toLowerCase();
@@ -191,12 +194,12 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 					} else {
 						ivLogo.setImageBitmap(null);
 					}
-					resId = ResHelper.getStringRes(tvName.getContext(), "ssdk_" + name);
-					if (resId > 0) {
-						tvName.setText(resId);
-					} else {
-						tvName.setText("");
-					}
+//					resId = ResHelper.getStringRes(tvName.getContext(), "ssdk_" + name);
+//					if (resId > 0) {
+//						tvName.setText(resId);
+//					} else {
+//						tvName.setText("");
+//					}
 				}
 			}
 		}

@@ -101,7 +101,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         TopLineInfo topLine = (TopLineInfo) obj;
         WebActivity.startActivity( getContext(),
                 LanguageUtil.chooseTest( topLine.linkH5Url, topLine.linkH5UrlEn ),
-                LanguageUtil.chooseTest( topLine.caption, topLine.captionEn ) );
+                getString(R.string.expo_headline) );
     };
 
     MyScrollView.OnScrollListener mScrollListener = new MyScrollView.OnScrollListener() {
