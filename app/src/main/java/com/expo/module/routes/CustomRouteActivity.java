@@ -82,6 +82,7 @@ public class CustomRouteActivity extends BaseActivity<CustomRouteContract.Presen
         mMapView.onCreate(savedInstanceState);
         mAMap = mMapView.getMap();
         mMapUtils = new MapUtils(mAMap);
+        mMapUtils.getTileOverlayOptions(getContext());
         mPresenter.loadParkMapData();
         mAMap.getUiSettings().setRotateGesturesEnabled(false);
         mAMap.getUiSettings().setTiltGesturesEnabled(false);

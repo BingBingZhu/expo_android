@@ -288,6 +288,19 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_track_on_off)
     public void trackOnOFF(View v){
+        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false))
+        new AlertDialog.Builder(this)
+            .setMessage(R.string.track_open_hint)
+            .setPositiveButton(R.string.open_track, (dialog, which) -> {
+                settingTrack();
+                dialog.dismiss();
+            }).setNegativeButton(R.string.think_again_track, null)
+            .show();
+        else
+            settingTrack();
+    }
+
+    private void settingTrack(){
         PrefsHelper.setBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false));
         // 设置图片
         imgTrackON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
