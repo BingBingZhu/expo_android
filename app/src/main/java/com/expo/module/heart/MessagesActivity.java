@@ -207,6 +207,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     @Override
     public void freshMessageList(List<Message> list) {
         messages = list;
+        checkEmpty();
         mAdapter.setData(list);
         mAdapter.notifyDataSetChanged();
     }
@@ -214,7 +215,13 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
     @Override
     public void delMessage(int position) {
         mAdapter.mData.remove(position);
+        checkEmpty();
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void checkEmpty() {
+        if (messages == null || messages.size() == 0) showEmptyView();
+        else hideEmptyView();
     }
 
     @Override
@@ -222,7 +229,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
 //        String url = "http://192.168.1.13:8888/#/orderStatus";
         String url = mPresenter.loadCommonInfo(CommonInfo.ORDER_MESSAGE_INFO);
         url = url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
-                + "&lan=" + LanguageUtil.chooseTest( "zh", "en" );
+                + "&lan=" + LanguageUtil.chooseTest("zh", "en");
         WebActivity.startActivity(getContext(), url, "订单详情", data);
     }
 

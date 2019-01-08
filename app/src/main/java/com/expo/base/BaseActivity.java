@@ -72,9 +72,16 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         titleRightView.setOnClickListener(clickListener);
     }
 
+    public boolean isInitRootEmptyView() {
+        return true;
+    }
+
     private void initRootView() {
         mRootView = new RootView(this);
         mRootView.setNormalView(getContentView());
+        if (isInitRootEmptyView()) {
+            mRootView.initEmptyView();
+        }
     }
 
 

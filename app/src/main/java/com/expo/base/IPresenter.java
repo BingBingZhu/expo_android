@@ -11,4 +11,5 @@ public abstract class IPresenter<T extends IView> {
         this.mView = view;
         mDao = new BaseDaoImpl();
     }
+
 }

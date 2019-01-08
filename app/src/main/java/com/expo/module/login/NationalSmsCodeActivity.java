@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.expo.R;
@@ -28,6 +29,7 @@ import com.sahooz.library.PyEntity;
 import com.sahooz.library.SideBar;
 import com.sahooz.library.TitleItemDecoration;
 import com.sahooz.library.VH;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +49,16 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
     EditText mEtSearch;
     @BindView(R.id.tv_letter)
     TextView mTvLetter;
+    @BindView(R.id.result_layout)
+    View mResultLayout;
+    @BindView(R.id.empty_layout)
+    View mEmptyLayout;
+    @BindView(R.id.layout_empty_img)
+    ImageView mEmptyImg;
+    @BindView(R.id.layout_empty_text)
+    TextView mEmptyText;
 
-//    private NationalSmsCode mNationalSmsCode;
+    //    private NationalSmsCode mNationalSmsCode;
     private ArrayList<Country> mSelectedCountries = new ArrayList<>();
     private ArrayList<Country> mAllCountries = new ArrayList<>();
     private NationalSmsCodeActivity.CAdapter adapter;
@@ -76,6 +86,10 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
         TitleItemDecoration decoration = new TitleItemDecoration(this, adapter.getEntityList());
         mRvPick.addItemDecoration(decoration);
         mRvPick.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        Picasso.with(getContext()).load(R.mipmap.empty_img2).into(mEmptyImg);
+        mEmptyText.setText(R.string.empty_content_2);
+
         mEtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -119,11 +133,23 @@ public class NationalSmsCodeActivity extends BaseActivity<NationalSmsCodeContrac
         }
         adapter.update(mSelectedCountries);
         adapter.notifyDataSetChanged();
+        if(mSelectedCountries.size() == 0){
+            mResultLayout.setVisibility(View.GONE);
+            mEmptyLayout.setVisibility(View.VISIBLE);
+        } else {
+            mResultLayout.setVisibility(View.VISIBLE);
+            mEmptyLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected boolean hasPresenter() {
         return true;
+    }
+
+    @Override
+    public boolean isInitRootEmptyView() {
+        return false;
     }
 
     /**
