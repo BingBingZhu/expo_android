@@ -107,9 +107,8 @@ public class CustomDefaultDialog {
         }
         dialogWindow.setGravity(Gravity.CENTER);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.width = (int) (((WindowManager)context.getSystemService( Context.WINDOW_SERVICE )).getDefaultDisplay().getWidth() * 0.8);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        lp.y = 20;//设置Dialog距离底部的距离
         dialogWindow.setAttributes(lp);
         dialog.show();//显示对话框
     }
