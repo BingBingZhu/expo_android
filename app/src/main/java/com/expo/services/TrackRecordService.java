@@ -39,8 +39,8 @@ public class TrackRecordService extends Service {
     private LBSTraceClient mLbsTraceClient;
     private BaseDao mDao;
     private List<Track> tracks;
-//    private LatLng latLng;
-//    private LatLng oldLatLng;
+    private LatLng latLng;
+    private LatLng oldLatLng;
     private List<TraceLocation> mLocationList;
 
     @Nullable
@@ -67,7 +67,6 @@ public class TrackRecordService extends Service {
                     // 纠偏
                     tracks.clear();
                     mLbsTraceClient.queryProcessedTrace(0, mLocationList, LBSTraceClient.TYPE_AMAP, traceListener);
-                    mLocationList.clear();
                 }
             }
         }
@@ -77,7 +76,20 @@ public class TrackRecordService extends Service {
     private TraceListener traceListener = new TraceListener() {
         @Override
         public void onRequestFailed(int i, String s) {
-            LogUtils.e("", "");
+            if (/*s.equals(LBSTraceClient.MIN_GRASP_POINT_ERROR) &&*/ !mLocationList.isEmpty()) {
+                latLng = new LatLng(mLocationList.get(0).getLatitude(), mLocationList.get(0).getLongitude());
+                if (isLocationChanage()) {
+                    tracks.add(new Track(mLocationList.get(0).getLatitude(), mLocationList.get(0).getLongitude(),
+                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
+                            ExpoApp.getApplication().getUser().getUid()));
+                    oldLatLng = latLng;
+                }
+                if (!tracks.isEmpty()) {
+                    PrefsHelper.setString(Constants.Prefs.KEY_TRACK_UPDATE_TIME, "最后更新足迹 " + sdf.format(new Date()));
+                    mDao.saveOrUpdateAll(tracks);
+                }
+            }
+            mLocationList.clear();
         }
 
         @Override
@@ -96,6 +108,7 @@ public class TrackRecordService extends Service {
                 PrefsHelper.setString(Constants.Prefs.KEY_TRACK_UPDATE_TIME, "最后更新足迹 " + sdf.format(new Date()));
                 mDao.saveOrUpdateAll(tracks);
             }
+            mLocationList.clear();
         }
     };
 
@@ -167,18 +180,18 @@ public class TrackRecordService extends Service {
 
     public static SimpleDateFormat sdf = new SimpleDateFormat( Constants.TimeFormat.TYPE_ALL, Locale.getDefault() );
 
-//    private boolean isLocationChanage() {
-//        if (null == oldLatLng) {
-//            return true;
-//        } else {
-//            float distance = AMapUtils.calculateLineDistance(latLng, oldLatLng);
-//            if (distance >= 3) {
-//                return true;
-//            }else{
-//                return false;
-//            }
-//        }
-//    }
+    private boolean isLocationChanage() {
+        if (null == oldLatLng) {
+            return true;
+        } else {
+            float distance = AMapUtils.calculateLineDistance(latLng, oldLatLng);
+            if (distance >= 3) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
 
 
     /**
