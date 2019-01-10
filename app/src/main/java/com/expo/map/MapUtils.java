@@ -190,7 +190,7 @@ public class MapUtils {
             myLocationStyle.radiusFillColor( BaseApplication.getApplication().getResources().getColor( R.color.color_local ) );//设置定位蓝点精度圆圈的填充颜色的方法。
             BitmapDescriptor bitmapDescriptor;
             View view = LayoutInflater.from( BaseApplication.getApplication() ).inflate( R.layout.layout_local_icon, null );
-            if (null != ExpoApp.getApplication().getUser() && !ExpoApp.getApplication().getUser().getPhotoUrl().isEmpty()) {
+            if (null != ExpoApp.getApplication().getUser() && null!=ExpoApp.getApplication().getUser().getPhotoUrl() && !ExpoApp.getApplication().getUser().getPhotoUrl().isEmpty()) {
                 Http.loadBitmap( ExpoApp.getApplication().getUser().getPhotoUrl(), (url, bitmap, obj) -> {
                     settingLocalImage( bitmap );
                     ExpoApp.getApplication().setUserHandBitmap( bitmap );
