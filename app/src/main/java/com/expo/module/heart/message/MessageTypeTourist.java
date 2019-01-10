@@ -13,4 +13,14 @@ public class MessageTypeTourist extends MessageType {
         return R.layout.item_message_tourist;
     }
 
+    @Override
+    public int getMenuIcon() {
+        return R.mipmap.delete;
+    }
+
+    @Override
+    public int getMenuBackground() {
+        return R.color.red_f7463f;
+    }
+
 }

@@ -13,4 +13,14 @@ public class MessageTypeAppointment extends MessageType {
         return R.layout.item_message_appointment;
     }
 
+    @Override
+    public int getMenuIcon() {
+        return R.mipmap.delete;
+    }
+
+    @Override
+    public int getMenuBackground() {
+        return R.color.transparent;
+    }
+
 }
