@@ -38,6 +38,7 @@ import com.expo.module.share.ShareUtil;
 import com.expo.pay.JsMethod;
 import com.expo.utils.Constants;
 import com.expo.utils.LocalBroadcastUtil;
+import com.expo.widget.CustomDefaultDialog;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -359,13 +360,13 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     };
 
     private void showForceSingOutDialog() {
-        new AlertDialog.Builder( ExpoApp.getApplication().getTopActivity() )
-                .setMessage( R.string.the_account_is_abnormal_please_log_in_again )
-                .setCancelable( false )
-                .setNegativeButton( R.string.ok, (dialog, which) -> {
+        CustomDefaultDialog dialog = new CustomDefaultDialog(ExpoApp.getApplication().getTopActivity());
+        dialog.setContent(R.string.the_account_is_abnormal_please_log_in_again)
+                .setOnlyOK()
+                .setCancelable(false)
+                .setOnOKClickListener(v -> {
                     runOnUiThread( () -> mPresenter.logout() );
-//                    ExpoApp.getApplication().setUser(null);
-//                    LoginActivity.startActivity(ExpoApp.getApplication().getTopActivity());
+                    dialog.dismiss();
                 }).show();
     }
 

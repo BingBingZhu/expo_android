@@ -22,6 +22,7 @@ import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 import com.expo.utils.NotificationUtil;
+import com.expo.widget.CustomDefaultDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -112,17 +113,15 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
     }
 
     private void showForceSingOutDialog(int textRes) {
-        new AlertDialog.Builder(ExpoApp.getApplication().getTopActivity())
-                .setMessage(textRes)
+        CustomDefaultDialog dialog = new CustomDefaultDialog(ExpoApp.getApplication().getTopActivity());
+        dialog.setContent(textRes)
+                .setOnlyOK()
                 .setCancelable(false)
-                .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ExpoApp.getApplication().setUser(null);
-                        LoginActivity.startActivity(ExpoApp.getApplication().getTopActivity());
-                    }
-                })
-                .show();
+                .setOnOKClickListener(v -> {
+                    ExpoApp.getApplication().setUser(null);
+                    LoginActivity.startActivity(ExpoApp.getApplication().getTopActivity());
+                    dialog.dismiss();
+                }).show();
     }
 
     private void checkMessage(Message message) {

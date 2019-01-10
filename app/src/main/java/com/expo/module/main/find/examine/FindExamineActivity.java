@@ -26,6 +26,7 @@ import com.expo.module.main.find.detail.FindDetailActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.widget.AppBarView;
+import com.expo.widget.CustomDefaultDialog;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.squareup.picasso.Picasso;
@@ -142,10 +143,11 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
     }
 
     private void showDeleteDialog(int id, int type, int positon) {
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.delete_tips)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.ok, (dialog, which) -> mPresenter.deleteSociety(id, type, positon))
+        CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+        dialog.setContent(R.string.delete_tips)
+                .setOkText(R.string.delete)
+                .setOkTextRed()
+                .setOnOKClickListener(v1 -> { mPresenter.deleteSociety(id, type, positon); dialog.dismiss(); })
                 .show();
     }
 
