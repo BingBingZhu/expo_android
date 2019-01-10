@@ -48,6 +48,10 @@ public class MapUtils {
         this.map = map;
     }
 
+    public boolean ptInPolygon(LatLng latLng, List<double[]> points){
+        return ptInPolygon(latLng.latitude, latLng.longitude, points);
+    }
+
     /**
      * 判断指定坐标在指定范围内
      *

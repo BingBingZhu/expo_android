@@ -7,6 +7,14 @@
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <ImageView
+        android:id="@+id/latched_position"
+        android:layout_width="@dimen/dms_106"
+        android:layout_height="@dimen/dms_106"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/dms_40"
+        android:layout_marginBottom="@dimen/dms_40"
+        android:src="@mipmap/ico_park_map_location"/>
     <LinearLayout
         android:id="@+id/custom_route_bottom_view"
         android:layout_width="match_parent"

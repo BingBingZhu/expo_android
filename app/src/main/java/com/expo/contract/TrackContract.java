@@ -2,6 +2,7 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.Park;
 import com.expo.entity.Track;
 
 import java.util.List;
@@ -16,11 +17,15 @@ public interface TrackContract {
         public abstract void queryTrack();
 
         public abstract void clearTrack();
+
+        public abstract void loadLimit();
     }
 
     interface View extends IView {
         void loadTrackRsp(Map<Long, List<Track>> map);
 
         void clearTrackRes();
+
+        void showParkScope(Park park);
     }
 }

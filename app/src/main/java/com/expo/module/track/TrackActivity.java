@@ -15,7 +15,9 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.TrackContract;
+import com.expo.entity.Park;
 import com.expo.entity.Track;
+import com.expo.map.MapUtils;
 import com.expo.utils.Constants;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class TrackActivity extends BaseActivity<TrackContract.Presenter> impleme
     TextView tvUpdateTime;
 
     private AMap mAMap;
+    private MapUtils mMapUtils;
 
     @Override
     protected int getContentView() {
@@ -50,6 +53,8 @@ public class TrackActivity extends BaseActivity<TrackContract.Presenter> impleme
         }
         mMapView.onCreate(savedInstanceState);
         mAMap = mMapView.getMap();
+        mMapUtils = new MapUtils(mAMap);
+        mPresenter.loadLimit();
         mPresenter.queryTrack();
     }
 
@@ -81,6 +86,11 @@ public class TrackActivity extends BaseActivity<TrackContract.Presenter> impleme
         mAMap.clear();
         PrefsHelper.setString(Constants.Prefs.KEY_TRACK_UPDATE_TIME, null);
         tvUpdateTime.setText(PrefsHelper.getString(Constants.Prefs.KEY_TRACK_UPDATE_TIME, getString(R.string.open_the_footprint_record)));
+    }
+
+    @Override
+    public void showParkScope(Park park) {
+        mMapUtils.setLimits(park);
     }
 
     private void drawLine(List<LatLng> latLngs) {

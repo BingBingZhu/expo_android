@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -68,6 +69,8 @@ public class CustomRouteActivity extends BaseActivity<CustomRouteContract.Presen
     private Marker clickMarker;
     private List<VenuesType> venuesTypes = new ArrayList<>();
     private Map<CustomRoute, Polyline> lineMap;
+    private Park mPark;
+    private LatLng mLatLng;
 
 
     @Override
@@ -88,7 +91,18 @@ public class CustomRouteActivity extends BaseActivity<CustomRouteContract.Presen
         mAMap.getUiSettings().setTiltGesturesEnabled(false);
         mAMap.getUiSettings().setZoomControlsEnabled(false);
         mAMap.setOnMarkerClickListener(this);
+        mMapUtils.setNotFollow();
+        mAMap.setMyLocationEnabled( true );
+        mAMap.setOnMyLocationChangeListener(mLocationChangeListener);
     }
+
+    private AMap.OnMyLocationChangeListener mLocationChangeListener = new AMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            if (null != location && location.getLatitude() != 0)
+                mLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+    };
 
     private Bitmap getMarkerBitmap(Venue v) {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.test_1);
@@ -205,9 +219,24 @@ public class CustomRouteActivity extends BaseActivity<CustomRouteContract.Presen
 
     private List<Venue> selectedVenue;
 
-    @OnClick(R.id.custom_route_save)
+    @OnClick({R.id.custom_route_save, R.id.latched_position})
     public void saveCustomRoute(View view) {
-        mPresenter.saveCustomRoute(mVenues, mCustomRoutes);
+        switch (view.getId()){
+            case R.id.custom_route_save:
+                mPresenter.saveCustomRoute(mVenues, mCustomRoutes);
+                break;
+            case R.id.latched_position:
+                if (mLatLng != null){
+                    if (mMapUtils.ptInPolygon(mLatLng, mPark.getElectronicFenceList())){
+                        mMapUtils.mapGoto(mLatLng);
+                    }else{
+                        ToastHelper.showShort("用户当前不在园区");
+                    }
+                }else{
+                    ToastHelper.showShort("定位中，请稍后...");
+                }
+                break;
+        }
     }
 
     // 清除路线
@@ -264,6 +293,7 @@ public class CustomRouteActivity extends BaseActivity<CustomRouteContract.Presen
     @Override
     public void showParkScope(Park park) {
         mMapUtils.setLimits(park);
+        this.mPark = park;
     }
 
     @Override
