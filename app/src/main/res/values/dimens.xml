@@ -103,4 +103,5 @@
     <dimen name="dms_380">190dp</dimen>
     <dimen name="dms_240">120dp</dimen>
     <dimen name="dms_124">62dp</dimen>
+    <dimen name="dms_48">24dp</dimen>
 </resources>

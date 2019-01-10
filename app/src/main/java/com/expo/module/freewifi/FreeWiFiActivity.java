@@ -7,6 +7,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,14 +52,18 @@ public class FreeWiFiActivity extends BaseActivity<FreeWiFiContract.Presenter> i
         setTitle(0, R.string.free_wifi_at_beijing_world_expo);
         wifi = mPresenter.queryWifi();
         if (null == wifi || wifi[0].isEmpty()) {
+            Log.i("aaaaaaaaaa", "没有wifi");
             setWifiView(STATE_UNUNITED);
             tvState.setText(R.string.not_free_wifi);
         } else {
+            Log.i("aaaaaaaaaa", "wifi ssid"+ wifi[0]);
             registerBroadcastReceiver();
             if (WifiUtil.isAtWifi(getContext(), wifi[0])) {
+                Log.i("aaaaaaaaaa", "connected wifi ssid"+ wifi[0]);
                 setWifiView(STATE_SUCCESSFU_LCONNECTION);
                 isConnect = true;
             } else {
+                Log.i("aaaaaaaaaa", "未连接世园wifi");
                 setWifiView(STATE_UNUNITED);
             }
         }

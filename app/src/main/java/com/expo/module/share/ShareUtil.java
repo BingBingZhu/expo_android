@@ -182,6 +182,15 @@ public class ShareUtil {
         ShareSDK.getPlatform(name).share(paramsToShare);
     }
 
+    public static void doShare(String name, String title, String text, String imageUrl, String shareUrl){
+        Platform.ShareParams paramsToShare = new Platform.ShareParams();
+        paramsToShare.setText(text);
+        paramsToShare.setTitle(title);
+        paramsToShare.setTitleUrl(shareUrl);
+        paramsToShare.setImagePath(imageUrl);
+        ShareSDK.getPlatform(name).share(paramsToShare);
+    }
+
 
     /**
      * title标题，在印象笔记、邮箱、信息、微信（包括好友、朋友圈和收藏）、

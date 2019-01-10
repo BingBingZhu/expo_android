@@ -38,6 +38,7 @@ import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 import com.expo.widget.AppBarView;
+import com.expo.widget.CustomDefaultDialog;
 import com.expo.widget.MySettingView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -90,9 +91,6 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
             case R.id.language_en:
                 changeLanguage( false, d );
                 break;
-//            case R.id.cancle:
-//                d.dismiss();
-//                break;
             case R.id.location_mode_0:
                 LocationManager.getInstance().setLocationModePotion(0);
                 mTvLocationPattern.setRightText(getString(R.string.hight_accuracy));
@@ -288,15 +286,15 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_track_on_off)
     public void trackOnOFF(View v){
-        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false))
-        new AlertDialog.Builder(this)
-            .setMessage(R.string.track_open_hint)
-            .setPositiveButton(R.string.open_track, (dialog, which) -> {
-                settingTrack();
-                dialog.dismiss();
-            }).setNegativeButton(R.string.think_again_track, null)
-            .show();
-        else
+        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false)) {
+            CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+            dialog.setContent(R.string.track_open_hint)
+                    .setOkText(R.string.open_track)
+                    .setCancelText(R.string.think_again_track)
+                    .setOkTextRed()
+                    .setOnOKClickListener(v1 -> { settingTrack(); dialog.dismiss(); })
+                    .show();
+        } else
             settingTrack();
     }
 
