@@ -153,8 +153,8 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
 
         mPresenter.getRouteDetail(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_ID, 0));
         mPresenter.getVenuesList(mInfo.idsList);
-        //LanguageUtil.chooseTest(CommUtils.getFullUrl(mInfo.voiceUrl), CommUtils.getFullUrl(mInfo.voiceUrlEn))
-        MediaPlayerManager.getInstence().setDataSource(getContext(), "http://audio.xmcdn.com/group15/M06/1D/EA/wKgDZVV47ZLD3fFXABohc_qeKmc390.m4a");
+        MediaPlayerManager.getInstence().setDataSource(getContext(), LanguageUtil.chooseTest(CommUtils.getFullUrl(mInfo.voiceUrl), CommUtils.getFullUrl(mInfo.voiceUrlEn)));
+//        MediaPlayerManager.getInstence().setDataSource(getContext(), "http://audio.xmcdn.com/group15/M06/1D/EA/wKgDZVV47ZLD3fFXABohc_qeKmc390.m4a");
     }
 
     @Override
