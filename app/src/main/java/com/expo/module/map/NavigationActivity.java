@@ -59,6 +59,7 @@ import com.expo.utils.Constants;
 import com.expo.utils.DeviceRotateManager;
 import com.expo.utils.ICameraManager;
 import com.expo.utils.LanguageUtil;
+import com.expo.widget.CustomDefaultDialog;
 import com.expo.widget.MultiDirectionSlidingDrawer;
 import com.expo.widget.X5WebView;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -405,19 +406,17 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     public void onBackPressed() {
 //        super.onBackPressed();
         mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_START));
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.leave_navi)
-                .setCancelable(false)
-                .setPositiveButton(R.string.ok, (dialog, which) -> {
+        CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+        dialog.setContent(R.string.leave_navi)
+                .setOnOKClickListener(v1 -> {
                     mWebView.loadUrl("javascript:leavePage()");
                     finish();
-                })
-                .setNegativeButton(R.string.cancel, (dialog, which) -> {
-                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_END));
                     dialog.dismiss();
                 })
-                .show();
-
+                .setOnCancelClickListener(v -> {
+                    mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_END));
+                    dialog.dismiss();
+                }).show();
     }
 
     @Override

@@ -34,6 +34,7 @@
             android:textSize="@dimen/font_26"
             android:text="再想想"/>
         <View
+            android:id="@+id/default_dialog_line"
             android:layout_width="@dimen/dms_2"
             android:layout_height="match_parent"
             android:background="@color/white_f4" />

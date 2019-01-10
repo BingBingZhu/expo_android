@@ -189,10 +189,9 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.setting_cache)
     public void clickCache(MySettingView view) {
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.clear_cache_msg)
-                .setPositiveButton(R.string.ok, (dialog, which) -> {
-
+        CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+        dialog.setContent(R.string.clear_cache_msg)
+                .setOnOKClickListener(v1 -> {
                     // 清除缓存
                     new AsyncTask<Void, Void, Void>() {
                         @Override
@@ -211,8 +210,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
                         }
                     }.execute();
                     dialog.dismiss();
-                }).setNegativeButton(R.string.cancel, null)
-                .show();
+                }).show();
     }
 
     @OnClick(R.id.setting_prompt_tone)
@@ -274,7 +272,10 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
 
     @OnClick(R.id.logout)
     public void logout(View view) {
-        mPresenter.logout();
+        CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+        dialog.setContent("是否确认退出当前账号？")
+                .setOnOKClickListener(v1 -> { mPresenter.logout(); dialog.dismiss(); })
+                .show();
     }
 
     @OnClick(R.id.setting_map_on_off)
