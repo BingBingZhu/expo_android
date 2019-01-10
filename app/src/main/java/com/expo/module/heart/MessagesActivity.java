@@ -135,22 +135,22 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
             topLine.setVisibility(View.GONE);
             mSwipeMenuRecyclerView.addItemDecoration(new SpaceDecoration(leftRight, v, leftRight, v, 0));
         }
-        mSwipeMenuRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            Drawable drawable = getResources().getDrawable(R.mipmap.shape_new_msg_flag);
-
-            @Override
-            public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                super.onDrawOver(c, parent, state);
-                for (int i = 0; i < parent.getChildCount(); i++) {
-                    View v = parent.getChildAt(i);
-                    if (!messages.get(i).isRead()) {
-                        drawable.setBounds(v.getRight() - drawable.getIntrinsicWidth(), v.getTop(),
-                                v.getRight(), v.getTop() + drawable.getIntrinsicHeight());
-                        drawable.draw(c);
-                    }
-                }
-            }
-        });        // item分割线
+//        mSwipeMenuRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+//            Drawable drawable = getResources().getDrawable(R.mipmap.shape_new_msg_flag);
+//
+//            @Override
+//            public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+//                super.onDrawOver(c, parent, state);
+//                for (int i = 0; i < parent.getChildCount(); i++) {
+//                    View v = parent.getChildAt(i);
+//                    if (!messages.get(i).isRead()) {
+//                        drawable.setBounds(v.getRight() - drawable.getIntrinsicWidth(), v.getTop(),
+//                                v.getRight(), v.getTop() + drawable.getIntrinsicHeight());
+//                        drawable.draw(c);
+//                    }
+//                }
+//            }
+//        });        // item分割线
 
         mSwipeMenuRecyclerView.setSwipeMenuCreator(this);
         mSwipeMenuRecyclerView.setSwipeMenuItemClickListener(this);
@@ -183,8 +183,9 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
         SwipeMenuItem deleteItem = new SwipeMenuItem(this)
-                .setBackground(R.drawable.bg_gradient_y_fc2637_fc515e)
-                .setImage(R.mipmap.delete)
+                .setBackground(mMessageType.getMenuBackground())
+                .setImage(mMessageType.getMenuIcon())
+//                .setImage(R.mipmap.delete)
                 .setWidth(width)
                 .setHeight(height);
         swipeRightMenu.addMenuItem(deleteItem); // 在Item右侧添加一个菜单。

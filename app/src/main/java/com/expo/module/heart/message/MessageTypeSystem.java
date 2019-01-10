@@ -19,4 +19,14 @@ public class MessageTypeSystem extends MessageType {
     @Override
     public void itemClick(Context context, Message message) {
     }
+
+    @Override
+    public int getMenuIcon() {
+        return R.mipmap.delete;
+    }
+
+    @Override
+    public int getMenuBackground() {
+        return R.color.red_f7463f;
+    }
 }

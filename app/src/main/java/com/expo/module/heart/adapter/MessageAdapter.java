@@ -52,9 +52,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == ITEM_TYPE.ITEM_TYPE_DATA.ordinal()){
+        if (viewType == ITEM_TYPE.ITEM_TYPE_DATA.ordinal()) {
             return new ViewHolder(LayoutInflater.from(mContext).inflate(mLayoutId, parent, false));
-        }else{
+        } else {
             return new DateViewHolder(LayoutInflater.from(mContext).inflate(R.layout.layout_message_date, null));
         }
     }
@@ -73,7 +73,10 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         mListener.itemClick(v, position, message);
                 });
             }
-        }else if (Iholder instanceof DateViewHolder){
+            if (holder.mUnRead != null)
+                if (!message.isRead()) holder.mUnRead.setVisibility(View.VISIBLE);
+                else holder.mUnRead.setVisibility(View.GONE);
+        } else if (Iholder instanceof DateViewHolder) {
             DateViewHolder holder = (DateViewHolder) Iholder;
             holder.tvDate.setText(message.getCreateTime());
         }
@@ -98,12 +101,14 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-//        TextView mDate;
+        //        TextView mDate;
         ImageView mImg;
         TextView mName;
         TextView mTime;
         TextView mContent;
         TextView mMore;
+        View mUnRead;
+
         public ViewHolder(View itemView) {
             super(itemView);
             mImg = itemView.findViewById(R.id.message_img);
@@ -111,11 +116,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mTime = itemView.findViewById(R.id.message_time);
             mContent = itemView.findViewById(R.id.message_content);
             mMore = itemView.findViewById(R.id.message_more);
+            mUnRead = itemView.findViewById(R.id.message_unread);
         }
     }
 
     class DateViewHolder extends RecyclerView.ViewHolder {
         TextView tvDate;
+
         public DateViewHolder(View itemView) {
             super(itemView);
             tvDate = itemView.findViewById(R.id.message_date);

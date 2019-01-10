@@ -16,4 +16,8 @@ public abstract class MessageType {
 //        WebTemplateActivity.startActivity(context, LanguageUtil.chooseTest(message.getLinkId(), message.getLinkIdEn()));
 //        WebTemplateActivity.startActivity(context, LanguageUtil.chooseTest(message.getLinkId(), message.getLinkIdEn()), LanguageUtil.chooseTest(message.getCaption(), message.getCaptionEn()));
     }
+
+    public abstract int getMenuIcon();
+
+    public abstract int getMenuBackground();
 }
