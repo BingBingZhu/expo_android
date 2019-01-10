@@ -4,6 +4,7 @@ import com.expo.base.ExpoApp;
 import com.expo.contract.TrackContract;
 import com.expo.contract.TrackContract.Presenter;
 import com.expo.db.QueryParams;
+import com.expo.entity.Park;
 import com.expo.entity.Track;
 
 import java.util.ArrayList;
@@ -45,5 +46,11 @@ public class TrackPresenterImpl extends Presenter {
     public void clearTrack() {
         mDao.clear(Track.class);
         mView.clearTrackRes();
+    }
+
+    @Override
+    public void loadLimit() {
+        Park park = mDao.unique( Park.class, null );
+        mView.showParkScope(park);
     }
 }
