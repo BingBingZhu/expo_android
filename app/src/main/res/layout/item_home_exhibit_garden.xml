@@ -10,7 +10,8 @@
         android:id="@+id/home_exhibit_garden_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_370"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ico_home_reco_garden_def"/>
 
     <TextView
         android:id="@+id/home_exhibit_garden_name"

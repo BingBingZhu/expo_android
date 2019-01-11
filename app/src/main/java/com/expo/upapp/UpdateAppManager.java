@@ -66,12 +66,18 @@ public class UpdateAppManager {
         AppInfo appInfo = null;
         for (AppInfo info : infos){
             if (info.platformname.equals("android")){
-                if (!info.ver.equals(appVersionName)){
-                    appInfo = info;
-                }
+
+//                if (isNewVersion()!info.ver.equals(appVersionName)){
+//                    appInfo = info;
+//                }
             }
         }
         return appInfo;
+    }
+
+    private boolean isNewVersion(String serVersion, String atVersion){
+
+        return false;
     }
 
     // 外存sdcard存放路径

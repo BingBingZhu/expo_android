@@ -37,6 +37,7 @@ import cn.sharesdk.onekeyshare.OnekeySharePage;
 import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
 
 import com.expo.R;
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.StatusBarUtils;
 import com.mob.tools.gui.MobViewPager;
 import com.mob.tools.utils.ResHelper;
@@ -85,18 +86,18 @@ public abstract class PlatformPage extends OnekeySharePage {
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         llPage.addView(llPanel, lp);
         /* 增加分享到 */
-        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,130);
-        lp.setMargins(0,0,0,0);
+        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int margin16 = ExpoApp.getApplication().getResources().getDimensionPixelSize(R.dimen.dms_32);
+        int margin22 = ExpoApp.getApplication().getResources().getDimensionPixelSize(R.dimen.dms_44);
+        int margin24 = ExpoApp.getApplication().getResources().getDimensionPixelSize(R.dimen.dms_48);
         LinearLayout buttonLayout = new LinearLayout(activity);
         buttonLayout.setBackgroundColor(Color.WHITE);
-        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,110);
-        lp2.setMargins(40, 50, 20, 0);
+        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp2.setMargins(margin16, margin22, 0, 0);
         TextView tv = new TextView(activity);
-//        tv.setGravity(Gravity.CENTER);
-        tv.setText("分享到");
+        tv.setText(R.string.share_to);
         tv.setTextSize(15);
         tv.setTextColor(getContext().getResources().getColor(R.color.color_333));
-        tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         tv.setBackgroundColor(Color.WHITE);
         buttonLayout.addView(tv,lp2);
         llPanel.addView(buttonLayout,lp);
@@ -116,19 +117,19 @@ public abstract class PlatformPage extends OnekeySharePage {
         adapter.setIndicator(vInd);
         mvp.setAdapter(adapter);
         /* 增加取消分享按钮 */
-        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,150);
+        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0,0,0,0);
         LinearLayout buttonLayout2 = new LinearLayout(activity);
         buttonLayout2.setBackgroundColor(Color.WHITE);
-        LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,110);
-        lp22.setMargins(20, 20, 20, 20);
-        Button button2 = new Button(activity);
-        button2.setText("取消分享");
-        button2.setTextSize(15);
-        button2.setTextColor(getContext().getResources().getColor(R.color.color_333));
-        button2.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        button2.setBackgroundColor(Color.WHITE);
-        button2.setOnClickListener(new OnClickListener() {
+        LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp22.setMargins(0, 0, 0, margin24);
+        TextView cancelShare = new TextView(activity);
+        cancelShare.setText(R.string.stop_sharing);
+        cancelShare.setGravity(Gravity.CENTER);
+        cancelShare.setTextSize(15);
+        cancelShare.setTextColor(getContext().getResources().getColor(R.color.color_333));
+        cancelShare.setBackgroundColor(Color.WHITE);
+        cancelShare.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -136,7 +137,7 @@ public abstract class PlatformPage extends OnekeySharePage {
                 finish();
             }
         });
-        buttonLayout2.addView(button2,lp22);
+        buttonLayout2.addView(cancelShare,lp22);
         llPanel.addView(buttonLayout2,lp);
         /* 增加取消分享按钮 */
     }

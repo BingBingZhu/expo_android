@@ -55,13 +55,13 @@ public class User extends BaseResponse implements Parcelable {
     @SerializedName(value = "PhotoUrl", alternate = {"picUrl"})
     private String photoUrl;
     @DatabaseField(columnName = "badge_caption")
-    @SerializedName(value = "BadgeCaption")
+    @SerializedName(value = "badgeCaption")
     private String badgeCaption;
     @DatabaseField(columnName = "badge_caption_en")
-    @SerializedName(value = "BadgeCaptionen")
+    @SerializedName(value = "badgeCaptionen")
     private String badgeCaptionEn;
     @DatabaseField(columnName = "badge_pic_small")
-    @SerializedName(value = "BadgePicsmall")
+    @SerializedName(value = "badgePicsmall")
     private String badgePicSmall;
 
     public User() {

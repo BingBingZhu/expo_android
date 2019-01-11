@@ -218,7 +218,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
         PromptActivity.startActivity(getContext());
     }
 
-    @OnClick(R.id.setting_update)
+    @OnClick(R.id.setting_update)n
     public void clickUpdate(MySettingView view) {
         mPresenter.checkUpdate();
         LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS, Constants.Action.ACTION_CANCEL_UPDATE);

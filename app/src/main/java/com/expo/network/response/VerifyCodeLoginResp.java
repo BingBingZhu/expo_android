@@ -3,15 +3,15 @@ package com.expo.network.response;
 import com.google.gson.annotations.SerializedName;
 
 public class VerifyCodeLoginResp extends BaseResponse {
-    @SerializedName("Caption")
+    @SerializedName("caption")
     private String caption;
-    @SerializedName("City")
+    @SerializedName("city")
     private String city;
-    @SerializedName("Mobile")
+    @SerializedName("mobile")
     private String mobile;
-    @SerializedName("PhotoUrl")
+    @SerializedName("photoUrl")
     private String photoUrl;
-    @SerializedName("Sex")
+    @SerializedName("sex")
     private String sex;
     @SerializedName("Uid")
     private String id;
