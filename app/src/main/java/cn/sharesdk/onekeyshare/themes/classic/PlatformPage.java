@@ -89,7 +89,8 @@ public abstract class PlatformPage extends OnekeySharePage {
         lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int margin16 = ExpoApp.getApplication().getResources().getDimensionPixelSize(R.dimen.dms_32);
         int margin22 = ExpoApp.getApplication().getResources().getDimensionPixelSize(R.dimen.dms_44);
-        int margin24 = ExpoApp.getApplication().getResources().getDimensionPixelSize(R.dimen.dms_48);
+        int margin14 = ExpoApp.getApplication().getResources().getDimensionPixelSize(R.dimen.dms_28);
+        int margin10 = ExpoApp.getApplication().getResources().getDimensionPixelSize(R.dimen.dms_20);
         LinearLayout buttonLayout = new LinearLayout(activity);
         buttonLayout.setBackgroundColor(Color.WHITE);
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -122,8 +123,9 @@ public abstract class PlatformPage extends OnekeySharePage {
         LinearLayout buttonLayout2 = new LinearLayout(activity);
         buttonLayout2.setBackgroundColor(Color.WHITE);
         LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp22.setMargins(0, 0, 0, margin24);
+        lp22.setMargins(0, 0, 0, margin14);
         TextView cancelShare = new TextView(activity);
+        cancelShare.setPadding(0, 0, 0, margin10);
         cancelShare.setText(R.string.stop_sharing);
         cancelShare.setGravity(Gravity.CENTER);
         cancelShare.setTextSize(15);
