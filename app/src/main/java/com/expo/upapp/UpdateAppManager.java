@@ -66,18 +66,33 @@ public class UpdateAppManager {
         AppInfo appInfo = null;
         for (AppInfo info : infos){
             if (info.platformname.equals("android")){
-
-//                if (isNewVersion()!info.ver.equals(appVersionName)){
-//                    appInfo = info;
-//                }
+                if (isNewVersion(info.ver, appVersionName)){
+                    appInfo = info;
+                }
             }
         }
         return appInfo;
     }
 
     private boolean isNewVersion(String serVersion, String atVersion){
-
-        return false;
+        boolean isNew = false;
+        if (serVersion.equals(atVersion))
+            isNew = false;
+        else{
+            String[] ser = serVersion.split("\\.");
+            String[] at = atVersion.split("\\.");
+            int length = ser.length > at.length ? at.length : ser.length;
+            for (int i = 0; i < length; i++){
+                isNew = ser[i].compareTo(at[i]) > 0 ? true : false;
+                if (isNew || ser[i].compareTo(at[i]) != 0){
+                    break;
+                }
+            }
+            if (!isNew && ser.length > at.length){
+                isNew = true;
+            }
+        }
+        return isNew;
     }
 
     // 外存sdcard存放路径
