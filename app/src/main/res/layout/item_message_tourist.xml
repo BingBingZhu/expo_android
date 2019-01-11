@@ -1,53 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/shape_tourist_service_item_bg"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dms_20"
-        android:paddingLeft="@dimen/dms_32"
-        android:paddingRight="@dimen/dms_32"
-        android:paddingBottom="@dimen/dms_30">
-        <TextView
-            android:id="@+id/message_name"
-            style="@style/TextSize15"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:textColor="@color/gray_32"
-            android:text=""/>
+        android:background="@drawable/shape_tourist_service_item_bg"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/message_time"
-            style="@style/TextSize13"
-            android:layout_below="@id/message_name"
-            android:layout_marginTop="@dimen/dms_6"
-            android:textColor="@color/gray_99"
-            android:text=""/>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dms_32"
+            android:paddingTop="@dimen/dms_20"
+            android:paddingRight="@dimen/dms_32"
+            android:paddingBottom="@dimen/dms_30">
 
-        <TextView
-            android:id="@+id/message_content"
-            style="@style/TextSize13"
-            android:layout_below="@id/message_time"
-            android:layout_marginTop="@dimen/dms_18"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:textColor="@color/gray_99"
-            android:text=""/>
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/message_name"
+                style="@style/TextSize15"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="@color/gray_32" />
 
-    <com.hedan.textdrawablelibrary.TextViewDrawable
-        android:id="@+id/item_more"
-        style="@style/TextSizeWhite13"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/dms_32"
-        android:layout_marginRight="@dimen/dms_32"
-        android:layout_marginBottom="@dimen/dms_18"
-        android:drawableRight="@mipmap/arrow_right"
-        android:text="@string/see_detail"
-        android:textColor="@color/gray_66" />
+            <TextView
+                android:id="@+id/message_time"
+                style="@style/TextSize13"
+                android:layout_below="@id/message_name"
+                android:layout_marginTop="@dimen/dms_6"
+                android:text=""
+                android:textColor="@color/gray_99" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/message_content"
+                style="@style/TextSize13"
+                android:layout_below="@id/message_time"
+                android:layout_marginTop="@dimen/dms_18"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="@color/gray_99" />
+        </RelativeLayout>
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/item_more"
+            style="@style/TextSizeWhite13"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/dms_32"
+            android:layout_marginRight="@dimen/dms_32"
+            android:layout_marginBottom="@dimen/dms_18"
+            android:drawableRight="@mipmap/arrow_right"
+            android:text="@string/see_detail"
+            android:textColor="@color/gray_66" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/message_unread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@mipmap/shape_new_msg_flag" />
+</FrameLayout>
