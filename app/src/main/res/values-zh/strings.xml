@@ -415,4 +415,6 @@
     <string name="track_open_hint">足迹功能较消耗电量，是否开启~</string>
     <string name="open_track">开启</string>
     <string name="think_again_track">再想想</string>
+    <string name="share_to">分享到</string>
+    <string name="stop_sharing">取消分享</string>
 </resources>

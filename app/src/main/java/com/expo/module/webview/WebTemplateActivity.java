@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.Gravity;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
@@ -26,7 +24,6 @@ import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
-import com.expo.utils.ShareUtils;
 import com.expo.widget.AppBarView;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
@@ -106,7 +103,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         shareView.setImageResource(R.mipmap.share_icon);
         shareView.setOnClickListener(v -> {
 //            ShareUtil.doShare("", mUrl);
-            ShareUtils.showShare(WebTemplateActivity.this,
+            ShareUtil.showShare(WebTemplateActivity.this,
                     LanguageUtil.chooseTest(mEncyclopedias.caption, mEncyclopedias.captionEn),
                     LanguageUtil.chooseTest(mEncyclopedias.remark, mEncyclopedias.remarkEn),
                     CommUtils.getFullUrl(mEncyclopedias.picUrl),

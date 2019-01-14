@@ -177,9 +177,9 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
         Http.request( new ResponseCallback<CheckThirdIdRegisterStateResp>() {
             @Override
             protected void onResponse(CheckThirdIdRegisterStateResp rsp) {
-                if (rsp.state == 0)//未注册过
+                if (rsp.state == 0)         // 未注册过
                     mView.toBindPhone( platform );
-                else if (rsp.state == 1)//已注册过
+                else if (rsp.state == 1)    // 已注册过
                     doThreeLogined( rsp.uid, rsp.ukey );
             }
         }, verifyCodeLoginObservable );

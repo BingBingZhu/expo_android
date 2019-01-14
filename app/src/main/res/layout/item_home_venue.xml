@@ -14,7 +14,8 @@
         app:leftTop_corner_radius="@dimen/dms_10"
         app:rightBottom_corner_radius="@dimen/dms_10"
         app:rightTop_corner_radius="@dimen/dms_10"
-        app:type="round" />
+        app:type="round"
+        android:src="@mipmap/ico_home_reco_venue_def"/>
 
     <TextView
         android:id="@+id/item_home_venue_text"
