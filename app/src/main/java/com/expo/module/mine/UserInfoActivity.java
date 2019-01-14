@@ -32,6 +32,7 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.utils.CheckUtils;
+import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.UserInfoContract;
 import com.expo.entity.User;
@@ -173,7 +174,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         editText.setBackgroundResource(0);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_28));
         editText.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-        editText.setFilters(new InputFilter[]{inputFilter,new InputFilter.LengthFilter(12)});
+        editText.setFilters(new InputFilter[]{inputFilter, new InputFilter.LengthFilter(12)});
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -192,9 +193,10 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         mUserName.addRightView(editText);
     }
 
-    InputFilter inputFilter= new InputFilter() {
+    InputFilter inputFilter = new InputFilter() {
         Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                 Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+
         @Override
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
             Matcher emojiMatcher = emoji.matcher(source);
@@ -353,9 +355,10 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
                 options.setShowCropFrame(false);
                 options.setCropGridColumnCount(0);
                 options.setCropGridRowCount(0);
+                FileUtils.deleteFiles(FileUtils.createFile(Constants.Config.ROOT_PATH + File.separator + Constants.Config.TEMP_PATH + TimeUtils.getNowMills()));
                 UCrop.of(UriUtil.getUriForFile(new File(data.getStringArrayListExtra(
-                        ImageSelectorUtils.SELECT_RESULT).get(0))), UriUtil.getUriForFile(new File(data.getStringArrayListExtra(
-                        ImageSelectorUtils.SELECT_RESULT).get(0))))
+                        ImageSelectorUtils.SELECT_RESULT).get(0))),
+                        UriUtil.getUriForFile(new File(Constants.Config.ROOT_PATH + File.separator + Constants.Config.TEMP_PATH + TimeUtils.getNowMills())))
                         .withAspectRatio(1, 1)
                         .withMaxResultSize(400, 400)
                         .withOptions(options)
