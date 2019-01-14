@@ -16,7 +16,6 @@
     <dimen name="font_48">24sp</dimen>
     <dimen name="font_20">10sp</dimen>
     <dimen name="font_16">8sp</dimen>
-    <dimen name="font_100">50sp</dimen>
 
     <!--尺寸-->
     <dimen name="dms_2">1dp</dimen>
@@ -40,7 +39,6 @@
     <dimen name="dms_36">18dp</dimen>
     <dimen name="dms_38">19dp</dimen>
     <dimen name="dms_40">20dp</dimen>
-    <dimen name="dms_42">21dp</dimen>
     <dimen name="dms_44">22dp</dimen>
     <dimen name="dms_45">22.5dp</dimen>
     <dimen name="dms_46">23dp</dimen>
@@ -55,15 +53,12 @@
     <dimen name="dms_76">38dp</dimen>
     <dimen name="dms_80">40dp</dimen>
     <dimen name="dms_84">42dp</dimen>
-    <dimen name="dms_86">43dp</dimen>
     <dimen name="dms_88">44dp</dimen>
     <dimen name="dms_90">45dp</dimen>
     <dimen name="dms_96">48dp</dimen>
     <dimen name="dms_100">50dp</dimen>
     <dimen name="dms_106">53dp</dimen>
-    <dimen name="dms_108">54dp</dimen>
     <dimen name="dms_110">55dp</dimen>
-    <dimen name="dms_112">56dp</dimen>
     <dimen name="dms_114">57dp</dimen>
     <dimen name="dms_120">60dp</dimen>
     <dimen name="dms_126">63dp</dimen>
@@ -76,14 +71,11 @@
     <dimen name="dms_190">95dp</dimen>
     <dimen name="dms_200">100dp</dimen>
     <dimen name="dms_202">101dp</dimen>
-    <dimen name="dms_216">108dp</dimen>
     <dimen name="dms_220">110dp</dimen>
-    <dimen name="dms_224">112dp</dimen>
     <dimen name="dms_230">115dp</dimen>
     <dimen name="dms_260">130dp</dimen>
     <dimen name="dms_300">150dp</dimen>
     <dimen name="dms_310">155dp</dimen>
-    <dimen name="dms_312">156dp</dimen>
     <dimen name="dms_340">170dp</dimen>
     <dimen name="dms_344">172dp</dimen>
     <dimen name="dms_360">180dp</dimen>
@@ -94,17 +86,10 @@
     <dimen name="dms_424">212dp</dimen>
     <dimen name="dms_468">234dp</dimen>
 
-    <dimen name="dms_minus_6">-3dp</dimen>
     <dimen name="dms_minus_8">-4dp</dimen>
     <dimen name="dms_minus_10">-5dp</dimen>
     <dimen name="dms_minus_14">-7dp</dimen>
-    <dimen name="dms_minus_20">-10dp</dimen>
     <dimen name="dms_minus_30">-15dp</dimen>
-    <dimen name="dms_minus_44">-22dp</dimen>
-    <dimen name="dms_minus_70">-35dp</dimen>
-    <dimen name="dms_minus_260">-130dp</dimen>
     <dimen name="dms_380">190dp</dimen>
     <dimen name="dms_240">120dp</dimen>
-    <dimen name="dms_124">62dp</dimen>
-    <dimen name="dms_48">24dp</dimen>
 </resources>

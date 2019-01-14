@@ -14,7 +14,6 @@
     <string name="input_phone">请输入手机号</string>
     <string name="input_identifying_code">请输入验证码</string>
     <string name="there_is_no_user_protocol">暂无用户协议</string>
-    <string name="user_protocol">用户协议</string>
     <string name="cancel">取消</string>
     <string name="ok">确认</string>
     <string name="submit">提交</string>
@@ -41,13 +40,8 @@
     <string name="bind_phone_need_sms">绑定手机号码需要通过短信验证</string>
     <string name="login">登录</string>
     <string name="logout">退出登录</string>
-    <string name="next_step">下一步</string>
-    <string name="send_sms_to_phone_number">我们将发送验证码到这个手机号码\n%s</string>
     <string name="kindly_reminder">温馨提示</string>
-    <string name="kindly_reminder_info">请在下方填入患者的年龄、症状、病史等情况和影像。信息描述的准确能够帮助救助人员进行施救。如遇昏厥、出血过多等严重情况请拨打120急救电话。</string>
     <string name="situation_describe">情况描述\t最多输入300字</string>
-    <string name="navigation">导航</string>
-    <string name="location">所在位置</string>
     <string name="save">保存</string>
     <string name="male">男</string>
     <string name="female">女</string>
@@ -57,7 +51,6 @@
     <string name="see_detail">查看详情</string>
     <string name="route_introduce">路线介绍</string>
     <string name="spot_introduce">景点介绍</string>
-    <string name="see_more">查看更多</string>
     <string name="hot">热度</string>
     <string name="camera_touch">轻触拍照，按住摄像</string>
     <string name="app_top_item">世园\n头条</string>
@@ -65,7 +58,6 @@
     <string name="new_message">新消息提示</string>
 
     <string name="main_home">首页</string>
-    <string name="main_panorama">全景</string>
     <string name="main_find">发现</string>
     <string name="main_encyclopedias">百科</string>
     <string name="main_mine">我的</string>
@@ -74,12 +66,8 @@
     <string name="item_tourist_service_text_0">医疗救助</string>
     <string name="item_tourist_service_text_1">人员走失</string>
     <string name="item_tourist_service_text_2">寻物启事</string>
-    <string name="item_tourist_service_text_3">无障碍服务</string>
     <string name="item_tourist_service_text_4">问询咨询</string>
     <string name="item_tourist_service_text_5">治安举报</string>
-    <string name="item_tourist_service_text_6">购票指南</string>
-    <string name="item_tourist_service_text_7">游客须知</string>
-    <string name="item_tourist_service_text_8">场馆预约</string>
 
     <string name="mine_edit_info">查看并编辑个人资料</string>
     <string name="item_mine_bespeak">我的预约</string>
@@ -112,10 +100,6 @@
     <string name="item_contacts_name_hint">请输入真实姓名</string>
     <string name="item_contacts_identify_id_hint">请正确填写证件号码</string>
 
-    <string name="location_describe_radio1">当前位置</string>
-    <string name="location_describe_radio2">餐厅</string>
-    <string name="location_describe_radio3">中国馆前门</string>
-    <string name="location_describe_radio4">世园会</string>
     <string name="location_describe">位置描述</string>
 
     <string name="cancel_the_login">已取消</string>
@@ -138,13 +122,10 @@
     <string name="title_contact_add">添加联系人</string>
     <string name="title_contact_edit">编辑联系人</string>
 
-    <string name="check_string_empty_email">邮箱不能为空</string>
     <string name="check_string_empty_content">内容不能为空</string>
     <string name="check_string_empty_name">姓名不能为空</string>
-    <string name="check_string_empty_report_content">评论内容不能为空</string>
     <string name="check_string_empty_localtion_descriptiong">情况描述不能为空</string>
     <string name="check_string_empty_title">标题不能为空</string>
-    <string name="check_string_empty_category">类别不能为空</string>
     <string name="check_string_empty_image_video">图片或视频不能为空</string>
     <string name="please_enter_keywords">请输入关键字</string>
     <string name="check_string_id_type">证件类型不能为空</string>
@@ -161,15 +142,12 @@
     <string name="home_func_item_appointment">场馆预约</string>
     <string name="home_func_item_tourist_service">游客服务</string>
     <string name="home_func_item_line">游览路线</string>
-    <string name="home_func_item_distinguish">光影森林</string>
-    <string name="home_func_item_periphery">周边服务</string>
     <string name="home_func_item_microcosmic">微观世界</string>
     <string name="home_func_item_online">网上世园</string>
     <string name="home_func_title_venue">推荐场馆</string>
     <string name="home_func_title_exhibit">推荐展览</string>
     <string name="home_func_title_exhibit_garden">推荐展园</string>
 
-    <string name="gps_open_weak">GPS信号较弱，请稍后再试</string>
     <string name="gps_open_title">该功能需要打开定位功能。</string>
     <string name="gps_open_content">请点击“设置”-“定位服务”打开定位功能</string>
 
@@ -183,16 +161,8 @@
     <string name="message_kind_tourist_title">游客服务反馈</string>
     <string name="message_kind_tourist_content">游客提交服务后的反馈信息</string>
 
-    <string name="empty_content_1">当前加载失败</string>
     <string name="empty_content_2">暂时没有数据</string>
-    <string name="empty_content_3">暂时没有数据</string>
-    <string name="empty_content_4">暂时没有预约</string>
-    <string name="empty_fresh_1">重新加载</string>
     <string name="empty_fresh_2">立即更新</string>
-    <string name="empty_fresh_3">立即开启</string>
-    <string name="empty_fresh_4">立即预约</string>
-
-    <string name="wifi_state_init">请点击按钮开启WLAN</string>
 
     <string name="not_input">未填写</string>
     <string name="no_more_data_available">暂无更多数据</string>
@@ -210,7 +180,6 @@
     <string name="other_login_methods">其他登录方式</string>
     <string name="get_code">获取验证码</string>
     <string name="recommend">推荐</string>
-    <string name="test_navi">导航导览</string>
     <string name="articles_of_agreement">《北京世园会用户服务协议》</string>
     <string name="there_is_no_user_guidance">暂无用户指南</string>
     <string name="system_messages">系统提醒</string>
@@ -233,7 +202,6 @@
     <string name="boy">男</string>
     <string name="girl">女</string>
     <string name="error_params">参数错误</string>
-    <string name="img_count_is_max">您选择的图片数量已经达到最大值，请先删除</string>
 
     <string name="dialog_image_record">拍摄</string>
     <string name="dialog_image_image_video">照片或者视频</string>
@@ -241,7 +209,6 @@
     <string name="buy_tickets">门票预订</string>
     <string name="clear_cache_msg">确定要清除缓存吗？</string>
     <string name="leave_navi">确定要离开导航吗？</string>
-    <string name="sence_introduction">景点介绍</string>
     <string name="please_click_the_button_to_open_wlan">请点击按钮开启WLAN</string>
     <string name="free_wifi_at_beijing_world_expo">北京世园会免费wifi</string>
     <string name="connecting">连接中</string>
@@ -250,7 +217,6 @@
     <string name="personal_center">个人中心</string>
     <string name="badge">徽章</string>
     <string name="the_current_integral">当前积分：%d分</string>
-    <string name="title_routest_detail">路线详情</string>
     <string name="the_account_is_abnormal_please_log_in_again">账号异常，请重新登录！</string>
     <string name="your_account_is_logged_in_on_another_device">您的账号在其他设备登录</string>
     <string name="your_account_is_locked_you_can_not_login">你的账号已被锁定，无法登录</string>
@@ -265,8 +231,6 @@
     <string name="download_the_new_version">下载新版本</string>
     <string name="talk_to_you_later">下次再说</string>
     <string name="phonetic_explaining">语音解说</string>
-    <string name="find_out_details">了解详情</string>
-    <string name="check_the_route">查看路线</string>
     <string name="please_enter_the_scenic_spot_you_want_to_search">请输入您想搜索的景区</string>
     <string name="search">搜索</string>
     <string name="missing_gyro_assembly">缺少陀螺仪组件，部分功能无法使用</string>
@@ -275,7 +239,6 @@
     <string name="pause_to_download">暂停下载</string>
     <string name="failed_to_edit_image">编辑图片失败</string>
     <string name="identification_of_failure">识别失败</string>
-    <string name="non_plant">非植物</string>
     <string name="create_an_account">创建账号</string>
     <string name="not_free_wifi">没有免费wifi</string>
     <string name="trying_to_locate">正在努力定位，请您稍等片刻！</string>
@@ -309,17 +272,6 @@
     <string name="there_is_no_audio_at_this_scenic_spot">该景点暂无音频</string>
     <string name="please_finish_recording_first">请先结束录像</string>
     <string name="no_details_are_available">暂无详情信息</string>
-    <string name="wechat">微信</string>
-    <string name="qq">QQ</string>
-    <string name="sina_microblog">新浪微博</string>
-    <string name="east">东</string>
-    <string name="south">南</string>
-    <string name="west">西</string>
-    <string name="north">北</string>
-    <string name="south_east">东南</string>
-    <string name="north_east">东北</string>
-    <string name="south_west">西南</string>
-    <string name="north_west">西北</string>
     <string name="welcome_to_the_beijing_world_expo">北京世园会欢迎您</string>
     <string name="baidu_navi">百度导航</string>
     <string name="complete">完成</string>
@@ -327,7 +279,6 @@
     <string name="max_select">最多只能选择%d个</string>
     <string name="max_images">最多只能选择%d张照片</string>
     <string name="autonavi_navi">高德导航</string>
-    <string name="the_guide_tour">导航导览</string>
     <string name="pilot_switch">导航辅助开关</string>
     <string name="notification_sound">通知提示音</string>
     <string name="publish">发布</string>
@@ -339,8 +290,6 @@
     <string name="examine_unpass">审核失败</string>
     <string name="examine_not">待审核</string>
     <string name="my_find">我的发现</string>
-    <string name="examine">审核</string>
-    <string name="examine_unpass_reason">内容不符合发布规定</string>
     <string name="examine_wait">待审核</string>
 
     <string name="find_tab_recommend">推荐</string>

@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <com.expo.widget.AppBarView
-        android:id="@+id/login_back"
         style="@style/TitleTextWhite12"
         app:title="@string/title_pick_ac" />
 

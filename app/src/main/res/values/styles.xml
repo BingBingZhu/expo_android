@@ -15,10 +15,6 @@
         <item name="android:windowBackground">@drawable/tourist_service_bg</item>
     </style>
 
-    <style name="AppTheme_Main" parent="AppTheme">
-        <item name="android:windowBackground">@color/white_f4</item>
-    </style>
-
     <style name="AppTheme_Fullscreen" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
     </style>
@@ -38,10 +34,6 @@
     <style name="WindowEnterFromBottom">
         <item name="android:windowEnterAnimation">@anim/abc_slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/abc_slide_out_bottom</item>
-    </style>
-
-    <style name="TransparentDialog">
-        <item name="android:windowBackground">@color/translucent_mask</item><!--背景透明-->
     </style>
 
     <style name="LineHorizontal">
@@ -156,17 +148,6 @@
 
     <style name="TextSizeWhite18" parent="TextSize18">
         <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="location_radio_style" parent="TextSizeBlack16">
-        <item name="android:layout_height">@dimen/dms_80</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">@color/gray_4c</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:clickable">true</item>
-        <item name="android:drawablePadding">@dimen/dms_30</item>
-        <item name="drawableSize">@dimen/dms_30</item>
-        <item name="drawableLeft">@drawable/selector_radio_location</item>
     </style>
 
     <style name="item_mine_entry" parent="TextSizeBlack14">

@@ -96,7 +96,6 @@
         android:textColor="@color/color_999" />
 
     <TextView
-        android:id="@+id/line2"
         style="@style/LineHorizontal"
         android:layout_height="@dimen/dms_8"
         android:layout_below="@id/seek_help_text4"
