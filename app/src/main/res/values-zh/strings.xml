@@ -66,8 +66,13 @@
     <string name="item_tourist_service_text_0">医疗救助</string>
     <string name="item_tourist_service_text_1">人员走失</string>
     <string name="item_tourist_service_text_2">寻物启事</string>
+    <string name="item_tourist_service_text_3">无障碍服务</string>
     <string name="item_tourist_service_text_4">问询咨询</string>
     <string name="item_tourist_service_text_5">治安举报</string>
+    <string name="item_tourist_service_text_6">购票指南</string>
+    <string name="item_tourist_service_text_7">游客须知</string>
+    <string name="item_tourist_service_text_8">场馆预约</string>
+    <string name="item_tourist_service_text_9">投诉受理</string>
 
     <string name="mine_edit_info">查看并编辑个人资料</string>
     <string name="item_mine_bespeak">我的预约</string>
@@ -309,7 +314,6 @@
     <string name="wx_is_not_installed">未安装微信客户端！</string>
     <string name="unable_to_provide_service">你不在园区，无法为你提供服务哦！</string>
     <string name="home_func_item_my_bespeak">我的预约</string>
-    <string name="item_tourist_service_text_9">投诉受理</string>
     <string name="unknown_type">未知类型</string>
     <string name="waiting_process">等待处理</string>
     <string name="being_processed">正在处理</string>
