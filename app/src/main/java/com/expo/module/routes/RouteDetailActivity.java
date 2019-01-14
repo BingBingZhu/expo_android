@@ -27,7 +27,6 @@ import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.decorations.SpaceDecoration;
-import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;

@@ -27,7 +27,6 @@ import com.expo.contract.FindDetailContract;
 import com.expo.entity.Find;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;

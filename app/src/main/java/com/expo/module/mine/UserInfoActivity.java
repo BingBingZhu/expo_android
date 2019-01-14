@@ -49,7 +49,6 @@ import com.facebook.drawee.generic.RoundingParams;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnItemClickListener;
-import com.squareup.picasso.Picasso;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
 

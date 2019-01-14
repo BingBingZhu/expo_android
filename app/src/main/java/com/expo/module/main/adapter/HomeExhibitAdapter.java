@@ -13,7 +13,6 @@ import com.expo.R;
 import com.expo.entity.Encyclopedias;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.LanguageUtil;
-import com.squareup.picasso.Picasso;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 

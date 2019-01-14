@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
@@ -17,7 +16,6 @@ import com.expo.utils.CommUtils;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
