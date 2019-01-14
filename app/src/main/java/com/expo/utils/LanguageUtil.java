@@ -49,8 +49,13 @@ public class LanguageUtil {
 
     public static boolean isCN() {
         String localLanguage = PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null );
-        if (!TextUtils.isEmpty( localLanguage ) && StringUtils.equals( LANGUAGE_CN, PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ) ))
+        if (!TextUtils.isEmpty( localLanguage ) && StringUtils.equals( LANGUAGE_CN, PrefsHelper.getString( Constants.Prefs.KEY_LANGUAGE_CHOOSE, null ) )) {
             return true;
+        }
+        return false;
+    }
+
+    public static boolean systemIsCN() {
         Locale locale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             locale = ExpoApp.getApplication().getResources().getConfiguration().getLocales().get( 0 );
@@ -62,6 +67,7 @@ public class LanguageUtil {
             return true;
         return false;
     }
+
 
     /**
      * 根据语言选择返回不同的string
