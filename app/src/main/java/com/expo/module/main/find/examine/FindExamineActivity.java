@@ -28,6 +28,7 @@ import com.expo.utils.Constants;
 import com.expo.widget.AppBarView;
 import com.expo.widget.CustomDefaultDialog;
 import com.expo.widget.decorations.SpaceDecoration;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -83,7 +84,7 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
 
                     } else {
                         holder.setVisible(R.id.item_find_video_control, false);
-                        CommUtils.setImgPic(FindExamineActivity.this, CommUtils.getFullUrl(find.url1), (ImageView) holder.getView(R.id.item_examine_img));
+                        ((SimpleDraweeView) holder.getView(R.id.item_examine_img)).setImageURI(CommUtils.getFullUrl(find.url1));
                     }
                 if (mIsShowRight) {
                     holder.setText(R.id.item_find_scans, find.views);
@@ -147,7 +148,10 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
         dialog.setContent(R.string.delete_tips)
                 .setOkText(R.string.delete)
                 .setOkTextRed()
-                .setOnOKClickListener(v1 -> { mPresenter.deleteSociety(id, type, positon); dialog.dismiss(); })
+                .setOnOKClickListener(v1 -> {
+                    mPresenter.deleteSociety(id, type, positon);
+                    dialog.dismiss();
+                })
                 .show();
     }
 

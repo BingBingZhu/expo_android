@@ -3,10 +3,7 @@ package com.expo.module.main.find.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -14,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -28,7 +24,6 @@ import com.expo.base.utils.ImageUtils;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FindDetailContract;
-import com.expo.contract.presenter.FindDetailPresenterImpl;
 import com.expo.entity.Find;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
@@ -37,15 +32,12 @@ import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
-import org.raphets.roundimageview.RoundImageView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static java.lang.Thread.sleep;
 
 public class FindDetailActivity extends BaseActivity<FindDetailContract.Presenter> implements FindDetailContract.View {
 

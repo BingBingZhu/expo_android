@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -33,6 +32,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.utils.CheckUtils;
 import com.expo.base.utils.FileUtils;
+import com.expo.base.utils.ImageUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.UserInfoContract;
 import com.expo.entity.User;
@@ -43,6 +43,9 @@ import com.expo.utils.PickerViewUtils;
 import com.expo.widget.AppBarView;
 import com.expo.widget.MyUserInfoView;
 import com.facebook.common.util.UriUtil;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnItemClickListener;
@@ -52,7 +55,8 @@ import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
 
 import org.greenrobot.eventbus.EventBus;
-import org.raphets.roundimageview.RoundImageView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -161,8 +165,13 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
     }
 
     public void initCircleView() {
-        RoundImageView imageView = new RoundImageView(this);
-        imageView.setType(RoundImageView.TYPE_CIRCLE);
+        GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(getResources());
+        RoundingParams rp = new RoundingParams();
+        rp.setRoundAsCircle(true);
+        builder.setRoundingParams(rp);
+        SimpleDraweeView imageView = new SimpleDraweeView(this);
+        GenericDraweeHierarchy hierachy = builder.build();
+        imageView.setHierarchy(hierachy);
         imageView.setImageResource(R.mipmap.ico_mine_def_photo);
         int width = (int) getResources().getDimension(R.dimen.dms_100);
         mUserImg.addRightView(imageView, width, width);
@@ -369,8 +378,9 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
                 mImageList.clear();
                 mImageList.add(UriUtils.uri2File(resultUri, "").getPath());
                 mUser.setPhotoUrl(mImageList.get(0));
-                Picasso.with(this).load("file://" + mImageList.get(0)).placeholder(R.mipmap.ico_mine_def_photo)
-                        .into((RoundImageView) mUserImg.getRightView());
+                ((SimpleDraweeView) mUserImg.getRightView()).setImageURI(ImageUtils.getImageContentUri(this, mImageList.get(0)));
+//                Picasso.with(this).load("file://" + mImageList.get(0)).placeholder(R.mipmap.ico_mine_def_photo)
+//                        .into((SimpleDraweeView) mUserImg.getRightView());
                 showSaveBtn(mUser);
             }
         }
@@ -391,7 +401,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         }
 
         if (!StringUtils.isEmpty(mUser.getPhotoUrl()))
-            Picasso.with(this).load(CommUtils.getFullUrl(mUser.getPhotoUrl())).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((RoundImageView) mUserImg.getRightView());
+            ((SimpleDraweeView) mUserImg.getRightView()).setImageURI(CommUtils.getFullUrl(mUser.getPhotoUrl()));
         ((TextView) mUserName.getRightView()).setText(mUser.getNick());
         if (StringUtils.equals("0", mUser.getSex())) {
             mRadioMale.setChecked(true);

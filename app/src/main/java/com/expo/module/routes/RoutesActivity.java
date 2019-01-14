@@ -21,6 +21,7 @@ import com.expo.utils.CommUtils;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.AppBarView;
 import com.expo.widget.decorations.SpaceDecoration;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -62,7 +63,7 @@ public class RoutesActivity extends BaseActivity<RoutesContract.Presenter> imple
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
                 RouteInfo info = mData.get(position);
-                Picasso.with(RoutesActivity.this).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_route_img));
+                ((SimpleDraweeView) holder.getView(R.id.item_route_img)).setImageURI(CommUtils.getFullUrl(info.picUrl));
                 holder.setText(R.id.item_route_name, LanguageUtil.chooseTest(info.caption, info.captionen));
                 holder.setText(R.id.item_route_hot, getString(R.string.heat) + info.hotCount);
                 holder.itemView.setOnClickListener(v -> {

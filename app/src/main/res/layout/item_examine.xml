@@ -44,17 +44,15 @@
         android:elevation="@dimen/dms_4"
         android:padding="@dimen/dms_22">
 
-        <org.raphets.roundimageview.RoundImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_examine_img"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_310"
             android:scaleType="centerCrop"
-            android:src="@drawable/image_default"
-            app:leftBottom_corner_radius="@dimen/dms_4"
-            app:leftTop_corner_radius="@dimen/dms_4"
-            app:rightBottom_corner_radius="@dimen/dms_4"
-            app:rightTop_corner_radius="@dimen/dms_4"
-            app:type="round" />
+            app:placeholderImage="@drawable/image_default"
+            app:placeholderImageScaleType="centerCrop"
+            app:roundAsCircle="false"
+            app:roundedCornerRadius="@dimen/dms_4" />
 
         <ImageView
             android:id="@+id/item_find_video_control"

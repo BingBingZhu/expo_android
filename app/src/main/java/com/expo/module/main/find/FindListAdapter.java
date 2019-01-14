@@ -16,12 +16,8 @@ import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.utils.ImageUtils;
 import com.expo.entity.Find;
-import com.expo.module.main.find.detail.FindDetailActivity;
 import com.expo.utils.CommUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.squareup.picasso.Picasso;
-
-import org.raphets.roundimageview.RoundImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,17 +54,17 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Find find = mData.get(position);
         if (find.url1.endsWith(".mp4")) {
-            CommUtils.setImgPic(mContext, "", holder.img);
+            holder.img.setImageResource(R.drawable.image_default);
             new Thread(() -> {
                 Bitmap bitmap = ImageUtils.createVideoThumbnail(CommUtils.getFullUrl(find.url1), MediaStore.Images.Thumbnails.MINI_KIND);
                 if (mHandler != null)
                     mHandler.post(() -> {
-                        if (bitmap != null &&  holder.img != null)
+                        if (bitmap != null && holder.img != null)
                             holder.img.setImageBitmap(bitmap);
                     });
             }).start();
         } else
-            CommUtils.setImgPic(mContext, CommUtils.getFullUrl(find.url1), holder.img);
+            holder.img.setImageURI(CommUtils.getFullUrl(find.url1));
         if ((position + 1) % 4 > 1) {
             holder.img.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen.dms_468);
         } else {
@@ -97,7 +93,7 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.find_list_img)
-        ImageView img;
+        SimpleDraweeView img;
         @BindView(R.id.item_find_video_control)
         ImageView videoImg;
         @BindView(R.id.find_list_content)
@@ -120,7 +116,7 @@ public class FindListAdapter extends RecyclerView.Adapter<FindListAdapter.ViewHo
 
     private View.OnClickListener onItemClickListener;
 
-    public void setOnItemClickListener(View.OnClickListener onItemClickListener){
+    public void setOnItemClickListener(View.OnClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 }

@@ -44,6 +44,7 @@ import com.expo.widget.LimitScrollerView;
 import com.expo.widget.MyScrollView;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.expo.widget.gallery.FixLinearSnapHelper;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -330,15 +331,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         View view = LayoutInflater.from( getContext() ).inflate( R.layout.item_home_venue, null );
         if (mListVenue.size() > position) {
             Encyclopedias encyclopedias = mListVenue.get( position );
-            ImageView imageView = view.findViewById( R.id.item_home_venue_img );
+            SimpleDraweeView imageView = view.findViewById( R.id.item_home_venue_img );
             imageView.getLayoutParams().width = width;
             imageView.getLayoutParams().height = height;
-            Picasso.with( getContext() )
-                    .load( CommUtils.getFullUrl( encyclopedias.picUrl ) )
-                    .placeholder( R.drawable.image_default ).error( R.drawable.image_default )
-                    .resize( width, height )
-                    .centerInside()
-                    .into( (ImageView) view.findViewById( R.id.item_home_venue_img ) );
+            imageView.setImageURI(CommUtils.getFullUrl( encyclopedias.picUrl ));
             ((TextView) view.findViewById( R.id.item_home_venue_text )).setText( LanguageUtil.chooseTest( encyclopedias.caption, encyclopedias.captionEn ) );
             view.setOnClickListener( v -> WebTemplateActivity.startActivity( getContext(), encyclopedias.getId() ) );
         }

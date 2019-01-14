@@ -17,14 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.raphets.roundimageview.RoundImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/find_list_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                app:leftTop_corner_radius="@dimen/dms_4"
-                app:rightTop_corner_radius="@dimen/dms_4"
-                app:type="round" />
+                app:roundAsCircle="false"
+                app:roundBottomLeft="false"
+                app:roundBottomRight="false"
+                app:roundedCornerRadius="@dimen/dms_4" />
 
             <ImageView
                 android:id="@+id/item_find_video_control"
@@ -94,23 +95,23 @@
             android:layout_marginLeft="@dimen/dms_12"
             android:layout_marginTop="@dimen/dms_20"
             android:layout_marginRight="@dimen/dms_28"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="@dimen/dms_20">
+            android:layout_marginBottom="@dimen/dms_20"
+            android:gravity="center_vertical">
 
-            <!--<org.raphets.roundimageview.RoundImageView-->
-                <!--android:id="@+id/find_list_head"-->
-                <!--android:layout_width="@dimen/dms_36"-->
-                <!--android:layout_height="@dimen/dms_36"-->
-                <!--android:layout_below="@id/find_list_scans"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--app:type="circle" />-->
+            <!--<com.facebook.drawee.view.SimpleDraweeView-->
+            <!--android:id="@+id/find_list_head"-->
+            <!--android:layout_width="@dimen/dms_36"-->
+            <!--android:layout_height="@dimen/dms_36"-->
+            <!--android:layout_below="@id/find_list_scans"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--app:type="circle" />-->
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/find_list_head"
                 android:layout_width="@dimen/dms_36"
                 android:layout_height="@dimen/dms_36"
-                app:roundAsCircle="true"
-                app:placeholderImage="@mipmap/ico_mine_def_photo"/>
+                app:placeholderImage="@mipmap/ico_mine_def_photo"
+                app:roundAsCircle="true" />
 
 
             <TextView
