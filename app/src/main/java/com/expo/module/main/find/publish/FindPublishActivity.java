@@ -23,7 +23,6 @@ import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
@@ -39,7 +38,6 @@ import com.expo.contract.FindPublishContract;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Find;
 import com.expo.map.LocationManager;
-import com.expo.map.MapUtils;
 import com.expo.module.camera.CameraActivity;
 import com.expo.module.mine.adapter.WorkAdapter;
 import com.expo.module.webview.WebActivity;

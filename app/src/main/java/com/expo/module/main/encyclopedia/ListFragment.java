@@ -1,7 +1,6 @@
 package com.expo.module.main.encyclopedia;
 
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.expo.R;
@@ -10,13 +9,11 @@ import com.expo.adapters.EncyclopediasAdapter;
 import com.expo.adapters.ListItemData;
 import com.expo.adapters.Tab;
 import com.expo.base.BaseFragment;
-import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ListContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.widget.RecycleViewDivider;
 import com.expo.widget.SimpleRecyclerView;
-import com.expo.widget.decorations.SpaceDecoration;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
-import com.baidu.speech.utils.LogUtil;
 import com.expo.R;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;

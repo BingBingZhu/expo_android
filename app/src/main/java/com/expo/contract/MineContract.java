@@ -2,7 +2,6 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
-import com.expo.entity.CommonInfo;
 import com.expo.entity.User;
 
 public interface MineContract {

@@ -1,7 +1,5 @@
 package com.expo.entity;
 
-import java.util.List;
-
 public class VenuesDistance {
 
     public String id;

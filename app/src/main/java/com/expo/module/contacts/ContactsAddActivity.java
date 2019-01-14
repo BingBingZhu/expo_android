@@ -1,50 +1,32 @@
 package com.expo.module.contacts;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SizeUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
-import com.expo.base.IPresenter;
 import com.expo.base.utils.CheckUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ContactsAddContract;
-import com.expo.contract.ContactsContract;
 import com.expo.entity.Contacts;
 import com.expo.module.mine.adapter.WorkAdapter;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
-import com.expo.widget.AppBarView;
 import com.expo.widget.MyContactsInfoView;
-import com.expo.widget.MyUserInfoView;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnItemClickListener;
-import com.zhy.adapter.recyclerview.CommonAdapter;
-import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;

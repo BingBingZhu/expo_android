@@ -1,7 +1,6 @@
 package com.expo.network;
 
 import com.expo.entity.User;
-import com.expo.entity.VisitorService;
 import com.expo.network.response.AllTypeResp;
 import com.expo.network.response.BadgeResp;
 import com.expo.network.response.BaseResponse;

@@ -14,7 +14,6 @@ import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
 import com.expo.network.response.UploadRsp;
-import com.expo.utils.Constants;
 
 import java.io.File;
 import java.util.Map;

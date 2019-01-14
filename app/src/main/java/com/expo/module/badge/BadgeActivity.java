@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,12 +13,9 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.contract.BadgeContract;
 import com.expo.entity.Badge;
-import com.expo.utils.BitmapUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 

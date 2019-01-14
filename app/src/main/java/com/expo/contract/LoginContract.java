@@ -5,7 +5,6 @@ import android.support.annotation.StringRes;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.CommonInfo;
-import com.expo.network.response.VerifyCodeLoginResp;
 
 public interface LoginContract {
     abstract class Presenter extends IPresenter<View> {

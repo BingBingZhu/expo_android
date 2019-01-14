@@ -3,14 +3,9 @@ package com.expo.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.expo.network.Http;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import java.util.ArrayList;
 
 @DatabaseTable(tableName = "contacts")
 public class Contacts implements Parcelable {

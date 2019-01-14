@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 
-import com.amap.api.maps.model.LatLng;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.map.LocationManager;
 

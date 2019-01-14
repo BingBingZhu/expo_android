@@ -4,8 +4,6 @@ import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.Contacts;
 
-import java.util.List;
-
 public interface ContactsAddContract {
     abstract class Presenter extends IPresenter<View> {
 

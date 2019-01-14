@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class WorkAdapter extends BaseAdapter {
 

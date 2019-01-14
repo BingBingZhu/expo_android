@@ -6,9 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.expo.adapters.Tab;
-import com.expo.module.main.encyclopedia.ListFragment;
-
 import java.util.List;
 
 public class FindTabPagerAdapter extends FragmentStatePagerAdapter {

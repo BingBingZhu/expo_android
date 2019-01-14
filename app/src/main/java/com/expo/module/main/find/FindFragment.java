@@ -12,7 +12,6 @@ import android.view.View;
 import com.expo.R;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.StatusBarUtils;
-import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FindContract;
 import com.expo.module.main.find.examine.FindExamineActivity;
 import com.expo.module.main.find.publish.FindPublishActivity;
@@ -23,8 +22,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.app.Activity.RESULT_OK;
 
 /*
  * 发现页

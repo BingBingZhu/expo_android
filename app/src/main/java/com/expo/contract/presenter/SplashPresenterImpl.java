@@ -2,7 +2,6 @@ package com.expo.contract.presenter;
 
 import android.text.TextUtils;
 
-import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.SplashContract;
@@ -13,7 +12,6 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
 import com.expo.entity.RouteHotInfo;
 import com.expo.entity.RouteInfo;
-import com.expo.entity.Subject;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.User;
@@ -23,13 +21,11 @@ import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.AllTypeResp;
 import com.expo.network.response.BadgeResp;
-import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
-import com.expo.network.response.SubjectResp;
 import com.expo.network.response.TopLineResp;
 import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
@@ -46,10 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import cn.jpush.android.api.JPushInterface;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.tencent.qq.QQ;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 

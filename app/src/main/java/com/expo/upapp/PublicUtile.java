@@ -1,7 +1,6 @@
 package com.expo.upapp;
 
 import android.app.Activity;
-import android.content.Context;
 
 /**
  * Created by lenovo on 2018/6/17.

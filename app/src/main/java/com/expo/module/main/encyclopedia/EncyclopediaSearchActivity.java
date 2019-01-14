@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.DividerItemDecoration;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -21,11 +20,9 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.SearchRecordUtil;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.EncyclopediaSearchContract;
-import com.expo.entity.Encyclopedias;
 import com.expo.widget.SimpleRecyclerView;
 import com.expo.widget.decorations.SpaceDecoration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

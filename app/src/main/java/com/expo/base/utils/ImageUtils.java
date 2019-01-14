@@ -1,7 +1,6 @@
 package com.expo.base.utils;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

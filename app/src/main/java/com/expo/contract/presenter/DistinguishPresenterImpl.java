@@ -1,41 +1,17 @@
 package com.expo.contract.presenter;
 
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
 import com.baidu.aip.imageclassify.AipImageClassify;
-import com.expo.base.utils.ToastHelper;
 import com.expo.contract.DistinguishContract;
-import com.expo.entity.Plant;
 import com.expo.network.Http;
-import com.expo.network.ResponseCallback;
-import com.expo.network.response.BaseResponse;
 import com.expo.network.response.GetBaiduDisting_Rsb;
-import com.expo.network.response.GetDistinguishPlantList_Rsb;
-import com.expo.network.response.VerificationCodeResp;
-import com.expo.utils.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import io.reactivex.Observable;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class DistinguishPresenterImpl extends DistinguishContract.Presenter {
 

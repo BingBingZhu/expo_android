@@ -6,7 +6,6 @@ import com.expo.entity.Find;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
-import com.expo.network.response.SocietyListResp;
 
 import java.util.Map;
 

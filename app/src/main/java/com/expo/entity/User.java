@@ -6,7 +6,6 @@ import android.text.TextUtils;
 
 import com.expo.base.ExpoApp;
 import com.expo.db.dao.BaseDao;
-import com.expo.db.dao.BaseDaoImpl;
 import com.expo.network.response.BaseResponse;
 import com.expo.utils.Constants;
 import com.google.gson.annotations.SerializedName;

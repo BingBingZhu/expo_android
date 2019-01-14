@@ -1,8 +1,6 @@
 package com.expo.map;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -20,9 +18,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.animation.AlphaAnimation;
 import com.amap.api.maps.model.animation.Animation;
-import com.expo.R;
 import com.expo.entity.Venue;
-import com.expo.entity.VenuesType;
 import com.expo.module.map.MarkerInfoInterface;
 import com.expo.utils.LanguageUtil;
 

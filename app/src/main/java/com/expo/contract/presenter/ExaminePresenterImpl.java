@@ -1,14 +1,9 @@
 package com.expo.contract.presenter;
 
 import com.expo.contract.ExamineContract;
-import com.expo.contract.RoutesContract;
-import com.expo.db.QueryParams;
-import com.expo.entity.RouteHotInfo;
-import com.expo.entity.RouteInfo;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.BaseResponse;
-import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.SocietyListResp;
 
 import java.util.Map;

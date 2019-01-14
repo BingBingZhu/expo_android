@@ -1,6 +1,5 @@
 package com.expo.entity;
 
-import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
 

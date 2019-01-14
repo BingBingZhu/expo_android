@@ -10,7 +10,6 @@ import com.expo.contract.MessagesContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Message;
-import com.expo.entity.User;
 import com.expo.network.Http;
 import com.expo.utils.Constants;
 
@@ -23,10 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Observable;
 import okhttp3.Call;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;

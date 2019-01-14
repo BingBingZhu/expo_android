@@ -4,7 +4,6 @@ import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.VisitorService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface ServiceHistoryContract {

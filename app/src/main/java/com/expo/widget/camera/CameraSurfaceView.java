@@ -9,7 +9,6 @@ import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
-import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -17,9 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.expo.R;
-import com.blankj.utilcode.util.ScreenUtils;
 import com.expo.base.utils.FileUtils;
-import com.expo.base.utils.ToastHelper;
 import com.expo.utils.Constants;
 
 import java.io.File;

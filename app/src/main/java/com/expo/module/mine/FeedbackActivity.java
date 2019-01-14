@@ -7,10 +7,8 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 
-import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.CheckUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FeedbackContract;
 

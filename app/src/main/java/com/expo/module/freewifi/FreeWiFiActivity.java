@@ -14,11 +14,7 @@ import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.LogUtils;
-import com.expo.base.utils.PrefsHelper;
-import com.expo.base.utils.ToastHelper;
 import com.expo.contract.FreeWiFiContract;
-import com.expo.utils.Constants;
 import com.expo.utils.wifi.WifiReceiver;
 import com.expo.utils.wifi.WifiReceiverActionListener;
 import com.expo.utils.wifi.WifiUtil;

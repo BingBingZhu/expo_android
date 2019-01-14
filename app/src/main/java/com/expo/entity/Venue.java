@@ -12,7 +12,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @DatabaseTable(tableName = "venue")
 public class Venue implements Parcelable, Comparable<Venue> {

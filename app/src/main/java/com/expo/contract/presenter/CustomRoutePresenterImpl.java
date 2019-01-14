@@ -3,7 +3,6 @@ package com.expo.contract.presenter;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.amap.api.maps.model.LatLng;
 import com.expo.R;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
@@ -11,8 +10,6 @@ import com.expo.contract.CustomRouteContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.CustomRoute;
 import com.expo.entity.Park;
-import com.expo.entity.RouteInfo;
-import com.expo.entity.TouristType;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.network.Http;

@@ -3,9 +3,6 @@ package com.expo.contract.presenter;
 import android.content.Context;
 
 import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.StringUtils;
-import com.expo.R;
-import com.expo.base.utils.ToastHelper;
 import com.expo.upapp.UpdateAppManager;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;

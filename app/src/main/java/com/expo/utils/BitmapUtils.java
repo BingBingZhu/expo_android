@@ -8,11 +8,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.media.ThumbnailUtils;
-import android.text.TextPaint;
-
-import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.expo.R;
-import com.expo.base.utils.LogUtils;
 
 public class BitmapUtils {
 

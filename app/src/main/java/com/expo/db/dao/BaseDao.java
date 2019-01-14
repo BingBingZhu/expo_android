@@ -4,7 +4,6 @@ import android.content.ContentValues;
 
 import com.expo.db.QueryParams;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 public interface BaseDao {

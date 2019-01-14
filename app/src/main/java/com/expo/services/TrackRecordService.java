@@ -5,10 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
@@ -16,7 +14,6 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.trace.LBSTraceClient;
 import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
-import com.amap.api.trace.TraceStatusListener;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
@@ -24,7 +21,6 @@ import com.expo.db.dao.BaseDao;
 import com.expo.db.dao.BaseDaoImpl;
 import com.expo.entity.Track;
 import com.expo.map.LocationManager;
-import com.expo.module.heart.HeartBeatService;
 import com.expo.utils.Constants;
 import com.expo.utils.LocalBroadcastUtil;
 

@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.PresenterFactory;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.ButterKnife;
 
 

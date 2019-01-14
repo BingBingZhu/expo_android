@@ -8,15 +8,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.idst.nls.internal.utils.Base64Encoder;
 import com.expo.R;
 import com.squareup.picasso.Picasso;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.Base64;
 
 public class CommUtils {
 

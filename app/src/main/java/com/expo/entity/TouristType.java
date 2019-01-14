@@ -4,12 +4,10 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.RequiresApi;
 
 import com.expo.base.ExpoApp;
 import com.expo.module.download.DownloadManager;
 import com.expo.utils.Constants;
-import com.expo.utils.ZipUtils;
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

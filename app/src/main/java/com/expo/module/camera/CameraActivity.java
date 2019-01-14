@@ -16,15 +16,12 @@ import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
-import com.expo.module.login.LoginActivity;
 import com.expo.utils.Constants;
 import com.expo.widget.camera.CameraSurfaceView;
 import com.senierr.shootbutton.ShootButton;
 import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;

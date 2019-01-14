@@ -9,15 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.entity.Message;
-import com.expo.utils.CommUtils;
-import com.expo.utils.Constants;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 

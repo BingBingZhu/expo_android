@@ -16,12 +16,8 @@ import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.utils.ImageUtils;
 import com.expo.entity.Find;
-import com.expo.module.main.find.detail.FindDetailActivity;
 import com.expo.utils.CommUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.squareup.picasso.Picasso;
-
-import org.raphets.roundimageview.RoundImageView;
 
 import java.util.ArrayList;
 import java.util.List;

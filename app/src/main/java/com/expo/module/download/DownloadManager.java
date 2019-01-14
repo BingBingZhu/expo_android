@@ -16,7 +16,6 @@ import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.LogUtils;
 import com.expo.db.dao.BaseDao;
 import com.expo.db.dao.BaseDaoImpl;
-import com.expo.entity.DownloadInfo;
 import com.expo.entity.TouristType;
 import com.expo.utils.Constants;
 

@@ -1,6 +1,5 @@
 package com.expo.contract;
 
-import com.expo.adapters.Tab;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.module.main.find.FindTab;

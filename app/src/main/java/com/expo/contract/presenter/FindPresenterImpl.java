@@ -1,12 +1,7 @@
 package com.expo.contract.presenter;
 
 import com.expo.R;
-import com.expo.adapters.DataTypeAdapter;
-import com.expo.adapters.Tab;
-import com.expo.contract.EncyclopediasContract;
 import com.expo.contract.FindContract;
-import com.expo.db.QueryParams;
-import com.expo.entity.DataType;
 import com.expo.module.main.find.FindTab;
 
 import java.util.ArrayList;

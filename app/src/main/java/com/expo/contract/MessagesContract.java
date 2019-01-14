@@ -2,7 +2,6 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
-import com.expo.db.QueryParams;
 import com.expo.entity.Message;
 
 import java.util.List;

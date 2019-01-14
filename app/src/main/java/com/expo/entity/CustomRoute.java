@@ -11,7 +11,6 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 

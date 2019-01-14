@@ -1,6 +1,5 @@
 package com.expo.contract;
 
-import com.amap.api.maps.model.LatLng;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.CustomRoute;
