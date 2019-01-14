@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dms_170">
 
-    <org.raphets.roundimageview.RoundImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/item_route_img"
         android:layout_width="@dimen/dms_230"
         android:layout_height="@dimen/dms_170"
         android:scaleType="centerCrop"
-        android:src="@drawable/image_default"
-        app:leftBottom_corner_radius="@dimen/dms_10"
-        app:leftTop_corner_radius="@dimen/dms_10"
-        app:type="round" />
+        app:placeholderImage="@drawable/image_default"
+        app:roundBottomRight="false"
+        app:roundedCornerRadius="@dimen/dms_10"
+        app:roundTopRight="false"
+        app:roundAsCircle="false" />
 
     <LinearLayout
         android:layout_width="match_parent"

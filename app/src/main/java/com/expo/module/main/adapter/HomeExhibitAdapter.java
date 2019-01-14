@@ -15,7 +15,7 @@ import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.LanguageUtil;
 import com.squareup.picasso.Picasso;
 
-import org.raphets.roundimageview.RoundImageView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -49,9 +49,7 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         if (getItemCount() == 0) return;
         Encyclopedias encyclopedias = mList.get( position % mList.size() );
-        Picasso.with( mContext ).load( getBackageImg( position ) )
-                .placeholder( R.drawable.image_default ).error( R.drawable.image_default )
-                .into( holder.img );
+        holder.img.setImageResource(getBackageImg( position ) );
 
         holder.name.setText( LanguageUtil.chooseTest( encyclopedias.caption, encyclopedias.captionEn ) );
         holder.content.setText( LanguageUtil.chooseTest( encyclopedias.remark, encyclopedias.remarkEn ) );
@@ -77,7 +75,7 @@ public class HomeExhibitAdapter extends RecyclerView.Adapter<HomeExhibitAdapter.
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_home_exhibit_img)
-        RoundImageView img;
+        SimpleDraweeView img;
         @BindView(R.id.item_home_exhibit_name)
         TextView name;
         @BindView(R.id.item_home_exhibit_cotent)

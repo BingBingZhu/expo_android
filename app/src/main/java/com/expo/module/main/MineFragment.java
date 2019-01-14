@@ -35,7 +35,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.raphets.roundimageview.RoundImageView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -46,7 +46,7 @@ import butterknife.OnClick;
 public class MineFragment extends BaseFragment<MineContract.Presenter> implements MineContract.View {
 
     @BindView(R.id.mine_img)
-    RoundImageView mImageView;
+    SimpleDraweeView mImageView;
     @BindView(R.id.mine_name)
     TextView mTvMineName;
     @BindView(R.id.mine_integral)
@@ -88,7 +88,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     public void freshUser(User user) {
         if (user == null) return;
         if (!StringUtils.isEmpty( user.getPhotoUrl() ))
-            CommUtils.setImgPic( getContext(), user.getPhotoUrl(), mImageView );
+            mImageView.setImageURI(CommUtils.getFullUrl(user.getPhotoUrl()));
         mTvMineName.setText( user.getNick() );
         totScores = user.getIntTotscores();
         score = user.getIntScore();

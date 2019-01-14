@@ -34,11 +34,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
-            <!--<org.raphets.roundimageview.RoundImageView
-                android:id="@+id/find_detail_head"
-                android:layout_width="@dimen/dms_80"
-                android:layout_height="@dimen/dms_80"
-                app:type="circle" />-->
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/find_detail_head"
                 android:layout_width="@dimen/dms_80"

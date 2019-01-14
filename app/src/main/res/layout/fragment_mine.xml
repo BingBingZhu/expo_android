@@ -52,17 +52,17 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_2"
-            android:layout_marginTop="@dimen/dms_20"
             android:layout_below="@id/mine_edit_info"
-            android:background="@color/white_f4"/>
+            android:layout_marginTop="@dimen/dms_20"
+            android:background="@color/white_f4" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/mine_edit_info"
             android:layout_marginLeft="@dimen/dms_28"
-            android:layout_marginRight="@dimen/dms_28"
             android:layout_marginTop="@dimen/dms_36"
+            android:layout_marginRight="@dimen/dms_28"
             android:layout_marginBottom="@dimen/dms_26"
             android:gravity="center"
             android:orientation="horizontal">
@@ -71,8 +71,8 @@
                 android:id="@+id/mine_integral"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginRight="@dimen/dms_20"
+                android:layout_weight="1"
                 android:drawableLeft="@mipmap/ico_trophy"
                 android:gravity="center"
                 android:text="@string/the_current_integral"
@@ -82,8 +82,8 @@
             <View
                 android:layout_width="@dimen/dms_2"
                 android:layout_height="match_parent"
-                android:background="@color/white_f4"/>
-            
+                android:background="@color/white_f4" />
+
             <LinearLayout
                 android:id="@+id/mine_badge_root"
                 android:layout_width="0dp"
@@ -91,11 +91,13 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
+
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/mine_badge_pic"
                     android:layout_width="@dimen/dms_60"
                     android:layout_height="@dimen/dms_60"
                     app:placeholderImage="@mipmap/ico_badge" />
+
                 <TextView
                     android:id="@+id/mine_badge"
                     android:layout_width="wrap_content"
@@ -109,7 +111,8 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <org.raphets.roundimageview.RoundImageView
+
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/mine_img"
         android:layout_width="@dimen/dms_130"
         android:layout_height="@dimen/dms_130"
@@ -117,10 +120,10 @@
         android:layout_marginLeft="@dimen/dms_64"
         android:layout_marginTop="@dimen/dms_60"
         android:elevation="5dp"
-        android:src="@mipmap/ico_mine_def_photo"
-        app:border_color="@color/white"
-        app:border_width="@dimen/dms_2"
-        app:type="circle" />
+        app:placeholderImage="@mipmap/ico_mine_def_photo"
+        app:roundAsCircle="true"
+        app:roundingBorderColor="@color/white"
+        app:roundingBorderWidth="@dimen/dms_2" />
 
     <ScrollView
         android:layout_width="match_parent"

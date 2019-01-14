@@ -32,7 +32,7 @@ import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
-import org.raphets.roundimageview.RoundImageView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ import butterknife.OnClick;
 public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presenter> implements RouteDetailContract.View {
 
     @BindView(R.id.item_route_img)
-    RoundImageView mIvImg;
+    SimpleDraweeView mIvImg;
     @BindView(R.id.item_route_name)
     TextView mTvName;
     @BindView(R.id.item_route_hot)
@@ -185,10 +185,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
                 int picRes = 0;
                 if (venue.getType() == 25 || venue.getType() == 26) {//场馆、景点
                     mPresenter.loadRemarkFormEncyclopedia(venue);
-                    Picasso.with(RouteDetailActivity.this).load(CommUtils.getFullUrl(venue.getPicUrl()))
-                            .placeholder(R.drawable.image_default)
-                            .error(R.drawable.image_default)
-                            .into((ImageView) holder.getView(R.id.item_route_img));
+                    ((SimpleDraweeView) holder.getView(R.id.item_route_img)).setImageURI(CommUtils.getFullUrl(venue.getPicUrl()));
                 } else if (venue.getType() == 27) {//美食
                     picRes = R.mipmap.ico_car_def_img;
                 } else if (venue.getType() == 28) {//卫生间
@@ -201,10 +198,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
                     picRes = R.mipmap.ico_car_def_img;
                 }
                 if (picRes != 0) {
-                    Picasso.with(RouteDetailActivity.this).load(picRes)
-                            .placeholder(R.drawable.image_default)
-                            .error(R.drawable.image_default)
-                            .into((ImageView) holder.getView(R.id.item_route_img));
+                    ((SimpleDraweeView) holder.getView(R.id.item_route_img)).setImageResource(picRes);
                 }
                 holder.setText(R.id.item_route_name, LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption()));
                 holder.setText(R.id.item_route_info, LanguageUtil.chooseTest(venue.getRemark(), venue.getEnRemark()));
@@ -235,7 +229,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
     public void showRouteDetail(RouteInfo info) {
         mInfo = info;
         if (mInfo == null) return;
-        Picasso.with(this).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into(mIvImg);
+        mIvImg.setImageURI(CommUtils.getFullUrl(info.picUrl));
         mTvName.setText(LanguageUtil.chooseTest(info.caption, info.captionen));
         mTvHot.setText(getResources().getString(R.string.hot) + info.hotCount);
         mTvTime.setText(String.format(getString(R.string.expected_travel_time, info.playTime)));

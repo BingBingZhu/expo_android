@@ -46,6 +46,7 @@
     <dimen name="dms_54">27dp</dimen>
     <dimen name="dms_60">30dp</dimen>
     <dimen name="dms_64">32dp</dimen>
+    <dimen name="dms_66">33dp</dimen>
     <dimen name="dms_68">34dp</dimen>
     <dimen name="dms_70">35dp</dimen>
     <dimen name="dms_72">36dp</dimen>
