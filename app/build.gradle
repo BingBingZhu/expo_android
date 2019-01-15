@@ -31,10 +31,21 @@ android {
         ]
     }
     buildTypes {
+
+//        debug {
+//            buildConfigField "boolean", "LOG_DEBUG", "true" // 显示log
+//            minifyEnabled true
+//            shrinkResources true
+//            zipAlignEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+////            signingConfig signingConfigs.config
+//        }
+
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false" //不显示log
             minifyEnabled true
             shrinkResources true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //            signingConfig signingConfigs.config
         }
