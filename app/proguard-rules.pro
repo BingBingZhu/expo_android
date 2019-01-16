@@ -118,6 +118,10 @@
 #----------------------------------------------------------------------------
 
 #---------------------------------5.其他-----------------------
+# 不混淆资源类
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
 # 防止构造被移除或者被重命名
 -keepclassmembers class com.expo.**{
     public <init>(android.content.Context);
