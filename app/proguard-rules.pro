@@ -61,6 +61,13 @@
 # Mob Share SDK
 -keep class com.mob.**{*;}
 -dontwarn com.mob.**
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class **.R{*;}
+-keep class m.framework.**{*;}
+-dontwarn cn.sharesdk.**
+-dontwarn com.sina.**
+-dontwarn **.R$*
 
 ## 保持所有baidu包下的文件不被混淆
 # 百度统计

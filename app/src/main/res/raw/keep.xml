@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@mipmap/tourist_service_*,
-    @string/item_tourist_service_text_*,
-    @drawable/ssdk_oks_classic_*" />
+    tools:keep="
+    @drawable/ssdk_oks_classic_qq,
+    @drawable/ssdk_oks_classic_qzone,
+    @drawable/ssdk_oks_classic_sinaweibo,
+    @drawable/ssdk_oks_classic_wechat,
+    @drawable/ssdk_oks_classic_wechatmoments
+    " />
