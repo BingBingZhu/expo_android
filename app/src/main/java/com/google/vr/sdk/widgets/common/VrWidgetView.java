@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.expo.R;
 import com.google.vr.cardboard.AndroidNCompat;
@@ -65,7 +66,7 @@ public abstract class VrWidgetView extends FrameLayout {
     private boolean isTransitionViewEnabled;
     private boolean isTouchTrackingEnabled;
     private boolean isInfoButtonEnabled;
-    private FullScreenDialog fullScreenDialog;
+    public FullScreenDialog fullScreenDialog;
     private TrackingSensorsHelper sensorsHelper;
     private TouchTracker touchTracker;
     private ScreenOnFlagHelper screenOnFlagHelper;
@@ -97,7 +98,7 @@ public abstract class VrWidgetView extends FrameLayout {
         if (!(context instanceof Activity)) {
             throw new RuntimeException("Context must be an instance of activity");
         } else {
-            this.activity = (Activity)context;
+            this.activity = (Activity) context;
         }
     }
 
@@ -111,7 +112,7 @@ public abstract class VrWidgetView extends FrameLayout {
         this.isTouchTrackingEnabled = true;
         this.isTransitionViewEnabled = true;
         this.screenOnFlagHelper = new ScreenOnFlagHelper(this.activity);
-        WindowManager windowManager = (WindowManager)this.getContext().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) this.getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         this.displayMetrics = new DisplayMetrics();
         display.getRealMetrics(this.displayMetrics);
@@ -128,7 +129,7 @@ public abstract class VrWidgetView extends FrameLayout {
                 VrWidgetView.this.setDisplayMode(1);
             }
         });
-        this.uiView = inflate(this.getContext(), layout.ui_view_embed, (ViewGroup)null);
+        this.uiView = inflate(this.getContext(), layout.ui_view_embed, (ViewGroup) null);
         this.viewRotator = new ViewRotator(this.getContext(), this.uiView, this.getScreenRotationInDegrees(display.getRotation()), this.sensorsHelper.areTrackingSensorsAvailable());
         this.innerWidgetView.addView(this.uiView);
         this.innerWidgetView.addView(new View(this.getContext()));
@@ -181,25 +182,25 @@ public abstract class VrWidgetView extends FrameLayout {
     protected abstract VrWidgetRenderer createRenderer(Context var1, GLThreadScheduler var2, float var3, float var4, int var5);
 
     private void initializeUiButtons() {
-        this.enterFullscreenButton = (ImageButton)this.uiView.findViewById(id.fullscreen_button);
+        this.enterFullscreenButton = (ImageButton) this.uiView.findViewById(id.fullscreen_button);
         this.enterFullscreenButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 VrWidgetView.this.setDisplayMode(2);
             }
         });
-        this.enterStereoModeButton = (ImageButton)this.uiView.findViewById(id.vr_mode_button);
+        this.enterStereoModeButton = (ImageButton) this.uiView.findViewById(id.vr_mode_button);
         this.enterStereoModeButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 VrWidgetView.this.setDisplayMode(3);
             }
         });
-        this.fullscreenBackButton = (ImageButton)this.uiView.findViewById(id.fullscreen_back_button);
+        this.fullscreenBackButton = (ImageButton) this.uiView.findViewById(id.fullscreen_back_button);
         this.fullscreenBackButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 VrWidgetView.this.setDisplayMode(1);
             }
         });
-        this.infoButton = (ImageButton)this.uiView.findViewById(id.info_button);
+        this.infoButton = (ImageButton) this.uiView.findViewById(id.info_button);
         this.infoButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 VrWidgetView.this.activity.startActivity(VrWidgetView.getInfoButtonIntent());
@@ -228,7 +229,7 @@ public abstract class VrWidgetView extends FrameLayout {
             this.updateStereoMode();
             if (this.isFullScreen()) {
                 this.orientationHelper.lockOrientation();
-                this.fullScreenDialog.show();
+                this.fullScreenDialog.show(newDisplayMode == 2);
             } else {
                 this.fullScreenDialog.dismiss();
                 this.orientationHelper.restoreOriginalOrientation();
@@ -245,14 +246,14 @@ public abstract class VrWidgetView extends FrameLayout {
     }
 
     private void updateControlsLayout() {
-        LinearLayout controlLayout = (LinearLayout)this.innerWidgetView.findViewById(id.control_layout);
-        LayoutParams layoutParams = (LayoutParams)controlLayout.getLayoutParams();
+        LinearLayout controlLayout = (LinearLayout) this.innerWidgetView.findViewById(id.control_layout);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) controlLayout.getLayoutParams();
         if (this.displayMode == 3 && this.orientationHelper.isInPortraitOrientation()) {
-//            layoutParams.addRule(9);
-//            layoutParams.addRule(11, 0);
+            layoutParams.addRule(9);
+            layoutParams.addRule(11, 0);
         } else {
-//            layoutParams.addRule(9, 0);
-//            layoutParams.addRule(11);
+            layoutParams.addRule(9, 0);
+            layoutParams.addRule(11);
         }
 
         controlLayout.setLayoutParams(layoutParams);
@@ -290,12 +291,13 @@ public abstract class VrWidgetView extends FrameLayout {
             this.enterStereoModeButton.setVisibility(View.GONE);
         }
 
-        this.vrUiLayer.setSettingsButtonEnabled(this.displayMode == 3);
+//        this.vrUiLayer.setSettingsButtonEnabled(this.displayMode == 3);
+        this.vrUiLayer.setSettingsButtonEnabled(false);
         this.vrUiLayer.setAlignmentMarkerEnabled(this.displayMode == 3);
         this.vrUiLayer.setTransitionViewEnabled(this.displayMode == 3 && this.isTransitionViewEnabled);
         if (!this.isFullScreen()) {
             this.fullscreenBackButton.setVisibility(View.GONE);
-            this.vrUiLayer.setBackButtonListener((Runnable)null);
+            this.vrUiLayer.setBackButtonListener((Runnable) null);
         } else if (this.displayMode == 3) {
             this.fullscreenBackButton.setVisibility(View.GONE);
             this.vrUiLayer.setBackButtonListener(new Runnable() {
@@ -304,15 +306,15 @@ public abstract class VrWidgetView extends FrameLayout {
                 }
             });
         } else {
-            this.fullscreenBackButton.setVisibility(View.VISIBLE);
-            this.vrUiLayer.setBackButtonListener((Runnable)null);
+            this.fullscreenBackButton.setVisibility(View.GONE);
+            this.vrUiLayer.setBackButtonListener((Runnable) null);
         }
 
         this.infoButton.setVisibility(this.isInfoButtonEnabled && this.displayMode != 3 ? View.VISIBLE : View.GONE);
     }
 
     private int getScreenRotationInDegrees(int rotation) {
-        switch(rotation) {
+        switch (rotation) {
             case 0:
             default:
                 return 0;
@@ -342,7 +344,7 @@ public abstract class VrWidgetView extends FrameLayout {
         this.renderer.onResume();
         this.updateStereoMode();
         if (this.isFullScreen()) {
-            this.fullScreenDialog.show();
+            this.fullScreenDialog.show(displayMode == 2);
         }
 
         this.updateButtonVisibility();
@@ -406,7 +408,7 @@ public abstract class VrWidgetView extends FrameLayout {
 
     protected void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle) {
-            Bundle bundle = (Bundle)state;
+            Bundle bundle = (Bundle) state;
             this.orientationHelper.onRestoreInstanceState(bundle.getBundle("orientationHelperState"));
             this.renderer.onRestoreInstanceState(bundle.getBundle("widgetRendererState"));
             this.displayMode = bundle.getInt("displayMode");

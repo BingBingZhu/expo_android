@@ -1,32 +1,27 @@
-package com.expo.module.online.widget;
+package com.expo.module.online.detail.widget;
 
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.google.vr.sdk.widgets.common.FullScreenDialog;
-import com.google.vr.sdk.widgets.common.VrWidgetRenderer;
 import com.google.vr.sdk.widgets.video.VrVideoEventListener;
 import com.google.vr.sdk.widgets.video.VrVideoView;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 
-public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, VRInterfaceView {
 
-    private static VRVideoView mVRVrVideoView;
     private Context mContext;
     private View mView;
-
-    private TextView mTips;
-    private TextView mDialog;
 
     private VrVideoView mVrVideoView;
     private SeekBar mSeekBar;
@@ -34,25 +29,12 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     private TextView mPlayTime;
     private TextView mPlayTotalTime;
     private ImageView mFullScreen;
-    private FrameLayout mFullScreenView;
 
     boolean mIsPlay;
 
-    FullScreenDialog mFullScreenDialog;
-
-    private static final Object LOCK = new Object();
-
-    public static VRVideoView getInstance(Context context) {
-        if (mVRVrVideoView == null) {
-            synchronized (LOCK) {
-                if (mVRVrVideoView == null) {
-                    mVRVrVideoView = new VRVideoView();
-                    mVRVrVideoView.init(context);
-                    mVRVrVideoView.createView(context);
-                }
-            }
-        }
-        return mVRVrVideoView;
+    public VRVideoView(Context context){
+        init(context);
+        createView(context);
     }
 
     private void init(Context context) {
@@ -81,6 +63,14 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         mPlay.setOnClickListener(this);
         mFullScreen.setOnClickListener(this);
 
+        mVrVideoView.fullScreenDialog.setVrVideoView(mVrVideoView);
+        mVrVideoView.fullScreenDialog.setListener(new FullScreenDialog.FullScreenClickListener() {
+            @Override
+            public void play() {
+                VRVideoView.this.playVideo(!mIsPlay);
+            }
+        });
+
         mVrVideoView.setEventListener(new VrVideoEventListener() {
             /**
              * 视频播放完成回调
@@ -100,6 +90,10 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
             public void onNewFrame() {
                 super.onNewFrame();
                 mSeekBar.setProgress((int) mVrVideoView.getCurrentPosition());
+                mVrVideoView.fullScreenDialog.setProgress((int) mVrVideoView.getCurrentPosition());
+
+                mPlayTime.setText(TimeUtils.millis2String((int) mVrVideoView.getCurrentPosition(), new SimpleDateFormat("mm:ss")));
+                mVrVideoView.fullScreenDialog.setPlayTime(TimeUtils.millis2String((int) mVrVideoView.getCurrentPosition(), new SimpleDateFormat("mm:ss")));
             }
 
             /**
@@ -108,6 +102,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
             @Override
             public void onClick() {
                 super.onClick();
+                mVrVideoView.fullScreenDialog.setIsShowControl(!mVrVideoView.fullScreenDialog.mIsShowControl);
             }
 
             /**
@@ -127,6 +122,8 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
                 super.onLoadSuccess();
                 /**加载成功后设置回调**/
                 mSeekBar.setMax((int) mVrVideoView.getDuration());
+                mPlayTotalTime.setText(TimeUtils.millis2String((int) mVrVideoView.getDuration(), new SimpleDateFormat("mm:ss")));
+                mVrVideoView.fullScreenDialog.setTotalTime(TimeUtils.millis2String((int) mVrVideoView.getDuration(), new SimpleDateFormat("mm:ss")));
             }
 
             /**
@@ -167,8 +164,8 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     }
 
     public void showFullSceen() {
-        getFullScreenDialog();
         mVrVideoView.setDisplayMode(2);
+        mVrVideoView.fullScreenDialog.setMaxDuration((int) mVrVideoView.getDuration());
     }
 
     public void showNormalSceen() {
@@ -188,10 +185,6 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         }
     }
 
-    public void setmFullScreen(FrameLayout fullScreen){
-        mFullScreenView = fullScreen;
-    }
-
     private void playVideo(boolean isPlay) {
         mIsPlay = isPlay;
         if (mIsPlay) {
@@ -199,35 +192,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         } else {
             mVrVideoView.pauseVideo();
         }
-    }
-
-    private FullScreenDialog getFullScreenDialog() {
-        if (mFullScreenDialog == null) {
-            synchronized (LOCK) {
-                if (mFullScreenDialog == null) {
-                    try {
-                        Class<?> classu = mVrVideoView.getClass();
-                        classu.getFields();
-                        for(Field fs: classu.getFields()){
-                            System.out.println("fs.getName:" + fs.getName());
-                        }
-                        Field field1 = classu.getField("innerWidgetView");
-                        ViewGroup innerWidgetView = (ViewGroup) field1.get(mVrVideoView);
-                        Field field2 = classu.getField("renderer");
-                        VrWidgetRenderer renderer = (VrWidgetRenderer) field2.get(mVrVideoView);
-                        mFullScreenDialog = new FullScreenDialog(mContext, innerWidgetView, renderer);
-                        Field field3 = classu.getField("fullScreenDialog");
-                        field3.setAccessible(true);
-                        field3.set(mVrVideoView, mFullScreenDialog);
-                    } catch (NoSuchFieldException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-        return mFullScreenDialog;
+        mVrVideoView.fullScreenDialog.playVideo(isPlay);
     }
 
     public void onDestroy() {
@@ -235,7 +200,6 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         mVrVideoView.shutdown();
         ((FrameLayout) mView.getParent()).removeView(mView);
         mView = null;
-        mVRVrVideoView = null;
     }
 
     @Override
