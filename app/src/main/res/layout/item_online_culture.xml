@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ency_item_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_206">
+
+        <ImageView
+            android:id="@+id/item_online_culture_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_default" />
+
+        <ImageView
+            android:layout_width="@dimen/dms_60"
+            android:layout_height="@dimen/dms_60"
+            android:layout_gravity="center"
+            android:src="@mipmap/player_playing" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_206"
+        android:layout_marginLeft="@dimen/dms_4"
+        android:layout_marginTop="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_4">
+
+        <TextView
+            android:id="@+id/item_online_culture_name"
+            style="@style/TextSizeBlack13"
+            android:layout_gravity="center_vertical|left" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/item_online_culture_scans"
+            style="@style/TextSizeBlack12"
+            android:layout_gravity="center_vertical|right"
+            android:drawableLeft="@mipmap/find_scans_small_white"
+            android:drawablePadding="@dimen/dms_10"
+            android:textColor="@color/gray_66"
+            android:textSize="@dimen/font_18" />
+    </FrameLayout>
+
+
+</LinearLayout>
