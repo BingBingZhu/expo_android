@@ -243,9 +243,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                         getString(R.string.home_func_item_panorama), BaseActivity.TITLE_COLOR_STYLE_WHITE);
                 break;
             case R.id.home_func_7:
-                VRDetailActivity.startActivity(getContext());
-//                OnlineExpoActivity.startActivity(getContext());
-//                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PANORAMA ), null, false );
+//                VRDetailActivity.startActivity(getContext());
+                OnlineExpoActivity.startActivity(getContext());
+                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PANORAMA ), null, false );
                 break;
             case R.id.home_navigation_item:
                 ParkMapActivity.startActivity(getContext(), null);
