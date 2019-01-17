@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ency_item_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/item_online_guide_img"
+        android:layout_width="@dimen/dms_168"
+        android:layout_height="@dimen/dms_164"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dms_22"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_online_guide_name"
+            style="@style/TextSizeBlack13"
+            android:layout_gravity="center_vertical|left" />
+
+        <TextView
+            android:id="@+id/item_online_guide_content"
+            style="@style/TextSizeBlack12"
+            android:layout_marginTop="@dimen/dms_34"
+            android:lines="2"
+            android:textColor="@color/gray_66" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_34">
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_online_guide_scans"
+                style="@style/TextSizeBlack12"
+                android:layout_gravity="center_vertical|right"
+                android:drawableLeft="@mipmap/find_scans_small_white"
+                android:drawablePadding="@dimen/dms_10"
+                android:textColor="@color/gray_66"
+                android:textSize="@dimen/font_18" />
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_online_guide_time"
+                style="@style/TextSizeBlack12"
+                android:layout_gravity="center_vertical|right"
+                android:drawableLeft="@mipmap/find_scans_small_white"
+                android:drawablePadding="@dimen/dms_10"
+                android:textColor="@color/gray_66"
+                android:textSize="@dimen/font_18" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

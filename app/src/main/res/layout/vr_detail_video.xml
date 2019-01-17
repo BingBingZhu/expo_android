@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.vr.sdk.widgets.video.VrVideoView
+        android:id="@+id/vr_video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
+        android:layout_marginBottom="@dimen/dms_164"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/play"
+            android:layout_width="@dimen/dms_32"
+            android:layout_height="@dimen/dms_36"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/player_playing" />
+
+        <TextView
+            android:id="@+id/play_time"
+            android:layout_width="@dimen/dms_48"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dms_44"
+            android:layout_toRightOf="@id/play"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_22" />
+
+        <ImageView
+            android:id="@+id/full_screen"
+            android:layout_width="@dimen/dms_40"
+            android:layout_height="@dimen/dms_40"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/player_playing" />
+
+        <TextView
+            android:id="@+id/play_total_time"
+            android:layout_width="@dimen/dms_48"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dms_44"
+            android:layout_toLeftOf="@id/full_screen"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_22" />
+
+        <SeekBar
+            android:id="@+id/seek_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dms_20"
+            android:layout_marginRight="@dimen/dms_20"
+            android:layout_toLeftOf="@id/play_total_time"
+            android:layout_toRightOf="@id/play_time" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

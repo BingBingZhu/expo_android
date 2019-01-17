@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.expo.widget.MyScrollView
+        android:id="@+id/online_home_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dms_360"
+                android:background="@mipmap/home_banner"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="@dimen/dms_120"
+                    android:layout_height="@dimen/dms_120"
+                    app:placeholderImage="@mipmap/home_icon"
+                    app:roundingBorderColor="@color/green_02cd9b"
+                    app:roundingBorderWidth="@dimen/dms_2" />
+
+                <TextView
+                    style="@style/TextSizeWhite12"
+                    android:layout_marginTop="@dimen/dms_40"
+                    android:text="@string/look_in_home"
+                    android:textColor="@color/white_f5" />
+            </LinearLayout>
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/online_expo_item_title_scene"
+                style="@style/online_expo_item_title"
+                android:layout_marginTop="@dimen/dms_40"
+                android:text="@string/expo_scene" />
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/online_expo_item_title_culture"
+                style="@style/online_expo_item_title"
+                android:layout_marginTop="@dimen/dms_70"
+                android:text="@string/expo_culture" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginTop="@dimen/dms_26"
+                android:layout_marginRight="@dimen/dms_30">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/online_expo_recycler_culture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/online_expo_exchange"
+                style="@style/TextSize12"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/green_02cd9b"
+                android:drawableLeft="@mipmap/duihao"
+                android:drawablePadding="@dimen/dms_12"
+                android:text="@string/exchange" />
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/online_expo_item_title_guide"
+                style="@style/online_expo_item_title"
+                android:layout_marginTop="@dimen/dms_30"
+                android:text="@string/online_guide" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginTop="@dimen/dms_26"
+                android:layout_marginRight="@dimen/dms_30">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/online_expo_recycler_guide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </com.expo.widget.MyScrollView>
+
+</FrameLayout>
