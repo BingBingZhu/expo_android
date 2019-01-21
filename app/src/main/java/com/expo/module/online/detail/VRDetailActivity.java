@@ -61,7 +61,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
 
     @Override
     protected boolean hasPresenter() {
-        return false;
+        return true;
     }
 
     public static void startActivity(Context context, int id, boolean canGoOther) {
@@ -86,7 +86,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     @OnClick({R.id.vr_detail_img, R.id.vr_detail_video})
     public void changeVr(View view) {
         if (mCanGoOther)
-            VRDetailActivity.startActivity(this, mVrInfo.id, false);
+            VRDetailActivity.startActivity(this, mVrInfo.getId(), false);
         else
             finish();
     }
@@ -97,7 +97,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
 
     public void showVrView() {
         boolean hasOther = false;
-        if (StringUtils.equals(mVrInfo.type, "2")) {
+        if (StringUtils.equals(mVrInfo.getType(), "2")) {
             mVRView = new VRVideoView(this);
             mVrVideo.setVisibility(View.GONE);
             if (hasOther)
@@ -116,11 +116,11 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
         if (vrInfo == null) finish();
 
         mVrInfo = vrInfo;
-        mTvName.setText(LanguageUtil.chooseTest(vrInfo.caption, vrInfo.captionEn));
+        mTvName.setText(LanguageUtil.chooseTest(vrInfo.getCaption(), vrInfo.getCaptionEn()));
         mTvScans.setText(getString(R.string.scans_scans, 123));
-        mTvTime.setText(getString(R.string.play_times, vrInfo.extAttr));
+        mTvTime.setText(getString(R.string.play_times, vrInfo.getExtAttr()));
 
         showVrView();
-        mVRView.setUrl(CommUtils.getFullUrl(vrInfo.url));
+        mVRView.setUrl(CommUtils.getFullUrl(vrInfo.getUrl()));
     }
 }

@@ -37,6 +37,7 @@ import com.expo.contract.presenter.SplashPresenterImpl;
 import com.expo.contract.presenter.TouristServicePresenterImpl;
 import com.expo.contract.presenter.TrackPresenterImpl;
 import com.expo.contract.presenter.UserInfoPresenterImpl;
+import com.expo.contract.presenter.VRDetailPresenterImpl;
 import com.expo.contract.presenter.VRImagePresenterImpl;
 import com.expo.contract.presenter.WebPresenterImpl;
 import com.expo.contract.presenter.WebTemplatePresenterImpl;
@@ -119,6 +120,8 @@ public class PresenterFactory {
             return new VRImagePresenterImpl( (VRImageContract.View) view );
         } else if (view instanceof OnlineHomeContract.View) {
             return new OnlineHomePresenterImpl( (OnlineHomeContract.View) view );
+        } else if (view instanceof VRDetailContract.View) {
+            return new VRDetailPresenterImpl( (VRDetailContract.View) view );
         }
         throw new UnsupportedOperationException();
     }

@@ -31,55 +31,55 @@ url (string, optional): 资源地址
     * */
 
     @DatabaseField(columnName = "_id", generatedId = true, allowGeneratedIdInsert = true)
-    public int id;
+    private int id;
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")
-    public String caption;
+    private String caption;
     @DatabaseField(columnName = "caption_en")
     @SerializedName("captionen")
-    public String captionEn;
+    private String captionEn;
     @DatabaseField(columnName = "top_kind")
     @SerializedName("topkind")
-    public String topKind;
+    private String topKind;
     @DatabaseField(columnName = "attr_ids")
     @SerializedName("attrids")
-    public String attrIds;
+    private String attrIds;
     @DatabaseField(columnName = "type")
     @SerializedName("type")
-    public String type;
+    private String type;
     @DatabaseField(columnName = "ext_attr")
     @SerializedName("extattr")
-    public String extAttr;
+    private String extAttr;
     @DatabaseField(columnName = "link_wiki_id")
     @SerializedName("linkwikiid")
-    public String linkWikiId;
+    private String linkWikiId;
     @DatabaseField(columnName = "link_pan_res_id")
     @SerializedName("linkpanresid")
-    public String linkPanResId;
+    private String linkPanResId;
     @DatabaseField(columnName = "remark")
     @SerializedName("remark")
-    public String remark;
+    private String remark;
     @DatabaseField(columnName = "remark_en")
     @SerializedName("remarken")
-    public String remarkEn;
+    private String remarkEn;
     @DatabaseField(columnName = "pic")
     @SerializedName("pic")
-    public String pic;
+    private String pic;
     @DatabaseField(columnName = "lon")
     @SerializedName("lon")
-    public String lon;
+    private String lon;
     @DatabaseField(columnName = "lat")
     @SerializedName("lat")
-    public String lat;
+    private String lat;
     @DatabaseField(columnName = "url")
     @SerializedName("url")
-    public String url;
+    private String url;
     @DatabaseField(columnName = "create_time")
     @SerializedName("createtime")
-    public String createTime;
+    private String createTime;
     @DatabaseField(columnName = "update_time")
     @SerializedName("updatetime")
-    public String updateTime;
+    private String updateTime;
 
     protected VrInfo() {
 
@@ -141,5 +141,141 @@ url (string, optional): 资源地址
         dest.writeString(url);
         dest.writeString(createTime);
         dest.writeString(updateTime);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public String getCaptionEn() {
+        return captionEn;
+    }
+
+    public void setCaptionEn(String captionEn) {
+        this.captionEn = captionEn;
+    }
+
+    public String getTopKind() {
+        return topKind;
+    }
+
+    public void setTopKind(String topKind) {
+        this.topKind = topKind;
+    }
+
+    public String getAttrIds() {
+        return attrIds;
+    }
+
+    public void setAttrIds(String attrIds) {
+        this.attrIds = attrIds;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getExtAttr() {
+        return extAttr;
+    }
+
+    public void setExtAttr(String extAttr) {
+        this.extAttr = extAttr;
+    }
+
+    public String getLinkWikiId() {
+        return linkWikiId;
+    }
+
+    public void setLinkWikiId(String linkWikiId) {
+        this.linkWikiId = linkWikiId;
+    }
+
+    public String getLinkPanResId() {
+        return linkPanResId;
+    }
+
+    public void setLinkPanResId(String linkPanResId) {
+        this.linkPanResId = linkPanResId;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getRemarkEn() {
+        return remarkEn;
+    }
+
+    public void setRemarkEn(String remarkEn) {
+        this.remarkEn = remarkEn;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 }
