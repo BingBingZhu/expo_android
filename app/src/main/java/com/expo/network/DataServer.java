@@ -25,6 +25,8 @@ import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.network.response.VersionInfoResp;
 import com.expo.network.response.VisitorServiceResp;
+import com.expo.network.response.VrInfoResp;
+import com.expo.network.response.VrLableInfoResp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -474,4 +476,24 @@ public interface DataServer {
     @FormUrlEncoded
     @POST
     Observable<HashMap<String, String>> registerTicket(@Url String url, @Field("phone") String phone, @Field("source") String source);
+
+    /**
+     * 获取全景资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetPanCamList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<VrInfoResp> getPanCamList(@Body RequestBody requestBody);
+
+    /**
+     * 获取全景标签资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetPanLableList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<VrLableInfoResp> getPanLableList(@Body RequestBody requestBody);
 }

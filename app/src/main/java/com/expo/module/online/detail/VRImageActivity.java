@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.LogUtils;
 import com.expo.contract.VRImageContract;
 import com.expo.module.online.detail.widget.VRImageView;
 import com.expo.widget.AppBarView;
@@ -129,6 +130,7 @@ public class VRImageActivity extends BaseActivity implements VRImageContract.Vie
 //                    CommUtils.getFullUrl(mEncyclopedias.picUrl),
 //                    mUrl + "&data_type=0",
 //                    mPlatformActionListener);
+            LogUtils.d("Tag", "share");
         });
     }
 }

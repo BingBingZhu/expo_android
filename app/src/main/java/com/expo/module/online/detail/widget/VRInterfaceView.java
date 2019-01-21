@@ -11,4 +11,5 @@ public interface VRInterfaceView {
     public void showVrSceen();
 
     public void onDestroy();
+
 }

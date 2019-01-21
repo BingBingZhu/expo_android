@@ -9,14 +9,18 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
+import com.expo.utils.wifi.WifiUtil;
 import com.google.vr.sdk.widgets.common.FullScreenDialog;
 import com.google.vr.sdk.widgets.video.VrVideoEventListener;
 import com.google.vr.sdk.widgets.video.VrVideoView;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+
+import butterknife.BindView;
 
 public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, VRInterfaceView {
 
@@ -29,10 +33,13 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     private TextView mPlayTime;
     private TextView mPlayTotalTime;
     private ImageView mFullScreen;
+    View mNoWifiLayout;
+    TextView mNoWifiPlay;
 
     boolean mIsPlay;
+    String mUrl;
 
-    public VRVideoView(Context context){
+    public VRVideoView(Context context) {
         init(context);
         createView(context);
     }
@@ -50,6 +57,8 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         mPlayTotalTime = mView.findViewById(R.id.play_total_time);
         mFullScreen = mView.findViewById(R.id.full_screen);
         mSeekBar = mView.findViewById(R.id.seek_bar);
+        mNoWifiLayout = mView.findViewById(R.id.no_wifi_layout);
+        mNoWifiPlay = mView.findViewById(R.id.no_wifi_play);
 
         /**设置加载设置**/
         VrVideoView.Options options = new VrVideoView.Options();
@@ -62,6 +71,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
 
         mPlay.setOnClickListener(this);
         mFullScreen.setOnClickListener(this);
+        mNoWifiPlay.setOnClickListener(this);
 
         mVrVideoView.fullScreenDialog.setVrVideoView(mVrVideoView);
         mVrVideoView.fullScreenDialog.setListener(new FullScreenDialog.FullScreenClickListener() {
@@ -160,6 +170,9 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
             case R.id.full_screen:
                 showFullSceen();
                 break;
+            case R.id.no_wifi_play:
+                startPlay(mUrl);
+                break;
         }
     }
 
@@ -178,7 +191,18 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     }
 
     public void setUrl(String url) {
+        mUrl = url;
+        if (NetworkUtils.isWifiConnected()) {
+            mNoWifiLayout.setVisibility(View.GONE);
+            startPlay(url);
+        } else {
+            mNoWifiLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void startPlay(String url) {
         try {
+            mNoWifiLayout.setVisibility(View.GONE);
             mVrVideoView.loadVideo(Uri.parse(url), null);
         } catch (IOException e) {
             e.printStackTrace();

@@ -22,6 +22,8 @@ import com.expo.entity.User;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.entity.VisitorService;
+import com.expo.entity.VrInfo;
+import com.expo.entity.VrLableInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +55,8 @@ public interface Constants {
         public static final String KEY_TOP_LINE_UPDATE_TIME = "key_top_line_update_time";
         public static final String KEY_VENUES_UPDATE_TIME = "key_venues_update_time";
         public static final String KEY_ROUTES_UPDATE_TIME = "key_routes_update_time";
+        public static final String KEY_VR_INFO_UPDATE_TIME = "key_vr_info_update_time";
+        public static final String KEY_VR_LABLE_INFO_UPDATE_TIME = "key_vr_lable_info_update_time";
         public static final String KEY_MAP_ON_OFF = "key_map_on_off";
         public static final String KEY_TRACK_ON_OFF = "key_track_on_off";
         public static final String KEY_MAP_PATTERN = "key_map_pattern";
@@ -93,6 +97,7 @@ public interface Constants {
         public static final String EXTRA_ENJOYS = "extra_enjoys";
         public static final String EXTRA_READ_COUNT = "extra_read_count";
         public static final String EXTRA_IS_START_LOCATION = "extra_is_start_location";
+        public static final String EXTRA_CAN_GO_OTHER = "extra_can_go_other";
     }
 
     /**
@@ -103,7 +108,7 @@ public interface Constants {
         //IP
 //        public static final String IP = "39.105.120.171";
         public static final String IP = "47.92.250.179";
-//        public static final String IP = "47.92.247.143";
+        //        public static final String IP = "47.92.247.143";
         //自己服务器基本请求用到的URL
         public static final String BASE_URL = "http://" + IP + ":8080/Api/";
         //自己服务器文件资源请求用到的URL
@@ -147,7 +152,8 @@ public interface Constants {
         //实体类
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class, CustomRoute.class,
-                TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, VisitorService.class, Contacts.class};
+                TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, VisitorService.class,
+                Contacts.class, VrInfo.class, VrLableInfo.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }

@@ -19,8 +19,6 @@ import com.expo.utils.MD5Util;
 import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 
-import org.reactivestreams.Subscriber;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

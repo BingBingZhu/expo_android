@@ -7,31 +7,41 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.contract.VRDetailContract;
+import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.widget.VRImageView;
 import com.expo.module.online.detail.widget.VRInterfaceView;
 import com.expo.module.online.detail.widget.VRVideoView;
+import com.expo.utils.CommUtils;
+import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class VRDetailActivity extends BaseActivity {
+public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> implements VRDetailContract.View {
 
     @BindView(R.id.vr_frame)
     FrameLayout mFlVrFrame;
-    @BindView(R.id.full_screen)
-    FrameLayout mFullScreen;
     @BindView(R.id.vr_detail_name)
     TextView mTvName;
     @BindView(R.id.vr_detail_scans)
     TextView mTvScans;
     @BindView(R.id.vr_detail_time)
     TextView mTvTime;
+    @BindView(R.id.vr_detail_img)
+    View mVrImg;
+    @BindView(R.id.vr_detail_video)
+    View mVrVideo;
 
     VRInterfaceView mVRView;
 
-    boolean isVideo;
+    boolean mCanGoOther;
+
+    VrInfo mVrInfo;
 
     @Override
     protected int getContentView() {
@@ -40,20 +50,13 @@ public class VRDetailActivity extends BaseActivity {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        isVideo = false;
-        if (isVideo)
-            mVRView = new VRVideoView(this);
-        else
-            mVRView = new VRImageView(this);
-        mFlVrFrame.addView(mVRView.getVrVideoView());
-        if (isVideo)
-            mVRView.setUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
-        else
-            mVRView.setUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547707751782&di=ffa3185875f6d3be3c94a6811d8f7317&imgtype=0&src=http%3A%2F%2Fpic1.16pic.com%2F00%2F50%2F47%2F16pic_5047893_b.jpg");
+        mCanGoOther = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRA_CAN_GO_OTHER, false);
+        mPresenter.setVrInfo(getIntent().getIntExtra(Constants.EXTRAS.EXTRA_ID, 0));
 
-        mTvName.setText("中国馆");
-        mTvScans.setText(getString(R.string.scans_scans, 123456));
-        mTvTime.setText(getString(R.string.play_times, 123456));
+        showVrView();
+
+        mFlVrFrame.addView(mVRView.getVrVideoView());
+
     }
 
     @Override
@@ -61,8 +64,11 @@ public class VRDetailActivity extends BaseActivity {
         return false;
     }
 
-    public static void startActivity(Context context) {
-        context.startActivity(new Intent(context, VRDetailActivity.class));
+    public static void startActivity(Context context, int id, boolean canGoOther) {
+        Intent intent = new Intent(context, VRDetailActivity.class);
+        intent.putExtra(Constants.EXTRAS.EXTRA_ID, id);
+        intent.putExtra(Constants.EXTRAS.EXTRA_CAN_GO_OTHER, canGoOther);
+        context.startActivity(intent);
     }
 
     @Override
@@ -77,8 +83,44 @@ public class VRDetailActivity extends BaseActivity {
         mVRView.showVrSceen();
     }
 
+    @OnClick({R.id.vr_detail_img, R.id.vr_detail_video})
+    public void changeVr(View view) {
+        if (mCanGoOther)
+            VRDetailActivity.startActivity(this, mVrInfo.id, false);
+        else
+            finish();
+    }
+
     @Override
     public void recreate() {
     }
 
+    public void showVrView() {
+        boolean hasOther = false;
+        if (StringUtils.equals(mVrInfo.type, "2")) {
+            mVRView = new VRVideoView(this);
+            mVrVideo.setVisibility(View.GONE);
+            if (hasOther)
+                mVrImg.setVisibility(View.VISIBLE);
+        } else {
+            mVRView = new VRImageView(this);
+            mVrImg.setVisibility(View.GONE);
+            if (hasOther)
+                mVrVideo.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    @Override
+    public void freshVrInfo(VrInfo vrInfo) {
+        if (vrInfo == null) finish();
+
+        mVrInfo = vrInfo;
+        mTvName.setText(LanguageUtil.chooseTest(vrInfo.caption, vrInfo.captionEn));
+        mTvScans.setText(getString(R.string.scans_scans, 123));
+        mTvTime.setText(getString(R.string.play_times, vrInfo.extAttr));
+
+        showVrView();
+        mVRView.setUrl(CommUtils.getFullUrl(vrInfo.url));
+    }
 }

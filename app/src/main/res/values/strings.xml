@@ -377,7 +377,8 @@
     <string name="hide">隐藏</string>
     <string name="show">显示</string>
     <string name="scans_scans">浏览 %d次</string>
-    <string name="play_times">%d分钟</string>
+    <string name="play_times">%s分钟</string>
+    <string name="no_fiwi_no_free">正在使用费WIFI网络，播放将产生流量费用</string>
 
     <string name="expo_scene_tab_space">空间布局</string>
     <string name="expo_scene_tab_scenery">景观展示</string>
