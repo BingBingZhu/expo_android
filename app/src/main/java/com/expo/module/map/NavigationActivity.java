@@ -3,6 +3,7 @@ package com.expo.module.map;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -247,14 +248,12 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mImgNavigationShow.setVisibility( View.VISIBLE );
         }
         mSlidingDrawerView.setOnDrawerCloseListener( () -> {
-            mCameraManager.stopPreview();
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false );
             updateMapStatue( false );
             mImgNavigationShow.setVisibility( View.VISIBLE );
             mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
         } );
         mSlidingDrawerView.setOnDrawerOpenListener( () -> {
-            mCameraManager.startPreview();
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true );
             updateMapStatue( true );
             mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
@@ -308,6 +307,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         @Override
         public void onMapClick(LatLng latLng) {
             if (mSlidingDrawerView.isOpened()) {
+                mCameraManager.stopPreview();
                 mSlidingDrawerView.animateClose();
             }
         }
@@ -658,6 +658,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 mWebView.loadUrl( "javascript:toggleImg(" + (PrefsHelper.getBoolean( Constants.Prefs.KEY_MODULE_ON_OFF, true ) ? 1 : 0) + ")" );
                 break;
             case R.id.navigation_show:
+                mCameraManager.startPreview();
                 mSlidingDrawerView.animateOpen();
                 break;
         }
