@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<solid android:color="@color/white" />-->
+    <!--<corners android:radius="@dimen/dms_10" />-->
+    <!--&lt;!&ndash;<stroke android:width="@dimen/dms_10"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:color="@color/transparent" />&ndash;&gt;-->
+    <!--<stroke-->
+        <!--android:color="@android:color/darker_gray" />-->
+<!--</shape>-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item>-->
+        <!--<shape>-->
+            <!--<solid android:color="#ff0000" />-->
+            <!--<gradient android:startColor="@color/gray_99"-->
+                <!--android:endColor="@color/white"-->
+                <!--android:angle="360"-->
+                <!--android:type="radial"-->
+                <!--android:gradientRadius="100%"/>-->
+            <!--&lt;!&ndash; 边框底部两个角都是有弧度的 &ndash;&gt;-->
+            <!--<corners android:radius="@dimen/dms_10" />-->
+        <!--</shape>-->
+    <!--</item>-->
+
+    <item android:top="@dimen/dms_10"
+        android:bottom="@dimen/dms_10"
+        android:right="@dimen/dms_10"
+        android:left="@dimen/dms_10"> <!--设置除了顶部都有边框-->
+        <shape>
+            <corners android:radius="@dimen/dms_10"/>
+            <solid android:color="#ffffff" />
+        </shape>
+    </item>
+    <!--<item>-->
+        <!--<shape>-->
+            <!--<corners android:radius="@dimen/dms_18" />-->
+            <!--<solid android:color="@color/white" />-->
+            <!--<gradient android:startColor="@color/gray_99"-->
+                <!--android:endColor="@color/white"-->
+                <!--android:angle="180"-->
+                <!--android:type="radial"-->
+                <!--android:gradientRadius="100%"/>-->
+        <!--</shape>-->
+    <!--</item>-->
+</layer-list>

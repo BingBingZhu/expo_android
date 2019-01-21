@@ -3,4 +3,6 @@
     <item name="title_back" type="id" />
     <item name="item_message" type="id" />
     <item name="appbar_title" type="id" />
+
+    <item name="mz_banner_item_tag" type="id"></item>
 </resources>
