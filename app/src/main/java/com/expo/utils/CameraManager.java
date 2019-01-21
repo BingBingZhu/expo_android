@@ -12,14 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.expo.base.utils.LogUtils;
+import com.zolad.gl.NeedTextureView;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CameraManager implements ICameraManager {
 
@@ -96,7 +92,11 @@ public class CameraManager implements ICameraManager {
                 mCamera.setPreviewDisplay( ((SurfaceView) mDisplayView).getHolder() );
                 mCamera.startPreview();
             } else if (mDisplayView instanceof TextureView) {
-                mCamera.setPreviewTexture( ((TextureView) mDisplayView).getSurfaceTexture() );
+                if (mDisplayView instanceof NeedTextureView) {
+                    mCamera.setPreviewTexture( ((NeedTextureView) mDisplayView).getRealSurfaceTexture() );
+                } else {
+                    mCamera.setPreviewTexture( ((TextureView) mDisplayView).getSurfaceTexture() );
+                }
                 mCamera.startPreview();
             }
         } catch (IOException e) {
@@ -122,15 +122,12 @@ public class CameraManager implements ICameraManager {
         if (previewSize != null) {
             parameters.setPreviewSize( previewSize.width, previewSize.height );
             //改变预览视图尺寸
-            changeDisplayViewSize( previewSize );
+//            changeDisplayViewSize( previewSize );
         }
-//        LogUtils.d( TAG, "preview size------>>>[" + previewSize.width + "," + previewSize.height + "]" );
-//        LogUtils.d( TAG, "view size------>>>[" + mViewWidth + "," + mViewHeight + "]" );
         //设置拍照尺寸
         Camera.Size pictureSize = getOptimalPictureSize( mViewWidth, mViewHeight );
         if (pictureSize != null)
             parameters.setPictureSize( pictureSize.width, pictureSize.height );
-        LogUtils.d( TAG, "picture size------>>>[" + pictureSize.width + "," + pictureSize.height + "]" );
     }
 
     private void changeDisplayViewSize(Camera.Size previewSize) {
@@ -170,18 +167,29 @@ public class CameraManager implements ICameraManager {
             w = w ^ h;
         }
         List<Camera.Size> sizes = mCamera.getParameters().getSupportedPreviewSizes();
-        Map<Float, Camera.Size> tmp = new HashMap<>();
+        final double ASPECT_TOLERANCE = 0.1;
+        double targetRatio = (double) w / h;
+        Camera.Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+        int targetHeight = h;
         for (Camera.Size size : sizes) {
-            //控制宽高在需求宽高的一定范围内
-            if (size.width > w * 0.5f && size.height > h * 0.5f)
-                tmp.put( Math.abs( (float) w * size.height / (size.width * h) - 1 ), size );
+            double ratio = (double) size.width / size.height;
+            if (Math.abs( ratio - targetRatio ) > ASPECT_TOLERANCE) continue;
+            if (Math.abs( size.height - targetHeight ) < minDiff) {
+                optimalSize = size;
+                minDiff = Math.abs( size.height - targetHeight );
+            }
         }
-        if (!tmp.isEmpty()) { //存在近似的尺寸
-            List<Float> keys = new ArrayList<>( tmp.keySet() );
-            Collections.sort( keys );
-            return tmp.get( keys.get( 0 ) );
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Camera.Size size : sizes) {
+                if (Math.abs( size.height - targetHeight ) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs( size.height - targetHeight );
+                }
+            }
         }
-        return null;
+        return optimalSize;
     }
 
     /* 获取最佳的拍摄画面尺寸 */
@@ -194,18 +202,29 @@ public class CameraManager implements ICameraManager {
             w = w ^ h;
         }
         List<Camera.Size> sizes = mCamera.getParameters().getSupportedPictureSizes();
-        Map<Float, Camera.Size> tmp = new HashMap<>();
+        final double ASPECT_TOLERANCE = 0.1;
+        double targetRatio = (double) w / h;
+        Camera.Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+        int targetHeight = h;
         for (Camera.Size size : sizes) {
-            //控制宽高在需求宽高的一定范围内
-            if (size.width > w * 0.7f && size.height > h * 0.7f)
-                tmp.put( Math.abs( (float) w * size.height / (size.width * h) - 1 ), size );
+            double ratio = (double) size.width / size.height;
+            if (Math.abs( ratio - targetRatio ) > ASPECT_TOLERANCE) continue;
+            if (Math.abs( size.height - targetHeight ) < minDiff) {
+                optimalSize = size;
+                minDiff = Math.abs( size.height - targetHeight );
+            }
         }
-        if (!tmp.isEmpty()) { //存在近似的尺寸
-            List<Float> keys = new ArrayList<>( tmp.keySet() );
-            Collections.sort( keys );
-            return tmp.get( keys.get( 0 ) );
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Camera.Size size : sizes) {
+                if (Math.abs( size.height - targetHeight ) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs( size.height - targetHeight );
+                }
+            }
         }
-        return null;
+        return optimalSize;
     }
 
     /**
@@ -357,8 +376,12 @@ public class CameraManager implements ICameraManager {
 
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-            mViewWidth = width;
-            mViewHeight = height;
+            if (mViewHeight != height) {
+                mViewHeight = height;
+            }
+            if (mViewWidth != width) {
+                mViewWidth = width;
+            }
         }
 
         @Override
