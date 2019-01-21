@@ -409,6 +409,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         dialog.setContent(R.string.leave_navi)
                 .setOnOKClickListener(v1 -> {
                     mWebView.loadUrl("javascript:leavePage()");
+                    mWebView.loadUrl("");
                     finish();
                     dialog.dismiss();
                 })

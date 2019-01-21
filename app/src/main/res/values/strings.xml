@@ -374,6 +374,10 @@
     <string name="expo_culture">文化世园</string>
     <string name="online_guide">在线导游</string>
     <string name="exchange">换一换</string>
+    <string name="hide">隐藏</string>
+    <string name="show">显示</string>
+    <string name="scans_scans">浏览 %d次</string>
+    <string name="play_times">%d分钟</string>
 
     <string name="expo_scene_tab_space">空间布局</string>
     <string name="expo_scene_tab_scenery">景观展示</string>

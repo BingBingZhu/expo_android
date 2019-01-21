@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dms_126"
+    android:layout_height="@dimen/dms_126">
+    <!--android:background="@color/selector_transparent_white">-->
+
+    <ImageView
+        android:id="@+id/item_vr_img"
+        android:layout_width="@dimen/dms_122"
+        android:layout_height="@dimen/dms_122"
+        android:layout_marginLeft="@dimen/dms_2"
+        android:layout_marginTop="@dimen/dms_2"
+        android:scaleType="centerCrop" />
+
+</FrameLayout>

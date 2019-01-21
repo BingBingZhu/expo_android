@@ -13,7 +13,6 @@
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_92"
-        android:layout_marginRight="@dimen/dms_30"
         android:background="@color/black_translucent_50">
 
         <ImageView
@@ -47,11 +46,12 @@
 
         <TextView
             android:id="@+id/play_time"
-            android:layout_width="@dimen/dms_48"
+            android:layout_width="@dimen/dms_64"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dms_44"
             android:layout_toRightOf="@id/play"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/font_22" />
 
@@ -65,10 +65,11 @@
 
         <TextView
             android:id="@+id/play_total_time"
-            android:layout_width="@dimen/dms_48"
+            android:layout_width="@dimen/dms_64"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dms_44"
             android:layout_toLeftOf="@id/full_screen"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/font_22" />
 
