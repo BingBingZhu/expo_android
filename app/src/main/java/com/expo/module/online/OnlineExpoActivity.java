@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.LogUtils;
 import com.expo.contract.OnlineHomeContract;
 import com.expo.entity.RollData;
+import com.expo.widget.RecycleViewDivider;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.expo.widget.laminatedbanner.LaminatedBannerView;
@@ -45,10 +47,10 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     CommonAdapter mAdapterCulture;
     CommonAdapter mAdapterGuide;
 
-    List mCultureList;
-    List mGuideList;
+    List<RollData> mCultureList;
+    List<RollData> mGuideList;
 
-    private static final  float EPSINON = 0.00001F;
+    private static final float EPSINON = 0.00001F;
 
     @Override
     protected int getContentView() {
@@ -57,13 +59,13 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-//        initCultureView();
-//        initGuideView();
+        initCultureView();
+        initGuideView();
         mPresenter.loadRollData();
     }
 
     private void initCultureView() {
-        mCultureList = new ArrayList();
+        mCultureList = new ArrayList<>();
         mAdapterCulture = new CommonAdapter(this, R.layout.item_online_culture, mGuideList) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
@@ -74,6 +76,11 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
             public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
             }
+
+            @Override
+            public int getItemCount() {
+                return mGuideList.size();
+            }
         };
 
         mRvCulture.setLayoutManager(new LinearLayoutManager(this));
@@ -82,7 +89,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     }
 
     private void initGuideView() {
-        mGuideList = new ArrayList();
+        mGuideList = new ArrayList<>();
         mAdapterGuide = new CommonAdapter(this, R.layout.item_online_guide, mGuideList) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
@@ -93,10 +100,16 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
             public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
             }
+
+            @Override
+            public int getItemCount() {
+                return mGuideList.size();
+            }
         };
 
         mRvGuide.setLayoutManager(new GridLayoutManager(this, 2));
-        mRvGuide.addItemDecoration(new SpaceDecoration(getResources().getDimensionPixelSize(R.dimen.dms_14)), getResources().getDimensionPixelSize(R.dimen.dms_30));
+        mRvGuide.addItemDecoration(new RecycleViewDivider(
+                getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor(R.color.white_f5)));
         mRvGuide.setAdapter(mAdapterGuide);
     }
 
@@ -112,26 +125,15 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     @Override
     public void loadRollDataRes(List<RollData> rollDataList) {
         mBanner.setIndicatorVisible(false);
+        mBanner.setBannerPageClickListener(new LaminatedBannerView.BannerPageClickListener() {
+            @Override
+            public void onPageClick(View view, int position) {
+
+            }
+        });
         mBanner.addPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (!(positionOffset < EPSINON  &&  positionOffset >  -EPSINON)) {
-                    LogUtils.e("aaaaaaaaaaaaaa", "position: " + position + "    "
-                            + "positionOffset: " + positionOffset + "    "
-                            + "positionOffsetPixels: " + positionOffsetPixels);
-//                    float fraction = positionOffset;
-//                    if (position == 0) {
-//                        img1.getBackground().setAlpha((int) ((1 - fraction) * 255));
-//                        img2.getBackground().setAlpha((int) (fraction * 255));
-//                        img3.getBackground().setAlpha(0);
-//                    }else if (position == rollDataList.size() - 1) {
-//                        img2.getBackground().setAlpha((int) ((1 - fraction) * 255));
-//                        img3.getBackground().setAlpha((int) (fraction * 255));
-//                        img1.getBackground().setAlpha(0);
-//                    }else{
-//
-//                    }
-                }
             }
 
             @Override
