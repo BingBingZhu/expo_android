@@ -1,4 +1,4 @@
-package com.zolad.gl.base;
+package com.gl.base;
 
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GLNeedGeometry {
+public class BottomArcsGLGeometry {
     private static final float preAngle = 1f;
     private RectF mViewPortGLBounds;
 

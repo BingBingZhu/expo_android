@@ -1,4 +1,4 @@
-package com.zolad.gl.interfaces;
+package com.gl.interfaces;
 
 import android.graphics.SurfaceTexture;
 

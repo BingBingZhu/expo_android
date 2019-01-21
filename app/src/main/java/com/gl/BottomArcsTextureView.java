@@ -1,29 +1,29 @@
-package com.zolad.gl;
+package com.gl;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.util.AttributeSet;
 
-import com.zolad.gl.base.GLTextureView;
-import com.zolad.gl.base.MultiSampleEGLConfigChooser;
-import com.zolad.gl.interfaces.SurfaceListener;
-import com.zolad.gl.renders.NeedGLRenderer;
+import com.gl.base.GLTextureView;
+import com.gl.base.MultiSampleEGLConfigChooser;
+import com.gl.interfaces.SurfaceListener;
+import com.gl.renders.BottomArcsGLRenderer;
 
-public class NeedTextureView extends GLTextureView {
+public class BottomArcsTextureView extends GLTextureView {
 
-    private NeedGLRenderer needGLRenderer;
+    private BottomArcsGLRenderer bottomArcsGLRenderer;
     private SurfaceTextureListener mSurfaceTextureListener;
 
-    public NeedTextureView(Context context) {
+    public BottomArcsTextureView(Context context) {
         this( context, null );
     }
 
-    public NeedTextureView(Context context, AttributeSet attrs) {
+    public BottomArcsTextureView(Context context, AttributeSet attrs) {
         this( context, attrs, 0 );
     }
 
 
-    public NeedTextureView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BottomArcsTextureView(Context context, AttributeSet attrs, int defStyleAttr) {
         super( context, attrs, defStyleAttr );
         setConfigAndRenderer();
     }
@@ -32,10 +32,10 @@ public class NeedTextureView extends GLTextureView {
         setEGLContextClientVersion( 2 );
         MultiSampleEGLConfigChooser chooser = new MultiSampleEGLConfigChooser();
         setEGLConfigChooser( chooser );
-        needGLRenderer = new NeedGLRenderer( this );
-        needGLRenderer.setUsesCoverageAa( chooser.usesCoverageAa() );
+        bottomArcsGLRenderer = new BottomArcsGLRenderer( this );
+        bottomArcsGLRenderer.setUsesCoverageAa( chooser.usesCoverageAa() );
         setSurfaceListener( surfaceListener );
-        setRenderer( needGLRenderer );
+        setRenderer( bottomArcsGLRenderer );
         setRenderMode( RENDERMODE_WHEN_DIRTY );
         setOpaque( false );
     }
@@ -72,15 +72,15 @@ public class NeedTextureView extends GLTextureView {
     }
 
     public void setCornerRadius(float radius) {
-        needGLRenderer.setCornerRadiusAndArrow( radius );
+        bottomArcsGLRenderer.setCornerRadiusAndArrow( radius );
     }
 
     public void setSurfaceListener(SurfaceListener provider) {
-        needGLRenderer.setSurfaceListener( provider );
+        bottomArcsGLRenderer.setSurfaceListener( provider );
     }
 
     public SurfaceTexture getRealSurfaceTexture() {
-        return needGLRenderer.getSurfaceTexture();
+        return bottomArcsGLRenderer.getSurfaceTexture();
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -12,7 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.zolad.gl.NeedTextureView;
+import com.expo.base.utils.LogUtils;
+import com.gl.BottomArcsTextureView;
 
 import java.io.IOException;
 import java.util.List;
@@ -92,8 +94,8 @@ public class CameraManager implements ICameraManager {
                 mCamera.setPreviewDisplay( ((SurfaceView) mDisplayView).getHolder() );
                 mCamera.startPreview();
             } else if (mDisplayView instanceof TextureView) {
-                if (mDisplayView instanceof NeedTextureView) {
-                    mCamera.setPreviewTexture( ((NeedTextureView) mDisplayView).getRealSurfaceTexture() );
+                if (mDisplayView instanceof BottomArcsTextureView) {
+                    mCamera.setPreviewTexture( ((BottomArcsTextureView) mDisplayView).getRealSurfaceTexture() );
                 } else {
                     mCamera.setPreviewTexture( ((TextureView) mDisplayView).getSurfaceTexture() );
                 }

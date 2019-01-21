@@ -1,4 +1,4 @@
-package com.zolad.gl.base;
+package com.gl.base;
 import android.util.Log;
 
 import javax.microedition.khronos.egl.EGL10;

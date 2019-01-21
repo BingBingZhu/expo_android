@@ -3,7 +3,6 @@ package com.expo.module.map;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.hardware.Camera;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +13,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
@@ -62,10 +60,10 @@ import com.expo.utils.LanguageUtil;
 import com.expo.widget.CustomDefaultDialog;
 import com.expo.widget.MultiDirectionSlidingDrawer;
 import com.expo.widget.X5WebView;
+import com.gl.BottomArcsTextureView;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
-import com.zolad.gl.NeedTextureView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,7 +92,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     @BindView(R.id.web_view)
     X5WebView mWebView;
     @BindView(R.id.texture_view)
-    NeedTextureView mTextureView;
+    BottomArcsTextureView mTextureView;
     @BindView(R.id.gt_navi_tips)
     TextView mTvTips;
     @BindView(R.id.img_module_show)
@@ -174,13 +172,15 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mMapView.onCreate( savedInstanceState );
         //地图中心点
         mCenterX = getResources().getDisplayMetrics().widthPixels / 2;
-        mCenterY = (int) (getResources().getDisplayMetrics().heightPixels * 0.85f);
+        mCenterY = (int) (getResources().getDisplayMetrics().heightPixels * 0.95f);
         //头像
         mPhotoSize = getResources().getDimensionPixelSize( R.dimen.dms_54 );
-//        mCameraManager = new CameraManager();
-//        mCameraManager.setFacing( true );
-//        mTextureView.setCornerRadius( getResources().getDisplayMetrics().widthPixels * 1.5f );
-//        mCameraManager.setDisplayView( mTextureView );
+        int previewHeight = computePreviewHeight();
+        mSlidingDrawerView.getLayoutParams().height = previewHeight;
+        mCameraManager = new CameraManager();
+        mCameraManager.setFacing( true );
+        mTextureView.setCornerRadius( getResources().getDisplayMetrics().widthPixels * 1.5f );
+        mCameraManager.setDisplayView( mTextureView );
         initMapNaviView();
         initPoiSearch();
         mVenue = getIntent().getParcelableExtra( Constants.EXTRAS.EXTRAS );
@@ -188,6 +188,21 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         initSlidingDrawer();
         initWebView();
         MediaPlayerManager.getInstence().setListener( null );
+    }
+
+    private int computePreviewHeight() {
+        int previewHeight;
+        int screenWidth = getResources().getDisplayMetrics().widthPixels;
+        int screenHeight = getResources().getDisplayMetrics().heightPixels;
+        float screenRatio = (float) screenHeight / screenWidth;
+        if (screenRatio >= 1.9) {
+            previewHeight = (int) (screenWidth * 1.666667f);
+        } else if (screenRatio >= 1.6) {
+            previewHeight = (int) (screenWidth * 1.222223f);
+        } else {
+            previewHeight = screenWidth;
+        }
+        return previewHeight;
     }
 
     @Override
@@ -224,7 +239,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private void initSlidingDrawer() {
         if (PrefsHelper.getBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true )) {
             mSlidingDrawerView.open();
-//            mCameraManager.startPreview();
+            mCameraManager.startPreview();
             updateMapStatue( true );
             mImgNavigationShow.setVisibility( View.GONE );
         } else {
@@ -232,14 +247,14 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mImgNavigationShow.setVisibility( View.VISIBLE );
         }
         mSlidingDrawerView.setOnDrawerCloseListener( () -> {
-//            mCameraManager.stopPreview();
+            mCameraManager.stopPreview();
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false );
             updateMapStatue( false );
             mImgNavigationShow.setVisibility( View.VISIBLE );
             mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
         } );
         mSlidingDrawerView.setOnDrawerOpenListener( () -> {
-//            mCameraManager.startPreview();
+            mCameraManager.startPreview();
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true );
             updateMapStatue( true );
             mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );

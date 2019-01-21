@@ -1,4 +1,4 @@
-package com.zolad.gl.renders;
+package com.gl.renders;
 
 import android.graphics.Point;
 import android.graphics.RectF;
@@ -8,9 +8,9 @@ import android.opengl.Matrix;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.zolad.gl.base.GLNeedGeometry;
-import com.zolad.gl.base.GLTextureView;
-import com.zolad.gl.interfaces.SurfaceListener;
+import com.gl.base.BottomArcsGLGeometry;
+import com.gl.base.GLTextureView;
+import com.gl.interfaces.SurfaceListener;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -20,9 +20,9 @@ import java.nio.ShortBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class NeedGLRenderer implements GLTextureView.Renderer, SurfaceTexture.OnFrameAvailableListener {
+public class BottomArcsGLRenderer implements GLTextureView.Renderer, SurfaceTexture.OnFrameAvailableListener {
 
-    private static String TAG = NeedGLRenderer.class.getSimpleName();
+    private static String TAG = BottomArcsGLRenderer.class.getSimpleName();
 
     private static final int FLOAT_SIZE_BYTES = 4;
     private static final int SHORT_SIZE_BYTES = 2;
@@ -59,6 +59,7 @@ public class NeedGLRenderer implements GLTextureView.Renderer, SurfaceTexture.On
     private int ustMatrixHandle;
     private int aPositionHandle;
     private int aTextureHandle;
+    private int mColorHandle;
 
     private static final int GL_TEXTURE_EXTERNAL_OES = 0x00008d65;
 
@@ -73,19 +74,19 @@ public class NeedGLRenderer implements GLTextureView.Renderer, SurfaceTexture.On
     private FloatBuffer triangleVertices;
     private ShortBuffer triangleIndices;
     private float radius;
-    private GLNeedGeometry roundedGeometry;
+    private BottomArcsGLGeometry roundedGeometry;
     private final Point viewPortSize = new Point();
     private final RectF viewPortGLBounds;
     private boolean usesCoverageAa = false;
     private boolean arrowDirectionLeft = false;
     private SurfaceListener surfaceListener;
 
-    public NeedGLRenderer(@NonNull GLTextureView view) {
-        this( view, new GLNeedGeometry(), new RectF( -1, 1, 1, -1 ) );
+    public BottomArcsGLRenderer(@NonNull GLTextureView view) {
+        this( view, new BottomArcsGLGeometry(), new RectF( -1, 1, 1, -1 ) );
     }
 
-    public NeedGLRenderer(@NonNull GLTextureView view, @NonNull GLNeedGeometry roundedGeometry,
-                          @NonNull RectF viewPortGLBounds) {
+    public BottomArcsGLRenderer(@NonNull GLTextureView view, @NonNull BottomArcsGLGeometry roundedGeometry,
+                                @NonNull RectF viewPortGLBounds) {
         glTextureView = view;
         this.roundedGeometry = roundedGeometry;
         this.viewPortGLBounds = viewPortGLBounds;
@@ -116,7 +117,7 @@ public class NeedGLRenderer implements GLTextureView.Renderer, SurfaceTexture.On
     }
 
     private void updateVertexData() {
-        final GLNeedGeometry.GeometryArrays arrays =
+        final BottomArcsGLGeometry.GeometryArrays arrays =
                 roundedGeometry.generateVertexData( radius, viewPortGLBounds, viewPortSize );
         triangleVerticesData = arrays.triangleVertices;
         triangleIndicesData = arrays.triangleIndices;

@@ -1,4 +1,4 @@
-package com.zolad.gl.base;
+package com.gl.base;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -11,7 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.View;
 
-import com.zolad.gl.egl.EGLLogWrapper;
+import com.gl.egl.EGLLogWrapper;
 
 import java.io.Writer;
 import java.lang.ref.WeakReference;
