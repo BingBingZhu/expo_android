@@ -146,6 +146,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
             case MSG_AUTH_COMPLETE:
                 //授权成功
                 mView.showShort( R.string.authorization_success );
+                mView.showLoadingView();
                 Object[] objs = (Object[]) msg.obj;
                 String platform = (String) objs[0];
                 verifyThirdState( platform );
@@ -177,6 +178,7 @@ public class LoginPresenterImpl extends LoginContract.Presenter implements Platf
         Http.request( new ResponseCallback<CheckThirdIdRegisterStateResp>() {
             @Override
             protected void onResponse(CheckThirdIdRegisterStateResp rsp) {
+                mView.hideLoadingView();
                 if (rsp.state == 0)          // 未注册过
                     mView.toBindPhone( platform );
                 else if (rsp.state == 1)    // 已注册过

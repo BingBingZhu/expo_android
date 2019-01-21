@@ -24,20 +24,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dms_360"
-                android:background="@mipmap/home_banner"
+                android:background="@mipmap/ico_on_line_home"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="@dimen/dms_120"
-                    android:layout_height="@dimen/dms_120"
+                    android:layout_width="@dimen/dms_126"
+                    android:layout_height="@dimen/dms_126"
+                    app:roundAsCircle="true"
                     app:placeholderImage="@mipmap/home_icon"
                     app:roundingBorderColor="@color/green_02cd9b"
                     app:roundingBorderWidth="@dimen/dms_2" />
 
                 <TextView
                     style="@style/TextSizeWhite12"
-                    android:layout_marginTop="@dimen/dms_40"
+                    android:layout_marginTop="@dimen/dms_32"
                     android:text="@string/look_in_home"
                     android:textColor="@color/white_f5" />
             </LinearLayout>
@@ -51,10 +52,11 @@
             <com.expo.widget.laminatedbanner.LaminatedBannerView
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="223dp"
                 android:layout_marginTop="10dp"
                 android:paddingTop="@dimen/dms_10"
                 android:paddingBottom="@dimen/dms_10"
+                android:layout_marginBottom="@dimen/dms_14"
                 android:gravity="center_vertical"
                 app:coverWidth="100"
                 app:open_mz_mode="true"
@@ -71,20 +73,13 @@
                     style="@style/online_expo_item_title"
                     android:layout_marginTop="@dimen/dms_70"
                     android:text="@string/expo_culture" />
-
-                <RelativeLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/online_expo_recycler_culture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dms_30"
                     android:layout_marginTop="@dimen/dms_26"
-                    android:layout_marginRight="@dimen/dms_30">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/online_expo_recycler_culture"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </RelativeLayout>
-
+                    android:layout_marginRight="@dimen/dms_30" />
                 <com.hedan.textdrawablelibrary.TextViewDrawable
                     android:id="@+id/online_expo_exchange"
                     style="@style/TextSize12"
@@ -100,7 +95,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dms_20"
                 android:background="@android:color/white"
                 android:orientation="vertical">
@@ -109,19 +104,11 @@
                     style="@style/online_expo_item_title"
                     android:layout_marginTop="@dimen/dms_30"
                     android:text="@string/online_guide" />
-
-                <RelativeLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/online_expo_recycler_guide"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dms_30"
-                    android:layout_marginTop="@dimen/dms_26"
-                    android:layout_marginRight="@dimen/dms_30">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/online_expo_recycler_guide"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </RelativeLayout>
+                    android:layout_marginTop="@dimen/dms_26" />
             </LinearLayout>
         </LinearLayout>
 

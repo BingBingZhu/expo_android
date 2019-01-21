@@ -171,18 +171,18 @@
             android:layout_marginBottom="@dimen/dms_80">
 
             <ImageView
-                android:id="@+id/login_wechat"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@mipmap/ico_wechat_login" />
-
-            <ImageView
                 android:id="@+id/login_qq"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@mipmap/ico_qq_login" />
+
+            <ImageView
+                android:id="@+id/login_wechat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/ico_wechat_login" />
 
             <ImageView
                 android:id="@+id/login_microblog"
