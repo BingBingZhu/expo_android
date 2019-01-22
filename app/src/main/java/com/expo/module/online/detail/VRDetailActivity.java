@@ -15,7 +15,6 @@ import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.widget.VRImageView;
 import com.expo.module.online.detail.widget.VRInterfaceView;
 import com.expo.module.online.detail.widget.VRVideoView;
-import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
@@ -94,7 +93,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     }
 
     public void showVrView() {
-        if (StringUtils.equals(mVrInfo.getType(), "2")) {
+        if (StringUtils.equals(mVrInfo.getType(), "0")) {
             mVRView = new VRVideoView(this);
             mVrVideo.setVisibility(View.GONE);
             if (StringUtils.isEmpty(mVrInfo.getLinkPanResId()))
