@@ -111,7 +111,11 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
             @Override
             public void onClick() {
                 super.onClick();
-                mVrVideoView.fullScreenDialog.setIsShowControl(!mVrVideoView.fullScreenDialog.mIsShowControl);
+                if (mVrVideoView.getDisplayMode() == 3) {
+                    mVrVideoView.fullScreenDialog.setIsShowControl(false);
+                } else {
+                    mVrVideoView.fullScreenDialog.setIsShowControl(!mVrVideoView.fullScreenDialog.mIsShowControl);
+                }
             }
 
             /**
@@ -178,6 +182,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     public void showFullSceen() {
         mVrVideoView.setDisplayMode(2);
         mVrVideoView.fullScreenDialog.setMaxDuration((int) mVrVideoView.getDuration());
+        mVrVideoView.fullScreenDialog.setIsShowControl(true);
     }
 
     public void showNormalSceen() {
@@ -185,6 +190,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     }
 
     public void showVrSceen() {
+        mVrVideoView.fullScreenDialog.setIsShowControl(false);
         mVrVideoView.setDisplayMode(3);
 
     }
