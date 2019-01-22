@@ -12,15 +12,14 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
-import com.expo.utils.wifi.WifiUtil;
+import com.expo.entity.VrInfo;
+import com.expo.utils.CommUtils;
 import com.google.vr.sdk.widgets.common.FullScreenDialog;
 import com.google.vr.sdk.widgets.video.VrVideoEventListener;
 import com.google.vr.sdk.widgets.video.VrVideoView;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-
-import butterknife.BindView;
 
 public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, VRInterfaceView {
 
@@ -37,7 +36,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     TextView mNoWifiPlay;
 
     boolean mIsPlay;
-    String mUrl;
+    VrInfo mVrInfo;
 
     public VRVideoView(Context context) {
         init(context);
@@ -171,7 +170,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
                 showFullSceen();
                 break;
             case R.id.no_wifi_play:
-                startPlay(mUrl);
+                startPlay(CommUtils.getFullUrl(mVrInfo.getUrl()));
                 break;
         }
     }
@@ -190,11 +189,11 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
 
     }
 
-    public void setUrl(String url) {
-        mUrl = url;
+    public void setVrInfo(VrInfo vrInfo) {
+        mVrInfo = vrInfo;
         if (NetworkUtils.isWifiConnected()) {
             mNoWifiLayout.setVisibility(View.GONE);
-            startPlay(url);
+            startPlay(CommUtils.getFullUrl(vrInfo.getUrl()));
         } else {
             mNoWifiLayout.setVisibility(View.VISIBLE);
         }

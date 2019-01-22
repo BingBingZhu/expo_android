@@ -14,7 +14,11 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.LogUtils;
 import com.expo.contract.VRImageContract;
+import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.widget.VRImageView;
+import com.expo.utils.CommUtils;
+import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 import com.expo.widget.AppBarView;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.squareup.picasso.Picasso;
@@ -27,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class VRImageActivity extends BaseActivity implements VRImageContract.View {
+public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> implements VRImageContract.View {
     @BindView(R.id.vr_image_title)
     AppBarView mAppBarView;
     @BindView(R.id.vr_image_recycler)
@@ -39,7 +43,7 @@ public class VRImageActivity extends BaseActivity implements VRImageContract.Vie
 
     CommonAdapter mAdapter;
 
-    List<String> mData;
+    List<VrInfo> mData;
     View mSelectView;
 
     VRImageView mVRView;
@@ -56,34 +60,32 @@ public class VRImageActivity extends BaseActivity implements VRImageContract.Vie
         initTitleRightTextView();
         mAppBarView.setOnClickListener(v -> finish());
 
+        VrInfo vrInfo = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
+
         mVRView = new VRImageView(this);
         mData = new ArrayList<>();
-        mData.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547707751782&di=ffa3185875f6d3be3c94a6811d8f7317&imgtype=0&src=http%3A%2F%2Fpic1.16pic.com%2F00%2F50%2F47%2F16pic_5047893_b.jpg");
-        mData.add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1745972916,2431690669&fm=26&gp=0.jpg");
-        mData.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3469548459,432454939&fm=26&gp=0.jpg");
-        mData.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547724031815&di=18361a98cc18c075da6232b4052eda99&imgtype=0&src=http%3A%2F%2Fimg4.dwstatic.com%2Ftv%2F1807%2F394814443465%2F1530859743543.jpg");
-        mData.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3888038808,1108989126&fm=26&gp=0.jpg");
-        mData.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548318771&di=c68decc65851ee97c28966ceed32eb1d&imgtype=jpg&er=1&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F771e9c07ddb2a292da982f7b4d1cfc3a57dd979e.jpg");
-        mRvRecycler.setAdapter(mAdapter = new CommonAdapter<String>(this, R.layout.item_vr_image, mData) {
+        mRvRecycler.setAdapter(mAdapter = new CommonAdapter<VrInfo>(this, R.layout.item_vr_image, mData) {
             @Override
-            protected void convert(ViewHolder holder, String o, int position) {
-                Picasso.with(VRImageActivity.this).load(mData.get(position)).into((ImageView) holder.getView(R.id.item_vr_img));
+            protected void convert(ViewHolder holder, VrInfo o, int position) {
+                Picasso.with(VRImageActivity.this).load(CommUtils.getFullUrl(mData.get(position).getPic())).into((ImageView) holder.getView(R.id.item_vr_img));
                 holder.itemView.setOnClickListener(v -> {
                     if (mSelectView != null)
                         mSelectView.setSelected(false);
                     mSelectView = v;
                     mSelectView.setSelected(true);
-                    mVRView.setUrl(mData.get(position));
+                    mVRView.setVrInfo(mData.get(position));
+                    mAppBarView.setTitle(LanguageUtil.chooseTest(mData.get(position).getCaption(), mData.get(position).getCaptionEn()));
                 });
             }
 
         });
+        mPresenter.loadVrRecommend(vrInfo);
         mRvRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRvRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mRvRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_36)));
 
         mFrame.addView(mVRView.getVrVideoView());
-        mVRView.setUrl(mData.get(0));
+        mVRView.setVrInfo(vrInfo);
         mVRView.mFullScreen.setVisibility(View.GONE);
         mTvShow.setSelected(true);
         mRvRecycler.setVisibility(View.VISIBLE);
@@ -115,8 +117,10 @@ public class VRImageActivity extends BaseActivity implements VRImageContract.Vie
         }
     }
 
-    public static void startActivity(Context context) {
-        context.startActivity(new Intent(context, VRImageActivity.class));
+    public static void startActivity(Context context, VrInfo vrInfo) {
+        Intent intent = new Intent(context, VRImageActivity.class);
+        intent.putExtra(Constants.EXTRAS.EXTRAS, vrInfo);
+        context.startActivity(intent);
     }
 
     public void initTitleRightTextView() {
@@ -132,5 +136,13 @@ public class VRImageActivity extends BaseActivity implements VRImageContract.Vie
 //                    mPlatformActionListener);
             LogUtils.d("Tag", "share");
         });
+    }
+
+    @Override
+    public void freshVrList(List<VrInfo> list) {
+        if (list != null) ;
+        mData.clear();
+        mData.addAll(list);
+        mAdapter.notifyDataSetChanged();
     }
 }

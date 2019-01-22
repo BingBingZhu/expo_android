@@ -51,12 +51,9 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mCanGoOther = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRA_CAN_GO_OTHER, false);
-        mPresenter.setVrInfo(getIntent().getIntExtra(Constants.EXTRAS.EXTRA_ID, 0));
+        mVrInfo = mPresenter.getVrInfo(getIntent().getStringExtra(Constants.EXTRAS.EXTRA_ID));
 
-        showVrView();
-
-        mFlVrFrame.addView(mVRView.getVrVideoView());
-
+        getVrInfo();
     }
 
     @Override
@@ -64,7 +61,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
         return true;
     }
 
-    public static void startActivity(Context context, int id, boolean canGoOther) {
+    public static void startActivity(Context context, String id, boolean canGoOther) {
         Intent intent = new Intent(context, VRDetailActivity.class);
         intent.putExtra(Constants.EXTRAS.EXTRA_ID, id);
         intent.putExtra(Constants.EXTRAS.EXTRA_CAN_GO_OTHER, canGoOther);
@@ -73,8 +70,10 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
 
     @Override
     protected void onDestroy() {
-        mVRView.onDestroy();
-        mVRView = null;
+        if (mVRView != null) {
+            mVRView.onDestroy();
+            mVRView = null;
+        }
         super.onDestroy();
     }
 
@@ -86,7 +85,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     @OnClick({R.id.vr_detail_img, R.id.vr_detail_video})
     public void changeVr(View view) {
         if (mCanGoOther)
-            VRDetailActivity.startActivity(this, mVrInfo.getId(), false);
+            VRDetailActivity.startActivity(this, mVrInfo.getLinkPanResId(), false);
         else
             finish();
     }
@@ -96,31 +95,35 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     }
 
     public void showVrView() {
-        boolean hasOther = false;
         if (StringUtils.equals(mVrInfo.getType(), "2")) {
             mVRView = new VRVideoView(this);
             mVrVideo.setVisibility(View.GONE);
-            if (hasOther)
+            if (StringUtils.isEmpty(mVrInfo.getLinkPanResId()))
+                mVrImg.setVisibility(View.GONE);
+            else
                 mVrImg.setVisibility(View.VISIBLE);
         } else {
             mVRView = new VRImageView(this);
             mVrImg.setVisibility(View.GONE);
-            if (hasOther)
+            if (StringUtils.isEmpty(mVrInfo.getLinkPanResId()))
+                mVrVideo.setVisibility(View.GONE);
+            else
                 mVrVideo.setVisibility(View.VISIBLE);
         }
+        mFlVrFrame.addView(mVRView.getVrVideoView());
     }
 
+    public void getVrInfo() {
+        if (mVrInfo == null) {
+            finish();
+            return;
+        }
 
-    @Override
-    public void freshVrInfo(VrInfo vrInfo) {
-        if (vrInfo == null) finish();
-
-        mVrInfo = vrInfo;
-        mTvName.setText(LanguageUtil.chooseTest(vrInfo.getCaption(), vrInfo.getCaptionEn()));
+        mTvName.setText(LanguageUtil.chooseTest(mVrInfo.getCaption(), mVrInfo.getCaptionEn()));
         mTvScans.setText(getString(R.string.scans_scans, 123));
-        mTvTime.setText(getString(R.string.play_times, vrInfo.getExtAttr()));
+        mTvTime.setText(getString(R.string.play_times, mVrInfo.getExtAttr()));
 
         showVrView();
-        mVRView.setUrl(CommUtils.getFullUrl(vrInfo.getUrl()));
+        mVRView.setVrInfo(mVrInfo);
     }
 }

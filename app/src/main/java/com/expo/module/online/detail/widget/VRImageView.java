@@ -13,7 +13,9 @@ import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
+import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.VRImageActivity;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.MD5Util;
 import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
@@ -36,7 +38,7 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
     public ImageView mFullScreen;
     ImageTask mImageTask;
 
-    String mCurrentUrl;
+    VrInfo mVrInfo;
 
     public VRImageView(Context context) {
         init(context);
@@ -73,8 +75,7 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
     }
 
     public void showFullSceen() {
-        VRImageActivity.startActivity(mContext);
-
+        VRImageActivity.startActivity(mContext, mVrInfo);
     }
 
     public void showNormalSceen() {
@@ -83,13 +84,12 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
 
     public void showVrSceen() {
         mPanoramaView.setDisplayMode(3);
-
     }
 
-    public void setUrl(String url) {
-        mCurrentUrl = url;
-        if (!getImage(url)) {
-            new ImageTask().execute(url);
+    public void setVrInfo(VrInfo vrInfo) {
+        mVrInfo = vrInfo;
+        if (!getImage(vrInfo.getUrl())) {
+            new ImageTask().execute(CommUtils.getFullUrl(vrInfo.getUrl()));
         }
     }
 
@@ -150,7 +150,7 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
             super.onPostExecute(bitmap);
             if (bitmap != null) {
                 ImageUtils.save(bitmap, Constants.Config.ROOT_PATH + File.separator + Constants.Config.TEMP_PATH + MD5Util.getMD5String(url), Bitmap.CompressFormat.JPEG);
-                if (!StringUtils.equals(url, mCurrentUrl)) return;
+                if (!StringUtils.equals(url, CommUtils.getFullUrl(mVrInfo.getUrl()))) return;
                 VrPanoramaView.Options options = new VrPanoramaView.Options();
                 options.inputType = VrPanoramaView.Options.TYPE_MONO;
                 //3.1.监听加载过程
