@@ -52,7 +52,6 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     protected void onInitView(Bundle savedInstanceState) {
         mCanGoOther = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRA_CAN_GO_OTHER, false);
         mVrInfo = mPresenter.getVrInfo(getIntent().getStringExtra(Constants.EXTRAS.EXTRA_ID));
-
         getVrInfo();
     }
 
