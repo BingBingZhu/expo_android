@@ -111,7 +111,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         @Override
         public void onScroll(int scrollY) {
             int color = Color.argb((int) Math.min(0xff,
-                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 0, 203, 153);
+                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 2, 205, 155);
             mHtTitle.setBackgroundColor(color);
         }
     };

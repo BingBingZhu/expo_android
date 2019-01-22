@@ -57,9 +57,9 @@ public class OnlineHomePresenterImpl extends OnlineHomeContract.Presenter {
                 List<VrInfo> tourVrs = mDao.query(VrInfo.class, new QueryParams().add("eq", "top_kind", TOP_KIND_TOUR));
                 new Handler(Looper.getMainLooper())
                         .post(() -> {
-                            mView.loadLiveDataRes(liveVrs);
-                            mView.loadCultureDataRes(cultureVrs);
-                            mView.loadTourDataRes(tourVrs);
+                            mView.loadLiveDataRes(null == liveVrs ? new ArrayList<VrInfo>() : liveVrs);
+                            mView.loadCultureDataRes(null == cultureVrs ? new ArrayList<VrInfo>() : cultureVrs);
+                            mView.loadTourDataRes(null == tourVrs ? new ArrayList<VrInfo>() : tourVrs);
                         });
             }
         }.start();

@@ -26,7 +26,7 @@ public class VrLableInfo implements Parcelable {
     private int idx;
     @DatabaseField(columnName = "link_id")
     @SerializedName("linkid")
-    private int linkId;
+    private Long linkId;
     @DatabaseField(columnName = "update_time")
     @SerializedName("updatetime")
     private String updateTime;
@@ -74,11 +74,11 @@ public class VrLableInfo implements Parcelable {
         this.idx = idx;
     }
 
-    public int getLinkId() {
+    public Long getLinkId() {
         return linkId;
     }
 
-    public void setLinkId(int linkId) {
+    public void setLinkId(Long linkId) {
         this.linkId = linkId;
     }
 
@@ -96,7 +96,7 @@ public class VrLableInfo implements Parcelable {
         createTime = in.readString();
         id = in.readLong();
         idx = in.readInt();
-        linkId = in.readInt();
+        linkId = in.readLong();
         updateTime = in.readString();
     }
 
@@ -124,7 +124,7 @@ public class VrLableInfo implements Parcelable {
         dest.writeString(createTime);
         dest.writeLong(id);
         dest.writeInt(idx);
-        dest.writeInt(linkId);
+        dest.writeLong(linkId);
         dest.writeString(updateTime);
     }
 }

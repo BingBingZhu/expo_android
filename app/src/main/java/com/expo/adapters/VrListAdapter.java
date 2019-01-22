@@ -47,8 +47,7 @@ public class VrListAdapter extends RecyclerView.Adapter<VrListAdapter.ViewHolder
         VrInfo vr = mVrInfos.get( position );
         holder.img.setImageURI( Constants.URL.FILE_BASE_URL + vr.getPic() );
         holder.tvName.setText( LanguageUtil.chooseTest( vr.getCaption(), vr.getCaptionEn() ) );
-//        holder.tvRecommend.setVisibility( vr.getRecommend() == 1 ? View.VISIBLE : View.GONE );
-//        holder.tvRemark.setText( LanguageUtil.chooseTest( vr.getRemark(), vr.getEnRemark() ) );
+        holder.tvViewCount.setText(vr.getViewCount()+"");
         holder.root.setOnClickListener( v -> WebTemplateActivity.startActivity( mContext, vr.getId() ) );
     }
 
@@ -62,16 +61,14 @@ public class VrListAdapter extends RecyclerView.Adapter<VrListAdapter.ViewHolder
         private View root;
         private SimpleDraweeView img;
         private TextView tvName;
-        private TextView tvRecommend;
-        private TextView tvRemark;
+        private TextView tvViewCount;
 
         public ViewHolder(View v) {
             super( v );
-            root = v.findViewById( R.id.ency_item_root );
-            img = v.findViewById( R.id.ency_item_img );
-            tvName = v.findViewById( R.id.ency_item_name );
-            tvRecommend = v.findViewById( R.id.ency_item_recommend );
-            tvRemark = v.findViewById( R.id.ency_item_remark );
+            root = v.findViewById( R.id.vr_list_item_root );
+            img = v.findViewById( R.id.vr_list_item_img );
+            tvName = v.findViewById( R.id.vr_list_item_name );
+            tvViewCount = v.findViewById( R.id.vr_list_item_view_count );
         }
     }
 }

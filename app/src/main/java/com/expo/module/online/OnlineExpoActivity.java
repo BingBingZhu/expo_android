@@ -207,7 +207,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         @Override
         public void onScroll(int scrollY) {
             int backgroundColor = Color.argb((int) Math.min(0xff,
-                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 0, 203, 153);
+                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 2, 205, 155);
             int textColor = Color.argb((int) Math.min(0xff,
                     Math.max(Float.valueOf(scrollY), 0.0f) / 2), 255, 255, 255);
             mTitle.setBackgroundColor(backgroundColor);

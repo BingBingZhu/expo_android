@@ -3,6 +3,7 @@ package com.expo.contract.presenter;
 import com.expo.contract.ListContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.VrInfo;
 
 import java.util.List;
 
@@ -24,5 +25,13 @@ public class ListPresenterImpl extends ListContract.Presenter {
                 .add( "orderBy", "recommend", false )
                 .add( "orderBy", "idx", true ) );
         mView.addEncysToList( data );
+    }
+
+    @Override
+    public void loadVrsByType(Long tabId, int page) {
+        List<VrInfo> data = mDao.query( VrInfo.class, new QueryParams()
+                .add( "eq", "top_kind", tabId )
+                .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT ) );
+        mView.addVrsToList( data );
     }
 }

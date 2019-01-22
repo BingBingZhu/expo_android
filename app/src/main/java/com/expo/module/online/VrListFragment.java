@@ -65,7 +65,7 @@ public class VrListFragment extends BaseFragment<ListContract.Presenter> impleme
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
                 page++;
-                mPresenter.loadEncyByType(mTab.getId(), page);
+                mPresenter.loadVrsByType(mTab.getId(), page);
             }
 
             @Override

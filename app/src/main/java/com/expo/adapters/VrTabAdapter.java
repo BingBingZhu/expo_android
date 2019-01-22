@@ -36,7 +36,7 @@ public class VrTabAdapter implements Tab {
 
     @Override
     public Long getId() {
-        return mVrLableInfo.getId();
+        return mVrLableInfo.getLinkId();
     }
 
     @Override

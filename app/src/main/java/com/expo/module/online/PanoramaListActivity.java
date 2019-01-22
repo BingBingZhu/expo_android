@@ -44,7 +44,7 @@ public class PanoramaListActivity extends BaseActivity<PanoramaListContract.Pres
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         type = getIntent().getIntExtra(Constants.EXTRAS.EXTRA_PANORAMA_TYPE, 0);
-        setTitle(0, getTitleText(type));
+        setTitle(1, getTitleText(type));
         initTabLayout();
         mAdapter = new TabPagerAdapter( getSupportFragmentManager(), TabPagerAdapter.TYPE_VR_PANORAMA );
         mPagerView.setAdapter( mAdapter );
