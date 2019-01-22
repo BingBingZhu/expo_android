@@ -1,12 +1,8 @@
 package com.expo.contract;
 
-import android.location.Location;
-
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
-import com.expo.entity.RollData;
-import com.expo.entity.Venue;
-import com.expo.entity.VisitorService;
+import com.expo.entity.VrInfo;
 
 import java.util.List;
 
@@ -17,11 +13,17 @@ public interface OnlineHomeContract {
             super(view);
         }
 
-        public abstract void loadRollData();
+        public abstract void loadVrHot();
 
+        public abstract void loadData();
     }
 
     interface View extends IView {
-        void loadRollDataRes(List<RollData> rollDataList);
+
+        void loadLiveDataRes(List<VrInfo> liveVrs);
+
+        void loadCultureDataRes(List<VrInfo> cultureVrs);
+
+        void loadTourDataRes(List<VrInfo> tourVrs);
     }
 }

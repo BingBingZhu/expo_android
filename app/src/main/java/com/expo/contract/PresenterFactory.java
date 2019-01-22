@@ -27,6 +27,7 @@ import com.expo.contract.presenter.MinePresenterImpl;
 import com.expo.contract.presenter.NationalSmsCodePresenterImpl;
 import com.expo.contract.presenter.NavigationPresenterImpl;
 import com.expo.contract.presenter.OnlineHomePresenterImpl;
+import com.expo.contract.presenter.PanoramaListPresenterImpl;
 import com.expo.contract.presenter.ParkMapPresenterImpl;
 import com.expo.contract.presenter.RouteDetailPresenterImpl;
 import com.expo.contract.presenter.RoutesPresenterImpl;
@@ -122,6 +123,8 @@ public class PresenterFactory {
             return new OnlineHomePresenterImpl( (OnlineHomeContract.View) view );
         } else if (view instanceof VRDetailContract.View) {
             return new VRDetailPresenterImpl( (VRDetailContract.View) view );
+        } else if (view instanceof PanoramaListContract.View) {
+            return new PanoramaListPresenterImpl( (PanoramaListContract.View) view );
         }
         throw new UnsupportedOperationException();
     }

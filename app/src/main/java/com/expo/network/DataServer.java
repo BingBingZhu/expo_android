@@ -8,6 +8,7 @@ import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.GetDistinguishPlantList_Rsb;
+import com.expo.network.response.PanResHotResp;
 import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RichTextRsp;
@@ -496,4 +497,14 @@ public interface DataServer {
     @POST("Terminal/GetPanLableList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<VrLableInfoResp> getPanLableList(@Body RequestBody requestBody);
+
+    /**
+     * 获取全景标签资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetPanResHotViews")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<PanResHotResp> getPanResHot(@Body RequestBody requestBody);
 }

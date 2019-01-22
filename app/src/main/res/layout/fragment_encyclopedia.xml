@@ -65,7 +65,6 @@
             app:tabIndicatorHeight="@dimen/dms_4"
             app:tabTextAppearance="@style/tab_text_appearance"
             app:tabSelectedTextColor="@color/color_ency_tab"
-
             app:tabTextColor="@android:color/white" />
     </LinearLayout>
     <android.support.v4.view.ViewPager

@@ -9,17 +9,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.LogUtils;
 import com.expo.contract.OnlineHomeContract;
-import com.expo.entity.RollData;
+import com.expo.entity.VrInfo;
+import com.expo.utils.LanguageUtil;
 import com.expo.widget.RecycleViewDivider;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -43,14 +41,8 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     @BindView(R.id.banner)
     LaminatedBannerView mBanner;
 
-
     CommonAdapter mAdapterCulture;
     CommonAdapter mAdapterGuide;
-
-    List<RollData> mCultureList;
-    List<RollData> mGuideList;
-
-    private static final float EPSINON = 0.00001F;
 
     @Override
     protected int getContentView() {
@@ -59,58 +51,8 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        initCultureView();
-        initGuideView();
-        mPresenter.loadRollData();
-    }
-
-    private void initCultureView() {
-        mCultureList = new ArrayList<>();
-        mAdapterCulture = new CommonAdapter(this, R.layout.item_online_culture, mGuideList) {
-            @Override
-            protected void convert(ViewHolder holder, Object o, int position) {
-
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return mGuideList.size();
-            }
-        };
-
-        mRvCulture.setLayoutManager(new LinearLayoutManager(this));
-        mRvCulture.addItemDecoration(new SpaceDecoration(getResources().getDimensionPixelSize(R.dimen.dms_58)), getResources().getDimensionPixelSize(R.dimen.dms_30));
-        mRvCulture.setAdapter(mAdapterCulture);
-    }
-
-    private void initGuideView() {
-        mGuideList = new ArrayList<>();
-        mAdapterGuide = new CommonAdapter(this, R.layout.item_online_guide, mGuideList) {
-            @Override
-            protected void convert(ViewHolder holder, Object o, int position) {
-
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return mGuideList.size();
-            }
-        };
-
-        mRvGuide.setLayoutManager(new GridLayoutManager(this, 2));
-        mRvGuide.addItemDecoration(new RecycleViewDivider(
-                getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor(R.color.white_f5)));
-        mRvGuide.setAdapter(mAdapterGuide);
+        mPresenter.loadData();
+        mPresenter.loadVrHot();
     }
 
     @Override
@@ -123,7 +65,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     }
 
     @Override
-    public void loadRollDataRes(List<RollData> rollDataList) {
+    public void loadLiveDataRes(List<VrInfo> liveVrs) {     // 世园实景
         mBanner.setIndicatorVisible(false);
         mBanner.setBannerPageClickListener(new LaminatedBannerView.BannerPageClickListener() {
             @Override
@@ -145,10 +87,59 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
             }
         });
         // 设置数据
-        mBanner.setPages(rollDataList, (LaminatedHolderCreator<BannerViewHolder>) () -> new BannerViewHolder());
+        mBanner.setPages(liveVrs, (LaminatedHolderCreator<BannerViewHolder>) () -> new BannerViewHolder());
     }
 
-    public static class BannerViewHolder implements LaminatedViewHolder<RollData> {
+    @Override
+    public void loadCultureDataRes(List<VrInfo> cultureVrs) {       // 文化世园
+        mAdapterCulture = new CommonAdapter(this, R.layout.item_online_culture, cultureVrs) {
+            @Override
+            protected void convert(ViewHolder holder, Object o, int position) {
+
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+            }
+
+            @Override
+            public int getItemCount() {
+                return cultureVrs.size();
+            }
+        };
+
+        mRvCulture.setLayoutManager(new LinearLayoutManager(this));
+        mRvCulture.addItemDecoration(new SpaceDecoration(getResources().getDimensionPixelSize(R.dimen.dms_58)), 0);
+        mRvCulture.setAdapter(mAdapterCulture);
+    }
+
+    @Override
+    public void loadTourDataRes(List<VrInfo> tourVrs) {     // 在线导游
+        mAdapterGuide = new CommonAdapter(this, R.layout.item_online_guide, tourVrs) {
+            @Override
+            protected void convert(ViewHolder holder, Object o, int position) {
+
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+            }
+
+            @Override
+            public int getItemCount() {
+                return tourVrs.size();
+            }
+        };
+
+        mRvGuide.setLayoutManager(new GridLayoutManager(this, 2));
+        mRvGuide.addItemDecoration(new RecycleViewDivider(
+                getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor(R.color.white_f5)));
+        mRvGuide.setAdapter(mAdapterGuide);
+    }
+
+    public static class BannerViewHolder implements LaminatedViewHolder<VrInfo> {
         private SimpleDraweeView imageView;
         private TextView tvName;
         private TextView tvCount;
@@ -164,11 +155,11 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         }
 
         @Override
-        public void onBind(Context context, int position, RollData data) {
+        public void onBind(Context context, int position, VrInfo data) {
             // 数据绑定
             imageView.setImageURI(data.getUrl());
-            tvName.setText(data.getName());
-            tvCount.setText(data.getCount() + "次");
+            tvName.setText(LanguageUtil.chooseTest(data.getCaption(), data.getCaptionEn()));
+            tvCount.setText(data.getViewCount() + "次");
         }
 
     }

@@ -390,4 +390,5 @@
     <string name="expo_vr_detail_img">全景图片</string>
     <string name="expo_vr_detail_video">全景视频</string>
     <string name="expo_vr_detail_sendtable">全景沙盘</string>
+    <string name="data_error">数据类型错误</string>
 </resources>
