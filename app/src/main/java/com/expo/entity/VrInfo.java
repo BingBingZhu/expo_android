@@ -31,7 +31,7 @@ url (string, optional): 资源地址
     * */
 
     @DatabaseField(columnName = "_id", generatedId = true, allowGeneratedIdInsert = true)
-    private int id;
+    private Long id;
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")
     private String caption;
@@ -80,13 +80,15 @@ url (string, optional): 资源地址
     @DatabaseField(columnName = "update_time")
     @SerializedName("updatetime")
     private String updateTime;
+    @DatabaseField(columnName = "view_count")
+    private long viewCount;
 
     protected VrInfo() {
 
     }
 
     protected VrInfo(Parcel in) {
-        id = in.readInt();
+        id = in.readLong();
         caption = in.readString();
         captionEn = in.readString();
         topKind = in.readString();
@@ -124,7 +126,7 @@ url (string, optional): 资源地址
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(caption);
         dest.writeString(captionEn);
         dest.writeString(topKind);
@@ -143,11 +145,11 @@ url (string, optional): 资源地址
         dest.writeString(updateTime);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -277,5 +279,13 @@ url (string, optional): 资源地址
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(long viewCount) {
+        this.viewCount = viewCount;
     }
 }

@@ -12,9 +12,8 @@ public class VRDetailPresenterImpl extends VRDetailContract.Presenter {
     }
 
     @Override
-    public void setVrInfo(int id) {
+    public void setVrInfo(long id) {
         mView.freshVrInfo(mDao.queryById(VrInfo.class, id));
-
     }
 
     @Override

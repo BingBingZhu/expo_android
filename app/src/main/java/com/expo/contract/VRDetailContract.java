@@ -11,12 +11,9 @@ public interface VRDetailContract {
             super(view);
         }
 
-        public abstract void setVrInfo(int id);
+        public abstract void setVrInfo(long id);
 
         public abstract void setVrResViews(int id);
-
-
-
     }
 
     interface View extends IView {
