@@ -3,6 +3,7 @@ package com.expo.module.online;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -15,15 +16,19 @@ import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.OnlineHomeContract;
 import com.expo.entity.VrInfo;
 import com.expo.utils.LanguageUtil;
+import com.expo.widget.AppBarView;
+import com.expo.widget.MyScrollView;
 import com.expo.widget.RecycleViewDivider;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.expo.widget.laminatedbanner.LaminatedBannerView;
 import com.expo.widget.laminatedbanner.holder.LaminatedHolderCreator;
 import com.expo.widget.laminatedbanner.holder.LaminatedViewHolder;
+import com.hedan.textdrawablelibrary.TextViewDrawable;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -31,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presenter> implements OnlineHomeContract.View {
 
@@ -40,9 +46,17 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     RecyclerView mRvGuide;
     @BindView(R.id.banner)
     LaminatedBannerView mBanner;
+    @BindView(R.id.online_expo_title)
+    AppBarView mTitle;
+    @BindView(R.id.online_home_scroll)
+    MyScrollView mSvScroll;
 
     CommonAdapter mAdapterCulture;
     CommonAdapter mAdapterGuide;
+
+    private ArrayList<VrInfo> mLiveVrs;
+    private ArrayList<VrInfo> mCultureVrs;
+    private ArrayList<VrInfo> mTourVrs;
 
     @Override
     protected int getContentView() {
@@ -51,8 +65,30 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        mSvScroll.setOnScrollListener(mScrollListener);
+        mTitle.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
+        mTitle.setBackgroundColor(Color.TRANSPARENT);
+        mTitle.setTitleColor(Color.TRANSPARENT);
         mPresenter.loadData();
         mPresenter.loadVrHot();
+    }
+
+    @OnClick({R.id.online_expo_item_title_scene, R.id.online_expo_item_title_culture, R.id.online_expo_item_title_guide, R.id.title_back})
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.online_expo_item_title_scene:     // 世园实景
+                PanoramaListActivity.startActivity(getContext(), 1, mLiveVrs);
+                break;
+            case R.id.online_expo_item_title_culture:      // 文化世园
+                PanoramaListActivity.startActivity(getContext(), 2, mCultureVrs);
+                break;
+            case R.id.online_expo_item_title_guide:     // 在线导游
+                PanoramaListActivity.startActivity(getContext(), 3, mTourVrs);
+                break;
+            case R.id.title_back:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -66,6 +102,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     public void loadLiveDataRes(List<VrInfo> liveVrs) {     // 世园实景
+        this.mLiveVrs = (ArrayList<VrInfo>) liveVrs;
         mBanner.setIndicatorVisible(false);
         mBanner.setBannerPageClickListener(new LaminatedBannerView.BannerPageClickListener() {
             @Override
@@ -92,6 +129,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     public void loadCultureDataRes(List<VrInfo> cultureVrs) {       // 文化世园
+        this.mCultureVrs = (ArrayList<VrInfo>) cultureVrs;
         mAdapterCulture = new CommonAdapter(this, R.layout.item_online_culture, cultureVrs) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
@@ -116,6 +154,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     public void loadTourDataRes(List<VrInfo> tourVrs) {     // 在线导游
+        this.mTourVrs = (ArrayList<VrInfo>) tourVrs;
         mAdapterGuide = new CommonAdapter(this, R.layout.item_online_guide, tourVrs) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
@@ -163,4 +202,16 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         }
 
     }
+
+    MyScrollView.OnScrollListener mScrollListener = new MyScrollView.OnScrollListener() {
+        @Override
+        public void onScroll(int scrollY) {
+            int backgroundColor = Color.argb((int) Math.min(0xff,
+                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 0, 203, 153);
+            int textColor = Color.argb((int) Math.min(0xff,
+                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 255, 255, 255);
+            mTitle.setBackgroundColor(backgroundColor);
+            mTitle.setTitleColor(textColor);
+        }
+    };
 }

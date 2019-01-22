@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.expo.module.main.encyclopedia.ListFragment;
+import com.expo.module.online.VrListFragment;
 
 import java.util.List;
 
@@ -14,14 +15,23 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Tab> tabs;
     private Bundle bundle;
+    private int dataType;
+    public static final int TYPE_ENCYCLOPEDIA = 1;
+    public static final int TYPE_VR_PANORAMA = 2;
 
-    public TabPagerAdapter(FragmentManager fm) {
+    public TabPagerAdapter(FragmentManager fm, int type) {
         super( fm );
+        this.dataType = type;
     }
 
     @Override
     public Fragment getItem(int position) {
-        ListFragment fragment = new ListFragment();
+        Fragment fragment;
+        if (dataType == TYPE_ENCYCLOPEDIA) {
+            fragment = new ListFragment();
+        }else{
+            fragment = new VrListFragment();
+        }
         Bundle bundle = new Bundle();
         bundle.putParcelable( "tab", tabs.get( position ) );
         fragment.setArguments( bundle );
