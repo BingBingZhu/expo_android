@@ -31,6 +31,7 @@ url (string, optional): 资源地址
     * */
 
     @DatabaseField(columnName = "_id", generatedId = true, allowGeneratedIdInsert = true)
+    @SerializedName("id")
     private Long id;
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")

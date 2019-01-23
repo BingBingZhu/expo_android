@@ -52,6 +52,7 @@ public class OnlineHomePresenterImpl extends OnlineHomeContract.Presenter {
         new Thread() {
             @Override
             public void run() {
+                List<VrInfo> vrs = mDao.query(VrInfo.class, null);
                 List<VrInfo> liveVrs = mDao.query(VrInfo.class, new QueryParams().add("eq", "top_kind", TOP_KIND_LIVE));
                 List<VrInfo> cultureVrs = mDao.query(VrInfo.class, new QueryParams().add("eq", "top_kind", TOP_KIND_CULTURE));
                 List<VrInfo> tourVrs = mDao.query(VrInfo.class, new QueryParams().add("eq", "top_kind", TOP_KIND_TOUR));
