@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="none">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_120"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/dms_50"
+        android:paddingTop="@dimen/dms_30"
+        android:paddingRight="@dimen/dms_50"
+        android:paddingBottom="@dimen/dms_30">
+
+        <ImageView
+            android:id="@+id/expo_activity_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/arrow_right" />
+
+        <ImageView
+            android:id="@+id/expo_activity_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:src="@mipmap/arrow_right" />
+
+        <TextView
+            android:id="@+id/expo_activity_date"
+            style="@style/TextSizeBlack14"
+            android:layout_gravity="center"
+            android:gravity="center" />
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/expo_activity_date_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_160" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dms_30"
+        android:paddingRight="@dimen/dms_30">
+
+        <LinearLayout
+            android:layout_width="@dimen/dms_120"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/LineVertical"
+                android:layout_width="@dimen/dms_10"
+                android:layout_height="@dimen/dms_80" />
+
+            <TextView
+                android:id="@+id/expand_activity_morning"
+                style="@style/TextSizeWhite18"
+                android:layout_width="@dimen/dms_90"
+                android:layout_height="@dimen/dms_90"
+                android:background="@drawable/selector_circle_ef_02cd9b"
+                android:gravity="center"
+                android:text="@string/morning" />
+
+            <ImageView
+                style="@style/LineVertical"
+                android:layout_width="@dimen/dms_10"
+                android:layout_height="@dimen/dms_80" />
+
+            <TextView
+                android:id="@+id/expand_activity_afternoon"
+                style="@style/TextSizeWhite18"
+                android:layout_width="@dimen/dms_90"
+                android:layout_height="@dimen/dms_90"
+                android:background="@drawable/selector_circle_ef_02cd9b"
+                android:gravity="center"
+                android:text="@string/afternoon" />
+
+            <ImageView
+                style="@style/LineVertical"
+                android:layout_width="@dimen/dms_10"
+                android:layout_height="@dimen/dms_80" />
+
+            <TextView
+                android:id="@+id/expand_activity_night"
+                style="@style/TextSizeWhite18"
+                android:layout_width="@dimen/dms_90"
+                android:layout_height="@dimen/dms_90"
+                android:background="@drawable/selector_circle_ef_02cd9b"
+                android:gravity="center"
+                android:text="@string/night" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/expo_activity_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dms_30" />
+    </LinearLayout>
+</LinearLayout>

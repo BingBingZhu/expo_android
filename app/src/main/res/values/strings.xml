@@ -126,6 +126,7 @@
     <string name="title_contact_appointment">预约联系人</string>
     <string name="title_contact_add">添加联系人</string>
     <string name="title_contact_edit">编辑联系人</string>
+    <string name="title_expo_activity">世园活动</string>
 
     <string name="check_string_empty_content">内容不能为空</string>
     <string name="check_string_empty_name">姓名不能为空</string>
@@ -367,4 +368,10 @@
     <string name="think_again_track">再想想</string>
     <string name="share_to">分享到</string>
     <string name="stop_sharing">取消分享</string>
+    <string name="morning">上午</string>
+    <string name="afternoon">下午</string>
+    <string name="night">晚上</string>
+    <string name="activity_time">活动时间</string>
+
+
 </resources>

@@ -11,6 +11,7 @@ import com.expo.contract.presenter.DistinguishPresenterImpl;
 import com.expo.contract.presenter.EncyclopediaSearchPresenterImpl;
 import com.expo.contract.presenter.EncyclopediasPresenterImpl;
 import com.expo.contract.presenter.ExaminePresenterImpl;
+import com.expo.contract.presenter.ExpoActivityPresenterImpl;
 import com.expo.contract.presenter.FeedbackPresenterImpl;
 import com.expo.contract.presenter.FindDetailPresenterImpl;
 import com.expo.contract.presenter.FindListPresenterImpl;
@@ -38,69 +39,70 @@ import com.expo.contract.presenter.TrackPresenterImpl;
 import com.expo.contract.presenter.UserInfoPresenterImpl;
 import com.expo.contract.presenter.WebPresenterImpl;
 import com.expo.contract.presenter.WebTemplatePresenterImpl;
+import com.expo.module.activity.ExpoActivityActivity;
 
 public class PresenterFactory {
     public static IPresenter getPresenter(IView view) {
         if (view instanceof SplashContract.View) {
-            return new SplashPresenterImpl( (SplashContract.View) view );
+            return new SplashPresenterImpl((SplashContract.View) view);
         } else if (view instanceof LoginContract.View) {
-            return new LoginPresenterImpl( (LoginContract.View) view );
+            return new LoginPresenterImpl((LoginContract.View) view);
         } else if (view instanceof HeartBeatContract.View) {
-            return new HeartBeatPresenterImpl( (HeartBeatContract.View) view );
+            return new HeartBeatPresenterImpl((HeartBeatContract.View) view);
         } else if (view instanceof EncyclopediasContract.View) {
-            return new EncyclopediasPresenterImpl( (EncyclopediasContract.View) view );
+            return new EncyclopediasPresenterImpl((EncyclopediasContract.View) view);
         } else if (view instanceof MineContract.View) {
-            return new MinePresenterImpl( (MineContract.View) view );
+            return new MinePresenterImpl((MineContract.View) view);
         } else if (view instanceof NavigationContract.View) {
-            return new NavigationPresenterImpl( (NavigationContract.View) view );
+            return new NavigationPresenterImpl((NavigationContract.View) view);
         } else if (view instanceof RoutesContract.View) {
-            return new RoutesPresenterImpl( (RoutesContract.View) view );
+            return new RoutesPresenterImpl((RoutesContract.View) view);
         } else if (view instanceof HomeContract.View) {
-            return new HomePresenterImpl( (HomeContract.View) view );
+            return new HomePresenterImpl((HomeContract.View) view);
         } else if (view instanceof BindPhoneContract.View) {
-            return new BindPhonePresenterImpl( (BindPhoneContract.View) view );
+            return new BindPhonePresenterImpl((BindPhoneContract.View) view);
         } else if (view instanceof DistinguishContract.View) {
-            return new DistinguishPresenterImpl( (DistinguishContract.View) view );
+            return new DistinguishPresenterImpl((DistinguishContract.View) view);
         } else if (view instanceof EncyclopediaSearchContract.View) {
-            return new EncyclopediaSearchPresenterImpl( (EncyclopediaSearchContract.View) view );
+            return new EncyclopediaSearchPresenterImpl((EncyclopediaSearchContract.View) view);
         } else if (view instanceof FeedbackContract.View) {
-            return new FeedbackPresenterImpl( (FeedbackContract.View) view );
+            return new FeedbackPresenterImpl((FeedbackContract.View) view);
         } else if (view instanceof FreeWiFiContract.View) {
-            return new FreeWifiPresenterImpl( (FreeWiFiContract.View) view );
+            return new FreeWifiPresenterImpl((FreeWiFiContract.View) view);
         } else if (view instanceof MessageKindContract.View) {
-            return new MessageKindPresenterImpl( (MessageKindContract.View) view );
+            return new MessageKindPresenterImpl((MessageKindContract.View) view);
         } else if (view instanceof MessagesContract.View) {
-            return new MessagesPresenterImpl( (MessagesContract.View) view );
+            return new MessagesPresenterImpl((MessagesContract.View) view);
         } else if (view instanceof NationalSmsCodeContract.View) {
-            return new NationalSmsCodePresenterImpl( (NationalSmsCodeContract.View) view );
+            return new NationalSmsCodePresenterImpl((NationalSmsCodeContract.View) view);
         } else if (view instanceof RouteDetailContract.View) {
-            return new RouteDetailPresenterImpl( (RouteDetailContract.View) view );
+            return new RouteDetailPresenterImpl((RouteDetailContract.View) view);
         } else if (view instanceof ParkMapContract.View) {
-            return new ParkMapPresenterImpl( (ParkMapContract.View) view );
+            return new ParkMapPresenterImpl((ParkMapContract.View) view);
         } else if (view instanceof SeekHelpContract.View) {
-            return new SeekHelpPresenterImpl( (SeekHelpContract.View) view );
+            return new SeekHelpPresenterImpl((SeekHelpContract.View) view);
         } else if (view instanceof SettingContract.View) {
-            return new SettingPresenterImpl( (SettingContract.View) view );
+            return new SettingPresenterImpl((SettingContract.View) view);
         } else if (view instanceof UserInfoContract.View) {
-            return new UserInfoPresenterImpl( (UserInfoContract.View) view );
+            return new UserInfoPresenterImpl((UserInfoContract.View) view);
         } else if (view instanceof ListContract.View) {
-            return new ListPresenterImpl( (ListContract.View) view );
+            return new ListPresenterImpl((ListContract.View) view);
         } else if (view instanceof WebTemplateContract.View) {
-            return new WebTemplatePresenterImpl( (WebTemplateContract.View) view );
+            return new WebTemplatePresenterImpl((WebTemplateContract.View) view);
         } else if (view instanceof WebContract.View) {
-            return new WebPresenterImpl( (WebContract.View) view );
+            return new WebPresenterImpl((WebContract.View) view);
         } else if (view instanceof TouristServiceContract.View) {
-            return new TouristServicePresenterImpl( (TouristServiceContract.View) view );
+            return new TouristServicePresenterImpl((TouristServiceContract.View) view);
         } else if (view instanceof BadgeContract.View) {
-            return new BadgePresenterImpl( (BadgeContract.View) view );
+            return new BadgePresenterImpl((BadgeContract.View) view);
         } else if (view instanceof TrackContract.View) {
-            return new TrackPresenterImpl( (TrackContract.View) view );
+            return new TrackPresenterImpl((TrackContract.View) view);
         } else if (view instanceof FindContract.View) {
-            return new FindPresenterImpl( (FindContract.View) view );
+            return new FindPresenterImpl((FindContract.View) view);
         } else if (view instanceof ContactsContract.View) {
-            return new ContactsPresenterImpl( (ContactsContract.View) view );
+            return new ContactsPresenterImpl((ContactsContract.View) view);
         } else if (view instanceof ContactsAddContract.View) {
-            return new ContactsAddPresenterImpl( (ContactsAddContract.View) view );
+            return new ContactsAddPresenterImpl((ContactsAddContract.View) view);
         } else if (view instanceof FindListContract.View) {
             return new FindListPresenterImpl((FindListContract.View) view);
         } else if (view instanceof ExamineContract.View) {
@@ -110,9 +112,11 @@ public class PresenterFactory {
         } else if (view instanceof FindDetailContract.View) {
             return new FindDetailPresenterImpl((FindDetailContract.View) view);
         } else if (view instanceof ServiceHistoryContract.View) {
-            return new ServiceHistoryPresenterImpl( (ServiceHistoryContract.View) view );
+            return new ServiceHistoryPresenterImpl((ServiceHistoryContract.View) view);
         } else if (view instanceof CustomRouteContract.View) {
-            return new CustomRoutePresenterImpl( (CustomRouteContract.View) view );
+            return new CustomRoutePresenterImpl((CustomRouteContract.View) view);
+        } else if (view instanceof ExpoActivityContract.View) {
+            return new ExpoActivityPresenterImpl((ExpoActivityContract.View) view);
         }
         throw new UnsupportedOperationException();
     }

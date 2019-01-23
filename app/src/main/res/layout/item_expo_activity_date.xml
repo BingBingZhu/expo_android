@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ency_item_root"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dms_160"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_date_day"
+        style="@style/TextSize14"
+        android:layout_width="@dimen/dms_80"
+        android:layout_height="@dimen/dms_80"
+        android:background="@drawable/selector_circle_transation_02cd9b"
+        android:gravity="center"
+        android:textColor="@color/selector_black_white" />
+
+    <TextView
+        android:id="@+id/item_date_week"
+        style="@style/TextSizeWhite12"
+        android:gravity="center"
+        android:textColor="@color/gray_66" />
+
+
+</LinearLayout>
