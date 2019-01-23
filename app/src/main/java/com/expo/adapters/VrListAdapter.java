@@ -49,7 +49,7 @@ public class VrListAdapter extends RecyclerView.Adapter<VrListAdapter.ViewHolder
         holder.img.setImageURI( Constants.URL.FILE_BASE_URL + vr.getPic() );
         holder.tvName.setText( LanguageUtil.chooseTest( vr.getCaption(), vr.getCaptionEn() ) );
         holder.tvViewCount.setText(vr.getViewCount()+"");
-        holder.root.setOnClickListener( v -> VRDetailActivity.startActivity(mContext, vr.getId(), true ));
+        holder.root.setOnClickListener( v -> VRDetailActivity.startActivity(mContext, String.valueOf(vr.getId()), true ));
     }
 
     @Override

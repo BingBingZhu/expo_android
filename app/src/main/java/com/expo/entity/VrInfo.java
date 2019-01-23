@@ -30,7 +30,7 @@ updatetime (string, optional),
 url (string, optional): 资源地址
     * */
 
-    @DatabaseField(columnName = "_id", generatedId = true, allowGeneratedIdInsert = true)
+    @DatabaseField(columnName = "_id", id = true)
     @SerializedName("id")
     private Long id;
     @DatabaseField(columnName = "caption")
@@ -56,7 +56,7 @@ url (string, optional): 资源地址
     private String linkWikiId;
     @DatabaseField(columnName = "link_pan_res_id")
     @SerializedName("linkpanresid")
-    private Long linkPanResId;
+    private String linkPanResId;
     @DatabaseField(columnName = "remark")
     @SerializedName("remark")
     private String remark;
@@ -97,7 +97,7 @@ url (string, optional): 资源地址
         type = in.readString();
         extAttr = in.readString();
         linkWikiId = in.readString();
-        linkPanResId = in.readLong();
+        linkPanResId = in.readString();
         remark = in.readString();
         remarkEn = in.readString();
         pic = in.readString();
@@ -135,7 +135,7 @@ url (string, optional): 资源地址
         dest.writeString(type);
         dest.writeString(extAttr);
         dest.writeString(linkWikiId);
-        dest.writeLong(linkPanResId);
+        dest.writeString(linkPanResId);
         dest.writeString(remark);
         dest.writeString(remarkEn);
         dest.writeString(pic);
@@ -210,13 +210,11 @@ url (string, optional): 资源地址
         this.linkWikiId = linkWikiId;
     }
 
-    public Long getLinkPanResId() {
-        if (null == linkPanResId)
-            return 0L;
+    public String getLinkPanResId() {
         return linkPanResId;
     }
 
-    public void setLinkPanResId(Long linkPanResId) {
+    public void setLinkPanResId(String linkPanResId) {
         this.linkPanResId = linkPanResId;
     }
 

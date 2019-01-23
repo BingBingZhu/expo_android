@@ -1,6 +1,7 @@
 package com.expo.contract.presenter;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.PrefsHelper;
@@ -494,6 +495,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         isRequest = Http.request( new ResponseCallback<VrInfoResp>() {
             @Override
             protected void onResponse(VrInfoResp rsp) {
+                Log.i("-------------VrInfoResp", "-----------");
                 PrefsHelper.setString( Constants.Prefs.KEY_VR_INFO_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( VrInfo.class );
                 List<VrInfo> vrInfos = rsp.vrInfos;

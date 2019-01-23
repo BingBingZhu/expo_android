@@ -115,7 +115,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
             }
         }
         mBanner.setIndicatorVisible(false);
-        mBanner.setBannerPageClickListener((view, position) -> VRDetailActivity.startActivity(getContext(), liveVrs.get(position).getId(), true));
+        mBanner.setBannerPageClickListener((view, position) -> VRDetailActivity.startActivity(getContext(), String.valueOf(liveVrs.get(position).getId()), true));
         mBanner.addPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -143,7 +143,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
                 holder.<SimpleDraweeView>getView(R.id.item_online_culture_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
                 holder.<TextView>getView(R.id.item_online_culture_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
                 holder.<TextViewDrawable>getView(R.id.item_online_culture_scans).setText(vr.getViewCount()+"次");
-                holder.setOnClickListener(R.id.item_online_culture_root, v -> VRDetailActivity.startActivity(getContext(), vr.getId(), true));
+                holder.setOnClickListener(R.id.item_online_culture_root, v -> VRDetailActivity.startActivity(getContext(), String.valueOf(vr.getId()), true));
             }
         };
         mRvCulture.setLayoutManager(new LinearLayoutManager(this));
@@ -162,7 +162,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
                 holder.<TextView>getView(R.id.item_online_guide_content).setText(LanguageUtil.chooseTest(vr.getRemark(), vr.getRemarkEn()));
                 holder.<TextViewDrawable>getView(R.id.item_online_guide_scans).setText(vr.getViewCount()+"次");
                 holder.<TextViewDrawable>getView(R.id.item_online_guide_time).setText(vr.getExtAttr()+"分钟");
-                holder.setOnClickListener(R.id.item_online_guide_root, v -> VRDetailActivity.startActivity(getContext(), vr.getId(), true));
+                holder.setOnClickListener(R.id.item_online_guide_root, v -> VRDetailActivity.startActivity(getContext(), String.valueOf(vr.getId()), true));
             }
         };
 
