@@ -59,7 +59,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
         return true;
     }
 
-    public static void startActivity(Context context, String id, boolean canGoOther) {
+    public static void startActivity(Context context, Long id, boolean canGoOther) {
         Intent intent = new Intent(context, VRDetailActivity.class);
         intent.putExtra(Constants.EXTRAS.EXTRA_ID, id);
         intent.putExtra(Constants.EXTRAS.EXTRA_CAN_GO_OTHER, canGoOther);
@@ -96,14 +96,14 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
         if (StringUtils.equals(mVrInfo.getType(), "0")) {
             mVRView = new VRVideoView(this);
             mVrVideo.setVisibility(View.GONE);
-            if (StringUtils.isEmpty(mVrInfo.getLinkPanResId()))
+            if (mVrInfo.getLinkPanResId() == 0)
                 mVrImg.setVisibility(View.GONE);
             else
                 mVrImg.setVisibility(View.VISIBLE);
         } else {
             mVRView = new VRImageView(this);
             mVrImg.setVisibility(View.GONE);
-            if (StringUtils.isEmpty(mVrInfo.getLinkPanResId()))
+            if (mVrInfo.getLinkPanResId()==0)
                 mVrVideo.setVisibility(View.GONE);
             else
                 mVrVideo.setVisibility(View.VISIBLE);

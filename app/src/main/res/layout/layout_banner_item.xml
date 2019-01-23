@@ -10,7 +10,8 @@
     android:background="@drawable/bg_white_transparency_r5_w5"
     android:paddingTop="@dimen/dms_20"
     android:paddingLeft="@dimen/dms_16"
-    android:paddingRight="@dimen/dms_16">
+    android:paddingRight="@dimen/dms_16"
+    android:gravity="center_horizontal">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/banner_image"
         android:layout_width="300dp"
@@ -24,7 +25,7 @@
         app:roundBottomRight="true"
         app:placeholderImage="@mipmap/ico_home_reco_garden_def" />
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dms_20"
         android:layout_marginBottom="@dimen/dms_10"
@@ -43,6 +44,8 @@
             android:id="@+id/banner_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/find_scans_small_white"
+            android:drawablePadding="@dimen/dms_10"
             android:gravity="right"
             android:text="123456789次"/>
     </LinearLayout>

@@ -28,9 +28,11 @@ public class ListPresenterImpl extends ListContract.Presenter {
     }
 
     @Override
-    public void loadVrsByType(Long tabId, int page) {
+    public void loadVrsByType(int vrType, Long tabId, int page) {
         List<VrInfo> data = mDao.query( VrInfo.class, new QueryParams()
-                .add( "eq", "top_kind", tabId )
+                .add( "eq", "top_kind", vrType )
+                .add("and")
+                .add("like", "attr_ids", "%;"+tabId+";%")
                 .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT ) );
         mView.addVrsToList( data );
     }

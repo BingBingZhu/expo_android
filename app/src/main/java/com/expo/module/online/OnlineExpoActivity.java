@@ -19,6 +19,8 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.OnlineHomeContract;
 import com.expo.entity.VrInfo;
+import com.expo.module.online.detail.VRDetailActivity;
+import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.AppBarView;
 import com.expo.widget.MyScrollView;
@@ -28,6 +30,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.expo.widget.laminatedbanner.LaminatedBannerView;
 import com.expo.widget.laminatedbanner.holder.LaminatedHolderCreator;
 import com.expo.widget.laminatedbanner.holder.LaminatedViewHolder;
+import com.hedan.textdrawablelibrary.TextViewDrawable;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -104,13 +107,15 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     public void loadLiveDataRes(List<VrInfo> liveVrs) {     // 世园实景
-        mBanner.setIndicatorVisible(false);
-        mBanner.setBannerPageClickListener(new LaminatedBannerView.BannerPageClickListener() {
-            @Override
-            public void onPageClick(View view, int position) {
-
+        if (liveVrs.size() > 0) {
+            for (int i = 0; i < 2; i++) {
+                if (liveVrs.size() < 3){
+                    liveVrs.add(liveVrs.get(0));
+                }
             }
-        });
+        }
+        mBanner.setIndicatorVisible(false);
+        mBanner.setBannerPageClickListener((view, position) -> VRDetailActivity.startActivity(getContext(), liveVrs.get(position).getId(), true));
         mBanner.addPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -132,23 +137,15 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     public void loadCultureDataRes(List<VrInfo> cultureVrs) {       // 文化世园
         this.mCultureVrs = cultureVrs;
         mRandomVrs = extractRandom(cultureVrs);
-        mAdapterCulture = new CommonAdapter(this, R.layout.item_online_culture, mRandomVrs) {
+        mAdapterCulture = new CommonAdapter<VrInfo>(this, R.layout.item_online_culture, mRandomVrs) {
             @Override
-            protected void convert(ViewHolder holder, Object o, int position) {
-
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return cultureVrs.size();
+            protected void convert(ViewHolder holder, VrInfo vr, int position) {
+                holder.<SimpleDraweeView>getView(R.id.item_online_culture_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
+                holder.<TextView>getView(R.id.item_online_culture_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
+                holder.<TextViewDrawable>getView(R.id.item_online_culture_scans).setText(vr.getViewCount()+"次");
+                holder.setOnClickListener(R.id.item_online_culture_root, v -> VRDetailActivity.startActivity(getContext(), vr.getId(), true));
             }
         };
-
         mRvCulture.setLayoutManager(new LinearLayoutManager(this));
         mRvCulture.addItemDecoration(new SpaceDecoration(getResources().getDimensionPixelSize(R.dimen.dms_58)), 0);
         mRvCulture.setAdapter(mAdapterCulture);
@@ -156,20 +153,16 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     public void loadTourDataRes(List<VrInfo> tourVrs) {     // 在线导游
-        mAdapterGuide = new CommonAdapter(this, R.layout.item_online_guide, tourVrs) {
+        mAdapterGuide = new CommonAdapter<VrInfo>(this, R.layout.item_online_guide, tourVrs) {
             @Override
-            protected void convert(ViewHolder holder, Object o, int position) {
-
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return tourVrs.size();
+            protected void convert(ViewHolder holder, VrInfo vr, int position) {
+                holder.<SimpleDraweeView>getView(R.id.item_online_guide_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
+//                holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setText("");
+                holder.<TextView>getView(R.id.item_online_guide_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
+                holder.<TextView>getView(R.id.item_online_guide_content).setText(LanguageUtil.chooseTest(vr.getRemark(), vr.getRemarkEn()));
+                holder.<TextViewDrawable>getView(R.id.item_online_guide_scans).setText(vr.getViewCount()+"次");
+                holder.<TextViewDrawable>getView(R.id.item_online_guide_time).setText(vr.getExtAttr()+"分钟");
+                holder.setOnClickListener(R.id.item_online_guide_root, v -> VRDetailActivity.startActivity(getContext(), vr.getId(), true));
             }
         };
 
@@ -231,7 +224,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         @Override
         public void onBind(Context context, int position, VrInfo data) {
             // 数据绑定
-            imageView.setImageURI(data.getUrl());
+            imageView.setImageURI(Constants.URL.FILE_BASE_URL + data.getUrl());
             tvName.setText(LanguageUtil.chooseTest(data.getCaption(), data.getCaptionEn()));
             tvCount.setText(data.getViewCount() + "次");
         }

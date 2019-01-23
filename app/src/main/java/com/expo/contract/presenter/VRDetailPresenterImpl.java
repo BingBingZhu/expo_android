@@ -20,7 +20,7 @@ public class VRDetailPresenterImpl extends VRDetailContract.Presenter {
         } else {
             vrInfo.setUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547707751782&di=ffa3185875f6d3be3c94a6811d8f7317&imgtype=0&src=http%3A%2F%2Fpic1.16pic.com%2F00%2F50%2F47%2F16pic_5047893_b.jpg");
         }
-        vrInfo.setLinkPanResId("11");
+        vrInfo.setLinkPanResId(11L);
         return vrInfo;
 //        return mDao.queryById(VrInfo.class, id);
     }

@@ -17,7 +17,7 @@ public interface ListContract {
 
         public abstract void loadEncyByType(Long tabId, int page);
 
-        public abstract void loadVrsByType(Long id, int page);
+        public abstract void loadVrsByType(int vrType, Long id, int page);
     }
 
     interface View extends IView {

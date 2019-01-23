@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ency_item_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/item_online_culture_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_206">
+        android:layout_height="wrap_content">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_online_culture_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="169dp"
+            android:layout_height="95dp"
             android:scaleType="centerCrop"
             android:src="@drawable/image_default" />
 
@@ -20,15 +20,15 @@
             android:layout_width="@dimen/dms_60"
             android:layout_height="@dimen/dms_60"
             android:layout_gravity="center"
-            android:src="@mipmap/player_playing" />
+            android:src="@mipmap/ico_paly_audio" />
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dms_206"
-        android:layout_marginLeft="@dimen/dms_4"
-        android:layout_marginTop="@dimen/dms_30"
-        android:layout_marginRight="@dimen/dms_4">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_18"
+        android:layout_marginTop="@dimen/dms_28"
+        android:layout_marginRight="@dimen/dms_18">
 
         <TextView
             android:id="@+id/item_online_culture_name"

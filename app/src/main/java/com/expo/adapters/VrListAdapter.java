@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.entity.VrInfo;
+import com.expo.module.online.detail.VRDetailActivity;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -48,7 +49,7 @@ public class VrListAdapter extends RecyclerView.Adapter<VrListAdapter.ViewHolder
         holder.img.setImageURI( Constants.URL.FILE_BASE_URL + vr.getPic() );
         holder.tvName.setText( LanguageUtil.chooseTest( vr.getCaption(), vr.getCaptionEn() ) );
         holder.tvViewCount.setText(vr.getViewCount()+"");
-        holder.root.setOnClickListener( v -> WebTemplateActivity.startActivity( mContext, vr.getId() ) );
+        holder.root.setOnClickListener( v -> VRDetailActivity.startActivity(mContext, vr.getId(), true ));
     }
 
     @Override

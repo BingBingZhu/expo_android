@@ -1,5 +1,6 @@
 package com.expo.module.online;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -16,6 +17,7 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.VrInfo;
 import com.expo.widget.RecycleViewDivider;
 import com.expo.widget.SimpleRecyclerView;
+import com.expo.widget.decorations.SpaceDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+@SuppressLint("ValidFragment")
 public class VrListFragment extends BaseFragment<ListContract.Presenter> implements ListContract.View {
 
     private Tab mTab;
@@ -36,6 +39,12 @@ public class VrListFragment extends BaseFragment<ListContract.Presenter> impleme
     private VrListAdapter adapter;
     private int page = 0;
     private List<VrInfo> mVrInfos = null;
+    private int vrType;
+
+    @SuppressLint("ValidFragment")
+    public VrListFragment(int vrType) {
+        this.vrType = vrType;
+    }
 
     @Override
     public int getContentView() {
@@ -53,9 +62,12 @@ public class VrListFragment extends BaseFragment<ListContract.Presenter> impleme
         mVrInfos = new ArrayList<>();
         adapter = new VrListAdapter(getContext(), mVrInfos);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addItemDecoration( new RecycleViewDivider(
-                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor( R.color.white_f4 ) ) );
-        mPresenter.loadVrsByType(mTab.getId(), page);
+        int topBottom = (int) getResources().getDimension(R.dimen.dms_20);
+        int leftRight = (int) getResources().getDimension(R.dimen.dms_30);
+        mRecyclerView.addItemDecoration(new SpaceDecoration(leftRight, topBottom, leftRight, topBottom, topBottom ));
+//        mRecyclerView.addItemDecoration( new RecycleViewDivider(
+//                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor( R.color.white_f4 ) ) );
+        mPresenter.loadVrsByType(vrType, mTab.getId(), page);
         initLoadMore();
     }
 
@@ -65,7 +77,7 @@ public class VrListFragment extends BaseFragment<ListContract.Presenter> impleme
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
                 page++;
-                mPresenter.loadVrsByType(mTab.getId(), page);
+                mPresenter.loadVrsByType(vrType, mTab.getId(), page);
             }
 
             @Override

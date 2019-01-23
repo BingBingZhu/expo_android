@@ -88,7 +88,7 @@
                     android:layout_marginBottom="@dimen/dms_40"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/green_02cd9b"
-                    android:drawableLeft="@mipmap/duihao"
+                    android:drawableLeft="@mipmap/ico_extract_random"
                     android:drawablePadding="@dimen/dms_12"
                     android:text="@string/exchange" />
             </LinearLayout>

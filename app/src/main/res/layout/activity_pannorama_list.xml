@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_f5"
     android:orientation="vertical">
     <FrameLayout
         android:layout_width="match_parent"
@@ -13,14 +14,14 @@
             android:id="@+id/pan_list_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabBackground="@android:color/white"
+            app:tabBackground="@android:color/transparent"
             app:tabMode="scrollable"
             app:tabGravity="center"
             app:tabPaddingTop="@dimen/dms_28"
             app:tabPaddingBottom="@dimen/dms_28"
             app:tabIndicatorColor="@color/green_02cd9b"
             app:tabIndicatorHeight="@dimen/dms_4"
-            app:tabTextAppearance="@style/tab_text_appearance"
+            app:tabTextAppearance="@style/tab_text_appearance_vr"
             app:tabSelectedTextColor="@color/color_333"
             app:tabTextColor="@color/color_666"/>
     </FrameLayout>

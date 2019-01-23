@@ -193,6 +193,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="tab_text_appearance_vr">
+        <item name="android:textSize">@dimen/font_26</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
