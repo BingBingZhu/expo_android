@@ -4,20 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.expo.widget.DivideTabLayout
-        android:id="@+id/pan_list_tab"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabBackground="@android:color/transparent"
-        app:tabMode="scrollable"
-        app:tabGravity="center"
-        app:tabPaddingTop="@dimen/dms_28"
-        app:tabPaddingBottom="@dimen/dms_28"
-        app:tabIndicatorColor="@color/green_02cd9b"
-        app:tabIndicatorHeight="@dimen/dms_4"
-        app:tabTextAppearance="@style/tab_text_appearance"
-        app:tabSelectedTextColor="@color/color_333"
-        app:tabTextColor="@color/color_666" />
+        android:layout_marginTop="@dimen/dms_2"
+        android:background="@color/white">
+        <com.expo.widget.DivideTabLayout
+            android:id="@+id/pan_list_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabBackground="@android:color/white"
+            app:tabMode="scrollable"
+            app:tabGravity="center"
+            app:tabPaddingTop="@dimen/dms_28"
+            app:tabPaddingBottom="@dimen/dms_28"
+            app:tabIndicatorColor="@color/green_02cd9b"
+            app:tabIndicatorHeight="@dimen/dms_4"
+            app:tabTextAppearance="@style/tab_text_appearance"
+            app:tabSelectedTextColor="@color/color_333"
+            app:tabTextColor="@color/color_666"/>
+    </FrameLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/pan_list_pager"
         android:layout_width="match_parent"

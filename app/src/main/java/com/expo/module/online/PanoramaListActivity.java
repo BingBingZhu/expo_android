@@ -56,8 +56,8 @@ public class PanoramaListActivity extends BaseActivity<PanoramaListContract.Pres
         // 设置分割线
         LinearLayout linearLayout = (LinearLayout) mTabView.getChildAt( 0 );
         linearLayout.setShowDividers( LinearLayout.SHOW_DIVIDER_MIDDLE );
-        linearLayout.setDividerDrawable( ContextCompat.getDrawable( getContext(), R.drawable.shape_tab_divide_line ) );
-        linearLayout.setDividerPadding( 8 );
+        linearLayout.setDividerDrawable( ContextCompat.getDrawable( getContext(), R.drawable.shape_vr_tab_divide_line ) );
+        linearLayout.setDividerPadding( (int)getResources().getDimension(R.dimen.dms_26) );
         mTabView.addOnTabSelectedListener( mTabSelectedListener );
     }
 
@@ -103,10 +103,10 @@ public class PanoramaListActivity extends BaseActivity<PanoramaListContract.Pres
         return true;
     }
 
-    public static void startActivity(Context context, int type, ArrayList<VrInfo> data){
+    public static void startActivity(Context context, int type){
         Intent intent = new Intent(context, PanoramaListActivity.class);
         intent.putExtra(Constants.EXTRAS.EXTRA_PANORAMA_TYPE, type);
-        intent.putParcelableArrayListExtra(Constants.EXTRAS.EXTRA_VR_DATA, data);
+//        intent.putParcelableArrayListExtra(Constants.EXTRAS.EXTRA_VR_DATA, data);
         context.startActivity(intent);
     }
 

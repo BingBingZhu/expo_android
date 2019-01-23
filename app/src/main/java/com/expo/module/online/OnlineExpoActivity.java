@@ -28,7 +28,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.expo.widget.laminatedbanner.LaminatedBannerView;
 import com.expo.widget.laminatedbanner.holder.LaminatedHolderCreator;
 import com.expo.widget.laminatedbanner.holder.LaminatedViewHolder;
-import com.hedan.textdrawablelibrary.TextViewDrawable;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -51,12 +50,11 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     @BindView(R.id.online_home_scroll)
     MyScrollView mSvScroll;
 
-    CommonAdapter mAdapterCulture;
-    CommonAdapter mAdapterGuide;
-
-    private ArrayList<VrInfo> mLiveVrs;
-    private ArrayList<VrInfo> mCultureVrs;
-    private ArrayList<VrInfo> mTourVrs;
+    private CommonAdapter mAdapterCulture;
+    private CommonAdapter mAdapterGuide;
+    private List<Integer> listRepetitionFlag = new ArrayList<>();   // 元素随机抽取记录
+    private List<VrInfo> mCultureVrs;
+    private List<VrInfo> mRandomVrs;
 
     @Override
     protected int getContentView() {
@@ -76,14 +74,18 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     @OnClick({R.id.online_expo_item_title_scene, R.id.online_expo_item_title_culture, R.id.online_expo_item_title_guide, R.id.title_back})
     public void onClick(View v){
         switch (v.getId()){
+            case R.id.online_expo_exchange:     // 换一换
+                mRandomVrs = extractRandom(mCultureVrs);
+                mAdapterCulture.notifyDataSetChanged();
+                break;
             case R.id.online_expo_item_title_scene:     // 世园实景
-                PanoramaListActivity.startActivity(getContext(), 1, mLiveVrs);
+                PanoramaListActivity.startActivity(getContext(), 1);
                 break;
             case R.id.online_expo_item_title_culture:      // 文化世园
-                PanoramaListActivity.startActivity(getContext(), 2, mCultureVrs);
+                PanoramaListActivity.startActivity(getContext(), 2);
                 break;
             case R.id.online_expo_item_title_guide:     // 在线导游
-                PanoramaListActivity.startActivity(getContext(), 3, mTourVrs);
+                PanoramaListActivity.startActivity(getContext(), 3);
                 break;
             case R.id.title_back:
                 finish();
@@ -102,7 +104,6 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     public void loadLiveDataRes(List<VrInfo> liveVrs) {     // 世园实景
-        this.mLiveVrs = (ArrayList<VrInfo>) liveVrs;
         mBanner.setIndicatorVisible(false);
         mBanner.setBannerPageClickListener(new LaminatedBannerView.BannerPageClickListener() {
             @Override
@@ -129,8 +130,9 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     public void loadCultureDataRes(List<VrInfo> cultureVrs) {       // 文化世园
-        this.mCultureVrs = (ArrayList<VrInfo>) cultureVrs;
-        mAdapterCulture = new CommonAdapter(this, R.layout.item_online_culture, cultureVrs) {
+        this.mCultureVrs = cultureVrs;
+        mRandomVrs = extractRandom(cultureVrs);
+        mAdapterCulture = new CommonAdapter(this, R.layout.item_online_culture, mRandomVrs) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
 
@@ -154,7 +156,6 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     @Override
     public void loadTourDataRes(List<VrInfo> tourVrs) {     // 在线导游
-        this.mTourVrs = (ArrayList<VrInfo>) tourVrs;
         mAdapterGuide = new CommonAdapter(this, R.layout.item_online_guide, tourVrs) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
@@ -176,6 +177,40 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mRvGuide.addItemDecoration(new RecycleViewDivider(
                 getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor(R.color.white_f5)));
         mRvGuide.setAdapter(mAdapterGuide);
+    }
+
+    /**
+     * 抽取随机元素
+     * @param vrInfos   总集合
+     * @return  抽取后的集合
+     */
+    private List<VrInfo> extractRandom(List<VrInfo> vrInfos){
+        int n = 4;
+        List<VrInfo> listNew = new ArrayList();
+        if(vrInfos.size() <= n){
+            listNew.addAll(vrInfos);
+        }else if(vrInfos.size() > n && vrInfos.size() < n*2){
+            listRepetitionFlag.clear();
+            while(listRepetitionFlag.size() < n){
+                int random = (int) (Math.random() * vrInfos.size());
+                if (!listRepetitionFlag.contains(random)) {
+                    listRepetitionFlag.add(random);
+                    listNew.add(vrInfos.get(random));
+                }
+            }
+        }else{
+            while(listRepetitionFlag.size() < n*2){
+                int random = (int) (Math.random() * vrInfos.size());
+                if (!listRepetitionFlag.contains(random)) {
+                    listRepetitionFlag.add(random);
+                    listNew.add(vrInfos.get(random));
+                }
+            }
+            for (int i = 0 ; i < 4 ; i ++ ){
+                listRepetitionFlag.remove(0);
+            }
+        }
+        return listNew;
     }
 
     public static class BannerViewHolder implements LaminatedViewHolder<VrInfo> {
