@@ -215,7 +215,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         String url;
         switch (view.getId()) {
             case R.id.home_func_0:
-                FreeWiFiActivity.startActivity(getContext());
+//                FreeWiFiActivity.startActivity(getContext());
+
                 break;
             case R.id.home_func_1:
                 url = mPresenter.loadCommonInfo(CommonInfo.BUY_TICKETS);
