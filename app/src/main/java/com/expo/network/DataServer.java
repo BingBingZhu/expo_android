@@ -509,7 +509,7 @@ public interface DataServer {
     Observable<PanResHotResp> getPanResHot(@Body RequestBody requestBody);
 
     /**
-     * 获取全景标签资源列表
+     * 为某个全景资源增加观看数
      *
      * @param requestBody
      * @return
