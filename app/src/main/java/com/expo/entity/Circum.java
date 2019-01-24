@@ -10,7 +10,29 @@ public class Circum {
     private String phone;
     private String url;
     private String score;
+    private String price;
     private String address;
+
+//    business_id	integer	店铺ID
+//    business_url	string	店铺详细信息跳转链接
+//    name	string	店铺名
+//    branch_name	string	店铺分店名，可能为空；例如：知春路店
+//    address	string	店铺地址
+//    telephone	string	带区号的电话号码
+//    categories	list	所属分类信息列表，使用分类树结构，如[“美食,火锅”, “酒店,婚宴酒店”]
+//    popular	integer	店铺人气
+//    status	integer	店铺状态，1代表正常营业，2代表暂停营业（比如停业装修、临时关门）
+//    service	float	服务评分，十分制
+//    decoration	float	环境评分，十分制
+//    taste	float	口味评分，十分制
+//    business_hour	string	营业时间
+//    introduction	string	店铺介绍
+//    s_photo_urls	list	小图列表，尺寸为278×200
+//    photo_urls	list	大图列表，尺寸为800×800
+//    avg_price	integer	人均价格，单位:元，若没有人均，返回-1
+//    avg_rating	float	星级评分（最高5星）
+//    latitude	float	纬度
+//    longitude	float	经度
 
     public Long getId() {
         return id;
@@ -82,6 +104,14 @@ public class Circum {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getAddress() {

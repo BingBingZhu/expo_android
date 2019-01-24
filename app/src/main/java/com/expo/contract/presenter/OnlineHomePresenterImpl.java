@@ -22,7 +22,7 @@ public class OnlineHomePresenterImpl extends OnlineHomeContract.Presenter {
     private final static String TOP_KIND_LIVE = "1";
     private final static String TOP_KIND_CULTURE = "2";
     private final static String TOP_KIND_TOUR = "3";
-    private static final int PER_PAGE_COUNT = 5;
+    private static final int PER_PAGE_COUNT = 4;
 
     public OnlineHomePresenterImpl(OnlineHomeContract.View view) {
         super(view);

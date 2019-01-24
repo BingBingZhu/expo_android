@@ -1,5 +1,7 @@
 package com.expo.module.circum;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -8,37 +10,37 @@ import com.expo.base.BaseActivity;
 
 import butterknife.OnClick;
 
-public class CircunHomeActivity extends BaseActivity {
+public class CircumHomeActivity extends BaseActivity {
 
 
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_circun_home;
+        return R.layout.activity_circum_home;
     }
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-
+        setTitle(1, "世园周边");
     }
 
     @OnClick({R.id.circun_cate, R.id.circun_hotel, R.id.circun_shop, R.id.circun_traffic, R.id.circun_scenic})
     public void onClick(View v){
         switch (v.getId()){
             case R.id.circun_cate:
-                CircunListActivity.startActivity(getContext(), 1);
+                CircumListActivity.startActivity(getContext(), 1);
                 break;
             case R.id.circun_hotel:
-                CircunListActivity.startActivity(getContext(), 2);
+                CircumListActivity.startActivity(getContext(), 2);
                 break;
             case R.id.circun_shop:
-                CircunListActivity.startActivity(getContext(), 3);
+                CircumListActivity.startActivity(getContext(), 3);
                 break;
             case R.id.circun_traffic:
-                CircunListActivity.startActivity(getContext(), 4);
+                CircumListActivity.startActivity(getContext(), 4);
                 break;
             case R.id.circun_scenic:
-                CircunListActivity.startActivity(getContext(), 5);
+                CircumListActivity.startActivity(getContext(), 5);
                 break;
         }
     }
@@ -46,5 +48,10 @@ public class CircunHomeActivity extends BaseActivity {
     @Override
     protected boolean hasPresenter() {
         return false;
+    }
+
+    public static void startActivity(Context context) {
+        Intent intent =  new Intent( context, CircumHomeActivity.class );
+        context.startActivity(intent);
     }
 }

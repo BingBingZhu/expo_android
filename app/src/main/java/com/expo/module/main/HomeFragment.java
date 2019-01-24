@@ -27,14 +27,13 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
 import com.expo.map.LocationManager;
-import com.expo.module.freewifi.FreeWiFiActivity;
+import com.expo.module.circum.CircumHomeActivity;
 import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.main.adapter.HomeExhibitAdapter;
 import com.expo.module.main.adapter.HomeTopLineAdapter;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 import com.expo.module.map.ParkMapActivity;
 import com.expo.module.online.OnlineExpoActivity;
-import com.expo.module.online.detail.VRDetailActivity;
 import com.expo.module.routes.RoutesActivity;
 import com.expo.module.service.TouristServiceActivity;
 import com.expo.module.webview.WebActivity;
@@ -216,7 +215,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         switch (view.getId()) {
             case R.id.home_func_0:
 //                FreeWiFiActivity.startActivity(getContext());
-
+                CircumHomeActivity.startActivity(getContext());     //周边服务（暂占用按钮）
                 break;
             case R.id.home_func_1:
                 url = mPresenter.loadCommonInfo(CommonInfo.BUY_TICKETS);
