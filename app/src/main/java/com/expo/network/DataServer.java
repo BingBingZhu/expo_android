@@ -507,4 +507,14 @@ public interface DataServer {
     @POST("Terminal/GetPanResHotViews")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<PanResHotResp> getPanResHot(@Body RequestBody requestBody);
+
+    /**
+     * 获取全景标签资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/SetPanResViews")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> setPanResViews(@Body RequestBody requestBody);
 }

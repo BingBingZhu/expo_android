@@ -124,5 +124,6 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
 
         showVrView();
         mVRView.setVrInfo(mVrInfo);
+        mPresenter.setPanResViews(mVrInfo.getId());
     }
 }

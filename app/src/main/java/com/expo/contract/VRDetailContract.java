@@ -13,6 +13,8 @@ public interface VRDetailContract {
 
         public abstract VrInfo getVrInfo(String id);
 
+        public abstract void setPanResViews(Long id);
+
     }
 
     interface View extends IView {
