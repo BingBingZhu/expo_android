@@ -16,6 +16,8 @@ public interface OnlineHomeContract {
         public abstract void loadVrHot();
 
         public abstract void loadData();
+
+        public abstract void loadMore(int page);
     }
 
     interface View extends IView {
@@ -25,5 +27,7 @@ public interface OnlineHomeContract {
         void loadCultureDataRes(List<VrInfo> cultureVrs);
 
         void loadTourDataRes(List<VrInfo> tourVrs);
+
+        void loadMoreTourDataRes(List<VrInfo> tourVrs);
     }
 }

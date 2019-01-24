@@ -22,6 +22,7 @@ public class OnlineHomePresenterImpl extends OnlineHomeContract.Presenter {
     private final static String TOP_KIND_LIVE = "1";
     private final static String TOP_KIND_CULTURE = "2";
     private final static String TOP_KIND_TOUR = "3";
+    private static final int PER_PAGE_COUNT = 5;
 
     public OnlineHomePresenterImpl(OnlineHomeContract.View view) {
         super(view);
@@ -52,10 +53,11 @@ public class OnlineHomePresenterImpl extends OnlineHomeContract.Presenter {
         new Thread() {
             @Override
             public void run() {
-                List<VrInfo> vrs = mDao.query(VrInfo.class, null);
                 List<VrInfo> liveVrs = mDao.query(VrInfo.class, new QueryParams().add("eq", "top_kind", TOP_KIND_LIVE));
                 List<VrInfo> cultureVrs = mDao.query(VrInfo.class, new QueryParams().add("eq", "top_kind", TOP_KIND_CULTURE));
-                List<VrInfo> tourVrs = mDao.query(VrInfo.class, new QueryParams().add("eq", "top_kind", TOP_KIND_TOUR));
+                List<VrInfo> tourVrs = mDao.query(VrInfo.class, new QueryParams()
+                        .add("eq", "top_kind", TOP_KIND_TOUR)
+                        .add( "limit", 0 * PER_PAGE_COUNT, PER_PAGE_COUNT ));
                 new Handler(Looper.getMainLooper())
                         .post(() -> {
                             mView.loadLiveDataRes(null == liveVrs ? new ArrayList<VrInfo>() : liveVrs);
@@ -64,5 +66,13 @@ public class OnlineHomePresenterImpl extends OnlineHomeContract.Presenter {
                         });
             }
         }.start();
+    }
+
+    @Override
+    public void loadMore(int page) {
+        List<VrInfo> tourVrs = mDao.query(VrInfo.class, new QueryParams()
+                .add("eq", "top_kind", TOP_KIND_TOUR)
+                .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT ));
+        mView.loadMoreTourDataRes(null == tourVrs ? new ArrayList<VrInfo>() : tourVrs);
     }
 }

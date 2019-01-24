@@ -53,7 +53,7 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
         adapter = new EncyAndSceneListAdapter(getContext(), mEncyclopediasList);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addItemDecoration( new RecycleViewDivider(
-                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor( R.color.white_f4 ) ) );
+                getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor( R.color.white_f5 ) ) );
         mPresenter.loadEncyByType(mTab.getId(), page);
         initLoadMore();
     }

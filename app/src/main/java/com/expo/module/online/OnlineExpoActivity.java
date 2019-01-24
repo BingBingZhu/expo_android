@@ -10,14 +10,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.StatusBarUtils;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.OnlineHomeContract;
+import com.expo.contract.presenter.OnlineHomePresenterImpl;
 import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.VRDetailActivity;
 import com.expo.utils.Constants;
@@ -39,9 +44,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler2;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presenter> implements OnlineHomeContract.View {
 
+    @BindView(R.id.ptr_view)
+    PtrClassicFrameLayout mPtrView;
     @BindView(R.id.online_expo_recycler_culture)
     RecyclerView mRvCulture;
     @BindView(R.id.online_expo_recycler_guide)
@@ -57,7 +67,9 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     private CommonAdapter mAdapterGuide;
     private List<Integer> listRepetitionFlag = new ArrayList<>();   // 元素随机抽取记录
     private List<VrInfo> mCultureVrs;
+    private List<VrInfo> mTourVrs;
     private List<VrInfo> mRandomVrs;
+    private int page = 0;
 
     @Override
     protected int getContentView() {
@@ -70,15 +82,18 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mTitle.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
         mTitle.setBackgroundColor(Color.TRANSPARENT);
         mTitle.setTitleColor(Color.TRANSPARENT);
+        mTourVrs = new ArrayList<>();
         mPresenter.loadData();
         mPresenter.loadVrHot();
+        initLoadMore();
     }
 
-    @OnClick({R.id.online_expo_item_title_scene, R.id.online_expo_item_title_culture, R.id.online_expo_item_title_guide, R.id.title_back})
+    @OnClick({R.id.online_expo_exchange, R.id.online_expo_item_title_scene, R.id.online_expo_item_title_culture, R.id.online_expo_item_title_guide, R.id.title_back})
     public void onClick(View v){
         switch (v.getId()){
             case R.id.online_expo_exchange:     // 换一换
-                mRandomVrs = extractRandom(mCultureVrs);
+                mRandomVrs.clear();
+                mRandomVrs.addAll(extractRandom(mCultureVrs));
                 mAdapterCulture.notifyDataSetChanged();
                 break;
             case R.id.online_expo_item_title_scene:     // 世园实景
@@ -94,6 +109,22 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
                 finish();
                 break;
         }
+    }
+
+    private void initLoadMore() {
+        mPtrView.setMode(PtrFrameLayout.Mode.LOAD_MORE);
+        mPtrView.setPtrHandler(new PtrDefaultHandler2() {
+            @Override
+            public void onLoadMoreBegin(PtrFrameLayout frame) {
+                page++;
+                mPresenter.loadMore(page);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+
+            }
+        });
     }
 
     @Override
@@ -136,7 +167,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     @Override
     public void loadCultureDataRes(List<VrInfo> cultureVrs) {       // 文化世园
         this.mCultureVrs = cultureVrs;
-        mRandomVrs = extractRandom(cultureVrs);
+        mRandomVrs = extractRandom(mCultureVrs);
         mAdapterCulture = new CommonAdapter<VrInfo>(this, R.layout.item_online_culture, mRandomVrs) {
             @Override
             protected void convert(ViewHolder holder, VrInfo vr, int position) {
@@ -145,17 +176,23 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
                 holder.<TextViewDrawable>getView(R.id.item_online_culture_scans).setText(vr.getViewCount()+"次");
                 holder.setOnClickListener(R.id.item_online_culture_root, v -> VRDetailActivity.startActivity(getContext(), String.valueOf(vr.getId()), true));
             }
+
+
         };
-        mRvCulture.setLayoutManager(new LinearLayoutManager(this));
-        mRvCulture.addItemDecoration(new SpaceDecoration(getResources().getDimensionPixelSize(R.dimen.dms_58)), 0);
+        int vSpace = (int) getResources().getDimension(R.dimen.dms_20);
+        int leftRight = (int) getResources().getDimension(R.dimen.dms_8);
+        mRvCulture.addItemDecoration(new SpaceDecoration( leftRight, vSpace ));
         mRvCulture.setAdapter(mAdapterCulture);
     }
 
     @Override
     public void loadTourDataRes(List<VrInfo> tourVrs) {     // 在线导游
-        mAdapterGuide = new CommonAdapter<VrInfo>(this, R.layout.item_online_guide, tourVrs) {
+        this.mTourVrs.clear();
+        this.mTourVrs.addAll(tourVrs);
+        mAdapterGuide = new CommonAdapter<VrInfo>(this, R.layout.item_online_guide, mTourVrs) {
             @Override
             protected void convert(ViewHolder holder, VrInfo vr, int position) {
+                holder.itemView.getLayoutParams().width = RecyclerView.LayoutParams.MATCH_PARENT;
                 holder.<SimpleDraweeView>getView(R.id.item_online_guide_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
 //                holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setText("");
                 holder.<TextView>getView(R.id.item_online_guide_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
@@ -165,11 +202,25 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
                 holder.setOnClickListener(R.id.item_online_guide_root, v -> VRDetailActivity.startActivity(getContext(), String.valueOf(vr.getId()), true));
             }
         };
-
-        mRvGuide.setLayoutManager(new GridLayoutManager(this, 2));
-        mRvGuide.addItemDecoration(new RecycleViewDivider(
-                getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor(R.color.white_f5)));
+        int leftRight = (int) getResources().getDimension(R.dimen.dms_16);
+        mRvGuide.addItemDecoration(new SpaceDecoration(leftRight, 0, leftRight, 0, 0));
+        mRvGuide.addItemDecoration( new RecycleViewDivider(
+                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor( R.color.white_f4 ) ) );
         mRvGuide.setAdapter(mAdapterGuide);
+    }
+
+    @Override
+    public void loadMoreTourDataRes(List<VrInfo> tourVrs) {
+        if (tourVrs.size() == 0) {
+            if (page > 0) {
+                page--;
+                ToastHelper.showShort(R.string.no_more_data_available);
+            }
+        } else {
+            this.mTourVrs.addAll(tourVrs);
+            mAdapterGuide.notifyDataSetChanged();
+        }
+        mPtrView.refreshComplete();
     }
 
     /**

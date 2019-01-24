@@ -1,10 +1,11 @@
 package com.expo.widget;
 
 import android.content.Context;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
 
-public class MyScrollView extends ScrollView {
+public class MyScrollView extends NestedScrollView {
     private OnScrollListener onScrollListener;
     private int scrollY;
 
