@@ -7,8 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
@@ -22,6 +22,7 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,23 +30,29 @@ import butterknife.OnClick;
 
 public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Presenter> implements ExpoActivityContract.View {
 
-    @BindView(R.id.expo_activity_date)
-    TextView mTvDateTitle;
+    @BindView(R.id.expo_activity_month_recycler)
+    RecyclerView mRvMonthRecycler;
     @BindView(R.id.expo_activity_date_recycler)
-    RecyclerView mRvDate;
+    RecyclerView mRvDateRecycler;
     @BindView(R.id.expo_activity_recycler)
-    RecyclerView mRvActivity;
+    RecyclerView mRvActivityRecycler;
 
+    View mSelectMonthView;
     View mSelectDateView;
     View mSelectTimeView;
 
+    CommonAdapter mMonthAdapter;
     CommonAdapter mDateAdapter;
     CommonAdapter mActivityAdapter;
 
+    List<Long> mMonthList;
     List<Long> mDateList;
     List<String> mActivityList;
+
+    long mSelectMonth;
     long mSelectTime;
 
+    int mMonthScrollX;
 
     @Override
     protected int getContentView() {
@@ -55,33 +62,80 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, R.string.title_expo_activity);
-        initRecyclerView();
+        initMonthRecycler();
+        initDateRecycler();
+        initActivityRecycler();
         mPresenter.loadDate(TimeUtils.getNowMills());
     }
 
-    private void initRecyclerView() {
+    private void initMonthRecycler() {
+        mMonthList = mPresenter.getMonthList();
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRvMonthRecycler.setLayoutManager(manager);
+        mRvMonthRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mMonthScrollX += dx;
+            }
+        });
+        mSelectMonth = TimeUtils.string2Millis(TimeUtils.millis2String(TimeUtils.getNowMills(), new SimpleDateFormat("yyyy-MM")), new SimpleDateFormat("yyyy-MM"));
+        mRvMonthRecycler.setAdapter(mMonthAdapter = new CommonAdapter(this, R.layout.item_expo_activity_month, mMonthList) {
+            @Override
+            protected void convert(ViewHolder holder, Object o, int position) {
+                holder.itemView.getLayoutParams().width = ScreenUtils.getScreenWidth() / 5;
+                if (mMonthList.get(position) == 0L) {
+                    holder.itemView.setSelected(false);
+                    return;
+                }
+                TimeUtils.getValueByCalendarField(mMonthList.get(position), Calendar.MONTH);
+                if (mSelectMonth == mMonthList.get(position)) {
+                    holder.itemView.setSelected(true);
+                    mSelectMonthView = holder.itemView;
+                } else {
+                    holder.itemView.setSelected(false);
+                }
+                holder.setText(R.id.month, getString(getResources().getIdentifier("month_" + (TimeUtils.getValueByCalendarField(mMonthList.get(position), Calendar.MONTH) + 1), "string", AppUtils.getAppPackageName())));
+                holder.itemView.setOnClickListener(v -> {
+                    if (mSelectMonthView != null) {
+                        mSelectMonthView.setSelected(false);
+                    }
+
+                    mSelectMonthView = v;
+                    mSelectMonthView.setSelected(true);
+
+                    mRvMonthRecycler.smoothScrollBy(ScreenUtils.getScreenWidth() * Math.max(0, position - 2) / 5 - mMonthScrollX, 0);
+
+                    mPresenter.loadDate(mMonthList.get(position));
+                });
+            }
+
+        });
+    }
+
+    private void initDateRecycler() {
         mDateList = new ArrayList();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRvDate.setLayoutManager(manager);
+        mRvDateRecycler.setLayoutManager(manager);
         mSelectTime = TimeUtils.string2Millis(TimeUtils.millis2String(TimeUtils.getNowMills(), new SimpleDateFormat("yyyy-MM-dd")), new SimpleDateFormat("yyyy-MM-dd"));
-        mRvDate.setAdapter(mDateAdapter = new CommonAdapter(this, R.layout.item_expo_activity_date, mDateList) {
+        mRvDateRecycler.setAdapter(mDateAdapter = new CommonAdapter(this, R.layout.item_expo_activity_date, mDateList) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
                 if (mSelectTime == mDateList.get(position)) {
-                    if (mSelectDateView != holder.itemView) {
-                        if (mSelectDateView != null)
-                            mSelectDateView.setSelected(false);
-                        mSelectTime = mDateList.get(position);
-                        mSelectDateView = holder.itemView;
-                        holder.itemView.setSelected(true);
-                    }
+                    if (mSelectDateView != null)
+                        mSelectDateView.setSelected(false);
+                    mSelectTime = mDateList.get(position);
+                    mSelectDateView = holder.itemView;
+                    holder.itemView.setSelected(true);
                 } else {
                     holder.itemView.setSelected(false);
                 }
                 holder.itemView.getLayoutParams().width = ScreenUtils.getScreenWidth() / 5;
                 holder.setText(R.id.item_date_day, String.valueOf(position + 1));
-                holder.setText(R.id.item_date_week, TimeUtils.getUSWeek(mDateList.get(position)).substring(0, 3));
+                holder.setText(R.id.item_date_week, getResources().getString(
+                        getResources().getIdentifier("expo_activity_" + TimeUtils.getUSWeek(mDateList.get(position)).toLowerCase(), "string", AppUtils.getAppPackageName())));
                 holder.itemView.setOnClickListener(v -> {
                     if (mSelectDateView != null)
                         mSelectDateView.setSelected(false);
@@ -94,9 +148,18 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
 
         });
 
+        for (int i = 0; i < mMonthList.size(); i++) {
+            if (mSelectMonth == mMonthList.get(i)) {
+                mRvMonthRecycler.smoothScrollBy(ScreenUtils.getScreenWidth() * Math.max(0, i - 2) / 5, 0);
+                return;
+            }
+        }
+    }
+
+    private void initActivityRecycler() {
         mActivityList = new ArrayList<>();
-        mRvActivity.setLayoutManager(new LinearLayoutManager(this));
-        mRvActivity.setAdapter(mActivityAdapter = new CommonAdapter(this, R.layout.item_expo_activity_activity, mActivityList) {
+        mRvActivityRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mRvActivityRecycler.setAdapter(mActivityAdapter = new CommonAdapter(this, R.layout.item_expo_activity_activity, mActivityList) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
                 Picasso.with(getContext()).load(CommUtils.getFullUrl("url")).into((ImageView) holder.getView(R.id.item_activity_img));
@@ -119,16 +182,15 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
     public void freshDate(List<Long> list) {
         mDateList.clear();
         mDateList.addAll(list);
-        mTvDateTitle.setText(TimeUtils.millis2String(mDateList.get(0), new SimpleDateFormat("yyyy年MM月")));
         mDateAdapter.notifyDataSetChanged();
 
         for (int i = 0; i < mDateList.size(); i++) {
             if (mSelectTime == mDateList.get(i)) {
-                mRvDate.getLayoutManager().scrollToPosition(i);
+                mRvDateRecycler.smoothScrollBy(ScreenUtils.getScreenWidth() * Math.max(0, i - 2) / 5, 0);
                 return;
             }
         }
-        mRvDate.getLayoutManager().scrollToPosition(0);
+        mRvDateRecycler.smoothScrollToPosition(0);
     }
 
     @Override
@@ -136,22 +198,16 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
         ToastHelper.showShort("刷新数据");
     }
 
-    @OnClick({R.id.expo_activity_left, R.id.expo_activity_right, R.id.expand_activity_morning, R.id.expand_activity_afternoon, R.id.expand_activity_night})
+    @OnClick({R.id.expand_activity_morning, R.id.expand_activity_noon, R.id.expand_activity_afternoon})
     public void clickView(View view) {
         switch (view.getId()) {
-            case R.id.expo_activity_left:
-                mPresenter.goNextMonth(mDateList.get(0), -1);
-                break;
-            case R.id.expo_activity_right:
-                mPresenter.goNextMonth(mDateList.get(0), 1);
-                break;
             case R.id.expand_activity_morning:
                 selectDataView(view);
                 break;
-            case R.id.expand_activity_afternoon:
+            case R.id.expand_activity_noon:
                 selectDataView(view);
                 break;
-            case R.id.expand_activity_night:
+            case R.id.expand_activity_afternoon:
                 selectDataView(view);
                 break;
         }

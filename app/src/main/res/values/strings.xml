@@ -373,5 +373,21 @@
     <string name="night">晚上</string>
     <string name="activity_time">活动时间</string>
 
+    <string name="expo_activity_monday">一</string>
+    <string name="expo_activity_tuesday">二</string>
+    <string name="expo_activity_wednesday">三</string>
+    <string name="expo_activity_thursday">四</string>
+    <string name="expo_activity_friday">五</string>
+    <string name="expo_activity_saturday">六</string>
+    <string name="expo_activity_sunday">七</string>
+
+    <string name="month_1">一月</string>
+    <string name="month_2">二月</string>
+    <string name="month_3">三月</string>
+    <string name="month_4">四月</string>
+    <string name="month_5">五月</string>
+    <string name="month_6">六月</string>
+    <string name="month_7">七月</string>
+
 
 </resources>

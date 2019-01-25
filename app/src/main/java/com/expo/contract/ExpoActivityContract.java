@@ -19,17 +19,14 @@ public interface ExpoActivityContract {
          */
         public abstract void loadDate(long time);
 
-        /**
-         * 1:下个月，-1上个月
-         */
-        public abstract void goNextMonth(long time, int month);
+        public abstract List<Long> getMonthList();
 
         /***
          * 加载列表
-         * @param date 日期
-         * @param time 0：全部，1：上午，2：下午，3：晚上
+         * @param time 日期
+         * @param type 0：全部，1：上午，2：下午，3：晚上
          */
-        public abstract void loadActivity(String date, int time);
+        public abstract void loadActivity(int time, int type);
 
 
     }

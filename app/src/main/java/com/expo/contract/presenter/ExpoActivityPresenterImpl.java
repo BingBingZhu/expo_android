@@ -1,6 +1,7 @@
 package com.expo.contract.presenter;
 
 import com.blankj.utilcode.util.TimeUtils;
+import com.expo.R;
 import com.expo.base.utils.DateUtils;
 import com.expo.contract.ExpoActivityContract;
 
@@ -19,12 +20,24 @@ public class ExpoActivityPresenterImpl extends ExpoActivityContract.Presenter {
     }
 
     @Override
-    public void goNextMonth(long time, int month) {
-        mView.freshDate(getDateList(DateUtils.getDate(time, 0, month, 0)));
+    public List<Long> getMonthList() {
+        List<Long> list = new ArrayList<>();
+        list.add(0L);
+        list.add(0L);
+        list.add(TimeUtils.string2Millis("2019-01", new SimpleDateFormat("yyyy-MM")));
+        list.add(TimeUtils.string2Millis("2019-02", new SimpleDateFormat("yyyy-MM")));
+        list.add(TimeUtils.string2Millis("2019-03", new SimpleDateFormat("yyyy-MM")));
+        list.add(TimeUtils.string2Millis("2019-04", new SimpleDateFormat("yyyy-MM")));
+        list.add(TimeUtils.string2Millis("2019-05", new SimpleDateFormat("yyyy-MM")));
+        list.add(TimeUtils.string2Millis("2019-06", new SimpleDateFormat("yyyy-MM")));
+        list.add(TimeUtils.string2Millis("2019-07", new SimpleDateFormat("yyyy-MM")));
+        list.add(0L);
+        list.add(0L);
+        return list;
     }
 
     @Override
-    public void loadActivity(String date, int time) {
+    public void loadActivity(int time, int type) {
 
     }
 
@@ -34,7 +47,7 @@ public class ExpoActivityPresenterImpl extends ExpoActivityContract.Presenter {
         int days = DateUtils.getMonthDays(time);
         List<Long> list = new ArrayList<>();
         for (int i = 0; i < days; i++) {
-            list.add(time + i * 24 * 3600 * 1000);
+            list.add(time + i * 24L * 3600L * 1000L);
         }
         return list;
     }
