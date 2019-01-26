@@ -25,21 +25,19 @@
         <ImageView
             android:id="@+id/expand_activity_morning"
             android:layout_width="@dimen/dms_198"
-            android:layout_height="@dimen/dms_60"
-            android:layout_marginTop="@dimen/dms_26"
+            android:layout_height="@dimen/dms_120"
             android:src="@drawable/selector_morning" />
 
         <ImageView
             android:id="@+id/expand_activity_noon"
             android:layout_width="@dimen/dms_198"
-            android:layout_height="@dimen/dms_60"
+            android:layout_height="@dimen/dms_120"
             android:src="@drawable/selector_noon" />
 
         <ImageView
             android:id="@+id/expand_activity_afternoon"
             android:layout_width="@dimen/dms_198"
-            android:layout_height="@dimen/dms_60"
-            android:layout_marginTop="@dimen/dms_28"
+            android:layout_height="@dimen/dms_120"
             android:src="@drawable/selector_afternoon" />
 
     </LinearLayout>

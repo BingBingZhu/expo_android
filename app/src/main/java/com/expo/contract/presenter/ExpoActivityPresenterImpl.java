@@ -51,6 +51,7 @@ public class ExpoActivityPresenterImpl extends ExpoActivityContract.Presenter {
             list.add(3);
             list.add(5);
             list.add(7);
+            params.add("and");
             params.add("in", "time_interval", list);
         } else if (type == 2) {
             List<Integer> list = new ArrayList<>();
@@ -58,6 +59,7 @@ public class ExpoActivityPresenterImpl extends ExpoActivityContract.Presenter {
             list.add(3);
             list.add(6);
             list.add(7);
+            params.add("and");
             params.add("in", "time_interval", list);
         } else if (type == 3) {
             List<Integer> list = new ArrayList<>();
@@ -65,6 +67,7 @@ public class ExpoActivityPresenterImpl extends ExpoActivityContract.Presenter {
             list.add(5);
             list.add(6);
             list.add(7);
+            params.add("and");
             params.add("in", "time_interval", list);
         }
         mView.freshActivityInfo(mDao.query(ExpoActivityInfo.class, params));
