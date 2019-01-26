@@ -367,4 +367,6 @@
     <string name="think_again_track">再想想</string>
     <string name="share_to">分享到</string>
     <string name="stop_sharing">取消分享</string>
+    <string name="expo_map">世园地图</string>
+    <string name="expo_scenic">世园景点</string>
 </resources>
