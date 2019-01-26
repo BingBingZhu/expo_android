@@ -29,6 +29,8 @@
             android:id="@+id/expo_activity_time"
             style="@style/TextSizeBlack12"
             android:layout_marginTop="@dimen/dms_26"
+            android:gravity="left|top"
+            android:lines="2"
             android:textColor="@color/gray_99" />
     </LinearLayout>
 

@@ -15,13 +15,17 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ExpoActivityContract;
+import com.expo.entity.ExpoActivityInfo;
 import com.expo.utils.CommUtils;
+import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -47,12 +51,15 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
 
     List<Long> mMonthList;
     List<Long> mDateList;
-    List<String> mActivityList;
+    List<ExpoActivityInfo> mActivityAllList;
+    List<ExpoActivityInfo> mActivityShowList;
 
     long mSelectMonth;
     long mSelectTime;
 
     int mMonthScrollX;
+
+    int mTimeType;//区分全天、上午、下午、晚上，分别为0、1、2、3
 
     @Override
     protected int getContentView() {
@@ -66,6 +73,8 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
         initDateRecycler();
         initActivityRecycler();
         mPresenter.loadDate(TimeUtils.getNowMills());
+        mTimeType = 0;
+        mPresenter.loadActivityInfo(mSelectTime, mTimeType);
     }
 
     private void initMonthRecycler() {
@@ -157,14 +166,41 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
     }
 
     private void initActivityRecycler() {
-        mActivityList = new ArrayList<>();
+        mActivityShowList = new ArrayList<>();
         mRvActivityRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRvActivityRecycler.setAdapter(mActivityAdapter = new CommonAdapter(this, R.layout.item_expo_activity_activity, mActivityList) {
+        mRvActivityRecycler.setAdapter(mActivityAdapter = new CommonAdapter(this, R.layout.item_expo_activity_activity, mActivityShowList) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
+                ExpoActivityInfo info = mActivityShowList.get(position);
                 Picasso.with(getContext()).load(CommUtils.getFullUrl("url")).into((ImageView) holder.getView(R.id.item_activity_img));
-                holder.setText(R.id.expo_activity_name, "名字");
-                holder.setText(R.id.expo_activity_time, "时间");
+                holder.setText(R.id.expo_activity_name, LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn()));
+                List<String> times = Arrays.asList(info.getTimes().split("/"));
+                for (int i = times.size() - 1; i >= 0; i--) {
+                    String start = times.get(i).split("-")[0];
+                    Long time = TimeUtils.string2Millis(start, new SimpleDateFormat("mm:ss"));
+                    if (mTimeType == 1 && time > Constants.TimeType.MORNING) {
+                        times.remove(i);
+                    }
+                    if (mTimeType == 2 && (time < Constants.TimeType.MORNING || time > Constants.TimeType.AFTERNOON)) {
+                        times.remove(i);
+                    }
+                    if (mTimeType == 3 && time < Constants.TimeType.AFTERNOON) {
+                        times.remove(i);
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < times.size(); i++) {
+                    if (i == 1 || i == 3)
+                        sb.append("\t");
+                    else if (i == 2)
+                        sb.append("\n");
+                    sb.append(times.get(i));
+                }
+                holder.setText(R.id.expo_activity_time, sb.toString());
+                holder.itemView.setOnClickListener(v -> {
+
+                });
             }
         });
     }
@@ -194,23 +230,28 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
     }
 
     @Override
-    public void freshData(List list) {
-        ToastHelper.showShort("刷新数据");
+    public void freshActivityInfo(List<ExpoActivityInfo> list) {
+        mActivityShowList.clear();
+        if (list != null)
+            mActivityShowList.addAll(list);
+        mActivityAdapter.notifyDataSetChanged();
     }
 
     @OnClick({R.id.expand_activity_morning, R.id.expand_activity_noon, R.id.expand_activity_afternoon})
     public void clickView(View view) {
         switch (view.getId()) {
             case R.id.expand_activity_morning:
-                selectDataView(view);
+                mTimeType = 1;
                 break;
             case R.id.expand_activity_noon:
-                selectDataView(view);
+                mTimeType = 2;
                 break;
             case R.id.expand_activity_afternoon:
-                selectDataView(view);
+                mTimeType = 3;
                 break;
         }
+        selectDataView(view);
+        mPresenter.loadActivityInfo(mSelectTime, mTimeType);
     }
 
     private void selectDataView(View view) {

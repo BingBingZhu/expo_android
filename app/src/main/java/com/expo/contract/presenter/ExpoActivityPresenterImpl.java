@@ -4,6 +4,9 @@ import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.utils.DateUtils;
 import com.expo.contract.ExpoActivityContract;
+import com.expo.db.QueryParams;
+import com.expo.entity.Encyclopedias;
+import com.expo.entity.ExpoActivityInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,8 +40,34 @@ public class ExpoActivityPresenterImpl extends ExpoActivityContract.Presenter {
     }
 
     @Override
-    public void loadActivity(int time, int type) {
-
+    public void loadActivityInfo(long time, int type) {
+        QueryParams params = new QueryParams()
+                .add("lt", "start_time", time)
+                .add("and")
+                .add("gt", "end_time", time);
+        if (type == 1) {
+            List<Integer> list = new ArrayList<>();
+            list.add(1);
+            list.add(3);
+            list.add(5);
+            list.add(7);
+            params.add("in", "time_interval", list);
+        } else if (type == 2) {
+            List<Integer> list = new ArrayList<>();
+            list.add(2);
+            list.add(3);
+            list.add(6);
+            list.add(7);
+            params.add("in", "time_interval", list);
+        } else if (type == 3) {
+            List<Integer> list = new ArrayList<>();
+            list.add(4);
+            list.add(5);
+            list.add(6);
+            list.add(7);
+            params.add("in", "time_interval", list);
+        }
+        mView.freshActivityInfo(mDao.query(ExpoActivityInfo.class, params));
     }
 
     private List<Long> getDateList(long time) {

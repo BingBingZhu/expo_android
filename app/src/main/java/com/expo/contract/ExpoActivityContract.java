@@ -3,6 +3,7 @@ package com.expo.contract;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.Badge;
+import com.expo.entity.ExpoActivityInfo;
 
 import java.util.List;
 
@@ -26,14 +27,13 @@ public interface ExpoActivityContract {
          * @param time 日期
          * @param type 0：全部，1：上午，2：下午，3：晚上
          */
-        public abstract void loadActivity(int time, int type);
-
+        public abstract void loadActivityInfo(long time, int type);
 
     }
 
     interface View extends IView {
         void freshDate(List<Long> list);
 
-        void freshData(List list);
+        void freshActivityInfo(List<ExpoActivityInfo> list);
     }
 }
