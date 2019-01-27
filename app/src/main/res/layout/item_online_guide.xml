@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_online_guide_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dms_28"
+    android:paddingBottom="@dimen/dms_28"
+    android:orientation="horizontal">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/item_online_guide_img"
+            android:layout_width="@dimen/dms_170"
+            android:layout_height="@dimen/dms_164"
+            android:scaleType="centerCrop" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/item_online_guide_tour"
+            android:layout_width="@dimen/dms_44"
+            android:layout_height="@dimen/dms_44"
+            android:layout_gravity="bottom|left"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_22"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_online_guide_name"
+            style="@style/TextSizeBlack13"
+            android:layout_gravity="center_vertical|left"
+            android:text="中国馆"/>
+
+        <TextView
+            android:id="@+id/item_online_guide_content"
+            style="@style/TextSizeBlack12"
+            android:layout_marginTop="@dimen/dms_14"
+            android:lines="2"
+            android:ellipsize="end"
+            android:textColor="@color/gray_66"
+            android:text="北京世界园艺博览会-网上世园会就集实景世园、世园、在线导游多种表现形式8480-5x..." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_14">
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_online_guide_scans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/find_scans_small_white"
+                android:gravity="center"
+                android:drawablePadding="@dimen/dms_10"
+                android:textColor="@color/gray_66"
+                android:textSize="@dimen/font_18"
+                android:text="12345678次"/>
+
+            <com.hedan.textdrawablelibrary.TextViewDrawable
+                android:id="@+id/item_online_guide_time"
+                android:layout_marginLeft="@dimen/dms_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:drawableLeft="@mipmap/ico_vr_play_time"
+                android:drawablePadding="@dimen/dms_10"
+                android:textColor="@color/gray_66"
+                android:textSize="@dimen/font_18"
+                android:text="32分钟"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -104,4 +104,33 @@
         <attr name="lefttext" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="LaminatedBannerView">
+        <attr name="open_mz_mode" format="boolean"/>
+        <attr name="canLoop" format="boolean"/>
+        <attr name="coverWidth" format="integer" />
+        <attr name="indicatorPaddingLeft" format="dimension"/>
+        <attr name="indicatorPaddingRight" format="dimension"/>
+        <attr name="indicatorPaddingTop" format="dimension"/>
+        <attr name="indicatorPaddingBottom" format="dimension"/>
+        <attr name="indicatorAlign">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+        <attr name="middle_page_cover" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="RecyclerViewPager">
+        <attr name="rvp_triggerOffset" format="float" />
+        <attr name="rvp_flingFactor" format="float" />
+        <attr name="rvp_singlePageFling" format="boolean" />
+        <attr name="rvp_inertia" format="boolean"/>
+        <attr name="rvp_millisecondsPerInch" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="ScaleViewPager">
+        <attr name="svp_minScale" format="float" />
+        <attr name="svp_maxScale" format="float" />
+        <attr name="svp_coverWidth" format="dimension" />
+    </declare-styleable>
 </resources>

@@ -234,6 +234,30 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         }
 
         @JavascriptInterface
+        /**
+         * 分享截图二维码
+         */
+        public void shareQRCode(){
+            Bitmap bitmap = captureScreen( WebActivity.this );
+            String filePath = FileUtils.saveScreenShot( bitmap );
+            ShareUtil.showShare(getContext(), null, null, filePath, null, null);
+        }
+
+        @JavascriptInterface
+        /**
+         * 截图保存本地
+         */
+        public void printscreen(){
+            Bitmap bitmap = captureScreen( WebActivity.this );
+            String filePath = FileUtils.saveScreenShot( bitmap );
+            new CustomDefaultDialog(getContext())
+                    .setContent("以保存至："+filePath)
+                    .setOnlyOK()
+                    .setCancelable(false)
+                    .show();
+        }
+
+        @JavascriptInterface
         public void unLogin() {
             mHandler.post( () -> showForceSingOutDialog() );
         }

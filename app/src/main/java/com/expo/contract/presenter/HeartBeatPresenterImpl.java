@@ -155,10 +155,9 @@ public class HeartBeatPresenterImpl extends HeartBeatContract.Presenter {
     }
 
     private void showAlertMsg(Message message) {
-        new AlertDialog.Builder(ExpoApp.getApplication().getTopActivity())
-                .setTitle(R.string.new_message)
-                .setMessage(LanguageUtil.chooseTest(message.getContent(), message.getContentEn()))
-                .setNegativeButton(R.string.ok, null)
-                .show();
+        CustomDefaultDialog dialog = new CustomDefaultDialog(ExpoApp.getApplication().getTopActivity());
+        dialog.setContent(LanguageUtil.chooseTest(message.getContent(), message.getContentEn()))
+                .setOnlyOK()
+                .setCancelable(false).show();
     }
 }

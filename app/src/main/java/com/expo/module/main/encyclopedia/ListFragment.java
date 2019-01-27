@@ -12,6 +12,7 @@ import com.expo.base.BaseFragment;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ListContract;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.VrInfo;
 import com.expo.widget.RecycleViewDivider;
 import com.expo.widget.SimpleRecyclerView;
 
@@ -52,7 +53,7 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
         adapter = new EncyAndSceneListAdapter(getContext(), mEncyclopediasList);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addItemDecoration( new RecycleViewDivider(
-                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor( R.color.white_f4 ) ) );
+                getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor( R.color.white_f5 ) ) );
         mPresenter.loadEncyByType(mTab.getId(), page);
         initLoadMore();
     }
@@ -90,5 +91,10 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
             mEncyclopediasList.addAll(EncyclopediasAdapter.convertToTabList(data));
         }
         mPtrView.refreshComplete();
+    }
+
+    @Override
+    public void addVrsToList(List<VrInfo> data) {
+        // 未使用方法
     }
 }

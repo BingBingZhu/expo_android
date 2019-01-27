@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/vr_image_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.expo.widget.AppBarView
+        android:id="@+id/vr_image_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.hedan.textdrawablelibrary.TextViewDrawable
+        android:id="@+id/vr_image_show"
+        style="@style/TextSizeWhite12"
+        android:layout_width="@dimen/dms_52"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dms_32"
+        android:layout_marginBottom="@dimen/dms_52"
+        android:drawableTop="@mipmap/find_scans_small_white"
+        android:drawablePadding="@dimen/dms_2"
+        android:text="@string/show"
+        app:drawableTopHeight="@dimen/dms_32"
+        app:drawableTopWidth="@dimen/dms_32" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vr_image_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_126"
+        android:layout_alignBottom="@id/vr_image_show"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_toRightOf="@id/vr_image_show" />
+
+
+</RelativeLayout>

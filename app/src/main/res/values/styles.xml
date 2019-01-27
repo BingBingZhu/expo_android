@@ -193,6 +193,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="tab_text_appearance_vr">
+        <item name="android:textSize">@dimen/font_26</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -242,5 +247,29 @@
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="online_expo_item_title" parent="TextSizeBlack15">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/dms_30</item>
+        <item name="android:layout_marginRight">@dimen/dms_30</item>
+        <item name="android:drawableLeft">@drawable/bg_02cd9b_r0</item>
+        <item name="android:drawableRight">@mipmap/arrow_mine</item>
+        <item name="android:drawablePadding">@dimen/dms_8</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="drawableLeftHeight">@dimen/dms_32</item>
+        <item name="drawableLeftWidth">@dimen/dms_4</item>
+    </style>
+
+    <style name="vr_detail_bottom_btn" parent="TextSize12">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/gray_66</item>
+        <item name="android:textSize">@dimen/font_22</item>
+        <item name="android:drawablePadding">@dimen/dms_18</item>
+        <item name="android:gravity">center</item>
+        <item name="drawableTopHeight">@dimen/dms_42</item>
+        <item name="drawableTopWidth">@dimen/dms_42</item>
     </style>
 </resources>

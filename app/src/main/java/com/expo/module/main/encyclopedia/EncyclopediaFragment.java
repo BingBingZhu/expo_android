@@ -51,7 +51,7 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     protected void onInitView(Bundle savedInstanceState) {
         mTopView.setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
         initTabLayout();
-        mAdapter = new TabPagerAdapter( getFragmentManager() );
+        mAdapter = new TabPagerAdapter( getFragmentManager(), TabPagerAdapter.TYPE_ENCYCLOPEDIA, 0 );
         mPagerView.setAdapter( mAdapter );
         mPagerView.addOnPageChangeListener( mOnPageChangeListener );
         mPresenter.loadTabs();

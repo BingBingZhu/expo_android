@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.vr.sdk.widgets.video.VrVideoView
+        android:id="@+id/vr_video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
+        android:layout_marginBottom="@dimen/dms_164"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/play"
+            android:layout_width="@dimen/dms_32"
+            android:layout_height="@dimen/dms_36"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/player_playing" />
+
+        <TextView
+            android:id="@+id/play_time"
+            android:layout_width="@dimen/dms_64"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dms_44"
+            android:layout_toRightOf="@id/play"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_22" />
+
+        <ImageView
+            android:id="@+id/full_screen"
+            android:layout_width="@dimen/dms_40"
+            android:layout_height="@dimen/dms_40"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/player_playing" />
+
+        <TextView
+            android:id="@+id/play_total_time"
+            android:layout_width="@dimen/dms_64"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dms_44"
+            android:layout_toLeftOf="@id/full_screen"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_22" />
+
+        <SeekBar
+            android:id="@+id/seek_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dms_20"
+            android:layout_marginRight="@dimen/dms_20"
+            android:layout_toLeftOf="@id/play_total_time"
+            android:layout_toRightOf="@id/play_time" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/no_wifi_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/no_wifi_tips"
+            style="@style/TextSizeWhite15"
+            android:text="@string/no_fiwi_no_free" />
+
+        <com.hedan.textdrawablelibrary.TextViewDrawable
+            android:id="@+id/no_wifi_play"
+            style="@style/TextSizeWhite15"
+            android:layout_height="@dimen/dms_90"
+            android:layout_marginTop="@dimen/dms_60"
+            android:background="@drawable/bg_666_r10"
+            android:drawableLeft="@mipmap/video_start"
+            android:drawablePadding="@dimen/dms_20"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dms_60"
+            android:paddingTop="@dimen/dms_20"
+            android:paddingRight="@dimen/dms_60"
+            android:paddingBottom="@dimen/dms_20"
+            android:text="500流量"
+            app:drawableLeftHeight="@dimen/dms_50"
+            app:drawableLeftWidth="@dimen/dms_50" />
+
+    </LinearLayout>
+
+</RelativeLayout>

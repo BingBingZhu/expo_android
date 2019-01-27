@@ -431,11 +431,12 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-        mWebView.loadUrl( String.format( "javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_START ) );
-        CustomDefaultDialog dialog = new CustomDefaultDialog( getContext() );
-        dialog.setContent( R.string.leave_navi )
-                .setOnOKClickListener( v1 -> {
-                    mWebView.loadUrl( "javascript:leavePage()" );
+        mWebView.loadUrl(String.format("javascript:tipTips('%s', '%s')", Constants.NaviTip.TO_JS_NAVI_TIP_TYPE, Constants.NaviTip.TO_JS_NAVI_TIP_LEAVE_START));
+        CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+        dialog.setContent(R.string.leave_navi)
+                .setOnOKClickListener(v1 -> {
+                    mWebView.loadUrl("javascript:leavePage()");
+                    mWebView.loadUrl("");
                     finish();
                     dialog.dismiss();
                 } )

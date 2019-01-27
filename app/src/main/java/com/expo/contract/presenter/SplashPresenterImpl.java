@@ -1,6 +1,7 @@
 package com.expo.contract.presenter;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.PrefsHelper;
@@ -17,6 +18,8 @@ import com.expo.entity.TouristType;
 import com.expo.entity.User;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
+import com.expo.entity.VrInfo;
+import com.expo.entity.VrLableInfo;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.AllTypeResp;
@@ -31,6 +34,8 @@ import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
 import com.expo.network.response.VenueResp;
 import com.expo.network.response.VenuesTypeResp;
+import com.expo.network.response.VrInfoResp;
+import com.expo.network.response.VrLableInfoResp;
 import com.expo.utils.Constants;
 
 import java.io.File;
@@ -133,6 +138,18 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                     updateTime = PrefsHelper.getString( Constants.Prefs.KEY_BADGE_UPDATE_TIME, null );
                     if (!rsp.badge.equals( updateTime )) {
                         loadBadgeInfo();
+                    }
+                }
+                if (!TextUtils.isEmpty( rsp.panorama )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_VR_INFO_UPDATE_TIME, null );
+                    if (!rsp.panorama.equals( updateTime )) {
+                        loadVrInfo();
+                    }
+                }
+                if (!TextUtils.isEmpty( rsp.vrLableInfo )) {
+                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_VR_LABLE_INFO_UPDATE_TIME, null );
+                    if (!rsp.vrLableInfo.equals( updateTime )) {
+                        loadVrLableInfo();
                     }
                 }
             }
@@ -460,6 +477,51 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 PrefsHelper.setString( Constants.Prefs.KEY_TOP_LINE_UPDATE_TIME, rsp.updateTime );
                 mDao.clear( TopLineInfo.class );
                 mDao.saveOrUpdateAll( rsp.topLine );
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable );
+        addNetworkRecord();
+    }
+
+    /**
+     * 加载全景资源
+     */
+    private void loadVrInfo() {
+        Observable<VrInfoResp> observable = Http.getServer().getPanCamList( Http.buildRequestBody( Http.getBaseParams() ) );
+        isRequest = Http.request( new ResponseCallback<VrInfoResp>() {
+            @Override
+            protected void onResponse(VrInfoResp rsp) {
+                Log.i("-------------VrInfoResp", "-----------");
+                PrefsHelper.setString( Constants.Prefs.KEY_VR_INFO_UPDATE_TIME, rsp.updateTime );
+                mDao.clear( VrInfo.class );
+                List<VrInfo> vrInfos = rsp.vrInfos;
+                mDao.saveOrUpdateAll( vrInfos );
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable );
+        addNetworkRecord();
+    }
+
+    /**
+     * 加载全景标签资源
+     */
+    private void loadVrLableInfo() {
+        Observable<VrLableInfoResp> observable = Http.getServer().getPanLableList( Http.buildRequestBody( Http.getBaseParams() ) );
+        isRequest = Http.request( new ResponseCallback<VrLableInfoResp>() {
+            @Override
+            protected void onResponse(VrLableInfoResp rsp) {
+                PrefsHelper.setString( Constants.Prefs.KEY_VR_LABLE_INFO_UPDATE_TIME, rsp.updateTime );
+                mDao.clear( VrLableInfo.class );
+                List<VrLableInfo> vrLableInfos = rsp.vrLableInfos;
+                mDao.saveOrUpdateAll( vrLableInfos );
             }
 
             @Override

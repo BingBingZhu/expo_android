@@ -360,6 +360,5 @@ public class ShareUtil {
         if(listener != null)
             oks.setCallback(listener);
         oks.show(context);
-
     }
 }

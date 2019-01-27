@@ -26,6 +26,8 @@ import com.expo.contract.presenter.MessagesPresenterImpl;
 import com.expo.contract.presenter.MinePresenterImpl;
 import com.expo.contract.presenter.NationalSmsCodePresenterImpl;
 import com.expo.contract.presenter.NavigationPresenterImpl;
+import com.expo.contract.presenter.OnlineHomePresenterImpl;
+import com.expo.contract.presenter.PanoramaListPresenterImpl;
 import com.expo.contract.presenter.ParkMapPresenterImpl;
 import com.expo.contract.presenter.RouteDetailPresenterImpl;
 import com.expo.contract.presenter.RoutesPresenterImpl;
@@ -36,6 +38,8 @@ import com.expo.contract.presenter.SplashPresenterImpl;
 import com.expo.contract.presenter.TouristServicePresenterImpl;
 import com.expo.contract.presenter.TrackPresenterImpl;
 import com.expo.contract.presenter.UserInfoPresenterImpl;
+import com.expo.contract.presenter.VRDetailPresenterImpl;
+import com.expo.contract.presenter.VRImagePresenterImpl;
 import com.expo.contract.presenter.WebPresenterImpl;
 import com.expo.contract.presenter.WebTemplatePresenterImpl;
 
@@ -113,6 +117,14 @@ public class PresenterFactory {
             return new ServiceHistoryPresenterImpl( (ServiceHistoryContract.View) view );
         } else if (view instanceof CustomRouteContract.View) {
             return new CustomRoutePresenterImpl( (CustomRouteContract.View) view );
+        } else if (view instanceof VRImageContract.View) {
+            return new VRImagePresenterImpl( (VRImageContract.View) view );
+        } else if (view instanceof OnlineHomeContract.View) {
+            return new OnlineHomePresenterImpl( (OnlineHomeContract.View) view );
+        } else if (view instanceof VRDetailContract.View) {
+            return new VRDetailPresenterImpl( (VRDetailContract.View) view );
+        } else if (view instanceof PanoramaListContract.View) {
+            return new PanoramaListPresenterImpl( (PanoramaListContract.View) view );
         }
         throw new UnsupportedOperationException();
     }
