@@ -412,6 +412,10 @@
     <string name="month_5">五月</string>
     <string name="month_6">六月</string>
     <string name="month_7">七月</string>
+    <string name="month_8">八月</string>
+    <string name="month_9">九月</string>
+    <string name="month_10">十月</string>
+    <string name="month_11">十一月</string>
 
 
     <string name="expo_map">世园地图</string>
