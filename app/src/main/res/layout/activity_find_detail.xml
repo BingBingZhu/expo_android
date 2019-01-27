@@ -15,7 +15,7 @@
         android:layout_width="@dimen/dms_36"
         android:layout_height="@dimen/dms_30"
         android:layout_margin="@dimen/dms_30"
-        android:src="@mipmap/icon_navbar_back_white" />
+        android:src="@mipmap/ico_white_back" />
 
     <LinearLayout
         android:id="@+id/find_detail_layout"
