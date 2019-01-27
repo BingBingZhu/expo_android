@@ -27,6 +27,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.TopLineInfo;
 import com.expo.map.LocationManager;
+import com.expo.module.activity.ExpoActivityActivity;
 import com.expo.module.freewifi.FreeWiFiActivity;
 import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.main.adapter.HomeExhibitAdapter;
@@ -245,6 +246,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             case R.id.home_func_7:
 //                VRDetailActivity.startActivity(getContext(), "8", true);
                 OnlineExpoActivity.startActivity(getContext());
+//                ExpoActivityActivity.startActivity(getContext());
 //                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PANORAMA ), null, false );
                 break;
             case R.id.home_navigation_item:

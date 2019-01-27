@@ -12,7 +12,7 @@
         android:paddingTop="@dimen/dms_36"
         android:paddingBottom="@dimen/dms_36"
         android:textSize="@dimen/font_30"
-        android:textColor="@color/selector_66_02cd9b"
+        android:textColor="@color/selector_999_333"
         android:text="@string/hight_accuracy"/>
     <View
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         android:paddingTop="@dimen/dms_36"
         android:paddingBottom="@dimen/dms_36"
         android:textSize="@dimen/font_30"
-        android:textColor="@color/selector_66_02cd9b"
+        android:textColor="@color/selector_999_333"
         android:text="@string/device_sensors"/>
     <View
         android:layout_width="match_parent"
@@ -44,6 +44,6 @@
         android:paddingTop="@dimen/dms_36"
         android:paddingBottom="@dimen/dms_36"
         android:textSize="@dimen/font_30"
-        android:textColor="@color/selector_66_02cd9b"
+        android:textColor="@color/selector_999_333"
         android:text="@string/battery_saving"/>
 </RadioGroup>

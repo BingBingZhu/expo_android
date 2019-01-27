@@ -7,6 +7,7 @@ import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CheckThirdIdRegisterStateResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
+import com.expo.network.response.ExpoActivityInfoResp;
 import com.expo.network.response.GetDistinguishPlantList_Rsb;
 import com.expo.network.response.PanResHotResp;
 import com.expo.network.response.ParkResp;
@@ -517,4 +518,14 @@ public interface DataServer {
     @POST("Terminal/SetPanResViews")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<BaseResponse> setPanResViews(@Body RequestBody requestBody);
+
+    /**
+     * 为某个全景资源增加观看数
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetShowTimesList_Rsb")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<ExpoActivityInfoResp> getShowTimesList_Rsb(@Body RequestBody requestBody);
 }

@@ -10,6 +10,7 @@ import com.expo.entity.CustomRoute;
 import com.expo.entity.DataType;
 import com.expo.entity.DownloadInfo;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.FootPrint;
 import com.expo.entity.Message;
 import com.expo.entity.Park;
@@ -58,6 +59,7 @@ public interface Constants {
         public static final String KEY_ROUTES_UPDATE_TIME = "key_routes_update_time";
         public static final String KEY_VR_INFO_UPDATE_TIME = "key_vr_info_update_time";
         public static final String KEY_VR_LABLE_INFO_UPDATE_TIME = "key_vr_lable_info_update_time";
+        public static final String KEY_EXPO_ACTIVITY_UPDATE_TIME = "key_expo_activity_update_time";
         public static final String KEY_MAP_ON_OFF = "key_map_on_off";
         public static final String KEY_TRACK_ON_OFF = "key_track_on_off";
         public static final String KEY_MAP_PATTERN = "key_map_pattern";
@@ -110,8 +112,8 @@ public interface Constants {
         public static final String ALI_BASE_URL = "http://47.95.215.6:8080/Api/";    //阿里云(识花)
         //IP
         public static final String IP = "39.105.120.171";
-//        public static final String IP = "47.92.250.179";
-        //        public static final String IP = "47.92.247.143";
+        //        public static final String IP = "47.92.250.179";
+//        public static final String IP = "47.92.247.143";
         //自己服务器基本请求用到的URL
         public static final String BASE_URL = "http://" + IP + ":8080/Api/";
         //自己服务器文件资源请求用到的URL
@@ -156,7 +158,7 @@ public interface Constants {
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class, CustomRoute.class,
                 TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, VisitorService.class,
-                Contacts.class, VrInfo.class, VrLableInfo.class, Tuple.class};
+                Contacts.class, VrInfo.class, VrLableInfo.class, Tuple.class, ExpoActivityInfo.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }
@@ -283,6 +285,12 @@ public interface Constants {
     class ScoreType {
         public static final String TYPE_ENCYCLOPEDIAS = "1";//附近景点
         public static final String TYPE_SHARE = "2";//附近景点
+    }
 
+
+    class TimeType {
+        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
+        public static final int AFTERNOON = 14 * 3600 * 1000;//中午和下午的分割线
+        public static final int NIGHT = 19 * 3600 * 1000;//下午和晚上的分割线
     }
 }

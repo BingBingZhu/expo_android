@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ency_item_root"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dms_254"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="@dimen/dms_28">
+
+    <ImageView
+        android:id="@+id/item_activity_img"
+        android:layout_width="@dimen/dms_200"
+        android:layout_height="@dimen/dms_200"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_toRightOf="@id/item_activity_img"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/expo_activity_name"
+            style="@style/TextSizeBlack15" />
+
+        <TextView
+            android:id="@+id/expo_activity_time"
+            style="@style/TextSizeBlack12"
+            android:layout_marginTop="@dimen/dms_26"
+            android:gravity="left|top"
+            android:lines="2"
+            android:textColor="@color/gray_99" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dms_26"
+        android:src="@mipmap/arrow_right" />
+
+</RelativeLayout>

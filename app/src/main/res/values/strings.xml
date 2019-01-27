@@ -127,6 +127,7 @@
     <string name="title_contact_add">添加联系人</string>
     <string name="title_contact_edit">编辑联系人</string>
     <string name="title_expo_scene">实景世园</string>
+    <string name="title_expo_activity">世园活动</string>
 
     <string name="check_string_empty_content">内容不能为空</string>
     <string name="check_string_empty_name">姓名不能为空</string>
@@ -391,4 +392,26 @@
     <string name="expo_vr_detail_video">全景视频</string>
     <string name="expo_vr_detail_sendtable">全景沙盘</string>
     <string name="data_error">数据类型错误</string>
+    <string name="morning">上午</string>
+    <string name="afternoon">下午</string>
+    <string name="night">晚上</string>
+    <string name="activity_time">活动时间</string>
+
+    <string name="expo_activity_monday">一</string>
+    <string name="expo_activity_tuesday">二</string>
+    <string name="expo_activity_wednesday">三</string>
+    <string name="expo_activity_thursday">四</string>
+    <string name="expo_activity_friday">五</string>
+    <string name="expo_activity_saturday">六</string>
+    <string name="expo_activity_sunday">七</string>
+
+    <string name="month_1">一月</string>
+    <string name="month_2">二月</string>
+    <string name="month_3">三月</string>
+    <string name="month_4">四月</string>
+    <string name="month_5">五月</string>
+    <string name="month_6">六月</string>
+    <string name="month_7">七月</string>
+
+
 </resources>

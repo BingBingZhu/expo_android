@@ -39,4 +39,6 @@ public class UpdateTimeResp extends BaseResponse {
     public String parkList;//园区数据更新时间
     @SerializedName(value = "gCacheUpdateTimePanLable")
     public String vrLableInfo;//全景标签数据更新时间
+    @SerializedName(value = "gCacheUpdateTimeShowTimes")
+    public String timeShowTimes;//园区活动更新时间
 }
