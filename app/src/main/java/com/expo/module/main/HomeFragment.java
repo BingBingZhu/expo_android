@@ -11,7 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ScreenUtils;
@@ -34,8 +35,6 @@ import com.expo.module.main.adapter.HomeExhibitAdapter;
 import com.expo.module.main.adapter.HomeTopLineAdapter;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 import com.expo.module.map.ParkMapActivity;
-import com.expo.module.online.OnlineExpoActivity;
-import com.expo.module.online.detail.VRDetailActivity;
 import com.expo.module.routes.RoutesActivity;
 import com.expo.module.service.TouristServiceActivity;
 import com.expo.module.webview.WebActivity;
@@ -51,16 +50,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /*
  * 首页
@@ -245,8 +240,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 break;
             case R.id.home_func_7:
 //                VRDetailActivity.startActivity(getContext(), "8", true);
-                OnlineExpoActivity.startActivity(getContext());
-//                ExpoActivityActivity.startActivity(getContext());
+//                OnlineExpoActivity.startActivity(getContext());
+                ExpoActivityActivity.startActivity(getContext());
 //                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PANORAMA ), null, false );
                 break;
             case R.id.home_navigation_item:
