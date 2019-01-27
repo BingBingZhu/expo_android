@@ -57,7 +57,7 @@ import butterknife.OnClick;
 import static com.expo.utils.Constants.EXTRAS.EXTRAS;
 
 /*
- * 游客求助，0:医疗救助、1:人员走失、2:寻物启事、3:治安举报、4:问询咨询通用页面
+ * 游客求助，5:医疗救助、6:人员走失、3:寻物启事、7:治安举报、0:问询咨询通用页面
  */
 public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View, View.OnClickListener {
 
@@ -131,24 +131,24 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
             mPhone.setVisibility( View.GONE );
         }
         switch (getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 )) {
-            case 0:
+            case 5:
                 mServiceType = "1";
                 mTvKindly.setText( R.string.kindly_reminder_medical );
                 break;
-            case 1:
-                mServiceType = "3";
+            case 7:
+                mServiceType = "2";
                 mTvKindly.setText( R.string.kindly_reminder_report );
                 break;
-            case 2:
+            case 3:
                 mServiceType = "5";
                 mTvKindly.setText( R.string.kindly_reminder_look_for );
                 break;
-            case 4:
+            case 0:
                 mServiceType = "4";
                 mTvKindly.setText( R.string.kindly_reminder_inquiry );
                 break;
-            case 5:
-                mServiceType = "2";
+            case 6:
+                mServiceType = "3";
                 mTvKindly.setText( R.string.kindly_reminder_lost );
                 break;
         }

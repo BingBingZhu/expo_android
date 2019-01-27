@@ -48,7 +48,7 @@ public class TouristServiceAdapter extends RecyclerView.Adapter<TouristServiceAd
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 8;
     }
 
     class TouristServiceViewHolder extends RecyclerView.ViewHolder {

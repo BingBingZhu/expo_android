@@ -63,16 +63,14 @@
     <string name="main_mine">我的</string>
 
     <string name="tourist_service_phone">游客服务热线：400-818-6666</string>
-    <string name="item_tourist_service_text_0">医疗救助</string>
-    <string name="item_tourist_service_text_1">人员走失</string>
-    <string name="item_tourist_service_text_2">寻物启事</string>
-    <string name="item_tourist_service_text_3">无障碍服务</string>
-    <string name="item_tourist_service_text_4">问询咨询</string>
-    <string name="item_tourist_service_text_5">治安举报</string>
-    <string name="item_tourist_service_text_6">购票指南</string>
-    <string name="item_tourist_service_text_7">游客须知</string>
-    <string name="item_tourist_service_text_8">场馆预约</string>
-    <string name="item_tourist_service_text_9">投诉受理</string>
+    <string name="item_tourist_service_text_0">问询咨询</string>
+    <string name="item_tourist_service_text_1">物品寄存</string>
+    <string name="item_tourist_service_text_2">物品租赁</string>
+    <string name="item_tourist_service_text_3">失物招领</string>
+    <string name="item_tourist_service_text_4">母婴服务</string>
+    <string name="item_tourist_service_text_5">医疗救助</string>
+    <string name="item_tourist_service_text_6">人员走失</string>
+    <string name="item_tourist_service_text_7">治安举报</string>
 
     <string name="mine_edit_info">查看并编辑个人资料</string>
     <string name="item_mine_bespeak">我的预约</string>
