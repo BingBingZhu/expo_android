@@ -55,7 +55,9 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                     return;
                 }
                 List<VenuesType> venuesTypes = mDao.query(VenuesType.class, new QueryParams()
-                        .add("eq", "is_enable", 1)
+                        .add("eq", "is_enable", 1).add("and")
+                        .add("notIn", "type_name", "停车场").add("and")
+                        .add("notIn", "type_name", "公交站")
                         .add("orderBy", "idx", true));
                 List<TouristType> touristTypes = mDao.query(TouristType.class, new QueryParams().add("eq", "is_enable", 1));
                 int tabPosition = 0;
