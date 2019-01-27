@@ -72,12 +72,13 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
     @Override
     protected void onInitView(Bundle savedInstanceState) {
 
-        setTitle( 0, R.string.home_func_item_tourist_service );
+        setTitle( 1, R.string.home_func_item_tourist_service );
         initTitleRightTextView( R.string.service_log, R.color.white, v -> ServiceHistoryActivity.startActivity( getContext() ) );
         mAdapter = new TouristServiceAdapter( this );
         mAdapter.setListener( mListener );
 
-        mRecycler.setLayoutManager( new GridLayoutManager( this, 3 ) );
+        mRecycler.setLayoutManager( new GridLayoutManager( this, 2 ) );
+        mRecycler.setNestedScrollingEnabled(false);
         mRecycler.addItemDecoration( new SpaceDecoration( (int) getResources().getDimension( R.dimen.dms_30 ) ) );
         mRecycler.setAdapter( mAdapter );
     }
