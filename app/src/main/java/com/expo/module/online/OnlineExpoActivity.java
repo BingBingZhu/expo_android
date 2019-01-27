@@ -79,6 +79,8 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mTitle.setBackgroundColor(Color.TRANSPARENT);
         mTitle.setTitleColor(Color.TRANSPARENT);
         mTourVrs = new ArrayList<>();
+        mRvCulture.setNestedScrollingEnabled(false);
+        mRvGuide.setNestedScrollingEnabled(false);
         mPresenter.loadData();
         mPresenter.loadVrHot();
         initLoadMore();
