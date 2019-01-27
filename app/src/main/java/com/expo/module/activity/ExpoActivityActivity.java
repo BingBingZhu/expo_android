@@ -61,6 +61,7 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
     int mMonthScrollX;
 
     int mTimeType;//区分全天、上午、下午、晚上，分别为0、1、2、3
+    boolean isInit;
 
     @Override
     protected int getContentView() {
@@ -73,7 +74,6 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
         initMonthRecycler();
         initDateRecycler();
         initActivityRecycler();
-        mPresenter.loadDate(TimeUtils.getNowMills());
         mTimeType = 0;
         mPresenter.loadActivityInfo(mSelectTime, mTimeType);
     }
@@ -90,7 +90,16 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
                 mMonthScrollX += dx;
             }
         });
+        int nowPosition = 2;
         mSelectMonth = TimeUtils.string2Millis(TimeUtils.millis2String(TimeUtils.getNowMills(), new SimpleDateFormat("yyyy-MM")), new SimpleDateFormat("yyyy-MM"));
+        for (int i = 0; i < mMonthList.size(); i++) {
+            if (mSelectMonth == mMonthList.get(i)) {
+                mRvMonthRecycler.smoothScrollBy(ScreenUtils.getScreenWidth() * Math.max(0, i - 2) / 5, 0);
+                nowPosition = i;
+                break;
+            }
+        }
+        mSelectMonth = mMonthList.get(nowPosition);
         mRvMonthRecycler.setAdapter(mMonthAdapter = new CommonAdapter(this, R.layout.item_expo_activity_month, mMonthList) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
@@ -125,6 +134,7 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
     }
 
     private void initDateRecycler() {
+        isInit = true;
         mDateList = new ArrayList();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -155,15 +165,17 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
                     selectDataView(null);
                 });
             }
-
         });
+        int position = 2;
 
         for (int i = 0; i < mMonthList.size(); i++) {
             if (mSelectMonth == mMonthList.get(i)) {
                 mRvMonthRecycler.smoothScrollBy(ScreenUtils.getScreenWidth() * Math.max(0, i - 2) / 5, 0);
-                return;
+                position = i;
+                break;
             }
         }
+        mPresenter.loadDate(mMonthList.get(position));
     }
 
     private void initActivityRecycler() {
