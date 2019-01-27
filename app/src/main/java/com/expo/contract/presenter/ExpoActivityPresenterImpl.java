@@ -68,8 +68,9 @@ public class ExpoActivityPresenterImpl extends ExpoActivityContract.Presenter {
             list.add(6);
             list.add(7);
             params.add("and");
-            params.add("in", "time_interval", list);
+            params.add("orderBy", "time_interval", list);
         }
+        params.add("ordey", "recommended_idx");
         mView.freshActivityInfo(mDao.query(ExpoActivityInfo.class, params));
     }
 
