@@ -1,6 +1,7 @@
 package com.expo.utils.wifi;
 
 import android.content.Context;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;

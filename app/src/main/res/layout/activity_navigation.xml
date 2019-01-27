@@ -29,9 +29,7 @@
             <ImageView
                 android:id="@+id/gt_navi_bar"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/navi_drag_bt" />
+                android:layout_height="0dp" />
         </FrameLayout>
     </com.expo.widget.MultiDirectionSlidingDrawer>
 

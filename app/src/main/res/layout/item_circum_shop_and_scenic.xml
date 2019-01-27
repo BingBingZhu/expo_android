@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:padding="@dimen/dms_28">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/circun_shop_and_scenic_item_img"
+        android:layout_width="@dimen/dms_200"
+        android:layout_height="@dimen/dms_200" />
+            <TextView
+                android:id="@+id/circun_shop_and_scenic_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dms_6"
+                android:layout_marginLeft="@dimen/dms_26"
+                android:layout_alignTop="@id/circun_shop_and_scenic_item_img"
+                android:layout_toRightOf="@id/circun_shop_and_scenic_item_img"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="五道口购物中心"
+                android:textSize="@dimen/font_30"
+                android:textColor="@color/color_333" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/circun_shop_and_scenic_item_name"
+            android:layout_below="@id/circun_shop_and_scenic_item_name"
+            android:layout_marginTop="@dimen/dms_14"
+            android:orientation="horizontal">
+
+            <com.expo.widget.StarBar
+                android:id="@+id/circun_shop_and_scenic_item_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:starCount="5"
+                app:starDistance="@dimen/dms_10"
+                app:starEmpty="@mipmap/ico_star_empty"
+                app:starFill="@mipmap/ico_star_full"
+                app:starSize="@dimen/dms_32" />
+            <TextView
+                android:id="@+id/circun_shop_and_scenic_item_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:textSize="@dimen/font_24"
+                android:textColor="@color/orange_ff8e11"
+                android:text="评分：9.8分"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/circun_shop_and_scenic_item_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_14"
+            android:layout_alignBottom="@id/circun_shop_and_scenic_item_img"
+            android:layout_alignLeft="@id/circun_shop_and_scenic_item_name"
+            android:layout_gravity="bottom"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/font_24"
+            android:textColor="@color/color_666"
+            android:text="距离您1.4km"/>
+</RelativeLayout>

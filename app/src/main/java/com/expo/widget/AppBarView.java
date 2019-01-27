@@ -48,7 +48,7 @@ public class AppBarView extends FrameLayout {
         TypedArray a = getContext().obtainStyledAttributes( attrs, R.styleable.AppBarView );
         mBackImage = a.getDrawable( R.styleable.AppBarView_backSrc );
         if (mBackImage == null) {
-            mBackImage = getContext().getResources().getDrawable( R.mipmap.icon_navbar_back_black );
+            mBackImage = getContext().getResources().getDrawable( R.mipmap.ico_black_back );
         }
         mTitleSize = getResources().getDimensionPixelSize( R.dimen.font_36 );
         mTitleSizeUnit = TypedValue.COMPLEX_UNIT_PX;

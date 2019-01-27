@@ -22,6 +22,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.module.main.find.FindFragment;
+import com.expo.module.main.scenic.ScenicFragment;
 import com.expo.services.TrackRecordService;
 import com.expo.upapp.UpdateAppManager;
 import com.expo.utils.Constants;
@@ -43,7 +44,7 @@ public class MainActivity extends BaseActivity {
     FragmentTabHost mTabHostView;
 
     private String[] tabTags = {"home", "encyclopedias", "find", "mine"};//"panorama",
-    private int[] tabTitles = { R.string.main_home, R.string.main_encyclopedias, R.string.main_find, R.string.main_mine };// R.string.main_panorama,
+    private int[] tabTitles = {R.string.main_home, R.string.main_encyclopedias, R.string.main_find, R.string.main_mine};// R.string.main_panorama,
     private int mImages[] = {
             R.drawable.selector_tab_home,
             R.drawable.selector_tab_panorama,
@@ -53,7 +54,8 @@ public class MainActivity extends BaseActivity {
     private Class[] fragments = new Class[]{
             HomeFragment.class,
 //            PanoramaFragment.class,
-            EncyclopediaFragment.class,
+            ScenicFragment.class,
+//            EncyclopediaFragment.class,
             FindFragment.class,
             MineFragment.class};
     private ServiceConnection conn;
@@ -111,12 +113,11 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS)){
+            if (intent.getAction().equals(Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS)) {
                 LocalBroadcastUtil.unregisterReceiver(context, receiver);
                 installApp(getContext());
             }
@@ -124,10 +125,10 @@ public class MainActivity extends BaseActivity {
     };
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void installApp(Context context){
-        if(!getPackageManager().canRequestPackageInstalls()){
-            Uri packageURI = Uri.parse("package:"+getPackageName());
-            Intent in = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageURI);
+    public void installApp(Context context) {
+        if (!getPackageManager().canRequestPackageInstalls()) {
+            Uri packageURI = Uri.parse("package:" + getPackageName());
+            Intent in = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
             startActivityForResult(in, Constants.RequestCode.REQ_INSTALL_PERMISS_CODE);
             return;
         }
@@ -138,12 +139,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constants.RequestCode.REQ_INSTALL_PERMISS_CODE){
-            if(getPackageManager().canRequestPackageInstalls()) {
+        if (requestCode == Constants.RequestCode.REQ_INSTALL_PERMISS_CODE) {
+            if (getPackageManager().canRequestPackageInstalls()) {
                 UpdateAppManager.getInstance(getContext()).installApp();
             }
-        }
-        else if (requestCode == Constants.RequestCode.REQ_TO_FIND_INFO){
+        } else if (requestCode == Constants.RequestCode.REQ_TO_FIND_INFO) {
             FindFragment f = (FindFragment) getFragment(2);
             if (null != f) {
                 // 然后在碎片中调用重写的onActivityResult方法
@@ -154,10 +154,10 @@ public class MainActivity extends BaseActivity {
 
     private Fragment getFragment(int tabId) {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        for(Fragment fragment : fragments) {
+        for (Fragment fragment : fragments) {
             String str1 = fragment.getTag();
             String str2 = String.valueOf(tabTags[tabId]);
-            if(str1 != null && str1.equals(str2)) // 最开始没有检查str1是否为空，导致crash！
+            if (str1 != null && str1.equals(str2)) // 最开始没有检查str1是否为空，导致crash！
                 return fragment;
         }
         return null;

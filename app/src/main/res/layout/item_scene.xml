@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dms_50"
+    android:paddingTop="@dimen/dms_30"
+    android:paddingRight="@dimen/dms_50">
+
+    <ImageView
+        android:id="@+id/item_scene_img"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_282"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/item_route_name"
+        style="@style/TextSizeBlack13"
+        android:layout_below="@id/item_scene_img"
+        android:layout_marginLeft="@dimen/dms_32"
+        android:layout_marginTop="@dimen/dms_34" />
+
+    <com.hedan.textdrawablelibrary.TextViewDrawable
+        android:id="@+id/item_route_hot"
+        style="@style/TextSize12"
+        android:layout_below="@id/item_scene_img"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dms_34"
+        android:layout_marginRight="@dimen/dms_30"
+        android:drawableLeft="@mipmap/delete_small_black"
+        android:textColor="@color/gray_66"
+        android:textSize="@dimen/font_18" />
+
+</RelativeLayout>

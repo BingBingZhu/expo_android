@@ -126,6 +126,8 @@
     <string name="title_contact_appointment">预约联系人</string>
     <string name="title_contact_add">添加联系人</string>
     <string name="title_contact_edit">编辑联系人</string>
+    <string name="title_expo_scene">实景世园</string>
+    <string name="title_expo_activity">世园活动</string>
 
     <string name="check_string_empty_content">内容不能为空</string>
     <string name="check_string_empty_name">姓名不能为空</string>
@@ -367,4 +369,55 @@
     <string name="think_again_track">再想想</string>
     <string name="share_to">分享到</string>
     <string name="stop_sharing">取消分享</string>
+
+    <string name="look_in_home">北京世界园艺博览会-在家看世园</string>
+    <string name="expo_scene">世园实景</string>
+    <string name="expo_culture">文化世园</string>
+    <string name="online_guide">在线导游</string>
+    <string name="exchange">换一换</string>
+    <string name="hide">隐藏</string>
+    <string name="show">显示</string>
+    <string name="scans_scans">浏览 %d次</string>
+    <string name="play_times">%s分钟</string>
+    <string name="no_fiwi_no_free">正在使用费WIFI网络，播放将产生流量费用</string>
+
+    <string name="expo_scene_tab_space">空间布局</string>
+    <string name="expo_scene_tab_scenery">景观展示</string>
+    <string name="expo_scene_tab_culture">文化主题</string>
+    <string name="expo_scene_tab_knowledge">科普知识</string>
+    <string name="expo_scene_tab_green">绿色产业</string>
+
+    <string name="expo_vr_detail_introduce">简介</string>
+    <string name="expo_vr_detail_img">全景图片</string>
+    <string name="expo_vr_detail_video">全景视频</string>
+    <string name="expo_vr_detail_sendtable">全景沙盘</string>
+    <string name="data_error">数据类型错误</string>
+    <string name="morning">上午</string>
+    <string name="afternoon">下午</string>
+    <string name="night">晚上</string>
+    <string name="activity_time">活动时间</string>
+
+    <string name="expo_activity_monday">一</string>
+    <string name="expo_activity_tuesday">二</string>
+    <string name="expo_activity_wednesday">三</string>
+    <string name="expo_activity_thursday">四</string>
+    <string name="expo_activity_friday">五</string>
+    <string name="expo_activity_saturday">六</string>
+    <string name="expo_activity_sunday">七</string>
+
+    <string name="month_1">一月</string>
+    <string name="month_2">二月</string>
+    <string name="month_3">三月</string>
+    <string name="month_4">四月</string>
+    <string name="month_5">五月</string>
+    <string name="month_6">六月</string>
+    <string name="month_7">七月</string>
+    <string name="month_8">八月</string>
+    <string name="month_9">九月</string>
+    <string name="month_10">十月</string>
+    <string name="month_11">十一月</string>
+
+
+    <string name="expo_map">世园地图</string>
+    <string name="expo_scenic">世园景点</string>
 </resources>

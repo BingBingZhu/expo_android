@@ -5,9 +5,12 @@ import com.expo.network.response.AllTypeResp;
 import com.expo.network.response.BadgeResp;
 import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CheckThirdIdRegisterStateResp;
+import com.expo.network.response.CircumResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
+import com.expo.network.response.ExpoActivityInfoResp;
 import com.expo.network.response.GetDistinguishPlantList_Rsb;
+import com.expo.network.response.PanResHotResp;
 import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RichTextRsp;
@@ -25,6 +28,8 @@ import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
 import com.expo.network.response.VersionInfoResp;
 import com.expo.network.response.VisitorServiceResp;
+import com.expo.network.response.VrInfoResp;
+import com.expo.network.response.VrLableInfoResp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -474,4 +479,64 @@ public interface DataServer {
     @FormUrlEncoded
     @POST
     Observable<HashMap<String, String>> registerTicket(@Url String url, @Field("phone") String phone, @Field("source") String source);
+
+    /**
+     * 获取全景资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetPanCamList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<VrInfoResp> getPanCamList(@Body RequestBody requestBody);
+
+    /**
+     * 获取全景标签资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetPanLableList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<VrLableInfoResp> getPanLableList(@Body RequestBody requestBody);
+
+    /**
+     * 获取全景标签资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetPanResHotViews")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<PanResHotResp> getPanResHot(@Body RequestBody requestBody);
+
+    /**
+     * 为某个全景资源增加观看数
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/SetPanResViews")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<BaseResponse> setPanResViews(@Body RequestBody requestBody);
+
+    /**
+     * 为某个全景资源增加观看数
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetShowTimesList_Rsb")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<ExpoActivityInfoResp> getShowTimesList_Rsb(@Body RequestBody requestBody);
+
+    /**
+     * 获取全景标签资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetBussinessCircleListByParams")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<CircumResp> getBussinessCircleListByParams(@Body RequestBody requestBody);
 }

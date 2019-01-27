@@ -2,6 +2,8 @@ package com.expo.module.main.encyclopedia;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.expo.R;
 import com.expo.adapters.EncyAndSceneListAdapter;
@@ -12,7 +14,8 @@ import com.expo.base.BaseFragment;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ListContract;
 import com.expo.entity.Encyclopedias;
-import com.expo.widget.RecycleViewDivider;
+import com.expo.entity.VrInfo;
+import com.expo.widget.decorations.RecycleViewDivider;
 import com.expo.widget.SimpleRecyclerView;
 
 import java.util.ArrayList;
@@ -52,7 +55,7 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
         adapter = new EncyAndSceneListAdapter(getContext(), mEncyclopediasList);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addItemDecoration( new RecycleViewDivider(
-                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor( R.color.white_f4 ) ) );
+                getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor( R.color.white_f5 ) ) );
         mPresenter.loadEncyByType(mTab.getId(), page);
         initLoadMore();
     }
@@ -85,10 +88,17 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
             if (page > 0) {
                 page--;
                 ToastHelper.showShort(R.string.no_more_data_available);
+//                View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_list_footer,null);
+//                mPtrView.setFooterView(view);
             }
         } else {
             mEncyclopediasList.addAll(EncyclopediasAdapter.convertToTabList(data));
         }
         mPtrView.refreshComplete();
+    }
+
+    @Override
+    public void addVrsToList(List<VrInfo> data) {
+        // 未使用方法
     }
 }
