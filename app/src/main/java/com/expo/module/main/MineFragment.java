@@ -138,7 +138,7 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
                 BadgeActivity.startActivity( getContext(), totScores );
                 break;
             case R.id.item_mine_contacts:       // 预约联系人
-                ContactsActivity.startActivity( getActivity(), false, 0 );
+                ContactsActivity.startActivity( getActivity(), false, 0 , "");
                 break;
         }
     }
