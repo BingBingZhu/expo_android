@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.amap.api.maps.AMap;
@@ -34,8 +35,11 @@ import com.expo.module.login.LoginActivity;
 import com.expo.module.map.NavigationActivity;
 import com.expo.module.share.ShareUtil;
 import com.expo.pay.JsMethod;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
+import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
+import com.expo.widget.AppBarView;
 import com.expo.widget.CustomDefaultDialog;
 import com.expo.widget.X5WebView;
 import com.tencent.smtt.export.external.interfaces.JsResult;
@@ -214,34 +218,32 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         mX5View.loadUrl("javascript:useCouponId()");
     }
 
+
+    public void showTitleRightView() {
+        if (((AppBarView) getTitleView()).getRightView() == null) {
+            ImageView shareView = new ImageView(this);
+            ((AppBarView) getTitleView()).setRightView(shareView);
+            shareView.setImageResource(R.mipmap.share_icon);
+            shareView.setOnClickListener(v -> {
+                Bitmap bitmap = captureScreen(WebActivity.this);
+                String filePath = FileUtils.saveScreenShot(bitmap);
+                ShareUtil.showShare(getContext(), null, null, filePath, null, null);
+            });
+        }else{
+            ((AppBarView) getTitleView()).getRightView().setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideTitleRightView(){
+        if (((AppBarView) getTitleView()).getRightView() != null){
+            ((AppBarView) getTitleView()).getRightView().setVisibility(View.GONE);
+        }
+    }
+
     /**
      * JavascriptInterface
      */
     public class JsHook {
-        @JavascriptInterface
-        public void weixin() {
-            share(Wechat.NAME);
-        }
-
-        @JavascriptInterface
-        public void qq() {
-            share(QQ.NAME);
-        }
-
-        @JavascriptInterface
-        public void weibo() {
-            share(SinaWeibo.NAME);
-        }
-
-        @JavascriptInterface
-        /**
-         * 分享截图二维码
-         */
-        public void shareQRCode() {
-            Bitmap bitmap = captureScreen(WebActivity.this);
-            String filePath = FileUtils.saveScreenShot(bitmap);
-            ShareUtil.showShare(getContext(), null, null, filePath, null, null);
-        }
 
         @JavascriptInterface
         /**
@@ -287,6 +289,17 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         }
 
         @JavascriptInterface
+        public void setTitle(String titleText, boolean isHaveShare) {
+            runOnUiThread( () -> {
+                WebActivity.this.setTitle( BaseActivity.TITLE_COLOR_STYLE_WHITE, titleText );
+                if (isHaveShare)
+                    showTitleRightView();
+                else
+                    hideTitleRightView();
+            } );
+        }
+
+        @JavascriptInterface
         public void setCouponId(String couponId) {
             if (mCoupon == null) mCoupon = new Coupon();
             mCoupon.couponId = couponId;
@@ -317,7 +330,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         }
 
         /**
-         * 无障碍服务 导航到服务中心
+         * 导航到服务中心
          */
         @JavascriptInterface
         public void goToServiceCenter() {
@@ -355,7 +368,6 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
         /**
          * 获取订单信息
-         *
          * @return
          */
         @JavascriptInterface
@@ -395,12 +407,12 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 }).show();
     }
 
-    private void share(String name) {
-        Bitmap bitmap = captureScreen(WebActivity.this);
-        String filePath = FileUtils.saveScreenShot(bitmap);
-        mShareUtil.setImagePath(filePath);
-        mShareUtil.doShare(name, filePath);
-    }
+//    private void share(String name) {
+//        Bitmap bitmap = captureScreen( WebActivity.this );
+//        String filePath = FileUtils.saveScreenShot( bitmap );
+//        mShareUtil.setImagePath( filePath );
+//        mShareUtil.doShare( name, filePath );
+//    }
 
     /**
      * 获取整个窗口的截图

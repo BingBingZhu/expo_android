@@ -140,7 +140,7 @@ public class ServiceHistoryAdapter extends RecyclerView.Adapter<ServiceHistoryAd
         } else if (serviceType.equals( "5" )) {
             return mContext.getString( R.string.item_tourist_service_text_2 );
         } else if (serviceType.equals( "6" )) {
-            return mContext.getString( R.string.item_tourist_service_text_9 );
+//            return mContext.getString( R.string.item_tourist_service_text_9 );
         }
         return mContext.getString( R.string.unknown_type );
     }

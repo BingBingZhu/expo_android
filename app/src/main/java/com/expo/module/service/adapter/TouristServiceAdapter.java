@@ -37,8 +37,9 @@ public class TouristServiceAdapter extends RecyclerView.Adapter<TouristServiceAd
 
     @Override
     public void onBindViewHolder(@NonNull TouristServiceViewHolder holder, int position) {
-        holder.mImage.setImageResource(mContext.getResources().getIdentifier("tourist_service_" + position, "mipmap", AppUtils.getAppPackageName()));
+        holder.mImage.setImageResource(mContext.getResources().getIdentifier("ico_tourist_service_" + position, "mipmap", AppUtils.getAppPackageName()));
         holder.mText.setText(mContext.getResources().getIdentifier("item_tourist_service_text_" + position, "string", AppUtils.getAppPackageName()));
+        holder.mTextIntro.setText(mContext.getResources().getIdentifier("item_tourist_service_intro_text_" + position, "string", AppUtils.getAppPackageName()));
         holder.itemView.setOnClickListener(v -> {
             if (listener != null)
                 listener.itemClick(v, position, null);
@@ -47,7 +48,7 @@ public class TouristServiceAdapter extends RecyclerView.Adapter<TouristServiceAd
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 8;
     }
 
     class TouristServiceViewHolder extends RecyclerView.ViewHolder {
@@ -57,6 +58,9 @@ public class TouristServiceAdapter extends RecyclerView.Adapter<TouristServiceAd
 
         @BindView(R.id.text1)
         TextView mText;
+
+        @BindView(R.id.text2)
+        TextView mTextIntro;
 
         public TouristServiceViewHolder(View itemView) {
             super(itemView);
