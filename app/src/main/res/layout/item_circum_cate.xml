@@ -23,6 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dms_28"
             android:layout_gravity="center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="麦当劳"
             android:textSize="@dimen/font_30"
             android:textColor="@color/color_333" />
@@ -65,6 +67,8 @@
             android:layout_marginTop="@dimen/dms_20"
             android:layout_marginBottom="@dimen/dms_32"
             android:layout_gravity="bottom"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textSize="@dimen/font_24"
             android:textColor="@color/color_666"
             android:text="距离您1.4km"/>

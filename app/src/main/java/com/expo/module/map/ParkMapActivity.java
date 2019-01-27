@@ -72,7 +72,7 @@ import com.expo.network.Http;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.media.MediaPlayUtil;
-import com.expo.widget.RecycleViewDivider;
+import com.expo.widget.decorations.RecycleViewDivider;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 

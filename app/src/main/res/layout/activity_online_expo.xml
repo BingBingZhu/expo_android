@@ -59,11 +59,8 @@
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="223dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="@dimen/dms_14"
                     android:gravity="center_vertical"
-                    android:paddingTop="@dimen/dms_10"
-                    android:paddingBottom="@dimen/dms_10"
                     app:canLoop="true"
                     app:coverWidth="100"
                     app:middle_page_cover="true"
@@ -120,6 +117,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dms_20"
+                        android:nestedScrollingEnabled="false"
                         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
                 </LinearLayout>
             </LinearLayout>

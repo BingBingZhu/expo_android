@@ -4,6 +4,8 @@ import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.contract.presenter.BadgePresenterImpl;
 import com.expo.contract.presenter.BindPhonePresenterImpl;
+import com.expo.contract.presenter.CircumTrafficPresenterImpl;
+import com.expo.contract.presenter.CirnumListPresenterImpl;
 import com.expo.contract.presenter.ContactsAddPresenterImpl;
 import com.expo.contract.presenter.ContactsPresenterImpl;
 import com.expo.contract.presenter.CustomRoutePresenterImpl;
@@ -125,6 +127,10 @@ public class PresenterFactory {
             return new VRDetailPresenterImpl( (VRDetailContract.View) view );
         } else if (view instanceof PanoramaListContract.View) {
             return new PanoramaListPresenterImpl( (PanoramaListContract.View) view );
+        } else if (view instanceof CirnumListContract.View) {
+            return new CirnumListPresenterImpl( (CirnumListContract.View) view );
+        } else if (view instanceof CircumTrafficContract.View) {
+            return new CircumTrafficPresenterImpl( (CircumTrafficContract.View) view );
         }
         throw new UnsupportedOperationException();
     }

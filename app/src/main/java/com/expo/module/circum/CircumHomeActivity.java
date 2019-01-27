@@ -36,11 +36,11 @@ public class CircumHomeActivity extends BaseActivity {
             case R.id.circun_shop:
                 CircumListActivity.startActivity(getContext(), 3);
                 break;
-            case R.id.circun_traffic:
+            case R.id.circun_scenic:
                 CircumListActivity.startActivity(getContext(), 4);
                 break;
-            case R.id.circun_scenic:
-                CircumListActivity.startActivity(getContext(), 5);
+            case R.id.circun_traffic:
+                CircumTrafficActivity.startActivity(getContext());
                 break;
         }
     }

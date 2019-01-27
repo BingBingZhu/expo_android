@@ -5,6 +5,7 @@ import com.expo.network.response.AllTypeResp;
 import com.expo.network.response.BadgeResp;
 import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CheckThirdIdRegisterStateResp;
+import com.expo.network.response.CircumResp;
 import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.GetDistinguishPlantList_Rsb;
@@ -507,4 +508,14 @@ public interface DataServer {
     @POST("Terminal/GetPanResHotViews")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<PanResHotResp> getPanResHot(@Body RequestBody requestBody);
+
+    /**
+     * 获取全景标签资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetBussinessCircleListByParams")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<CircumResp> getBussinessCircleListByParams(@Body RequestBody requestBody);
 }

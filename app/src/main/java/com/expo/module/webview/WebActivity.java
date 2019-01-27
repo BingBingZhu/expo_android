@@ -251,7 +251,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             Bitmap bitmap = captureScreen( WebActivity.this );
             String filePath = FileUtils.saveScreenShot( bitmap );
             new CustomDefaultDialog(getContext())
-                    .setContent("以保存至："+filePath)
+                    .setContent("已保存至："+filePath)
                     .setOnlyOK()
                     .setCancelable(false)
                     .show();

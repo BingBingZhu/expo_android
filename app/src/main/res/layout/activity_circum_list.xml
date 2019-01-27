@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white_f5"
     android:orientation="vertical">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/circun_list_recyclerview"
-        android:layout_marginLeft="@dimen/dms_30"
-        android:layout_marginRight="@dimen/dms_30"
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptr_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:ptr_mode="both">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/circun_list_recyclerview"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginRight="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_20"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 </LinearLayout>

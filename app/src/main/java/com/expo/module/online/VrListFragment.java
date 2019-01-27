@@ -2,12 +2,8 @@ package com.expo.module.online;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 
 import com.expo.R;
-import com.expo.adapters.EncyAndSceneListAdapter;
-import com.expo.adapters.EncyclopediasAdapter;
-import com.expo.adapters.ListItemData;
 import com.expo.adapters.Tab;
 import com.expo.adapters.VrListAdapter;
 import com.expo.base.BaseFragment;
@@ -15,7 +11,6 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ListContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.VrInfo;
-import com.expo.widget.RecycleViewDivider;
 import com.expo.widget.SimpleRecyclerView;
 import com.expo.widget.decorations.SpaceDecoration;
 
