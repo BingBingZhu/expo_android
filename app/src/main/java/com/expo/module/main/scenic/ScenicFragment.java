@@ -29,20 +29,6 @@ public class ScenicFragment extends BaseFragment {
 
     private ScenicTabPagerAdapter mAdapter;
 
-    private ViewPager.SimpleOnPageChangeListener mOnPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
-        @Override
-        public void onPageSelected(int position) {
-            if (position == 0) {
-                mMapView.setSelected(true);
-                mSceneView.setSelected(false);
-            } else {
-                mMapView.setSelected(false);
-                mSceneView.setSelected(true);
-
-            }
-        }
-    };
-
     @Override
     public int getContentView() {
         return R.layout.fragment_scenic;
@@ -52,7 +38,6 @@ public class ScenicFragment extends BaseFragment {
     protected void onInitView(Bundle savedInstanceState) {
         mTopView.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
         mAdapter = new ScenicTabPagerAdapter(getFragmentManager());
-        mPagerView.addOnPageChangeListener(mOnPageChangeListener);
         mPagerView.setAdapter(mAdapter);
 
         onClickMap(null);

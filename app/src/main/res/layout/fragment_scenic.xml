@@ -14,8 +14,8 @@
 
         <TextView
             android:id="@+id/map"
-            android:padding="@dimen/dms_20"
             style="@style/TextSize16"
+            android:padding="@dimen/dms_20"
             android:text="@string/expo_map"
             android:textColor="@color/selector_33_white" />
 
@@ -29,7 +29,7 @@
 
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.expo.widget.NoScrollViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
