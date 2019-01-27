@@ -102,7 +102,7 @@ public interface Constants {
         public static final String EXTRA_IS_START_LOCATION = "extra_is_start_location";
         public static final String EXTRA_CAN_GO_OTHER = "extra_can_go_other";
         public static final String EXTRA_PANORAMA_TYPE = "extra_panorama_type";
-        public static final String EXTRA_VR_DATA = "extra_vr_data";
+        public static final String EXTRA_CIRCUN_TYPE = "extra_circun_type";
     }
 
     /**

@@ -10,29 +10,17 @@
         android:background="@drawable/bg_white_r5"
         android:orientation="vertical">
         <Button
-            android:id="@+id/dialog_select_1"
+            android:id="@+id/dialog_telephone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_90"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:text="@string/baidu_navi"
+            android:text="酒店电话：010-80777666"
             android:textColor="@color/color_333"
             android:textSize="@dimen/font_30"/>
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_999"/>
-
-        <Button
-            android:id="@+id/dialog_select_2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dms_90"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="@string/autonavi_navi"
-            android:textColor="@color/color_333"
-            android:textSize="@dimen/font_30"/>
+            android:layout_height="0px"/>
     </LinearLayout>
     <Button
         android:id="@+id/btn_cancel"

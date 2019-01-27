@@ -1,4 +1,4 @@
-package com.expo.widget;
+package com.expo.widget.decorations;
 
 import android.content.Context;
 import android.content.res.TypedArray;

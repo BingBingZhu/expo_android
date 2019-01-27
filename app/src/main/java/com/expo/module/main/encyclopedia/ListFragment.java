@@ -2,6 +2,8 @@ package com.expo.module.main.encyclopedia;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.expo.R;
 import com.expo.adapters.EncyAndSceneListAdapter;
@@ -13,7 +15,7 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ListContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.VrInfo;
-import com.expo.widget.RecycleViewDivider;
+import com.expo.widget.decorations.RecycleViewDivider;
 import com.expo.widget.SimpleRecyclerView;
 
 import java.util.ArrayList;
@@ -86,6 +88,8 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
             if (page > 0) {
                 page--;
                 ToastHelper.showShort(R.string.no_more_data_available);
+//                View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_list_footer,null);
+//                mPtrView.setFooterView(view);
             }
         } else {
             mEncyclopediasList.addAll(EncyclopediasAdapter.convertToTabList(data));

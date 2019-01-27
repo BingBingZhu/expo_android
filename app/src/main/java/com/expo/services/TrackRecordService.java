@@ -32,12 +32,20 @@ import java.util.Locale;
 
 public class TrackRecordService extends Service {
 
+    public static Location LOCATION;        // 供app内部公共调用
+
+    public static Location getLocation(){
+        return LOCATION;
+    }
+
     private LBSTraceClient mLbsTraceClient;
     private BaseDao mDao;
     private List<Track> tracks;
     private LatLng latLng;
     private LatLng oldLatLng;
     private List<TraceLocation> mLocationList;
+    private boolean isStartTrack;
+    public static SimpleDateFormat sdf = new SimpleDateFormat( Constants.TimeFormat.TYPE_ALL, Locale.getDefault() );
 
     @Nullable
     @Override
@@ -48,15 +56,17 @@ public class TrackRecordService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        initTrace();
+        LocationManager.getInstance().registerLocationListener(locationChangeListener);
         LocalBroadcastUtil.registerReceiver(getApplicationContext(), receiver, Constants.Action.ACTION_TRACK_CHANAGE);
-        if (PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false))
-            startTrace();
+        isStartTrack = PrefsHelper.getBoolean(Constants.Prefs.KEY_TRACK_ON_OFF, false);
     }
 
     private AMap.OnMyLocationChangeListener locationChangeListener = new AMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
-            if ( null != location && location.getLatitude() != 0 ){
+            LOCATION = location;
+            if ( isStartTrack && null != location && location.getLatitude() != 0 ){
                 TraceLocation traceLocation = new TraceLocation(location.getLatitude(), location.getLongitude(), location.getSpeed(), location.getBearing(), location.getTime());
                 mLocationList.add(traceLocation);
                 if ( mLocationList.size() >= 5 ){
@@ -114,67 +124,19 @@ public class TrackRecordService extends Service {
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean isStart = intent.getBooleanExtra(Constants.EXTRAS.EXTRA_TRACK_CHANAGE, false);
-            if (isStart)
-                startTrace();
-            else
-                stopTrace();
+            isStartTrack = intent.getBooleanExtra(Constants.EXTRAS.EXTRA_TRACK_CHANAGE, false);
         }
     };
 
     /**
-     * 开始记录
+     * 初始化轨迹记录
      */
-    private void startTrace() {
+    private void initTrace() {
         tracks = new ArrayList<>();
         mLocationList = new ArrayList<>();
         mDao = new BaseDaoImpl();
         mLbsTraceClient = LBSTraceClient.getInstance(getApplicationContext());
-//        mLbsTraceClient.startTrace(traceStatusListener);
-
-
-
-        LocationManager.getInstance().registerLocationListener(locationChangeListener);
     }
-
-    /**
-     * 停止记录
-     */
-    private void stopTrace() {
-//        if (null != mLbsTraceClient)
-//            mLbsTraceClient.stopTrace();
-        LocationManager.getInstance().unregisterLocationListener(locationChangeListener);
-    }
-
-    // 结合定位轨迹纠偏回调
-//    private TraceStatusListener traceStatusListener = new TraceStatusListener() {
-//        @Override
-//        public void onTraceStatus(List<TraceLocation> list, List<LatLng> list1, String s) {
-//            tracks.clear();
-//            if (s.equals(LBSTraceClient.TRACE_SUCCESS)) {
-//                oldLatLng = null;
-//                for (LatLng latLng : list1) {
-//                    tracks.add(new Track(latLng.latitude, latLng.longitude,
-//                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
-//                            ExpoApp.getApplication().getUser().getUid()));
-//                }
-//            } else if (s.equals(LBSTraceClient.MIN_GRASP_POINT_ERROR) && !list.isEmpty()) {
-//                latLng = new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
-//                if (isLocationChanage()) {
-//                    tracks.add(new Track(list.get(0).getLatitude(), list.get(0).getLongitude(),
-//                            PrefsHelper.getLong(Constants.Prefs.KEY_RUN_UP_COUNT, 0),
-//                            ExpoApp.getApplication().getUser().getUid()));
-//                    oldLatLng = latLng;
-//                }
-//            }
-//            if (!tracks.isEmpty()) {
-//                PrefsHelper.setString(Constants.Prefs.KEY_TRACK_UPDATE_TIME, "最后更新足迹 " + sdf.format(new Date()));
-//                mDao.saveOrUpdateAll(tracks);
-//            }
-//        }
-//    };
-
-    public static SimpleDateFormat sdf = new SimpleDateFormat( Constants.TimeFormat.TYPE_ALL, Locale.getDefault() );
 
     private boolean isLocationChanage() {
         if (null == oldLatLng) {
@@ -212,7 +174,7 @@ public class TrackRecordService extends Service {
 
     @Override
     public void onDestroy() {
-        stopTrace();
+        LocationManager.getInstance().unregisterLocationListener(locationChangeListener);
         LocalBroadcastUtil.unregisterReceiver(getApplicationContext(), receiver);
         super.onDestroy();
     }

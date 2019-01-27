@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:drawable="@drawable/bg_02cd9b_r5" />
+    <item android:state_selected="false">
+        <shape>
+            <corners android:radius="@dimen/dms_10" />
+            <solid android:color="@color/transparent" />
+            <stroke
+                android:width="@dimen/dms_2"
+                android:color="@color/color_666" />
+        </shape>
+    </item>
+</selector>

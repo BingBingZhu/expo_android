@@ -3,33 +3,29 @@ package com.expo.module.online;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.OnlineHomeContract;
-import com.expo.contract.presenter.OnlineHomePresenterImpl;
 import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.VRDetailActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.AppBarView;
 import com.expo.widget.MyScrollView;
-import com.expo.widget.RecycleViewDivider;
+import com.expo.widget.decorations.RecyckeVeiwFooter;
+import com.expo.widget.decorations.RecycleViewDivider;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.expo.widget.laminatedbanner.LaminatedBannerView;
@@ -83,6 +79,8 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mTitle.setBackgroundColor(Color.TRANSPARENT);
         mTitle.setTitleColor(Color.TRANSPARENT);
         mTourVrs = new ArrayList<>();
+        mRvCulture.setNestedScrollingEnabled(false);
+        mRvGuide.setNestedScrollingEnabled(false);
         mPresenter.loadData();
         mPresenter.loadVrHot();
         initLoadMore();
@@ -118,6 +116,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
             public void onLoadMoreBegin(PtrFrameLayout frame) {
                 page++;
                 mPresenter.loadMore(page);
+                frame.postDelayed(mPtrView::refreshComplete, 2000);
             }
 
             @Override
@@ -192,9 +191,10 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mAdapterGuide = new CommonAdapter<VrInfo>(this, R.layout.item_online_guide, mTourVrs) {
             @Override
             protected void convert(ViewHolder holder, VrInfo vr, int position) {
+//                VrInfo vr = (VrInfo) obj;
                 holder.itemView.getLayoutParams().width = RecyclerView.LayoutParams.MATCH_PARENT;
                 holder.<SimpleDraweeView>getView(R.id.item_online_guide_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
-//                holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setText("");
+//                holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
                 holder.<TextView>getView(R.id.item_online_guide_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
                 holder.<TextView>getView(R.id.item_online_guide_content).setText(LanguageUtil.chooseTest(vr.getRemark(), vr.getRemarkEn()));
                 holder.<TextViewDrawable>getView(R.id.item_online_guide_scans).setText(vr.getViewCount()+"次");
@@ -209,18 +209,26 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mRvGuide.setAdapter(mAdapterGuide);
     }
 
+    private boolean haveFooter;
+
     @Override
     public void loadMoreTourDataRes(List<VrInfo> tourVrs) {
+        mPtrView.refreshComplete();
         if (tourVrs.size() == 0) {
             if (page > 0) {
                 page--;
                 ToastHelper.showShort(R.string.no_more_data_available);
+//                if (!haveFooter) {
+//                    View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_list_footer, null);
+//                    mPtrView.setFooterView(view);
+//                    haveFooter = true;
+////                    mRvGuide.addItemDecoration(new RecyckeVeiwFooter(), -1);
+//                }
             }
         } else {
             this.mTourVrs.addAll(tourVrs);
             mAdapterGuide.notifyDataSetChanged();
         }
-        mPtrView.refreshComplete();
     }
 
     /**

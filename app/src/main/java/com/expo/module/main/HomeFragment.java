@@ -30,11 +30,13 @@ import com.expo.entity.TopLineInfo;
 import com.expo.map.LocationManager;
 import com.expo.module.activity.ExpoActivityActivity;
 import com.expo.module.freewifi.FreeWiFiActivity;
+import com.expo.module.circum.CircumHomeActivity;
 import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.main.adapter.HomeExhibitAdapter;
 import com.expo.module.main.adapter.HomeTopLineAdapter;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 import com.expo.module.map.ParkMapActivity;
+import com.expo.module.online.OnlineExpoActivity;
 import com.expo.module.routes.RoutesActivity;
 import com.expo.module.service.TouristServiceActivity;
 import com.expo.module.webview.WebActivity;
@@ -211,7 +213,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         String url;
         switch (view.getId()) {
             case R.id.home_func_0:
-                FreeWiFiActivity.startActivity(getContext());
+//                FreeWiFiActivity.startActivity(getContext());
+                CircumHomeActivity.startActivity(getContext());     //周边服务（暂占用按钮）
                 break;
             case R.id.home_func_1:
                 url = mPresenter.loadCommonInfo(CommonInfo.BUY_TICKETS);
@@ -240,8 +243,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 break;
             case R.id.home_func_7:
 //                VRDetailActivity.startActivity(getContext(), "8", true);
-//                OnlineExpoActivity.startActivity(getContext());
-                ExpoActivityActivity.startActivity(getContext());
+                OnlineExpoActivity.startActivity(getContext());
 //                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PANORAMA ), null, false );
                 break;
             case R.id.home_navigation_item:

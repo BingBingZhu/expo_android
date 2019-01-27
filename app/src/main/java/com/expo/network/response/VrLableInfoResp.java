@@ -7,6 +7,6 @@ import java.util.List;
 
 public class VrLableInfoResp extends BaseResponse {
     public String updateTime;
-    @SerializedName("objlist")
+    @SerializedName(value = "Objlist", alternate = "objlist")
     public List<VrLableInfo> vrLableInfos;
 }

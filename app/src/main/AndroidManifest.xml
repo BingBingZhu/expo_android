@@ -287,6 +287,21 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
+            android:name=".module.circum.CircumHomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".module.circum.CircumListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".module.circum.CircumTrafficActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
             android:name=".module.online.PanoramaListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -299,7 +314,6 @@
         <!--心跳连接服务-->
         <service android:name=".module.heart.HeartBeatService" />
         <!--轨迹记录服务-->
-        <service android:name=".services.TrackRecordService" />
         <!-- 定位服务 -->
         <service android:name="com.amap.api.location.APSService" />
         <!--百度语音服务-->

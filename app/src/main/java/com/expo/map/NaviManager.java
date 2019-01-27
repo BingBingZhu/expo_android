@@ -29,19 +29,35 @@ public class NaviManager implements View.OnClickListener/*, AMapNaviListener */{
         return naviManager;
     }
     private static Context mContext;
-    private Venue venue;
+//    private Venue venue;
     private Dialog dialog;
+    private String name;
+    private double lat;
+    private double lng;
+
+    public void showSelectorNavi(Venue venue){
+//        this.venue = venue;
+        this.name = venue.getCaption();
+        this.lat = venue.getLat();
+        this.lng = venue.getLng();
+        showSelectorNavi();
+    }
+
+    public void showSelectorNavi(String name, double lat, double lng){
+        this.name = name;
+        this.lat = lat;
+        this.lng = lng;
+        showSelectorNavi();
+    }
+
 
     /*跳转第三方导航app进行导航 start*/
-    public void showSelectorNavi(Venue venue){
-        this.venue = venue;
+    public void showSelectorNavi(){
         dialog = new Dialog(mContext, R.style.BottomActionSheetDialogStyle);
         View v = LayoutInflater.from(mContext).inflate(R.layout.dialog_layout_selector, null);
         Button btn1 = v.findViewById(R.id.dialog_select_1);
         Button btn2 = v.findViewById(R.id.dialog_select_2);
         Button btnCancel = v.findViewById(R.id.btn_cancel);
-//        btn1.setText("百度导航");
-//        btn2.setText("高德导航");
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -62,8 +78,8 @@ public class NaviManager implements View.OnClickListener/*, AMapNaviListener */{
             Intent naviIntent;
             if (packageName.equals("com.baidu.BaiduMap")){
                 naviIntent = new Intent("android.intent.action.VIEW", android.net.Uri.parse(
-                        "baidumap://map/direction?origin=我的位置&destination=name:"+ venue.getCaption()+
-                                "|latlng:"+ venue.getLat()+","+ venue.getLng()/*+"|addr:北京市东城区东长安街"*/ +
+                        "baidumap://map/direction?origin=我的位置&destination=name:"+ name +
+                                "|latlng:"+ lat +","+ lng /*+"|addr:北京市东城区东长安街"*/ +
                         "&coord_type=gcj02&mode=driving&src=com.casvd.lucaspark"));
 //                naviIntent = new Intent("android.intent.action.VIEW", android.net.Uri.parse(
 //                        "baidumap://map/direction?region="+ venue.getCity()+"&origin=我的位置&destination=name:"+ venue.getCaption()+
@@ -72,7 +88,7 @@ public class NaviManager implements View.OnClickListener/*, AMapNaviListener */{
             }else{
                 naviIntent = new Intent("android.intent.action.VIEW", android.net.Uri.parse(
                         "androidamap://route?sourceApplication=guangtuan&sname=我的位置&" +
-                        "dlat="+ venue.getLat() +"&dlon="+ venue.getLng()+"&dname="+ venue.getCaption()+"&dev=0&t=2"));
+                        "dlat="+ lat +"&dlon="+ lng +"&dname="+ name +"&dev=0&t=2"));
             }
             mContext.startActivity(naviIntent);
         }else {
