@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.OnlineHomeContract;
+import com.expo.entity.TouristType;
 import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.VRDetailActivity;
 import com.expo.utils.Constants;
@@ -81,6 +83,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mTourVrs = new ArrayList<>();
         mRvCulture.setNestedScrollingEnabled(false);
         mRvGuide.setNestedScrollingEnabled(false);
+        mPresenter.loadTouristType();
         mPresenter.loadData();
         mPresenter.loadVrHot();
         initLoadMore();
@@ -191,10 +194,10 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mAdapterGuide = new CommonAdapter<VrInfo>(this, R.layout.item_online_guide, mTourVrs) {
             @Override
             protected void convert(ViewHolder holder, VrInfo vr, int position) {
-//                VrInfo vr = (VrInfo) obj;
                 holder.itemView.getLayoutParams().width = RecyclerView.LayoutParams.MATCH_PARENT;
                 holder.<SimpleDraweeView>getView(R.id.item_online_guide_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
-//                holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
+                if (null != tourist && null != tourist.getPicSmallUrl() && !TextUtils.isEmpty(tourist.getPicSmallUrl()))
+                    holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setImageURI(Constants.URL.FILE_BASE_URL + tourist.getPicSmallUrl());
                 holder.<TextView>getView(R.id.item_online_guide_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
                 holder.<TextView>getView(R.id.item_online_guide_content).setText(LanguageUtil.chooseTest(vr.getRemark(), vr.getRemarkEn()));
                 holder.<TextViewDrawable>getView(R.id.item_online_guide_scans).setText(vr.getViewCount()+"次");
@@ -229,6 +232,13 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
             this.mTourVrs.addAll(tourVrs);
             mAdapterGuide.notifyDataSetChanged();
         }
+    }
+
+    private TouristType tourist;
+
+    @Override
+    public void loadTouristTypeRes(TouristType touristType) {
+        this.tourist = touristType;
     }
 
     /**

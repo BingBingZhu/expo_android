@@ -55,11 +55,11 @@ public class VrListFragment extends BaseFragment<ListContract.Presenter> impleme
     protected void onInitView(Bundle savedInstanceState) {
         mTab = getArguments().getParcelable("tab");
         mVrInfos = new ArrayList<>();
-        adapter = new VrListAdapter(getContext(), mVrInfos);
+        adapter = new VrListAdapter(getContext(), mVrInfos, vrType);
         mRecyclerView.setAdapter(adapter);
         int topBottom = (int) getResources().getDimension(R.dimen.dms_20);
         int leftRight = (int) getResources().getDimension(R.dimen.dms_30);
-        mRecyclerView.addItemDecoration(new SpaceDecoration(leftRight, topBottom, leftRight, topBottom, topBottom ));
+        mRecyclerView.addItemDecoration(new SpaceDecoration(leftRight, topBottom, leftRight, 0, topBottom ));
 //        mRecyclerView.addItemDecoration( new RecycleViewDivider(
 //                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor( R.color.white_f4 ) ) );
         mPresenter.loadVrsByType(vrType, mTab.getId(), page);

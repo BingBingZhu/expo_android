@@ -24,7 +24,7 @@
         app:roundBottomLeft="true"
         app:roundBottomRight="true"
         app:placeholderImage="@mipmap/ico_home_reco_garden_def" />
-    <LinearLayout
+    <FrameLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dms_20"
@@ -42,11 +42,11 @@
             android:text="中国馆生存手册上学活..."/>
         <TextView
             android:id="@+id/banner_count"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/find_scans_small_white"
+            android:drawableLeft="@mipmap/ico_vr_view_eye"
             android:drawablePadding="@dimen/dms_10"
-            android:gravity="right"
+            android:layout_gravity="right"
             android:text="123456789次"/>
-    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

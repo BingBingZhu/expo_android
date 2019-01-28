@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/vr_list_item_root"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical">
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/vr_list_item_img"
-        android:layout_width="344dp"
-        android:layout_height="194dp" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/vr_list_item_img"
+            android:layout_width="344dp"
+            android:layout_height="194dp"
+            app:placeholderImageScaleType="centerCrop"
+            app:placeholderImage="@mipmap/ico_home_reco_garden_def"/>
+        <ImageView
+            android:id="@+id/vr_list_item_is_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:src="@mipmap/ico_paly_audio" />
+    </FrameLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

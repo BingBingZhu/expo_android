@@ -3,6 +3,8 @@ package com.expo.widget;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,8 @@ public class CustomDefaultDialog {
     private String ok = "确认";
     private String cancel = "取消";
     private Context context;
-    private boolean isRed;
+    @SuppressLint("ResourceAsColor")
+    private @ColorInt int color = R.color.color_333;
     private boolean onlyOk;
     private boolean cancelable = true;
 
@@ -80,15 +83,12 @@ public class CustomDefaultDialog {
         return this;
     }
 
-    /**
-     * 设置确认按钮红色
-     * @return
-     */
-    @SuppressLint("ResourceType")
-    public CustomDefaultDialog setOkTextRed(){
-        this.isRed = true;
+    public CustomDefaultDialog setOkTextColor(int color){
+        this.color = color;
         return this;
     }
+
+
 
     /**
      * 取消按钮文本
@@ -152,6 +152,7 @@ public class CustomDefaultDialog {
     /**
      * 显示dialog
      */
+    @SuppressLint("ResourceType")
     public void show(){
         dialog = new Dialog(context, R.style.TopActionSheetDialogStyle);
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_layout_default, null);
@@ -163,8 +164,7 @@ public class CustomDefaultDialog {
             tvCancel.setVisibility(View.GONE);
             line.setVisibility(View.GONE);
         }
-        if (isRed)
-            tvOK.setTextColor(context.getResources().getColor(R.color.red_fe2121));
+        tvOK.setTextColor(context.getResources().getColor(color));
         tvContent.setText(content);
         tvOK.setText(ok);
         tvCancel.setText(cancel);

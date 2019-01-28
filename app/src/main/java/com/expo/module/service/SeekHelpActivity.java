@@ -57,7 +57,8 @@ import butterknife.OnClick;
 import static com.expo.utils.Constants.EXTRAS.EXTRAS;
 
 /*
- * 游客求助，5:医疗救助、6:人员走失、3:寻物启事、7:治安举报、0:问询咨询通用页面
+ * 游客求助，0:问询咨询、5:医疗救助、6:人员走失、7:治安举报
+ * 游客服务通用页面
  */
 public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View, View.OnClickListener {
 

@@ -291,7 +291,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
             dialog.setContent(R.string.track_open_hint)
                     .setOkText(R.string.open_track)
                     .setCancelText(R.string.think_again_track)
-                    .setOkTextRed()
+                    .setOkTextColor(R.color.red_fe2121)
                     .setOnOKClickListener(v1 -> { settingTrack(); dialog.dismiss(); })
                     .show();
         } else

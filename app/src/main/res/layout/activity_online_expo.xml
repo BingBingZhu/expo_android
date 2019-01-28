@@ -34,13 +34,10 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:layout_width="@dimen/dms_126"
-                        android:layout_height="@dimen/dms_126"
-                        app:placeholderImage="@mipmap/home_icon"
-                        app:roundAsCircle="true"
-                        app:roundingBorderColor="@color/green_02cd9b"
-                        app:roundingBorderWidth="@dimen/dms_2" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ico_online_expo_logo"/>
 
                     <TextView
                         style="@style/TextSizeWhite12"
