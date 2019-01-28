@@ -149,6 +149,10 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.zhy:base-rvadapter:3.0.3'
     implementation 'com.github.senierr:ShootButton:1.0.5'
+    //手机号检查和地区选择页面
+    implementation 'com.github.zzdragon:phonenumberlib:1.0.0'
+    //刷新加载框架
+    implementation 'com.github.zzdragon:ptr-lib:1.0.0'
     //高德
     implementation 'com.amap.api:navi-3dmap:6.3.0_3dmap6.4.1'
     implementation 'com.amap.api:location:4.2.0'
@@ -185,8 +189,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-    implementation project(':phoneNumberLib')
-    implementation project(path: ':ptr-lib')
     implementation files('libs/aip-java-sdk-4.2.0.jar')
     implementation files('libs/log4j-1.2.17.jar')
     implementation files('libs/baidu-speech.jar')
