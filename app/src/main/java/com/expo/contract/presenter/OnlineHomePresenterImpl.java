@@ -54,10 +54,20 @@ public class OnlineHomePresenterImpl extends OnlineHomeContract.Presenter {
         new Thread() {
             @Override
             public void run() {
-                List<VrInfo> liveVrs = mDao.query( VrInfo.class, new QueryParams().add( "eq", "top_kind", TOP_KIND_LIVE ) );
-                List<VrInfo> cultureVrs = mDao.query( VrInfo.class, new QueryParams().add( "eq", "top_kind", TOP_KIND_CULTURE ) );
+                List<VrInfo> liveVrs = mDao.query( VrInfo.class, new QueryParams()
+                        .add( "eq", "top_kind", TOP_KIND_LIVE )
+                        .add("and")
+                        .add("eq", "is_recommended", 1)
+                        .add("orderBy", "recommended_idx", true));
+                List<VrInfo> cultureVrs = mDao.query( VrInfo.class, new QueryParams()
+                        .add( "eq", "top_kind", TOP_KIND_CULTURE )
+                        .add("and")
+                        .add("eq", "is_recommended", 1) );
                 List<VrInfo> tourVrs = mDao.query( VrInfo.class, new QueryParams()
                         .add( "eq", "top_kind", TOP_KIND_TOUR )
+                        .add("and")
+                        .add("eq", "is_recommended", 1)
+                        .add("orderBy", "recommended_idx", true)
                         .add( "limit", 0 * PER_PAGE_COUNT, PER_PAGE_COUNT ) );
                 new Handler( Looper.getMainLooper() )
                         .post( () -> {

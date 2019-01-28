@@ -69,20 +69,20 @@ public class CirnumListPresenterImpl extends CirnumListContract.Presenter {
 
     @Override
     public String getDistance(double latitude, double longitude) {
-        return "12km";
-//        if (null == TrackRecordService.getLocation() || TrackRecordService.getLocation().getLatitude() == 0) {
-//            return "";
-//        }
-//        String units = "m";
-//        float distance = AMapUtils.calculateLineDistance( new LatLng( latitude, longitude ),
-//                new LatLng( TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude() ) );
-//        if (distance >= 1000) {
-//            units = "km";
-//            distance = distance / 1000;
-//        }
-//        if (mDecimalFormat == null) {
-//            mDecimalFormat = new DecimalFormat( "#######.00" );
-//        }
-//        return mDecimalFormat.format( distance ) + units;
+//        return "12km";
+        if (null == TrackRecordService.getLocation() || TrackRecordService.getLocation().getLatitude() == 0) {
+            return "";
+        }
+        String units = "m";
+        float distance = AMapUtils.calculateLineDistance( new LatLng( latitude, longitude ),
+                new LatLng( TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude() ) );
+        if (distance >= 1000) {
+            units = "km";
+            distance = distance / 1000;
+        }
+        if (mDecimalFormat == null) {
+            mDecimalFormat = new DecimalFormat( "#######.00" );
+        }
+        return mDecimalFormat.format( distance ) + units;
     }
 }

@@ -108,7 +108,9 @@ public class CircumListActivity extends BaseActivity<CirnumListContract.Presente
                         holder.setText(R.id.circun_cate_item_name, circum.getName());
                         holder.setText(R.id.circun_cate_item_score, "评分："+circum.getTaste()+"分");
                         holder.setText(R.id.circun_cate_item_price, "￥"+circum.getAvgPrice());
-                        holder.setText(R.id.circun_cate_item_distance, circum.getAddress()/*"距离您" + mPresenter.getDistance(circum.getLatitude(), circum.getLongitude())*/);
+                        String distance = mPresenter.getDistance(circum.getLatitude(), circum.getLongitude());
+                        distance = distance.equals("") ? "未定位" : "距离您" + distance;
+                                holder.setText(R.id.circun_cate_item_distance, distance);
                         holder.itemView.setOnClickListener(v -> WebActivity.startActivity(getContext(), circum.getBusinessUrl(), circum.getName()));
                     }
                 };
@@ -132,7 +134,9 @@ public class CircumListActivity extends BaseActivity<CirnumListContract.Presente
                             }
                         }
                         holder.setText(R.id.circun_hotel_item_type, type);
-                        holder.setText(R.id.circun_hotel_item_distance, circum.getAddress()/*"距离您" + mPresenter.getDistance(circum.getLatitude(), circum.getLongitude())*/);
+                        String distance = mPresenter.getDistance(circum.getLatitude(), circum.getLongitude());
+                        distance = distance.equals("") ? "未定位" : "距离您" + distance;
+                        holder.setText(R.id.circun_hotel_item_distance, distance);
                         holder.itemView.setOnClickListener(v -> WebActivity.startActivity(getContext(), circum.getBusinessUrl(), circum.getName()));
                         holder.setOnClickListener(R.id.circun_hotel_item_telephone, v -> telephone(circum.getTelephone()));
                         holder.setOnClickListener(R.id.circun_hotel_item_navi, v -> navi(circum.getName(), circum.getLatitude(), circum.getLongitude()));
@@ -151,7 +155,9 @@ public class CircumListActivity extends BaseActivity<CirnumListContract.Presente
                         holder.setText(R.id.circun_shop_and_scenic_item_name, circum.getName());
                         holder.setText(R.id.circun_shop_and_scenic_item_score, "评分："+circum.getDecoration()+"分");
                         holder.<StarBar>getView(R.id.circun_shop_and_scenic_item_star).setStarMark((circum.getDecoration()/2F));
-                        holder.setText(R.id.circun_shop_and_scenic_item_distance, circum.getAddress()/*"距离您" + mPresenter.getDistance(circum.getLatitude(), circum.getLongitude())*/);
+                        String distance = mPresenter.getDistance(circum.getLatitude(), circum.getLongitude());
+                        distance = distance.equals("") ? "未定位" : "距离您" + distance;
+                        holder.setText(R.id.circun_shop_and_scenic_item_distance, distance);
                         holder.itemView.setOnClickListener(v -> WebActivity.startActivity(getContext(), circum.getBusinessUrl(), circum.getName()));
                     }
                 };

@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebContract;
 import com.expo.entity.Coupon;
@@ -227,7 +229,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             shareView.setOnClickListener(v -> {
                 Bitmap bitmap = captureScreen(WebActivity.this);
                 String filePath = FileUtils.saveScreenShot(bitmap);
-                ShareUtil.showShare(getContext(), null, null, filePath, null, null);
+                ShareUtil.showShare(getContext(), null, null, filePath, null, null, true);
             });
         }else{
             ((AppBarView) getTitleView()).getRightView().setVisibility(View.VISIBLE);
@@ -289,7 +291,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         }
 
         @JavascriptInterface
-        public void setTitle(String titleText, boolean isHaveShare) {
+        public void setTitleRight(String titleText, boolean isHaveShare) {
             runOnUiThread( () -> {
                 WebActivity.this.setTitle( BaseActivity.TITLE_COLOR_STYLE_WHITE, titleText );
                 if (isHaveShare)
@@ -407,12 +409,12 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 }).show();
     }
 
-//    private void share(String name) {
-//        Bitmap bitmap = captureScreen( WebActivity.this );
-//        String filePath = FileUtils.saveScreenShot( bitmap );
-//        mShareUtil.setImagePath( filePath );
-//        mShareUtil.doShare( name, filePath );
-//    }
+    private void share(String name) {
+        Bitmap bitmap = captureScreen( WebActivity.this );
+        String filePath = FileUtils.saveScreenShot( bitmap );
+        mShareUtil.setImagePath( filePath );
+        mShareUtil.doShare( name, filePath );
+    }
 
     /**
      * 获取整个窗口的截图

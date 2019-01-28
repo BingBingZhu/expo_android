@@ -108,7 +108,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
                     LanguageUtil.chooseTest(mEncyclopedias.remark, mEncyclopedias.remarkEn),
                     CommUtils.getFullUrl(mEncyclopedias.picUrl),
                     mUrl + "&data_type=0",
-                    mPlatformActionListener);
+                    mPlatformActionListener, false);
 //            mEncyclopedias
 //            mShareUtil.setTitle(LanguageUtil.chooseTest(mEncyclopedias.caption, mEncyclopedias.captionEn));
 //            mShareUtil.setImageUrl(CommUtils.getFullUrl(mEncyclopedias.picUrl));
