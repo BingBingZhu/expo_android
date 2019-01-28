@@ -25,7 +25,7 @@ public class CommonInfo implements Parcelable {
     public static final String ENCYCLOPEDIAS_DETAIL_URL = "13";// 百科详情
     public static final String EXPO_BRIEF_INTRODUCTION = "14";// 世园会简介
     public static final String TOURIST_SERVICE_RENTAL_ITEMS = "15";// 物品租赁
-    public static final String TOURIST_SERVICE_LOST_AND_FOUND = "16";// 失物招领
+    public static final String TOURIST_SERVICE_LOST_AND_FOUND = "16";// 问询咨询
     public static final String TOURIST_SERVICE_MATERNAL_AND_CHILD = "17";// 母婴服务
     public static final String TOURIST_SERVICE_LEFT_LUGGAGE = "18";// 物品寄存
 

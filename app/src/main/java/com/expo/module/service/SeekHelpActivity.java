@@ -2,6 +2,7 @@ package com.expo.module.service;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -57,8 +58,7 @@ import butterknife.OnClick;
 import static com.expo.utils.Constants.EXTRAS.EXTRAS;
 
 /*
- * 游客求助，0:问询咨询、5:医疗救助、6:人员走失、7:治安举报
- * 游客服务通用页面
+ * 游客求助，3:寻物启事、5:医疗救助、6:人员走失、7:治安举报  通用页面
  */
 public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View, View.OnClickListener {
 
@@ -144,10 +144,10 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                 mServiceType = "5";
                 mTvKindly.setText( R.string.kindly_reminder_look_for );
                 break;
-            case 0:
-                mServiceType = "4";
-                mTvKindly.setText( R.string.kindly_reminder_inquiry );
-                break;
+//            case 0:
+//                mServiceType = "4";
+//                mTvKindly.setText( R.string.kindly_reminder_inquiry );
+//                break;
             case 6:
                 mServiceType = "3";
                 mTvKindly.setText( R.string.kindly_reminder_lost );
@@ -194,20 +194,11 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     }
 
-    /**
-     * 启动游客服务求助界面
-     *
-     * @param context
-     * @param type    求助类型
-     */
-    public static void startActivity(@NonNull Activity context, int type) {
-        if (!GpsUtil.isOPen( context )) {
-            GpsUtil.openGPSSettings( context );
-            return;
-        }
-        Intent in = new Intent( context, SeekHelpActivity.class );
-        in.putExtra( EXTRAS, type );
-        context.startActivity( in );
+    public static void startActivity(Context context, String title, int position){
+        Intent intent = new Intent(context, SeekHelpActivity.class);
+        intent.putExtra(Constants.EXTRAS.EXTRA_TITLE, title);
+        intent.putExtra(Constants.EXTRAS.EXTRAS, position);
+        context.startActivity(intent);
     }
 
     @Override
@@ -219,7 +210,6 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
         }
         if (resultCode == RESULT_OK)
             if (requestCode == Constants.RequestCode.REQUEST111 && data != null) {
-//                mImageList.clear();
                 resetCameraPosition();
                 mImageList.addAll( data.getStringArrayListExtra(
                         ImageSelectorUtils.SELECT_RESULT ) );
