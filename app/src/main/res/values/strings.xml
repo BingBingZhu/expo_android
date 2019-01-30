@@ -420,4 +420,5 @@
 
     <string name="expo_map">世园地图</string>
     <string name="expo_scenic">世园景点</string>
+    <string name="phone_not_support">该手机暂不支持次功能</string>
 </resources>

@@ -2,6 +2,7 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.contract.presenter.ArPresenterImpl;
 import com.expo.contract.presenter.BadgePresenterImpl;
 import com.expo.contract.presenter.BindPhonePresenterImpl;
 import com.expo.contract.presenter.CircumTrafficPresenterImpl;
@@ -120,21 +121,23 @@ public class PresenterFactory {
         } else if (view instanceof ServiceHistoryContract.View) {
             return new ServiceHistoryPresenterImpl((ServiceHistoryContract.View) view);
         } else if (view instanceof CustomRouteContract.View) {
-            return new CustomRoutePresenterImpl( (CustomRouteContract.View) view );
+            return new CustomRoutePresenterImpl((CustomRouteContract.View) view);
         } else if (view instanceof VRImageContract.View) {
-            return new VRImagePresenterImpl( (VRImageContract.View) view );
+            return new VRImagePresenterImpl((VRImageContract.View) view);
         } else if (view instanceof OnlineHomeContract.View) {
-            return new OnlineHomePresenterImpl( (OnlineHomeContract.View) view );
+            return new OnlineHomePresenterImpl((OnlineHomeContract.View) view);
         } else if (view instanceof VRDetailContract.View) {
-            return new VRDetailPresenterImpl( (VRDetailContract.View) view );
+            return new VRDetailPresenterImpl((VRDetailContract.View) view);
         } else if (view instanceof PanoramaListContract.View) {
-            return new PanoramaListPresenterImpl( (PanoramaListContract.View) view );
+            return new PanoramaListPresenterImpl((PanoramaListContract.View) view);
         } else if (view instanceof CirnumListContract.View) {
-            return new CirnumListPresenterImpl( (CirnumListContract.View) view );
+            return new CirnumListPresenterImpl((CirnumListContract.View) view);
         } else if (view instanceof CircumTrafficContract.View) {
-            return new CircumTrafficPresenterImpl( (CircumTrafficContract.View) view );
-        }else if (view instanceof ExpoActivityContract.View) {
+            return new CircumTrafficPresenterImpl((CircumTrafficContract.View) view);
+        } else if (view instanceof ExpoActivityContract.View) {
             return new ExpoActivityPresenterImpl((ExpoActivityContract.View) view);
+        } else if (view instanceof ArContract.View) {
+            return new ArPresenterImpl((ArContract.View) view);
         }
         throw new UnsupportedOperationException();
     }

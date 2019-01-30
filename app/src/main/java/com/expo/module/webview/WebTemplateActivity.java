@@ -19,7 +19,7 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.Venue;
 import com.expo.module.map.NavigationActivity;
 import com.expo.module.map.ParkMapActivity;
-import com.expo.module.share.ShareUtil;
+import com.expo.utils.ShareUtil;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -94,7 +94,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         mX5View.removeTencentAd(this);
         mX5View.addJavascriptInterface(new JsHook(), "hook");
         loadUrl(mUrl + (mVenue == null ? "&data_type=0" : "&data_type=1"));
-        mShareUtil = new ShareUtil(this);
+        mShareUtil = new ShareUtil();
     }
 
     public void initTitleRightTextView() {

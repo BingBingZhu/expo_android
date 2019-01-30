@@ -54,17 +54,17 @@ public final class Http {
 
     static {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .readTimeout( 10, TimeUnit.SECONDS )
-                .connectTimeout( 10, TimeUnit.SECONDS );
+                .readTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS);
         if (ExpoApp.getApplication().isDebug()) {
-            builder.addInterceptor( new LogInterceptor() );
+            builder.addInterceptor(new LogInterceptor());
         }
         mClient = builder.build();
         mRetrofit = new Retrofit.Builder()
-                .client( mClient )
-                .baseUrl( Constants.URL.BASE_URL )
-                .addCallAdapterFactory( RxJava2CallAdapterFactory.createAsync() )
-                .addConverterFactory( GsonConverterFactory.create( getGsonInstance() ) )
+                .client(mClient)
+                .baseUrl(Constants.URL.BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+                .addConverterFactory(GsonConverterFactory.create(getGsonInstance()))
                 .build();
     }
 
@@ -100,8 +100,8 @@ public final class Http {
             synchronized (Http.class) {
                 if (mGson == null) {
                     mGson = new GsonBuilder()
-                            .excludeFieldsWithModifiers( Modifier.STATIC, Modifier.FINAL, Modifier.TRANSIENT )
-                            .setDateFormat( "yyyy-MM-dd HH:mm:ss" )
+                            .excludeFieldsWithModifiers(Modifier.STATIC, Modifier.FINAL, Modifier.TRANSIENT)
+                            .setDateFormat("yyyy-MM-dd HH:mm:ss")
                             .create();
                 }
             }
@@ -113,7 +113,7 @@ public final class Http {
         if (mServer == null) {
             synchronized (Http.class) {
                 if (mServer == null) {
-                    mServer = mRetrofit.create( DataServer.class );
+                    mServer = mRetrofit.create(DataServer.class);
                 }
             }
         }
@@ -122,41 +122,47 @@ public final class Http {
 
     public static <T> boolean request(Observer<T> observer, Observable<T>... observables) {
         if (!isConnected() && Thread.currentThread() == Looper.getMainLooper().getThread()) {
-            ToastHelper.showShort( R.string.no_network_connection );
+            ToastHelper.showShort(R.string.no_network_connection);
             return false;
         }
         if (observables.length > 1) {
-            Observable.merge( Arrays.asList( observables ) )
-                    .observeOn( AndroidSchedulers.mainThread() )
-                    .subscribe( observer );
+            Observable.merge(Arrays.asList(observables))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer);
         } else if (observables.length == 1) {
             observables[0]
-                    .observeOn( AndroidSchedulers.mainThread() )
-                    .subscribe( observer );
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer);
         }
         return true;
     }
 
     public static Map<String, Object> getBaseParams() {
         Map<String, Object> params = new HashMap<>();
-        params.put( "type", "1" );
-        params.put( "Ver", BuildConfig.VERSION_NAME );
+        params.put("type", "1");
+        params.put("Ver", BuildConfig.VERSION_NAME);
         User user = ExpoApp.getApplication().getUser();
         if (user != null) {
-            params.put( "Uid", user.getUid() );
-            params.put( "Ukey", user.getUkey() );
+            params.put("Uid", user.getUid());
+            params.put("Ukey", user.getUkey());
         }
         return params;
     }
 
     public static RequestBody buildRequestBody(Map<String, Object> params) {
-        return RequestBody.create( MediaType.parse( "application/json" ), getGsonInstance().toJson( params ) );
+        return RequestBody.create(MediaType.parse("application/json"), getGsonInstance().toJson(params));
     }
 
     public static boolean isConnected() {
-        ConnectivityManager cm = (ConnectivityManager) BaseApplication.getApplication().getSystemService( Context.CONNECTIVITY_SERVICE );
+        ConnectivityManager cm = (ConnectivityManager) BaseApplication.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
         return info != null && info.isConnected();
+    }
+
+    public static String getNetworkType() {
+        ConnectivityManager cm = (ConnectivityManager) BaseApplication.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        return info.getTypeName();
     }
 
     /**
@@ -167,17 +173,17 @@ public final class Http {
      * @param callerContext
      */
     public static void loadBitmap(String url, Http.OnLoadImageCompleteListener listener, Object callerContext) {
-        ImageRequest ir = ImageRequest.fromUri( url );
+        ImageRequest ir = ImageRequest.fromUri(url);
         DataSource<CloseableReference<CloseableImage>> dataSource
-                = Fresco.getImagePipeline().fetchDecodedImage( ir, callerContext );
-        if (Fresco.getImagePipeline().isInBitmapMemoryCache( ir )) {                                  //有缓存时直接从缓存中加载
+                = Fresco.getImagePipeline().fetchDecodedImage(ir, callerContext);
+        if (Fresco.getImagePipeline().isInBitmapMemoryCache(ir)) {                                  //有缓存时直接从缓存中加载
             Bitmap bmp = ((CloseableBitmap) dataSource.getResult().get()).getUnderlyingBitmap();
             if (listener != null) {
-                listener.onComplete( url, bmp, callerContext );
+                listener.onComplete(url, bmp, callerContext);
             }
             CloseableReference<CloseableImage> closeableReference = dataSource.getResult();
             if (closeableReference != null) {
-                CloseableReference.closeSafely( closeableReference );
+                CloseableReference.closeSafely(closeableReference);
             }
             dataSource.close();
         } else {                                                                                    //无缓存时从网络加载
@@ -186,7 +192,7 @@ public final class Http {
                 @Override
                 protected void onNewResultImpl(@Nullable Bitmap bitmap) {
                     if (listener != null) {
-                        listener.onComplete( url, bitmap, callerContext );
+                        listener.onComplete(url, bitmap, callerContext);
                     }
                     dataSource.close();
                 }
@@ -194,16 +200,16 @@ public final class Http {
                 @Override
                 protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
                     if (listener != null) {
-                        listener.onComplete( url, null, callerContext );
+                        listener.onComplete(url, null, callerContext);
                     }
-                    LogUtils.d( "--load user photo failure--", dataSource.getFailureCause() );
+                    LogUtils.d("--load user photo failure--", dataSource.getFailureCause());
                     CloseableReference<CloseableImage> closeableReference = dataSource.getResult();
                     if (closeableReference != null) {
-                        CloseableReference.closeSafely( closeableReference );
+                        CloseableReference.closeSafely(closeableReference);
                     }
                 }
             };
-            dataSource.subscribe( dataSubscriber, UiThreadImmediateExecutorService.getInstance() );
+            dataSource.subscribe(dataSubscriber, UiThreadImmediateExecutorService.getInstance());
         }
     }
 

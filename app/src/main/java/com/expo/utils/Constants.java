@@ -202,6 +202,7 @@ public interface Constants {
         public static final int REQ_TO_QRCODE = 130;
         public static final int REQ_TO_FIND_INFO = 131;
         public static final int REQ_INSTALL_PERMISS_CODE = 132;
+        public static final int REQ_AR = 200;
     }
 
     /**

@@ -24,6 +24,7 @@ public class CommonInfo implements Parcelable {
     public static final String VISITOR_SERVICE_DETAILS = "12";//游客服务详情
     public static final String ENCYCLOPEDIAS_DETAIL_URL = "13";// 百科详情
     public static final String EXPO_BRIEF_INTRODUCTION = "14";// 世园会简介
+    public static final String EXPO_AR_DOWNLOAD_PAGE = "15";// 世园会简介
 
     @DatabaseField(columnName = "id", id = true)
     @SerializedName("id")
@@ -78,7 +79,7 @@ public class CommonInfo implements Parcelable {
     public static final Creator<CommonInfo> CREATOR = new Creator<CommonInfo>() {
         @Override
         public CommonInfo createFromParcel(Parcel in) {
-            return new CommonInfo( in );
+            return new CommonInfo(in);
         }
 
         @Override
@@ -175,19 +176,19 @@ public class CommonInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (id == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeInt( id );
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
         }
-        dest.writeString( caption );
-        dest.writeString( createTime );
-        dest.writeString( isEenable );
-        dest.writeString( linkId );
-        dest.writeString( linkUrl );
-        dest.writeString( remark );
-        dest.writeString( type );
-        dest.writeString( updateTime );
+        dest.writeString(caption);
+        dest.writeString(createTime);
+        dest.writeString(isEenable);
+        dest.writeString(linkId);
+        dest.writeString(linkUrl);
+        dest.writeString(remark);
+        dest.writeString(type);
+        dest.writeString(updateTime);
     }
 
     @Override
