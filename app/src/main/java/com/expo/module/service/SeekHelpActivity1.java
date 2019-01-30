@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -54,12 +53,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.expo.utils.Constants.EXTRAS.EXTRAS;
-
 /*
  * 游客求助，3:寻物启事、5:医疗救助、6:人员走失、7:治安举报  通用页面
  */
-public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View, View.OnClickListener {
+public class SeekHelpActivity1 extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View, View.OnClickListener {
 
     @BindView(R.id.seek_help_image_selector)
     RecyclerView mRecycler;
@@ -73,6 +70,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
     TextView mTvKindly;
     @BindView(R.id.seek_help_text4)
     TextViewDrawable mTvLocationInfo;
+    @BindView(R.id.rule_view)
+    View mRuleView;
 
     ArrayList<String> mImageList;
     SeekHelpAdapter mAdapter;
@@ -126,7 +125,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle( 0, getIntent().getStringExtra( Constants.EXTRAS.EXTRA_TITLE ) );
+        setTitle( "信息提交" );
         if (getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 ) != 0) {
             mPhone.setVisibility( View.GONE );
         }
@@ -143,10 +142,6 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                 mServiceType = "5";
                 mTvKindly.setText( R.string.kindly_reminder_look_for );
                 break;
-//            case 0:
-//                mServiceType = "4";
-//                mTvKindly.setText( R.string.kindly_reminder_inquiry );
-//                break;
             case 6:
                 mServiceType = "3";
                 mTvKindly.setText( R.string.kindly_reminder_lost );
@@ -193,9 +188,8 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
 
     }
 
-    public static void startActivity(Context context, String title, int position){
-        Intent intent = new Intent(context, SeekHelpActivity.class);
-        intent.putExtra(Constants.EXTRAS.EXTRA_TITLE, title);
+    public static void startActivity(Context context, int position){
+        Intent intent = new Intent(context, SeekHelpActivity1.class);
         intent.putExtra(Constants.EXTRAS.EXTRAS, position);
         context.startActivity(intent);
     }
@@ -302,7 +296,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                     ToastHelper.showShort( getString( R.string.max_images, 3 ) );
                     break;
                 }
-                startActivityForResult( new Intent( SeekHelpActivity.this, CameraActivity.class ), Constants.RequestCode.REQ_TO_CAMERA );
+                startActivityForResult( new Intent( SeekHelpActivity1.this, CameraActivity.class ), Constants.RequestCode.REQ_TO_CAMERA );
                 break;
             case R.id.image_album:
                 goImageSelector();
@@ -357,7 +351,7 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
                     .setMaxSelectCount( Constants.Config.IMAGE_MAX_COUNT - count ) // 图片的最大选择数量，小于等于0时，不限数量。
                     .setSelected( mImageList ) // 把已选的图片传入默认选中。
                     .setViewImage( true ) //是否点击放大图片查看,，默认为true
-                    .start( SeekHelpActivity.this, Constants.RequestCode.REQUEST111 ); // 打开相册
+                    .start( SeekHelpActivity1.this, Constants.RequestCode.REQUEST111 ); // 打开相册
     }
 
     private int getCameraImageCount() {

@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_f5">
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <ImageView
             android:id="@+id/banner"
             android:layout_width="match_parent"
@@ -18,7 +19,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dms_30"
             android:layout_marginRight="@dimen/dms_30"
-            android:layout_below="@id/banner"
             android:layout_marginTop="@dimen/dms_minus_68"
             android:layout_marginBottom="@dimen/dms_40"
             android:orientation="vertical">
@@ -63,6 +63,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </com.expo.widget.MyScrollView>

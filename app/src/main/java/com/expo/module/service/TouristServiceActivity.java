@@ -57,7 +57,8 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
             case 5:     // 医疗救助
             case 6:     // 人员走失
             case 7:     // 治安举报
-                SeekHelpActivity.startActivity(getContext(), title, position);
+                SeekHelpActivity2.startActivity(getContext(), title, position);
+
                 break;
         }
     };

@@ -190,9 +190,12 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.service.SeekHelpActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:name=".module.service.SeekHelpActivity1"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.service.SeekHelpActivity2"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.service.ShootActivity"
             android:screenOrientation="portrait" />

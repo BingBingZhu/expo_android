@@ -172,6 +172,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         mRootView.setTitle(layoutId, title);
     }
 
+    public void setTitle(String title) {
+        mRootView.setTitle(1, title);
+    }
+
     public void setTitleVisibility(int visibility) {
         mRootView.setTitleVisibility(visibility);
     }
