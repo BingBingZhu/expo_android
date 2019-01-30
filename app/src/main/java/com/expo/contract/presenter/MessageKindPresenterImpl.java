@@ -6,6 +6,7 @@ import com.expo.contract.MessageKindContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.Message;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,13 +22,16 @@ public class MessageKindPresenterImpl extends MessageKindContract.Presenter {
                 .add("groupBy", "type")
                 .add("orderBy", "create_time", true);
         List<Message> list = mDao.query(Message.class, params);
+//        list = null == list ? new ArrayList<>() : list;
+//        list.add(getDefaultMessage(1));
+//        list.add(getDefaultMessage(5));
         int sum = 0;
         if (list != null)
             for (int i = 0; i < list.size(); i++) {
                 sum += 1 << Integer.valueOf(list.get(i).getType().replace(" ", ""));
             }
         for (int i = 0; i < 6; i++) {
-            if (i != 1 && i != 4 && i != 5) continue;
+            if (i != 1 /*&& i != 4*/ && i != 5) continue;
             if ((sum & (1 << i)) == 0) {
                 list.add(getDefaultMessage(i));
             }

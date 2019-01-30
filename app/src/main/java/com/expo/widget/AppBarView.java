@@ -21,6 +21,7 @@ public class AppBarView extends FrameLayout {
     private ImageView mBackView;
     private TextView mTitleView;
     private View mRightView;
+    private View mLine;
     private OnClickListener mClickListener;
     private boolean mShowBackButton;
     private Drawable mBackImage;
@@ -29,6 +30,7 @@ public class AppBarView extends FrameLayout {
     private int mTitleSizeUnit;
     private int mTitleColor;
     private int mBackgroundColor;
+    private int mLineColor;
 
     public AppBarView(Context context) {
         this( context, null );
@@ -55,6 +57,7 @@ public class AppBarView extends FrameLayout {
         mTitle = a.getString( R.styleable.AppBarView_title );
         mTitleColor = a.getColor( R.styleable.AppBarView_titleColor, getContext().getResources().getColor( R.color.caption_color ) );
         mBackgroundColor = a.getColor( R.styleable.AppBarView_backgroundColor, getContext().getResources().getColor( R.color.green_00cb99 ) );
+        mLineColor = a.getColor( R.styleable.AppBarView_lineColor, getContext().getResources().getColor( R.color.white_f5 ) );
         mShowBackButton = a.getBoolean( R.styleable.AppBarView_showBack, true );
         a.recycle();
 
@@ -74,6 +77,11 @@ public class AppBarView extends FrameLayout {
         mTitleView.setMaxWidth( (int) getContext().getResources().getDimension( R.dimen.dms_390 ) );
         addView( mTitleView, lp );
         setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
+
+        mLine = new View(getContext());
+        lp = new LayoutParams( LayoutParams.MATCH_PARENT, (int) getContext().getResources().getDimension( R.dimen.dms_2 ) );
+        lp.gravity = Gravity.BOTTOM;
+        addView( mLine, lp );
     }
 
     @Override
@@ -93,6 +101,7 @@ public class AppBarView extends FrameLayout {
         mBackView.setImageDrawable( mBackImage );
         mBackView.setId( R.id.title_back );
         mTitleView.setId( R.id.appbar_title );
+        mLine.setBackgroundColor(mLineColor);
         int margin = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 11, getContext().getResources().getDisplayMetrics() );
         mBackView.setPadding( margin, margin, margin, margin );
         if (mClickListener != null) {
@@ -149,6 +158,13 @@ public class AppBarView extends FrameLayout {
         this.mBackImage = getContext().getResources().getDrawable( resId );
         if (this.mBackView != null) {
             this.mBackView.setImageDrawable( mBackImage );
+        }
+    }
+
+    public void setLineBackgroundColor(int colorId){
+        this.mLineColor = colorId;
+        if (mLine != null) {
+            mLine.setBackgroundColor( mLineColor );
         }
     }
 

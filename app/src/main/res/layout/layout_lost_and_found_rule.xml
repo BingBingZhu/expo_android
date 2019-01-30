@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginTop="@dimen/dms_20"
+    android:paddingBottom="@dimen/dms_80"
+    android:paddingTop="@dimen/dms_48"
+    android:paddingLeft="@dimen/dms_20"
+    android:paddingRight="@dimen/dms_20">
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ico_lost_and_found_rule"/>
+    <TextView
+        android:id="@+id/num1"
+        android:layout_width="17dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_46"
+        android:paddingLeft="@dimen/dms_4"
+        android:paddingRight="@dimen/dms_4"
+        android:gravity="center"
+        android:layout_below="@+id/img"
+        android:background="@drawable/shape_rule_num_bg"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_333"
+        android:text="1" />
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_20"
+        android:layout_alignTop="@id/num1"
+        android:layout_toRightOf="@+id/num1"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_666"
+        android:text="温馨提示：请您保管好您的随身物品，以免丢失。"/>
+
+    <LinearLayout
+        android:layout_width="@dimen/dms_2"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/num1"
+        android:layout_alignRight="@id/num1"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/num1"
+        android:layout_above="@id/num6">
+        <TextView
+            android:layout_width="@dimen/dms_2"
+            android:layout_height="match_parent"
+            android:layerType="software"
+            android:background="@drawable/shape_imaginary_line"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/num2"
+        android:layout_width="17dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_46"
+        android:paddingLeft="@dimen/dms_4"
+        android:paddingRight="@dimen/dms_4"
+        android:gravity="center"
+        android:layout_below="@+id/text1"
+        android:background="@drawable/shape_rule_num_bg"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_333"
+        android:text="2" />
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_20"
+        android:layout_alignTop="@id/num2"
+        android:layout_toRightOf="@+id/num2"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_666"
+        android:text="当您丢失物品时，园内游客服务中心和您身边的工作人员均可提供失物招领服务，同时您可以通过智慧世园APP服务平台上传失物图片及文字描述，作为帮助您找寻失物的重要参考。"/>
+
+    <TextView
+        android:id="@+id/num3"
+        android:layout_width="17dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_46"
+        android:paddingLeft="@dimen/dms_4"
+        android:paddingRight="@dimen/dms_4"
+        android:gravity="center"
+        android:layout_below="@+id/text2"
+        android:background="@drawable/shape_rule_num_bg"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_333"
+        android:text="3" />
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_20"
+        android:layout_alignTop="@id/num3"
+        android:layout_toRightOf="@+id/num3"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_666"
+        android:text="当您在拾得失物时，请及时送交至游客服务中心失物招领处或交给您身边的工作人员；凡拾得贵重物品、违禁物品、危险物品须立即送交至园区治安处理点。"/>
+
+    <TextView
+        android:id="@+id/num4"
+        android:layout_width="17dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_46"
+        android:paddingLeft="@dimen/dms_4"
+        android:paddingRight="@dimen/dms_4"
+        android:gravity="center"
+        android:layout_below="@+id/text3"
+        android:background="@drawable/shape_rule_num_bg"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_333"
+        android:text="4" />
+    <TextView
+        android:id="@+id/text4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_20"
+        android:layout_alignTop="@id/num4"
+        android:layout_toRightOf="@+id/num4"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_666"
+        android:text="失物招领信息将会登记在游客服务中心失物招领处，并在智慧世园APP服务平台“游客服务”板块的“失物招领”功能里持续显示，方便您随时（包括出园后）查询失物相关信息。"/>
+
+    <TextView
+        android:id="@+id/num5"
+        android:layout_width="17dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_46"
+        android:paddingLeft="@dimen/dms_4"
+        android:paddingRight="@dimen/dms_4"
+        android:gravity="center"
+        android:layout_below="@+id/text4"
+        android:background="@drawable/shape_rule_num_bg"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_333"
+        android:text="5" />
+    <TextView
+        android:id="@+id/text5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dms_20"
+        android:layout_alignTop="@id/num5"
+        android:layout_toRightOf="@+id/num5"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_666"
+        android:text="工作人员通过核实比对，认定为您的失物后将及时联系到您，办理返还事宜。捡拾失物自信息登记后2日内无人认领，将移交至园区治安处理点。"/>
+
+    <TextView
+        android:id="@+id/num6"
+        android:layout_width="17dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dms_4"
+        android:paddingRight="@dimen/dms_4"
+        android:layout_alignTop="@id/text6"
+        android:gravity="center"
+        android:background="@drawable/shape_rule_num_bg"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_333"
+        android:text="6" />
+    <TextView
+        android:id="@+id/text6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_46"
+        android:layout_alignLeft="@+id/text5"
+        android:layout_below="@+id/text5"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_666"
+        android:text="领取失物时，须持本人身份证或其它证明本人身份的有效证件。代理他人领取失物时，还须出示失主的委托书、失主的有效证件。  "/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text6"
+        android:layout_marginTop="@dimen/dms_60"
+        android:layout_alignLeft="@id/text6"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/font_26"
+        android:text="工作时间：8:00-21:00 "/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dms_22"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/font_26"
+        android:text="祝您游园愉快！ "/>
+</RelativeLayout>

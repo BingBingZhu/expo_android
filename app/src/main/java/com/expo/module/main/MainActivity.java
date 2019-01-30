@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.module.main.find.FindFragment;
@@ -43,8 +44,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_host)
     FragmentTabHost mTabHostView;
 
-    private String[] tabTags = {"home", "encyclopedias", "find", "mine"};//"panorama",
-    private int[] tabTitles = {R.string.main_home, R.string.main_encyclopedias, R.string.main_find, R.string.main_mine};// R.string.main_panorama,
+    private String[] tabTags = {"home", "scenic", "find", "mine"};//"panorama",
+    private int[] tabTitles = {R.string.main_home, R.string.main_scenic, R.string.main_find, R.string.main_mine};// R.string.main_panorama,
     private int mImages[] = {
             R.drawable.selector_tab_home,
             R.drawable.selector_tab_panorama,

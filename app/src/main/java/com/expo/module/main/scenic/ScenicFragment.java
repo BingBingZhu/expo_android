@@ -8,6 +8,7 @@ import android.view.View;
 import com.expo.R;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.StatusBarUtils;
+import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 
 
 import butterknife.BindView;
@@ -70,6 +71,12 @@ public class ScenicFragment extends BaseFragment {
         mMapView.setSelected(true);
         mSceneView.setSelected(false);
     }
+
+    @OnClick(R.id.scenic_search)
+    public void onScenicSearch(View view) {
+        EncyclopediaSearchActivity.startActivity(getContext());
+    }
+
 
     @OnClick(R.id.scene)
     public void onClickScene(View view) {

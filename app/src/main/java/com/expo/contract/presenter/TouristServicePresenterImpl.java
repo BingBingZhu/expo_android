@@ -1,8 +1,18 @@
 package com.expo.contract.presenter;
 
+import android.location.Location;
+
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
 import com.expo.contract.TouristServiceContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.CommonInfo;
+import com.expo.entity.Park;
+import com.expo.entity.Venue;
+import com.expo.entity.VenuesType;
+import com.expo.map.MapUtils;
+
+import java.util.List;
 
 public class TouristServicePresenterImpl extends TouristServiceContract.Presenter {
     public TouristServicePresenterImpl(TouristServiceContract.View view) {
@@ -14,6 +24,44 @@ public class TouristServicePresenterImpl extends TouristServiceContract.Presente
         CommonInfo info = mDao.unique( CommonInfo.class, new QueryParams().add( "eq", "type", type ) );
         if (info != null) {
             return info.getLinkUrl();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean checkInPark(Location location) {
+        Park park = mDao.unique( Park.class, null );
+        if (park == null) return false;
+        List<double[]> bounds = park.getElectronicFenceList();
+        return MapUtils.ptInPolygon( location.getLatitude(), location.getLongitude(), bounds );
+    }
+
+    @Override
+    public Venue getNearbyServiceCenter(Location location) {
+        VenuesType venuesType = mDao.unique( VenuesType.class, new QueryParams()
+                .add( "eq", "is_enable", 1 )
+                .add( "and" )
+                .add( "like", "type_name", "%\u670d\u52a1%" ) );//服务
+        if (venuesType != null) {
+            List<Venue> venues = mDao.query( Venue.class, new QueryParams()
+                    .add( "eq", "type", String.valueOf( venuesType.getId() ) ) );
+            if (venues != null) {
+                if (venues.size() > 1) {
+                    float minDistance = Float.MAX_VALUE;
+                    Venue result = null;
+                    LatLng loc = new LatLng( location.getLatitude(), location.getLongitude() );
+                    for (Venue venue : venues) {
+                        float distance = AMapUtils.calculateLineDistance( loc, new LatLng( venue.getLat(), venue.getLng() ) );
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            result = venue;
+                        }
+                    }
+                    return result;
+                } else {
+                    return venues.get( 0 );
+                }
+            }
         }
         return null;
     }

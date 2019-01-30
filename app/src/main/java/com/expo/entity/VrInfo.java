@@ -2,6 +2,7 @@ package com.expo.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
@@ -81,6 +82,12 @@ url (string, optional): 资源地址
     @DatabaseField(columnName = "update_time")
     @SerializedName("updatetime")
     private String updateTime;
+    @DatabaseField(columnName = "is_recommended")
+    @SerializedName("isrecommended")
+    private Integer isRecommended;
+    @DatabaseField(columnName = "recommended_idx")
+    @SerializedName("recommendedidx")
+    private Integer recommendedIdx;
     @DatabaseField(columnName = "view_count")
     private long viewCount;
 
@@ -89,7 +96,11 @@ url (string, optional): 资源地址
     }
 
     protected VrInfo(Parcel in) {
-        id = in.readLong();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
         caption = in.readString();
         captionEn = in.readString();
         topKind = in.readString();
@@ -106,6 +117,17 @@ url (string, optional): 资源地址
         url = in.readString();
         createTime = in.readString();
         updateTime = in.readString();
+        if (in.readByte() == 0) {
+            isRecommended = null;
+        } else {
+            isRecommended = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            recommendedIdx = null;
+        } else {
+            recommendedIdx = in.readInt();
+        }
+        viewCount = in.readLong();
     }
 
     public static final Creator<VrInfo> CREATOR = new Creator<VrInfo>() {
@@ -127,7 +149,12 @@ url (string, optional): 资源地址
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
         dest.writeString(caption);
         dest.writeString(captionEn);
         dest.writeString(topKind);
@@ -144,6 +171,19 @@ url (string, optional): 资源地址
         dest.writeString(url);
         dest.writeString(createTime);
         dest.writeString(updateTime);
+        if (isRecommended == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(isRecommended);
+        }
+        if (recommendedIdx == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(recommendedIdx);
+        }
+        dest.writeLong(viewCount);
     }
 
     public Long getId() {
@@ -195,6 +235,8 @@ url (string, optional): 资源地址
     }
 
     public String getExtAttr() {
+        if (null == extAttr || TextUtils.isEmpty(extAttr))
+            extAttr = "0";
         return extAttr;
     }
 
@@ -280,6 +322,22 @@ url (string, optional): 资源地址
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getIsRecommended() {
+        return isRecommended;
+    }
+
+    public void setIsRecommended(Integer isRecommended) {
+        this.isRecommended = isRecommended;
+    }
+
+    public Integer getRecommendedIdx() {
+        return recommendedIdx;
+    }
+
+    public void setRecommendedIdx(Integer recommendedIdx) {
+        this.recommendedIdx = recommendedIdx;
     }
 
     public long getViewCount() {

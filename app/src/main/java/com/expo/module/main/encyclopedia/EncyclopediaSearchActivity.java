@@ -57,7 +57,7 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
     protected void onInitView(Bundle savedInstanceState) {
         mSearchContent.setOnEditorActionListener( this );
         mResultView.addItemDecoration( new SpaceDecoration( 0, getResources().getDimensionPixelSize( R.dimen.dms_4 ) ) );
-        setTitle( 0, R.string.search );
+        setTitle( 1, R.string.search );
 //        mResultView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));        // item分割线
 //        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_18);
 //        mResultView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));

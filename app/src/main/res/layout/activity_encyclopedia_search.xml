@@ -3,80 +3,108 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green_02cd9b"
     android:orientation="vertical">
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dms_28"
-        android:layout_marginRight="@dimen/dms_28"
-        android:layout_marginTop="@dimen/dms_4"
-        android:background="@drawable/shape_search_column_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dms_10"
-            android:layout_marginBottom="@dimen/dms_10"
-            android:layout_marginLeft="@dimen/dms_32"
-            android:src="@mipmap/ico_search"/>
-        <EditText
-            android:id="@+id/serach_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/search_cancle"
+            style="@style/TextSizeBlack14"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginRight="@dimen/dms_30"
+            android:text="@string/cancel" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dms_12"
-            android:layout_marginRight="@dimen/dms_18"
-            android:paddingTop="@dimen/dms_18"
-            android:paddingBottom="@dimen/dms_18"
-            android:background="@android:color/transparent"
-            android:textSize="@dimen/font_26"
-            android:textColorHint="@color/color_999"
-            android:textColor="@color/color_333"
-            android:imeOptions="actionSearch"
-            android:singleLine="true"
-            android:maxLength="15"
-            android:hint="请输入搜索的关键词"/>
-    </LinearLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_toLeftOf="@id/search_cancle"
+            android:background="@drawable/bg_f5_r10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/serach_ico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dms_10"
+                android:layout_marginTop="@dimen/dms_10"
+                android:layout_marginRight="@dimen/dms_28"
+                android:layout_marginBottom="@dimen/dms_10"
+                android:src="@mipmap/ico_search" />
+
+            <EditText
+                android:id="@+id/serach_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dms_12"
+                android:layout_marginRight="@dimen/dms_18"
+                android:layout_toLeftOf="@id/serach_ico"
+                android:background="@android:color/transparent"
+                android:hint="请输入搜索的关键词"
+                android:imeOptions="actionSearch"
+                android:maxLength="15"
+                android:paddingTop="@dimen/dms_18"
+                android:paddingBottom="@dimen/dms_18"
+                android:singleLine="true"
+                android:textColor="@color/color_333"
+                android:textColorHint="@color/color_999"
+                android:textSize="@dimen/font_26" />
+        </RelativeLayout>
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/search_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
         android:layout_marginTop="@dimen/dms_24"
-        android:visibility="visible"
-        android:orientation="vertical">
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dms_30"
                 android:layout_marginTop="@dimen/dms_28"
                 android:layout_marginBottom="@dimen/dms_28"
-                android:layout_marginLeft="@dimen/dms_30"
-                android:textSize="@dimen/font_34"
+                android:text="@string/history"
                 android:textColor="@color/color_333"
-                android:text="@string/history"/>
+                android:textSize="@dimen/font_34" />
+
             <ImageView
                 android:id="@+id/search_history_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dms_30"
                 android:layout_gravity="center_vertical|right"
-                android:src="@mipmap/ico_del_history"/>
+                android:layout_marginRight="@dimen/dms_30"
+                android:src="@mipmap/ico_del_history" />
         </FrameLayout>
+
         <ListView
             android:id="@+id/search_history_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dms_10"
-            android:divider="@android:color/transparent"
-            android:listSelector="@android:color/transparent"
-            android:dividerHeight="@dimen/dms_20"
             android:layout_marginLeft="@dimen/dms_50"
-            android:layout_marginRight="@dimen/dms_50"/>
+            android:layout_marginTop="@dimen/dms_10"
+            android:layout_marginRight="@dimen/dms_50"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="@dimen/dms_20"
+            android:listSelector="@android:color/transparent" />
     </LinearLayout>
+
     <com.expo.widget.SimpleRecyclerView
         android:id="@+id/search_result"
         android:layout_width="match_parent"
@@ -84,7 +112,7 @@
         android:layout_marginTop="@dimen/dms_20"
         android:background="@color/white_f4"
         android:overScrollMode="never"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
 </LinearLayout>

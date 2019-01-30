@@ -5,11 +5,13 @@ import android.os.Looper;
 
 import com.expo.contract.OnlineHomeContract;
 import com.expo.db.QueryParams;
+import com.expo.entity.TouristType;
 import com.expo.entity.Tuple;
 import com.expo.entity.VrInfo;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.PanResHotResp;
+import com.expo.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +56,20 @@ public class OnlineHomePresenterImpl extends OnlineHomeContract.Presenter {
         new Thread() {
             @Override
             public void run() {
-                List<VrInfo> liveVrs = mDao.query( VrInfo.class, new QueryParams().add( "eq", "top_kind", TOP_KIND_LIVE ) );
-                List<VrInfo> cultureVrs = mDao.query( VrInfo.class, new QueryParams().add( "eq", "top_kind", TOP_KIND_CULTURE ) );
+                List<VrInfo> liveVrs = mDao.query( VrInfo.class, new QueryParams()
+                        .add( "eq", "top_kind", TOP_KIND_LIVE )
+                        .add("and")
+                        .add("eq", "is_recommended", 1)
+                        .add("orderBy", "recommended_idx", true));
+                List<VrInfo> cultureVrs = mDao.query( VrInfo.class, new QueryParams()
+                        .add( "eq", "top_kind", TOP_KIND_CULTURE )
+                        .add("and")
+                        .add("eq", "is_recommended", 1) );
                 List<VrInfo> tourVrs = mDao.query( VrInfo.class, new QueryParams()
                         .add( "eq", "top_kind", TOP_KIND_TOUR )
+                        .add("and")
+                        .add("eq", "is_recommended", 1)
+                        .add("orderBy", "recommended_idx", true)
                         .add( "limit", 0 * PER_PAGE_COUNT, PER_PAGE_COUNT ) );
                 new Handler( Looper.getMainLooper() )
                         .post( () -> {
@@ -75,5 +87,16 @@ public class OnlineHomePresenterImpl extends OnlineHomeContract.Presenter {
                 .add( "eq", "top_kind", TOP_KIND_TOUR )
                 .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT ) );
         mView.loadMoreTourDataRes( null == tourVrs ? new ArrayList<VrInfo>() : tourVrs );
+    }
+
+    @Override
+    public void loadTouristType() {
+        List<TouristType> touristTypes = mDao.query(TouristType.class, new QueryParams().add("eq", "is_enable", 1));
+        for (TouristType touristType : touristTypes) {
+            if (touristType.isUsed()) {
+                mView.loadTouristTypeRes(touristType);
+            }
+        }
+
     }
 }

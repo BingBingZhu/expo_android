@@ -11,7 +11,8 @@
         android:id="@+id/item_route_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_390"
-        android:scaleType="centerCrop"
+        app:placeholderImageScaleType="centerCrop"
+        app:placeholderImage="@mipmap/ico_home_reco_garden_def"
         app:roundAsCircle="false"
         app:roundedCornerRadius="@dimen/dms_10" />
 

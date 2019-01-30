@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.expo.R;
@@ -22,10 +23,12 @@ import java.util.List;
 public class VrListAdapter extends RecyclerView.Adapter<VrListAdapter.ViewHolder> {
 
     private List<VrInfo> mVrInfos;
+    private int vrType;
     private Context mContext;
 
-    public VrListAdapter(Context context, List<VrInfo> vrInfos) {
+    public VrListAdapter(Context context, List<VrInfo> vrInfos, int vrType) {
         this.mContext = context;
+        this.vrType = vrType;
         if (null == vrInfos) {
             this.mVrInfos = new ArrayList<>();
         } else {
@@ -46,9 +49,12 @@ public class VrListAdapter extends RecyclerView.Adapter<VrListAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         VrInfo vr = mVrInfos.get( position );
+        if (vrType == 2){
+            holder.imgIsVideo.setVisibility(View.VISIBLE);
+        }
         holder.img.setImageURI( Constants.URL.FILE_BASE_URL + vr.getPic() );
         holder.tvName.setText( LanguageUtil.chooseTest( vr.getCaption(), vr.getCaptionEn() ) );
-        holder.tvViewCount.setText(vr.getViewCount()+"");
+        holder.tvViewCount.setText(vr.getViewCount()+"次");
         holder.root.setOnClickListener( v -> VRDetailActivity.startActivity(mContext, String.valueOf(vr.getId()), true ));
     }
 
@@ -63,6 +69,7 @@ public class VrListAdapter extends RecyclerView.Adapter<VrListAdapter.ViewHolder
         private SimpleDraweeView img;
         private TextView tvName;
         private TextView tvViewCount;
+        private ImageView imgIsVideo;
 
         public ViewHolder(View v) {
             super( v );
@@ -70,6 +77,7 @@ public class VrListAdapter extends RecyclerView.Adapter<VrListAdapter.ViewHolder
             img = v.findViewById( R.id.vr_list_item_img );
             tvName = v.findViewById( R.id.vr_list_item_name );
             tvViewCount = v.findViewById( R.id.vr_list_item_view_count );
+            imgIsVideo = v.findViewById( R.id.vr_list_item_is_video );
         }
     }
 }

@@ -106,6 +106,7 @@
     <dimen name="dms_minus_10">-5dp</dimen>
     <dimen name="dms_minus_14">-7dp</dimen>
     <dimen name="dms_minus_30">-15dp</dimen>
+    <dimen name="dms_minus_68">-34dp</dimen>
     <dimen name="dms_380">190dp</dimen>
     <dimen name="dms_240">120dp</dimen>
 </resources>

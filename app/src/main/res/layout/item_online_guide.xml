@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_online_guide_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,7 +14,8 @@
             android:id="@+id/item_online_guide_img"
             android:layout_width="@dimen/dms_170"
             android:layout_height="@dimen/dms_164"
-            android:scaleType="centerCrop" />
+            app:placeholderImageScaleType="centerCrop"
+            app:placeholderImage="@mipmap/ico_home_reco_garden_def" />
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_online_guide_tour"
             android:layout_width="@dimen/dms_44"
@@ -51,7 +53,7 @@
                 android:id="@+id/item_online_guide_scans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/find_scans_small_white"
+                android:drawableLeft="@mipmap/ico_vr_view_eye"
                 android:gravity="center"
                 android:drawablePadding="@dimen/dms_10"
                 android:textColor="@color/gray_66"

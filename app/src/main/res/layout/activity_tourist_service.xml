@@ -1,22 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.expo.widget.MyScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
+    android:layout_height="match_parent"
+    android:background="@color/white_f5">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_88" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ico_tourist_service_top"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginRight="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_minus_68"
+            android:layout_marginBottom="@dimen/dms_40"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dms_40"
+                android:paddingBottom="@dimen/dms_28"
+                android:paddingLeft="@dimen/dms_36"
+                android:paddingRight="@dimen/dms_36"
+                android:orientation="vertical"
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_28"
+                    android:textColor="@color/color_666"
+                    android:text="当您在园区需要帮助时，我们建议您寻找到身边的工作人员！"/>
+                <TextView
+                    android:id="@+id/tourist_service_navi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dms_6"
+                    android:drawableRight="@mipmap/ico_navi_to_service_center"
+                    android:drawablePadding="@dimen/dms_22"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="right"
+                    android:textColor="#1391FF"
+                    android:textSize="@dimen/font_24"
+                    android:text="为您快速导航最近服务中心" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dms_36"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/font_30"
+                android:textColor="@color/color_666"
+                android:text="公告板"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tourist_services_phone"
-        style="@style/TextSizeBlack14"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/dms_80"
-        android:gravity="center"
-        android:text="@string/tourist_service_phone" />
-
-</FrameLayout>
+</com.expo.widget.MyScrollView>

@@ -9,8 +9,8 @@
     android:elevation="@dimen/dms_10"
     android:background="@drawable/bg_white_transparency_r5_w5"
     android:paddingTop="@dimen/dms_20"
-    android:paddingLeft="@dimen/dms_16"
-    android:paddingRight="@dimen/dms_16"
+    android:paddingLeft="@dimen/dms_20"
+    android:paddingRight="@dimen/dms_20"
     android:gravity="center_horizontal">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/banner_image"
@@ -24,11 +24,11 @@
         app:roundBottomLeft="true"
         app:roundBottomRight="true"
         app:placeholderImage="@mipmap/ico_home_reco_garden_def" />
-    <LinearLayout
+    <FrameLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_20"
-        android:layout_marginBottom="@dimen/dms_10"
+        android:layout_marginTop="@dimen/dms_26"
+        android:layout_marginBottom="@dimen/dms_26"
         android:paddingLeft="@dimen/dms_20"
         android:paddingRight="@dimen/dms_20"
         android:orientation="horizontal">
@@ -39,14 +39,18 @@
             android:maxLength="10"
             android:maxLines="1"
             android:ellipsize="end"
+            android:textColor="@color/color_333"
+            android:textSize="@dimen/font_26"
             android:text="中国馆生存手册上学活..."/>
         <TextView
             android:id="@+id/banner_count"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/find_scans_small_white"
+            android:drawableLeft="@mipmap/ico_vr_view_eye"
             android:drawablePadding="@dimen/dms_10"
-            android:gravity="right"
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/font_18"
             android:text="123456789次"/>
-    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.TouristType;
 import com.expo.entity.VrInfo;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public interface OnlineHomeContract {
         public abstract void loadData();
 
         public abstract void loadMore(int page);
+
+        public abstract void loadTouristType();
+
     }
 
     interface View extends IView {
@@ -29,5 +33,7 @@ public interface OnlineHomeContract {
         void loadTourDataRes(List<VrInfo> tourVrs);
 
         void loadMoreTourDataRes(List<VrInfo> tourVrs);
+
+        void loadTouristTypeRes(TouristType touristType);
     }
 }

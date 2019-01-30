@@ -33,7 +33,8 @@ public class ListPresenterImpl extends ListContract.Presenter {
                 .add( "eq", "top_kind", vrType )
                 .add("and")
                 .add("like", "attr_ids", "%;"+tabId+";%")
-                .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT ) );
+                .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT )
+                .add("orderBy", "recommended_idx", true) );
         mView.addVrsToList( data );
     }
 }

@@ -9,6 +9,7 @@
         <attr name="backgroundColor" format="color" />
         <attr name="showBack" format="boolean" />
         <attr name="showMenu" format="boolean" />
+        <attr name="lineColor" format="color" />
     </declare-styleable>
 
 

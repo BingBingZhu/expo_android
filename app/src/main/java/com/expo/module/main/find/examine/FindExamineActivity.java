@@ -139,7 +139,7 @@ public class FindExamineActivity extends BaseActivity<ExamineContract.Presenter>
         CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
         dialog.setContent(R.string.delete_tips)
                 .setOkText(R.string.delete)
-                .setOkTextRed()
+                .setOkTextColor(R.color.red_fe2121)
                 .setOnOKClickListener(v1 -> { mPresenter.deleteSociety(id, type, positon); dialog.dismiss(); })
                 .show();
     }

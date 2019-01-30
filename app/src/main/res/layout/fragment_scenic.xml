@@ -4,34 +4,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/top_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green_02cd9b"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginTop="@dimen/dms_20">
 
-        <TextView
-            android:id="@+id/map"
-            style="@style/TextSize16"
-            android:padding="@dimen/dms_20"
-            android:text="@string/expo_map"
-            android:textColor="@color/selector_33_white" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_f7_r90"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dms_10"
+            android:paddingRight="@dimen/dms_10">
 
-        <TextView
-            android:id="@+id/scene"
-            style="@style/TextSize16"
-            android:layout_marginLeft="@dimen/dms_60"
-            android:text="@string/expo_scenic"
-            android:textColor="@color/selector_33_white" />
+            <TextView
+                android:id="@+id/map"
+                style="@style/TextSize18"
+                android:background="@drawable/selector_transation_white_90"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dms_30"
+                android:paddingTop="@dimen/dms_10"
+                android:paddingRight="@dimen/dms_30"
+                android:paddingBottom="@dimen/dms_10"
+                android:text="@string/expo_map"
+                android:textColor="@color/selector_33_3ad7b0" />
 
+            <TextView
+                android:id="@+id/scene"
+                style="@style/TextSize18"
+                android:background="@drawable/selector_transation_white_90"
+                android:paddingLeft="@dimen/dms_30"
+                android:paddingTop="@dimen/dms_10"
+                android:paddingRight="@dimen/dms_30"
+                android:paddingBottom="@dimen/dms_10"
+                android:text="@string/expo_scenic"
+                android:textColor="@color/selector_33_3ad7b0" />
 
-    </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/scenic_search"
+            android:layout_width="@dimen/dms_32"
+            android:layout_height="@dimen/dms_32"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="@dimen/dms_60"
+            android:src="@mipmap/scenic_search" />
+    </FrameLayout>
+
 
     <com.expo.widget.NoScrollViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dms_30"
         android:overScrollMode="never" />
 </LinearLayout>
