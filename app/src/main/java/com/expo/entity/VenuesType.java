@@ -52,6 +52,15 @@ public class VenuesType implements Parcelable {
     @DatabaseField(columnName = "pic_mark_url")
     @SerializedName("picmarkurl")
     private String picMarkUrl;          // 地图图标 ,
+    @DatabaseField(columnName = "show_in_map")
+    @SerializedName("showinmap")
+    private String showInMap;
+    @DatabaseField(columnName = "show_in_scenicspot")
+    @SerializedName("showinscenicspot")
+    private String showInScenicspot;
+    @DatabaseField(columnName = "show_in_wiki")
+    @SerializedName("showinwiki")
+    private String showInWiki;
 
     private Bitmap lstBitmap;
     private Bitmap markBitmap;
@@ -194,6 +203,30 @@ public class VenuesType implements Parcelable {
         return null != markBitmap;
     }
 
+    public String getShowInMap() {
+        return showInMap;
+    }
+
+    public void setShowInMap(String showInMap) {
+        this.showInMap = showInMap;
+    }
+
+    public String getShowInScenicspot() {
+        return showInScenicspot;
+    }
+
+    public void setShowInScenicspot(String showInScenicspot) {
+        this.showInScenicspot = showInScenicspot;
+    }
+
+    public String getShowInWiki() {
+        return showInWiki;
+    }
+
+    public void setShowInWiki(String showInWiki) {
+        this.showInWiki = showInWiki;
+    }
+
     protected VenuesType(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
@@ -217,6 +250,9 @@ public class VenuesType implements Parcelable {
         updateTime = in.readString();
         picLstUrl = in.readString();
         picMarkUrl = in.readString();
+        showInMap = in.readString();
+        showInScenicspot = in.readString();
+        showInWiki = in.readString();
     }
 
     public static final Creator<VenuesType> CREATOR = new Creator<VenuesType>() {
@@ -262,5 +298,8 @@ public class VenuesType implements Parcelable {
         dest.writeString(updateTime);
         dest.writeString(picLstUrl);
         dest.writeString(picMarkUrl);
+        dest.writeString(showInMap);
+        dest.writeString(showInScenicspot);
+        dest.writeString(showInWiki);
     }
 }

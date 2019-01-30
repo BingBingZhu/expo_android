@@ -1,5 +1,6 @@
 package com.expo.module.map;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -42,8 +43,20 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.base.utils.ViewUtils;
 import com.expo.contract.ParkMapContract;
-import com.expo.entity.*;
-import com.expo.map.*;
+import com.expo.contract.ParkMapFragmentContract;
+import com.expo.entity.CustomRoute;
+import com.expo.entity.Encyclopedias;
+import com.expo.entity.Park;
+import com.expo.entity.RouteInfo;
+import com.expo.entity.TouristType;
+import com.expo.entity.Venue;
+import com.expo.entity.VenuesType;
+import com.expo.map.ClusterClickListener;
+import com.expo.map.ClusterItem;
+import com.expo.map.ClusterOverlay;
+import com.expo.map.MapUtils;
+import com.expo.map.NaviManager;
+import com.expo.map.RegionItem;
 import com.expo.module.download.DownloadManager;
 import com.expo.module.routes.RouteDetailActivity;
 import com.expo.module.webview.WebTemplateActivity;
@@ -65,8 +78,9 @@ import static com.amap.api.fence.GeoFenceClient.GEOFENCE_OUT;
 /*
  * 导游导览
  */
-public class ParkMapFragment extends BaseFragment<ParkMapContract.Presenter> implements
-        ParkMapContract.View, AMap.OnMapTouchListener, AMap.OnMarkerClickListener {
+@SuppressLint("ValidFragment")
+public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presenter> implements
+        ParkMapFragmentContract.View, AMap.OnMapTouchListener, AMap.OnMarkerClickListener {
 
     public static final String GEOFENCE_BROADCAST_ACTION = "com.location.apis.geofencedemo.broadcast";
     public static final String EXPO_PARK = "expo_park";
@@ -144,8 +158,9 @@ public class ParkMapFragment extends BaseFragment<ParkMapContract.Presenter> imp
         }
     };
 
-    public ParkMapFragment() {
+    public ParkMapFragment(List<VenuesType> list) {
         mSpotId = 0L;
+        mVenuesTypes = list;
     }
 
     @Override
@@ -165,7 +180,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapContract.Presenter> imp
         mAMap.setOnMyLocationChangeListener(mLocationChangeListener);
         mAMap.addTileOverlay(mMapUtils.getTileOverlayOptions(getContext()));
         mAMap.setMaxZoomLevel(19);
-        mPresenter.loadParkMapData(mSpotId);
+        mPresenter.loadParkMapData(mSpotId, mVenuesTypes);
         // 地理围栏
         mGeoFenceClient = new GeoFenceClient(getContext());
         mGeoFenceClient.setActivateAction(GEOFENCE_IN | GEOFENCE_OUT);
@@ -178,6 +193,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapContract.Presenter> imp
                 getContext());
         mClusterOverlay.setMarkerInfoInterface(mMarkerInfoInterface);
         mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
+
     }
 
     @Override

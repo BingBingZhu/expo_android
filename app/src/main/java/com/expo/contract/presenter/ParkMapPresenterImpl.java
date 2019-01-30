@@ -36,7 +36,7 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
         new Thread() {
             @Override
             public void run() {
-                Park park = mDao.unique( Park.class, null );
+                Park park = mDao.unique(Park.class, null);
                 if (park != null && park.getElectronicFenceList().size() >= 3) {
                     new Handler(Looper.getMainLooper())
                             .post(() -> {
@@ -55,8 +55,12 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                     return;
                 }
                 List<VenuesType> venuesTypes = mDao.query(VenuesType.class, new QueryParams()
-                        .add("eq", "is_enable", 1).add("and")
-                        .add("notIn", "type_name", "停车场").add("and")
+                        .add("eq", "is_enable", 1)
+                        .add("and")
+                        .add("eq", "show_in_map", "1")
+                        .add("and")
+                        .add("notIn", "type_name", "停车场")
+                        .add("and")
                         .add("notIn", "type_name", "公交站")
                         .add("orderBy", "idx", true));
                 List<TouristType> touristTypes = mDao.query(TouristType.class, new QueryParams().add("eq", "is_enable", 1));
@@ -92,7 +96,7 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
 
     @Override
     public List<Venue> getActualScenes(ArrayList<Integer> ids) {
-        List<Venue> venues = mDao.query(Venue.class,new QueryParams().add("in","_id",ids));
+        List<Venue> venues = mDao.query(Venue.class, new QueryParams().add("in", "_id", ids));
         return venues;
     }
 
@@ -104,16 +108,16 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                 .add("eq", "is_enable", 1));
 
         QueryParams queryParams = new QueryParams();
-        if (LanguageUtil.isCN()){
+        if (LanguageUtil.isCN()) {
             queryParams.add("eq", "type", venuesType.getId()).add("and")
                     .add("eq", "is_enable", 1).add("and")
-                    .add("like", "caption", "%"+caption+"%");
-        }else{
+                    .add("like", "caption", "%" + caption + "%");
+        } else {
             queryParams.add("eq", "type", venuesType.getId()).add("and")
                     .add("eq", "is_enable", 1).add("and")
-                    .add("like", "caption_en", "%"+caption+"%");
+                    .add("like", "caption_en", "%" + caption + "%");
         }
-        List<Venue> venues = mDao.query( Venue.class, queryParams );
+        List<Venue> venues = mDao.query(Venue.class, queryParams);
         return venues;
     }
 
@@ -122,7 +126,7 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
         if (null == latLng || latLng.latitude == 0)
             return false;
         List<double[]> bounds = venue.getElectronicFenceList();
-        return MapUtils.ptInPolygon( latLng.latitude, latLng.longitude, bounds );
+        return MapUtils.ptInPolygon(latLng.latitude, latLng.longitude, bounds);
     }
 
     private void loadSubjectImages(List<VenuesType> venuesTypes) {

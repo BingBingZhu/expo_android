@@ -1,7 +1,10 @@
 package com.expo.contract;
 
+import com.expo.adapters.Tab;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.ExpoActivityInfo;
+import com.expo.entity.Schedule;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 
@@ -18,6 +21,8 @@ public interface WebTemplateContract {
 
         public abstract Venue loadSceneByWikiId(long id);
 
+        public abstract Schedule loadScheduleByWikiId(long id);
+
         public abstract String toJson(Object obj);
 
         public abstract List<Encyclopedias> loadNeayByVenues(Venue as);
@@ -27,6 +32,8 @@ public interface WebTemplateContract {
         public abstract List<Encyclopedias> loadRandomData(Long typeId, Long currId);
 
         public abstract String loadCommonInfo(String type);
+
+        public abstract String getRecommendAndTodayExpoActivitys(Long time, long id);
     }
 
     interface View extends IView {

@@ -75,7 +75,7 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
     }
 
     public void showFullSceen() {
-        VRImageActivity.startActivity(mContext, mVrInfo);
+        VRImageActivity.startActivity(mContext, mVrInfo.getId());
     }
 
     public void showNormalSceen() {

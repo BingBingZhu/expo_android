@@ -1,5 +1,6 @@
 package com.expo.module.main.encyclopedia;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import com.expo.adapters.TabPagerAdapter;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.EncyclopediasContract;
+import com.expo.entity.VenuesType;
 import com.expo.module.distinguish.DistinguishActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -31,6 +33,7 @@ import butterknife.OnClick;
 /*
  * 百科页
  */
+@SuppressLint("ValidFragment")
 public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Presenter> implements EncyclopediasContract.View {
 
     @BindView(R.id.ency_top_view)
@@ -41,6 +44,11 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     ViewPager mPagerView;
 
     private TabPagerAdapter mAdapter;
+    List<VenuesType> mList;
+
+    public EncyclopediaFragment(List<VenuesType> list) {
+        mList = list;
+    }
 
     @Override
     public int getContentView() {
@@ -51,18 +59,19 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     protected void onInitView(Bundle savedInstanceState) {
 //        mTopView.setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
         initTabLayout();
-        mAdapter = new TabPagerAdapter( getFragmentManager(), TabPagerAdapter.TYPE_ENCYCLOPEDIA, 0 );
-        mPagerView.setAdapter( mAdapter );
-        mPagerView.addOnPageChangeListener( mOnPageChangeListener );
-        mPresenter.loadTabs();
-        LocalBroadcastUtil.registerReceiver( getContext(), receiver, Constants.Action.ACTION_CHANGE_LANGUAGE );
+        mAdapter = new TabPagerAdapter(getFragmentManager(), TabPagerAdapter.TYPE_ENCYCLOPEDIA, 0);
+        mPagerView.setAdapter(mAdapter);
+        mPagerView.addOnPageChangeListener(mOnPageChangeListener);
+        mPresenter.loadTabs(getContext(), mList);
+
+        LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_CHANGE_LANGUAGE);
     }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals( Constants.Action.ACTION_CHANGE_LANGUAGE )) {
-                mAdapter.needRestoreSave( false );
+            if (intent.getAction().equals(Constants.Action.ACTION_CHANGE_LANGUAGE)) {
+                mAdapter.needRestoreSave(false);
             }
         }
     };
@@ -74,29 +83,29 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState( outState );
+        super.onSaveInstanceState(outState);
     }
 
     private void initTabLayout() {
         // 设置分割线
-        LinearLayout linearLayout = (LinearLayout) mTabView.getChildAt( 0 );
-        linearLayout.setShowDividers( LinearLayout.SHOW_DIVIDER_MIDDLE );
-        linearLayout.setDividerDrawable( ContextCompat.getDrawable( getContext(), R.drawable.shape_tab_divide_line ) );
-        linearLayout.setDividerPadding( 8 );
-        mTabView.addOnTabSelectedListener( mTabSelectedListener );
+        LinearLayout linearLayout = (LinearLayout) mTabView.getChildAt(0);
+        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        linearLayout.setDividerDrawable(ContextCompat.getDrawable(getContext(), R.drawable.shape_tab_divide_line));
+        linearLayout.setDividerPadding(8);
+        mTabView.addOnTabSelectedListener(mTabSelectedListener);
     }
 
     private ViewPager.SimpleOnPageChangeListener mOnPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
         public void onPageSelected(int position) {
-            mTabView.getTabAt( position ).select();
+            mTabView.getTabAt(position).select();
         }
     };
 
     private TabLayout.OnTabSelectedListener mTabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
-            mPagerView.setCurrentItem( tab.getPosition() );
+            mPagerView.setCurrentItem(tab.getPosition());
         }
 
         @Override
@@ -118,15 +127,15 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     @Override
     public void setTabData(List<Tab> tabs) {
         if (tabs == null || tabs.isEmpty()) {
-            mTabView.setVisibility( View.GONE );
+            mTabView.setVisibility(View.GONE);
             return;
         }
-        mAdapter.setTabs( tabs );
-        mTabView.setVisibility( View.VISIBLE );
-        mTabView.setTabMode( TabLayout.MODE_SCROLLABLE );
+        mAdapter.setTabs(tabs);
+        mTabView.setVisibility(View.VISIBLE);
+        mTabView.setTabMode(TabLayout.MODE_SCROLLABLE);
         for (Tab type : tabs) {
-            String tabText = LanguageUtil.chooseTest( type.getTab(), type.getEnTab() );
-            mTabView.addTab( mTabView.newTab().setText( tabText ) );
+            String tabText = LanguageUtil.chooseTest(type.getTab(), type.getEnTab());
+            mTabView.addTab(mTabView.newTab().setText(tabText));
         }
         mAdapter.notifyDataSetChanged();
     }
@@ -135,10 +144,10 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ency_search:
-                EncyclopediaSearchActivity.startActivity( getContext() );
+                EncyclopediaSearchActivity.startActivity(getContext());
                 break;
             case R.id.ency_scan:
-                DistinguishActivity.startActivity( getContext() );
+                DistinguishActivity.startActivity(getContext());
                 break;
         }
     }
@@ -146,6 +155,6 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LocalBroadcastUtil.unregisterReceiver( getContext(), receiver );
+        LocalBroadcastUtil.unregisterReceiver(getContext(), receiver);
     }
 }

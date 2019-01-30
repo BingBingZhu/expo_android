@@ -3,7 +3,6 @@ package com.expo.module.online;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -14,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.StatusBarUtils;
@@ -22,11 +22,11 @@ import com.expo.contract.OnlineHomeContract;
 import com.expo.entity.TouristType;
 import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.VRDetailActivity;
+import com.expo.module.online.detail.VRImageActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.AppBarView;
 import com.expo.widget.MyScrollView;
-import com.expo.widget.decorations.RecyckeVeiwFooter;
 import com.expo.widget.decorations.RecycleViewDivider;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -91,8 +91,8 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     }
 
     @OnClick({R.id.online_expo_exchange, R.id.online_expo_item_title_scene, R.id.online_expo_item_title_culture, R.id.online_expo_item_title_guide, R.id.title_back})
-    public void onClick(View v){
-        switch (v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.online_expo_exchange:     // 换一换
                 mRandomVrs.clear();
                 mRandomVrs.addAll(extractRandom(mCultureVrs));
@@ -143,13 +143,13 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
     public void loadLiveDataRes(List<VrInfo> liveVrs) {     // 世园实景
         if (liveVrs.size() > 0) {
             for (int i = 0; i < 2; i++) {
-                if (liveVrs.size() < 3){
+                if (liveVrs.size() < 3) {
                     liveVrs.add(liveVrs.get(0));
                 }
             }
         }
         mBanner.setIndicatorVisible(false);
-        mBanner.setBannerPageClickListener((view, position) -> VRDetailActivity.startActivity(getContext(), String.valueOf(liveVrs.get(position).getId()), true));
+        mBanner.setBannerPageClickListener((view, position) -> goVrInfo(liveVrs.get(position)));
         mBanner.addPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -176,15 +176,15 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
             protected void convert(ViewHolder holder, VrInfo vr, int position) {
                 holder.<SimpleDraweeView>getView(R.id.item_online_culture_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
                 holder.<TextView>getView(R.id.item_online_culture_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
-                holder.<TextViewDrawable>getView(R.id.item_online_culture_scans).setText(vr.getViewCount()+"次");
-                holder.setOnClickListener(R.id.item_online_culture_root, v -> VRDetailActivity.startActivity(getContext(), String.valueOf(vr.getId()), true));
+                holder.<TextViewDrawable>getView(R.id.item_online_culture_scans).setText(vr.getViewCount() + "次");
+                holder.setOnClickListener(R.id.item_online_culture_root, v -> goVrInfo(vr));
             }
 
 
         };
         int vSpace = (int) getResources().getDimension(R.dimen.dms_20);
         int leftRight = (int) getResources().getDimension(R.dimen.dms_8);
-        mRvCulture.addItemDecoration(new SpaceDecoration( leftRight, vSpace ));
+        mRvCulture.addItemDecoration(new SpaceDecoration(leftRight, vSpace));
         mRvCulture.setAdapter(mAdapterCulture);
     }
 
@@ -201,15 +201,15 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
                     holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setImageURI(Constants.URL.FILE_BASE_URL + tourist.getPicSmallUrl());
                 holder.<TextView>getView(R.id.item_online_guide_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
                 holder.<TextView>getView(R.id.item_online_guide_content).setText(LanguageUtil.chooseTest(vr.getRemark(), vr.getRemarkEn()));
-                holder.<TextViewDrawable>getView(R.id.item_online_guide_scans).setText(vr.getViewCount()+"次");
-                holder.<TextViewDrawable>getView(R.id.item_online_guide_time).setText(vr.getExtAttr()+"分钟");
-                holder.setOnClickListener(R.id.item_online_guide_root, v -> VRDetailActivity.startActivity(getContext(), String.valueOf(vr.getId()), true));
+                holder.<TextViewDrawable>getView(R.id.item_online_guide_scans).setText(vr.getViewCount() + "次");
+                holder.<TextViewDrawable>getView(R.id.item_online_guide_time).setText(vr.getExtAttr() + "分钟");
+                holder.setOnClickListener(R.id.item_online_guide_root, v -> goVrInfo(vr));
             }
         };
         int leftRight = (int) getResources().getDimension(R.dimen.dms_16);
         mRvGuide.addItemDecoration(new SpaceDecoration(leftRight, 0, leftRight, 0, 0));
-        mRvGuide.addItemDecoration( new RecycleViewDivider(
-                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor( R.color.white_f4 ) ) );
+        mRvGuide.addItemDecoration(new RecycleViewDivider(
+                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor(R.color.white_f4)));
         mRvGuide.setAdapter(mAdapterGuide);
     }
 
@@ -244,36 +244,45 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
 
     /**
      * 抽取随机元素
-     * @param vrInfos   总集合
-     * @return  抽取后的集合
+     *
+     * @param vrInfos 总集合
+     * @return 抽取后的集合
      */
-    private List<VrInfo> extractRandom(List<VrInfo> vrInfos){
+    private List<VrInfo> extractRandom(List<VrInfo> vrInfos) {
         int n = 4;
         List<VrInfo> listNew = new ArrayList();
-        if(vrInfos.size() <= n){
+        if (vrInfos.size() <= n) {
             listNew.addAll(vrInfos);
-        }else if(vrInfos.size() > n && vrInfos.size() < n*2){
+        } else if (vrInfos.size() > n && vrInfos.size() < n * 2) {
             listRepetitionFlag.clear();
-            while(listRepetitionFlag.size() < n){
+            while (listRepetitionFlag.size() < n) {
                 int random = (int) (Math.random() * vrInfos.size());
                 if (!listRepetitionFlag.contains(random)) {
                     listRepetitionFlag.add(random);
                     listNew.add(vrInfos.get(random));
                 }
             }
-        }else{
-            while(listRepetitionFlag.size() < n*2){
+        } else {
+            while (listRepetitionFlag.size() < n * 2) {
                 int random = (int) (Math.random() * vrInfos.size());
                 if (!listRepetitionFlag.contains(random)) {
                     listRepetitionFlag.add(random);
                     listNew.add(vrInfos.get(random));
                 }
             }
-            for (int i = 0 ; i < 4 ; i ++ ){
+            for (int i = 0; i < 4; i++) {
                 listRepetitionFlag.remove(0);
             }
         }
         return listNew;
+    }
+
+    private void goVrInfo(VrInfo vrInfo) {
+        if (StringUtils.equals(vrInfo.getType(), Constants.VrType.VR_TYPE_IMG)) {
+            VRImageActivity.startActivity(this, vrInfo.getId());
+        } else if (StringUtils.equals(vrInfo.getType(), Constants.VrType.VR_TYPE_VIDEO)) {
+            VRDetailActivity.startActivity(this, vrInfo.getId());
+        }
     }
 
     public static class BannerViewHolder implements LaminatedViewHolder<VrInfo> {

@@ -8,8 +8,13 @@ import android.view.View;
 import com.expo.R;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.StatusBarUtils;
+import com.expo.contract.SceneContract;
+import com.expo.contract.ScenicContract;
+import com.expo.entity.VenuesType;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -17,7 +22,7 @@ import butterknife.OnClick;
 /*
  * 景点页面
  */
-public class ScenicFragment extends BaseFragment {
+public class ScenicFragment extends BaseFragment<ScenicContract.Presenter> implements ScenicContract.View {
 
     @BindView(R.id.top_view)
     View mTopView;
@@ -38,7 +43,8 @@ public class ScenicFragment extends BaseFragment {
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mTopView.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
-        mAdapter = new ScenicTabPagerAdapter(getFragmentManager());
+        List<VenuesType> list = mPresenter.getTabs();
+        mAdapter = new ScenicTabPagerAdapter(getFragmentManager(), list);
         mPagerView.setAdapter(mAdapter);
 
         onClickMap(null);
@@ -61,7 +67,7 @@ public class ScenicFragment extends BaseFragment {
 
     @Override
     protected boolean hasPresenter() {
-        return false;
+        return true;
     }
 
 

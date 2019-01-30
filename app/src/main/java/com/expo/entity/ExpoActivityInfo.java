@@ -160,7 +160,7 @@ public class ExpoActivityInfo {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
-        setEndTime(TimeUtils.string2Millis(endDate, new SimpleDateFormat("yyyy-MM")));
+        setEndTime(TimeUtils.string2Millis(endDate, new SimpleDateFormat("yyyy-MM-dd")));
     }
 
     public int getId() {
@@ -257,7 +257,7 @@ public class ExpoActivityInfo {
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
-        setStartTime(TimeUtils.string2Millis(startDate, new SimpleDateFormat("yyyy-MM")));
+        setStartTime(TimeUtils.string2Millis(startDate, new SimpleDateFormat("yyyy-MM-dd")));
     }
 
     public String getTimes() {
@@ -265,20 +265,38 @@ public class ExpoActivityInfo {
     }
 
     public void setTimes(String times) {
-        this.times = times;
         String[] timeArray = times.split("/");
         int interval = 0;
         for (int i = 0; i < timeArray.length; i++) {
-            String start = timeArray[i].split("-")[0];
-            Long time = TimeUtils.string2Millis(start, new SimpleDateFormat("mm:ss"));
-            if (time <= Constants.TimeType.MORNING) {
-                interval = interval | 1 << 0;
-            } else if (time <= Constants.TimeType.AFTERNOON) {
-                interval = interval | 1 << 1;
-            } else {
-                interval = interval | 1 << 2;
+            String start = timeArray[i].split("-")[0].replace(" ", "");
+            String end = timeArray[i].split("-")[1].replace(" ", "");
+            if (start.length() > 5) {
+                start = start.substring(0, 5);
+            }
+            if (end.length() > 5) {
+                end = end.substring(0, 5);
+            }
+            timeArray[i] = start + " - " + end;
+            Long stime = Long.valueOf(start.split(":")[0]) * 3600 * 1000 + Long.valueOf(start.split(":")[1]) * 60 * 1000;
+            Long etime = Long.valueOf(end.split(":")[0]) * 3600 * 1000 + Long.valueOf(end.split(":")[1]) * 60 * 1000;
+            if (stime < Constants.TimeType.MORNING) {
+                interval = interval | (1 << 0);
+            }
+            if (!(stime >= Constants.TimeType.AFTERNOON || etime <= Constants.TimeType.MORNING)) {
+                interval = interval | (1 << 1);
+            }
+            if (etime > Constants.TimeType.AFTERNOON) {
+                interval = interval | (1 << 2);
             }
         }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < timeArray.length; i++) {
+            if (i != 0) {
+                sb.append("/");
+            }
+            sb.append(timeArray[i]);
+        }
+        this.times = sb.toString();
         setTimeInterval(interval);
     }
 

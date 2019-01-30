@@ -142,50 +142,6 @@ url (string, optional): 资源地址
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(id);
-        }
-        dest.writeString(caption);
-        dest.writeString(captionEn);
-        dest.writeString(topKind);
-        dest.writeString(attrIds);
-        dest.writeString(type);
-        dest.writeString(extAttr);
-        dest.writeString(linkWikiId);
-        dest.writeString(linkPanResId);
-        dest.writeString(remark);
-        dest.writeString(remarkEn);
-        dest.writeString(pic);
-        dest.writeString(lon);
-        dest.writeString(lat);
-        dest.writeString(url);
-        dest.writeString(createTime);
-        dest.writeString(updateTime);
-        if (isRecommended == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(isRecommended);
-        }
-        if (recommendedIdx == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(recommendedIdx);
-        }
-        dest.writeLong(viewCount);
-    }
-
     public Long getId() {
         return id;
     }
@@ -346,5 +302,49 @@ url (string, optional): 资源地址
 
     public void setViewCount(long viewCount) {
         this.viewCount = viewCount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        dest.writeString(caption);
+        dest.writeString(captionEn);
+        dest.writeString(topKind);
+        dest.writeString(attrIds);
+        dest.writeString(type);
+        dest.writeString(extAttr);
+        dest.writeString(linkWikiId);
+        dest.writeString(linkPanResId);
+        dest.writeString(remark);
+        dest.writeString(remarkEn);
+        dest.writeString(pic);
+        dest.writeString(lon);
+        dest.writeString(lat);
+        dest.writeString(url);
+        dest.writeString(createTime);
+        dest.writeString(updateTime);
+        if (isRecommended == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(isRecommended);
+        }
+        if (recommendedIdx == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(recommendedIdx);
+        }
+        dest.writeLong(viewCount);
     }
 }

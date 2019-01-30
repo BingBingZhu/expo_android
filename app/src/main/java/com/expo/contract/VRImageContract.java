@@ -14,7 +14,7 @@ public interface VRImageContract {
             super(view);
         }
 
-        public abstract void loadVrRecommend(VrInfo vrInfo);
+        public abstract void loadVrRecommend(Long id);
 
     }
 
