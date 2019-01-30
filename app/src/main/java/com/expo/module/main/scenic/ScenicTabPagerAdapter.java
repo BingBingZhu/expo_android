@@ -35,11 +35,13 @@ public class ScenicTabPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<VenuesType> getTabType(boolean showInMap) {
         List<VenuesType> list = new ArrayList<>();
-        for (int i = 0; i < mList.size(); i++) {
-            if (showInMap && StringUtils.equals("1", mList.get(i).getShowInMap())) {
-                list.add(mList.get(i));
-            } else if (!showInMap && StringUtils.equals("1", mList.get(i).getShowInScenicspot())) {
-                list.add(mList.get(i));
+        if (mList != null) {
+            for (int i = 0; i < mList.size(); i++) {
+                if (showInMap && StringUtils.equals("1", mList.get(i).getShowInMap())) {
+                    list.add(mList.get(i));
+                } else if (!showInMap && StringUtils.equals("1", mList.get(i).getShowInScenicspot())) {
+                    list.add(mList.get(i));
+                }
             }
         }
         return list;

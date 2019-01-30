@@ -105,7 +105,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         mUrl = mUrl + (mVenue == null ? "&data_type=0" : "&data_type=1");
         mUrl = mUrl + (schedule == null ? "&ordertype=0" : "&ordertype=1");
         loadUrl(mUrl);
-        mShareUtil = new ShareUtil(this);
+        mShareUtil = new ShareUtil();
     }
 
     public void initTitleRightTextView() {
@@ -119,7 +119,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
                     LanguageUtil.chooseTest(mEncyclopedias.remark, mEncyclopedias.remarkEn),
                     CommUtils.getFullUrl(mEncyclopedias.picUrl),
                     mUrl + "&data_type=0",
-                    mPlatformActionListener, false);
+                    mPlatformActionListener);
 //            mEncyclopedias
 //            mShareUtil.setTitle(LanguageUtil.chooseTest(mEncyclopedias.caption, mEncyclopedias.captionEn));
 //            mShareUtil.setImageUrl(CommUtils.getFullUrl(mEncyclopedias.picUrl));

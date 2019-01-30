@@ -105,7 +105,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         mX5View.addJavascriptInterface(new WebActivity.JsHook(), "hook");
         mX5View.addJavascriptInterface(new JsMethod(this, mX5View), "androidFunction");
         loadUrl(mUrl);
-        mShareUtil = new ShareUtil(this);
+        mShareUtil = new ShareUtil();
     }
 
     private void loadUrl(String url) {
@@ -232,7 +232,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             shareView.setOnClickListener(v -> {
                 Bitmap bitmap = captureScreen(WebActivity.this);
                 String filePath = FileUtils.saveScreenShot(bitmap);
-                ShareUtil.showShare(getContext(), null, null, filePath, null, null, true);
+                ShareUtil.showShare(getContext(), null, null, filePath, null, null);
             });
         }else{
             ((AppBarView) getTitleView()).getRightView().setVisibility(View.VISIBLE);
