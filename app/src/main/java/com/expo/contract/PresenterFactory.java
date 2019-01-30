@@ -2,6 +2,7 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.contract.presenter.ArPresenterImpl;
 import com.expo.contract.presenter.BadgePresenterImpl;
 import com.expo.contract.presenter.BindPhonePresenterImpl;
 import com.expo.contract.presenter.CircumTrafficPresenterImpl;
@@ -147,6 +148,8 @@ public class PresenterFactory {
             return new ParkMapFragmentPresenterImpl((ParkMapFragmentContract.View) view);
         } else if (view instanceof ScenicContract.View) {
             return new ScenicPresenterImpl((ScenicContract.View) view);
+        } else if (view instanceof ArContract.View) {
+            return new ArPresenterImpl((ArContract.View) view);
         }
         throw new UnsupportedOperationException();
     }

@@ -35,7 +35,7 @@ import com.expo.map.LocationManager;
 import com.expo.module.contacts.ContactsActivity;
 import com.expo.module.login.LoginActivity;
 import com.expo.module.map.NavigationActivity;
-import com.expo.module.share.ShareUtil;
+import com.expo.utils.ShareUtil;
 import com.expo.pay.JsMethod;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
@@ -141,6 +141,9 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             super.onProgressChanged(webView, i);
             if (i == 100) {
                 mProgressView.setVisibility(View.GONE);
+                if (mUrl.contains("m.dianping.com")) {
+                    mX5View.loadUrl("javascript:function f() {var ds = document.getElementsByClassName('J_downloadlayer');if (ds.length > 0) {ds[0].remove();}ds = document.getElementsByTagName('header');if (ds.length > 0) {ds[0].remove();}ds = document.getElementsByClassName('app-sticker');if (ds.length > 0) {ds[0].remove();}ds = document.getElementsByClassName('shop-details');if (ds.length > 0) {ds[0].removeAttribute('style');}}f();");
+                }
             } else {
                 mProgressView.setVisibility(View.VISIBLE);
                 mProgressView.setProgress(i);
@@ -246,6 +249,31 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
      * JavascriptInterface
      */
     public class JsHook {
+
+//        @JavascriptInterface
+//        public void weixin() {
+//            share(Wechat.NAME);
+//        }
+//
+//        @JavascriptInterface
+//        public void qq() {
+//            share(QQ.NAME);
+//        }
+//
+//        @JavascriptInterface
+//        public void weibo() {
+//            share(SinaWeibo.NAME);
+//        }
+//
+//        @JavascriptInterface
+//        /**
+//         * 分享截图二维码
+//         */
+//        public void shareQRCode() {
+//            Bitmap bitmap = captureScreen(WebActivity.this);
+//            String filePath = FileUtils.saveScreenShot(bitmap);
+//            ShareUtil.showShare(getContext(), null, null, filePath, null, null);
+//        }
 
         @JavascriptInterface
         /**
@@ -410,10 +438,11 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     }
 
     private void share(String name) {
-        Bitmap bitmap = captureScreen( WebActivity.this );
-        String filePath = FileUtils.saveScreenShot( bitmap );
-        mShareUtil.setImagePath( filePath );
-        mShareUtil.doShare( name, filePath );
+        Bitmap bitmap = captureScreen(WebActivity.this);
+        String filePath = FileUtils.saveScreenShot(bitmap);
+        mShareUtil.setImagePath(filePath);
+        mShareUtil.setPlatformName(name);
+        mShareUtil.share();
     }
 
     /**
