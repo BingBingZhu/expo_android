@@ -126,6 +126,6 @@
         android:id="@+id/online_expo_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:backSrc="@mipmap/ico_white_back"
+        app:backSrc="@mipmap/ico_black_back"
         app:title="网上世园" />
 </FrameLayout>

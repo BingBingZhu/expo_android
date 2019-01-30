@@ -16,7 +16,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@mipmap/ico_circum_home_top"/>
+                android:src="@mipmap/ico_cirum_traffic_top"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,18 +53,11 @@
                 app:spanCount="2" />
             <TextView
                 android:id="@+id/circum_traffic_navi_parking_lot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="@dimen/dms_60"
                 android:layout_marginBottom="@dimen/dms_40"
                 android:layout_marginLeft="@dimen/dms_30"
                 android:layout_marginRight="@dimen/dms_30"
-                android:paddingTop="@dimen/dms_30"
-                android:paddingBottom="@dimen/dms_30"
-                android:textColor="@color/selector_login_correlation_text_color"
-                android:background="@drawable/selector_login_correlation_btn_bg"
-                android:textSize="@dimen/font_34"
+                style="@style/theme_btn"
                 android:text="开始导航"/>
 
             <View
@@ -108,20 +101,12 @@
                 app:spanCount="2" />
             <TextView
                 android:id="@+id/circum_traffic_navi_bus_station"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="@dimen/dms_60"
                 android:layout_marginBottom="@dimen/dms_40"
                 android:layout_marginLeft="@dimen/dms_30"
                 android:layout_marginRight="@dimen/dms_30"
-                android:paddingTop="@dimen/dms_30"
-                android:paddingBottom="@dimen/dms_30"
-                android:textColor="@color/selector_login_correlation_text_color"
-                android:background="@drawable/selector_login_correlation_btn_bg"
-                android:textSize="@dimen/font_34"
-                android:text="开始导航"/>
-
+                android:text="开始导航"
+                style="@style/theme_btn" />
         </LinearLayout>
     </com.expo.widget.MyScrollView>
 </LinearLayout>

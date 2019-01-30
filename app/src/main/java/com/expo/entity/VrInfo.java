@@ -2,6 +2,7 @@ package com.expo.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
@@ -234,6 +235,8 @@ url (string, optional): 资源地址
     }
 
     public String getExtAttr() {
+        if (null == extAttr || TextUtils.isEmpty(extAttr))
+            extAttr = "0";
         return extAttr;
     }
 

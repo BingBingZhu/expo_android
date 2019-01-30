@@ -80,6 +80,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mTitle.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
         mTitle.setBackgroundColor(Color.TRANSPARENT);
         mTitle.setTitleColor(Color.TRANSPARENT);
+        mTitle.setLineBackgroundColor(Color.TRANSPARENT);
         mTourVrs = new ArrayList<>();
         mRvCulture.setNestedScrollingEnabled(false);
         mRvGuide.setNestedScrollingEnabled(false);
@@ -304,11 +305,14 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         @Override
         public void onScroll(int scrollY) {
             int backgroundColor = Color.argb((int) Math.min(0xff,
-                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 2, 205, 155);
-            int textColor = Color.argb((int) Math.min(0xff,
                     Math.max(Float.valueOf(scrollY), 0.0f) / 2), 255, 255, 255);
+            int textColor = Color.argb((int) Math.min(0xff,
+                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 51, 51, 51);
+//            int lineColor = Color.argb((int) Math.min(0xff,
+//                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 245, 245, 245);
             mTitle.setBackgroundColor(backgroundColor);
             mTitle.setTitleColor(textColor);
+//            mTitle.setLineBackgroundColor(lineColor);
         }
     };
 }
