@@ -21,6 +21,7 @@ public class AppBarView extends FrameLayout {
     private ImageView mBackView;
     private TextView mTitleView;
     private View mRightView;
+    private View mLine;
     private OnClickListener mClickListener;
     private boolean mShowBackButton;
     private Drawable mBackImage;
@@ -74,6 +75,12 @@ public class AppBarView extends FrameLayout {
         mTitleView.setMaxWidth( (int) getContext().getResources().getDimension( R.dimen.dms_390 ) );
         addView( mTitleView, lp );
         setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
+
+        mLine = new View(getContext());
+        lp = new LayoutParams( LayoutParams.MATCH_PARENT, (int) getContext().getResources().getDimension( R.dimen.dms_2 ) );
+        lp.gravity = Gravity.BOTTOM;
+        mLine.setBackgroundColor(getResources().getColor(R.color.white_f5));
+        addView( mLine, lp );
     }
 
     @Override

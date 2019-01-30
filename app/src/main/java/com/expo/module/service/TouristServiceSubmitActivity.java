@@ -4,10 +4,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +34,9 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SeekHelpContract;
 import com.expo.entity.User;
-import com.expo.entity.Venue;
 import com.expo.entity.VisitorService;
 import com.expo.map.LocationManager;
 import com.expo.module.camera.CameraActivity;
-import com.expo.module.map.NavigationActivity;
 import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
@@ -56,22 +55,19 @@ import butterknife.OnClick;
 /*
  * 游客求助，3:寻物启事、5:医疗救助、6:人员走失、7:治安举报  通用页面
  */
-public class SeekHelpActivity1 extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View, View.OnClickListener {
+public class TouristServiceSubmitActivity extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View, View.OnClickListener {
 
     @BindView(R.id.seek_help_image_selector)
     RecyclerView mRecycler;
     @BindView(R.id.seek_help_text3)
     EditText mEtEdit;
-    @BindView(R.id.seek_help_phone)
-    View mPhone;
-    @BindView(R.id.seek_help_speech)
-    View mSpeech;
     @BindView(R.id.seek_help_text2)
     TextView mTvKindly;
     @BindView(R.id.seek_help_text4)
     TextViewDrawable mTvLocationInfo;
-    @BindView(R.id.rule_view)
-    View mRuleView;
+    @BindView(R.id.seek_help_scan_num)
+    TextView mTvScanNum;
+
 
     ArrayList<String> mImageList;
     SeekHelpAdapter mAdapter;
@@ -120,37 +116,49 @@ public class SeekHelpActivity1 extends BaseActivity<SeekHelpContract.Presenter> 
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_seek_help;
+        return R.layout.activity_tourist_service_submit;
     }
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle( "信息提交" );
-        if (getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 ) != 0) {
-            mPhone.setVisibility( View.GONE );
-        }
         switch (getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 )) {
-            case 5:
-                mServiceType = "1";
-                mTvKindly.setText( R.string.kindly_reminder_medical );
-                break;
             case 7:
                 mServiceType = "2";
-                mTvKindly.setText( R.string.kindly_reminder_report );
+                mTvKindly.setText("您可以上传图片、文字作为工作人员处理的重要凭证。");
                 break;
             case 3:
                 mServiceType = "5";
-                mTvKindly.setText( R.string.kindly_reminder_look_for );
+                mTvKindly.setText("您可以上传图片、文字等信息，作为帮助找寻失物的重要参考。");
                 break;
             case 6:
                 mServiceType = "3";
-                mTvKindly.setText( R.string.kindly_reminder_lost );
+                mTvKindly.setText( "您可以上传图片、文字作为找人的重要参考。" );
                 break;
         }
         initRecord();
         initRecyclerView();
-
+        initScanNum();
         mIsLocation = true;
+    }
+
+    private void initScanNum() {
+        mEtEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mTvScanNum.setText(s.length()+"/300");
+            }
+        });
     }
 
     @Override
@@ -178,7 +186,7 @@ public class SeekHelpActivity1 extends BaseActivity<SeekHelpContract.Presenter> 
     private void initRecyclerView() {
         mAdapter = new SeekHelpAdapter( this );
         mRecycler.setLayoutManager( new GridLayoutManager( this, 4 ) );
-        mRecycler.addItemDecoration( new SpaceDecoration( (int) getResources().getDimension( R.dimen.dms_10 ) ) );
+        mRecycler.addItemDecoration( new SpaceDecoration( (int) getResources().getDimension( R.dimen.dms_14 ) ) );
         mRecycler.setAdapter( mAdapter );
 
         mImageList = new ArrayList<>();
@@ -189,7 +197,7 @@ public class SeekHelpActivity1 extends BaseActivity<SeekHelpContract.Presenter> 
     }
 
     public static void startActivity(Context context, int position){
-        Intent intent = new Intent(context, SeekHelpActivity1.class);
+        Intent intent = new Intent(context, TouristServiceSubmitActivity.class);
         intent.putExtra(Constants.EXTRAS.EXTRAS, position);
         context.startActivity(intent);
     }
@@ -246,24 +254,6 @@ public class SeekHelpActivity1 extends BaseActivity<SeekHelpContract.Presenter> 
         }
     }
 
-    @OnClick(R.id.seek_help_navigation)
-    public void navigation(View view) {
-        if (isNotLocation()) {
-            ToastHelper.showShort( R.string.trying_to_locate );
-            return;
-        }
-        if (mPresenter.checkInPark( mLocation.getLatitude(), mLocation.getLongitude() )) {
-            Venue venue = mPresenter.getNearbyServiceCenter( mLocation );
-            if (venue != null) {
-                NavigationActivity.startActivity( getContext(), venue );
-            } else {
-                ToastHelper.showShort( R.string.no_service_agencies );
-            }
-        } else {
-            ToastHelper.showShort( R.string.unable_to_provide_service );
-        }
-    }
-
     private boolean isNotLocation(){
         return null == mLocation || mLocation.getLatitude() == 0;
     }
@@ -275,13 +265,6 @@ public class SeekHelpActivity1 extends BaseActivity<SeekHelpContract.Presenter> 
             return;
         }
         LocationDescribeActivity.startActivityForResult( this, mLocation.getLatitude(), mLocation.getLongitude(), mPoiId, mCoordinateAssist );
-    }
-
-    @OnClick(R.id.seek_help_phone)
-    public void phone(View view) {
-        Intent intent = new Intent( Intent.ACTION_DIAL, Uri.parse( "tel:" + "400 818 6666" ) );
-        intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
-        startActivity( intent );
     }
 
 
@@ -296,7 +279,7 @@ public class SeekHelpActivity1 extends BaseActivity<SeekHelpContract.Presenter> 
                     ToastHelper.showShort( getString( R.string.max_images, 3 ) );
                     break;
                 }
-                startActivityForResult( new Intent( SeekHelpActivity1.this, CameraActivity.class ), Constants.RequestCode.REQ_TO_CAMERA );
+                startActivityForResult( new Intent( TouristServiceSubmitActivity.this, CameraActivity.class ), Constants.RequestCode.REQ_TO_CAMERA );
                 break;
             case R.id.image_album:
                 goImageSelector();
@@ -351,7 +334,7 @@ public class SeekHelpActivity1 extends BaseActivity<SeekHelpContract.Presenter> 
                     .setMaxSelectCount( Constants.Config.IMAGE_MAX_COUNT - count ) // 图片的最大选择数量，小于等于0时，不限数量。
                     .setSelected( mImageList ) // 把已选的图片传入默认选中。
                     .setViewImage( true ) //是否点击放大图片查看,，默认为true
-                    .start( SeekHelpActivity1.this, Constants.RequestCode.REQUEST111 ); // 打开相册
+                    .start( TouristServiceSubmitActivity.this, Constants.RequestCode.REQUEST111 ); // 打开相册
     }
 
     private int getCameraImageCount() {

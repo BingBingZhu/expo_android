@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.expo.R;
@@ -57,7 +56,7 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
             case 5:     // 医疗救助
             case 6:     // 人员走失
             case 7:     // 治安举报
-                SeekHelpActivity2.startActivity(getContext(), title, position);
+                TouristServiceSecondActivity.startActivity(getContext(), title, position);
 
                 break;
         }

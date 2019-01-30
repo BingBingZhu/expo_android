@@ -165,11 +165,11 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      * @param stringId layoutId为0或者1 有效
      */
     public void setTitle(int layoutId, int stringId) {
-        mRootView.setTitle(layoutId, getResources().getString(stringId));
+        mRootView.setTitle(1, getResources().getString(stringId));
     }
 
     public void setTitle(int layoutId, String title) {
-        mRootView.setTitle(layoutId, title);
+        mRootView.setTitle(1, title);
     }
 
     public void setTitle(String title) {

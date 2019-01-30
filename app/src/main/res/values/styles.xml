@@ -180,6 +180,17 @@
         <item name="android:layout_marginTop">@dimen/dms_20</item>
     </style>
 
+    <style name="theme_btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_login_correlation_btn_bg</item>
+        <item name="android:paddingTop">@dimen/dms_30</item>
+        <item name="android:paddingBottom">@dimen/dms_30</item>
+        <item name="android:textColor">@color/selector_login_correlation_text_color</item>
+        <item name="android:textSize">@dimen/font_30</item>
+    </style>
+
     <style name="item_user_info">
         <item name="android:layout_height">@dimen/dms_100</item>
         <item name="android:layout_width">match_parent</item>

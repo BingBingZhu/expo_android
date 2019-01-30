@@ -1,58 +1,28 @@
 package com.expo.module.service;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amap.api.maps.AMap;
-import com.baidu.speech.EventListener;
-import com.baidu.speech.EventManager;
-import com.baidu.speech.EventManagerFactory;
-import com.baidu.speech.asr.SpeechConstant;
-import com.donkingliang.imageselector.utils.ImageSelector;
-import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.BaseAdapterItemClickListener;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.CheckUtils;
-import com.expo.base.utils.GpsUtil;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.SeekHelpContract;
 import com.expo.entity.User;
 import com.expo.entity.Venue;
 import com.expo.entity.VisitorService;
-import com.expo.map.LocationManager;
-import com.expo.module.camera.CameraActivity;
 import com.expo.module.map.NavigationActivity;
-import com.expo.module.service.adapter.SeekHelpAdapter;
 import com.expo.services.TrackRecordService;
 import com.expo.utils.Constants;
-import com.expo.widget.decorations.SpaceDecoration;
-import com.hedan.textdrawablelibrary.TextViewDrawable;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.expo.widget.CustomDefaultDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -64,7 +34,7 @@ import butterknife.OnClick;
 6:     // 人员走失
 7:     // 治安举报
  */
-public class SeekHelpActivity2 extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View {
+public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.Presenter> implements SeekHelpContract.View {
 
     @BindView(R.id.banner)
     ImageView mImgBanner;
@@ -87,7 +57,7 @@ public class SeekHelpActivity2 extends BaseActivity<SeekHelpContract.Presenter> 
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_seek_help2;
+        return R.layout.activity_tourist_service_second;
     }
 
     @Override
@@ -107,7 +77,7 @@ public class SeekHelpActivity2 extends BaseActivity<SeekHelpContract.Presenter> 
     }
 
     public static void startActivity(Context context, String title, int position){
-        Intent intent = new Intent(context, SeekHelpActivity2.class);
+        Intent intent = new Intent(context, TouristServiceSecondActivity.class);
         intent.putExtra(Constants.EXTRAS.EXTRA_TITLE, title);
         intent.putExtra(Constants.EXTRAS.EXTRAS, position);
         context.startActivity(intent);
@@ -116,13 +86,78 @@ public class SeekHelpActivity2 extends BaseActivity<SeekHelpContract.Presenter> 
     @OnClick(R.id.seek_help_function)
     public void onClick(View view) {
         if (mTypePosition == 5){    // 医疗救助 定位发送
-            ToastHelper.showShort("Send location to service");
-//            ToastHelper.showShort( R.string.trying_to_locate );
+            if (TrackRecordService.getLocation() == null || TrackRecordService.getLocation().getLatitude() == 0) {
+                ToastHelper.showShort( R.string.trying_to_locate );
+                return;
+            }
+            if (mPresenter.checkInPark( TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude() )) {
+                CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+                dialog.setContent("是否因伤病较重，行动不便需要我们立即到您身边开展医疗救助？")
+                        .setOkText("是")
+                        .setOkTextColor(R.color.green_02cd9b)
+                        .setCancelText("否")
+                        .setOnCancelClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                VisitorService visitorService = initSubmitData();
+                                if (visitorService != null) {
+                                    mPresenter.addVisitorService( visitorService );
+                                }
+                                dialog.dismiss();
+                            }
+                        }).show();
+            } else {
+                ToastHelper.showShort( R.string.unable_to_provide_service );
+            }
         }else{  // 跳转页面   填写信息
-            SeekHelpActivity1.startActivity(getContext(), mTypePosition);
+            TouristServiceSubmitActivity.startActivity(getContext(), mTypePosition);
         }
-//            ToastHelper.showShort( R.string.unable_to_provide_service );
     }
+
+
+    private VisitorService initSubmitData() {
+//        if (CheckUtils.isEmtpy( mEtEdit.getText().toString(), R.string.check_string_empty_localtion_descriptiong, true )) {
+//            return null;
+//        }
+
+//        if (mIsLocation && mLocation == null)
+//            if (CheckUtils.isEmtpy( mCoordinateAssist, R.string.check_string_no_gps_empty_localtion, true ))
+//                return null;
+
+        VisitorService visitorService = new VisitorService();
+        User user = ExpoApp.getApplication().getUser();
+//        switch (mImageList.size()) {
+//            case 3:
+//                visitorService.setImgUrl3( mImageList.get( 2 ) );
+//            case 2:
+//                visitorService.setImgUrl2( mImageList.get( 1 ) );
+//            case 1:
+//                visitorService.setImgUrl1( mImageList.get( 0 ) );
+//        }
+        visitorService.setDisposeType( "1" );
+        visitorService.setState( "1" );
+        visitorService.setServiceType( "1" );
+//        visitorService.setCoordinateAssist( mCoordinateAssist );
+        visitorService.setCounttryCode( PrefsHelper.getString( Constants.Prefs.KEY_COUNTRY_CODE, "+86" ) );
+        visitorService.setGpsLatitude( String.valueOf( TrackRecordService.getLocation().getLatitude() ) );
+        visitorService.setGpsLongitude( String.valueOf( TrackRecordService.getLocation().getLongitude() ) );
+        visitorService.setPhone( user.getMobile() );
+//        visitorService.setSituation( mEtEdit.getText().toString() );
+        visitorService.setUserId( user.getUid() );
+        visitorService.setUserName( user.getNick() );
+        visitorService.setPlatform("1");
+        return visitorService;
+    }
+
+
+
+
+
+
+
+
+
+
 
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
@@ -157,8 +192,12 @@ public class SeekHelpActivity2 extends BaseActivity<SeekHelpContract.Presenter> 
 
     @Override
     public void complete() {
-        ToastHelper.showShort( getResources().getString( R.string.submit_success ) );
-        finish();
+        new CustomDefaultDialog(getContext())
+        .setContent("定位已上传，我们记录了您的定位信息，请您在原地等候")
+        .setOnlyOK()
+        .setOkText("好的")
+        .setCancelable(false)
+        .show();
     }
 
 
@@ -166,7 +205,6 @@ public class SeekHelpActivity2 extends BaseActivity<SeekHelpContract.Presenter> 
         int drawablePadding = (int) getResources().getDimension(R.dimen.dms_26);
         switch (mTypePosition) {
             case 5:     // 医疗救助
-//                mServiceType = "1";
                 mImgBanner.setImageResource(R.mipmap.ico_top_banner_medical);
                 mTv1.setText("轻伤治疗");
                 mTv2.setText("请您判断患者病情或伤势，如果患者可以行动，则请患者前往医疗服务站接受治疗");
@@ -178,7 +216,6 @@ public class SeekHelpActivity2 extends BaseActivity<SeekHelpContract.Presenter> 
                 mTvFunction.setCompoundDrawablePadding(drawablePadding);
                 break;
             case 7:     // 治安举报
-//                mServiceType = "2";
                 mImgBanner.setImageResource(R.mipmap.ico_top_banner_security);
                 mTv1.setText("温馨提示");
                 mTv2.setText("请立即寻求您周边的工作人员帮助");
@@ -188,7 +225,6 @@ public class SeekHelpActivity2 extends BaseActivity<SeekHelpContract.Presenter> 
                 mTvFunction.setText("信息填写");
                 break;
             case 3:     // 失物招领
-//                mServiceType = "5";
                 mImgBanner.setImageResource(R.mipmap.ico_top_banner_look_for_something);
                 mTv1.setText("信息提交");
                 mTv2.setText("您可以上传失物的图片、文字等信息，作为帮助找寻失物的参考。");
@@ -208,7 +244,6 @@ public class SeekHelpActivity2 extends BaseActivity<SeekHelpContract.Presenter> 
                 mTvFunction.setLayoutParams(param);
                 break;
             case 6:     // 人员走失
-//                mServiceType = "3";
                 mImgBanner.setImageResource(R.mipmap.ico_top_banner_look_for_people);
                 mTv1.setText("温馨提示");
                 mTv2.setText("请立即寻求您周边的工作人员帮助");
