@@ -57,6 +57,9 @@ url (string, optional): 资源地址
     @DatabaseField(columnName = "link_pan_res_id")
     @SerializedName("linkpanresid")
     private String linkPanResId;
+    @DatabaseField(columnName = "recommended_idx")
+    @SerializedName("recommendedidx")
+    private String recommendedIdx;
     @DatabaseField(columnName = "remark")
     @SerializedName("remark")
     private String remark;
@@ -98,6 +101,7 @@ url (string, optional): 资源地址
         extAttr = in.readString();
         linkWikiId = in.readString();
         linkPanResId = in.readString();
+        recommendedIdx = in.readString();
         remark = in.readString();
         remarkEn = in.readString();
         pic = in.readString();
@@ -136,6 +140,7 @@ url (string, optional): 资源地址
         dest.writeString(extAttr);
         dest.writeString(linkWikiId);
         dest.writeString(linkPanResId);
+        dest.writeString(recommendedIdx);
         dest.writeString(remark);
         dest.writeString(remarkEn);
         dest.writeString(pic);
@@ -216,6 +221,14 @@ url (string, optional): 资源地址
 
     public void setLinkPanResId(String linkPanResId) {
         this.linkPanResId = linkPanResId;
+    }
+
+    public String getRecommendedIdx() {
+        return recommendedIdx;
+    }
+
+    public void setRecommendedIdx(String recommendedIdx) {
+        this.recommendedIdx = recommendedIdx;
     }
 
     public String getRemark() {

@@ -15,6 +15,7 @@ import com.expo.entity.FootPrint;
 import com.expo.entity.Message;
 import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
+import com.expo.entity.Schedule;
 import com.expo.entity.Subject;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.TouristType;
@@ -100,7 +101,6 @@ public interface Constants {
         public static final String EXTRA_ENJOYS = "extra_enjoys";
         public static final String EXTRA_READ_COUNT = "extra_read_count";
         public static final String EXTRA_IS_START_LOCATION = "extra_is_start_location";
-        public static final String EXTRA_CAN_GO_OTHER = "extra_can_go_other";
         public static final String EXTRA_PANORAMA_TYPE = "extra_panorama_type";
         public static final String EXTRA_CIRCUN_TYPE = "extra_circun_type";
     }
@@ -158,7 +158,7 @@ public interface Constants {
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class, CustomRoute.class,
                 TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, VisitorService.class,
-                Contacts.class, VrInfo.class, VrLableInfo.class, Tuple.class, ExpoActivityInfo.class};
+                Contacts.class, VrInfo.class, VrLableInfo.class, Tuple.class, ExpoActivityInfo.class, Schedule.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }
@@ -208,7 +208,7 @@ public interface Constants {
      *
      */
     class TimeFormat {
-        public static final String TYPE_ALL = "yyyy-MM-dd hh:mm:ss";
+        public static final String TYPE_ALL = "yyyy-MM-dd HH:mm:ss";
         public static final String TYPE_SIMPLE = "yyyy-MM-dd";
         public static final String TYPE_YEAR = "yyyy";
     }
@@ -289,8 +289,17 @@ public interface Constants {
 
 
     class TimeType {
-        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
-        public static final int AFTERNOON = 14 * 3600 * 1000;//中午和下午的分割线
-        public static final int NIGHT = 19 * 3600 * 1000;//下午和晚上的分割线
+        //        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
+//        public static final int AFTERNOON = 14 * 3600 * 1000;//中午和下午的分割线
+//        public static final int NIGHT = 19 * 3600 * 1000;//下午和晚上的分割线
+        public static final int MORNING = 1 * 3600 * 1000;//上午和中午的分割线
+        public static final int AFTERNOON = 2 * 3600 * 1000;//中午和下午的分割线
+        public static final int NIGHT = 3 * 3600 * 1000;//下午和晚上的分割线
+    }
+
+    class VrType {
+        public static final String VR_TYPE_VIDEO = "0";//视频
+        public static final String VR_TYPE_IMG = "1";//图片
+        public static final String VR_TYPE_VR = "2";//vr
     }
 }

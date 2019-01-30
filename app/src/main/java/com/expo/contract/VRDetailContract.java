@@ -11,7 +11,7 @@ public interface VRDetailContract {
             super(view);
         }
 
-        public abstract VrInfo getVrInfo(String id);
+        public abstract VrInfo getVrInfo(Long id);
 
         public abstract void setPanResViews(Long id);
 

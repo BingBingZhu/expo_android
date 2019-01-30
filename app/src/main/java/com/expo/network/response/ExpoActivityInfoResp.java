@@ -7,6 +7,6 @@ import java.util.List;
 
 public class ExpoActivityInfoResp extends BaseResponse {
     public String Updatetime;
-    @SerializedName("objlist")
+    @SerializedName("Objlist")
     public List<ExpoActivityInfo> expoActivityInfos;
 }

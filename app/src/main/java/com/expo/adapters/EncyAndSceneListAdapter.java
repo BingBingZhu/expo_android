@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.expo.R;
+import com.expo.entity.CommonInfo;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -31,24 +32,24 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
         }
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from( mContext ).inflate( R.layout.layout_ency_item, parent, false );
-        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams( RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT );
-        view.setLayoutParams( lp );
-        return new ViewHolder( view );
+        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_ency_item, parent, false);
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
+        view.setLayoutParams(lp);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListItemData ency = mEncyList.get( position );
-        holder.img.setImageURI( Constants.URL.FILE_BASE_URL + ency.getPicUrl() );
-        holder.tvName.setText( LanguageUtil.chooseTest( ency.getCaption(), ency.getEnCaption() ) );
-        holder.tvRecommend.setVisibility( ency.getRecommend() == 1 ? View.VISIBLE : View.GONE );
-        holder.tvRemark.setText( LanguageUtil.chooseTest( ency.getRemark(), ency.getEnRemark() ) );
-        holder.root.setOnClickListener( v -> WebTemplateActivity.startActivity( mContext, ency.getId() ) );
+        ListItemData ency = mEncyList.get(position);
+        holder.img.setImageURI(Constants.URL.FILE_BASE_URL + ency.getPicUrl());
+        holder.tvName.setText(LanguageUtil.chooseTest(ency.getCaption(), ency.getEnCaption()));
+//        holder.tvRecommend.setVisibility(ency.getRecommend() == 1 ? View.VISIBLE : View.GONE);
+        holder.tvRecommend.setVisibility(View.GONE);
+        holder.tvRemark.setText(LanguageUtil.chooseTest(ency.getRemark(), ency.getEnRemark()));
+        holder.root.setOnClickListener(v -> WebTemplateActivity.startActivity(mContext, ency.getId()));
     }
 
     @Override
@@ -65,12 +66,12 @@ public class EncyAndSceneListAdapter extends RecyclerView.Adapter<EncyAndSceneLi
         private TextView tvRemark;
 
         public ViewHolder(View v) {
-            super( v );
-            root = v.findViewById( R.id.ency_item_root );
-            img = v.findViewById( R.id.ency_item_img );
-            tvName = v.findViewById( R.id.ency_item_name );
-            tvRecommend = v.findViewById( R.id.ency_item_recommend );
-            tvRemark = v.findViewById( R.id.ency_item_remark );
+            super(v);
+            root = v.findViewById(R.id.ency_item_root);
+            img = v.findViewById(R.id.ency_item_img);
+            tvName = v.findViewById(R.id.ency_item_name);
+            tvRecommend = v.findViewById(R.id.ency_item_recommend);
+            tvRemark = v.findViewById(R.id.ency_item_remark);
         }
     }
 }

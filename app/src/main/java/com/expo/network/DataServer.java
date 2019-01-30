@@ -15,6 +15,7 @@ import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RichTextRsp;
 import com.expo.network.response.RouteInfoResp;
+import com.expo.network.response.ScheduleResp;
 import com.expo.network.response.SocietyListResp;
 import com.expo.network.response.VenueResp;
 import com.expo.network.response.SubjectResp;
@@ -539,4 +540,14 @@ public interface DataServer {
     @POST("Terminal/GetBussinessCircleListByParams")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<CircumResp> getBussinessCircleListByParams(@Body RequestBody requestBody);
+
+    /**
+     * 获取全景标签资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetScheduleVenList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<ScheduleResp> getScheduleVenList(@Body RequestBody requestBody);
 }

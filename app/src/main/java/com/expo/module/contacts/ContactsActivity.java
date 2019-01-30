@@ -72,10 +72,14 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
         mMap = new HashMap<>();
         mData = new ArrayList<>();
 
+        mSelectCount = 0;
         for (int i = 0; ids != null && i < ids.length; i++) {
-            if (!StringUtils.isEmpty(ids[i]))
+            if (!StringUtils.isEmpty(ids[i])) {
                 mMap.put(ids[i] + "", null);
+                mSelectCount++;
+            }
         }
+        setConfirmText(--mSelectCount, mMaxCount);
 
         if (isSelect) {
             mTvOk.setVisibility(View.VISIBLE);

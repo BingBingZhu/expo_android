@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
@@ -163,6 +164,7 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
                     mSelectDateView = v;
                     mSelectDateView.setSelected(true);
                     selectDataView(null);
+                    mPresenter.loadActivityInfo(mSelectTime, 0);
                 });
             }
         });
@@ -181,34 +183,43 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
     private void initActivityRecycler() {
         mActivityShowList = new ArrayList<>();
         mRvActivityRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRvActivityRecycler.setAdapter(mActivityAdapter = new CommonAdapter(this, R.layout.item_expo_activity_activity, mActivityShowList) {
+        mRvActivityRecycler.setAdapter(mActivityAdapter = new CommonAdapter<ExpoActivityInfo>(this, R.layout.item_expo_activity_activity, mActivityShowList) {
             @Override
-            protected void convert(ViewHolder holder, Object o, int position) {
+            protected void convert(ViewHolder holder, ExpoActivityInfo o, int position) {
                 ExpoActivityInfo info = mActivityShowList.get(position);
                 Picasso.with(getContext()).load(CommUtils.getFullUrl("url")).into((ImageView) holder.getView(R.id.item_activity_img));
                 holder.setText(R.id.expo_activity_name, LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn()));
-                List<String> times = Arrays.asList(info.getTimes().split("/"));
-                for (int i = times.size() - 1; i >= 0; i--) {
-                    String start = times.get(i).split("-")[0];
-                    Long time = TimeUtils.string2Millis(start, new SimpleDateFormat("mm:ss"));
-                    if (mTimeType == 1 && time > Constants.TimeType.MORNING) {
-                        times.remove(i);
+                String[] times = info.getTimes().split("/");
+                for (int i = 0; i < times.length; i++) {
+                    String start = times[i].split("-")[0];
+                    String end = times[i].split("-")[1];
+                    Long stime = Long.valueOf(start.split(":")[0].replace(" ", "")) * 3600 * 1000 + Long.valueOf(start.split(":")[1].replace(" ", "")) * 60 * 1000;
+                    Long etime = Long.valueOf(end.split(":")[0].replace(" ", "")) * 3600 * 1000 + Long.valueOf(end.split(":")[1].replace(" ", "")) * 60 * 1000;
+
+                    if (mTimeType == 1 && stime >= Constants.TimeType.MORNING) {
+                        times[i] = null;
                     }
-                    if (mTimeType == 2 && (time < Constants.TimeType.MORNING || time > Constants.TimeType.AFTERNOON)) {
-                        times.remove(i);
+                    if (mTimeType == 2 && (stime >= Constants.TimeType.AFTERNOON || etime <= Constants.TimeType.MORNING)) {
+                        times[i] = null;
                     }
-                    if (mTimeType == 3 && time < Constants.TimeType.AFTERNOON) {
-                        times.remove(i);
+                    if (mTimeType == 3 && etime <= Constants.TimeType.AFTERNOON) {
+                        times[i] = null;
                     }
                 }
 
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < times.size(); i++) {
-                    if (i == 1 || i == 3)
-                        sb.append("\t");
-                    else if (i == 2)
-                        sb.append("\n");
-                    sb.append(times.get(i));
+                int chat = 0;
+                for (int i = 0; i < times.length; i++) {
+                    if (!StringUtils.isEmpty(times[i])) {
+                        sb.append(times[i]);
+                        if (chat == 0 || chat == 2) {
+                            sb.append("\t");
+                        } else if (chat == 1) {
+                            sb.append("\n");
+
+                        }
+                        chat++;
+                    }
                 }
                 holder.setText(R.id.expo_activity_time, sb.toString());
                 holder.itemView.setOnClickListener(v -> WebActivity.startActivity(ExpoActivityActivity.this, LanguageUtil.chooseTest(info.getLinkH5Url(), info.getLinkH5UrLen()), LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn())));
@@ -262,6 +273,9 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
                 break;
         }
         selectDataView(view);
+        if (!view.isSelected()) {
+            mTimeType = 0;
+        }
         mPresenter.loadActivityInfo(mSelectTime, mTimeType);
     }
 

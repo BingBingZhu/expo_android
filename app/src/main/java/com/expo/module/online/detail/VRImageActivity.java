@@ -58,9 +58,8 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
         mAppBarView.setBackgroundResource(R.color.white);
         mAppBarView.setTitle("全景图片");
         initTitleRightTextView();
-        mAppBarView.setOnClickListener(v -> finish());
 
-        VrInfo vrInfo = getIntent().getParcelableExtra(Constants.EXTRAS.EXTRAS);
+        Long id = getIntent().getLongExtra(Constants.EXTRAS.EXTRAS, 0);
 
         mVRView = new VRImageView(this);
         mData = new ArrayList<>();
@@ -79,16 +78,10 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
             }
 
         });
-        mPresenter.loadVrRecommend(vrInfo);
         mRvRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRvRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mRvRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_36)));
-
-        mFrame.addView(mVRView.getVrVideoView());
-        mVRView.setVrInfo(vrInfo);
-        mVRView.mFullScreen.setVisibility(View.GONE);
-        mTvShow.setSelected(true);
-        mRvRecycler.setVisibility(View.VISIBLE);
+        mPresenter.loadVrRecommend(id);
     }
 
     @Override
@@ -101,6 +94,11 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
         mVRView.onDestroy();
         mVRView = null;
         super.onDestroy();
+    }
+
+    @OnClick(R.id.title_back)
+    public void onClick(View v){
+        finish();
     }
 
     @OnClick(R.id.vr_image_show)
@@ -117,9 +115,9 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
         }
     }
 
-    public static void startActivity(Context context, VrInfo vrInfo) {
+    public static void startActivity(Context context, Long id) {
         Intent intent = new Intent(context, VRImageActivity.class);
-        intent.putExtra(Constants.EXTRAS.EXTRAS, vrInfo);
+        intent.putExtra(Constants.EXTRAS.EXTRAS, id);
         context.startActivity(intent);
     }
 
@@ -144,5 +142,11 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
         mData.clear();
         mData.addAll(list);
         mAdapter.notifyDataSetChanged();
+
+        mFrame.addView(mVRView.getVrVideoView());
+        mVRView.setVrInfo(list.get(0));
+        mVRView.mFullScreen.setVisibility(View.GONE);
+        mTvShow.setSelected(true);
+        mRvRecycler.setVisibility(View.VISIBLE);
     }
 }

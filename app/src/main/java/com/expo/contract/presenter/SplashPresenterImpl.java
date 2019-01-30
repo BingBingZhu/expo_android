@@ -3,6 +3,7 @@ package com.expo.contract.presenter;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.SplashContract;
@@ -14,6 +15,7 @@ import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Park;
 import com.expo.entity.RouteHotInfo;
 import com.expo.entity.RouteInfo;
+import com.expo.entity.Schedule;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.TouristType;
 import com.expo.entity.User;
@@ -31,6 +33,7 @@ import com.expo.network.response.ExpoActivityInfoResp;
 import com.expo.network.response.ParkResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
+import com.expo.network.response.ScheduleResp;
 import com.expo.network.response.TopLineResp;
 import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
@@ -44,6 +47,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +72,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         checkUpdateDate(emptyBody);
         copyAMapStyleToSDCard();
         getRouterHotCountList();
+        getScheduleDatas();
     }
 
     private void checkUpdateDate(RequestBody emptyBody) {
@@ -142,15 +147,15 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                         loadBadgeInfo();
                     }
                 }
-                if (!TextUtils.isEmpty( rsp.panorama )) {
-                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_VR_INFO_UPDATE_TIME, null );
-                    if (!rsp.panorama.equals( updateTime )) {
+                if (!TextUtils.isEmpty(rsp.panorama)) {
+                    updateTime = PrefsHelper.getString(Constants.Prefs.KEY_VR_INFO_UPDATE_TIME, null);
+                    if (!rsp.panorama.equals(updateTime)) {
                         loadVrInfo();
                     }
                 }
-                if (!TextUtils.isEmpty( rsp.vrLableInfo )) {
-                    updateTime = PrefsHelper.getString( Constants.Prefs.KEY_VR_LABLE_INFO_UPDATE_TIME, null );
-                    if (!rsp.vrLableInfo.equals( updateTime )) {
+                if (!TextUtils.isEmpty(rsp.vrLableInfo)) {
+                    updateTime = PrefsHelper.getString(Constants.Prefs.KEY_VR_LABLE_INFO_UPDATE_TIME, null);
+                    if (!rsp.vrLableInfo.equals(updateTime)) {
                         loadVrLableInfo();
                     }
                 }
@@ -491,7 +496,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable );
+        }, observable);
         addNetworkRecord();
     }
 
@@ -499,22 +504,22 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
      * 加载全景资源
      */
     private void loadVrInfo() {
-        Observable<VrInfoResp> observable = Http.getServer().getPanCamList( Http.buildRequestBody( Http.getBaseParams() ) );
-        isRequest = Http.request( new ResponseCallback<VrInfoResp>() {
+        Observable<VrInfoResp> observable = Http.getServer().getPanCamList(Http.buildRequestBody(Http.getBaseParams()));
+        isRequest = Http.request(new ResponseCallback<VrInfoResp>() {
             @Override
             protected void onResponse(VrInfoResp rsp) {
                 Log.i("-------------VrInfoResp", "-----------");
-                PrefsHelper.setString( Constants.Prefs.KEY_VR_INFO_UPDATE_TIME, rsp.updateTime );
-                mDao.clear( VrInfo.class );
+                PrefsHelper.setString(Constants.Prefs.KEY_VR_INFO_UPDATE_TIME, rsp.updateTime);
+                mDao.clear(VrInfo.class);
                 List<VrInfo> vrInfos = rsp.vrInfos;
-                mDao.saveOrUpdateAll( vrInfos );
+                mDao.saveOrUpdateAll(vrInfos);
             }
 
             @Override
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable );
+        }, observable);
         addNetworkRecord();
     }
 
@@ -522,21 +527,21 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
      * 加载全景标签资源
      */
     private void loadVrLableInfo() {
-        Observable<VrLableInfoResp> observable = Http.getServer().getPanLableList( Http.buildRequestBody( Http.getBaseParams() ) );
-        isRequest = Http.request( new ResponseCallback<VrLableInfoResp>() {
+        Observable<VrLableInfoResp> observable = Http.getServer().getPanLableList(Http.buildRequestBody(Http.getBaseParams()));
+        isRequest = Http.request(new ResponseCallback<VrLableInfoResp>() {
             @Override
             protected void onResponse(VrLableInfoResp rsp) {
-                PrefsHelper.setString( Constants.Prefs.KEY_VR_LABLE_INFO_UPDATE_TIME, rsp.updateTime );
-                mDao.clear( VrLableInfo.class );
+                PrefsHelper.setString(Constants.Prefs.KEY_VR_LABLE_INFO_UPDATE_TIME, rsp.updateTime);
+                mDao.clear(VrLableInfo.class);
                 List<VrLableInfo> vrLableInfos = rsp.vrLableInfos;
-                mDao.saveOrUpdateAll( vrLableInfos );
+                mDao.saveOrUpdateAll(vrLableInfos);
             }
 
             @Override
             public void onComplete() {
                 notifyLoadComplete();
             }
-        }, observable );
+        }, observable);
         addNetworkRecord();
     }
 
@@ -551,7 +556,32 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 PrefsHelper.setString(Constants.Prefs.KEY_EXPO_ACTIVITY_UPDATE_TIME, rsp.Updatetime);
                 mDao.clear(ExpoActivityInfo.class);
                 List<ExpoActivityInfo> expoActivityInfos = rsp.expoActivityInfos;
+                for (ExpoActivityInfo info : expoActivityInfos) {
+                    info.setStartTime(TimeUtils.string2Millis(info.getStartDate()));
+                    info.setEndTime(TimeUtils.string2Millis(info.getEndDate()));
+                    info.setTimes(info.getTimes());
+                }
                 mDao.saveOrUpdateAll(expoActivityInfos);
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable);
+        addNetworkRecord();
+    }
+
+    /**
+     * 获取可预约的场馆列表
+     */
+    private void getScheduleDatas() {
+        Observable<ScheduleResp> observable = Http.getServer().getScheduleVenList(Http.buildRequestBody(Http.getBaseParams()));
+        isRequest = Http.request(new ResponseCallback<ScheduleResp>() {
+            @Override
+            protected void onResponse(ScheduleResp rsp) {
+                mDao.clear(Schedule.class);
+                mDao.saveOrUpdateAll(rsp.schedules);
             }
 
             @Override

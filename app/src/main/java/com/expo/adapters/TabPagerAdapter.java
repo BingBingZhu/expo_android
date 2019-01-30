@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.expo.module.main.encyclopedia.ListFragment;
+import com.expo.module.main.venue.VenueFragment;
+import com.expo.module.main.venue.VenueListFragment;
 import com.expo.module.online.VrListFragment;
 
 import java.util.List;
@@ -19,9 +21,10 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     private int vrType;
     public static final int TYPE_ENCYCLOPEDIA = 1;
     public static final int TYPE_VR_PANORAMA = 2;
+    public static final int TYPE_FACILITIE = 3;
 
     public TabPagerAdapter(FragmentManager fm, int type, int vrType) {
-        super( fm );
+        super(fm);
         this.dataType = type;
         this.vrType = vrType;
     }
@@ -31,12 +34,14 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment;
         if (dataType == TYPE_ENCYCLOPEDIA) {
             fragment = new ListFragment();
-        }else{
+        } else if (dataType == TYPE_FACILITIE) {
+            fragment = new VenueListFragment();
+        } else {
             fragment = new VrListFragment(vrType);
         }
         Bundle bundle = new Bundle();
-        bundle.putParcelable( "tab", tabs.get( position ) );
-        fragment.setArguments( bundle );
+        bundle.putParcelable("tab", tabs.get(position));
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -60,13 +65,13 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public void restoreState(Parcelable state, ClassLoader loader) {
         bundle = (Bundle) state;
-        if (bundle == null || bundle.getBoolean( "needRestore", true )) {
-            super.restoreState( state, loader );
+        if (bundle == null || bundle.getBoolean("needRestore", true)) {
+            super.restoreState(state, loader);
         }
     }
 
     public void needRestoreSave(boolean need) {
         if (bundle != null)
-            bundle.putBoolean( "needRestore", need );
+            bundle.putBoolean("needRestore", need);
     }
 }

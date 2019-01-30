@@ -227,7 +227,8 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     public void onDestroy() {
         mVrVideoView.pauseRendering();
         mVrVideoView.shutdown();
-        ((FrameLayout) mView.getParent()).removeView(mView);
+        if (mView.getParent() != null)
+            ((FrameLayout) mView.getParent()).removeView(mView);
         mView = null;
     }
 

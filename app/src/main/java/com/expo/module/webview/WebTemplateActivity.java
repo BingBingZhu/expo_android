@@ -10,12 +10,17 @@ import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
+import com.expo.adapters.Tab;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebTemplateContract;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
+import com.expo.entity.ExpoActivityInfo;
+import com.expo.entity.Schedule;
 import com.expo.entity.Venue;
 import com.expo.module.map.NavigationActivity;
 import com.expo.module.map.ParkMapActivity;
@@ -77,15 +82,17 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        id = getIntent().getLongExtra( Constants.EXTRAS.EXTRA_DATA_ID, 0 );
-        mUrl = mPresenter.loadCommonInfo( CommonInfo.ENCYCLOPEDIAS_DETAIL_URL );
-        mUrl += "?id=" + id + "&lan=" + LanguageUtil.chooseTest( "zh", "en" );
-        mEncyclopedias = mPresenter.loadEncyclopediaById( id );
-        if (mEncyclopedias==null){
-            ToastHelper.showShort( R.string.error_params );
+        id = getIntent().getLongExtra(Constants.EXTRAS.EXTRA_DATA_ID, 0);
+        mUrl = mPresenter.loadCommonInfo(CommonInfo.ENCYCLOPEDIAS_DETAIL_URL);
+//        mUrl = "http://192.168.1.13:8080/#/detail";
+        mUrl += "?id=" + id + "&lan=" + LanguageUtil.chooseTest("zh", "en");
+        mEncyclopedias = mPresenter.loadEncyclopediaById(id);
+        if (mEncyclopedias == null) {
+            ToastHelper.showShort(R.string.error_params);
             finish();
         }
-        mVenue = mPresenter.loadSceneByWikiId( id );
+        mVenue = mPresenter.loadSceneByWikiId(id);
+        Schedule schedule = mPresenter.loadScheduleByWikiId(id);
         loadRecommends();
         setTitle(BaseActivity.TITLE_COLOR_STYLE_WHITE, mEncyclopedias.caption);
         initTitleRightTextView();
@@ -93,7 +100,9 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         mX5View.setWebChromeClient(webChromeClient);
         mX5View.removeTencentAd(this);
         mX5View.addJavascriptInterface(new JsHook(), "hook");
-        loadUrl(mUrl + (mVenue == null ? "&data_type=0" : "&data_type=1"));
+        mUrl = mUrl + (mVenue == null ? "&data_type=0" : "&data_type=1");
+        mUrl = mUrl + (schedule == null ? "&ordertype=0" : "&ordertype=1");
+        loadUrl(mUrl);
         mShareUtil = new ShareUtil(this);
     }
 
@@ -194,9 +203,9 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
     private void loadRecommends() {
         if (mVenue != null) {
-            mRecommendEncyclopedias = mPresenter.loadNeayByVenues( mVenue );
+            mRecommendEncyclopedias = mPresenter.loadNeayByVenues(mVenue);
         } else {
-            mRecommendEncyclopedias = mPresenter.loadRandomData( mEncyclopedias.getTypeId(), mEncyclopedias.getId() );
+            mRecommendEncyclopedias = mPresenter.loadRandomData(mEncyclopedias.getTypeId(), mEncyclopedias.getId());
         }
     }
 
@@ -216,7 +225,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         public String loadNearByVenues(int id) {
             if (id != mEncyclopedias.id)
                 loadRecommends();
-            return mPresenter.toJson( mRecommendEncyclopedias );
+            return mPresenter.toJson(mRecommendEncyclopedias);
         }
 
         @JavascriptInterface
@@ -228,9 +237,14 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
         @JavascriptInterface
         public void setTitle(String titleText) {
-            runOnUiThread( () -> {
-                WebTemplateActivity.this.setTitle( BaseActivity.TITLE_COLOR_STYLE_WHITE, titleText );
-            } );
+            runOnUiThread(() -> {
+                WebTemplateActivity.this.setTitle(BaseActivity.TITLE_COLOR_STYLE_WHITE, titleText);
+            });
+        }
+
+        @JavascriptInterface
+        public String getActiveData() {
+            return mPresenter.getRecommendAndTodayExpoActivitys(TimeUtils.getNowMills(), id);
         }
     }
 }

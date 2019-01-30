@@ -142,7 +142,7 @@ public class Venue implements Parcelable, Comparable<Venue> {
     public static final Creator<Venue> CREATOR = new Creator<Venue>() {
         @Override
         public Venue createFromParcel(Parcel in) {
-            return new Venue( in );
+            return new Venue(in);
         }
 
         @Override
@@ -152,14 +152,14 @@ public class Venue implements Parcelable, Comparable<Venue> {
     };
 
     public ArrayList<double[]> getElectronicFenceList() {
-        return Http.getGsonInstance().fromJson( electronicFenceList, new TypeToken<ArrayList<double[]>>() {
-        }.getType() );
+        return Http.getGsonInstance().fromJson(electronicFenceList, new TypeToken<ArrayList<double[]>>() {
+        }.getType());
     }
 
 
     public Long getType() {
         try {
-            return Long.parseLong( type );
+            return Long.parseLong(type);
         } catch (Exception e) {
             e.printStackTrace();
             return 0L;
@@ -169,7 +169,7 @@ public class Venue implements Parcelable, Comparable<Venue> {
 
     public Double getLng() {
         try {
-            return Double.parseDouble( lng );
+            return Double.parseDouble(lng);
         } catch (Exception e) {
             return 0.0;
         }
@@ -181,7 +181,7 @@ public class Venue implements Parcelable, Comparable<Venue> {
 
     public Double getLat() {
         try {
-            return Double.parseDouble( lat );
+            return Double.parseDouble(lat);
         } catch (Exception e) {
             return 0.0;
         }
@@ -391,7 +391,7 @@ public class Venue implements Parcelable, Comparable<Venue> {
         this.routeIndex = routeIndex;
     }
 
-    public LatLng getLatLng(){
+    public LatLng getLatLng() {
         return new LatLng(this.getLat(), this.getLng());
     }
 
@@ -403,41 +403,41 @@ public class Venue implements Parcelable, Comparable<Venue> {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (id == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeLong( id );
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
         }
-        dest.writeString( caption );
-        dest.writeString( enCaption );
-        dest.writeString( type );
-        dest.writeString( remark );
-        dest.writeString( enRemark );
-        dest.writeInt( isEnable );
-        dest.writeString( picUrl );
-        dest.writeString( linkH5Url );
-        dest.writeString( linkH5UrlEn );
-        dest.writeString( createTime );
-        dest.writeString( updateTime );
-        dest.writeString( lng );
-        dest.writeString( lat );
-        dest.writeString( electronicFenceList );
+        dest.writeString(caption);
+        dest.writeString(enCaption);
+        dest.writeString(type);
+        dest.writeString(remark);
+        dest.writeString(enRemark);
+        dest.writeInt(isEnable);
+        dest.writeString(picUrl);
+        dest.writeString(linkH5Url);
+        dest.writeString(linkH5UrlEn);
+        dest.writeString(createTime);
+        dest.writeString(updateTime);
+        dest.writeString(lng);
+        dest.writeString(lat);
+        dest.writeString(electronicFenceList);
         if (isRecommended == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeInt( isRecommended );
+            dest.writeByte((byte) 1);
+            dest.writeInt(isRecommended);
         }
-        dest.writeString( recommendedIdx );
-        dest.writeString( wikiId );
-        dest.writeInt( score );
-        dest.writeString( voiceUrl );
-        dest.writeString( voiceUrlEn );
-        dest.writeString( gisId );
-        dest.writeString( gisTypeId );
-        dest.writeString( parkId );
-        dest.writeString( parkName );
-        dest.writeString( picUrlEn );
+        dest.writeString(recommendedIdx);
+        dest.writeString(wikiId);
+        dest.writeInt(score);
+        dest.writeString(voiceUrl);
+        dest.writeString(voiceUrlEn);
+        dest.writeString(gisId);
+        dest.writeString(gisTypeId);
+        dest.writeString(parkId);
+        dest.writeString(parkName);
+        dest.writeString(picUrlEn);
     }
 
     @Override

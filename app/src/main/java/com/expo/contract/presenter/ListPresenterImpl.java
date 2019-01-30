@@ -17,23 +17,34 @@ public class ListPresenterImpl extends ListContract.Presenter {
 
     @Override
     public void loadEncyByType(Long tabId, int page) {
-        List<Encyclopedias> data = mDao.query( Encyclopedias.class, new QueryParams()
-                .add( "eq", "type_id", tabId )
-                .add( "and" )
-                .add( "eq", "enable", 1 )
-                .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT )
-                .add( "orderBy", "recommend", false )
-                .add( "orderBy", "idx", true ) );
-        mView.addEncysToList( data );
+        List<Encyclopedias> data = null;
+        if (tabId == -1L) {
+            data = mDao.query(Encyclopedias.class, new QueryParams()
+                    .add("eq", "recommend", 1)
+                    .add("and")
+                    .add("eq", "enable", 1)
+                    .add("limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT)
+                    .add("orderBy", "recommend", false)
+                    .add("orderBy", "idx", true));
+        } else {
+            data = mDao.query(Encyclopedias.class, new QueryParams()
+                    .add("eq", "type_id", tabId)
+                    .add("and")
+                    .add("eq", "enable", 1)
+                    .add("limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT)
+                    .add("orderBy", "recommend", false)
+                    .add("orderBy", "idx", true));
+        }
+        mView.addEncysToList(data);
     }
 
     @Override
     public void loadVrsByType(int vrType, Long tabId, int page) {
-        List<VrInfo> data = mDao.query( VrInfo.class, new QueryParams()
-                .add( "eq", "top_kind", vrType )
+        List<VrInfo> data = mDao.query(VrInfo.class, new QueryParams()
+                .add("eq", "top_kind", vrType)
                 .add("and")
-                .add("like", "attr_ids", "%;"+tabId+";%")
-                .add( "limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT ) );
-        mView.addVrsToList( data );
+                .add("like", "attr_ids", "%;" + tabId + ";%")
+                .add("limit", page * PER_PAGE_COUNT, PER_PAGE_COUNT));
+        mView.addVrsToList(data);
     }
 }

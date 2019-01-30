@@ -8,16 +8,18 @@ import com.expo.R;
 import com.expo.adapters.DownloadData;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ParkMapContract;
+import com.expo.contract.ParkMapFragmentContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.CustomRoute;
-import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.TouristType;
+import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.map.MapUtils;
 import com.expo.module.download.DownloadManager;
+import com.expo.module.map.ParkMapFragment;
 import com.expo.network.Http;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -25,13 +27,13 @@ import com.expo.utils.LanguageUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
-    public ParkMapPresenterImpl(ParkMapContract.View view) {
+public class ParkMapFragmentPresenterImpl extends ParkMapFragmentContract.Presenter {
+    public ParkMapFragmentPresenterImpl(ParkMapFragmentContract.View view) {
         super(view);
     }
 
     @Override
-    public void loadParkMapData(Long asId) {
+    public void loadParkMapData(Long asId, final List<VenuesType> venuesType) {
         mView.showLoadingView();
         new Thread() {
             @Override
@@ -54,15 +56,20 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                             });
                     return;
                 }
-                List<VenuesType> venuesTypes = mDao.query(VenuesType.class, new QueryParams()
-                        .add("eq", "is_enable", 1)
-                        .add("and")
-                        .add("eq", "show_in_map", "1")
-                        .add("and")
-                        .add("notIn", "type_name", "停车场")
-                        .add("and")
-                        .add("notIn", "type_name", "公交站")
-                        .add("orderBy", "idx", true));
+                List<VenuesType> venuesTypes = null;
+                if (venuesType == null) {
+                    venuesTypes = mDao.query(VenuesType.class, new QueryParams()
+                            .add("eq", "is_enable", 1)
+                            .add("and")
+                            .add("eq", "show_in_map", "1")
+                            .add("and")
+                            .add("notIn", "type_name", "停车场")
+                            .add("and")
+                            .add("notIn", "type_name", "公交站")
+                            .add("orderBy", "idx", true));
+                } else {
+                    venuesTypes = venuesType;
+                }
                 List<TouristType> touristTypes = mDao.query(TouristType.class, new QueryParams().add("eq", "is_enable", 1));
                 int tabPosition = 0;
                 Venue as = mDao.queryById(Venue.class, asId);
@@ -75,15 +82,16 @@ public class ParkMapPresenterImpl extends ParkMapContract.Presenter {
                     }
                 }
                 int finalTabPosition = tabPosition;
+                List<VenuesType> finalVenuesTypes = venuesTypes;
                 new Handler(Looper.getMainLooper())
                         .post(() -> {
                             mView.loadCustomRoute(customRoutes);
-                            mView.loadTabRes(venuesTypes, finalTabPosition);
+                            mView.loadTabRes(finalVenuesTypes, finalTabPosition);
                             mView.loadFacilityRes(facilities, as);
                             mView.loadTouristTypeRes(touristTypes);
                             mView.loadRoute(routeInfos);
                             mView.hideLoadingView();
-                            loadSubjectImages(venuesTypes);
+                            loadSubjectImages(finalVenuesTypes);
                         });
             }
         }.start();

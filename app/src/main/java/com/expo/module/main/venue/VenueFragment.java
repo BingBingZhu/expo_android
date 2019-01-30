@@ -1,4 +1,4 @@
-package com.expo.module.main.encyclopedia;
+package com.expo.module.main.venue;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -16,10 +16,11 @@ import com.expo.R;
 import com.expo.adapters.Tab;
 import com.expo.adapters.TabPagerAdapter;
 import com.expo.base.BaseFragment;
-import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.EncyclopediasContract;
+import com.expo.contract.VenueContract;
 import com.expo.entity.VenuesType;
 import com.expo.module.distinguish.DistinguishActivity;
+import com.expo.module.map.ParkMapFragment;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
@@ -34,7 +35,7 @@ import butterknife.OnClick;
  * 百科页
  */
 @SuppressLint("ValidFragment")
-public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Presenter> implements EncyclopediasContract.View {
+public class VenueFragment extends BaseFragment<VenueContract.Presenter> implements VenueContract.View {
 
     @BindView(R.id.ency_top_view)
     View mTopView;
@@ -44,10 +45,9 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     ViewPager mPagerView;
 
     private TabPagerAdapter mAdapter;
-    List<VenuesType> mList;
 
-    public EncyclopediaFragment(List<VenuesType> list) {
-        mList = list;
+    public VenueFragment(List<VenuesType> list){
+        super();
     }
 
     @Override
@@ -59,11 +59,10 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     protected void onInitView(Bundle savedInstanceState) {
 //        mTopView.setPadding( 0, StatusBarUtils.getStatusBarHeight( getContext() ), 0, 0 );
         initTabLayout();
-        mAdapter = new TabPagerAdapter(getFragmentManager(), TabPagerAdapter.TYPE_ENCYCLOPEDIA, 0);
+        mAdapter = new TabPagerAdapter(getFragmentManager(), TabPagerAdapter.TYPE_FACILITIE, 0);
         mPagerView.setAdapter(mAdapter);
         mPagerView.addOnPageChangeListener(mOnPageChangeListener);
-        mPresenter.loadTabs(getContext(), mList);
-
+        mPresenter.loadTabs();
         LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_CHANGE_LANGUAGE);
     }
 
@@ -144,7 +143,7 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ency_search:
-                EncyclopediaSearchActivity.startActivity(getContext());
+                VenueSearchActivity.startActivity(getContext());
                 break;
             case R.id.ency_scan:
                 DistinguishActivity.startActivity(getContext());

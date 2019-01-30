@@ -53,7 +53,7 @@
                 android:layout_marginRight="@dimen/dms_28"
                 android:src="@mipmap/ico_ency_scan" />
         </FrameLayout>
-
+ ]
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dms_2"

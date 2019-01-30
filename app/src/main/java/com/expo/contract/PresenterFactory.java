@@ -31,9 +31,11 @@ import com.expo.contract.presenter.NationalSmsCodePresenterImpl;
 import com.expo.contract.presenter.NavigationPresenterImpl;
 import com.expo.contract.presenter.OnlineHomePresenterImpl;
 import com.expo.contract.presenter.PanoramaListPresenterImpl;
+import com.expo.contract.presenter.ParkMapFragmentPresenterImpl;
 import com.expo.contract.presenter.ParkMapPresenterImpl;
 import com.expo.contract.presenter.RouteDetailPresenterImpl;
 import com.expo.contract.presenter.RoutesPresenterImpl;
+import com.expo.contract.presenter.ScenicPresenterImpl;
 import com.expo.contract.presenter.SeekHelpPresenterImpl;
 import com.expo.contract.presenter.ServiceHistoryPresenterImpl;
 import com.expo.contract.presenter.SettingPresenterImpl;
@@ -43,6 +45,8 @@ import com.expo.contract.presenter.TrackPresenterImpl;
 import com.expo.contract.presenter.UserInfoPresenterImpl;
 import com.expo.contract.presenter.VRDetailPresenterImpl;
 import com.expo.contract.presenter.VRImagePresenterImpl;
+import com.expo.contract.presenter.VenueListPresenterImpl;
+import com.expo.contract.presenter.VenuePresenterImpl;
 import com.expo.contract.presenter.WebPresenterImpl;
 import com.expo.contract.presenter.WebTemplatePresenterImpl;
 import com.expo.module.activity.ExpoActivityActivity;
@@ -120,21 +124,29 @@ public class PresenterFactory {
         } else if (view instanceof ServiceHistoryContract.View) {
             return new ServiceHistoryPresenterImpl((ServiceHistoryContract.View) view);
         } else if (view instanceof CustomRouteContract.View) {
-            return new CustomRoutePresenterImpl( (CustomRouteContract.View) view );
+            return new CustomRoutePresenterImpl((CustomRouteContract.View) view);
         } else if (view instanceof VRImageContract.View) {
-            return new VRImagePresenterImpl( (VRImageContract.View) view );
+            return new VRImagePresenterImpl((VRImageContract.View) view);
         } else if (view instanceof OnlineHomeContract.View) {
-            return new OnlineHomePresenterImpl( (OnlineHomeContract.View) view );
+            return new OnlineHomePresenterImpl((OnlineHomeContract.View) view);
         } else if (view instanceof VRDetailContract.View) {
-            return new VRDetailPresenterImpl( (VRDetailContract.View) view );
+            return new VRDetailPresenterImpl((VRDetailContract.View) view);
         } else if (view instanceof PanoramaListContract.View) {
-            return new PanoramaListPresenterImpl( (PanoramaListContract.View) view );
+            return new PanoramaListPresenterImpl((PanoramaListContract.View) view);
         } else if (view instanceof CirnumListContract.View) {
-            return new CirnumListPresenterImpl( (CirnumListContract.View) view );
+            return new CirnumListPresenterImpl((CirnumListContract.View) view);
         } else if (view instanceof CircumTrafficContract.View) {
-            return new CircumTrafficPresenterImpl( (CircumTrafficContract.View) view );
-        }else if (view instanceof ExpoActivityContract.View) {
+            return new CircumTrafficPresenterImpl((CircumTrafficContract.View) view);
+        } else if (view instanceof ExpoActivityContract.View) {
             return new ExpoActivityPresenterImpl((ExpoActivityContract.View) view);
+        } else if (view instanceof VenueContract.View) {
+            return new VenuePresenterImpl((VenueContract.View) view);
+        } else if (view instanceof VenueListContract.View) {
+            return new VenueListPresenterImpl((VenueListContract.View) view);
+        } else if (view instanceof ParkMapFragmentContract.View) {
+            return new ParkMapFragmentPresenterImpl((ParkMapFragmentContract.View) view);
+        } else if (view instanceof ScenicContract.View) {
+            return new ScenicPresenterImpl((ScenicContract.View) view);
         }
         throw new UnsupportedOperationException();
     }
