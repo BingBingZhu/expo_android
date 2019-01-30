@@ -15,7 +15,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.module.webview.WebActivity;
 import com.expo.utils.Constants;
 
-public class ArFragment extends BaseFragment<ArContract.Presenter> implements ArContract.View {
+public class ArFragment extends BaseFragment<ArContract.Presenter> implements ArContract.View, View.OnClickListener {
     @Override
     public int getContentView() {
         return R.layout.fragment_ar;
@@ -23,7 +23,9 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-
+        findViewById(R.id.ar_photograph).setOnClickListener(this);
+        findViewById(R.id.ar_portal).setOnClickListener(this);
+        findViewById(R.id.ar_scan_logo).setOnClickListener(this);
     }
 
     @Override
@@ -40,13 +42,13 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
             int type = 0;
             switch (v.getId()) {
                 case R.id.ar_photograph://拍照
-                    type = 1;
-                    break;
-                case R.id.ar_scan_logo://扫logo
                     type = 2;
                     break;
-                case R.id.ar_portal://传送门
+                case R.id.ar_scan_logo://扫logo
                     type = 3;
+                    break;
+                case R.id.ar_portal://传送门
+                    type = 1;
                     break;
             }
             if (type == 0) {

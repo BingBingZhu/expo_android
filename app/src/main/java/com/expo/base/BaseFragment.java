@@ -1,6 +1,7 @@
 package com.expo.base;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -46,6 +47,10 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
             ((ViewGroup) mContentView.getParent()).removeView(mContentView);
         }
         return mContentView;
+    }
+
+    public <T extends View> T findViewById(@IdRes int id) {
+        return mContentView.findViewById(id);
     }
 
     public boolean isNeedPaddingTop() {
