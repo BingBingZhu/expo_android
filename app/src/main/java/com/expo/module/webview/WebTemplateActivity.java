@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.adapters.Tab;
 import com.expo.base.BaseActivity;
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.WebTemplateContract;
 import com.expo.entity.CommonInfo;
@@ -207,6 +209,15 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         } else {
             mRecommendEncyclopedias = mPresenter.loadRandomData(mEncyclopedias.getTypeId(), mEncyclopedias.getId());
         }
+    }
+
+    private void goBespeak() {
+        String url = mPresenter.loadCommonInfo(CommonInfo.VENUE_BESPEAK);
+        url = "http://192.168.1.13:8888/";
+        WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 :
+                url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
+                        + "&lan=" + LanguageUtil.chooseTest("zh", "en"), getString(R.string.home_func_item_appointment), BaseActivity.TITLE_COLOR_STYLE_WHITE);
+
     }
 
     /**

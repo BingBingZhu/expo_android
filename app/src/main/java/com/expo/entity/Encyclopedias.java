@@ -48,6 +48,9 @@ public class Encyclopedias implements Parcelable {
     @DatabaseField(columnName = "link_h5_url_en")
     @SerializedName("linkh5urlen")
     public String linkH5UrlEn;
+    @DatabaseField(columnName = "model_url")
+    @SerializedName("modelurl")
+    public String modelUrl;
     @DatabaseField(columnName = "link_info_url")
     @SerializedName("linkinfourl")
     public String linkInfoUrl;
@@ -133,6 +136,7 @@ public class Encyclopedias implements Parcelable {
         }
         linkH5Url = in.readString();
         linkH5UrlEn = in.readString();
+        modelUrl = in.readString();
         linkInfoUrl = in.readString();
         picUrl = in.readString();
         py = in.readString();
@@ -454,6 +458,7 @@ public class Encyclopedias implements Parcelable {
         }
         dest.writeString( linkH5Url );
         dest.writeString( linkH5UrlEn );
+        dest.writeString( modelUrl );
         dest.writeString( linkInfoUrl );
         dest.writeString( picUrl );
         dest.writeString( py );

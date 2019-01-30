@@ -60,13 +60,39 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/scenic_search"
-            android:layout_width="@dimen/dms_32"
-            android:layout_height="@dimen/dms_32"
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="@dimen/dms_60"
-            android:src="@mipmap/scenic_search" />
+            android:layout_marginRight="@dimen/dms_60">
+
+            <ImageView
+                android:id="@+id/scenic_search"
+                android:layout_width="@dimen/dms_32"
+                android:layout_height="@dimen/dms_32"
+                android:layout_gravity="center"
+                android:src="@mipmap/scenic_search" />
+
+            <LinearLayout
+                android:id="@+id/scenic_map"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dms_38"
+                    android:layout_height="@dimen/dms_38"
+                    android:src="@mipmap/map_right_title" />
+
+                <TextView
+                    style="@style/TextSizeBlack12"
+                    android:layout_marginTop="@dimen/dms_10"
+                    android:text="@string/my_route"
+                    android:textSize="@dimen/font_18" />
+            </LinearLayout>
+        </FrameLayout>
     </FrameLayout>
 
 
