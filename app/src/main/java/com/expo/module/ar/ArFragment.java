@@ -34,7 +34,7 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
     }
 
     public void onClick(View v) {
-        if (AppUtils.getAppInfo() == null) {
+        if (AppUtils.getAppInfo("com.casvd.expo_ar") == null) {
             WebActivity.startActivity(getContext(), mPresenter.loadCommonInfo(CommonInfo.EXPO_AR_DOWNLOAD_PAGE), "Logo扫一扫");
         } else {
             Intent in = new Intent("com.casvd.expo_ar.ar");
