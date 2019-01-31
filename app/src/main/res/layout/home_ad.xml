@@ -6,7 +6,6 @@
     android:layout_marginLeft="@dimen/dms_10"
     android:layout_marginTop="@dimen/dms_40"
     android:layout_marginRight="@dimen/dms_10"
-    android:background="@drawable/top_line_bg"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 

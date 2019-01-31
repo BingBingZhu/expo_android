@@ -18,6 +18,7 @@
     <color name="gray_cc">#CCCCCC</color>
     <color name="gray_4c">#4C4C4C</color>
     <color name="gray_8f">#8F8F8F</color>
+    <color name="gray_a6">#A6A6A6</color>
     <color name="color_local_stork">#5FFFC1</color>
     <color name="color_local">#425FFFC1</color>
     <color name="green_02cd9b">#02CD9B</color>
@@ -44,6 +45,8 @@
     <color name="red_fa5452">#FA5452</color>
     <color name="orange_ff7342">#FF7342</color>
     <color name="orange_ff8e11">#FF8E11</color>
+    <color name="orange_fdb931">#FDB931</color>
     <color name="blue_2e5d95">#2E5D95</color>
+    <color name="blue_2f9bfe">#2F9BFE</color>
     <color name="park_dialog_name_bg_color">#9A201E0E</color>
 </resources>

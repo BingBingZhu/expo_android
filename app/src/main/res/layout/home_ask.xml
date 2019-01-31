@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dms_146"
+    android:layout_marginTop="@dimen/dms_30"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_146"
+        android:layout_marginTop="@dimen/dms_30"
+        android:src="@mipmap/home_ask" />
+
+    <TextView
+        android:id="@+id/home_ask_title"
+        style="@style/TextSizeBlack18"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dms_32"
+        android:text="@string/i_want_ask"
+        android:textColor="@color/blue_2f9bfe"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/home_ask_q"
+        style="@style/TextSizeBlack14"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dms_32"
+        android:layout_toRightOf="@id/home_ask_title"
+        android:text="如何进行场馆预约？"
+        android:textColor="@color/gray_a6"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

@@ -7,15 +7,6 @@
     android:paddingTop="@dimen/dms_40"
     android:paddingRight="@dimen/dms_30">
 
-    <com.hedan.textdrawablelibrary.TextViewDrawable
-        style="@style/TextSizeBlack15"
-        android:drawableLeft="@mipmap/flame"
-        android:textStyle="bold"
-        android:gravity="bottom"
-        android:drawablePadding="@dimen/dms_10"
-        android:text="@string/home_func_title_venue"
-        android:textSize="@dimen/font_34" />
-
     <LinearLayout
         android:id="@+id/home_venue_layout"
         android:layout_width="match_parent"

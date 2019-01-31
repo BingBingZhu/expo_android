@@ -73,6 +73,17 @@
     <string name="item_tourist_service_text_6">人员走失</string>
     <string name="item_tourist_service_text_7">治安举报</string>
 
+    <string name="item_tourist_service_intro_text_0">想要了解世园情况</string>
+    <string name="item_tourist_service_intro_text_1">为您提供物品存放服务</string>
+    <string name="item_tourist_service_intro_text_2">出租婴儿车、轮椅</string>
+    <string name="item_tourist_service_intro_text_3">请您保管好财务</string>
+    <string name="item_tourist_service_intro_text_4">母婴休息专区</string>
+    <string name="item_tourist_service_intro_text_5">健康的身体才能开心的游玩</string>
+    <string name="item_tourist_service_intro_text_6">请您看好老人和孩子</string>
+    <string name="item_tourist_service_intro_text_7">遇事礼让，文明游园</string>
+    <!--<string name="item_tourist_service_text_8">场馆预约</string>-->
+    <!--<string name="item_tourist_service_text_9">投诉受理</string>-->
+
     <string name="mine_edit_info">查看并编辑个人资料</string>
     <string name="item_mine_bespeak">我的预约</string>
     <string name="item_mine_comment_report">评价与反馈</string>
@@ -125,6 +136,8 @@
     <string name="title_contact_appointment">预约联系人</string>
     <string name="title_contact_add">添加联系人</string>
     <string name="title_contact_edit">编辑联系人</string>
+    <string name="title_expo_scene">实景世园</string>
+    <string name="title_expo_activity">世园活动</string>
 
     <string name="check_string_empty_content">内容不能为空</string>
     <string name="check_string_empty_name">姓名不能为空</string>
@@ -151,6 +164,12 @@
     <string name="home_func_title_venue">推荐场馆</string>
     <string name="home_func_title_exhibit">推荐展览</string>
     <string name="home_func_title_exhibit_garden">推荐展园</string>
+
+    <string name="home_tab_play">游玩</string>
+    <string name="home_tab_service">服务</string>
+    <string name="home_tab_food">美食</string>
+    <string name="home_tab_accommodation">住宿</string>
+    <string name="home_tab_periphery">周边</string>
 
     <string name="gps_open_title">该功能需要打开定位功能。</string>
     <string name="gps_open_content">请点击“设置”-“定位服务”打开定位功能</string>
@@ -370,4 +389,55 @@
     <string name="share_to">分享到</string>
     <string name="stop_sharing">取消分享</string>
     <string name="data_error">数据类型错误</string>
+
+    <string name="look_in_home">北京世界园艺博览会-在家看世园</string>
+    <string name="expo_scene">世园实景</string>
+    <string name="expo_culture">文化世园</string>
+    <string name="online_guide">在线导游</string>
+    <string name="exchange">换一换</string>
+    <string name="hide">隐藏</string>
+    <string name="show">显示</string>
+    <string name="scans_scans">浏览 %d次</string>
+    <string name="play_times">%s分钟</string>
+    <string name="no_fiwi_no_free">正在使用费WIFI网络，播放将产生流量费用</string>
+
+    <string name="expo_scene_tab_space">空间布局</string>
+    <string name="expo_scene_tab_scenery">景观展示</string>
+    <string name="expo_scene_tab_culture">文化主题</string>
+    <string name="expo_scene_tab_knowledge">科普知识</string>
+    <string name="expo_scene_tab_green">绿色产业</string>
+
+    <string name="expo_vr_detail_introduce">简介</string>
+    <string name="expo_vr_detail_img">全景图片</string>
+    <string name="expo_vr_detail_video">全景视频</string>
+    <string name="expo_vr_detail_sendtable">全景沙盘</string>
+    <string name="morning">上午</string>
+    <string name="afternoon">下午</string>
+    <string name="night">晚上</string>
+    <string name="activity_time">活动时间</string>
+    <string name="everyone_playing">大家都在玩</string>
+    <string name="discover">发现</string>
+
+    <string name="expo_activity_monday">一</string>
+    <string name="expo_activity_tuesday">二</string>
+    <string name="expo_activity_wednesday">三</string>
+    <string name="expo_activity_thursday">四</string>
+    <string name="expo_activity_friday">五</string>
+    <string name="expo_activity_saturday">六</string>
+    <string name="expo_activity_sunday">七</string>
+
+    <string name="month_1">一月</string>
+    <string name="month_2">二月</string>
+    <string name="month_3">三月</string>
+    <string name="month_4">四月</string>
+    <string name="month_5">五月</string>
+    <string name="month_6">六月</string>
+    <string name="month_7">七月</string>
+    <string name="month_8">八月</string>
+    <string name="month_9">九月</string>
+    <string name="month_10">十月</string>
+    <string name="month_11">十一月</string>
+
+    <string name="expo_map">智玩地图</string>
+    <string name="expo_scenic">世园景点</string>
 </resources>

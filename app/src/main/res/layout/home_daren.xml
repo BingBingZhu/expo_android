@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dms_30"
+    android:orientation="vertical"
+    android:padding="@dimen/dms_30"
+    android:paddingTop="@dimen/dms_36">
+
+    <TextView
+        style="@style/TextSizeBlack16"
+        android:layout_gravity="center_vertical"
+        android:text="@string/daren_play_expo"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_254"
+        android:layout_marginTop="@dimen/dms_30"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/daren_left_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/daren_left" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/daren_left_circle_img"
+                android:layout_width="@dimen/dms_66"
+                android:layout_height="@dimen/dms_66"
+                android:layout_gravity="left|bottom"
+                android:layout_marginLeft="@dimen/dms_16"
+                android:layout_marginBottom="@dimen/dms_12"
+                app:placeholderImage="@mipmap/daren_circle_left"
+                app:placeholderImageScaleType="centerCrop"
+                app:roundAsCircle="true"
+                app:roundingBorderColor="@color/white"
+                app:roundingBorderWidth="@dimen/dms_2" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dms_22"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/daren_right_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/daren_left" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/daren_right_circle_img"
+                android:layout_width="@dimen/dms_66"
+                android:layout_height="@dimen/dms_66"
+                android:layout_gravity="left|bottom"
+                android:layout_marginLeft="@dimen/dms_16"
+                android:layout_marginBottom="@dimen/dms_12"
+                app:placeholderImage="@mipmap/daren_circle_left"
+                app:placeholderImageScaleType="centerCrop"
+                app:roundAsCircle="true"
+                app:roundingBorderColor="@color/white"
+                app:roundingBorderWidth="@dimen/dms_2" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/daren_img1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_206"
+        android:layout_marginTop="@dimen/dms_60"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/daren1" />
+
+    <ImageView
+        android:id="@+id/daren_img2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_206"
+        android:layout_marginTop="@dimen/dms_30"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/daren2" />
+
+</LinearLayout>

@@ -81,6 +81,9 @@ public class ExpoActivityInfo {
     @DatabaseField(columnName = "lon")
     @SerializedName("lon")
     private String lon;
+    @DatabaseField(columnName = "pic_url")
+    @SerializedName("picurl")
+    private String picUrl;
     @DatabaseField(columnName = "recommended_idx")
     @SerializedName("recommendedidx")
     private int recommendedIdx;
@@ -225,6 +228,14 @@ public class ExpoActivityInfo {
 
     public void setLon(String lon) {
         this.lon = lon;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public int getRecommendedIdx() {

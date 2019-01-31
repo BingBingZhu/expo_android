@@ -3,6 +3,8 @@ package com.expo.contract.presenter;
 import android.content.Context;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.expo.entity.ExpoActivityInfo;
+import com.expo.entity.RouteInfo;
 import com.expo.upapp.UpdateAppManager;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
@@ -30,69 +32,87 @@ import java.util.List;
 
 public class HomePresenterImpl extends HomeContract.Presenter {
     public HomePresenterImpl(HomeContract.View view) {
-        super( view );
+        super(view);
     }
 
     @Override
     public void setMessageCount() {
-        new Message().sendMessageCount( null );
+        new Message().sendMessageCount(null);
     }
 
     @Override
     public void setTopLine() {
-        mView.showTopLine( mDao.query( TopLineInfo.class, null ) );
+        mView.showTopLine(mDao.query(TopLineInfo.class, null));
     }
 
     @Override
     public void setVenue() {
         QueryParams params = new QueryParams()
-                .add( "eq", "enable", 1 )
-                .add( "and" )
-                .add( "eq", "recommend", 1 )
-                .add( "and" )
-                .add( "eq", "type_name", "场馆" )
-                .add( "orderBy", "idx", true );
-        mView.showVenue( mDao.query( Encyclopedias.class, params ) );
+                .add("eq", "enable", 1)
+                .add("and")
+                .add("eq", "recommend", 1)
+                .add("and")
+                .add("eq", "type_name", "场馆")
+                .add("orderBy", "idx", true);
+        mView.showVenue(mDao.query(Encyclopedias.class, params));
     }
 
     @Override
-    public void setExhibit() {
-        //从数据库获取
+    public void setHotActivity() {
         QueryParams params = new QueryParams()
-                .add( "eq", "enable", 1 )
-                .add( "and" )
-                .add( "eq", "recommend", 1 )
-                .add( "and" )
-                .add( "eq", "type_name", "展览" )
-                .add( "orderBy", "idx", true );
-        mView.showExhibit( mDao.query( Encyclopedias.class, params ) );
+                .add("limit", 0, 5)
+                .add("orderBy", "recommended_idx", "true");
+        mView.showActivity(mDao.query(ExpoActivityInfo.class, params));
     }
 
     @Override
-    public void setExhibitGarden() {
-        //从数据库获取
+    public void setRecommendRoute() {
         QueryParams params = new QueryParams()
-                .add( "eq", "enable", 1 )
-                .add( "and" )
-                .add( "eq", "recommend", 1 )
-                .add( "and" )
-                .add( "eq", "type_name", "展园" )
-                .add( "orderBy", "idx", true );
-        mView.showExhibitGarden( mDao.query( Encyclopedias.class, params ) );
+                .add("eq", "enable", "1")
+                .add("and")
+                .add("eq", "type_id", "1")
+                .add("limit", 0, 3);
+        mView.showRoute(mDao.query(RouteInfo.class, params));
     }
+
+//    @Override
+//    public void setExhibit() {
+//        //从数据库获取
+//        QueryParams params = new QueryParams()
+//                .add( "eq", "enable", 1 )
+//                .add( "and" )
+//                .add( "eq", "recommend", 1 )
+//                .add( "and" )
+//                .add( "eq", "type_name", "展览" )
+//                .add( "orderBy", "idx", true );
+//        mView.showExhibit( mDao.query( Encyclopedias.class, params ) );
+//    }
+
+//    @Override
+//    public void setExhibitGarden() {
+//        //从数据库获取
+//        QueryParams params = new QueryParams()
+//                .add( "eq", "enable", 1 )
+//                .add( "and" )
+//                .add( "eq", "recommend", 1 )
+//                .add( "and" )
+//                .add( "eq", "type_name", "展园" )
+//                .add( "orderBy", "idx", true );
+//        mView.showExhibitGarden( mDao.query( Encyclopedias.class, params ) );
+//    }
 
     public void startHeartService(Context context) {
-        HeartBeatService.startService( context );
+        HeartBeatService.startService(context);
     }
 
     @Override
     public void stopHeartService(Context context) {
-        HeartBeatService.stopService( context );
+        HeartBeatService.stopService(context);
     }
 
     @Override
     public String loadCommonInfo(String type) {
-        CommonInfo info = mDao.unique( CommonInfo.class, new QueryParams().add( "eq", "type", type ) );
+        CommonInfo info = mDao.unique(CommonInfo.class, new QueryParams().add("eq", "type", type));
         if (info != null) {
             return info.getLinkUrl();
         }
@@ -102,35 +122,35 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     @Override
     public void appRun(String jgId) {
         Map<String, Object> params = Http.getBaseParams();
-        params.put( "jgid", jgId);
-        Observable<BaseResponse> observable = Http.getServer().userlogAppRun( Http.buildRequestBody( params ) );
-        Http.request( new ResponseCallback<BaseResponse>() {
+        params.put("jgid", jgId);
+        Observable<BaseResponse> observable = Http.getServer().userlogAppRun(Http.buildRequestBody(params));
+        Http.request(new ResponseCallback<BaseResponse>() {
             @Override
             protected void onResponse(BaseResponse rsp) {
             }
 
-        }, observable );
+        }, observable);
     }
 
     @Override
     public void checkUpdate() {
         Map<String, Object> params = Http.getBaseParams();
-        RequestBody requestBody = Http.buildRequestBody( params );
-        Observable<VersionInfoResp> observable = Http.getServer().getAppUpdateInfo( requestBody );
-        Http.request( new ResponseCallback<VersionInfoResp>() {
+        RequestBody requestBody = Http.buildRequestBody(params);
+        Observable<VersionInfoResp> observable = Http.getServer().getAppUpdateInfo(requestBody);
+        Http.request(new ResponseCallback<VersionInfoResp>() {
             @Override
             protected void onResponse(VersionInfoResp rsp) {
                 AppInfo appInfo = UpdateAppManager.getInstance().isHaveUpdate(AppUtils.getAppVersionName(), rsp.Objlst);
                 if (null != appInfo) {
-                    mView.appUpdate( appInfo );
+                    mView.appUpdate(appInfo);
                 }
             }
-        }, observable );
+        }, observable);
     }
 
     @Override
     public void update(Context context, AppInfo appInfo) {
-        UpdateAppManager.getInstance( context ).showNoticeDialog( appInfo, false );
+        UpdateAppManager.getInstance(context).showNoticeDialog(appInfo, false);
     }
 
     @Override
