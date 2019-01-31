@@ -20,32 +20,61 @@
 
             <include layout="@layout/home_map" />
 
-
-            <include layout="@layout/home_func" />
-
             <include
                 android:id="@+id/home_ad"
                 layout="@layout/home_ad" />
+
+            <include layout="@layout/home_func" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dms_24"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/home_find" />
+
+            <include layout="@layout/home_find" />
+
+            <include
+                android:id="@+id/home_tab1"
+                layout="@layout/home_tab1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dms_166" />
+
+            <include layout="@layout/home_discover" />
+
+            <include
+                android:id="@+id/home_hot_activity"
+                layout="@layout/home_hot_activity" />
+
+            <include
+                android:id="@+id/home_route"
+                layout="@layout/home_route" />
+
+            <include layout="@layout/home_ranking" />
+
+            <include layout="@layout/home_daren" />
+
+            <include layout="@layout/home_ask" />
 
             <include
                 android:id="@+id/home_venue"
                 layout="@layout/home_venue" />
 
-            <ImageView
-                android:id="@+id/home_navigation_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dms_40"
-                android:adjustViewBounds="true"
-                android:src="@mipmap/home_navigation_item" />
+            <include layout="@layout/home_food" />
 
-            <include
-                android:id="@+id/home_exhibit"
-                layout="@layout/home_exhibit" />
+            <include layout="@layout/home_hotel" />
 
-            <include
-                android:id="@+id/home_exhibit_garden"
-                layout="@layout/home_exhibit_garden" />
+            <include layout="@layout/home_experience" />
+
+
+            <!--<include-->
+            <!--android:id="@+id/home_exhibit"-->
+            <!--layout="@layout/home_exhibit" />-->
+
+            <!--<include-->
+            <!--android:id="@+id/home_exhibit_garden"-->
+            <!--layout="@layout/home_exhibit_garden" />-->
 
             <TextView
                 android:layout_width="0dp"
@@ -56,7 +85,10 @@
     </com.expo.widget.MyScrollView>
 
     <include
-        android:id="@+id/home_title"
-        layout="@layout/home_title" />
+        android:id="@+id/home_tab2"
+        layout="@layout/home_tab2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_166"
+        android:visibility="gone" />
 
 </FrameLayout>

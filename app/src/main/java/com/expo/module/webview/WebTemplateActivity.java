@@ -213,10 +213,11 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
     private void goBespeak() {
         String url = mPresenter.loadCommonInfo(CommonInfo.VENUE_BESPEAK);
-        url = "http://192.168.1.13:8888/";
-        WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 :
+//        url = "http://192.168.1.13:8888/";
+        WebActivity.startActivity(this, TextUtils.isEmpty(url) ? Constants.URL.HTML_404 :
                 url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
                         + "&lan=" + LanguageUtil.chooseTest("zh", "en"), getString(R.string.home_func_item_appointment), BaseActivity.TITLE_COLOR_STYLE_WHITE);
+        finish();
 
     }
 
@@ -256,6 +257,13 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         @JavascriptInterface
         public String getActiveData() {
             return mPresenter.getRecommendAndTodayExpoActivitys(TimeUtils.getNowMills(), id);
+        }
+
+        @JavascriptInterface
+        public void jumpOrder() {
+            runOnUiThread(() -> {
+                goBespeak();
+            });
         }
     }
 }

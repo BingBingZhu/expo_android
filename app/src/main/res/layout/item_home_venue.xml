@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:orientation="vertical">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/item_home_venue_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:roundedCornerRadius="@dimen/dms_10"
-        app:roundAsCircle="false"
-        app:placeholderImage="@mipmap/ico_home_reco_venue_def"/>
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/item_home_venue_text"
         style="@style/TextSizeBlack14"
         android:layout_marginTop="@dimen/dms_20" />
+
+    <TextView
+        android:id="@+id/item_home_venue"
+        style="@style/TextSizeBlack14"
+        android:layout_width="@dimen/dms_114"
+        android:layout_height="@dimen/dms_10"
+        android:layout_marginTop="@dimen/dms_14"
+        android:background="#FFCD00" />
 
 </LinearLayout>

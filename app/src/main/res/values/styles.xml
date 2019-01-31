@@ -245,9 +245,26 @@
     </style>
 
     <style name="style_home_fun_item" parent="@style/TextSizeBlack13">
-        <item name="drawableTopHeight">@dimen/dms_100</item>
-        <item name="drawableTopWidth">@dimen/dms_100</item>
         <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">@dimen/dms_18</item>
+        <item name="drawableTopHeight">@dimen/dms_88</item>
+        <item name="drawableTopWidth">@dimen/dms_88</item>
+    </style>
+
+    <style name="style_home_find_item">
+        <item name="android:layout_marginLeft">@dimen/dms_20</item>
+        <item name="android:layout_height">@dimen/dms_64</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="style_home_play_item" parent="TextSize13">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">@dimen/dms_10</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/selector_33_fdb931</item>
     </style>
 
     <!-- dialog从下面进出动画 -->
