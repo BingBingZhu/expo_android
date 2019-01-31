@@ -128,6 +128,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.ar.ArActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".module.webview.WebTemplateActivity"
             android:screenOrientation="portrait" />
 
@@ -280,8 +284,8 @@
 
         <activity
             android:name=".module.online.detail.VRDetailActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
