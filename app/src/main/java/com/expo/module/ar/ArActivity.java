@@ -2,6 +2,7 @@ package com.expo.module.ar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.expo.R;
@@ -28,6 +29,13 @@ public class ArActivity extends BaseActivity {
 
     public static void startActivity(Context context) {
         Intent in = new Intent(context, ArActivity.class);
+        context.startActivity(in);
+    }
+
+    public static void lunchPhotograph(Context context) {
+        Intent in = new Intent("com.casvd.expo_ar.ar");
+        in.putExtra("kill", true);
+        in.setData(Uri.parse("casvd://ar.casvd.com/2"));
         context.startActivity(in);
     }
 }
