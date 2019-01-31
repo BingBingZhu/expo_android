@@ -209,7 +209,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         int leftRight = (int) getResources().getDimension(R.dimen.dms_16);
         mRvGuide.addItemDecoration(new SpaceDecoration(leftRight, 0, leftRight, 0, 0));
         mRvGuide.addItemDecoration(new RecycleViewDivider(
-                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor(R.color.white_f4)));
+                getContext(), LinearLayoutManager.VERTICAL, 4, getResources().getColor(R.color.white_f5)));
         mRvGuide.setAdapter(mAdapterGuide);
     }
 

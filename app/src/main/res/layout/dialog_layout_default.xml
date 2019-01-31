@@ -17,7 +17,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_2"
-        android:background="@color/white_f4" />
+        android:background="@color/white_f5" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:id="@+id/default_dialog_line"
             android:layout_width="@dimen/dms_2"
             android:layout_height="match_parent"
-            android:background="@color/white_f4" />
+            android:background="@color/white_f5" />
         <TextView
             android:id="@+id/default_dialog_ok"
             android:layout_width="0dp"

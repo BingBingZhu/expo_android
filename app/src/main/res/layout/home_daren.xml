@@ -4,20 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dms_30"
-    android:orientation="vertical"
-    android:padding="@dimen/dms_30"
-    android:paddingTop="@dimen/dms_36">
+    android:orientation="vertical">
 
     <TextView
         style="@style/TextSizeBlack16"
+        android:layout_width="match_parent"
         android:layout_gravity="center_vertical"
+        android:paddingTop="@dimen/dms_36"
+        android:paddingLeft="@dimen/dms_30"
+        android:paddingRight="@dimen/dms_30"
         android:text="@string/daren_play_expo"
+        android:background="@color/white"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_254"
-        android:layout_marginTop="@dimen/dms_30"
+        android:background="@color/white"
+        android:padding="@dimen/dms_30"
         android:orientation="horizontal">
 
         <FrameLayout
@@ -78,8 +82,10 @@
         android:id="@+id/daren_img1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_206"
-        android:layout_marginTop="@dimen/dms_60"
+        android:layout_marginTop="@dimen/dms_30"
         android:scaleType="centerCrop"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
         android:src="@mipmap/daren1" />
 
     <ImageView
@@ -87,6 +93,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_206"
         android:layout_marginTop="@dimen/dms_30"
+        android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginRight="@dimen/dms_30"
         android:scaleType="centerCrop"
         android:src="@mipmap/daren2" />
 

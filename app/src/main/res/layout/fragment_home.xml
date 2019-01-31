@@ -8,7 +8,6 @@
         android:id="@+id/home_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:scrollbars="none">
 
         <LinearLayout
@@ -31,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dms_24"
                 android:adjustViewBounds="true"
+                android:background="@color/white"
                 android:src="@mipmap/home_find" />
 
             <include layout="@layout/home_find" />
@@ -77,8 +77,13 @@
             <!--layout="@layout/home_exhibit_garden" />-->
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dms_10" />
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="到底啦！"
+                android:textSize="@dimen/font_24"
+                android:textColor="@color/gray_999999"
+                android:layout_margin="@dimen/dms_24"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

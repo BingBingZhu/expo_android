@@ -38,6 +38,7 @@ import com.expo.entity.RouteInfo;
 import com.expo.entity.TopLineInfo;
 import com.expo.map.LocationManager;
 import com.expo.module.activity.ExpoActivityActivity;
+import com.expo.module.ar.ArActivity;
 import com.expo.module.freewifi.FreeWiFiActivity;
 import com.expo.module.circum.CircumHomeActivity;
 import com.expo.module.heart.MessageKindActivity;
@@ -311,7 +312,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @OnClick({R.id.home_func_0, R.id.home_func_1, R.id.home_func_2, R.id.home_func_3, R.id.home_func_4,
             R.id.home_func_5, R.id.home_func_6, R.id.home_func_7,
-            R.id.title_home_icon, R.id.home_map_img})
+            R.id.title_home_icon, R.id.home_map_img, R.id.daren_img2})
     public void clickFunc(View view) {
         String url;
         switch (view.getId()) {
@@ -325,7 +326,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 break;
             case R.id.home_func_2:
 //                ExpoActivityActivity.startActivity(getContext());//世园活动
-                OnlineExpoActivity.startActivity(getContext());//网上世园
 //                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PANORAMA ), null, false );
                 break;
             case R.id.home_func_3:
@@ -358,6 +358,12 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             case R.id.title_home_icon:
                 url = mPresenter.loadCommonInfo(CommonInfo.EXPO_BRIEF_INTRODUCTION);
                 WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 : url, getString(R.string.beijing_world_expo_2019), 1);
+                break;
+            case R.id.daren_img2://AR乐拍
+                ArActivity.startActivity(getContext());
+                break;
+            case R.id.daren_img1://网上世园
+                OnlineExpoActivity.startActivity(getContext());
                 break;
         }
     }

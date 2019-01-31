@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dms_30"
     android:orientation="vertical"
+    android:background="@color/white"
     android:padding="@dimen/dms_30"
     android:paddingTop="@dimen/dms_36">
 
@@ -31,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_206"
         android:layout_marginTop="@dimen/dms_30"
+        android:scaleType="fitXY"
         android:src="@mipmap/hot_activity_0" />
 
     <LinearLayout

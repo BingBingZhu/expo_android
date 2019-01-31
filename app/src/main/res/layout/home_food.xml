@@ -5,6 +5,7 @@
     android:layout_marginTop="@dimen/dms_30"
     android:orientation="vertical"
     android:padding="@dimen/dms_30"
+    android:background="@color/white"
     android:paddingTop="@dimen/dms_36">
 
     <FrameLayout

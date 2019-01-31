@@ -3,8 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_marginTop="@dimen/dms_30"
     android:paddingLeft="@dimen/dms_30"
     android:paddingTop="@dimen/dms_40"
+    android:paddingBottom="@dimen/dms_30"
+    android:background="@color/white"
     android:paddingRight="@dimen/dms_30">
 
     <FrameLayout
@@ -31,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_410"
         android:layout_marginTop="@dimen/dms_30"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:src="@mipmap/home_experience" />
 
 </LinearLayout>

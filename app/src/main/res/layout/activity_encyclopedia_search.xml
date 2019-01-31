@@ -110,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dms_20"
-        android:background="@color/white_f4"
+        android:background="@color/white_f5"
         android:overScrollMode="never"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
