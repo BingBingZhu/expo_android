@@ -7,7 +7,9 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
+import android.support.annotation.MainThread;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
@@ -29,6 +31,9 @@ import com.expo.upapp.UpdateAppManager;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -151,6 +156,16 @@ public class MainActivity extends BaseActivity {
                 f.onActivityResult(requestCode, resultCode, data);
             }
         }
+    }
+
+    public void goScenic() {
+        mTabHostView.setCurrentTabByTag("scenic");
+        new Handler().postDelayed(() -> ((ScenicFragment) getFragment(1)).onClickScene(null), 300);
+    }
+
+    public void goScenicMap() {
+        mTabHostView.setCurrentTabByTag("scenic");
+        new Handler().postDelayed(() -> ((ScenicFragment) getFragment(1)).onClickScene(null), 300);
     }
 
     private Fragment getFragment(int tabId) {

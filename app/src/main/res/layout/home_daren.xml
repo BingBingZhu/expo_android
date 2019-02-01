@@ -10,90 +10,37 @@
         style="@style/TextSizeBlack16"
         android:layout_width="match_parent"
         android:layout_gravity="center_vertical"
-        android:paddingTop="@dimen/dms_36"
+        android:background="@color/white"
         android:paddingLeft="@dimen/dms_30"
+        android:paddingTop="@dimen/dms_36"
         android:paddingRight="@dimen/dms_30"
         android:text="@string/daren_play_expo"
-        android:background="@color/white"
         android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/home_daren_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_254"
         android:background="@color/white"
-        android:padding="@dimen/dms_30"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/daren_left_img"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/daren_left" />
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/daren_left_circle_img"
-                android:layout_width="@dimen/dms_66"
-                android:layout_height="@dimen/dms_66"
-                android:layout_gravity="left|bottom"
-                android:layout_marginLeft="@dimen/dms_16"
-                android:layout_marginBottom="@dimen/dms_12"
-                app:placeholderImage="@mipmap/daren_circle_left"
-                app:placeholderImageScaleType="centerCrop"
-                app:roundAsCircle="true"
-                app:roundingBorderColor="@color/white"
-                app:roundingBorderWidth="@dimen/dms_2" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dms_22"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/daren_right_img"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/daren_left" />
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/daren_right_circle_img"
-                android:layout_width="@dimen/dms_66"
-                android:layout_height="@dimen/dms_66"
-                android:layout_gravity="left|bottom"
-                android:layout_marginLeft="@dimen/dms_16"
-                android:layout_marginBottom="@dimen/dms_12"
-                app:placeholderImage="@mipmap/daren_circle_left"
-                app:placeholderImageScaleType="centerCrop"
-                app:roundAsCircle="true"
-                app:roundingBorderColor="@color/white"
-                app:roundingBorderWidth="@dimen/dms_2" />
-        </FrameLayout>
-    </LinearLayout>
+        android:orientation="horizontal"
+        android:padding="@dimen/dms_30" />
 
     <ImageView
         android:id="@+id/daren_img1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_206"
-        android:layout_marginTop="@dimen/dms_30"
-        android:scaleType="centerCrop"
         android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginTop="@dimen/dms_30"
         android:layout_marginRight="@dimen/dms_30"
+        android:scaleType="centerCrop"
         android:src="@mipmap/daren1" />
 
     <ImageView
         android:id="@+id/daren_img2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_206"
-        android:layout_marginTop="@dimen/dms_30"
         android:layout_marginLeft="@dimen/dms_30"
+        android:layout_marginTop="@dimen/dms_30"
         android:layout_marginRight="@dimen/dms_30"
         android:scaleType="centerCrop"
         android:src="@mipmap/daren2" />

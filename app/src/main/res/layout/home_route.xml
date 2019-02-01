@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dms_30"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     android:padding="@dimen/dms_30"
     android:paddingTop="@dimen/dms_36">
 
@@ -50,7 +50,8 @@
                 style="@style/TextSizeWhite15"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="@dimen/dms_16"
-                android:lines="2" />
+                android:lines="2"
+                android:visibility="gone" />
 
             <TextView
                 style="@style/TextSizeBlack12"
@@ -60,7 +61,8 @@
                 android:gravity="center"
                 android:padding="@dimen/dms_10"
                 android:text="游玩去世园"
-                android:textSize="@dimen/font_20" />
+                android:textSize="@dimen/font_20"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <ImageView

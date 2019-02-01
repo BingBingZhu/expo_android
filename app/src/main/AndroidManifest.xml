@@ -136,6 +136,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.webview.WebExpoActivityActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".module.mine.UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity

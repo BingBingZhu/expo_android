@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+
+    <ImageView
+        android:id="@+id/daren_left_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/daren_left" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/daren_left_circle_img"
+        android:layout_width="@dimen/dms_66"
+        android:layout_height="@dimen/dms_66"
+        android:layout_gravity="left|bottom"
+        android:layout_marginLeft="@dimen/dms_16"
+        android:layout_marginBottom="@dimen/dms_12"
+        app:placeholderImage="@mipmap/daren_circle_left"
+        app:placeholderImageScaleType="centerCrop"
+        app:roundAsCircle="true"
+        app:roundingBorderColor="@color/white"
+        app:roundingBorderWidth="@dimen/dms_2" />
+
+</FrameLayout>
