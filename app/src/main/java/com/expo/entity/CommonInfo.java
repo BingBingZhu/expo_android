@@ -29,6 +29,7 @@ public class CommonInfo implements Parcelable {
     public static final String TOURIST_SERVICE_MATERNAL_AND_CHILD = "17";// 母婴服务
     public static final String TOURIST_SERVICE_LEFT_LUGGAGE = "18";// 物品寄存
     public static final String EXPO_AR_DOWNLOAD_PAGE = "15";// 世园会简介
+    public static final String EXPO_ACTIVITY_DETAIL_INFOFORMATION = "19";// 世园活动
 
     @DatabaseField(columnName = "id", id = true)
     @SerializedName("id")

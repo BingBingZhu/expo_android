@@ -1,32 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dms_122"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/dms_30"
-    android:background="@color/white"
-    android:paddingRight="@dimen/dms_30">
+    android:scrollbars="none">
 
-    <ImageView
-        android:id="@+id/home_find_0"
-        style="@style/style_home_find_item"
-        android:layout_marginLeft="0dp"
-        android:src="@mipmap/home_find_toilet" />
+    <LinearLayout
+        android:id="@+id/home_find_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dms_122"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/home_find_1"
-        style="@style/style_home_find_item"
-        android:src="@mipmap/home_find_station" />
+        <ImageView
+            android:id="@+id/home_find_0"
+            style="@style/style_home_find_item"
+            android:src="@mipmap/home_find_toilet" />
 
-    <ImageView
-        android:id="@+id/home_find_2"
-        style="@style/style_home_find_item"
-        android:src="@mipmap/home_find_gate" />
+        <ImageView
+            android:id="@+id/home_find_1"
+            style="@style/style_home_find_item"
+            android:src="@mipmap/home_find_station" />
 
-    <ImageView
-        android:id="@+id/home_find_3"
-        style="@style/style_home_find_item"
-        android:src="@mipmap/home_find_service_centre" />
+        <ImageView
+            android:id="@+id/home_find_2"
+            style="@style/style_home_find_item"
+            android:src="@mipmap/home_find_gate" />
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/home_find_3"
+            style="@style/style_home_find_item"
+            android:src="@mipmap/home_find_service_centre" />
+
+        <ImageView
+            android:id="@+id/home_find_4"
+            style="@style/style_home_find_item"
+            android:src="@mipmap/home_find_service_centre" />
+
+        <ImageView
+            android:id="@+id/home_find_5"
+            style="@style/style_home_find_item"
+            android:src="@mipmap/home_find_service_centre" />
+
+        <ImageView
+            android:id="@+id/home_find_6"
+            style="@style/style_home_find_item"
+            android:src="@mipmap/home_find_service_centre" />
+
+    </LinearLayout>
+</HorizontalScrollView>

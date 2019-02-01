@@ -10,6 +10,7 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.TopLineInfo;
+import com.expo.entity.VrInfo;
 
 import java.util.List;
 
@@ -33,6 +34,14 @@ public interface HomeContract {
         public abstract void setHotActivity();
 
         public abstract void setRecommendRoute();
+
+        public abstract void setRankingScenic();
+
+        public abstract void setVr();
+
+        public abstract void setFood();
+
+        public abstract void setHotel();
 
         public abstract void startHeartService(Context context);
 
@@ -65,5 +74,13 @@ public interface HomeContract {
         void showActivity(List<ExpoActivityInfo> list);
 
         void showRoute(List<RouteInfo> list);
+
+        void showRankingScenic(List<Encyclopedias> list);
+
+        void showVr(List<VrInfo> data);
+
+        void showFood(List<Encyclopedias> list);
+
+        void showHotel(List<Encyclopedias> list);
     }
 }

@@ -27,9 +27,9 @@ public class ExpoActivityPresenterImpl extends ExpoActivityContract.Presenter {
         List<Long> list = new ArrayList<>();
         list.add(0L);
         list.add(0L);
-        list.add(TimeUtils.string2Millis("2019-01", new SimpleDateFormat("yyyy-MM")));
-        list.add(TimeUtils.string2Millis("2019-02", new SimpleDateFormat("yyyy-MM")));
-        list.add(TimeUtils.string2Millis("2019-03", new SimpleDateFormat("yyyy-MM")));
+//        list.add(TimeUtils.string2Millis("2019-01", new SimpleDateFormat("yyyy-MM")));
+//        list.add(TimeUtils.string2Millis("2019-02", new SimpleDateFormat("yyyy-MM")));
+//        list.add(TimeUtils.string2Millis("2019-03", new SimpleDateFormat("yyyy-MM")));
         list.add(TimeUtils.string2Millis("2019-04", new SimpleDateFormat("yyyy-MM")));
         list.add(TimeUtils.string2Millis("2019-05", new SimpleDateFormat("yyyy-MM")));
         list.add(TimeUtils.string2Millis("2019-06", new SimpleDateFormat("yyyy-MM")));

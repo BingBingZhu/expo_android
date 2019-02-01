@@ -5,6 +5,7 @@ import android.content.Context;
 import com.blankj.utilcode.util.AppUtils;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
+import com.expo.entity.VrInfo;
 import com.expo.upapp.UpdateAppManager;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
@@ -60,7 +61,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     @Override
     public void setHotActivity() {
         QueryParams params = new QueryParams()
-                .add("limit", 0, 5)
+                .add("limit", 0, 4)
                 .add("orderBy", "recommended_idx", "true");
         mView.showActivity(mDao.query(ExpoActivityInfo.class, params));
     }
@@ -71,8 +72,51 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("eq", "enable", "1")
                 .add("and")
                 .add("eq", "type_id", "1")
-                .add("limit", 0, 3);
+                .add("limit", 0, 5);
         mView.showRoute(mDao.query(RouteInfo.class, params));
+    }
+
+    @Override
+    public void setRankingScenic() {
+        QueryParams params = new QueryParams()
+                .add("eq", "recommend", "1")
+                .add("and")
+                .add("eq", "type_name", "景点")
+                .add("and")
+                .add("eq", "enable", 1)
+                .add("orderBy", "recommended_idx", true)
+                .add("limit", 0, 2);
+        mView.showRankingScenic(mDao.query(Encyclopedias.class, params));
+    }
+
+    @Override
+    public void setVr() {
+        mView.showVr(mDao.query(VrInfo.class, new QueryParams()
+                .add("eq", "is_recommended", 1)
+                .add("orderBy", "recommended_idx", true)
+                .add("limit", 0, 2)));
+    }
+
+    @Override
+    public void setFood() {
+        QueryParams params = new QueryParams()
+                .add("eq", "type_name", "美食")
+                .add("and")
+                .add("eq", "enable", 1)
+                .add("orderBy", "recommended_idx", true)
+                .add("limit", 0, 5);
+        mView.showFood(mDao.query(Encyclopedias.class, params));
+    }
+
+    @Override
+    public void setHotel() {
+        QueryParams params = new QueryParams()
+                .add("eq", "type_name", "酒店")
+                .add("and")
+                .add("eq", "enable", 1)
+                .add("orderBy", "recommended_idx", true)
+                .add("limit", 0, 3);
+        mView.showHotel(mDao.query(Encyclopedias.class, params));
     }
 
 //    @Override

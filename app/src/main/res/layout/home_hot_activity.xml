@@ -29,6 +29,7 @@
 
 
     <ImageView
+        android:id="@+id/home_hot_activity_firsh"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_206"
         android:layout_marginTop="@dimen/dms_30"

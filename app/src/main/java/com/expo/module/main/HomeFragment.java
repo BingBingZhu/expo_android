@@ -1,6 +1,5 @@
 package com.expo.module.main;
 
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,10 +10,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -23,6 +20,7 @@ import butterknife.OnClick;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
@@ -36,21 +34,22 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.TopLineInfo;
+import com.expo.entity.VrInfo;
 import com.expo.map.LocationManager;
 import com.expo.module.activity.ExpoActivityActivity;
 import com.expo.module.ar.ArActivity;
-import com.expo.module.freewifi.FreeWiFiActivity;
 import com.expo.module.circum.CircumHomeActivity;
 import com.expo.module.heart.MessageKindActivity;
-import com.expo.module.main.adapter.HomeExhibitAdapter;
 import com.expo.module.main.adapter.HomeTopLineAdapter;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
-import com.expo.module.map.ParkMapActivity;
 import com.expo.module.online.OnlineExpoActivity;
+import com.expo.module.online.detail.VRDetailActivity;
+import com.expo.module.online.detail.VRImageActivity;
 import com.expo.module.routes.RouteDetailActivity;
 import com.expo.module.routes.RoutesActivity;
 import com.expo.module.service.TouristServiceActivity;
 import com.expo.module.webview.WebActivity;
+import com.expo.module.webview.WebExpoActivityActivity;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
@@ -58,7 +57,6 @@ import com.expo.utils.LanguageUtil;
 import com.expo.widget.LimitScrollerView;
 import com.expo.widget.MyScrollView;
 import com.expo.widget.decorations.SpaceDecoration;
-import com.expo.widget.gallery.FixLinearSnapHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -107,6 +105,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     @BindView(R.id.home_tab2)
     View mTabView2;
 
+    // 推荐活动
+
+    @BindView(R.id.home_hot_activity_firsh)
+    ImageView mActivityFirsh;
     // 推荐游园路线
     @BindView(R.id.home_route)
     View mRoute;
@@ -120,13 +122,20 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     ImageView mIvRouteImg2;
     @BindView(R.id.hot_route_layout2)
     LinearLayout mLlRoute;
+    @BindView(R.id.home_ranking)
+    View mRankingView;
     // 推荐游园路线
     @BindView(R.id.home_ranking_recycler)
     RecyclerView mRvRanking;
     // 推荐游园路线
     @BindView(R.id.home_food_layout)
     LinearLayout mLlFood;
+    //达人
+    @BindView(R.id.home_daren_layout)
+    LinearLayout mLlDaren;
     // 世园会三大特色酒店
+    @BindView(R.id.home_hotel)
+    View mHotelView;
     @BindView(R.id.home_hotel_layout)
     LinearLayout mLlHotel;
 
@@ -134,6 +143,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     List<Encyclopedias> mListVenue;
     List<ExpoActivityInfo> mListActivity;
     List<RouteInfo> mListRoute;
+    List<Encyclopedias> mListFood;
+    List<Encyclopedias> mListHotel;
+    List<VrInfo> mListDaren;
     //    List<Encyclopedias> mListExhibit;
 //    List<Encyclopedias> mListExhibitGarden;
     List<Encyclopedias> mListRanking;
@@ -167,7 +179,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 ////                    Math.max(Float.valueOf(scrollY), 0.0f) / 2), 2, 205, 155);
 ////            mHtTitle.setBackgroundColor(color);
 
-            if (mTabView1.getTop() < Math.abs(scrollY)) {
+            if (mTabView1.getTop() - StatusBarUtils.getStatusBarHeight(getContext()) < Math.abs(scrollY)) {
                 mTabView2.setVisibility(View.VISIBLE);
             } else {
                 mTabView2.setVisibility(View.GONE);
@@ -215,13 +227,16 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mPresenter.setVenue();
         mPresenter.setHotActivity();
         mPresenter.setRecommendRoute();
+        mPresenter.setRankingScenic();
+        mPresenter.setVr();
+        mPresenter.setFood();
+        mPresenter.setHotel();
 //        mPresenter.setExhibit();
 //        mPresenter.setExhibitGarden();
         mPresenter.startHeartService(getContext());
         mPresenter.startHeartService(getContext());
 
         LocationManager.getInstance().registerLocationListener(mOnLocationChangeListener);//定位
-        initSimpleData();
     }
 
     @Override
@@ -234,13 +249,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mLsvScroll.setDataAdapter(mAdapterTopLine = new HomeTopLineAdapter(getContext()));
         mLsvScroll.setOnItemClickListener(mTopLineListener);
         mAdapterTopLine.setDatas(mListTopLine);
-    }
-
-    private void initSimpleData() {
-        for (int i = 0; i < 5; i++)
-            addFood(i);
-        for (int i = 0; i < 3; i++)
-            addHotelView(i);
     }
 
 //    private void initRecyclerExhibit() {
@@ -274,28 +282,25 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     private void initRecyclerRanking() {
         mListRanking = new ArrayList<>();
-        Encyclopedias encyclopedias = new Encyclopedias();
-        mListRanking.add(encyclopedias);
-        mListRanking.add(encyclopedias);
         mRvRanking.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvRanking.addItemDecoration(new SpaceDecoration(0, (int) getContent().getResources().getDimension(R.dimen.dms_30), 0, 0, 0));
         mRvRanking.setAdapter(mAdapterRanking = new CommonAdapter<Encyclopedias>(getContext(), R.layout.item_home_ranking, mListRanking) {
             @Override
             protected void convert(ViewHolder holder, Encyclopedias encyclopedias, int position) {
-//                Picasso.with(getContext()).load(CommUtils.getFullUrl(encyclopedias.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_home_rankiing_img));
-//                holder.setText(R.id.item_home_rankiing_text1, LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
-//                holder.setText(R.id.item_home_rankiing_text2, LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
-//                holder.setText(R.id.item_home_rankiing_text3, LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
-//                holder.itemView.setOnClickListener(v -> WebTemplateActivity.startActivity(mContext, encyclopedias.getId()));
-                Picasso.with(getContext()).load(R.mipmap.item_home_ranking).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_home_ranking_img));
-                holder.setText(R.id.item_home_ranking_text1, "核心亮点场馆");
-                holder.setText(R.id.item_home_ranking_text2, "植物馆");
-                holder.setText(R.id.item_home_ranking_text3, "#植物馆建筑面积约10,000平方米，建筑设计理念为“升起的...");
+                Picasso.with(getContext()).load(CommUtils.getFullUrl(encyclopedias.picUrl)).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_home_ranking_img));
+                holder.setText(R.id.item_home_ranking_text1, LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+                holder.setText(R.id.item_home_ranking_text2, LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+                holder.setText(R.id.item_home_ranking_text3, LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
+                holder.itemView.setOnClickListener(v -> WebTemplateActivity.startActivity(mContext, encyclopedias.getId()));
+//                Picasso.with(getContext()).load(R.mipmap.item_home_ranking).placeholder(R.drawable.image_default).error(R.drawable.image_default).into((ImageView) holder.getView(R.id.item_home_ranking_img));
+//                holder.setText(R.id.item_home_ranking_text1, "核心亮点场馆");
+//                holder.setText(R.id.item_home_ranking_text2, "植物馆");
+//                holder.setText(R.id.item_home_ranking_text3, "#植物馆建筑面积约10,000平方米，建筑设计理念为“升起的...");
             }
 
             @Override
             public int getItemCount() {
-                return 2;
+                return mListRanking.size();
             }
         });
     }
@@ -318,21 +323,27 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         switch (view.getId()) {
             case R.id.home_func_0:
 //                FreeWiFiActivity.startActivity(getContext()); //免费wifi
-                CircumHomeActivity.startActivity(getContext());     //周边服务（暂占用按钮）
+//                CircumHomeActivity.startActivity(getContext());     //周边服务（暂占用按钮）
+                ((MainActivity) getContext()).goScenic();
                 break;
             case R.id.home_func_1:
-                WebActivity.startActivity(getContext(), mPresenter.loadCommonInfo(CommonInfo.PORTAL_WEBSITE_INTEGRATION),
-                        getString(R.string.home_func_item_panorama), BaseActivity.TITLE_COLOR_STYLE_WHITE); //微观世界
+//                WebActivity.startActivity(getContext(), mPresenter.loadCommonInfo(CommonInfo.PORTAL_WEBSITE_INTEGRATION),
+//                        getString(R.string.home_func_item_panorama), BaseActivity.TITLE_COLOR_STYLE_WHITE); //微观世界
+                ExpoActivityActivity.startActivity(getContext());
                 break;
             case R.id.home_func_2:
 //                ExpoActivityActivity.startActivity(getContext());//世园活动
 //                WebActivity.startActivity( getContext(), mPresenter.loadCommonInfo( CommonInfo.PANORAMA ), null, false );
+                CircumHomeActivity.startActivity(getContext());
                 break;
             case R.id.home_func_3:
-                ParkMapActivity.startActivity(getContext(), null);  //导航导览
+//                ParkMapActivity.startActivity(getContext(), null);  //导航导览
+//                ArActivity.startActivity(getContext());
+                ArActivity.lunchPhotograph(getContext(), mPresenter.loadCommonInfo(CommonInfo.EXPO_AR_DOWNLOAD_PAGE));
                 break;
-            case R.id.home_func_4:
-                RoutesActivity.startActivity(getContext());//游览路线
+            case R.id.home_func_4://智玩
+//                RoutesActivity.startActivity(getContext());//游览路线
+                ((MainActivity) getContext()).goScenicMap();
                 break;
 
             case R.id.home_func_5:
@@ -398,8 +409,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         if (isDataEmpty(mHomeActivity, list)) return;
         mLlActivity.removeAllViews();
         mListActivity = list;
-        for (int i = 0; list != null && i < list.size() || i < 3; i++) {
-            addHotActivity(i);
+        for (int i = 0; list != null && i < list.size() || i < 4; i++) {
+            if (i == 0)
+                addHotActivityFirst();
+            else
+                addHotActivity(i);
         }
     }
 
@@ -407,11 +421,47 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     public void showRoute(List<RouteInfo> list) {
         if (isDataEmpty(mRoute, list)) return;
         mListRoute = list;
-        addRoute1();
-        addRoute2();
-        for (int i = 2; list != null && i < list.size() || i < 5; i++) {
-            addRouteBottom(i);
+        for (int i = 0; list != null && i < list.size() || i < 5; i++) {
+            if (i == 0) {
+                addRoute1();
+            } else if (i == 1) {
+                addRoute2();
+            } else {
+                addRouteBottom(i);
+            }
         }
+    }
+
+    @Override
+    public void showRankingScenic(List<Encyclopedias> list) {
+        if (isDataEmpty(mRankingView, list)) return;
+        mListRanking.clear();
+        mListRanking.addAll(list);
+        mAdapterRanking.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showVr(List<VrInfo> list) {
+        if (isDataEmpty(mLlDaren, list)) return;
+        mListDaren = list;
+        for (int i = 0; i < 2; i++)
+            addVr(i);
+    }
+
+    @Override
+    public void showFood(List<Encyclopedias> list) {
+        if (isDataEmpty(mLlFood, list)) return;
+        mListFood = list;
+        for (int i = 0; i < 5; i++)
+            addFood(i);
+    }
+
+    @Override
+    public void showHotel(List<Encyclopedias> list) {
+        if (isDataEmpty(mHotelView, list)) return;
+        mListHotel = list;
+        for (int i = 0; i < 3; i++)
+            addHotelView(i);
     }
 
     public void sort(List<Encyclopedias> list, LatLng latLng) {
@@ -485,19 +535,21 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     }
 
     // 热门活动
+    private void addHotActivityFirst() {
+        Picasso.with(getContext()).load(CommUtils.getFullUrl(mListActivity.get(0).getPicUrl())).into(mActivityFirsh);
+    }
+
     private void addHotActivity(int position) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_home_hot_activity, null);
-//        if (mListActivity.size() > position) {
-//            ExpoActivityInfo info = mListActivity.get(position);
-//            ImageView imageView = view.findViewById(R.id.item_home_activity_img);
-//            Picasso.with(getContext()).load(CommUtils.getFullUrl(info.getPicUrl())).placeholder(R.drawable.image_default).into(imageView);
+        if (mListActivity.size() > position) {
+            ExpoActivityInfo info = mListActivity.get(position);
+            ImageView imageView = view.findViewById(R.id.item_home_activity_img);
+            Picasso.with(getContext()).load(CommUtils.getFullUrl(info.getPicUrl())).placeholder(R.drawable.image_default).into(imageView);
 //            ((TextView) view.findViewById(R.id.item_home_activity_text)).setText(LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn()));
-//            view.setOnClickListener(v -> WebActivity.startActivity(getContext(), LanguageUtil.chooseTest(info.getLinkH5Url(), info.getLinkH5UrLen()), LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn())));
-//        }
-        ImageView imageView = view.findViewById(R.id.item_home_activity_img);
-        Picasso.with(getContext()).load(R.mipmap.hot_activity_1).placeholder(R.drawable.image_default).into(imageView);
-        ((TextView) view.findViewById(R.id.item_home_activity_text)).setText("花车巡游");
-
+            view.setOnClickListener(v -> {
+                WebExpoActivityActivity.startActivity(getContext(), info.getId());
+            });
+        }
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, -2);
         params.weight = 1;
         if (position != 0) {
@@ -513,38 +565,41 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         int width = (int) (ScreenUtils.getScreenWidth() - getContext().getResources().getDimension(R.dimen.dms_68)) * 2 / 3;
         mRouteLeft.getLayoutParams().width = width;
         mIvRouteImg1.getLayoutParams().width = width;
-//        if (mListRoute != null && mListRoute.size() > 0) {
-//            RouteInfo info = mListRoute.get(0);
-//            Picasso.with(getContext()).load(CommUtils.getFullUrl(info.picUrl)).into(mIvRouteImg1);
-//        }
-        Picasso.with(getContext()).load(R.mipmap.route_top_left).into(mIvRouteImg1);
-        mTvRouteText1.setText("浪漫世园行《山水园艺轴》\n推荐最佳路线");
+        if (mListRoute != null && mListRoute.size() > 0) {
+            RouteInfo info = mListRoute.get(0);
+            Picasso.with(getContext()).load(CommUtils.getFullUrl(info.picUrl)).into(mIvRouteImg1);
+//        mTvRouteText1.setText("浪漫世园行《山水园艺轴》\n推荐最佳路线");
+            mIvRouteImg1.setOnClickListener(v -> RouteDetailActivity.startActivity(getContext(), info.id, LanguageUtil.chooseTest(info.caption, info.captionen)));
+        }
+//        Picasso.with(getContext()).load(R.mipmap.route_top_left).into(mIvRouteImg1);
+//        mTvRouteText1.setText("浪漫世园行《山水园艺轴》\n推荐最佳路线");
     }
 
     private void addRoute2() {
         int width = (int) (ScreenUtils.getScreenWidth() - getContext().getResources().getDimension(R.dimen.dms_76)) / 3;
         mIvRouteImg2.getLayoutParams().width = width;
-//        if (mListRoute != null && mListRoute.size() > 1) {
-//            RouteInfo info = mListRoute.get(1);
-//            Picasso.with(getContext()).load(CommUtils.getFullUrl(info.picUrl)).into(mIvRouteImg2);
-//        }
-        Picasso.with(getContext()).load(R.mipmap.route_top_right).into(mIvRouteImg2);
+        if (mListRoute != null && mListRoute.size() > 1) {
+            RouteInfo info = mListRoute.get(1);
+            Picasso.with(getContext()).load(CommUtils.getFullUrl(info.picUrl)).into(mIvRouteImg2);
+            mIvRouteImg2.setOnClickListener(v -> RouteDetailActivity.startActivity(getContext(), info.id, LanguageUtil.chooseTest(info.caption, info.captionen)));
+        }
+//        Picasso.with(getContext()).load(R.mipmap.route_top_right).into(mIvRouteImg2);
     }
 
     // 推荐游园路线
     private void addRouteBottom(int position) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_home_hot_activity, null);
-//        if (mListRoute.size() > position) {
-//            RouteInfo info = mListRoute.get(position);
-//            ImageView imageView = view.findViewById(R.id.item_home_activity_img);
-//            Picasso.with(getContext()).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).into(imageView);
-//            ((TextView) view.findViewById(R.id.item_home_activity_text)).setText(LanguageUtil.chooseTest(info.caption, info.captionen));
-//            view.setOnClickListener(v -> RouteDetailActivity.startActivity(getContext(), info.id, LanguageUtil.chooseTest(info.caption, info.captionen)));
-//        }
+        if (mListRoute.size() > position) {
+            RouteInfo info = mListRoute.get(position);
+            ImageView imageView = view.findViewById(R.id.item_home_activity_img);
+            Picasso.with(getContext()).load(CommUtils.getFullUrl(info.picUrl)).into(imageView);
+            ((TextView) view.findViewById(R.id.item_home_activity_text)).setText(LanguageUtil.chooseTest(info.caption, info.captionen));
+            view.setOnClickListener(v -> RouteDetailActivity.startActivity(getContext(), info.id, LanguageUtil.chooseTest(info.caption, info.captionen)));
+        }
 
-        ImageView imageView = view.findViewById(R.id.item_home_activity_img);
-        Picasso.with(getContext()).load(R.mipmap.route_bottom).placeholder(R.drawable.image_default).into(imageView);
-        ((TextView) view.findViewById(R.id.item_home_activity_text)).setText("游玩去世园");
+//        ImageView imageView = view.findViewById(R.id.item_home_activity_img);
+//        Picasso.with(getContext()).load(R.mipmap.route_bottom).placeholder(R.drawable.image_default).into(imageView);
+//        ((TextView) view.findViewById(R.id.item_home_activity_text)).setText("游玩去世园");
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, -2);
         params.weight = 1;
@@ -555,21 +610,22 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mLlRoute.addView(view);
     }
 
-    // 推荐游园路线
+    // 世园美食
     private void addFood(int position) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_home_food_title, null);
-//        if (mListRoute.size() > position) {
-//            RouteInfo info = mListRoute.get(position);
-//            ImageView imageView = view.findViewById(R.id.item_home_activity_img);
-//            Picasso.with(getContext()).load(CommUtils.getFullUrl(info.picUrl)).placeholder(R.drawable.image_default).into(imageView);
-//            ((TextView) view.findViewById(R.id.item_home_activity_text)).setText(LanguageUtil.chooseTest(info.caption, info.captionen));
-//            view.setOnClickListener(v -> RouteDetailActivity.startActivity(getContext(), info.id, LanguageUtil.chooseTest(info.caption, info.captionen)));
-//        }
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) (ScreenUtils.getScreenWidth() - getContext().getResources().getDimension(R.dimen.dms_60)) / 5, -1);
+//        view.setLayoutParams(params);
+        if (mListFood.size() > position) {
+            Encyclopedias info = mListFood.get(position);
+            SimpleDraweeView imageView = view.findViewById(R.id.item_home_food_title_img);
+            imageView.setImageURI(CommUtils.getFullUrl(info.picUrl));
+            ((TextView) view.findViewById(R.id.item_home_food_title_text)).setText(LanguageUtil.chooseTest(info.caption, info.captionEn));
+            view.setOnClickListener(v -> RouteDetailActivity.startActivity(getContext(), info.id, LanguageUtil.chooseTest(info.caption, info.captionEn)));
+        }
 
-//        view.getLayoutParams().width = (int) (ScreenUtils.getScreenWidth() - getContext().getResources().getDimension(R.dimen.dms_60)) / 5;
-        ImageView imageView = view.findViewById(R.id.item_home_food_title_img);
-        Picasso.with(getContext()).load(R.mipmap.item_home_food_title_img).placeholder(R.drawable.image_default).into(imageView);
-        ((TextView) view.findViewById(R.id.item_home_food_title_text)).setText("涮羊肉");
+//        ImageView imageView = view.findViewById(R.id.item_home_food_title_img);
+//        Picasso.with(getContext()).load(R.mipmap.item_home_food_title_img).placeholder(R.drawable.image_default).into(imageView);
+//        ((TextView) view.findViewById(R.id.item_home_food_title_text)).setText("涮羊肉");
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, -2);
         params.weight = 1;
@@ -578,19 +634,42 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mLlFood.addView(view);
     }
 
+    // 世园美食
+    private void addVr(int position) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.item_home_daren, null);
+        if (mListDaren.size() > position) {
+            VrInfo vrInfo = mListDaren.get(position);
+            ImageView imageView = view.findViewById(R.id.daren_left_img);
+            Picasso.with(getContext()).load(CommUtils.getFullUrl(vrInfo.getUrl())).placeholder(R.drawable.image_default).into(imageView);
+            SimpleDraweeView circleView = view.findViewById(R.id.daren_left_circle_img);
+            circleView.setImageURI(CommUtils.getFullUrl(vrInfo.getUrl()));
+            view.setOnClickListener(v -> {
+                if (StringUtils.equals(vrInfo.getType(), Constants.VrType.VR_TYPE_IMG)) {
+                    VRImageActivity.startActivity(getContext(), vrInfo.getId());
+                } else if (StringUtils.equals(vrInfo.getType(), Constants.VrType.VR_TYPE_VIDEO)) {
+                    VRDetailActivity.startActivity(getContext(), vrInfo.getId());
+                }
+            });
+        }
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, -2);
+        params.weight = 1;
+        if (position != 0) {
+            params.leftMargin = (int) getContent().getResources().getDimension(R.dimen.dms_22);
+        }
+        view.setLayoutParams(params);
+        mLlDaren.addView(view);
+    }
+
     // 世园会三大特色酒店
     private void addHotelView(int position) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_home_hotel, null);
-//        if (mListVenue.size() > position) {
-//            Encyclopedias encyclopedias = mListVenue.get(position);
-//            ImageView imageView = view.findViewById(R.id.item_home_hotel_img);
-//            Picasso.with(getContext()).load(CommUtils.getFullUrl(encyclopedias.picUrl)).placeholder(R.drawable.image_default).into(imageView);
-//            ((TextView) view.findViewById(R.id.item_home_hotel_text)).setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
-//            view.setOnClickListener(v -> WebTemplateActivity.startActivity(getContext(), encyclopedias.getId()));
-//        }
-        ImageView imageView = view.findViewById(R.id.item_home_hotel_img);
-        Picasso.with(getContext()).load(R.mipmap.item_home_hotel).placeholder(R.drawable.image_default).into(imageView);
-        ((TextView) view.findViewById(R.id.item_home_hotel_text)).setText("凯悦酒店");
+        if (mListHotel.size() > position) {
+            Encyclopedias encyclopedias = mListHotel.get(position);
+            ImageView imageView = view.findViewById(R.id.item_home_hotel_img);
+            Picasso.with(getContext()).load(CommUtils.getFullUrl(encyclopedias.picUrl)).placeholder(R.drawable.image_default).into(imageView);
+            ((TextView) view.findViewById(R.id.item_home_hotel_text)).setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+            view.setOnClickListener(v -> WebTemplateActivity.startActivity(getContext(), encyclopedias.getId()));
+        }
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, -2);
         params.weight = 1;
         if (position != 0) {
@@ -612,4 +691,56 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         LocationManager.getInstance().unregisterLocationListener(mOnLocationChangeListener);
     }
 
+    @OnClick({R.id.home_find_0, R.id.home_find_1, R.id.home_find_2, R.id.home_find_3,
+            R.id.home_find_4, R.id.home_find_5, R.id.home_find_6})
+    public void clickFind(View view) {
+        ((MainActivity) getContext()).goScenicMap();
+    }
+
+    @OnClick(R.id.home_activity_more)
+    public void clickActivityMore() {
+        ExpoActivityActivity.startActivity(getContext());
+    }
+
+    @OnClick(R.id.home_hot_activity_firsh)
+    public void clickActivityFirst() {
+        if (mListActivity != null && mListActivity.size() > 1) {
+            WebExpoActivityActivity.startActivity(getContext(), mListActivity.get(0).getId());
+        }
+    }
+
+    @OnClick(R.id.home_route_more)
+    public void clickRouteMore() {
+        RoutesActivity.startActivity(getContext());
+    }
+
+    @OnClick(R.id.home_ranking_more)
+    public void clickRankingMore() {
+        ((MainActivity) getContext()).goScenic();
+    }
+
+    @OnClick(R.id.home_food_more)
+    public void clickFoodMore() {
+        ((MainActivity) getContext()).goScenic();
+    }
+
+    @OnClick(R.id.home_hotel_more)
+    public void clickHotelMore() {
+        ((MainActivity) getContext()).goScenic();
+    }
+
+    @OnClick({R.id.home_experience_more, R.id.home_experience_img})
+    public void clickExperienceMore() {
+        CircumHomeActivity.startActivity(getContext());
+    }
+
+    @OnClick(R.id.daren_img1)
+    public void clickDaren1() {
+        OnlineExpoActivity.startActivity(getContext());
+    }
+
+    @OnClick(R.id.home_hotel_more)
+    public void clickDaren2() {
+        ArActivity.lunchPhotograph(getContext(), mPresenter.loadCommonInfo(CommonInfo.EXPO_AR_DOWNLOAD_PAGE));
+    }
 }

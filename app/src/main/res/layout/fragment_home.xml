@@ -51,7 +51,9 @@
                 android:id="@+id/home_route"
                 layout="@layout/home_route" />
 
-            <include layout="@layout/home_ranking" />
+            <include
+                android:id="@+id/home_ranking"
+                layout="@layout/home_ranking" />
 
             <include layout="@layout/home_daren" />
 
@@ -63,7 +65,9 @@
 
             <include layout="@layout/home_food" />
 
-            <include layout="@layout/home_hotel" />
+            <include
+                android:id="@+id/home_hotel"
+                layout="@layout/home_hotel" />
 
             <include layout="@layout/home_experience" />
 
