@@ -11,6 +11,8 @@ import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
@@ -91,11 +93,13 @@ public class WebExpoActivityActivity extends BaseActivity<WebExpoActivityContrac
             ToastHelper.showShort(R.string.error_params);
             finish();
         }
-        mVenue = mPresenter.loadSceneByWikiId(id);
+        if (!StringUtils.isEmpty(mExpoActivityInfo.getLinkId()))
+            mVenue = mPresenter.loadSceneByWikiId(Long.valueOf(mExpoActivityInfo.getLinkId()));
         Schedule schedule = mPresenter.loadScheduleByWikiId(id);
         setTitle(BaseActivity.TITLE_COLOR_STYLE_WHITE, mExpoActivityInfo.getCaption());
         initTitleRightTextView();
 
+        mUrl = mUrl + (mVenue == null ? "&data_type=0" : "&data_type=1");
         mX5View.setWebChromeClient(webChromeClient);
         mX5View.removeTencentAd(this);
         mX5View.addJavascriptInterface(new JsHook(), "hook");
@@ -220,7 +224,7 @@ public class WebExpoActivityActivity extends BaseActivity<WebExpoActivityContrac
         }
 
         @JavascriptInterface
-        public void gotoDataLocation(int id) {
+        public void gotoDataLocation() {
             runOnUiThread(() -> {
                 NavigationActivity.startActivity(WebExpoActivityActivity.this, mVenue);
             });
