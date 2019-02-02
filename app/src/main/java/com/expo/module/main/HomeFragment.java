@@ -370,12 +370,12 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 url = mPresenter.loadCommonInfo(CommonInfo.EXPO_BRIEF_INTRODUCTION);
                 WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 : url, getString(R.string.beijing_world_expo_2019), 1);
                 break;
-            case R.id.daren_img2://AR乐拍
-                ArActivity.startActivity(getContext());
-                break;
-            case R.id.daren_img1://网上世园
-                OnlineExpoActivity.startActivity(getContext());
-                break;
+//            case R.id.daren_img2://AR乐拍
+//                ArActivity.startActivity(getContext());
+//                break;
+//            case R.id.daren_img1://网上世园
+//                OnlineExpoActivity.startActivity(getContext());
+//                break;
         }
     }
 
@@ -739,7 +739,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         OnlineExpoActivity.startActivity(getContext());
     }
 
-    @OnClick(R.id.home_hotel_more)
+    @OnClick(R.id.daren_img2)
     public void clickDaren2() {
         ArActivity.lunchPhotograph(getContext(), mPresenter.loadCommonInfo(CommonInfo.EXPO_AR_DOWNLOAD_PAGE));
     }
