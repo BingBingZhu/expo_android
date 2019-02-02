@@ -238,7 +238,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
      * 下拉窗体
      */
     private void initSlidingDrawer() {
-        if (PrefsHelper.getBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true )) {
+        if (PrefsHelper.getBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false )) {
             mSlidingDrawerView.open();
             mCameraManager.startPreview();
             updateMapStatue( true );

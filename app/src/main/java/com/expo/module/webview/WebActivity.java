@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import com.expo.services.TrackRecordService;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -364,12 +365,12 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
          */
         @JavascriptInterface
         public void goToServiceCenter() {
-            if (null == mLocation) {
+            if (null == TrackRecordService.getLocation()) {
                 ToastHelper.showShort(R.string.trying_to_locate);
                 return;
             } else {
-                if (mPresenter.checkInPark(mLocation)) {
-                    Venue venue = mPresenter.getNearbyServiceCenter(mLocation);
+                if (mPresenter.checkInPark(TrackRecordService.getLocation())) {
+                    Venue venue = mPresenter.getNearbyServiceCenter(TrackRecordService.getLocation());
                     if (venue != null) {
                         NavigationActivity.startActivity(getContext(), venue);
                     } else {

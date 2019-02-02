@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/icon_center_img"
-            android:layout_width="@dimen/dms_34"
-            android:layout_height="@dimen/dms_34"
+            android:layout_width="@dimen/dms_36"
+            android:layout_height="@dimen/dms_36"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/dms_12"
             android:src="@mipmap/test_1" />

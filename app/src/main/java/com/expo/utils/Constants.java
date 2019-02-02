@@ -98,11 +98,14 @@ public interface Constants {
         public static final String EXTRA_USER_POINTS = "extra_user_points";
         public static final String EXTRA_ROUTE_NAME = "extra_route_name";
         public static final String EXTRA_JSON_DATA = "extra_json_data";
+        public static final String EXTRA_JSON_DATA2 = "extra_json_data2";
         public static final String EXTRA_ENJOYS = "extra_enjoys";
         public static final String EXTRA_READ_COUNT = "extra_read_count";
         public static final String EXTRA_IS_START_LOCATION = "extra_is_start_location";
         public static final String EXTRA_PANORAMA_TYPE = "extra_panorama_type";
         public static final String EXTRA_CIRCUN_TYPE = "extra_circun_type";
+        public static final String EXTRA_AT_VENUE_LIST = "extra_at_venue_list";
+        public static final String EXTRA_BITMAP_BYTE_ARRAY = "extra_bitmap_byte_array";
     }
 
     /**

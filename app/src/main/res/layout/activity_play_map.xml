@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/play_map_info_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/play_map_destination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dms_22"
+            android:layout_marginBottom="@dimen/dms_22"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:textSize="@dimen/font_36"
+            android:textColor="@color/color_333"
+            android:textStyle="bold"
+            android:text="目的地：中国馆"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_2"
+            android:background="@color/white_f5" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_150"
+            android:paddingTop="@dimen/dms_20"
+            android:paddingBottom="@dimen/dms_20"
+            android:paddingLeft="@dimen/dms_30"
+            android:paddingRight="@dimen/dms_30">
+            <TextView
+                android:id="@+id/play_map_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_30"
+                android:textColor="@color/color_666"
+                android:text="实际距离：520m" />
+            <TextView
+                android:id="@+id/play_map_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textSize="@dimen/font_30"
+                android:textColor="@color/color_666"
+                android:text="预计全程时常：7分钟" />
+            <TextView
+                android:id="@+id/play_map_start_navi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dms_22"
+                android:paddingBottom="@dimen/dms_22"
+                android:paddingLeft="@dimen/font_28"
+                android:paddingRight="@dimen/font_28"
+                android:background="@drawable/bg_02cd9b_r5"
+                android:layout_gravity="right|center_vertical"
+                android:textSize="@dimen/font_36"
+                android:textColor="@color/white"
+                android:text="开始导航" />
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_2"
+            android:background="@color/white_f5" />
+    </LinearLayout>
+    <com.amap.api.maps.TextureMapView
+        android:id="@+id/play_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
