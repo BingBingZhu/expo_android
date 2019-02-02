@@ -25,6 +25,7 @@ import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.module.main.find.FindFragment;
+import com.expo.module.main.find.FindFragment2;
 import com.expo.module.main.scenic.ScenicFragment;
 import com.expo.services.TrackRecordService;
 import com.expo.upapp.UpdateAppManager;
@@ -62,7 +63,7 @@ public class MainActivity extends BaseActivity {
 //            PanoramaFragment.class,
             ScenicFragment.class,
 //            EncyclopediaFragment.class,
-            FindFragment.class,
+            FindFragment2.class,
             MineFragment.class};
     private ServiceConnection conn;
 

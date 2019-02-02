@@ -129,7 +129,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     private String mPlayUrl;
     private long mSpotId;
 
-    private ClusterOverlay mClusterOverlay;
+//    private ClusterOverlay mClusterOverlay;
 
     ClusterClickListener mClusterClickListener = new ClusterClickListener() {
         @Override
@@ -197,11 +197,11 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(GEOFENCE_BROADCAST_ACTION);
         getContext().registerReceiver(mGeoFenceReceiver, filter);
-        mClusterOverlay = new ClusterOverlay(mAMap, null,
-                SizeUtils.dp2px(50),
-                getContext());
-        mClusterOverlay.setMarkerInfoInterface(mMarkerInfoInterface);
-        mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
+//        mClusterOverlay = new ClusterOverlay(mAMap, null,
+//                SizeUtils.dp2px(50),
+//                getContext());
+//        mClusterOverlay.setMarkerInfoInterface(mMarkerInfoInterface);
+//        mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
 
     }
 
@@ -796,7 +796,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         } else {
             mAtVenue.addAll(facilities);
         }
-        mClusterOverlay.clearClusterItem();
+//        mClusterOverlay.clearClusterItem();
         clearMap();
         for (Venue as : mAtVenue) {
             if (as.getLat() == 0)
@@ -804,20 +804,20 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
             LatLng latLng = new LatLng(as.getLat(), as.getLng());
             VenuesType vt = mVenuesTypes.get(mTabPosition);
 
-            if (mTabPosition == 0) {
-                RegionItem regionItem = new RegionItem(latLng,
-                        LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption()));
-                regionItem.venuesType = vt;
-                regionItem.actualScene = as;
-                mClusterOverlay.addClusterItem(regionItem);
-            } else {
+//            if (mTabPosition == 0) {
+//                RegionItem regionItem = new RegionItem(latLng,
+//                        LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption()));
+//                regionItem.venuesType = vt;
+//                regionItem.actualScene = as;
+//                mClusterOverlay.addClusterItem(regionItem);
+//            } else {
                 Marker marker = mAMap.addMarker(new MarkerOptions()
                         .icon(mMapUtils.setMarkerIconDrawable(getContext(), vt.getMarkBitmap(),
                                 LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption())))
                         .anchor(0.5F, 0.90F).position(latLng));
                 marker.setObject(as);
                 markers.add(marker);
-            }
+//            }
         }
         mMapUtils.setCameraZoom(markers);
     }
@@ -851,7 +851,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 }
                 mOldTabPosition = mTabPosition;
                 clearMap();
-                mClusterOverlay.clearClusterItem();
+//                mClusterOverlay.clearClusterItem();
                 mTabId = ParkMapFragment.this.mVenuesTypes.get(mTabPosition).getId();
                 if (isTabByCnName("\u8def\u7ebf")) {
                     if (mCustomRoutes.size() > 1)
