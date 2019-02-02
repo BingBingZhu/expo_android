@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <TextView
@@ -21,8 +22,8 @@
 
         <ImageView
             android:id="@+id/icon_center_img"
-            android:layout_width="@dimen/dms_34"
-            android:layout_height="@dimen/dms_34"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/dms_14"
             android:src="@mipmap/test_1" />

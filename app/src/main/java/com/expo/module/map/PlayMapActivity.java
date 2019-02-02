@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -236,6 +237,26 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
         in.putExtra(Constants.EXTRAS.EXTRA_JSON_DATA, Http.getGsonInstance().toJson(venue));
         in.putExtra(Constants.EXTRAS.EXTRA_BITMAP_BYTE_ARRAY, bitmapToByteArray(bitmap));
         context.startActivity(in);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mAMapNavi != null) {
+            mAMapNavi.stopNavi();
+            mAMapNavi.destroy();
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mAMapNavi != null) {
+                mAMapNavi.stopNavi();
+                mAMapNavi.destroy();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private static byte[] bitmapToByteArray(Bitmap bitmap){

@@ -80,11 +80,13 @@ public class MediaPlayUtil {
         switch (currentState) {
             case STATE_NORMAL:
                 playMusic(url);
-                imgView.setImageResource(R.mipmap.ico_audio_play);
+                if (null != imgView)
+                    imgView.setImageResource(R.mipmap.ico_audio_play);
                 break;
             case STATE_PLAY:
                 stopMusic();
-                imgView.setImageResource(R.mipmap.ico_audio_pause);
+                if (null != imgView)
+                    imgView.setImageResource(R.mipmap.ico_audio_pause);
                 break;
         }
     }

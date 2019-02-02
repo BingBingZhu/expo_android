@@ -87,7 +87,7 @@
         <attr name="circleColor" format="color" />
         <attr name="cringColor" format="color" />
         <attr name="cringBgColor" format="color" />
-        <attr name="centerPic" format="reference" />
+        <!--<attr name="centerPic" format="reference" />-->
     </declare-styleable>
 
     <style name="ApkDownloadDialogStyle" parent="@android:style/Theme.Dialog">

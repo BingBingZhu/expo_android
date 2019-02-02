@@ -53,6 +53,7 @@
                     android:scaleType="fitXY"
                     android:background="@drawable/shape_park_dialog_pic_contour"
                     android:padding="@dimen/dms_6"
+                    app:placeholderImageScaleType="centerCrop"
                     app:placeholderImage="@mipmap/ico_ency_def" />
                 <TextView
                     android:id="@+id/park_mark_dialog_name"

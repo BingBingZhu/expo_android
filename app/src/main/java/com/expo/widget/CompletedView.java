@@ -44,16 +44,16 @@ public class CompletedView extends View {
     private int mXCenter;
     // 圆心y坐标
     private int mYCenter;
-//    // 字的长度
-//    private float mTxtWidth;
-//    // 字的高度
-//    private float mTxtHeight;
+    // 字的长度
+    private float mTxtWidth;
+    // 字的高度
+    private float mTxtHeight;
     // 总进度
     private int mTotalProgress = 100;
     // 当前进度
     private int mProgress;
     // 中心图标
-    private Drawable mCenterDrawable;
+//    private Drawable mCenterDrawable;
 
     public CompletedView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -67,12 +67,12 @@ public class CompletedView extends View {
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(attrs,
                 R.styleable.TasksCompletedView, 0, 0);
         mRadius = typeArray.getDimension(R.styleable.TasksCompletedView_radius, getResources().getDimensionPixelSize(R.dimen.dms_34));
-        mStrokeWidth = typeArray.getDimension(R.styleable.TasksCompletedView_strokeWidth, getResources().getDimensionPixelSize(R.dimen.dms_6));
-        mCircleColor = typeArray.getColor(R.styleable.TasksCompletedView_circleColor, getContext().getResources().getColor(R.color.transparent));
+        mStrokeWidth = typeArray.getDimension(R.styleable.TasksCompletedView_strokeWidth, getResources().getDimensionPixelSize(R.dimen.dms_10));
+        mCircleColor = typeArray.getColor(R.styleable.TasksCompletedView_circleColor, getContext().getResources().getColor(R.color.translucent_mask));
         mCirclePointColor = getContext().getResources().getColor(R.color.white);
         mRingColor = typeArray.getColor(R.styleable.TasksCompletedView_cringColor, getContext().getResources().getColor(R.color.green_00cb99));
-        mRingBgColor = typeArray.getColor(R.styleable.TasksCompletedView_cringBgColor, getContext().getResources().getColor(R.color.gray_cc));
-        mCenterDrawable = typeArray.getDrawable(R.styleable.TasksCompletedView_centerPic);
+        mRingBgColor = typeArray.getColor(R.styleable.TasksCompletedView_cringBgColor, getContext().getResources().getColor(R.color.translucent_mask));
+//        mCenterDrawable = typeArray.getDrawable(R.styleable.TasksCompletedView_centerPic);
         mRingRadius = mRadius + mStrokeWidth / 2;
     }
 
@@ -84,11 +84,11 @@ public class CompletedView extends View {
         mCirclePaint.setColor(mCircleColor);
         mCirclePaint.setStyle(Paint.Style.FILL);
 
-        // 小白点
-        mCirclePointPaint = new Paint();
-        mCirclePointPaint.setAntiAlias(true);
-        mCirclePointPaint.setColor(mCirclePointColor);
-        mCirclePointPaint.setStyle(Paint.Style.FILL);
+//        // 小白点
+//        mCirclePointPaint = new Paint();
+//        mCirclePointPaint.setAntiAlias(true);
+//        mCirclePointPaint.setColor(mCirclePointColor);
+//        mCirclePointPaint.setStyle(Paint.Style.FILL);
 
         //外圆弧背景
         mRingPaintBg = new Paint();
@@ -106,15 +106,15 @@ public class CompletedView extends View {
         mRingPaint.setStrokeWidth(mStrokeWidth);
         //mRingPaint.setStrokeCap(Paint.Cap.ROUND);//设置线冒样式，有圆 有方
 
-//        //中间字
-//        mTextPaint = new Paint();
-//        mTextPaint.setAntiAlias(true);
-//        mTextPaint.setStyle(Paint.Style.FILL);
-//        mTextPaint.setColor(mRingColor);
-//        mTextPaint.setTextSize(mRadius / 2);
+        //中间字
+        mTextPaint = new Paint();
+        mTextPaint.setAntiAlias(true);
+        mTextPaint.setStyle(Paint.Style.FILL);
+        mTextPaint.setColor(getResources().getColor(R.color.white));
+        mTextPaint.setTextSize(mRadius / 2);
 
-//        Paint.FontMetrics fm = mTextPaint.getFontMetrics();
-//        mTxtHeight = (int) Math.ceil(fm.descent - fm.ascent);
+        Paint.FontMetrics fm = mTextPaint.getFontMetrics();
+        mTxtHeight = (int) Math.ceil(fm.descent - fm.ascent);
     }
 
     //画图
@@ -133,9 +133,9 @@ public class CompletedView extends View {
         oval1.bottom = mRingRadius * 2 + (mYCenter - mRingRadius);
         canvas.drawArc(oval1, 0, 360, false, mRingPaintBg); //圆弧所在的椭圆对象、圆弧的起始角度、圆弧的角度、是否显示半径连线
 
-        mCenterDrawable.setBounds((int) (oval1.left+mRingRadius/3), (int) (oval1.top+mRingRadius/3),
-                (int) (oval1.right-mRingRadius/3), (int) (oval1.bottom-mRingRadius/3));
-        mCenterDrawable.draw(canvas);
+//        mCenterDrawable.setBounds((int) (oval1.left+mRingRadius/3), (int) (oval1.top+mRingRadius/3),
+//                (int) (oval1.right-mRingRadius/3), (int) (oval1.bottom-mRingRadius/3));
+//        mCenterDrawable.draw(canvas);
 
 
         //外圆弧
@@ -147,13 +147,13 @@ public class CompletedView extends View {
             oval.bottom = mRingRadius * 2 + (mYCenter - mRingRadius);
             canvas.drawArc(oval, -90, ((float)mProgress / mTotalProgress) * 360, false, mRingPaint); //
 
-//            //字体
-//            String txt = mProgress + "分";
-//            mTxtWidth = mTextPaint.measureText(txt, 0, txt.length());
-//            canvas.drawText(txt, mXCenter - mTxtWidth / 2, mYCenter + mTxtHeight / 4, mTextPaint);
+            //字体
+            String txt = mProgress + "%";
+            mTxtWidth = mTextPaint.measureText(txt, 0, txt.length());
+            canvas.drawText(txt, mXCenter - mTxtWidth / 2, mYCenter + mTxtHeight / 4, mTextPaint);
         }
 
-        canvas.drawCircle(getWidth() / 2, oval1.top, getResources().getDimensionPixelSize(R.dimen.dms_2), mCirclePointPaint);
+//        canvas.drawCircle(getWidth() / 2, oval1.top, getResources().getDimensionPixelSize(R.dimen.dms_2), mCirclePointPaint);
     }
 
     //设置进度
@@ -162,8 +162,8 @@ public class CompletedView extends View {
         postInvalidate();//重绘
     }
 
-    public void setCenterPic(int resId){
-        mCenterDrawable = getContext().getResources().getDrawable(resId);
-        postInvalidate();//重绘
-    }
+//    public void setCenterPic(int resId){
+//        mCenterDrawable = getContext().getResources().getDrawable(resId);
+//        postInvalidate();//重绘
+//    }
 }

@@ -12,6 +12,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import com.expo.adapters.LBSMapAdapter;
+import com.expo.base.utils.LogUtils;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -672,19 +674,19 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             mPresenter.saveUsed(mTouristTypes);
             mTouristAdapter.notifyDataSetChanged();
         });
-        mTouristAdapter.setDownloadOnClickListener(v13 -> {
-            RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v13.getTag();
-            int position = holder.getAdapterPosition();
-            DownloadData info = downloadDataList.get(position);
-            if (info.getStatus() == DownloadManager.DOWNLOAD_IDLE || info.getStatus() == DownloadManager.DOWNLOAD_STOPPED
-                    || info.getStatus() == DownloadManager.DOWNLOAD_ERROR) {
-                //开始下载
-                mPresenter.startDownloadTask(info);
-            } else if (info.getStatus() == DownloadManager.DOWNLOAD_WAITING || info.getStatus() == DownloadManager.DOWNLOAD_STARTED) {
-                //停止下载
-                mPresenter.stopDownloadTask(info);
-            }
-        });
+//        mTouristAdapter.setDownloadOnClickListener(v13 -> {
+//            RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v13.getTag();
+//            int position = holder.getAdapterPosition();
+//            DownloadData info = downloadDataList.get(position);
+//            if (info.getStatus() == DownloadManager.DOWNLOAD_IDLE || info.getStatus() == DownloadManager.DOWNLOAD_STOPPED
+//                    || info.getStatus() == DownloadManager.DOWNLOAD_ERROR) {
+//                //开始下载
+//                mPresenter.startDownloadTask(info);
+//            } else if (info.getStatus() == DownloadManager.DOWNLOAD_WAITING || info.getStatus() == DownloadManager.DOWNLOAD_STARTED) {
+//                //停止下载
+//                mPresenter.stopDownloadTask(info);
+//            }
+//        });
         mTouristListView.addItemDecoration(new RecycleViewDivider(
                 getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor(R.color.color_local_stork)));
         mTouristListView.setAdapter(mTouristAdapter);

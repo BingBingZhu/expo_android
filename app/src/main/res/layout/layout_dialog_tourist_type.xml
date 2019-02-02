@@ -11,6 +11,7 @@
         android:id="@+id/dialog_tourist_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/dms_10"
         android:layout_gravity="right"
         android:layout_marginRight="@dimen/dms_40"
         android:src="@mipmap/ico_tourist_select_close" />
@@ -19,7 +20,7 @@
         android:id="@+id/dialog_tourist_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_20"
+        android:layout_marginTop="@dimen/dms_6"
         android:layout_marginBottom="@dimen/dms_14"
         android:overScrollMode="never"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
