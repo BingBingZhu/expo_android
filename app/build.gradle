@@ -183,10 +183,8 @@ dependencies {
     //全景
     implementation 'com.google.vr:sdk-base:1.40.0'
     implementation 'com.google.vr:sdk-audio:1.40.0'
-    implementation('com.google.vr:sdk-videowidget:1.40.0', {
-        exclude module: 'sdk-commonwidget'
-    })
-    implementation 'com.google.vr:sdk-panowidget:1.40.0'
+    implementation 'com.google.vr:sdk-videowidget:1.40.0'
+    implementation 'com.google.vr:sdk-panowidget:1.40.0@aar'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

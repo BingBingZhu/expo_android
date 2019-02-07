@@ -35,7 +35,8 @@
 # 导航
 -keep class com.amap.api.navi.**{*;}
 -keep class com.autonavi.**{*;}
-
+#VR
+-keep class com.google.**{*;}
 # Mob Share SDK
 -keep class com.mob.**{*;}
 -dontwarn com.mob.**

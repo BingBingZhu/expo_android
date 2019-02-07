@@ -102,7 +102,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
 //            else
 //                mVrVideo.setVisibility(View.VISIBLE);
 //        }
-//        mFlVrFrame.addView(mVRView.getVrVideoView());
+        mFlVrFrame.addView(mVRView.getVrVideoView());
     }
 
     public void getVrInfo() {

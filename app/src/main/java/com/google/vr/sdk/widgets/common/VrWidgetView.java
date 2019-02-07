@@ -26,7 +26,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.expo.R;
+import com.expo.R.id;
+import com.expo.R.layout;
 import com.google.vr.cardboard.AndroidNCompat;
 import com.google.vr.cardboard.UiLayer;
 import com.google.vr.cardboard.VrParamsProvider;
@@ -34,8 +35,6 @@ import com.google.vr.cardboard.VrParamsProviderFactory;
 import com.google.vr.sdk.proto.nano.CardboardDevice.DeviceParams;
 import com.google.vr.sdk.widgets.common.TouchTracker.TouchEnabledVrView;
 import com.google.vr.sdk.widgets.common.VrWidgetRenderer.GLThreadScheduler;
-import com.google.vr.widgets.common.R.id;
-import com.google.vr.widgets.common.R.layout;
 import com.google.vrtoolkit.cardboard.ScreenOnFlagHelper;
 
 public abstract class VrWidgetView extends FrameLayout {

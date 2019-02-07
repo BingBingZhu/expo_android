@@ -206,6 +206,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     }
 
     private void startPlay(String url) {
+        url = "http://vr.cnquanjing.com/17/video/1482771526772yht.mp4";
         try {
             mNoWifiLayout.setVisibility(View.GONE);
             mVrVideoView.loadVideo(Uri.parse(url), null);
