@@ -14,6 +14,8 @@ public interface FindContract {
         }
 
         public abstract void loadTabs();
+
+        public abstract String loadCommonInfo(String portalWebsiteIntegration);
     }
 
     interface View extends IView {

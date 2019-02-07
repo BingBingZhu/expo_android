@@ -43,6 +43,7 @@
         android:layout_marginTop="@dimen/dms_30"
         android:layout_marginRight="@dimen/dms_30"
         android:scaleType="centerCrop"
+        android:visibility="gone"
         android:src="@mipmap/daren2" />
 
 </LinearLayout>
