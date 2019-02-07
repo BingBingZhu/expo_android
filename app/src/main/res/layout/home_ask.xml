@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dms_146"
     android:layout_marginTop="@dimen/dms_30"
+    android:id="@+id/service_qa"
     android:background="@color/black_282626"
     android:orientation="vertical">
 

@@ -65,7 +65,7 @@
             android:id="@+id/ency_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabBackground="@android:color/transparent"
+            app:tabBackground="@color/white"
             app:tabGravity="center"
             app:tabIndicatorColor="@color/green_02cd9b"
             app:tabIndicatorHeight="@dimen/dms_4"

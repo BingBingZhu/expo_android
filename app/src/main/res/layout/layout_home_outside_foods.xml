@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img"
+        android:layout_width="@dimen/dms_190"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dms_30"
+        app:placeholderImage="@mipmap/ico_mine_def_photo"
+        app:placeholderImageScaleType="centerCrop"
+        app:viewAspectRatio="1" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/img"
+        android:layout_toRightOf="@id/img"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/font_28"
+        android:textStyle="bold" />
+
+    <com.expo.widget.StarBar
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="@dimen/dms_30"
+        android:layout_toRightOf="@id/img"
+        app:starCount="5"
+        app:starDistance="@dimen/dms_10"
+        app:starEmpty="@mipmap/ico_star_empty"
+        app:starFill="@mipmap/ico_star_full"
+        app:starSize="@dimen/dms_32" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/rating"
+        android:layout_alignBottom="@id/rating"
+        android:layout_toRightOf="@id/rating"
+        android:textColor="@color/color_e47f4d"
+        android:textSize="@dimen/font_26"
+        android:layout_marginLeft="@dimen/dms_50"/>
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/img"
+        android:layout_toRightOf="@id/img"
+        android:textColor="@color/color_a1a1a1"
+        android:textSize="@dimen/font_28"
+        android:textStyle="bold" />
+</RelativeLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.expo.widget.MyScrollView
+        android:id="@+id/home_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/home_map_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@mipmap/home_banner" />
+
+            <include
+                android:id="@+id/home_ad"
+                layout="@layout/home_ad" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dms_24"
+                android:adjustViewBounds="true"
+                android:background="@color/white"
+                android:src="@mipmap/home_find" />
+
+            <include layout="@layout/home_find" />
+
+            <include
+                android:id="@+id/home_tab1"
+                layout="@layout/home_tab1" />
+
+            <ImageView
+                android:id="@+id/online_expo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dms_206"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginTop="@dimen/dms_30"
+                android:layout_marginRight="@dimen/dms_30"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/daren1" />
+
+            <ImageView
+                android:id="@+id/ar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dms_206"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginTop="@dimen/dms_30"
+                android:layout_marginRight="@dimen/dms_30"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/daren2" />
+
+            <include layout="@layout/home_ask" />
+        </LinearLayout>
+
+    </com.expo.widget.MyScrollView>
+
+    <include
+        android:id="@+id/home_tab2"
+        layout="@layout/home_tab1"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/home_title"
+        layout="@layout/home_title" />
+
+</FrameLayout>

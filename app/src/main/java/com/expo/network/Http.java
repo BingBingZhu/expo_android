@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
 import com.expo.BuildConfig;
 import com.expo.R;
@@ -26,6 +27,7 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.lang.reflect.Modifier;
@@ -211,6 +213,13 @@ public final class Http {
             };
             dataSource.subscribe(dataSubscriber, UiThreadImmediateExecutorService.getInstance());
         }
+    }
+
+    public static void loadImage(ImageView imgView, String url) {
+        Picasso.with(ExpoApp.getApplication())
+                .load(Constants.URL.FILE_BASE_URL + url)
+                .placeholder(R.mipmap.ico_home_reco_garden_def)
+                .into(imgView);
     }
 
     /**

@@ -32,9 +32,11 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/park_map_menu"
             app:tabBackground="@android:color/transparent"
+            app:tabMode="scrollable"
             app:tabIndicatorHeight="0dp"
             app:tabSelectedTextColor="@color/color_333"
-            app:tabTextColor="@color/color_666" />
+            app:tabTextColor="@color/color_666"
+            app:tabTextAppearance="@style/tab_text_appearance"/>
     </RelativeLayout>
 
     <RelativeLayout

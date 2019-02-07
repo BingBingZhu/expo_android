@@ -12,8 +12,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+
 import com.expo.adapters.LBSMapAdapter;
 import com.expo.base.utils.LogUtils;
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -145,17 +147,17 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         public void onClick(Marker marker, List<ClusterItem> clusterItems) {
             if (clusterItems == null) {
                 if (marker.getObject() instanceof Venue)
-                    showVenueDialog( (Venue) marker.getObject() );
+                    showVenueDialog((Venue) marker.getObject());
             } else {
                 if (clusterItems.size() == 1) {
-                    showVenueDialog( ((RegionItem) clusterItems.get( 0 )).actualScene );
+                    showVenueDialog(((RegionItem) clusterItems.get(0)).actualScene);
                 } else if (clusterItems.size() > 1) {
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                     for (ClusterItem clusterItem : clusterItems) {
-                        builder.include( clusterItem.getPosition() );
+                        builder.include(clusterItem.getPosition());
                     }
                     LatLngBounds latLngBounds = builder.build();
-                    mAMap.animateCamera( CameraUpdateFactory.newLatLngBounds( latLngBounds, 0 )
+                    mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0)
                     );
                 }
             }
@@ -309,10 +311,10 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
             // 单项点击事件
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
             int position = holder.getAdapterPosition();
-            Venue as = venues.get( position );
-            showVenueDialog( as );
-        } );
-        searchContent.addTextChangedListener( new TextWatcher() {
+            Venue as = venues.get(position);
+            showVenueDialog(as);
+        });
+        searchContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -375,7 +377,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         polylines = new ArrayList<>();
         addActualSceneMarker(mTabId, mFacilities, true);
         // 弹出marker提示框
-        showVenueDialog( as );
+        showVenueDialog(as);
     }
 
     /**
@@ -385,31 +387,31 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         if (null == venue) {
             return;
         }
-        mMapUtils.mapGoto( venue.getLat(), venue.getLng() );
+        mMapUtils.mapGoto(venue.getLat(), venue.getLng());
         boolean isInVenue = mPresenter.checkInVenue(mLatLng, venue);
-        mActualSceneDialog = new Dialog( getContext(), R.style.TopActionSheetDialogStyle );
+        mActualSceneDialog = new Dialog(getContext(), R.style.TopActionSheetDialogStyle);
         if (mActualSceneDialog.isShowing())
             return;
-        View v = LayoutInflater.from( getContext() ).inflate( R.layout.layout_as_dialog, null );
-        View voiceRoot = v.findViewById( R.id.park_mark_dialog_voice_root );
-        ImageView imgVoice = v.findViewById( R.id.park_mark_dialog_voice_img );   // 音频图片
-        TextView appointmentTime = v.findViewById( R.id.park_mark_dialog_appointment_time );  // 预约时间
-        SimpleDraweeView pic = v.findViewById( R.id.park_mark_dialog_pic );
-        TextView asName = v.findViewById( R.id.park_mark_dialog_name );
-        TextView asHint = v.findViewById( R.id.park_mark_dialog_hint );   // 场馆人多提示
-        ImageView asInfo = v.findViewById( R.id.park_mark_dialog_info );
-        ImageView asLine = v.findViewById( R.id.park_mark_dialog_line );
-        ImageView dialogClose = v.findViewById( R.id.park_mark_dialog_close );
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_as_dialog, null);
+        View voiceRoot = v.findViewById(R.id.park_mark_dialog_voice_root);
+        ImageView imgVoice = v.findViewById(R.id.park_mark_dialog_voice_img);   // 音频图片
+        TextView appointmentTime = v.findViewById(R.id.park_mark_dialog_appointment_time);  // 预约时间
+        SimpleDraweeView pic = v.findViewById(R.id.park_mark_dialog_pic);
+        TextView asName = v.findViewById(R.id.park_mark_dialog_name);
+        TextView asHint = v.findViewById(R.id.park_mark_dialog_hint);   // 场馆人多提示
+        ImageView asInfo = v.findViewById(R.id.park_mark_dialog_info);
+        ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
+        ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
         stopPlay(TYPE_VENUE, venue.getId(), imgVoice);
-        asName.setText( LanguageUtil.chooseTest( venue.getCaption(), venue.getEnCaption() ) );
-        if (isTabByCnName( "\u7f8e\u98df" )) {
-            pic.setImageResource( R.mipmap.ico_food_def_img );
-        } else if (isTabByCnName( "\u536b\u751f\u95f4" )) {
-            pic.setImageResource( R.mipmap.ico_toilet_def_img );
-        } else if (isTabByCnName( "\u5bfc\u89c8\u8f66" )) {
-            pic.setImageResource( R.mipmap.ico_car_def_img );
-        } else if (isTabByCnName( "\u6cbb\u5b89\u4ead" )) {
-            pic.setImageResource( R.mipmap.ico_public_security_def_img );
+        asName.setText(LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption()));
+        if (isTabByCnName("\u7f8e\u98df")) {
+            pic.setImageResource(R.mipmap.ico_food_def_img);
+        } else if (isTabByCnName("\u536b\u751f\u95f4")) {
+            pic.setImageResource(R.mipmap.ico_toilet_def_img);
+        } else if (isTabByCnName("\u5bfc\u89c8\u8f66")) {
+            pic.setImageResource(R.mipmap.ico_car_def_img);
+        } else if (isTabByCnName("\u6cbb\u5b89\u4ead")) {
+            pic.setImageResource(R.mipmap.ico_public_security_def_img);
         }
         Encyclopedias wiki = mPresenter.getEncy(venue.getWikiId());
         if (wiki != null) {
@@ -426,9 +428,9 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                 ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
                 return;
             }
-            play( voiceUrl, TYPE_VENUE, venue.getId(), imgVoice );
-        } );
-        asInfo.setOnClickListener( v12 -> {
+            play(voiceUrl, TYPE_VENUE, venue.getId(), imgVoice);
+        });
+        asInfo.setOnClickListener(v12 -> {
             if (null == wiki) {
                 ToastHelper.showShort(R.string.no_details_are_available);
                 return;
@@ -452,7 +454,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
                         ToastHelper.showLong(R.string.please_select_tourist);
                         showTouristTypeDialog();
                     }
-                }else{
+                } else {
                     ToastHelper.showLong(String.format(getString(R.string.no_navigation_required),
                             LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption())));
                 }
@@ -468,11 +470,11 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     private void play(String url, int lastType, long lastId, ImageView imgView) {
         this.lastType = lastType;
         this.lastId = lastId;
-        MediaPlayUtil.getInstence().startPlay( url, imgView );
+        MediaPlayUtil.getInstence().startPlay(url, imgView);
     }
 
-    private void stopPlay(int type, long id, ImageView imgView){
-        if (lastType == type && lastId == id){
+    private void stopPlay(int type, long id, ImageView imgView) {
+        if (lastType == type && lastId == id) {
             imgView.setImageResource(R.mipmap.ico_audio_play);
             return;
         }
@@ -487,33 +489,33 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
         if (null == routeInfo) {
             return;
         }
-        mRouteInfoDialog = new Dialog( getContext(), R.style.TopActionSheetDialogStyle );
+        mRouteInfoDialog = new Dialog(getContext(), R.style.TopActionSheetDialogStyle);
         if (mRouteInfoDialog.isShowing())
             return;
-        View v = LayoutInflater.from( getContext() ).inflate( R.layout.layout_as_dialog, null );
-        View voiceRoot = v.findViewById( R.id.park_mark_dialog_voice_root );
-        ImageView imgVoice = v.findViewById( R.id.park_mark_dialog_voice_img );   // 音频图片
-        TextView appointmentTime = v.findViewById( R.id.park_mark_dialog_appointment_time );  // 预约时间
-        SimpleDraweeView pic = v.findViewById( R.id.park_mark_dialog_pic );
-        TextView asName = v.findViewById( R.id.park_mark_dialog_name );
-        TextView asHint = v.findViewById( R.id.park_mark_dialog_hint );   // 场馆人多提示
-        ImageView asInfo = v.findViewById( R.id.park_mark_dialog_info );
-        ImageView asLine = v.findViewById( R.id.park_mark_dialog_line );
-        ImageView dialogClose = v.findViewById( R.id.park_mark_dialog_close );
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_as_dialog, null);
+        View voiceRoot = v.findViewById(R.id.park_mark_dialog_voice_root);
+        ImageView imgVoice = v.findViewById(R.id.park_mark_dialog_voice_img);   // 音频图片
+        TextView appointmentTime = v.findViewById(R.id.park_mark_dialog_appointment_time);  // 预约时间
+        SimpleDraweeView pic = v.findViewById(R.id.park_mark_dialog_pic);
+        TextView asName = v.findViewById(R.id.park_mark_dialog_name);
+        TextView asHint = v.findViewById(R.id.park_mark_dialog_hint);   // 场馆人多提示
+        ImageView asInfo = v.findViewById(R.id.park_mark_dialog_info);
+        ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
+        ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
         stopPlay(TYPE_ROUTE, routeInfo.id, imgVoice);
-        pic.setImageURI( Constants.URL.FILE_BASE_URL + routeInfo.picUrl );
-        asName.setText( LanguageUtil.chooseTest( routeInfo.caption, routeInfo.captionen ) );
-        voiceRoot.setOnClickListener( v14 -> {
-            String voiceUrl = LanguageUtil.chooseTest( routeInfo.voiceUrl,
-                    routeInfo.voiceUrlEn.isEmpty() ? routeInfo.voiceUrl : routeInfo.voiceUrlEn );
+        pic.setImageURI(Constants.URL.FILE_BASE_URL + routeInfo.picUrl);
+        asName.setText(LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
+        voiceRoot.setOnClickListener(v14 -> {
+            String voiceUrl = LanguageUtil.chooseTest(routeInfo.voiceUrl,
+                    routeInfo.voiceUrlEn.isEmpty() ? routeInfo.voiceUrl : routeInfo.voiceUrlEn);
             if (voiceUrl.isEmpty()) {
                 ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
                 return;
             }
-            play( voiceUrl, TYPE_ROUTE, routeInfo.id, imgVoice );
-        } );
-        asInfo.setOnClickListener( v12 -> {
-            RouteDetailActivity.startActivity( getContext(), routeInfo.id, LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen) );
+            play(voiceUrl, TYPE_ROUTE, routeInfo.id, imgVoice);
+        });
+        asInfo.setOnClickListener(v12 -> {
+            RouteDetailActivity.startActivity(getContext(), routeInfo.id, LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
             mRouteInfoDialog.dismiss();
         });
         asLine.setOnClickListener(v13 -> {
@@ -899,7 +901,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     public boolean onMarkerClick(Marker marker) {
         Venue venue = (Venue) marker.getObject();
         // 显示marker弹窗
-        showVenueDialog( venue );
+        showVenueDialog(venue);
         return false;
     }
 

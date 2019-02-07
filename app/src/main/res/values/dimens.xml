@@ -30,6 +30,7 @@
     <dimen name="dms_20">10dp</dimen>
     <dimen name="dms_24">12dp</dimen>
     <dimen name="dms_22">11dp</dimen>
+    <dimen name="dms_25">12.5dp</dimen>
     <dimen name="dms_26">13dp</dimen>
     <dimen name="dms_28">14dp</dimen>
     <dimen name="dms_32">16dp</dimen>

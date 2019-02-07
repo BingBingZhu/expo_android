@@ -29,6 +29,7 @@ import com.expo.base.ExpoApp;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.HomeContract;
 import com.expo.entity.AppInfo;
+import com.expo.entity.Circum;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
@@ -462,6 +463,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mListHotel = list;
         for (int i = 0; i < 3; i++)
             addHotelView(i);
+    }
+
+    @Override
+    public void setOutsideFoods(List<Circum> circums) {
+
     }
 
     public void sort(List<Encyclopedias> list, LatLng latLng) {

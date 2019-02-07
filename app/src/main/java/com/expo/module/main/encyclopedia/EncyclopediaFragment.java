@@ -119,6 +119,21 @@ public class EncyclopediaFragment extends BaseFragment<EncyclopediasContract.Pre
         }
     };
 
+
+    public void showTag(String tag) {
+        int tabIndex = mTabView.getSelectedTabPosition();
+        TabLayout.Tab tab = mTabView.getTabAt(tabIndex);
+        if (tab.getText().equals(tag)) return;
+        for (int i = 0; i < mTabView.getTabCount(); i++) {
+            if (i == tabIndex) continue;
+            tab = mTabView.getTabAt(i);
+            if (tab.getText().equals(tag)) {
+                tab.select();
+                break;
+            }
+        }
+    }
+
     @Override
     protected boolean hasPresenter() {
         return true;

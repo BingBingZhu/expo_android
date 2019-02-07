@@ -221,7 +221,7 @@
     </style>
 
     <style name="tab_text_appearance">
-        <item name="android:textSize">@dimen/font_34</item>
+        <item name="android:textSize">@dimen/font_26</item>
         <item name="android:textStyle">bold</item>
     </style>
 

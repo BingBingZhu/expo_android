@@ -23,12 +23,12 @@
         <TextView
             android:id="@+id/home_tab2_play"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_play" />
+            android:text="@string/home_tab_find" />
 
         <TextView
             android:id="@+id/home_tab2_service"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_service" />
+            android:text="@string/home_tab_activities" />
 
         <TextView
             android:id="@+id/home_tab2_food"

@@ -6,6 +6,7 @@ import com.amap.api.maps.model.LatLng;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.AppInfo;
+import com.expo.entity.Circum;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
@@ -13,6 +14,7 @@ import com.expo.entity.TopLineInfo;
 import com.expo.entity.VrInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface HomeContract {
     abstract class Presenter extends IPresenter<View> {
@@ -58,6 +60,42 @@ public interface HomeContract {
         public abstract void checkUpdate();
 
         public abstract void update(Context context, AppInfo appInfo);
+
+        //加载主菜单
+        public abstract List<int[]> loadMainMenuDate();
+
+        //世园活动
+        public abstract List loadExpoActivities();
+
+        //推荐路线
+        public abstract List loadRouteInfo();
+
+        //经典
+        public abstract List<Object> loadSciences();
+
+        //推荐网上世园
+        public abstract List<Object> loadVrInfo();
+
+        //预约
+        public abstract List<Object> loadBespeak();
+
+        //世园美食
+        public abstract List<Object> loadExpoFoods();
+
+        //周边美食
+        public abstract void loadOutsideFoods();
+
+        //世园酒店
+        public abstract List<Object> loadHotels();
+
+        //延庆必体验
+        public abstract List<Object> loadNearbyExperience();
+
+        //发现数据
+        public abstract List<Object> loadDiscover();
+
+        //根据类型名找对应id
+        public abstract long loadTypeId(String typeName);
     }
 
     interface View extends IView {
@@ -82,5 +120,7 @@ public interface HomeContract {
         void showFood(List<Encyclopedias> list);
 
         void showHotel(List<Encyclopedias> list);
+
+        void setOutsideFoods(List<Circum> circums);
     }
 }

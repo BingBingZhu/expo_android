@@ -8,7 +8,9 @@
         android:id="@+id/top_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_20">
+        android:background="@color/white"
+        android:paddingBottom="@dimen/dms_18"
+        android:paddingTop="@dimen/dms_18">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -100,6 +102,5 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dms_30"
         android:overScrollMode="never" />
 </LinearLayout>

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">EXPO 2019</string>
     <string name="click_again_to_exit">Click again to exit</string>
-    <string name="same_month">%d-%d %d:%d</string>
-    <string name="yesterday">%d:%d yesterday</string>
-    <string name="today">%d:%d today</string>
+    <string name="same_month" formatted="false">%d-%d %d:%d</string>
+    <string name="yesterday" formatted="false">%d:%d yesterday</string>
+    <string name="today" formatted="false">%d:%d today</string>
     <string name="within_one_hours">%d minutes age</string>
     <string name="a_moment_age">a moment age</string>
     <string name="no_network_connection">No network connection</string>
@@ -170,10 +170,10 @@
     <string name="home_func_title_exhibit">推荐展览</string>
     <string name="home_func_title_exhibit_garden">推荐展园</string>
 
-    <string name="home_tab_play">游玩</string>
-    <string name="home_tab_service">服务</string>
+    <string name="home_tab_find">发现</string>
+    <string name="home_tab_activities">活动</string>
     <string name="home_tab_food">美食</string>
-    <string name="home_tab_accommodation">住宿</string>
+    <string name="home_tab_accommodation">酒店</string>
     <string name="home_tab_periphery">周边</string>
 
     <string name="gps_open_title">该功能需要打开定位功能。</string>
@@ -452,4 +452,12 @@
     <string name="expo_map">智玩地图</string>
     <string name="expo_scenic">世园景点</string>
     <string name="phone_not_support">该手机暂不支持次功能</string>
+    <string name="hotel">住宿</string>
+    <string name="play">游玩</string>
+    <string name="market">购物</string>
+    <string name="list_end">到底啦！</string>
+    <string name="discover_1">4月份最热景点</string>
+    <string name="discover_2">4月份最热场馆</string>
+    <string name="discover_3">4月份最热植物</string>
+    <string name="home__tab1__route">路线</string>
 </resources>

@@ -2,6 +2,7 @@ package com.expo.module.main.scenic;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.SceneContract;
 import com.expo.contract.ScenicContract;
 import com.expo.entity.VenuesType;
+import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 import com.expo.module.routes.CustomRouteActivity;
 
@@ -49,11 +51,10 @@ public class ScenicFragment extends BaseFragment<ScenicContract.Presenter> imple
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mTopView.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, 0);
+        mTopView.setPadding(0, StatusBarUtils.getStatusBarHeight(getContext()), 0, mTopView.getPaddingBottom());
         List<VenuesType> list = mPresenter.getTabs();
         mAdapter = new ScenicTabPagerAdapter(getFragmentManager(), list);
         mPagerView.setAdapter(mAdapter);
-
         onClickMap(null);
     }
 
@@ -107,6 +108,18 @@ public class ScenicFragment extends BaseFragment<ScenicContract.Presenter> imple
 
         mSearch.setVisibility(View.VISIBLE);
         mMap.setVisibility(View.GONE);
+    }
+
+    public void openSceneAndShowTag(String tag) {
+        onClickScene(null);
+        List<Fragment> fragments = getFragmentManager().getFragments();
+        if (fragments == null) return;
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof EncyclopediaFragment) {
+                ((EncyclopediaFragment) fragment).showTag(tag);
+                break;
+            }
+        }
     }
 
     @Override

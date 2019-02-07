@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity {
             R.drawable.selector_tab_find,
             R.drawable.selector_tab_mine};
     private Class[] fragments = new Class[]{
-            HomeFragment.class,
+            HomeFragment2.class,
 //            PanoramaFragment.class,
             ScenicFragment.class,
 //            EncyclopediaFragment.class,
@@ -160,12 +160,17 @@ public class MainActivity extends BaseActivity {
 
     public void goScenic() {
         mTabHostView.setCurrentTabByTag("scenic");
-        new Handler().postDelayed(() -> ((ScenicFragment) getFragment(1)).onClickScene(null), 300);
+        mTabHostView.postDelayed(() -> ((ScenicFragment) getFragment(1)).onClickScene(null), 300);
+    }
+
+    public void goScenicAndShowTab(String tab){
+        mTabHostView.setCurrentTabByTag("scenic");
+        mTabHostView.postDelayed(() -> ((ScenicFragment) getFragment(1)).openSceneAndShowTag(tab), 300);
     }
 
     public void goScenicMap() {
         mTabHostView.setCurrentTabByTag("scenic");
-        new Handler().postDelayed(() -> ((ScenicFragment) getFragment(1)).onClickScene(null), 300);
+        mTabHostView.postDelayed(() -> ((ScenicFragment) getFragment(1)).onClickMap(null), 300);
     }
 
     private Fragment getFragment(int tabId) {

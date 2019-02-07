@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dms_166"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical">
 
     <TextView
         style="@style/TextSizeBlack16"
+        android:layout_marginTop="@dimen/dms_30"
         android:text="@string/everyone_playing" />
 
     <TextView
@@ -18,33 +19,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dms_18">
 
         <TextView
-            android:id="@+id/home__tab1__play"
+            android:id="@+id/home__tab1__find"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_play" />
+            android:text="@string/home_tab_find" />
 
         <TextView
-            android:id="@+id/home__tab1__service"
+            android:id="@+id/home__tab1__activities"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_service" />
+            android:text="@string/home_tab_activities" />
 
         <TextView
-            android:id="@+id/home__tab1__food"
+            android:id="@+id/home__tab1__route"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_food" />
+            android:text="@string/home__tab1__route" />
 
         <TextView
-            android:id="@+id/home__tab1__accommodation"
+            android:id="@+id/home__tab1__science"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_accommodation" />
+            android:text="@string/find_tab_scenic" />
 
         <TextView
             android:id="@+id/home__tab1__periphery"
             style="@style/style_home_play_item"
             android:text="@string/home_tab_periphery" />
-
-
     </LinearLayout>
 </LinearLayout>

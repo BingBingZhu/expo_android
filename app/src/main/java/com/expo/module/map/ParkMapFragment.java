@@ -12,11 +12,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
-import com.expo.adapters.LBSMapAdapter;
-import com.expo.base.utils.LogUtils;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -29,22 +26,30 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.OnClick;
+
 import com.amap.api.fence.GeoFence;
 import com.amap.api.fence.GeoFenceClient;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
-import com.amap.api.maps.model.*;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.Polyline;
+import com.amap.api.maps.model.PolylineOptions;
 import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
-import com.expo.adapters.*;
+import com.expo.adapters.DownloadData;
+import com.expo.adapters.LBSMapAdapter;
+import com.expo.adapters.ParkActualSceneAdapter;
+import com.expo.adapters.ParkRouteAdapter;
+import com.expo.adapters.TouristAdapter;
+import com.expo.adapters.TouristTypeAdapter;
 import com.expo.base.BaseFragment;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.ToastHelper;
 import com.expo.base.utils.ViewUtils;
-import com.expo.contract.ParkMapContract;
 import com.expo.contract.ParkMapFragmentContract;
 import com.expo.entity.CustomRoute;
 import com.expo.entity.Encyclopedias;
@@ -66,13 +71,15 @@ import com.expo.network.Http;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.media.MediaPlayUtil;
-import com.expo.widget.decorations.RecycleViewDivider;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.amap.api.fence.GeoFenceClient.GEOFENCE_IN;
 import static com.amap.api.fence.GeoFenceClient.GEOFENCE_OUT;
@@ -128,13 +135,13 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     private long lastId;
     private String mPlayUrl;
     private long mSpotId;
+    private int mapOffsetX, mapOffsetY;
 
     private ClusterOverlay mClusterOverlay;
 
     ClusterClickListener mClusterClickListener = new ClusterClickListener() {
         @Override
         public void onClick(Marker marker, List<ClusterItem> clusterItems) {
-            marker.getOptions().setInfoWindowOffset(250, 0);
             if (clusterItems == null) {
                 if (marker.getObject() instanceof Venue) {
                     marker.setInfoWindowEnable(true);
@@ -189,6 +196,8 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         mAMap.addTileOverlay(mMapUtils.getTileOverlayOptions(getContext()));
         mAMap.setMaxZoomLevel(19);
         mAMap.setInfoWindowAdapter(new LBSMapAdapter(getContext(), mInfoWindowListener));
+        cumputeMapOffset();
+        mAMap.setPointToCenter(getResources().getDisplayMetrics().widthPixels / 2 - mapOffsetX, getResources().getDisplayMetrics().heightPixels / 2 + mapOffsetY);
         mPresenter.loadParkMapData(mSpotId, mVenuesTypes);
         // 地理围栏
         mGeoFenceClient = new GeoFenceClient(getContext());
@@ -202,7 +211,14 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 getContext());
         mClusterOverlay.setMarkerInfoInterface(mMarkerInfoInterface);
         mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
+    }
 
+    private void cumputeMapOffset() {
+        View v = getActivity().getLayoutInflater().inflate(R.layout.layout_map_window_item, null);
+        int spec = View.MeasureSpec.makeMeasureSpec(1 << 30 - 1, View.MeasureSpec.AT_MOST);
+        v.measure(spec, spec);
+        mapOffsetX = (int) (v.getMeasuredWidth() * 0.316);
+        mapOffsetY = v.getMeasuredHeight() / 3;
     }
 
     @Override
@@ -672,7 +688,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         for (Venue venue : mFacilities) {
             if (venue.isSelected()) {
                 Marker marker = mAMap.addMarker(new MarkerOptions()
-                        .setInfoWindowOffset(250, 0)
+                        .setInfoWindowOffset(mapOffsetX, 0)
                         .icon(mMapUtils.setMarkerIconDrawable(getContext(), getMarkerBitmap(venue),
                                 LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption())))
                         .anchor(0.5F, 0.90F).position(venue.getLatLng()));
@@ -738,7 +754,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v12.getTag();
             int position = holder.getAdapterPosition();
             TouristType tourist = mTouristTypes.get(position);
-            if (tourist.getDownState() == DownloadManager.DOWNLOAD_FINISH){     // 使用
+            if (tourist.getDownState() == DownloadManager.DOWNLOAD_FINISH) {     // 使用
                 for (TouristType touristType : mTouristTypes) {
                     if (touristType.getId() == mTouristTypes.get(position).getId()) {
                         touristType.setUsed(true);
@@ -748,7 +764,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                     }
                 }
                 mPresenter.saveUsed(mTouristTypes);
-            }else{     // 下载
+            } else {     // 下载
                 DownloadData info = downloadDataList.get(position);
                 if (info.getStatus() == DownloadManager.DOWNLOAD_IDLE || info.getStatus() == DownloadManager.DOWNLOAD_STOPPED
                         || info.getStatus() == DownloadManager.DOWNLOAD_ERROR) {
@@ -811,7 +827,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 regionItem.actualScene = as;
                 mClusterOverlay.addClusterItem(regionItem);
             } else {
-                Marker marker = mAMap.addMarker(new MarkerOptions()
+                Marker marker = mAMap.addMarker(new MarkerOptions().setInfoWindowOffset(mapOffsetX, 0)
                         .icon(mMapUtils.setMarkerIconDrawable(getContext(), vt.getMarkBitmap(),
                                 LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption())))
                         .anchor(0.5F, 0.90F).position(latLng));
@@ -832,9 +848,6 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 
     private void initTab(List<VenuesType> venuesTypes, int tabPosition) {
         mTabId = venuesTypes.get(tabPosition).getId();
-        mTabView.setTabMode(TabLayout.MODE_SCROLLABLE);
-        //tab的下划线颜色,默认是粉红色
-        mTabView.setSelectedTabIndicatorColor(Color.TRANSPARENT);
         for (int i = 0; i < venuesTypes.size(); i++) {
             TabLayout.Tab tab1 = mTabView.newTab().setCustomView(getView(i));
             mTabView.addTab(tab1);
