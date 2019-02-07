@@ -5,13 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.Marker;
 import com.expo.R;
 import com.expo.entity.Venue;
+import com.expo.map.Cluster;
+import com.expo.map.ClusterItem;
+import com.expo.map.RegionItem;
 import com.expo.module.map.InfoWindowListener;
 import com.expo.utils.LanguageUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.util.List;
 
 public final class LBSMapAdapter implements AMap.InfoWindowAdapter {
 
@@ -34,7 +40,19 @@ public final class LBSMapAdapter implements AMap.InfoWindowAdapter {
         TextView asInfo = v.findViewById(R.id.park_mark_dialog_info);
         ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
         ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
-        Venue venue = (Venue) marker.getObject();
+        Venue venue;
+        if (marker.getObject() instanceof Venue) {
+            venue = (Venue) marker.getObject();
+        } else if (marker.getObject() instanceof Cluster) {
+            List<ClusterItem> items = ((Cluster) marker.getObject()).getClusterItems();
+            if (items != null && !items.isEmpty()) {
+                venue = ((RegionItem) items.get(0)).actualScene;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
         mListener.onStopPlay(venue);
         asName.setText(LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption()));
         mListener.onSetPic(venue, pic);

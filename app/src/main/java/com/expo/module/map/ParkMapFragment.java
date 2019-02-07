@@ -38,7 +38,6 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
-import com.blankj.utilcode.util.SizeUtils;
 import com.expo.R;
 import com.expo.adapters.DownloadData;
 import com.expo.adapters.LBSMapAdapter;
@@ -60,10 +59,8 @@ import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.map.ClusterClickListener;
 import com.expo.map.ClusterItem;
-import com.expo.map.ClusterOverlay;
 import com.expo.map.MapUtils;
 import com.expo.map.NaviManager;
-import com.expo.map.RegionItem;
 import com.expo.module.download.DownloadManager;
 import com.expo.module.routes.RouteDetailActivity;
 import com.expo.module.webview.WebTemplateActivity;
@@ -144,14 +141,13 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         public void onClick(Marker marker, List<ClusterItem> clusterItems) {
             if (clusterItems == null) {
                 if (marker.getObject() instanceof Venue) {
-                    marker.setInfoWindowEnable(true);
                     marker.showInfoWindow();
                 }
 //                    showVenueDialog((Venue) marker.getObject());
             } else {
                 if (clusterItems.size() == 1) {
-                    marker.setInfoWindowEnable(true);
                     marker.showInfoWindow();
+                    mAMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
 //                    showVenueDialog(((RegionItem) clusterItems.get(0)).actualScene);
                 } else if (clusterItems.size() > 1) {
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -196,7 +192,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         mAMap.addTileOverlay(mMapUtils.getTileOverlayOptions(getContext()));
         mAMap.setMaxZoomLevel(19);
         mAMap.setInfoWindowAdapter(new LBSMapAdapter(getContext(), mInfoWindowListener));
-        cumputeMapOffset();
+        computeMapOffset();
         mAMap.setPointToCenter(getResources().getDisplayMetrics().widthPixels / 2 - mapOffsetX, getResources().getDisplayMetrics().heightPixels / 2 + mapOffsetY);
         mPresenter.loadParkMapData(mSpotId, mVenuesTypes);
         // 地理围栏
@@ -209,11 +205,12 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 //        mClusterOverlay = new ClusterOverlay(mAMap, null,
 //                SizeUtils.dp2px(50),
 //                getContext());
+//        mClusterOverlay.setInfoWindowOffset(mapOffsetX, 0);
 //        mClusterOverlay.setMarkerInfoInterface(mMarkerInfoInterface);
 //        mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
     }
 
-    private void cumputeMapOffset() {
+    private void computeMapOffset() {
         View v = getActivity().getLayoutInflater().inflate(R.layout.layout_map_window_item, null);
         int spec = View.MeasureSpec.makeMeasureSpec(1 << 30 - 1, View.MeasureSpec.AT_MOST);
         v.measure(spec, spec);
@@ -682,7 +679,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     private void drawCustomRoute() {
         clearMap();
         for (CustomRoute cr : mCustomRoutes) {
-            polylines.add(mAMap.addPolyline(new PolylineOptions().addAll(cr.getPoints()).width(10).
+            polylines.add(mAMap.addPolyline(new PolylineOptions().addAll(cr.getPoints()).zIndex(10).width(10).
                     color(getResources().getColor(R.color.orange_ff7342))));
         }
         for (Venue venue : mFacilities) {
@@ -764,7 +761,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                     }
                 }
                 mPresenter.saveUsed(mTouristTypes);
-            }else{     // 下载
+            } else {     // 下载
                 DownloadData info = downloadDataList.get(position);
                 if (info.getStatus() == DownloadManager.DOWNLOAD_IDLE || info.getStatus() == DownloadManager.DOWNLOAD_STOPPED
                         || info.getStatus() == DownloadManager.DOWNLOAD_ERROR) {
@@ -827,12 +824,12 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 //                regionItem.actualScene = as;
 //                mClusterOverlay.addClusterItem(regionItem);
 //            } else {
-                Marker marker = mAMap.addMarker(new MarkerOptions().setInfoWindowOffset(mapOffsetX, 0)
-                        .icon(mMapUtils.setMarkerIconDrawable(getContext(), vt.getMarkBitmap(),
-                                LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption())))
-                        .anchor(0.5F, 0.90F).position(latLng));
-                marker.setObject(as);
-                markers.add(marker);
+            Marker marker = mAMap.addMarker(new MarkerOptions().setInfoWindowOffset(mapOffsetX, 0)
+                    .icon(mMapUtils.setMarkerIconDrawable(getContext(), vt.getMarkBitmap(),
+                            LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption())))
+                    .anchor(0.5F, 0.90F).position(latLng));
+            marker.setObject(as);
+            markers.add(marker);
 //            }
         }
         mMapUtils.setCameraZoom(markers);

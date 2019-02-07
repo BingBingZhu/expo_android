@@ -48,6 +48,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private float mPXInMeters;
     private boolean mIsCanceled = false;
     private MapUtils mMapUtils;
+    private int infoWindowOffsetX, infoWindowOffsetY;
     MarkerInfoInterface mMarkerInfoInterface;
 
     /**
@@ -61,6 +62,11 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         this(amap, null, clusterSize, context);
 
 
+    }
+
+    public void setInfoWindowOffset(int x, int y) {
+        this.infoWindowOffsetX = x;
+        this.infoWindowOffsetY = y;
     }
 
     /**
@@ -194,15 +200,16 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 
         ArrayList<Marker> removeMarkers = new ArrayList<>();
         removeMarkers.addAll(mAddMarkers);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-        MyAnimationListener myAnimationListener = new MyAnimationListener(removeMarkers);
+//        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+//        MyAnimationListener myAnimationListener = new MyAnimationListener(removeMarkers);
         for (Cluster cluster : clusters) {
             addSingleClusterToMap(cluster);
         }
         for (Marker marker : removeMarkers) {
-            marker.setAnimation(alphaAnimation);
-            marker.setAnimationListener(myAnimationListener);
-            marker.startAnimation();
+//            marker.setAnimation(alphaAnimation);
+//            marker.setAnimationListener(myAnimationListener);
+//            marker.startAnimation();
+            marker.remove();
         }
     }
 
@@ -215,7 +222,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
      */
     private void addSingleClusterToMap(Cluster cluster) {
         LatLng latlng = cluster.getCenterLatLng();
-        MarkerOptions markerOptions = new MarkerOptions();
+        MarkerOptions markerOptions = new MarkerOptions().setInfoWindowOffset(infoWindowOffsetX,infoWindowOffsetY);
         if (cluster.getClusterCount() > 1)
             markerOptions.anchor(0.5f, 0.5f)
                     .icon(getBitmapDes(cluster.getClusterCount())).position(latlng);
