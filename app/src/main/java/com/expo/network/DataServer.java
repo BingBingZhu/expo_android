@@ -12,18 +12,19 @@ import com.expo.network.response.ExpoActivityInfoResp;
 import com.expo.network.response.GetDistinguishPlantList_Rsb;
 import com.expo.network.response.PanResHotResp;
 import com.expo.network.response.ParkResp;
-import com.expo.network.response.RouteHotCountResp;
+import com.expo.network.response.PortalSiteResp;
 import com.expo.network.response.RichTextRsp;
+import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.ScheduleResp;
 import com.expo.network.response.SocietyListResp;
-import com.expo.network.response.VenueResp;
 import com.expo.network.response.SubjectResp;
 import com.expo.network.response.TopLineResp;
 import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
 import com.expo.network.response.UploadRsp;
 import com.expo.network.response.UserHeartBeatResp;
+import com.expo.network.response.VenueResp;
 import com.expo.network.response.VenuesTypeResp;
 import com.expo.network.response.VerificationCodeResp;
 import com.expo.network.response.VerifyCodeLoginResp;
@@ -550,4 +551,14 @@ public interface DataServer {
     @POST("Terminal/GetScheduleVenList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<ScheduleResp> getScheduleVenList(@Body RequestBody requestBody);
+
+    /**
+     * 获取全景标签资源列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetPortalSiteList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<PortalSiteResp> loadPortalList(@Body RequestBody requestBody);
 }

@@ -39,7 +39,9 @@ import com.expo.module.ar.ArActivity;
 import com.expo.module.circum.CircumHomeActivity;
 import com.expo.module.circum.CircumListActivity;
 import com.expo.module.freewifi.FreeWiFiActivity;
+import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.main.adapter.HomeTopLineAdapter;
+import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 import com.expo.module.map.AMapServicesUtil;
 import com.expo.module.online.OnlineExpoActivity;
 import com.expo.module.routes.RouteDetailActivity;
@@ -226,93 +228,115 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         mGridLayoutFactory = new GridLayoutFactory(getContext(), bindViewListener);
         mGridLayoutFactory.setOnItemClickListener(itemClickListener);
         int marginTop = getResources().getDimensionPixelSize(R.dimen.dms_30);
+        int padding, paddingV;
+        View view;
         //主菜单
         List<int[]> menuData = mPresenter.loadMainMenuDate();
-        View view = mGridLayoutFactory.getView(configs.get(0), menuData);
-        view.setBackgroundResource(R.color.white);
-        int padding = getResources().getDimensionPixelSize(R.dimen.dms_10);
-        view.setPadding(padding, padding, padding, padding);
-        ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(view, 2);
+        if (menuData != null && !menuData.isEmpty()) {
+            view = mGridLayoutFactory.getView(configs.get(0), menuData);
+            view.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_10);
+            view.setPadding(padding, padding, padding, padding);
+            ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(view, 2);
+        }
         //发现
         List<Object> discover = mPresenter.loadDiscover();
-        mFindView = mGridLayoutFactory.getView(configs.get(1), discover);
-        mFindView.setBackgroundResource(R.color.white);
-        padding = getResources().getDimensionPixelSize(R.dimen.dms_20);
-        mFindView.setPadding(padding, padding, padding, padding);
-        ((ViewGroup.MarginLayoutParams) mFindView.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(mFindView, 6);
+        if (discover != null && !discover.isEmpty()) {
+            mFindView = mGridLayoutFactory.getView(configs.get(1), discover);
+            mFindView.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_20);
+            mFindView.setPadding(padding, padding, padding, padding);
+            ((ViewGroup.MarginLayoutParams) mFindView.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(mFindView, 6);
+        }
         //活动
         List<Object> activityInfos = mPresenter.loadExpoActivities();
-        mActivitiesView = mGridLayoutFactory.getView(configs.get(2), activityInfos);
-        mActivitiesView.setBackgroundResource(R.color.white);
-        padding = getResources().getDimensionPixelSize(R.dimen.dms_25);
-        int paddingV = getResources().getDimensionPixelSize(R.dimen.dms_20);
-        mActivitiesView.setPadding(padding, paddingV, padding, paddingV);
-        ((ViewGroup.MarginLayoutParams) mActivitiesView.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(mActivitiesView, 7);
+        if (activityInfos != null && !activityInfos.isEmpty()) {
+            mActivitiesView = mGridLayoutFactory.getView(configs.get(2), activityInfos);
+            mActivitiesView.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_25);
+            paddingV = getResources().getDimensionPixelSize(R.dimen.dms_20);
+            mActivitiesView.setPadding(padding, paddingV, padding, paddingV);
+            ((ViewGroup.MarginLayoutParams) mActivitiesView.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(mActivitiesView, 7);
+        }
         //推荐路线
         List<RouteInfo> routeInfos = mPresenter.loadRouteInfo();
-        mRouteView = mGridLayoutFactory.getView(configs.get(3), routeInfos);
-        mRouteView.setBackgroundResource(R.color.white);
-        padding = getResources().getDimensionPixelSize(R.dimen.dms_26);
-        mRouteView.setPadding(padding, padding, padding, padding);
-        ((ViewGroup.MarginLayoutParams) mRouteView.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(mRouteView, 8);
+        if (routeInfos != null && !routeInfos.isEmpty()) {
+            mRouteView = mGridLayoutFactory.getView(configs.get(3), routeInfos);
+            mRouteView.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_26);
+            mRouteView.setPadding(padding, padding, padding, padding);
+            ((ViewGroup.MarginLayoutParams) mRouteView.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(mRouteView, 8);
+        }
         //人气景点
         List<Object> encyclopedias = mPresenter.loadSciences();
-        mScienceView = mGridLayoutFactory.getView(configs.get(4), encyclopedias);
-        mScienceView.setBackgroundResource(R.color.white);
-        padding = getResources().getDimensionPixelSize(R.dimen.dms_16);
-        mScienceView.setPadding(padding, padding, padding, padding);
-        ((ViewGroup.MarginLayoutParams) mScienceView.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(mScienceView, 9);
+        if (encyclopedias != null && !encyclopedias.isEmpty()) {
+            mScienceView = mGridLayoutFactory.getView(configs.get(4), encyclopedias);
+            mScienceView.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_16);
+            mScienceView.setPadding(padding, padding, padding, padding);
+            ((ViewGroup.MarginLayoutParams) mScienceView.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(mScienceView, 9);
+        }
         //游世园
         List<Object> vrInfo = mPresenter.loadVrInfo();
-        view = mGridLayoutFactory.getView(configs.get(5), vrInfo);
-        view.setBackgroundResource(R.color.white);
-        padding = getResources().getDimensionPixelSize(R.dimen.dms_20);
-        view.setPadding(padding, padding, padding, padding);
-        ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(view, 10);
+        if (vrInfo != null && !vrInfo.isEmpty()) {
+            view = mGridLayoutFactory.getView(configs.get(5), vrInfo);
+            view.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_20);
+            view.setPadding(padding, padding, padding, padding);
+            ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(view, 10);
+        }
         //预约
         List<Object> bespeak = mPresenter.loadBespeak();
-        view = mGridLayoutFactory.getView(configs.get(6), bespeak);
-        view.setBackgroundResource(R.color.white);
-        padding = getResources().getDimensionPixelSize(R.dimen.dms_26);
-        view.setPadding(padding, padding, padding, padding);
-        ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(view);
+        if (bespeak != null && !bespeak.isEmpty()) {
+            view = mGridLayoutFactory.getView(configs.get(6), bespeak);
+            view.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_26);
+            view.setPadding(padding, padding, padding, padding);
+            ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(view);
+        }
         //世园美食
         List<Object> foods = mPresenter.loadExpoFoods();
-        mPeripheryView = mGridLayoutFactory.getView(configs.get(7), foods);
-        mPeripheryView.setBackgroundResource(R.color.white);
-        padding = getResources().getDimensionPixelSize(R.dimen.dms_8);
-        int paddingTop = getResources().getDimensionPixelSize(R.dimen.dms_14);
-        paddingV = getResources().getDimensionPixelSize(R.dimen.dms_10);
-        mPeripheryView.setPadding(padding, paddingTop, padding, paddingV);
-        ((ViewGroup.MarginLayoutParams) mPeripheryView.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(mPeripheryView);
+        if (foods != null && !foods.isEmpty()) {
+            mPeripheryView = mGridLayoutFactory.getView(configs.get(7), foods);
+            mPeripheryView.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_8);
+            int paddingTop = getResources().getDimensionPixelSize(R.dimen.dms_14);
+            paddingV = getResources().getDimensionPixelSize(R.dimen.dms_10);
+            mPeripheryView.setPadding(padding, paddingTop, padding, paddingV);
+            ((ViewGroup.MarginLayoutParams) mPeripheryView.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(mPeripheryView);
+        }
         //周边美食
         mOutsideFoodConfig = configs.get(8);
         mPresenter.loadOutsideFoods();
         //酒店
         List<Object> hotels = mPresenter.loadHotels();
-        view = mGridLayoutFactory.getView(configs.get(9), hotels);
-        view.setBackgroundResource(R.color.white);
-        padding = getResources().getDimensionPixelSize(R.dimen.dms_25);
-        paddingV = getResources().getDimensionPixelSize(R.dimen.dms_16);
-        view.setPadding(padding, paddingV, padding, paddingV);
-        ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(view);
+        if (hotels != null && !hotels.isEmpty()) {
+            view = mGridLayoutFactory.getView(configs.get(9), hotels);
+            view.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_25);
+            paddingV = getResources().getDimensionPixelSize(R.dimen.dms_16);
+            view.setPadding(padding, paddingV, padding, paddingV);
+            ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(view);
+        }
         //延庆体验
         List<Object> data = mPresenter.loadNearbyExperience();
-        view = mGridLayoutFactory.getView(configs.get(10), data);
-        view.setBackgroundResource(R.color.white);
-        padding = getResources().getDimensionPixelSize(R.dimen.dms_25);
-        view.setPadding(padding, padding, padding, padding);
-        ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
-        mContainer.addView(view);
+        if (data != null && !data.isEmpty()) {
+            view = mGridLayoutFactory.getView(configs.get(10), data);
+            view.setBackgroundResource(R.color.white);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_25);
+            view.setPadding(padding, padding, padding, padding);
+            ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(view);
+        }
         TextView end = new TextView(getContext());
         end.setText(R.string.list_end);
         end.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.font_24));
@@ -454,11 +478,10 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     StarBar starBar = item.findViewById(R.id.rating);
                     img = item.findViewById(R.id.img);
                     tv.setText(circum.getName());
-                    score.setText("评分：" + circum.getTaste() + "分");
+                    score.setText("口味：" + circum.getTaste() + "分");
                     starBar.setStarMark(circum.getAvgRating());
                     img.setImageURI(Uri.parse(circum.getPhotoUrls()));
-                    String distanceStr = String.format("距离你：%s", AMapServicesUtil.calculateAzimuth(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), new LatLng(circum.getLatitude(), circum.getLongitude())));
-                    distance.setText(distanceStr);
+                    distance.setText(AMapServicesUtil.calculateDistance(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), new LatLng(circum.getLatitude(), circum.getLongitude())));
                     break;
                 case R.layout.layout_home_hotel:
                     encyclopedias = (Encyclopedias) obj;
@@ -561,7 +584,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                 CircumHomeActivity.startActivity(getContext());
                 break;
             case 3:
-                ArActivity.lunchPhotograph(getContext(), mPresenter.loadCommonInfo(CommonInfo.EXPO_AR_DOWNLOAD_PAGE));
+                ArActivity.startActivity(getContext());
                 break;
             case 4:
                 ((MainActivity) getContext()).goScenicMap();
@@ -592,15 +615,26 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         mAdapterTopLine.setDatas(mListTopLine);
     }
 
-    @OnClick({R.id.ar, R.id.online_expo, R.id.service_qa, R.id.home__tab1__find,
+    @OnClick({R.id.ar, R.id.online_expo, R.id.service_qa, R.id.home_title_text, R.id.title_home_icon,
+            R.id.title_home_msg, R.id.home__tab1__find,
             R.id.home__tab1__activities, R.id.home__tab1__route, R.id.home__tab1__science,
             R.id.home__tab1__periphery, R.id.home_find_0, R.id.home_find_1, R.id.home_find_2,
             R.id.home_find_3, R.id.home_find_4, R.id.home_find_5, R.id.home_find_6})
     public void onClick(View view) {
         String url;
         switch (view.getId()) {
+            case R.id.title_home_icon:
+//                WebActivity.startActivity(getContext(),"","");
+                break;
+            case R.id.title_home_msg:
+                MessageKindActivity.startActivity(getContext());
+                break;
+            case R.id.home_title_text://搜索框
+                EncyclopediaSearchActivity.startActivity(getContext());
+//                VenueSearchActivity.startActivity(getContext());
+                break;
             case R.id.ar://AR
-                ArActivity.startActivity(getContext());
+                ArActivity.lunchPhotograph(getContext(), mPresenter.loadCommonInfo(CommonInfo.EXPO_AR_DOWNLOAD_PAGE));
                 break;
             case R.id.online_expo://网上世园
                 OnlineExpoActivity.startActivity(getContext());

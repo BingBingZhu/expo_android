@@ -63,7 +63,8 @@ public class MainActivity extends BaseActivity {
 //            PanoramaFragment.class,
             ScenicFragment.class,
 //            EncyclopediaFragment.class,
-            FindFragment2.class,
+//            FindFragment2.class,
+            PortalSiteFragment.class,
             MineFragment.class};
     private ServiceConnection conn;
 

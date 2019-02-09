@@ -13,6 +13,7 @@ import com.expo.entity.DataType;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Park;
+import com.expo.entity.PortalSite;
 import com.expo.entity.RouteHotInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
@@ -31,6 +32,7 @@ import com.expo.network.response.CommonInfoResp;
 import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.ExpoActivityInfoResp;
 import com.expo.network.response.ParkResp;
+import com.expo.network.response.PortalSiteResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.ScheduleResp;
@@ -47,7 +49,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +74,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         copyAMapStyleToSDCard();
         getRouterHotCountList();
         getScheduleDatas();
+        loadPortalList();
     }
 
     private void checkUpdateDate(RequestBody emptyBody) {
@@ -314,7 +316,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
      * 复制地图样式文件到手机储存中
      */
     public void copyAMapStyleToSDCard() {
-        loadCompleteCount.addAndGet(1);
+        addNetworkRecord();
         new Thread() {
             @Override
             public void run() {
@@ -582,6 +584,26 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             protected void onResponse(ScheduleResp rsp) {
                 mDao.clear(Schedule.class);
                 mDao.saveOrUpdateAll(rsp.schedules);
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable);
+        addNetworkRecord();
+    }
+
+    /**
+     * 获取门户网站地址列表
+     */
+    private void loadPortalList() {
+        Observable<PortalSiteResp> observable = Http.getServer().loadPortalList(Http.buildRequestBody(Http.getBaseParams()));
+        isRequest = Http.request(new ResponseCallback<PortalSiteResp>() {
+            @Override
+            protected void onResponse(PortalSiteResp rsp) {
+                mDao.clear(PortalSite.class);
+                mDao.saveOrUpdateAll(rsp.PortalSiteList);
             }
 
             @Override

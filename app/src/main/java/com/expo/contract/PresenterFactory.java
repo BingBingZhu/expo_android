@@ -34,6 +34,7 @@ import com.expo.contract.presenter.OnlineHomePresenterImpl;
 import com.expo.contract.presenter.PanoramaListPresenterImpl;
 import com.expo.contract.presenter.ParkMapFragmentPresenterImpl;
 import com.expo.contract.presenter.ParkMapPresenterImpl;
+import com.expo.contract.presenter.PortalSitePresenterImpl;
 import com.expo.contract.presenter.RouteDetailPresenterImpl;
 import com.expo.contract.presenter.RoutesPresenterImpl;
 import com.expo.contract.presenter.ScenicPresenterImpl;
@@ -51,7 +52,6 @@ import com.expo.contract.presenter.VenuePresenterImpl;
 import com.expo.contract.presenter.WebExpoActivityPresenterImpl;
 import com.expo.contract.presenter.WebPresenterImpl;
 import com.expo.contract.presenter.WebTemplatePresenterImpl;
-import com.expo.module.activity.ExpoActivityActivity;
 
 public class PresenterFactory {
     public static IPresenter getPresenter(IView view) {
@@ -153,6 +153,8 @@ public class PresenterFactory {
             return new ArPresenterImpl((ArContract.View) view);
         } else if (view instanceof WebExpoActivityContract.View) {
             return new WebExpoActivityPresenterImpl((WebExpoActivityContract.View) view);
+        } else if (view instanceof PortalSiteContract.View) {
+            return new PortalSitePresenterImpl((PortalSiteContract.View) view);
         }
         throw new UnsupportedOperationException();
     }

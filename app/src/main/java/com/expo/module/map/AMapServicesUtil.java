@@ -6,6 +6,7 @@ package com.expo.module.map;
 
 import android.graphics.Bitmap;
 
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.navi.model.NaviLatLng;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AMapServicesUtil {
     public static int BUFFER_SIZE = 2048;
@@ -21,8 +23,8 @@ public class AMapServicesUtil {
     public static byte[] inputStreamToByte(InputStream in) throws IOException {
 
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        byte[]                data      = new byte[BUFFER_SIZE];
-        int                   count     = -1;
+        byte[] data = new byte[BUFFER_SIZE];
+        int count = -1;
         while ((count = in.read(data, 0, BUFFER_SIZE)) != -1)
             outStream.write(data, 0, count);
 
@@ -70,8 +72,10 @@ public class AMapServicesUtil {
         Bitmap newbmp = Bitmap.createScaledBitmap(bitmap, width, height, true);
         return newbmp;
     }
+
     /**
      * 计算两定位点间的方位角
+     *
      * @param point1
      * @param point2
      * @return 角度
@@ -92,5 +96,15 @@ public class AMapServicesUtil {
             }
         }
         return (float) angle;
+    }
+
+    public static String calculateDistance(LatLng point1, LatLng point2) {
+        float distance = AMapUtils.calculateLineDistance(point1, point2);
+        String format = "\u8ddd\u79bb：%.2f M";
+        if (distance >= 1000) {
+            distance = distance / 1000;
+            format = "\u8ddd\u79bb：%.2f KM";
+        }
+        return String.format(Locale.getDefault(),format, distance);
     }
 }

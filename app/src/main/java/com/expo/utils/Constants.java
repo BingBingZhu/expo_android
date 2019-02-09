@@ -14,6 +14,7 @@ import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.FootPrint;
 import com.expo.entity.Message;
 import com.expo.entity.Park;
+import com.expo.entity.PortalSite;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
 import com.expo.entity.Subject;
@@ -161,7 +162,7 @@ public interface Constants {
         public static final Class[] DB_CLASSES = new Class[]{Venue.class, CommonInfo.class, DataType.class, DownloadInfo.class,
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class, CustomRoute.class,
                 TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, VisitorService.class,
-                Contacts.class, VrInfo.class, VrLableInfo.class, Tuple.class, ExpoActivityInfo.class, Schedule.class};
+                Contacts.class, VrInfo.class, VrLableInfo.class, Tuple.class, ExpoActivityInfo.class, Schedule.class, PortalSite.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }

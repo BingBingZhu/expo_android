@@ -229,7 +229,12 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         QueryParams params = new QueryParams()
                 .add("limit", 0, 3)
                 .add("orderBy", "recommended_idx", "true");
-        data.addAll(mDao.query(ExpoActivityInfo.class, params));
+        List tmp = mDao.query(ExpoActivityInfo.class, params);
+        if (tmp != null) {
+            data.addAll(tmp);
+        } else {
+            return null;
+        }
         return data;
     }
 
@@ -242,7 +247,12 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("and")
                 .add("eq", "type_id", "1")
                 .add("limit", 0, 5);
-        data.addAll(mDao.query(RouteInfo.class, params));
+        List tmp = mDao.query(RouteInfo.class, params);
+        if (tmp != null) {
+            data.addAll(tmp);
+        } else {
+            return null;
+        }
         return data;
     }
 
@@ -258,7 +268,12 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("eq", "enable", 1)
                 .add("orderBy", "recommended_idx", true)
                 .add("limit", 0, 2);
-        data.addAll(mDao.query(Encyclopedias.class, params));
+        List tmp = mDao.query(Encyclopedias.class, params);
+        if (tmp != null) {
+            data.addAll(tmp);
+        } else {
+            return null;
+        }
         return data;
     }
 
@@ -266,10 +281,15 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     public List<Object> loadVrInfo() {
         ArrayList data = new ArrayList();
         data.add(R.string.daren_play_expo);
-        data.addAll(mDao.query(VrInfo.class, new QueryParams()
+        List tmp = mDao.query(VrInfo.class, new QueryParams()
                 .add("eq", "is_recommended", 1)
                 .add("orderBy", "recommended_idx", true)
-                .add("limit", 0, 2)));
+                .add("limit", 0, 2));
+        if (tmp != null) {
+            data.addAll(tmp);
+        } else {
+            return null;
+        }
         return data;
     }
 
@@ -277,11 +297,16 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     public List<Object> loadBespeak() {
         ArrayList data = new ArrayList();
         data.add(R.string.home_func_item_appointment);
-        data.addAll(mDao.query(Schedule.class, new QueryParams()
+        List tmp = mDao.query(Schedule.class, new QueryParams()
                 .add("eq", "open_state", 0)
                 .add("and")
                 .add("eq", "online_state", 0)
-                .add("limit", 0, 3)));
+                .add("limit", 0, 3));
+        if (tmp != null) {
+            data.addAll(tmp);
+        } else {
+            return null;
+        }
         return data;
     }
 
@@ -295,7 +320,12 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("eq", "enable", 1)
                 .add("orderBy", "recommended_idx", true)
                 .add("limit", 0, 5);
-        data.addAll(mDao.query(Encyclopedias.class, params));
+        List tmp = mDao.query(Encyclopedias.class, params);
+        if (tmp != null) {
+            data.addAll(tmp);
+        } else {
+            return null;
+        }
         return data;
     }
 
@@ -344,7 +374,12 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("eq", "enable", 1)
                 .add("orderBy", "recommended_idx", true)
                 .add("limit", 0, 3);
-        data.addAll(mDao.query(Encyclopedias.class, params));
+        List tmp = mDao.query(Encyclopedias.class, params);
+        if (tmp != null) {
+            data.addAll(tmp);
+        } else {
+            return null;
+        }
         return data;
     }
 
