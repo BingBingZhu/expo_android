@@ -19,8 +19,8 @@ import java.util.zip.ZipFile;
 
 @DatabaseTable(tableName = "tourist_type")
 public class TouristType implements Parcelable {
-    @DatabaseField(columnName = "id", id = true)
-    @SerializedName("id")
+    @DatabaseField(columnName = "id"/*, id = true*/, generatedId = true, allowGeneratedIdInsert = true)
+//    @SerializedName("id")
     private Long id;
     @DatabaseField(columnName = "age")
     @SerializedName("age")
@@ -79,6 +79,8 @@ public class TouristType implements Parcelable {
 
     public TouristType() {
     }
+
+
 
     protected TouristType(Parcel in) {
         age = in.readString();

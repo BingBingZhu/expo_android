@@ -324,7 +324,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 mPresenter.submitTouristRecord( location.getLatitude(), location.getLongitude(), mVenue.getLat(), mVenue.getLng(), location.getSpeed() );
             }
             mLocation = location;
-            if (isFirst) {//第一次定位成功后移动到地图中心
+            if (isFirst) {  //第一次定位成功后移动到地图中心
                 isFirst = false;
                 mMap.moveCamera( CameraUpdateFactory.newLatLngZoom( new LatLng( location.getLatitude(), location.getLongitude() ), 20 ) );
             }

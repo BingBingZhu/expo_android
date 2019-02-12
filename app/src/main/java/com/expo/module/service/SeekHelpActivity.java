@@ -259,12 +259,12 @@ public class SeekHelpActivity extends BaseActivity<SeekHelpContract.Presenter> i
             return;
         }
         if (mPresenter.checkInPark( mLocation.getLatitude(), mLocation.getLongitude() )) {
-            Venue venue = mPresenter.getNearbyServiceCenter( mLocation );
-            if (venue != null) {
-                NavigationActivity.startActivity( getContext(), venue );
-            } else {
-                ToastHelper.showShort( R.string.no_service_agencies );
-            }
+//            Venue venue = mPresenter.getNearbyServiceCenter( mLocation );
+//            if (venue != null) {
+//                NavigationActivity.startActivity( getContext(), venue );
+//            } else {
+//                ToastHelper.showShort( R.string.no_service_agencies );
+//            }
         } else {
             ToastHelper.showShort( R.string.unable_to_provide_service );
         }

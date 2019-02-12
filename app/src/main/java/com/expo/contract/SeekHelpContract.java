@@ -20,7 +20,7 @@ public interface SeekHelpContract {
 
         public abstract boolean checkInPark(double mLat, double mLng);
 
-        public abstract Venue getNearbyServiceCenter(Location mLocation);
+//        public abstract Venue getNearbyServiceCenter(Location mLocation);
     }
 
     interface View extends IView {

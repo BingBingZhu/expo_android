@@ -27,6 +27,7 @@ import com.expo.entity.Schedule;
 import com.expo.entity.Venue;
 import com.expo.module.map.NavigationActivity;
 import com.expo.module.map.ParkMapActivity;
+import com.expo.module.map.PlayMapActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -211,7 +212,6 @@ public class WebExpoActivityActivity extends BaseActivity<WebExpoActivityContrac
                 url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
                         + "&lan=" + LanguageUtil.chooseTest("zh", "en"), getString(R.string.home_func_item_appointment), BaseActivity.TITLE_COLOR_STYLE_WHITE);
         finish();
-
     }
 
     /**
@@ -226,7 +226,7 @@ public class WebExpoActivityActivity extends BaseActivity<WebExpoActivityContrac
         @JavascriptInterface
         public void gotoDataLocation() {
             runOnUiThread(() -> {
-                NavigationActivity.startActivity(WebExpoActivityActivity.this, mVenue);
+                PlayMapActivity.startActivity(getContext(), mVenue, 1);
             });
         }
 

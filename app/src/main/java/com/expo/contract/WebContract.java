@@ -23,7 +23,7 @@ public interface WebContract {
 
         public abstract boolean checkInPark(Location location);
 
-        public abstract Venue getNearbyServiceCenter(Location location);
+//        public abstract Venue getNearbyServiceCenter(Location location);
     }
 
     interface View extends IView{

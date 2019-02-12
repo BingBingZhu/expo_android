@@ -43,10 +43,11 @@ public class TouristAdapter extends RecyclerView.Adapter<TouristAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TouristType tourist = mTourists.get(position);
-        holder.imgPic.setImageURI(Constants.URL.FILE_BASE_URL + tourist.getPicUrl());
+        if (null == tourist.getPicUrl() || tourist.getPicUrl().isEmpty())
+            holder.imgPic.setImageResource(R.mipmap.ico_default_tour);
+        else
+            holder.imgPic.setImageURI(Constants.URL.FILE_BASE_URL + tourist.getPicUrl());
         holder.tvUse.setSelected(tourist.isUsed());
-//        holder.tvUse.setText(tourist.getDownState() == DownloadManager.DOWNLOAD_FINISH ? "立即使用" : "下载");
-//        holder.imgSelected.setVisibility(tourist.isUsed() ? View.VISIBLE : View.GONE);
         holder.tvName.setText(LanguageUtil.chooseTest(tourist.getCaption(), tourist.getCaptionEN()));
         holder.tvSex.setText(mContext.getString(R.string.sex_is) +
                 (tourist.getSex().equals("0") ? mContext.getString(R.string.boy) : mContext.getString(R.string.girl)));

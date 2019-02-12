@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.ToastHelper;
+import com.expo.contract.PlayMapContract;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.map.LocationManager;
@@ -43,7 +45,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickListener {
+public class PlayMapActivity extends BaseActivity<PlayMapContract.Presenter> implements PlayMapContract.View, AMap.OnMarkerClickListener {
 
     @BindView(R.id.play_map_destination)
     TextView mTvDestination;       // 目的地
@@ -62,6 +64,15 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
 
     private Bitmap mBitmap;
     private List<Venue> mVenueList;
+    private Venue mClickVenue;
+    private NaviRouteOverlay mNaviRouteOverlay;
+    private int mPhotoSize;
+    private List<Marker> mMarkers;
+    private String mVenueTypeString;
+
+    private int onlyPreview = 0;    // 默认 0，    仅预览（活动） 1，  需切换（百科） 2
+    NaviLatLng mFrom;
+    NaviLatLng mTo;
 
     @Override
     protected int getContentView() {
@@ -71,9 +82,6 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, "智玩地图");
-        mClickVenue = Http.getGsonInstance().fromJson(getIntent().getStringExtra(Constants.EXTRAS.EXTRA_JSON_DATA), Venue.class);
-        mBitmap = byteArrayToBitmap(getIntent().getByteArrayExtra(Constants.EXTRAS.EXTRA_BITMAP_BYTE_ARRAY));
-        mVenueList = getIntent().getParcelableArrayListExtra(Constants.EXTRAS.EXTRA_AT_VENUE_LIST);
         mMapView.onCreate(savedInstanceState);
         mAMap = mMapView.getMap();
         mMapUtils = new MapUtils(mAMap);
@@ -81,13 +89,34 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
         mAMap.getUiSettings().setTiltGesturesEnabled(false);
         mAMap.getUiSettings().setZoomControlsEnabled(false);
         mAMap.setOnMarkerClickListener(this);
-        mPhotoSize = getResources().getDimensionPixelSize( R.dimen.dms_54 );
-        initMapMarker();
-        startNavi();
+        mPhotoSize = getResources().getDimensionPixelSize(R.dimen.dms_54);
+        mVenueTypeString = getIntent().getStringExtra(Constants.EXTRAS.EXTRA_VENUE_TYPE_NAME);
+        onlyPreview = getIntent().getIntExtra(Constants.EXTRAS.EXTRA_ONLY_PREVIEW, 0);
+        switch (onlyPreview){
+            case 0:
+                if (!TextUtils.isEmpty(mVenueTypeString)) {
+                    mPresenter.queryVenueAndNearByType(mVenueTypeString);
+                } else {
+                    mClickVenue = Http.getGsonInstance().fromJson(getIntent().getStringExtra(Constants.EXTRAS.EXTRA_JSON_DATA), Venue.class);
+                    mBitmap = byteArrayToBitmap(getIntent().getByteArrayExtra(Constants.EXTRAS.EXTRA_BITMAP_BYTE_ARRAY));
+                    mVenueList = getIntent().getParcelableArrayListExtra(Constants.EXTRAS.EXTRA_AT_VENUE_LIST);
+                    initMapMarker();
+                    startNavi();
+                }
+                break;
+            case 1:         // 仅预览（活动） 1
+                mClickVenue = Http.getGsonInstance().fromJson(getIntent().getStringExtra(Constants.EXTRAS.EXTRA_JSON_DATA), Venue.class);
+                startNavi();
+                break;
+            case 2:         // 需切换（百科） 2
+                mClickVenue = Http.getGsonInstance().fromJson(getIntent().getStringExtra(Constants.EXTRAS.EXTRA_JSON_DATA), Venue.class);
+                mPresenter.queryVenuesByVenue(mClickVenue);
+                break;
+        }
     }
 
     @OnClick(R.id.play_map_start_navi)
-    public void onClick(View v){
+    public void onClick(View v) {
         if (mAMapNavi != null) {
             mAMapNavi.stopNavi();
             mAMapNavi.destroy();
@@ -97,6 +126,7 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
     }
 
     private void initMapMarker() {
+        mMarkers = new ArrayList<>();
         for (Venue as : mVenueList) {
             if (as.getLat() == 0)
                 continue;
@@ -106,14 +136,13 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
                             LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption())))
                     .anchor(0.5F, 0.90F).position(latLng));
             marker.setObject(as);
+            mMarkers.add(marker);
         }
     }
 
-    private Venue mClickVenue;
-
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if (mClickVenue.getId() == ((Venue) marker.getObject()).getId()){
+        if (mClickVenue.getId() == ((Venue) marker.getObject()).getId()) {
             return false;
         }
         mClickVenue = (Venue) marker.getObject();
@@ -132,9 +161,6 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
         }
     }
 
-    NaviLatLng mFrom;
-    NaviLatLng mTo;
-
     private void pedestrianRoutePlanning() {
         mTo = new NaviLatLng(mClickVenue.getLat(), mClickVenue.getLng());
         mFrom = new NaviLatLng(TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude());
@@ -144,8 +170,6 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
             ToastHelper.showShort(R.string.route_planning_failure);
         }
     }
-    private NaviRouteOverlay mNaviRouteOverlay;
-    private int mPhotoSize;
 
     private NaviListener mNaviListener = new NaviListener() {
         @Override
@@ -168,21 +192,21 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
             latLngs.add(0, mFrom);
             latLngs.add(mTo);
             if (mNaviRouteOverlay == null) {
-                mNaviRouteOverlay = new NaviRouteOverlay( mAMap, naviPath, mFrom, mTo );
+                mNaviRouteOverlay = new NaviRouteOverlay(mAMap, naviPath, mFrom, mTo);
                 if (ExpoApp.getApplication().getUserHandBitmap() == null) {
-                    mNaviRouteOverlay.setCarMarkerIcon( BitmapUtils.circleBitmap(
-                            BitmapFactory.decodeResource( getResources(), R.mipmap.ico_mine_def_photo ), mPhotoSize, mPhotoSize ) );
+                    mNaviRouteOverlay.setCarMarkerIcon(BitmapUtils.circleBitmap(
+                            BitmapFactory.decodeResource(getResources(), R.mipmap.ico_mine_def_photo), mPhotoSize, mPhotoSize));
                 } else {
-                    mNaviRouteOverlay.setCarMarkerIcon( BitmapUtils.circleBitmap( ExpoApp.getApplication().getUserHandBitmap(), mPhotoSize, mPhotoSize ) );
+                    mNaviRouteOverlay.setCarMarkerIcon(BitmapUtils.circleBitmap(ExpoApp.getApplication().getUserHandBitmap(), mPhotoSize, mPhotoSize));
                 }
-                mNaviRouteOverlay.setRouteCustomTexture( R.mipmap.ico_route_item );
-                mNaviRouteOverlay.setRouteWidth( 40 );
-                mNaviRouteOverlay.setPassedRouteCustomTexture( R.mipmap.ico_route_item_passed );
+                mNaviRouteOverlay.setRouteCustomTexture(R.mipmap.ico_route_item);
+                mNaviRouteOverlay.setRouteWidth(40);
+                mNaviRouteOverlay.setPassedRouteCustomTexture(R.mipmap.ico_route_item_passed);
                 mNaviRouteOverlay.addToMap();
             } else {
                 LatLng startLatLng = LocationManager.getInstance().getCurrentLocationLatLng();
-                mFrom = new NaviLatLng( startLatLng.latitude, startLatLng.longitude );
-                mNaviRouteOverlay.resetRouteLineData( naviPath, mFrom, mTo );
+                mFrom = new NaviLatLng(startLatLng.latitude, startLatLng.longitude);
+                mNaviRouteOverlay.resetRouteLineData(naviPath, mFrom, mTo);
             }
             setViewContent(naviPath);
             hideLoadingView();
@@ -219,16 +243,16 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
             units = "分钟";
         }
         if (min >= 60) {
-            h = (int) Math.floor(min/60);
-            return h + "小时" + min%60 + units;
-        }else {
+            h = (int) Math.floor(min / 60);
+            return h + "小时" + min % 60 + units;
+        } else {
             return min + units;
         }
     }
 
     @Override
     protected boolean hasPresenter() {
-        return false;
+        return true;
     }
 
     public static void startActivity(Context context, List<Venue> venues, Venue venue, Bitmap bitmap) {
@@ -236,6 +260,20 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
         in.putParcelableArrayListExtra(Constants.EXTRAS.EXTRA_AT_VENUE_LIST, (ArrayList<Venue>) venues);
         in.putExtra(Constants.EXTRAS.EXTRA_JSON_DATA, Http.getGsonInstance().toJson(venue));
         in.putExtra(Constants.EXTRAS.EXTRA_BITMAP_BYTE_ARRAY, bitmapToByteArray(bitmap));
+        context.startActivity(in);
+    }
+
+    public static void startActivity(Context context, String typeName) {
+        Intent in = new Intent(context, PlayMapActivity.class);
+        in.putExtra(Constants.EXTRAS.EXTRA_VENUE_TYPE_NAME, typeName);
+        context.startActivity(in);
+    }
+
+
+    public static void startActivity(Context context, Venue venue, int onlyPreview) {
+        Intent in = new Intent(context, PlayMapActivity.class);
+        in.putExtra(Constants.EXTRAS.EXTRA_JSON_DATA, Http.getGsonInstance().toJson(venue));
+        in.putExtra(Constants.EXTRAS.EXTRA_ONLY_PREVIEW, onlyPreview);
         context.startActivity(in);
     }
 
@@ -249,7 +287,7 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mAMapNavi != null) {
                 mAMapNavi.stopNavi();
@@ -259,12 +297,13 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
         return super.onKeyDown(keyCode, event);
     }
 
-    private static byte[] bitmapToByteArray(Bitmap bitmap){
+    private static byte[] bitmapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return baos.toByteArray();
     }
-    private Bitmap byteArrayToBitmap(byte[] b){
+
+    private Bitmap byteArrayToBitmap(byte[] b) {
         if (b.length != 0) {
             return BitmapFactory.decodeByteArray(b, 0, b.length);
         } else {
@@ -288,5 +327,29 @@ public class PlayMapActivity extends BaseActivity implements AMap.OnMarkerClickL
     protected void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+    }
+
+    @Override
+    public void queryVenueRes(List<Venue> venues) {
+        // 根据类型获取分类设施，首条为距离用户最近的设施
+        if (null == venues || venues.size() == 0) {
+            ToastHelper.showShort(R.string.no_service_agencies);
+            return;
+        }
+        mClickVenue = venues.get(0);
+        mVenueList = venues;
+        initMapMarker();
+        startNavi();
+    }
+
+    @Override
+    public void updateMarkerPic(Bitmap bmp) {
+        // 更新Marker点的中心图标
+        mBitmap = bmp;
+        for (Marker marker : mMarkers) {
+            Venue as = (Venue) marker.getObject();
+            marker.setIcon(mMapUtils.setMarkerIconDrawable(getContext(), mBitmap,
+                    LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption())));
+        }
     }
 }

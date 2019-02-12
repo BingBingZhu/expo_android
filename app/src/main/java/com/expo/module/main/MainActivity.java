@@ -1,5 +1,6 @@
 package com.expo.module.main;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,8 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -20,14 +23,25 @@ import android.widget.TextView;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
+import com.expo.base.utils.ToastHelper;
+import com.expo.module.download.UnzipTask;
+import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.module.main.find.FindFragment;
 import com.expo.module.main.scenic.ScenicFragment;
 import com.expo.services.TrackRecordService;
 import com.expo.upapp.UpdateAppManager;
+import com.expo.utils.AssetCopyer;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import butterknife.BindView;
@@ -77,6 +91,7 @@ public class MainActivity extends BaseActivity {
         TrackRecordService.startService(getContext());
         LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS);
 //        StatusBarUtils.cancelStatusBarFullTransparent( MainActivity.this );//加上4.4系统会出现不能沉浸式，不要加
+        new AssetCopyer(MainActivity.this).copyAssetsFile2Phone();
     }
 
     @Override
