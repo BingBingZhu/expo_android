@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
@@ -206,10 +207,11 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     }
 
     private void startPlay(String url) {
-        url = "http://vr.cnquanjing.com/17/video/1482771526772yht.mp4";
         try {
             mNoWifiLayout.setVisibility(View.GONE);
-            mVrVideoView.loadVideo(Uri.parse(url), null);
+            VrVideoView.Options options = new VrVideoView.Options();
+            options.inputFormat= VrVideoView.Options.FORMAT_HLS;
+            mVrVideoView.loadVideo(Uri.parse(url), options);
         } catch (IOException e) {
             e.printStackTrace();
         }
