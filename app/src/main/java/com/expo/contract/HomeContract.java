@@ -96,6 +96,8 @@ public interface HomeContract {
 
         //根据类型名找对应id
         public abstract long loadTypeId(String typeName);
+
+        public abstract boolean checkInPark(double latitude, double longitude);
     }
 
     interface View extends IView {

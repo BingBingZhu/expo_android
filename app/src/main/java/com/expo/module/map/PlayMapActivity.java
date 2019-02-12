@@ -164,6 +164,7 @@ public class PlayMapActivity extends BaseActivity<PlayMapContract.Presenter> imp
     private void pedestrianRoutePlanning() {
         mTo = new NaviLatLng(mClickVenue.getLat(), mClickVenue.getLng());
         mFrom = new NaviLatLng(TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude());
+        mMapUtils.setCameraZoom(mFrom, mTo);
         boolean isSuccess = mAMapNavi.calculateWalkRoute(mFrom, mTo);
         if (!isSuccess) {
             hideLoadingView();

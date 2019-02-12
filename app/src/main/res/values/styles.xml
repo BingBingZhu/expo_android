@@ -255,9 +255,14 @@
     </style>
 
     <style name="style_home_find_item">
-        <item name="android:layout_marginLeft">@dimen/dms_20</item>
-        <item name="android:layout_height">@dimen/dms_64</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/dms_20</item>
+        <item name="android:drawablePadding">@dimen/dms_10</item>
+        <item name="android:paddingLeft">@dimen/dms_16</item>
+        <item name="android:paddingRight">@dimen/dms_20</item>
+        <item name="android:paddingTop">@dimen/dms_12</item>
+        <item name="android:paddingBottom">@dimen/dms_12</item>
     </style>
 
     <style name="style_home_play_item" parent="TextSize13">

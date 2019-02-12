@@ -23,6 +23,7 @@ import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.ExpoApp;
 import com.expo.base.utils.StatusBarUtils;
+import com.expo.base.utils.ToastHelper;
 import com.expo.contract.HomeContract;
 import com.expo.entity.AppInfo;
 import com.expo.entity.Circum;
@@ -44,6 +45,7 @@ import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.main.adapter.HomeTopLineAdapter;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 import com.expo.module.map.AMapServicesUtil;
+import com.expo.module.map.PlayMapActivity;
 import com.expo.module.online.OnlineExpoActivity;
 import com.expo.module.routes.RouteDetailActivity;
 import com.expo.module.routes.RoutesActivity;
@@ -52,6 +54,7 @@ import com.expo.module.webview.WebActivity;
 import com.expo.module.webview.WebExpoActivityActivity;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.network.Http;
+import com.expo.services.TrackRecordService;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.LimitScrollerView;
@@ -113,12 +116,12 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     private Location mLocation;
     private List<Circum> mCircum;
 
-    private long typeToilet;
-    private long typeStation;
-    private long typeGate;
-    private long typeService;
-    private long typeDeposit;
-    private long typeMedical;
+//    private long typeToilet;
+//    private long typeStation;
+//    private long typeGate;
+//    private long typeService;
+//    private long typeDeposit;
+//    private long typeMedical;
 
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
         ExpoActivityInfo expoActivityInfo = (ExpoActivityInfo) obj;
@@ -149,15 +152,15 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
             if (topHeight == 0) {
                 topHeight = mHtTitle.getBottom() + mTabView1.getHeight() + 10;
             }
-            if (mPeripheryView!=null && mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
+            if (mPeripheryView != null && mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__periphery);
-            } else if (mScienceView!=null && mScienceView.getTop() - scrollY - 15 <= topHeight) {
+            } else if (mScienceView != null && mScienceView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__science);
-            } else if (mRouteView!=null && mRouteView.getTop() - scrollY - 15 <= topHeight) {
+            } else if (mRouteView != null && mRouteView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__route);
-            } else if (mActivitiesView!=null && mActivitiesView.getTop() - scrollY - 15 <= topHeight) {
+            } else if (mActivitiesView != null && mActivitiesView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__activities);
-            } else if (mFindView!=null && mFindView.getTop() - scrollY - 15 <= topHeight) {
+            } else if (mFindView != null && mFindView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__find);
             }
         }
@@ -610,11 +613,71 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         mAdapterTopLine.setDatas(mListTopLine);
     }
 
+    @OnClick({R.id.home_find_0, R.id.home_find_1, R.id.home_find_2,
+            R.id.home_find_3, R.id.home_find_4, R.id.home_find_5, R.id.home_find_6})
+    public void onFindClick(View v) {        // 找附近
+        // 是否在园区内
+        if (null == TrackRecordService.getLocation() || TrackRecordService.getLocation().getLatitude() == 0) {
+            ToastHelper.showShort(R.string.trying_to_locate);
+            return;
+        }
+        if (!mPresenter.checkInPark(TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude())) {
+            ToastHelper.showShort(R.string.unable_to_provide_service);
+            return;
+        }
+        switch (v.getId()) {
+            case R.id.home_find_0://卫生间
+//                if (typeToilet == 0) {
+//                    typeToilet = mPresenter.loadTypeId("\u536b\u751f\u95f4");
+//                }
+//                if (typeToilet != 0)
+                goMapNavigation("\u536b\u751f\u95f4");
+                break;
+            case R.id.home_find_1://览车
+//                if (typeStation == 0) {
+//                    typeStation = mPresenter.loadTypeId("\u8f66\u7ad9");
+//                }
+//                if (typeStation != 0)
+                goMapNavigation("\u89c8\u8f66");
+                break;
+            case R.id.home_find_2://大门
+//                if (typeGate == 0) {
+//                    typeGate = mPresenter.loadTypeId("\u5927\u95e8");
+//                }
+//                if (typeGate != 0)
+                goMapNavigation("\u5927\u95e8");
+                break;
+            case R.id.home_find_3://服务
+//                if (typeDeposit == 0) {
+//                    typeDeposit = mPresenter.loadTypeId("\u670d\u52a1");
+//                }
+//                if (typeDeposit != 0)
+                goMapNavigation("\u670d\u52a1");
+                break;
+            case R.id.home_find_4://医疗
+//                if (typeService == 0) {
+//                    typeService = mPresenter.loadTypeId("\u533b\u7597");
+//                }
+//                if (typeService != 0)
+                goMapNavigation("\u533b\u7597");
+                break;
+            case R.id.home_find_5://母婴
+//                if (typeMedical == 0) {
+//                    typeMedical = mPresenter.loadTypeId("\u6bcd\u5a74");
+//                }
+//                if (typeMedical != 0)
+                goMapNavigation("\u6bcd\u5a74");
+                break;
+            case R.id.home_find_6:
+                FreeWiFiActivity.startActivity(getContext());
+                break;
+        }
+    }
+
     @OnClick({R.id.ar, R.id.online_expo, R.id.service_qa, R.id.home_title_text, R.id.title_home_icon,
             R.id.title_home_msg, R.id.home__tab1__find,
             R.id.home__tab1__activities, R.id.home__tab1__route, R.id.home__tab1__science,
-            R.id.home__tab1__periphery, R.id.home_find_0, R.id.home_find_1, R.id.home_find_2,
-            R.id.home_find_3, R.id.home_find_4, R.id.home_find_5, R.id.home_find_6})
+            R.id.home__tab1__periphery})
     public void onClick(View view) {
         String url;
         switch (view.getId()) {
@@ -656,57 +719,12 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
             case R.id.home__tab1__periphery://滚动到周边
                 scrollTo(mPeripheryView);
                 break;
-            case R.id.home_find_0:
-                if (typeToilet == 0) {//卫生间
-                    typeToilet = mPresenter.loadTypeId("\u536b\u751f\u95f4");
-                }
-                if (typeToilet != 0)
-                    goMapNavigation(typeToilet);
-                break;
-            case R.id.home_find_1:
-                if (typeStation == 0) {//车站
-                    typeStation = mPresenter.loadTypeId("\u8f66\u7ad9");
-                }
-                if (typeStation != 0)
-                    goMapNavigation(typeStation);
-                break;
-            case R.id.home_find_2:
-                if (typeGate == 0) {//大门
-                    typeGate = mPresenter.loadTypeId("\u5927\u95e8");
-                }
-                if (typeGate != 0)
-                    goMapNavigation(typeGate);
-                break;
-            case R.id.home_find_3:
-                if (typeDeposit == 0) {//寄存
-                    typeDeposit = mPresenter.loadTypeId("\u5bc4\u5b58");
-                }
-                if (typeDeposit != 0)
-                    goMapNavigation(typeDeposit);
-                break;
-            case R.id.home_find_4:
-                if (typeService == 0) {//服务
-                    typeService = mPresenter.loadTypeId("\u670d\u52a1");
-                }
-                if (typeService != 0)
-                    goMapNavigation(typeService);
-                break;
-            case R.id.home_find_5:
-                if (typeMedical == 0) {//医疗
-                    typeMedical = mPresenter.loadTypeId("\u533b\u7597");
-                }
-                if (typeMedical != 0)
-                    goMapNavigation(typeMedical);
-                break;
-            case R.id.home_find_6:
-                FreeWiFiActivity.startActivity(getContext());
-                break;
         }
     }
 
     //跳转地图导航到该类型最近的点
-    private void goMapNavigation(long typeId) {
-
+    private void goMapNavigation(String typeName) {
+        PlayMapActivity.startActivity(getContext(), typeName);
     }
 
     private void scrollTo(View view) {

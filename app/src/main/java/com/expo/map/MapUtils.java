@@ -23,6 +23,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.TileOverlayOptions;
 import com.amap.api.maps.model.UrlTileProvider;
+import com.amap.api.navi.model.NaviLatLng;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseApplication;
@@ -242,6 +243,20 @@ public class MapUtils {
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
         for (int i = 0; i < markers.size(); i++) {
             boundsBuilder.include( markers.get( i ).getPosition() );
+        }
+        map.animateCamera( CameraUpdateFactory.newLatLngBounds( boundsBuilder.build(), 260 ) );
+    }
+
+    /**
+     * 根据多个 导航点 确定zoom及可视区域
+     * @param latLngs
+     */
+    public void setCameraZoom(NaviLatLng... latLngs) {
+        if (null == latLngs || latLngs.length == 0)
+            return;
+        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
+        for (NaviLatLng naviLatLng : latLngs){
+            boundsBuilder.include(new LatLng(naviLatLng.getLatitude(), naviLatLng.getLongitude()));
         }
         map.animateCamera( CameraUpdateFactory.newLatLngBounds( boundsBuilder.build(), 260 ) );
     }

@@ -16,6 +16,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Message;
+import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
 import com.expo.entity.ScheduleTimeInfo;
@@ -24,6 +25,7 @@ import com.expo.entity.TopLineInfo;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.entity.VrInfo;
+import com.expo.map.MapUtils;
 import com.expo.module.heart.HeartBeatService;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
@@ -462,6 +464,14 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 return type.getId();
         }
         return 0;
+    }
+
+    @Override
+    public boolean checkInPark(double latitude, double longitude) {
+        Park park = mDao.unique( Park.class, null );
+        if (park == null) return false;
+        List<double[]> bounds = park.getElectronicFenceList();
+        return MapUtils.ptInPolygon( latitude, longitude, bounds );
     }
 
     @Override
