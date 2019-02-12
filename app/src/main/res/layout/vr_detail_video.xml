@@ -25,7 +25,7 @@
             android:layout_width="@dimen/dms_32"
             android:layout_height="@dimen/dms_36"
             android:layout_centerVertical="true"
-            android:src="@mipmap/player_playing" />
+            android:src="@drawable/selector_vr_player" />
 
         <TextView
             android:id="@+id/play_time"
@@ -44,7 +44,7 @@
             android:layout_height="@dimen/dms_40"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/player_playing" />
+            android:src="@mipmap/vr_full" />
 
         <TextView
             android:id="@+id/play_total_time"
@@ -86,7 +86,7 @@
             android:layout_height="@dimen/dms_90"
             android:layout_marginTop="@dimen/dms_60"
             android:background="@drawable/bg_666_r10"
-            android:drawableLeft="@mipmap/video_start"
+            android:drawableLeft="@mipmap/vr_start"
             android:drawablePadding="@dimen/dms_20"
             android:gravity="center"
             android:paddingLeft="@dimen/dms_60"

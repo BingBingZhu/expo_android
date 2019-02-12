@@ -78,6 +78,9 @@ public class ExpoActivityInfo {
     @DatabaseField(columnName = "link_id")
     @SerializedName("linkid")
     private String linkId;
+    @DatabaseField(columnName = "link_name")
+    @SerializedName("linkname")
+    private String linkName;
     @DatabaseField(columnName = "lon")
     @SerializedName("lon")
     private String lon;
@@ -220,6 +223,14 @@ public class ExpoActivityInfo {
 
     public void setLinkId(String linkId) {
         this.linkId = linkId;
+    }
+
+    public String getLinkName() {
+        return linkName;
+    }
+
+    public void setLinkName(String linkName) {
+        this.linkName = linkName;
     }
 
     public String getLon() {

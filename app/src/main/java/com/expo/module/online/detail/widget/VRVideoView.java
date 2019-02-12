@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
@@ -212,6 +211,9 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
             VrVideoView.Options options = new VrVideoView.Options();
             options.inputFormat= VrVideoView.Options.FORMAT_HLS;
             mVrVideoView.loadVideo(Uri.parse(url), options);
+
+            mPlay.setSelected(true);
+            mVrVideoView.fullScreenDialog.playVideo(true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -224,6 +226,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         } else {
             mVrVideoView.pauseVideo();
         }
+        mPlay.setSelected(isPlay);
         mVrVideoView.fullScreenDialog.playVideo(isPlay);
     }
 

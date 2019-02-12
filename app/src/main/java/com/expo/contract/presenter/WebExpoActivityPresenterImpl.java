@@ -46,8 +46,7 @@ public class WebExpoActivityPresenterImpl extends WebExpoActivityContract.Presen
 
     @Override
     public Venue loadSceneByWikiId(long id) {
-        return mDao.unique(Venue.class, new QueryParams()
-                .add("eq", "wiki_id", String.valueOf(id)));
+        return mDao.queryById(Venue.class, id);
     }
 
     @Override

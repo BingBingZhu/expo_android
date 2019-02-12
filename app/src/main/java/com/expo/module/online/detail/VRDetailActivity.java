@@ -72,7 +72,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
         super.onDestroy();
     }
 
-    @OnClick(R.id.vr_panorama)
+    @OnClick(R.id.vr_eye)
     public void clickVrPanorama(View view) {
         mVRView.showVrSceen();
     }

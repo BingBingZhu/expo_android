@@ -18,6 +18,7 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ExpoActivityContract;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.module.webview.WebActivity;
+import com.expo.module.webview.WebExpoActivityActivity;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -230,7 +231,8 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
                     }
                 }
                 holder.setText(R.id.expo_activity_time, sb.toString());
-                holder.itemView.setOnClickListener(v -> WebActivity.startActivity(ExpoActivityActivity.this, LanguageUtil.chooseTest(info.getLinkH5Url(), info.getLinkH5UrLen()), LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn())));
+//                holder.itemView.setOnClickListener(v -> WebActivity.startActivity(ExpoActivityActivity.this, LanguageUtil.chooseTest(info.getLinkH5Url(), info.getLinkH5UrLen()), LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn())));
+                holder.itemView.setOnClickListener(v -> WebExpoActivityActivity.startActivity(ExpoActivityActivity.this, info.getId()));
             }
         });
     }

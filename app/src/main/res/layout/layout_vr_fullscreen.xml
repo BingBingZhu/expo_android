@@ -13,7 +13,7 @@
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_92"
-        android:background="@color/black_translucent_50">
+        android:background="@mipmap/vr_full_top">
 
         <ImageView
             android:id="@+id/close"
@@ -21,7 +21,7 @@
             android:layout_height="@dimen/dms_36"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dms_30"
-            android:src="@mipmap/litter_close" />
+            android:src="@mipmap/ico_map_window_close" />
 
         <TextView
             android:id="@+id/title_name"
@@ -33,16 +33,17 @@
         android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dms_92"
+        android:background="@mipmap/vr_full_bottom"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="@dimen/dms_30"
-        android:layout_marginRight="@dimen/dms_30">
+        android:paddingLeft="@dimen/dms_30"
+        android:paddingRight="@dimen/dms_30">
 
         <ImageView
             android:id="@+id/play"
             android:layout_width="@dimen/dms_32"
             android:layout_height="@dimen/dms_36"
             android:layout_centerVertical="true"
-            android:src="@mipmap/player_playing" />
+            android:src="@drawable/selector_vr_player" />
 
         <TextView
             android:id="@+id/play_time"
@@ -56,19 +57,20 @@
             android:textSize="@dimen/font_22" />
 
         <ImageView
-            android:id="@+id/full_screen"
+            android:id="@+id/full_eye"
             android:layout_width="@dimen/dms_40"
             android:layout_height="@dimen/dms_40"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/player_playing" />
+            android:src="@mipmap/vr_eye_small" />
 
         <TextView
             android:id="@+id/play_total_time"
             android:layout_width="@dimen/dms_64"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dms_44"
-            android:layout_toLeftOf="@id/full_screen"
+            android:layout_toLeftOf="@id/full_eye"
+            android:layout_centerVertical="true"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/font_22" />

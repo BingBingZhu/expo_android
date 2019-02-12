@@ -300,9 +300,8 @@ public interface Constants {
         //        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
 //        public static final int AFTERNOON = 14 * 3600 * 1000;//中午和下午的分割线
 //        public static final int NIGHT = 19 * 3600 * 1000;//下午和晚上的分割线
-        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
-        public static final int AFTERNOON = 15 * 3600 * 1000;//中午和下午的分割线
-        public static final int NIGHT = 19 * 3600 * 1000;//下午和晚上的分割线
+        public static final int MORNING = 12 * 3600 * 1000;//上午和中午的分割线
+        public static final int AFTERNOON = 19 * 3600 * 1000;//中午和下午的分割线
     }
 
     class VrType {
