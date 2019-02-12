@@ -99,7 +99,7 @@ public interface HomeContract {
     }
 
     interface View extends IView {
-        void showTopLine(List<TopLineInfo> list);
+        void showTopLine(List<ExpoActivityInfo> list);
 
         void showVenue(List<Encyclopedias> list);
 

@@ -14,7 +14,7 @@
         android:gravity="center"
         android:paddingTop="@dimen/dms_30"
         android:paddingBottom="@dimen/dms_28"
-        android:text="@string/expo_knowledge"
+        android:text="@string/main_college"
         android:textColor="@color/white"
         android:textSize="@dimen/font_36" />
 

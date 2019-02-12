@@ -107,8 +107,11 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
                 holder.itemView.getLayoutParams().width = ScreenUtils.getScreenWidth() / 5;
                 if (mMonthList.get(position) == 0L) {
                     holder.itemView.setSelected(false);
+                    holder.setText(R.id.month, "");
+                    holder.itemView.setEnabled(false);
                     return;
                 }
+                holder.itemView.setEnabled(true);
                 TimeUtils.getValueByCalendarField(mMonthList.get(position), Calendar.MONTH);
                 if (mSelectMonth == mMonthList.get(position)) {
                     holder.itemView.setSelected(true);
@@ -121,6 +124,7 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
                     if (mSelectMonthView != null) {
                         mSelectMonthView.setSelected(false);
                     }
+                    mSelectMonth = mMonthList.get(position);
 
                     mSelectMonthView = v;
                     mSelectMonthView.setSelected(true);
@@ -141,6 +145,9 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvDateRecycler.setLayoutManager(manager);
         mSelectTime = TimeUtils.string2Millis(TimeUtils.millis2String(TimeUtils.getNowMills(), new SimpleDateFormat("yyyy-MM-dd")), new SimpleDateFormat("yyyy-MM-dd"));
+        if (mSelectTime < mMonthList.get(2)) {
+            mSelectTime = mMonthList.get(2);
+        }
         mRvDateRecycler.setAdapter(mDateAdapter = new CommonAdapter(this, R.layout.item_expo_activity_date, mDateList) {
             @Override
             protected void convert(ViewHolder holder, Object o, int position) {
@@ -187,7 +194,8 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
             @Override
             protected void convert(ViewHolder holder, ExpoActivityInfo o, int position) {
                 ExpoActivityInfo info = mActivityShowList.get(position);
-                Picasso.with(getContext()).load(CommUtils.getFullUrl("url")).into((ImageView) holder.getView(R.id.item_activity_img));
+//                Picasso.with(getContext()).load(CommUtils.getFullUrl("url")).into((ImageView) holder.getView(R.id.item_activity_img));
+                CommUtils.setImgPic(getContext(), o.getPicUrl(), (ImageView) holder.getView(R.id.item_activity_img));
                 holder.setText(R.id.expo_activity_name, LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn()));
                 String[] times = info.getTimes().split("/");
                 for (int i = 0; i < times.length; i++) {

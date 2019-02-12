@@ -17,6 +17,7 @@ import com.expo.network.response.RichTextRsp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.ScheduleResp;
+import com.expo.network.response.SheduleInfoResp;
 import com.expo.network.response.SocietyListResp;
 import com.expo.network.response.SubjectResp;
 import com.expo.network.response.TopLineResp;
@@ -561,4 +562,14 @@ public interface DataServer {
     @POST("Terminal/GetPortalSiteList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<PortalSiteResp> loadPortalList(@Body RequestBody requestBody);
+
+    /**
+     * 获取所有预约信息数据(15天)
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/GetScheduleDatas")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<SheduleInfoResp> getScheduleDatas(@Body RequestBody requestBody);
 }
