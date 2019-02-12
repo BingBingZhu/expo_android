@@ -20,6 +20,7 @@ import com.expo.entity.User;
 import com.expo.entity.Venue;
 import com.expo.entity.VisitorService;
 import com.expo.module.map.NavigationActivity;
+import com.expo.module.map.PlayMapActivity;
 import com.expo.services.TrackRecordService;
 import com.expo.utils.Constants;
 import com.expo.widget.CustomDefaultDialog;
@@ -62,10 +63,10 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        setTitle( 1, getIntent().getStringExtra( Constants.EXTRAS.EXTRA_TITLE ) );
-        mTypePosition = getIntent().getIntExtra( Constants.EXTRAS.EXTRAS, 0 );
+        setTitle(1, getIntent().getStringExtra(Constants.EXTRAS.EXTRA_TITLE));
+        mTypePosition = getIntent().getIntExtra(Constants.EXTRAS.EXTRAS, 0);
         if (mTypePosition == 3) {
-            mRuleView.setVisibility( View.VISIBLE );
+            mRuleView.setVisibility(View.VISIBLE);
         }
         initViewData();
     }
@@ -76,7 +77,7 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
         return true;
     }
 
-    public static void startActivity(Context context, String title, int position){
+    public static void startActivity(Context context, String title, int position) {
         Intent intent = new Intent(context, TouristServiceSecondActivity.class);
         intent.putExtra(Constants.EXTRAS.EXTRA_TITLE, title);
         intent.putExtra(Constants.EXTRAS.EXTRAS, position);
@@ -85,12 +86,12 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
 
     @OnClick(R.id.seek_help_function)
     public void onClick(View view) {
-        if (mTypePosition == 5){    // 医疗救助 定位发送
+        if (mTypePosition == 5) {    // 医疗救助 定位发送
             if (TrackRecordService.getLocation() == null || TrackRecordService.getLocation().getLatitude() == 0) {
-                ToastHelper.showShort( R.string.trying_to_locate );
+                ToastHelper.showShort(R.string.trying_to_locate);
                 return;
             }
-            if (mPresenter.checkInPark( TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude() )) {
+            if (mPresenter.checkInPark(TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude())) {
                 CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
                 dialog.setContent("是否因伤病较重，行动不便需要我们立即到您身边开展医疗救助？")
                         .setOkText("是")
@@ -101,103 +102,76 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
                             public void onClick(View v) {
                                 VisitorService visitorService = initSubmitData();
                                 if (visitorService != null) {
-                                    mPresenter.addVisitorService( visitorService );
+                                    mPresenter.addVisitorService(visitorService);
                                 }
                                 dialog.dismiss();
                             }
                         }).show();
             } else {
-                ToastHelper.showShort( R.string.unable_to_provide_service );
+                ToastHelper.showShort(R.string.unable_to_provide_service);
             }
-        }else{  // 跳转页面   填写信息
+        } else {  // 跳转页面   填写信息
             TouristServiceSubmitActivity.startActivity(getContext(), mTypePosition);
         }
     }
 
 
     private VisitorService initSubmitData() {
-//        if (CheckUtils.isEmtpy( mEtEdit.getText().toString(), R.string.check_string_empty_localtion_descriptiong, true )) {
-//            return null;
-//        }
-
-//        if (mIsLocation && mLocation == null)
-//            if (CheckUtils.isEmtpy( mCoordinateAssist, R.string.check_string_no_gps_empty_localtion, true ))
-//                return null;
-
         VisitorService visitorService = new VisitorService();
         User user = ExpoApp.getApplication().getUser();
-//        switch (mImageList.size()) {
-//            case 3:
-//                visitorService.setImgUrl3( mImageList.get( 2 ) );
-//            case 2:
-//                visitorService.setImgUrl2( mImageList.get( 1 ) );
-//            case 1:
-//                visitorService.setImgUrl1( mImageList.get( 0 ) );
-//        }
-        visitorService.setDisposeType( "1" );
-        visitorService.setState( "1" );
-        visitorService.setServiceType( "1" );
+        visitorService.setDisposeType("1");
+        visitorService.setState("1");
+        visitorService.setServiceType("1");
 //        visitorService.setCoordinateAssist( mCoordinateAssist );
-        visitorService.setCounttryCode( PrefsHelper.getString( Constants.Prefs.KEY_COUNTRY_CODE, "+86" ) );
-        visitorService.setGpsLatitude( String.valueOf( TrackRecordService.getLocation().getLatitude() ) );
-        visitorService.setGpsLongitude( String.valueOf( TrackRecordService.getLocation().getLongitude() ) );
-        visitorService.setPhone( user.getMobile() );
+        visitorService.setCounttryCode(PrefsHelper.getString(Constants.Prefs.KEY_COUNTRY_CODE, "+86"));
+        visitorService.setGpsLatitude(String.valueOf(TrackRecordService.getLocation().getLatitude()));
+        visitorService.setGpsLongitude(String.valueOf(TrackRecordService.getLocation().getLongitude()));
+        visitorService.setPhone(user.getMobile());
 //        visitorService.setSituation( mEtEdit.getText().toString() );
-        visitorService.setUserId( user.getUid() );
-        visitorService.setUserName( user.getNick() );
+        visitorService.setUserId(user.getUid());
+        visitorService.setUserName(user.getNick());
         visitorService.setPlatform("1");
         return visitorService;
     }
 
-
-
-
-
-
-
-
-
-
-
     @OnClick(R.id.seek_help_navigation)
     public void navigation(View view) {
         if (isNotLocation()) {
-            ToastHelper.showShort( R.string.trying_to_locate );
+            ToastHelper.showShort(R.string.trying_to_locate);
             return;
         }
-        if (mPresenter.checkInPark( TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude() )) {
-            Venue venue = mPresenter.getNearbyServiceCenter( TrackRecordService.getLocation() );
-            if (venue != null) {
-                NavigationActivity.startActivity( getContext(), venue );
-            } else {
-                ToastHelper.showShort( R.string.no_service_agencies );
+        if (mPresenter.checkInPark(TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude())) {
+            switch (mTypePosition) {
+                case 3:     // 失物招领
+                    PlayMapActivity.startActivity(getContext(), "服务");
+                    break;
+                case 5:     // 医疗救助
+                    PlayMapActivity.startActivity(getContext(), "服务");
+                    break;
+                case 6:     // 人员走失
+                    PlayMapActivity.startActivity(getContext(), "服务");
+                    break;
+                case 7:     // 治安举报
+                    PlayMapActivity.startActivity(getContext(), "治安");
+                    break;
             }
         } else {
-            ToastHelper.showShort( R.string.unable_to_provide_service );
+            ToastHelper.showShort(R.string.unable_to_provide_service);
         }
     }
 
-    private boolean isNotLocation(){
+    private boolean isNotLocation() {
         return null == TrackRecordService.getLocation() || TrackRecordService.getLocation().getLatitude() == 0;
     }
-
-//    @OnClick(R.id.seek_help_function)
-//    public void location(View view) {
-//        if (isNotLocation()) {
-//            ToastHelper.showShort( R.string.trying_to_locate );
-//            return;
-//        }
-//        LocationDescribeActivity.startActivityForResult( this, mLocation.getLatitude(), mLocation.getLongitude(), mPoiId, mCoordinateAssist );
-//    }
 
     @Override
     public void complete() {
         new CustomDefaultDialog(getContext())
-        .setContent("定位已上传，我们记录了您的定位信息，请您在原地等候")
-        .setOnlyOK()
-        .setOkText("好的")
-        .setCancelable(false)
-        .show();
+                .setContent("定位已上传，我们记录了您的定位信息，请您在原地等候")
+                .setOnlyOK()
+                .setOkText("好的")
+                .setCancelable(false)
+                .show();
     }
 
 
@@ -238,7 +212,7 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
                 mTvFunction.setPadding(hPadding, vPadding, hPadding, vPadding);
                 mTvFunction.setBackground(getResources().getDrawable(R.drawable.bg_white_99_r5_w1));
                 mTvFunction.setTextColor(getResources().getColor(R.color.color_333));
-                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 param.gravity = Gravity.CENTER_HORIZONTAL;
                 param.topMargin = (int) getResources().getDimension(R.dimen.dms_32);
                 mTvFunction.setLayoutParams(param);

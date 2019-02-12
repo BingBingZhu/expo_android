@@ -54,7 +54,7 @@
             android:layout_height="@dimen/dms_106"
             android:layout_above="@+id/latched_position"
             android:layout_marginLeft="@dimen/dms_40"
-            app:placeholderImage="@mipmap/ico_park_map_test1" />
+            app:placeholderImage="@mipmap/ico_default_tour_small" />
 
         <ImageView
             android:id="@+id/latched_position"

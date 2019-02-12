@@ -26,6 +26,7 @@ import com.expo.entity.Schedule;
 import com.expo.entity.Venue;
 import com.expo.module.map.NavigationActivity;
 import com.expo.module.map.ParkMapActivity;
+import com.expo.module.map.PlayMapActivity;
 import com.expo.utils.ShareUtil;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
@@ -243,7 +244,8 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         @JavascriptInterface
         public void gotoDataLocation(int id) {
             runOnUiThread(() -> {
-                NavigationActivity.startActivity(WebTemplateActivity.this, mVenue);
+//                NavigationActivity.startActivity(WebTemplateActivity.this, mVenue);
+                PlayMapActivity.startActivity(getContext(), mVenue, 2);
             });
         }
 

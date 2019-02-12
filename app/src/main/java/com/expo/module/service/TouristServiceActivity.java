@@ -18,11 +18,14 @@ import com.expo.contract.TouristServiceContract;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Venue;
 import com.expo.module.map.NavigationActivity;
+import com.expo.module.map.PlayMapActivity;
 import com.expo.module.service.adapter.TouristServiceAdapter;
 import com.expo.module.webview.WebActivity;
 import com.expo.services.TrackRecordService;
 import com.expo.utils.Constants;
 import com.expo.widget.decorations.SpaceDecoration;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,7 +60,6 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
             case 6:     // 人员走失
             case 7:     // 治安举报
                 TouristServiceSecondActivity.startActivity(getContext(), title, position);
-
                 break;
         }
     };
@@ -92,12 +94,7 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
             return;
         } else {
             if (mPresenter.checkInPark(TrackRecordService.getLocation())) {
-                Venue venue = mPresenter.getNearbyServiceCenter(TrackRecordService.getLocation());
-                if (venue != null) {
-                    NavigationActivity.startActivity(getContext(), venue);
-                } else {
-                    ToastHelper.showShort(R.string.no_service_agencies);
-                }
+                PlayMapActivity.startActivity(getContext(), "\u670d\u52a1");
             } else {
                 ToastHelper.showShort(R.string.unable_to_provide_service);
             }

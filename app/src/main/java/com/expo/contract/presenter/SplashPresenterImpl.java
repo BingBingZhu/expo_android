@@ -1,9 +1,11 @@
 package com.expo.contract.presenter;
 
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.blankj.utilcode.util.TimeUtils;
+import com.expo.base.ExpoApp;
 import com.expo.base.utils.FileUtils;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.contract.SplashContract;
@@ -24,6 +26,7 @@ import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
 import com.expo.entity.VrInfo;
 import com.expo.entity.VrLableInfo;
+import com.expo.module.download.DownloadManager;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
 import com.expo.network.response.AllTypeResp;
@@ -218,6 +221,21 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             protected void onResponse(TouristTypeResp rsp) {
                 PrefsHelper.setString(Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, rsp.updateTime);
                 mDao.clear(TouristType.class);
+                TouristType t = new TouristType();
+                t.setCaption("默认光团");
+                t.setCaptionEN("default");
+                t.setAge("10");
+                t.setIsEnable("1");
+                t.setSex("0");
+                t.setCurrPosition(100);
+                t.setModelFileSize(100L);
+                t.setDownState(DownloadManager.DOWNLOAD_FINISH);
+                t.setRemark("性格：阳光、乐天派、\n" +
+                        "可信赖、充满善意。默认");
+                t.setRemarkEN("it ok");
+                t.setLocalPath(ExpoApp.getApplication().getFilesDir().getAbsolutePath() + Constants.URL.LOCAL_DEFAULT_TOUR_COPY_PATH);
+                t.setUsed(true);
+                mDao.saveOrUpdate(t);
                 mDao.saveOrUpdateAll(rsp.touristTypes);
             }
 
@@ -228,6 +246,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         }, observable);
         addNetworkRecord();
     }
+
 
     /**
      * 加载徽章列表

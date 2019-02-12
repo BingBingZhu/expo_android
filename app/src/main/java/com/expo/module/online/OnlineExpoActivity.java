@@ -199,6 +199,8 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
                 holder.<SimpleDraweeView>getView(R.id.item_online_guide_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
                 if (null != tourist && null != tourist.getPicSmallUrl() && !TextUtils.isEmpty(tourist.getPicSmallUrl()))
                     holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setImageURI(Constants.URL.FILE_BASE_URL + tourist.getPicSmallUrl());
+                else
+                    holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setImageResource(R.mipmap.ico_default_tour);
                 holder.<TextView>getView(R.id.item_online_guide_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
                 holder.<TextView>getView(R.id.item_online_guide_content).setText(LanguageUtil.chooseTest(vr.getRemark(), vr.getRemarkEn()));
                 holder.<TextViewDrawable>getView(R.id.item_online_guide_scans).setText(vr.getViewCount() + "次");

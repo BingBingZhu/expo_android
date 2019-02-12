@@ -14,7 +14,10 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+
+import com.expo.module.map.PlayMapActivity;
 import com.expo.services.TrackRecordService;
+
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -235,13 +238,13 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 String filePath = FileUtils.saveScreenShot(bitmap);
                 ShareUtil.showShare(getContext(), null, null, filePath, null, null);
             });
-        }else{
+        } else {
             ((AppBarView) getTitleView()).getRightView().setVisibility(View.VISIBLE);
         }
     }
 
-    public void hideTitleRightView(){
-        if (((AppBarView) getTitleView()).getRightView() != null){
+    public void hideTitleRightView() {
+        if (((AppBarView) getTitleView()).getRightView() != null) {
             ((AppBarView) getTitleView()).getRightView().setVisibility(View.GONE);
         }
     }
@@ -321,13 +324,13 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
         @JavascriptInterface
         public void setTitleRight(String titleText, boolean isHaveShare) {
-            runOnUiThread( () -> {
-                WebActivity.this.setTitle( BaseActivity.TITLE_COLOR_STYLE_WHITE, titleText );
+            runOnUiThread(() -> {
+                WebActivity.this.setTitle(BaseActivity.TITLE_COLOR_STYLE_WHITE, titleText);
                 if (isHaveShare)
                     showTitleRightView();
                 else
                     hideTitleRightView();
-            } );
+            });
         }
 
         @JavascriptInterface
@@ -364,18 +367,13 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
          * 导航到服务中心
          */
         @JavascriptInterface
-        public void goToServiceCenter() {
+        public void goToServiceCenter(String venueTypeName) {
             if (null == TrackRecordService.getLocation()) {
                 ToastHelper.showShort(R.string.trying_to_locate);
                 return;
             } else {
                 if (mPresenter.checkInPark(TrackRecordService.getLocation())) {
-                    Venue venue = mPresenter.getNearbyServiceCenter(TrackRecordService.getLocation());
-                    if (venue != null) {
-                        NavigationActivity.startActivity(getContext(), venue);
-                    } else {
-                        ToastHelper.showShort(R.string.no_service_agencies);
-                    }
+                    PlayMapActivity.startActivity(getContext(), venueTypeName);
                 } else {
                     ToastHelper.showShort(R.string.unable_to_provide_service);
                 }
@@ -399,6 +397,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
         /**
          * 获取订单信息
+         *
          * @return
          */
         @JavascriptInterface

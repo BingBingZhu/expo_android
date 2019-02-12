@@ -29,6 +29,7 @@ import com.expo.entity.VisitorService;
 import com.expo.entity.VrInfo;
 import com.expo.entity.VrLableInfo;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,7 +100,7 @@ public interface Constants {
         public static final String EXTRA_USER_POINTS = "extra_user_points";
         public static final String EXTRA_ROUTE_NAME = "extra_route_name";
         public static final String EXTRA_JSON_DATA = "extra_json_data";
-        public static final String EXTRA_JSON_DATA2 = "extra_json_data2";
+        public static final String EXTRA_VENUE_TYPE_NAME = "extra_venue_type_name";
         public static final String EXTRA_ENJOYS = "extra_enjoys";
         public static final String EXTRA_READ_COUNT = "extra_read_count";
         public static final String EXTRA_IS_START_LOCATION = "extra_is_start_location";
@@ -107,6 +108,7 @@ public interface Constants {
         public static final String EXTRA_CIRCUN_TYPE = "extra_circun_type";
         public static final String EXTRA_AT_VENUE_LIST = "extra_at_venue_list";
         public static final String EXTRA_BITMAP_BYTE_ARRAY = "extra_bitmap_byte_array";
+        public static final String EXTRA_ONLY_PREVIEW = "extra_only_preview";
     }
 
     /**
@@ -127,13 +129,16 @@ public interface Constants {
         //植物识别地址
         public static final String DISTINGUISH_PLANT = "http://plantgw.nongbangzhu.cn/plant/recognize";
         public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://39.105.120.171/res/static/dist/index.html#/introduce";
-        //        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
-        //        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce";
+//        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://www.toolsmi.com/dist/index.html#/introduce";
+//        public static final String ENCYCLOPEDIAS_DETAIL_URL = "http://192.168.1.143:8080/dist1/index.html#/introduce";
         public static final String HTML_404 = "file:///android_asset/web/404.html";
         public static final String UPPAY_APP_DOWNLOAD_URL = "http://47.92.247.143/res/static/UPPayPluginEx.apk";
         //        public static final String MAP_TILES_BASE_URL = FILE_BASE_URL + "titlemap/tiles/%d/%d_%d.png";
         public static final String MAP_TILES_BASE_URL = "http://39.105.120.171/res/titlemap/tiles/%d/%d_%d.png";
         public static final String REGISTER_TICKET = "http://47.92.129.164:8890/ticketAppUser/appUserToOffWebUser";
+
+        public static final String ASSETS_DEFAULT_TOUR_FILE_NAME = "defaulttour.zip";
+        public static final String LOCAL_DEFAULT_TOUR_COPY_PATH = File.separator + ASSETS_DEFAULT_TOUR_FILE_NAME;
     }
 
     /**
@@ -294,7 +299,7 @@ public interface Constants {
 
 
     class TimeType {
-        //        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
+//        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
 //        public static final int AFTERNOON = 14 * 3600 * 1000;//中午和下午的分割线
 //        public static final int NIGHT = 19 * 3600 * 1000;//下午和晚上的分割线
         public static final int MORNING = 1 * 3600 * 1000;//上午和中午的分割线
