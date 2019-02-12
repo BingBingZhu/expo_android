@@ -481,7 +481,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     tv = item.findViewById(R.id.title);
                     img = item.findViewById(R.id.img);
                     tv.setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
-                    Http.loadImage(img, encyclopedias.picUrl);
+                    img.setImageURI(Uri.parse(Constants.URL.FILE_BASE_URL + encyclopedias.picUrl));
                     break;
             }
         }

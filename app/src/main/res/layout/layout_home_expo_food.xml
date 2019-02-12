@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:placeholderImage="@mipmap/ico_mine_def_photo"
+        app:actualImageScaleType="centerCrop"
         app:roundAsCircle="true"
         app:viewAspectRatio="1"
         app:roundingBorderColor="@color/orange_ff8e11"
@@ -21,7 +22,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black_333333"
         android:textSize="@dimen/dms_28"
-        android:textStyle="bold"
         android:layout_marginTop="@dimen/dms_10"
         android:layout_gravity="center_horizontal"/>
 </LinearLayout>

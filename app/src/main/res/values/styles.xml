@@ -28,7 +28,6 @@
     </style>
 
     <style name="AppTheme_Splash" parent="AppTheme">
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@drawable/splash_bg</item>
     </style>
 

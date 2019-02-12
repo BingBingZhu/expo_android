@@ -334,24 +334,22 @@ public class HomePresenterImpl extends HomeContract.Presenter {
 //                .add("and")
                 .add("eq", "date", date)
                 .add("limit", 0, 3));
-
-        for (ScheduleVenue sv : tmp) {
-            List<ScheduleTimeInfo> times = mDao.query(ScheduleTimeInfo.class, new QueryParams()
-                    .add("eq", "venue_id", sv.id)
-                    .add("and")
-                    .add("eq", "date", date)
-                    .add("limit", 0, 3));
-            int count = 0;
-            int usedCount = 0;
-            for (ScheduleTimeInfo st : times) {
-                count += st.personalCount;
-                usedCount += st.personalUsedCount;
-            }
-            if (usedCount == 0) usedCount = 1;
-            sv.percent = count * 100 / usedCount;
-        }
-
         if (tmp != null) {
+            for (ScheduleVenue sv : tmp) {
+                List<ScheduleTimeInfo> times = mDao.query(ScheduleTimeInfo.class, new QueryParams()
+                        .add("eq", "venue_id", sv.id)
+                        .add("and")
+                        .add("eq", "date", date)
+                        .add("limit", 0, 3));
+                int count = 0;
+                int usedCount = 0;
+                for (ScheduleTimeInfo st : times) {
+                    count += st.personalCount;
+                    usedCount += st.personalUsedCount;
+                }
+                if (usedCount == 0) usedCount = 1;
+                sv.percent = count * 100 / usedCount;
+            }
             data.addAll(tmp);
         } else {
             return null;
