@@ -49,6 +49,7 @@ import com.expo.module.routes.RouteDetailActivity;
 import com.expo.module.routes.RoutesActivity;
 import com.expo.module.service.TouristServiceActivity;
 import com.expo.module.webview.WebActivity;
+import com.expo.module.webview.WebExpoActivityActivity;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.network.Http;
 import com.expo.utils.Constants;
@@ -120,10 +121,11 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     private long typeMedical;
 
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
-        TopLineInfo topLine = (TopLineInfo) obj;
-        WebActivity.startActivity(getContext(),
-                LanguageUtil.chooseTest(topLine.linkH5Url, topLine.linkH5UrlEn),
-                getString(R.string.expo_headline));
+        ExpoActivityInfo expoActivityInfo = (ExpoActivityInfo) obj;
+//        WebActivity.startActivity(getContext(),
+//                LanguageUtil.chooseTest(topLine.linkH5Url, topLine.linkH5UrlEn),
+//                getString(R.string.expo_headline));
+        WebExpoActivityActivity.startActivity(getContext(), expoActivityInfo.getId());
     };
 
     MyScrollView.OnScrollListener mScrollListener = new MyScrollView.OnScrollListener() {
