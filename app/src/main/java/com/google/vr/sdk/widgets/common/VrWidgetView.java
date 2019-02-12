@@ -210,7 +210,7 @@ public abstract class VrWidgetView extends FrameLayout {
 
     public void getHeadRotation(float[] yawAndPitch) {
         if (yawAndPitch.length < 2) {
-            throw new IllegalArgumentException("Array should have at least 2 elements.");
+            throw new IllegalArgumentException("Array sh-ould have at least 2 elements.");
         } else {
             this.renderer.getHeadRotation(yawAndPitch);
         }
@@ -218,6 +218,11 @@ public abstract class VrWidgetView extends FrameLayout {
 
     public void setDisplayMode(int newDisplayMode) {
         if (newDisplayMode != this.displayMode) {
+            if (newDisplayMode == 2) {
+                this.renderer.isLanscape = true;
+            } else {
+                this.renderer.isLanscape = false;
+            }
             this.renderer.updateCurrentYaw();
             if (newDisplayMode <= 0 || newDisplayMode >= 4) {
                 Log.e(TAG, (new StringBuilder(38)).append("Invalid DisplayMode value: ").append(newDisplayMode).toString());
@@ -228,11 +233,12 @@ public abstract class VrWidgetView extends FrameLayout {
             this.updateStereoMode();
             if (this.isFullScreen()) {
                 this.orientationHelper.lockOrientation();
-                this.fullScreenDialog.show(newDisplayMode == 2);
+                this.fullScreenDialog.showLandscape(newDisplayMode == 2);
             } else {
                 this.fullScreenDialog.dismiss();
                 this.orientationHelper.restoreOriginalOrientation();
             }
+
 
             this.updateControlsLayout();
             this.updateTouchTracker();
@@ -343,7 +349,7 @@ public abstract class VrWidgetView extends FrameLayout {
         this.renderer.onResume();
         this.updateStereoMode();
         if (this.isFullScreen()) {
-            this.fullScreenDialog.show(displayMode == 2);
+            this.fullScreenDialog.showLandscape(displayMode == 2);
         }
 
         this.updateButtonVisibility();

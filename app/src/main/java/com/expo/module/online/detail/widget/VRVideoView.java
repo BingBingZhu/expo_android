@@ -210,6 +210,9 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         try {
             mNoWifiLayout.setVisibility(View.GONE);
             mVrVideoView.loadVideo(Uri.parse(url), null);
+
+            mPlay.setSelected(true);
+            mVrVideoView.fullScreenDialog.playVideo(true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -222,6 +225,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         } else {
             mVrVideoView.pauseVideo();
         }
+        mPlay.setSelected(isPlay);
         mVrVideoView.fullScreenDialog.playVideo(isPlay);
     }
 

@@ -65,7 +65,7 @@ public class FullScreenDialog extends Dialog implements View.OnClickListener, Se
 
         dialogView.findViewById(R.id.close).setOnClickListener(this);
         dialogView.findViewById(R.id.play).setOnClickListener(this);
-        dialogView.findViewById(R.id.full_screen).setOnClickListener(this);
+        dialogView.findViewById(R.id.full_eye).setOnClickListener(this);
         seekBar.setOnSeekBarChangeListener(this);
 
         setIsShowControl(true);
@@ -94,11 +94,12 @@ public class FullScreenDialog extends Dialog implements View.OnClickListener, Se
         super.onStop();
     }
 
-    public void show(boolean isLandscape) {
+    public void showLandscape(boolean isLandscape) {
         mIsLandscape = isLandscape;
         if (isLandscape) {
             ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         } else {
+            ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             setIsShowControl(false);
         }
         super.show();
@@ -151,13 +152,15 @@ public class FullScreenDialog extends Dialog implements View.OnClickListener, Se
                 mListener.play();
                 break;
             case R.id.close:
-            case R.id.full_screen:
                 mVrVideoView.setDisplayMode(1);
+                break;
+            case R.id.full_eye:
+                mVrVideoView.setDisplayMode(3);
+                showLandscape(false);
                 break;
 
         }
     }
-
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

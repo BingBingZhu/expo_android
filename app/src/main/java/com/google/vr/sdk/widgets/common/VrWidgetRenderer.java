@@ -27,6 +27,7 @@ public abstract class VrWidgetRenderer implements Renderer {
     private volatile SetStereoModeRequest lastSetStereoModeRequest;
     private float[] tmpHeadAngles = new float[2];
     private float currentYaw;
+    public boolean isLanscape = false;
 
     protected VrWidgetRenderer(Context context, GLThreadScheduler glThreadScheduler, float xMetersPerPixel, float yMetersPerPixel, int screenRotation) {
         this.context = context;
@@ -54,7 +55,9 @@ public abstract class VrWidgetRenderer implements Renderer {
     }
 
     public void onSurfaceChanged(GL10 gl, int w, int h) {
-        this.nativeResize(this.nativeRenderer, w, h, this.xMetersPerPixel, this.yMetersPerPixel, this.screenRotation);
+        int screenRotation = this.screenRotation;
+        if (isLanscape) screenRotation = 90;
+        this.nativeResize(this.nativeRenderer, w, h, this.xMetersPerPixel, this.yMetersPerPixel, screenRotation);
     }
 
     public void onDrawFrame(GL10 gl) {

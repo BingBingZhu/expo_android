@@ -26,12 +26,14 @@
             </FrameLayout>
 
             <ImageView
-                android:id="@+id/vr_panorama"
+                android:id="@+id/vr_eye"
                 android:layout_width="@dimen/dms_128"
                 android:layout_height="@dimen/dms_128"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/msg_laba" />
+                android:padding="@dimen/dms_28"
+                android:background="@mipmap/vr_btn_bg"
+                android:src="@mipmap/vr_eye" />
 
         </RelativeLayout>
 
@@ -67,7 +69,7 @@
                     style="@style/TextSizeBlack12"
                     android:layout_marginLeft="@dimen/dms_42"
                     android:layout_toRightOf="@id/vr_detail_scans"
-                    android:drawableLeft="@mipmap/time"
+                    android:drawableLeft="@mipmap/vr_duration"
                     android:textColor="@color/gray_66"
                     app:drawableLeftHeight="@dimen/dms_18"
                     app:drawableLeftWidth="@dimen/dms_18" />
@@ -77,7 +79,7 @@
                     android:layout_width="@dimen/dms_36"
                     android:layout_height="@dimen/dms_36"
                     android:layout_alignParentRight="true"
-                    android:src="@mipmap/ico_tourist_downloading" />
+                    android:src="@mipmap/vr_download" />
             </RelativeLayout>
 
             <LinearLayout
@@ -89,25 +91,25 @@
                 <com.hedan.textdrawablelibrary.TextViewDrawable
                     android:id="@+id/vr_detail_introduce"
                     style="@style/vr_detail_bottom_btn"
-                    android:drawableTop="@mipmap/ico_system_message"
+                    android:drawableTop="@mipmap/vr_introduce"
                     android:text="@string/expo_vr_detail_introduce" />
 
                 <com.hedan.textdrawablelibrary.TextViewDrawable
                     android:id="@+id/vr_detail_img"
                     style="@style/vr_detail_bottom_btn"
-                    android:drawableTop="@mipmap/ico_system_message"
+                    android:drawableTop="@mipmap/vr_img"
                     android:text="@string/expo_vr_detail_img" />
 
                 <com.hedan.textdrawablelibrary.TextViewDrawable
                     android:id="@+id/vr_detail_video"
                     style="@style/vr_detail_bottom_btn"
-                    android:drawableTop="@mipmap/ico_system_message"
+                    android:drawableTop="@mipmap/vr_img"
                     android:text="@string/expo_vr_detail_video" />
 
                 <com.hedan.textdrawablelibrary.TextViewDrawable
                     android:id="@+id/vr_detail_sendtable"
                     style="@style/vr_detail_bottom_btn"
-                    android:drawableTop="@mipmap/ico_system_message"
+                    android:drawableTop="@mipmap/vr_send_table"
                     android:text="@string/expo_vr_detail_sendtable" />
 
             </LinearLayout>
