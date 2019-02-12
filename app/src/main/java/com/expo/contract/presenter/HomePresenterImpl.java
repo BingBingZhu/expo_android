@@ -328,12 +328,8 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     public List<Object> loadBespeak() {
         String date = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd"));
         ArrayList data = new ArrayList();
-        data.add(R.string.home_func_item_appointment);
+        data.add(R.string.home_bespeak_today);
         List<ScheduleVenue> tmp = mDao.query(ScheduleVenue.class, new QueryParams()
-//                .add("eq", "open_state", 0)
-//                .add("and")
-//                .add("eq", "online_state", 0)
-//                .add("and")
                 .add("eq", "date", date)
                 .add("limit", 0, 3));
         if (tmp != null) {
@@ -468,10 +464,10 @@ public class HomePresenterImpl extends HomeContract.Presenter {
 
     @Override
     public boolean checkInPark(double latitude, double longitude) {
-        Park park = mDao.unique( Park.class, null );
+        Park park = mDao.unique(Park.class, null);
         if (park == null) return false;
         List<double[]> bounds = park.getElectronicFenceList();
-        return MapUtils.ptInPolygon( latitude, longitude, bounds );
+        return MapUtils.ptInPolygon(latitude, longitude, bounds);
     }
 
     @Override

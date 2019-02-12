@@ -4,9 +4,10 @@ import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
+import android.text.util.Linkify;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -33,7 +34,6 @@ import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
 import com.expo.entity.ScheduleVenue;
-import com.expo.entity.TopLineInfo;
 import com.expo.entity.VrInfo;
 import com.expo.map.LocationManager;
 import com.expo.module.activity.ExpoActivityActivity;
@@ -55,6 +55,7 @@ import com.expo.module.webview.WebExpoActivityActivity;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.network.Http;
 import com.expo.services.TrackRecordService;
+import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.LimitScrollerView;
@@ -69,8 +70,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -227,12 +231,12 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         mGridLayoutFactory.setOnItemClickListener(itemClickListener);
         int marginTop = getResources().getDimensionPixelSize(R.dimen.dms_30);
         int padding, paddingV;
+        int padding20 = getResources().getDimensionPixelSize(R.dimen.dms_20);
         View view;
         //主菜单
         List<int[]> menuData = mPresenter.loadMainMenuDate();
         if (menuData != null && !menuData.isEmpty()) {
             view = mGridLayoutFactory.getView(configs.get(0), menuData);
-            view.setBackgroundResource(R.color.white);
             padding = getResources().getDimensionPixelSize(R.dimen.dms_10);
             view.setPadding(padding, padding, padding, padding);
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
@@ -242,9 +246,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<Object> discover = mPresenter.loadDiscover();
         if (discover != null && !discover.isEmpty()) {
             mFindView = mGridLayoutFactory.getView(configs.get(1), discover);
-            mFindView.setBackgroundResource(R.color.white);
-            padding = getResources().getDimensionPixelSize(R.dimen.dms_20);
-            mFindView.setPadding(padding, padding, padding, padding);
+            mFindView.setPadding(padding20, padding20, padding20, padding20);
             ((ViewGroup.MarginLayoutParams) mFindView.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(mFindView, 6);
         }
@@ -252,10 +254,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<Object> activityInfos = mPresenter.loadExpoActivities();
         if (activityInfos != null && !activityInfos.isEmpty()) {
             mActivitiesView = mGridLayoutFactory.getView(configs.get(2), activityInfos);
-            mActivitiesView.setBackgroundResource(R.color.white);
-            padding = getResources().getDimensionPixelSize(R.dimen.dms_25);
-            paddingV = getResources().getDimensionPixelSize(R.dimen.dms_20);
-            mActivitiesView.setPadding(padding, paddingV, padding, paddingV);
+            mActivitiesView.setPadding(padding20, padding20, padding20, padding20);
             ((ViewGroup.MarginLayoutParams) mActivitiesView.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(mActivitiesView, 7);
         }
@@ -263,9 +262,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<RouteInfo> routeInfos = mPresenter.loadRouteInfo();
         if (routeInfos != null && !routeInfos.isEmpty()) {
             mRouteView = mGridLayoutFactory.getView(configs.get(3), routeInfos);
-            mRouteView.setBackgroundResource(R.color.white);
-            padding = getResources().getDimensionPixelSize(R.dimen.dms_26);
-            mRouteView.setPadding(padding, padding, padding, padding);
+            mRouteView.setPadding(padding20, padding20, padding20, padding20);
             ((ViewGroup.MarginLayoutParams) mRouteView.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(mRouteView, 8);
         }
@@ -273,7 +270,6 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<Object> encyclopedias = mPresenter.loadSciences();
         if (encyclopedias != null && !encyclopedias.isEmpty()) {
             mScienceView = mGridLayoutFactory.getView(configs.get(4), encyclopedias);
-            mScienceView.setBackgroundResource(R.color.white);
             padding = getResources().getDimensionPixelSize(R.dimen.dms_16);
             mScienceView.setPadding(padding, padding, padding, padding);
             ((ViewGroup.MarginLayoutParams) mScienceView.getLayoutParams()).topMargin = marginTop;
@@ -283,9 +279,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<Object> vrInfo = mPresenter.loadVrInfo();
         if (vrInfo != null && !vrInfo.isEmpty()) {
             view = mGridLayoutFactory.getView(configs.get(5), vrInfo);
-            view.setBackgroundResource(R.color.white);
-            padding = getResources().getDimensionPixelSize(R.dimen.dms_20);
-            view.setPadding(padding, padding, padding, padding);
+            view.setPadding(padding20, padding20, padding20, padding20);
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(view, 10);
         }
@@ -293,9 +287,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<Object> bespeak = mPresenter.loadBespeak();
         if (bespeak != null && !bespeak.isEmpty()) {
             view = mGridLayoutFactory.getView(configs.get(6), bespeak);
-            view.setBackgroundResource(R.color.white);
-            padding = getResources().getDimensionPixelSize(R.dimen.dms_26);
-            view.setPadding(padding, padding, padding, padding);
+            view.setPadding(padding20, padding20, padding20, padding20);
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(view);
         }
@@ -303,7 +295,6 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<Object> foods = mPresenter.loadExpoFoods();
         if (foods != null && !foods.isEmpty()) {
             mPeripheryView = mGridLayoutFactory.getView(configs.get(7), foods);
-            mPeripheryView.setBackgroundResource(R.color.white);
             padding = getResources().getDimensionPixelSize(R.dimen.dms_8);
             int paddingTop = getResources().getDimensionPixelSize(R.dimen.dms_14);
             paddingV = getResources().getDimensionPixelSize(R.dimen.dms_10);
@@ -318,10 +309,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<Object> hotels = mPresenter.loadHotels();
         if (hotels != null && !hotels.isEmpty()) {
             view = mGridLayoutFactory.getView(configs.get(9), hotels);
-            view.setBackgroundResource(R.color.white);
-            padding = getResources().getDimensionPixelSize(R.dimen.dms_25);
-            paddingV = getResources().getDimensionPixelSize(R.dimen.dms_16);
-            view.setPadding(padding, paddingV, padding, paddingV);
+            view.setPadding(padding20, padding20, padding20, padding20);
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(view);
         }
@@ -329,9 +317,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<Object> data = mPresenter.loadNearbyExperience();
         if (data != null && !data.isEmpty()) {
             view = mGridLayoutFactory.getView(configs.get(10), data);
-            view.setBackgroundResource(R.color.white);
-            padding = getResources().getDimensionPixelSize(R.dimen.dms_25);
-            view.setPadding(padding, padding, padding, padding);
+            view.setPadding(padding20, padding20, padding20, padding20);
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(view);
         }
@@ -389,24 +375,25 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     TextView tvMore = item.findViewById(R.id.more);
                     tv.setText((Integer) obj);
                     int paddingBottom = 0;
-                    if ("activities".equals(tag)) {
+                    if ("activities".equals(tag) || "discovery".equals(tag) || "routes".equals(tag)
+                            || "play".equals(tag) || "periphery".equals(tag) || "bespeak".equals(tag)) {
                         paddingBottom = getResources().getDimensionPixelSize(R.dimen.dms_10);
-                    } else if ("discovery".equals(tag)) {
-                        paddingBottom = getResources().getDimensionPixelSize(R.dimen.dms_6);
-                        tvMore.setVisibility(View.GONE);
-                    } else if ("routes".equals(tag)) {
-                        paddingBottom = getResources().getDimensionPixelSize(R.dimen.dms_22);
-                    } else if ("play".equals(tag)) {
-                        paddingBottom = getResources().getDimensionPixelSize(R.dimen.dms_10);
-                    } else if ("periphery".equals(tag)) {
-                        paddingBottom = getResources().getDimensionPixelSize(R.dimen.dms_20);
-                    } else if ("bespeak".equals(tag)) {
-                        paddingBottom = getResources().getDimensionPixelSize(R.dimen.dms_22);
                     }
-                    if (tvMore.getVisibility() == View.VISIBLE) {
-                        tvMore.setTag(tag);
-                        tvMore.setOnClickListener(moreClickListener);
+                    if ("bespeak".equals(tag)) {
+                        TextView tvTime = item.findViewById(R.id.describe);
+                        tvTime.setText(new SimpleDateFormat("yyyy\u5e74MM\u6708dd\u65e5", Locale.getDefault()).format(new Date()));
+                        tvTime.setVisibility(View.VISIBLE);
+                        tvMore.setAutoLinkMask(Linkify.ALL);
+                        tvMore.setCompoundDrawables(null, null, null, null);
+                        tvMore.setTextColor(getResources().getColor(R.color.black_333333));
+                        SpannableString content = new SpannableString(getString(R.string.enter));
+                        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                        tvMore.setText(content);
                     }
+//                    if (tvMore.getVisibility() == View.VISIBLE) {
+                    tvMore.setTag(tag);
+                    tvMore.setOnClickListener(moreClickListener);
+//                    }
                     if (paddingBottom != 0)
                         item.setPadding(0, 0, 0, paddingBottom);
                     break;
@@ -459,7 +446,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     tv.setText(LanguageUtil.chooseTest(schedule.caption, schedule.captionEn));
                     bar.setMax(100);
                     bar.setProgress(schedule.percent);
-                    Http.loadImage(img, schedule.pic);
+                    img.setImageURI(Uri.parse(CommUtils.getFullUrl(schedule.pic)));
                     break;
                 case R.layout.layout_home_expo_food:
                     tv = item.findViewById(R.id.title);
@@ -486,7 +473,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     tv = item.findViewById(R.id.title);
                     img = item.findViewById(R.id.img);
                     tv.setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
-                    img.setImageURI(Uri.parse(Constants.URL.FILE_BASE_URL + encyclopedias.picUrl));
+                    img.setImageURI(Uri.parse(CommUtils.getFullUrl(encyclopedias.picUrl)));
                     break;
             }
         }
@@ -790,7 +777,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
             int paddingV = getResources().getDimensionPixelSize(R.dimen.dms_25);
             view.setPadding(padding, padding, padding, paddingV);
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = 1;
-            mContainer.addView(view, 16);
+            mContainer.addView(view, 17);
         }
     }
 

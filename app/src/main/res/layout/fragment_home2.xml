@@ -43,6 +43,35 @@
                 android:id="@+id/home_tab1"
                 layout="@layout/home_tab1" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dms_30"
+                android:layout_marginLeft="@dimen/dms_30"
+                android:layout_marginRight="@dimen/dms_30"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/indicator"
+                    android:layout_width="@dimen/dms_6"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dms_12"
+                    android:layout_marginTop="@dimen/dms_4"
+                    android:layout_marginBottom="@dimen/dms_4"
+                    android:background="@color/green_02cd9b" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toRightOf="@id/indicator"
+                    android:textColor="#333333"
+                    android:text="@string/look_expo_in_home"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/online_expo"
                 android:layout_width="match_parent"

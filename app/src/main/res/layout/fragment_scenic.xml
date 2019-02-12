@@ -8,7 +8,6 @@
         android:id="@+id/top_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:paddingBottom="@dimen/dms_18"
         android:paddingTop="@dimen/dms_18">
 

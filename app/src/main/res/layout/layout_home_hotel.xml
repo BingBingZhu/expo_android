@@ -9,7 +9,7 @@
         android:id="@+id/img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:placeholderImage="@mipmap/ico_mine_def_photo"
+        app:placeholderImage="@mipmap/ico_home_reco_venue_def"
         app:placeholderImageScaleType="centerCrop"
         app:actualImageScaleType="centerCrop"
         app:viewAspectRatio="0.9" />

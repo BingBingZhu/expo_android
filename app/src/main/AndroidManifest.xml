@@ -110,7 +110,7 @@
         <activity
             android:name=".module.main.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Gray" />
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".module.language.LanguageActivity"
