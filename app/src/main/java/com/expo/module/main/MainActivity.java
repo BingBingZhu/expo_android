@@ -7,9 +7,7 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
-import android.support.annotation.MainThread;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
@@ -21,20 +19,14 @@ import android.widget.TextView;
 
 import com.expo.R;
 import com.expo.base.BaseActivity;
-import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.PrefsHelper;
-import com.expo.module.main.encyclopedia.EncyclopediaFragment;
 import com.expo.module.main.find.FindFragment;
-import com.expo.module.main.find.FindFragment2;
 import com.expo.module.main.scenic.ScenicFragment;
 import com.expo.services.TrackRecordService;
 import com.expo.upapp.UpdateAppManager;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -50,13 +42,13 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_host)
     FragmentTabHost mTabHostView;
 
-    private String[] tabTags = {"home", "scenic", "find", "mine"};//"panorama",
-    private int[] tabTitles = {R.string.main_home, R.string.main_scenic, R.string.main_find, R.string.main_mine};// R.string.main_panorama,
+    private String[] tabTags = {"home", "scenic", "college", "mine"};//"panorama",
+    private int[] tabTitles = {R.string.main_home, R.string.main_scenic, R.string.main_college, R.string.main_mine};// R.string.main_panorama,
     private int mImages[] = {
             R.drawable.selector_tab_home,
             R.drawable.selector_tab_panorama,
 //            R.drawable.selector_tab_encyclopedia,
-            R.drawable.selector_tab_find,
+            R.drawable.selector_tab_college,
             R.drawable.selector_tab_mine};
     private Class[] fragments = new Class[]{
             HomeFragment2.class,

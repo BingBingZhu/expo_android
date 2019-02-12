@@ -31,6 +31,7 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
+import com.expo.entity.ScheduleVenue;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.VrInfo;
 import com.expo.map.LocationManager;
@@ -101,7 +102,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     private View mPeripheryView;
     private View mSelectedTabView;
 
-    private List<TopLineInfo> mListTopLine;
+    private List<ExpoActivityInfo> mListTopLine;
     private String mOutsideFoodConfig;
     private HomeTopLineAdapter mAdapterTopLine;
     private GridLayoutFactory mGridLayoutFactory;
@@ -117,14 +118,6 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     private long typeService;
     private long typeDeposit;
     private long typeMedical;
-
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-        }
-    };
 
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
         TopLineInfo topLine = (TopLineInfo) obj;
@@ -457,11 +450,11 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     tv = item.findViewById(R.id.title);
                     img = item.findViewById(R.id.img);
                     ProgressBar bar = item.findViewById(R.id.progress);
-                    Schedule schedule = (Schedule) obj;
-                    tv.setText(LanguageUtil.chooseTest(schedule.getCaption(), schedule.getCaptionEn()));
+                    ScheduleVenue schedule = (ScheduleVenue) obj;
+                    tv.setText(LanguageUtil.chooseTest(schedule.caption, schedule.captionEn));
                     bar.setMax(100);
-                    bar.setProgress(50);
-                    Http.loadImage(img, schedule.getPic());
+                    bar.setProgress(schedule.percent);
+                    Http.loadImage(img, schedule.pic);
                     break;
                 case R.layout.layout_home_expo_food:
                     tv = item.findViewById(R.id.title);
@@ -725,7 +718,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     }
 
     @Override
-    public void showTopLine(List<TopLineInfo> list) {
+    public void showTopLine(List<ExpoActivityInfo> list) {
         if (isDataEmpty(mHomeAd, list)) return;
         mListTopLine.clear();
         mListTopLine.addAll(list);
@@ -857,8 +850,6 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     public void onDestroy() {
         if (null != mPresenter)
             mPresenter.stopHeartService(getContext());
-        mHandler.removeCallbacksAndMessages(null);
-        mHandler = null;
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         LocationManager.getInstance().unregisterLocationListener(mOnLocationChangeListener);

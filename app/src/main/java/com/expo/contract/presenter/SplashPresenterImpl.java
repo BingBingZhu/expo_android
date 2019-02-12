@@ -36,6 +36,7 @@ import com.expo.network.response.PortalSiteResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.ScheduleResp;
+import com.expo.network.response.SheduleInfoResp;
 import com.expo.network.response.TopLineResp;
 import com.expo.network.response.TouristTypeResp;
 import com.expo.network.response.UpdateTimeResp;
@@ -75,6 +76,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         getRouterHotCountList();
         getScheduleDatas();
         loadPortalList();
+        loadSheduleDatas();
     }
 
     private void checkUpdateDate(RequestBody emptyBody) {
@@ -604,6 +606,25 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             protected void onResponse(PortalSiteResp rsp) {
                 mDao.clear(PortalSite.class);
                 mDao.saveOrUpdateAll(rsp.PortalSiteList);
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable);
+        addNetworkRecord();
+    }
+
+    /**
+     * 获取所有预约信息数据(15天)
+     */
+    private void loadSheduleDatas() {
+        Observable<SheduleInfoResp> observable = Http.getServer().getScheduleDatas(Http.buildRequestBody(Http.getBaseParams()));
+        isRequest = Http.request(new ResponseCallback<SheduleInfoResp>() {
+            @Override
+            protected void onResponse(SheduleInfoResp rsp) {
+                rsp.updateSheduleInfo(mDao);
             }
 
             @Override

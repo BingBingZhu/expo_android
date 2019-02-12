@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SideBar">
+        <attr format="color" name="letterColor"/>
+        <attr format="color" name="selectColor"/>
+        <attr format="dimension" name="letterSize"/>
+    </declare-styleable>
+    <string name="app_name">Library</string>
+    <string name="search">Search</string>
+</resources>

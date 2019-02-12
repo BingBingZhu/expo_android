@@ -1,0 +1,36 @@
+in.srain.cube.views.ptr
+attr ptr_content
+attr ptr_duration_to_close
+attr ptr_duration_to_close_header
+attr ptr_footer
+attr ptr_header
+attr ptr_keep_header_when_refresh
+attr ptr_mode
+attr ptr_pull_to_fresh
+attr ptr_ratio_of_header_height_to_refresh
+attr ptr_resistance
+attr ptr_rotate_ani_time
+drawable ptr_rotate_arrow
+id both
+id loadMore
+id none
+id ptr_classic_header_rotate_view
+id ptr_classic_header_rotate_view_header_last_update
+id ptr_classic_header_rotate_view_header_text
+id ptr_classic_header_rotate_view_header_title
+id ptr_classic_header_rotate_view_progressbar
+id refresh
+layout cube_ptr_classic_default_header
+string cube_ptr_hours_ago
+string cube_ptr_last_update
+string cube_ptr_minutes_ago
+string cube_ptr_pull_down
+string cube_ptr_pull_down_to_refresh
+string cube_ptr_pull_up
+string cube_ptr_pull_up_to_load
+string cube_ptr_refresh_complete
+string cube_ptr_refreshing
+string cube_ptr_release_to_refresh
+string cube_ptr_seconds_ago
+styleable PtrClassicHeader ptr_rotate_ani_time
+styleable PtrFrameLayout ptr_content ptr_duration_to_close ptr_duration_to_close_header ptr_footer ptr_header ptr_keep_header_when_refresh ptr_mode ptr_pull_to_fresh ptr_ratio_of_header_height_to_refresh ptr_resistance

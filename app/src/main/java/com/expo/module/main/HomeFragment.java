@@ -140,7 +140,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     @BindView(R.id.home_hotel_layout)
     LinearLayout mLlHotel;
 
-    List<TopLineInfo> mListTopLine;
+    List<ExpoActivityInfo> mListTopLine;
     List<Encyclopedias> mListVenue;
     List<ExpoActivityInfo> mListActivity;
     List<RouteInfo> mListRoute;
@@ -157,14 +157,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     CommonAdapter<Encyclopedias> mAdapterRanking;
 
     boolean isLocation = false;
-
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-        }
-    };
 
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
         TopLineInfo topLine = (TopLineInfo) obj;
@@ -386,7 +378,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     }
 
     @Override
-    public void showTopLine(List<TopLineInfo> list) {
+    public void showTopLine(List<ExpoActivityInfo> list) {
         if (isDataEmpty(mHomeAd, list)) return;
         mListTopLine.clear();
         mListTopLine.addAll(list);
@@ -690,8 +682,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     public void onDestroy() {
         if (null != mPresenter)
             mPresenter.stopHeartService(getContext());
-        mHandler.removeCallbacksAndMessages(null);
-        mHandler = null;
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         LocationManager.getInstance().unregisterLocationListener(mOnLocationChangeListener);

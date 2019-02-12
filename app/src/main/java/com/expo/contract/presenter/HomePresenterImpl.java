@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.contract.HomeContract;
 import com.expo.db.QueryParams;
@@ -17,6 +18,8 @@ import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Message;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
+import com.expo.entity.ScheduleTimeInfo;
+import com.expo.entity.ScheduleVenue;
 import com.expo.entity.TopLineInfo;
 import com.expo.entity.Venue;
 import com.expo.entity.VenuesType;
@@ -33,6 +36,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +57,18 @@ public class HomePresenterImpl extends HomeContract.Presenter {
 
     @Override
     public void setTopLine() {
-        mView.showTopLine(mDao.query(TopLineInfo.class, null));
+//        mView.showTopLine(mDao.query(TopLineInfo.class, null));
+
+        long time = TimeUtils.getNowMills();
+        QueryParams params = new QueryParams()
+                .add("lt", "start_time", time)
+                .add("and")
+                .add("gt", "end_time", time)
+                .add("and")
+                .add("eq", "enablestate", 1)
+                .add("and")
+                .add("eq", "is_recommended", 1);
+        mView.showTopLine(mDao.query(ExpoActivityInfo.class, params));
     }
 
     @Override
@@ -70,7 +85,13 @@ public class HomePresenterImpl extends HomeContract.Presenter {
 
     @Override
     public void setHotActivity() {
+        long time = TimeUtils.getNowMills();
         QueryParams params = new QueryParams()
+                .add("gt", "start_time", time)
+                .add("and")
+                .add("eq", "enablestate", 1)
+                .add("and")
+                .add("eq", "is_recommended", 1)
                 .add("limit", 0, 4)
                 .add("orderBy", "recommended_idx", "true");
         mView.showActivity(mDao.query(ExpoActivityInfo.class, params));
@@ -223,13 +244,21 @@ public class HomePresenterImpl extends HomeContract.Presenter {
 
     @Override
     public List loadExpoActivities() {
-        ArrayList data = new ArrayList();
-        data.add(R.string.hot_activity);
-        data.add(R.mipmap.hot_activity_0);
         QueryParams params = new QueryParams()
+//                .add("gt", "start_time", TimeUtils.getNowMills())//当天之后开始的活动筛选，获取开始时间从明天或更后面开始的活动
+//                .add("and")
+                .add("gt", "end_time", TimeUtils.getNowMills())//筛选还没有完成的活动，结束时间在今天或之后的活动
+                .add("and")
+                .add("eq", "enablestate", 1)
+                .add("and")
+                .add("eq", "is_recommended", 1)
                 .add("limit", 0, 3)
                 .add("orderBy", "recommended_idx", "true");
         List tmp = mDao.query(ExpoActivityInfo.class, params);
+        if (tmp == null || tmp.size() == 0) return null;
+        ArrayList data = new ArrayList();
+        data.add(R.string.hot_activity);
+        data.add(R.mipmap.hot_activity_0);
         if (tmp != null) {
             data.addAll(tmp);
         } else {
@@ -295,13 +324,33 @@ public class HomePresenterImpl extends HomeContract.Presenter {
 
     @Override
     public List<Object> loadBespeak() {
+        String date = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd"));
         ArrayList data = new ArrayList();
         data.add(R.string.home_func_item_appointment);
-        List tmp = mDao.query(Schedule.class, new QueryParams()
-                .add("eq", "open_state", 0)
-                .add("and")
-                .add("eq", "online_state", 0)
+        List<ScheduleVenue> tmp = mDao.query(ScheduleVenue.class, new QueryParams()
+//                .add("eq", "open_state", 0)
+//                .add("and")
+//                .add("eq", "online_state", 0)
+//                .add("and")
+                .add("eq", "date", date)
                 .add("limit", 0, 3));
+
+        for (ScheduleVenue sv : tmp) {
+            List<ScheduleTimeInfo> times = mDao.query(ScheduleTimeInfo.class, new QueryParams()
+                    .add("eq", "venue_id", sv.id)
+                    .add("and")
+                    .add("eq", "date", date)
+                    .add("limit", 0, 3));
+            int count = 0;
+            int usedCount = 0;
+            for (ScheduleTimeInfo st : times) {
+                count += st.personalCount;
+                usedCount += st.personalUsedCount;
+            }
+            if (usedCount == 0) usedCount = 1;
+            sv.percent = count * 100 / usedCount;
+        }
+
         if (tmp != null) {
             data.addAll(tmp);
         } else {

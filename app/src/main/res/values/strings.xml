@@ -53,7 +53,7 @@
     <string name="spot_introduce">景点介绍</string>
     <string name="hot">热度</string>
     <string name="camera_touch">轻触拍照，按住摄像</string>
-    <string name="app_top_item">世园\n头条</string>
+    <string name="app_top_item">世园\n活动</string>
     <string name="submit_success">你已经提交成功</string>
     <string name="new_message">新消息提示</string>
 
@@ -62,6 +62,7 @@
     <string name="main_encyclopedias">Ency</string>
     <string name="main_scenic">Scen</string>
     <string name="main_mine">Mine</string>
+    <string name="main_college">Coll</string>
 
     <string name="tourist_service_phone">游客服务热线：400-818-6666</string>
     <string name="item_tourist_service_text_0">问询咨询</string>
