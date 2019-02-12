@@ -147,15 +147,15 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
             if (topHeight == 0) {
                 topHeight = mHtTitle.getBottom() + mTabView1.getHeight() + 10;
             }
-            if (mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
+            if (mPeripheryView!=null && mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__periphery);
-            } else if (mScienceView.getTop() - scrollY - 15 <= topHeight) {
+            } else if (mScienceView!=null && mScienceView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__science);
-            } else if (mRouteView.getTop() - scrollY - 15 <= topHeight) {
+            } else if (mRouteView!=null && mRouteView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__route);
-            } else if (mActivitiesView.getTop() - scrollY - 15 <= topHeight) {
+            } else if (mActivitiesView!=null && mActivitiesView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__activities);
-            } else if (mFindView.getTop() - scrollY - 15 <= topHeight) {
+            } else if (mFindView!=null && mFindView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home__tab1__find);
             }
         }
