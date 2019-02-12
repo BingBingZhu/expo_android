@@ -56,12 +56,12 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_host)
     FragmentTabHost mTabHostView;
 
-    private String[] tabTags = {"home", "scenic", "college", "mine"};//"panorama",
-    private int[] tabTitles = {R.string.main_home, R.string.main_scenic, R.string.main_college, R.string.main_mine};// R.string.main_panorama,
+    private String[] tabTags = {"home", "scenic","find", "college", "mine"};//"panorama",
+    private int[] tabTitles = {R.string.main_home, R.string.main_scenic,R.string.main_find, R.string.main_college, R.string.main_mine};// R.string.main_panorama,
     private int mImages[] = {
             R.drawable.selector_tab_home,
             R.drawable.selector_tab_panorama,
-//            R.drawable.selector_tab_encyclopedia,
+            R.drawable.selector_tab_find,
             R.drawable.selector_tab_college,
             R.drawable.selector_tab_mine};
     private Class[] fragments = new Class[]{
@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
 //            PanoramaFragment.class,
             ScenicFragment.class,
 //            EncyclopediaFragment.class,
-//            FindFragment2.class,
+            FindFragment.class,
             PortalSiteFragment.class,
             MineFragment.class};
     private ServiceConnection conn;
