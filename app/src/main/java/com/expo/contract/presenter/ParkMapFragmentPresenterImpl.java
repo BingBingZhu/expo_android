@@ -62,10 +62,6 @@ public class ParkMapFragmentPresenterImpl extends ParkMapFragmentContract.Presen
                             .add("eq", "is_enable", 1)
                             .add("and")
                             .add("eq", "show_in_map", "1")
-                            .add("and")
-                            .add("notIn", "type_name", "停车场")
-                            .add("and")
-                            .add("notIn", "type_name", "公交站")
                             .add("orderBy", "idx", true));
                 } else {
                     venuesTypes = venuesType;

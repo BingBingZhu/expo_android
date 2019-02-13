@@ -69,10 +69,10 @@
 
             <ImageView
                 android:id="@+id/scenic_search"
-                android:layout_width="@dimen/dms_32"
-                android:layout_height="@dimen/dms_32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/scenic_search" />
+                android:src="@mipmap/ico_scenic_search" />
 
             <LinearLayout
                 android:id="@+id/scenic_map"

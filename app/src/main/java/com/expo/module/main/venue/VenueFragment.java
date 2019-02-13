@@ -20,6 +20,7 @@ import com.expo.contract.EncyclopediasContract;
 import com.expo.contract.VenueContract;
 import com.expo.entity.VenuesType;
 import com.expo.module.distinguish.DistinguishActivity;
+import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
 import com.expo.module.map.ParkMapFragment;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
@@ -143,7 +144,7 @@ public class VenueFragment extends BaseFragment<VenueContract.Presenter> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ency_search:
-                VenueSearchActivity.startActivity(getContext());
+                EncyclopediaSearchActivity.startActivity(getContext());
                 break;
             case R.id.ency_scan:
                 DistinguishActivity.startActivity(getContext());

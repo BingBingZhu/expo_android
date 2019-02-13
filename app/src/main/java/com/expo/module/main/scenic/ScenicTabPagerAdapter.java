@@ -26,7 +26,7 @@ public class ScenicTabPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         Fragment fragment;
         if (position == 0) {
-            fragment = new ParkMapFragment(getTabType(true));
+            fragment = new ParkMapFragment(/*getTabType(true)*/null);
         } else
             fragment = new EncyclopediaFragment(getTabType(false));
 //            fragment = new VenueFragment(getTabType(false));

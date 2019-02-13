@@ -48,7 +48,7 @@
                     android:layout_gravity="right"
                     android:textColor="#1391FF"
                     android:textSize="@dimen/font_24"
-                    android:text="为您快速导航最近服务中心" />
+                    android:text="为您快速导航最近的服务中心" />
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"

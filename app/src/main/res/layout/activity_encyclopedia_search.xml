@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_20">
 
         <TextView
             android:id="@+id/search_cancle"
@@ -38,7 +40,7 @@
                 android:layout_marginTop="@dimen/dms_10"
                 android:layout_marginRight="@dimen/dms_28"
                 android:layout_marginBottom="@dimen/dms_10"
-                android:src="@mipmap/ico_search" />
+                android:src="@mipmap/ico_scenic_search" />
 
             <EditText
                 android:id="@+id/serach_content"
@@ -49,7 +51,7 @@
                 android:layout_marginRight="@dimen/dms_18"
                 android:layout_toLeftOf="@id/serach_ico"
                 android:background="@android:color/transparent"
-                android:hint="请输入搜索的关键词"
+                android:hint="请输入景点名称"
                 android:imeOptions="actionSearch"
                 android:maxLength="15"
                 android:paddingTop="@dimen/dms_18"
@@ -60,12 +62,17 @@
                 android:textSize="@dimen/font_26" />
         </RelativeLayout>
     </RelativeLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_2"
+        android:layout_marginTop="@dimen/dms_6"
+        android:background="@color/white_f5"/>
     <LinearLayout
         android:id="@+id/search_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dms_24"
+        android:layout_marginTop="@dimen/dms_6"
+        android:layout_marginBottom="@dimen/dms_6"
         android:background="@android:color/white"
         android:orientation="vertical"
         android:visibility="visible">
@@ -78,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dms_30"
-                android:layout_marginTop="@dimen/dms_28"
+                android:layout_marginTop="@dimen/dms_30"
                 android:layout_marginBottom="@dimen/dms_28"
                 android:text="@string/history"
                 android:textColor="@color/color_333"
@@ -93,22 +100,50 @@
                 android:src="@mipmap/ico_del_history" />
         </FrameLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dms_2"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_6"
+            android:background="@color/white_f5"/>
+        <TextView
+            android:id="@+id/search_history_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginTop="@dimen/dms_36"
+            android:visibility="gone"
+            android:textSize="@dimen/font_28"
+            android:textColor="@color/color_999"
+            android:text="还没有搜索记录"/>
+
         <ListView
             android:id="@+id/search_history_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dms_50"
+            android:layout_marginLeft="@dimen/dms_30"
             android:layout_marginTop="@dimen/dms_10"
-            android:layout_marginRight="@dimen/dms_50"
+            android:visibility="visible"
             android:divider="@android:color/transparent"
             android:dividerHeight="@dimen/dms_20"
             android:listSelector="@android:color/transparent" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/search_result_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dms_36"
+        android:textSize="@dimen/font_30"
+        android:textColor="@color/color_999"
+        android:text="未找到含有“呃呃”"
+        android:visibility="visible"/>
+
     <com.expo.widget.SimpleRecyclerView
         android:id="@+id/search_result"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dms_20"
         android:background="@color/white_f5"
         android:overScrollMode="never"
