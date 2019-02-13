@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.entity.VrInfo;
+import com.expo.network.Http;
 import com.expo.utils.CommUtils;
 import com.google.vr.sdk.widgets.common.FullScreenDialog;
 import com.google.vr.sdk.widgets.video.VrVideoEventListener;
@@ -174,8 +175,24 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
                 showFullSceen();
                 break;
             case R.id.no_wifi_play:
-                startPlay(CommUtils.getFullUrl(mVrInfo.getUrl()));
+                startPlay(CommUtils.getPanoramaFullUrl(getImageString(mVrInfo)));
                 break;
+        }
+    }
+
+    private String getImageString(VrInfo vrInfo) {
+        String[] urlArray = vrInfo.getUrlArray();
+        String networkType = Http.getNetworkType().toLowerCase();
+        if (!networkType.contains("wifi") && urlArray.length >= 2) {
+            if (urlArray.length == 2) {
+                return urlArray[1];
+            } else if (urlArray.length == 3) {
+                return urlArray[2];
+            }else{
+                return urlArray[0];
+            }
+        } else {
+            return urlArray[0];
         }
     }
 
@@ -199,7 +216,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         mVrInfo = vrInfo;
         if (NetworkUtils.isWifiConnected()) {
             mNoWifiLayout.setVisibility(View.GONE);
-            startPlay(CommUtils.getFullUrl(vrInfo.getUrl()));
+            startPlay(CommUtils.getPanoramaFullUrl(getImageString(vrInfo)));
         } else {
             mNoWifiLayout.setVisibility(View.VISIBLE);
         }
@@ -209,7 +226,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         try {
             mNoWifiLayout.setVisibility(View.GONE);
             VrVideoView.Options options = new VrVideoView.Options();
-            options.inputFormat= VrVideoView.Options.FORMAT_HLS;
+            options.inputFormat = VrVideoView.Options.FORMAT_HLS;
             mVrVideoView.loadVideo(Uri.parse(url), options);
 
             mPlay.setSelected(true);

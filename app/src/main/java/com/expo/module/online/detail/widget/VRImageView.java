@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.VRImageActivity;
+import com.expo.network.Http;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.MD5Util;
@@ -88,8 +89,9 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
 
     public void setVrInfo(VrInfo vrInfo) {
         mVrInfo = vrInfo;
-        if (!getImage(vrInfo.getUrl())) {
-            new ImageTask().execute(CommUtils.getFullUrl(vrInfo.getUrl()));
+        String url = getImageString(vrInfo);
+        if (!getImage(url)) {
+            new ImageTask().execute(CommUtils.getPanoramaFullUrl(url));
         }
     }
 
@@ -102,6 +104,16 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
         mPanoramaView.shutdown();
         ((FrameLayout) mView.getParent()).removeView(mView);
         mView = null;
+    }
+
+    private String getImageString(VrInfo vrInfo) {
+        String[] urlArray = vrInfo.getUrlArray();
+        String networkType = Http.getNetworkType().toLowerCase();
+        if (!networkType.contains("wifi") && urlArray.length >= 2) {
+            return urlArray[1];
+        } else {
+            return urlArray[0];
+        }
     }
 
     private boolean getImage(String url) {
@@ -150,7 +162,8 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
             super.onPostExecute(bitmap);
             if (bitmap != null) {
                 ImageUtils.save(bitmap, Constants.Config.ROOT_PATH + File.separator + Constants.Config.TEMP_PATH + MD5Util.getMD5String(url), Bitmap.CompressFormat.JPEG);
-                if (!StringUtils.equals(url, CommUtils.getFullUrl(mVrInfo.getUrl()))) return;
+                if (!StringUtils.equals(url, CommUtils.getPanoramaFullUrl(getImageString(mVrInfo))))
+                    return;
                 VrPanoramaView.Options options = new VrPanoramaView.Options();
                 options.inputType = VrPanoramaView.Options.TYPE_MONO;
                 //3.1.监听加载过程

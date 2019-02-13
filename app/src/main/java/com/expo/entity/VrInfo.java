@@ -260,6 +260,12 @@ url (string, optional): 资源地址
         return url;
     }
 
+    public String[] getUrlArray() {
+        if (TextUtils.isEmpty(url))
+            return null;
+        return url.split(";");
+    }
+
     public void setUrl(String url) {
         this.url = url;
     }

@@ -40,6 +40,13 @@ public class CommUtils {
         return imgUrl;
     }
 
+    public static String getPanoramaFullUrl(String url) {
+        String imgUrl = url;
+        if (!imgUrl.startsWith("http"))
+            imgUrl = Constants.URL.PANORAMA_BASE_URL + imgUrl;
+        return imgUrl;
+    }
+
     public static void setImgPic(Context context, String url, ImageView view) {
         Picasso.with(context)
                 .load(getFullUrl(url))

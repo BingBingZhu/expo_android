@@ -638,9 +638,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         if (mListDaren.size() > position) {
             VrInfo vrInfo = mListDaren.get(position);
             ImageView imageView = view.findViewById(R.id.daren_left_img);
-            Picasso.with(getContext()).load(CommUtils.getFullUrl(vrInfo.getUrl())).placeholder(R.drawable.image_default).into(imageView);
+            Picasso.with(getContext()).load(CommUtils.getFullUrl(vrInfo.getPic())).placeholder(R.drawable.image_default).into(imageView);
             SimpleDraweeView circleView = view.findViewById(R.id.daren_left_circle_img);
-            circleView.setImageURI(CommUtils.getFullUrl(vrInfo.getUrl()));
+            circleView.setImageURI(CommUtils.getFullUrl(vrInfo.getPic()));
             view.setOnClickListener(v -> {
                 if (StringUtils.equals(vrInfo.getType(), Constants.VrType.VR_TYPE_IMG)) {
                     VRImageActivity.startActivity(getContext(), vrInfo.getId());

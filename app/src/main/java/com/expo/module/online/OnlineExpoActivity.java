@@ -174,7 +174,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         mAdapterCulture = new CommonAdapter<VrInfo>(this, R.layout.item_online_culture, mRandomVrs) {
             @Override
             protected void convert(ViewHolder holder, VrInfo vr, int position) {
-                holder.<SimpleDraweeView>getView(R.id.item_online_culture_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
+                holder.<SimpleDraweeView>getView(R.id.item_online_culture_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getPic());
                 holder.<TextView>getView(R.id.item_online_culture_name).setText(LanguageUtil.chooseTest(vr.getCaption(), vr.getCaptionEn()));
                 holder.<TextViewDrawable>getView(R.id.item_online_culture_scans).setText(vr.getViewCount() + "次");
                 holder.setOnClickListener(R.id.item_online_culture_root, v -> goVrInfo(vr));
@@ -196,7 +196,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
             @Override
             protected void convert(ViewHolder holder, VrInfo vr, int position) {
                 holder.itemView.getLayoutParams().width = RecyclerView.LayoutParams.MATCH_PARENT;
-                holder.<SimpleDraweeView>getView(R.id.item_online_guide_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getUrl());
+                holder.<SimpleDraweeView>getView(R.id.item_online_guide_img).setImageURI(Constants.URL.FILE_BASE_URL + vr.getPic());
                 if (null != tourist && null != tourist.getPicSmallUrl() && !TextUtils.isEmpty(tourist.getPicSmallUrl()))
                     holder.<SimpleDraweeView>getView(R.id.item_online_guide_tour).setImageURI(Constants.URL.FILE_BASE_URL + tourist.getPicSmallUrl());
                 else
@@ -305,7 +305,7 @@ public class OnlineExpoActivity extends BaseActivity<OnlineHomeContract.Presente
         @Override
         public void onBind(Context context, int position, VrInfo data) {
             // 数据绑定
-            imageView.setImageURI(Constants.URL.FILE_BASE_URL + data.getUrl());
+            imageView.setImageURI(Constants.URL.FILE_BASE_URL + data.getPic());
             tvName.setText(LanguageUtil.chooseTest(data.getCaption(), data.getCaptionEn()));
             tvCount.setText(data.getViewCount() + "次");
         }
