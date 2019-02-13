@@ -59,6 +59,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     private Encyclopedias mEncyclopedias;
     private List<Encyclopedias> mRecommendEncyclopedias;
     private ShareUtil mShareUtil;
+    private ExpoActivityInfo mExpoActivityInfo;
 
     PlatformActionListener mPlatformActionListener = new PlatformActionListener() {
         @Override
@@ -266,6 +267,21 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
             runOnUiThread(() -> {
                 goBespeak();
             });
+        }
+
+        /**
+         * 获取活动信息
+         *
+         * @return
+         */
+        @JavascriptInterface
+        public void setActivatedId(String id) {
+            mExpoActivityInfo = mPresenter.getExpoActivityInfoById(id);
+        }
+
+        @JavascriptInterface
+        public String getDataById() {
+            return mPresenter.toJson(mExpoActivityInfo);
         }
     }
 }

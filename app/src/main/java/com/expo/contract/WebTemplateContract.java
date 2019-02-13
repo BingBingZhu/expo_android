@@ -34,6 +34,9 @@ public interface WebTemplateContract {
         public abstract String loadCommonInfo(String type);
 
         public abstract String getRecommendAndTodayExpoActivitys(Long time, long id);
+
+        public abstract ExpoActivityInfo getExpoActivityInfoById(String id);
+
     }
 
     interface View extends IView {

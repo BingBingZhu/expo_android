@@ -176,4 +176,9 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
         }
         return "";
     }
+
+    @Override
+    public ExpoActivityInfo getExpoActivityInfoById(String id) {
+        return mDao.queryById(ExpoActivityInfo.class, id);
+    }
 }
