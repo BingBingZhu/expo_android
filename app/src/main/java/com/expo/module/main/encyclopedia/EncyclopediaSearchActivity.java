@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +19,7 @@ import com.expo.adapters.EncyAndSceneListAdapter;
 import com.expo.adapters.ListItemData;
 import com.expo.base.BaseActivity;
 import com.expo.base.utils.SearchRecordUtil;
+import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.EncyclopediaSearchContract;
 import com.expo.widget.SimpleRecyclerView;
@@ -42,6 +44,12 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
     SimpleRecyclerView mResultView;
     @BindView(R.id.serach_content)
     EditText mSearchContent;
+    @BindView(R.id.search_history_empty)
+    TextView mHistoryEmptyTv;
+    @BindView(R.id.search_result_empty)
+    TextView mSearchEmptyTv;
+    @BindView(R.id.root_view)
+    View mRootView;
 
     private String mSearchContentStr;
     private String[] mHistory;
@@ -55,9 +63,12 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mSearchContent.setOnEditorActionListener( this );
-        mResultView.addItemDecoration( new SpaceDecoration( 0, getResources().getDimensionPixelSize( R.dimen.dms_4 ) ) );
-        setTitle( 1, R.string.search );
+        mSearchContent.setOnEditorActionListener(this);
+        mResultView.addItemDecoration(new SpaceDecoration(0, getResources().getDimensionPixelSize(R.dimen.dms_4)));
+        mRootView.setPadding(mRootView.getPaddingLeft(),
+                mRootView.getPaddingTop() + StatusBarUtils.getStatusBarHeight(getContext()),
+                mRootView.getPaddingRight(), mRootView.getPaddingBottom());
+//        setTitle( 1, R.string.search );
 //        mResultView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));        // item分割线
 //        int marginV = getResources().getDimensionPixelSize(R.dimen.dms_18);
 //        mResultView.addItemDecoration(new SpaceDecoration(0, marginV, 0, 0, 0));
@@ -67,11 +78,17 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
     private void loadHistory() {
         mSearchRecordUtil = new SearchRecordUtil();
         mHistory = mSearchRecordUtil.loadHistory();
-        mHistoryAdapter = new ArrayAdapter<String>( getContext(), R.layout.layout_history_item, mHistory );
-        mHistoryList.setDivider(getResources().getDrawable(android.R.drawable.divider_horizontal_bright));
+        if (null == mHistory || mHistory.length == 0) {
+            mHistoryEmptyTv.setVisibility(View.VISIBLE);
+        }
+        mHistoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.layout_history_item, mHistory);
+        mHistoryList.setDivider(getResources().getDrawable(R.drawable.bg_f5_r10));
         mHistoryList.setDividerHeight(getResources().getDimensionPixelSize(R.dimen.dms_2));
-        mHistoryList.setAdapter( mHistoryAdapter );
-        mHistoryList.setOnItemClickListener( (parent, view, position, id) -> search( mHistory[position] ) );
+        mHistoryList.setAdapter(mHistoryAdapter);
+        mHistoryList.setOnItemClickListener((parent, view, position, id) -> {
+            mSearchContentStr = mHistory[position];
+            search(mHistory[position]);
+        });
     }
 
     @Override
@@ -80,8 +97,8 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
     }
 
     public static void startActivity(@NonNull Context context) {
-        Intent in = new Intent( context, EncyclopediaSearchActivity.class );
-        context.startActivity( in );
+        Intent in = new Intent(context, EncyclopediaSearchActivity.class);
+        context.startActivity(in);
     }
 
     @Override
@@ -89,44 +106,50 @@ public class EncyclopediaSearchActivity extends BaseActivity<EncyclopediaSearchC
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             mSearchContentStr = mSearchContent.getText().toString().trim();
             if (mSearchContentStr.isEmpty()) {
-                ToastHelper.showShort( R.string.please_enter_keywords );
+                ToastHelper.showShort(R.string.please_enter_keywords);
                 return true;
             }
-            search( mSearchContentStr );
+            search(mSearchContentStr);
             return true;
         }
         return false;
     }
 
     private void search(String searchContent) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService( INPUT_METHOD_SERVICE );
-        inputMethodManager.hideSoftInputFromWindow( getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS );
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         showLoadingView();
         mSearchContent.setText(searchContent);
         mSearchContent.clearFocus();
-        mSearchRecordUtil.saveToHistory( searchContent );
-        mPresenter.searchEncy( searchContent );
+        mSearchRecordUtil.saveToHistory(searchContent);
+        mPresenter.searchEncy(searchContent);
     }
 
     @Override
     public void getSearchResult(List<ListItemData> listItemDatas) {
-        mResultView.setAdapter( new EncyAndSceneListAdapter( getContext(), listItemDatas ) );
-        mHistoryView.setVisibility( View.GONE );
-        mResultView.setVisibility( View.VISIBLE );
         hideLoadingView();
+        mHistoryView.setVisibility(View.GONE);
+        mResultView.setAdapter(new EncyAndSceneListAdapter(getContext(), listItemDatas));
+        if (null == listItemDatas || listItemDatas.size() == 0) {
+            mSearchEmptyTv.setText("未找到含有“" + mSearchContentStr + "”");
+            mSearchEmptyTv.setVisibility(View.VISIBLE);
+            return;
+        }
+        mSearchEmptyTv.setVisibility(View.GONE);
+        mResultView.setVisibility(View.VISIBLE);
     }
 
-    @OnClick(R.id.search_history_clear)
+    @OnClick({R.id.search_history_clear, R.id.search_cancle})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_history_clear:
                 mSearchRecordUtil.clearHistory();
                 mHistory = mSearchRecordUtil.loadHistory();
-                mHistoryAdapter = new ArrayAdapter<String>( getContext(), R.layout.layout_history_item, mHistory );
-                mHistoryList.setAdapter( mHistoryAdapter );
+                mHistoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.layout_history_item, mHistory);
+                mHistoryList.setAdapter(mHistoryAdapter);
                 break;
-            case R.id.title_back:
-                finish();
+            case R.id.search_cancle:
+                onBackPressed();
                 break;
         }
     }

@@ -524,7 +524,7 @@ public interface DataServer {
     Observable<BaseResponse> setPanResViews(@Body RequestBody requestBody);
 
     /**
-     * 为某个全景资源增加观看数
+     * 获取世园活动列表
      *
      * @param requestBody
      * @return

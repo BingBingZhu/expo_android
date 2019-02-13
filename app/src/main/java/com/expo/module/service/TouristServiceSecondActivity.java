@@ -143,13 +143,13 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
         if (mPresenter.checkInPark(TrackRecordService.getLocation().getLatitude(), TrackRecordService.getLocation().getLongitude())) {
             switch (mTypePosition) {
                 case 3:     // 失物招领
-                    PlayMapActivity.startActivity(getContext(), "服务");
+                    PlayMapActivity.startActivity(getContext(), "服务中心");
                     break;
                 case 5:     // 医疗救助
-                    PlayMapActivity.startActivity(getContext(), "服务");
+                    PlayMapActivity.startActivity(getContext(), "医疗");
                     break;
                 case 6:     // 人员走失
-                    PlayMapActivity.startActivity(getContext(), "服务");
+                    PlayMapActivity.startActivity(getContext(), "服务中心");
                     break;
                 case 7:     // 治安举报
                     PlayMapActivity.startActivity(getContext(), "治安");
@@ -182,7 +182,7 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
                 mImgBanner.setImageResource(R.mipmap.ico_top_banner_medical);
                 mTv1.setText("轻伤治疗");
                 mTv2.setText("请您判断患者病情或伤势，如果患者可以行动，则请患者前往医疗服务站接受治疗");
-                mTvNavigation.setText("导航最近的医疗服务站");
+                mTvNavigation.setText("为您快速导航最近的医疗服务站");
                 mTv3.setText("定位救助");
                 mTv4.setText("如果患者无法以动，可以点击定位救助功能");
                 mTvFunction.setText("定位救助");
@@ -193,7 +193,7 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
                 mImgBanner.setImageResource(R.mipmap.ico_top_banner_security);
                 mTv1.setText("温馨提示");
                 mTv2.setText("请立即寻求您周边的工作人员帮助");
-                mTvNavigation.setText("导航最近的治安点");
+                mTvNavigation.setText("为您快速导航最近的治安点");
                 mTv3.setText("信息提交");
                 mTv4.setText("您可以上传图片、文字作为重要参考");
                 mTvFunction.setText("信息填写");
@@ -202,7 +202,7 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
                 mImgBanner.setImageResource(R.mipmap.ico_top_banner_look_for_something);
                 mTv1.setText("信息提交");
                 mTv2.setText("您可以上传失物的图片、文字等信息，作为帮助找寻失物的参考。");
-                mTvNavigation.setText("为您快速导航最近服务中心");
+                mTvNavigation.setText("为您快速导航最近的服务中心");
                 mTv3.setText("信息提交");
                 mTv4.setText("您可以上传图片、文字作为寻物的重要参考");
                 mTvFunction.setText("信息填写");
@@ -221,7 +221,7 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
                 mImgBanner.setImageResource(R.mipmap.ico_top_banner_look_for_people);
                 mTv1.setText("温馨提示");
                 mTv2.setText("请立即寻求您周边的工作人员帮助");
-                mTvNavigation.setText("导航最近的医服务点");
+                mTvNavigation.setText("为您快速导航最近的服务中心");
                 mTv3.setText("信息提交");
                 mTv4.setText("您可以上传图片、文字作为找人的重要参考");
                 mTvFunction.setText("信息填写");
