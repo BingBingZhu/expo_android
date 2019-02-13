@@ -7,20 +7,27 @@
         android:id="@+id/img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/bottom"
+        style="@style/TextSizeWhite15"
+        android:layout_alignBottom="@id/img"
+        android:layout_marginLeft="@dimen/dms_16"
+        android:layout_marginBottom="@dimen/dms_16"
+        android:singleLine="true"
+        android:text="推荐最佳路线" />
 
     <TextView
         android:id="@+id/title"
+        style="@style/TextSizeWhite15"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/img"
-        android:layout_margin="@dimen/dms_16"
+        android:layout_above="@id/bottom"
+        android:layout_marginLeft="@dimen/dms_16"
+        android:layout_marginBottom="@dimen/dms_16"
         android:ellipsize="end"
-        android:lineSpacingMultiplier="1.1"
-        android:maxLines="2"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_30" />
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/tag"
@@ -28,9 +35,11 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/title"
         android:layout_marginLeft="@dimen/dms_16"
+        android:layout_marginBottom="@dimen/dms_16"
         android:background="@drawable/shape_home_route_tag_1"
         android:padding="@dimen/dms_10"
         android:text="游玩去世园"
         android:textColor="@color/black_333333"
         android:textSize="@dimen/font_20" />
+
 </RelativeLayout>

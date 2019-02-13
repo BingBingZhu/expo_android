@@ -1,5 +1,6 @@
 package com.expo.module.main;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.LatLng;
+import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
@@ -34,6 +36,8 @@ import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
 import com.expo.entity.ScheduleVenue;
+import com.expo.entity.TopLineInfo;
+import com.expo.entity.Venue;
 import com.expo.entity.VrInfo;
 import com.expo.map.LocationManager;
 import com.expo.module.activity.ExpoActivityActivity;
@@ -102,13 +106,15 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     ViewGroup mTabView2;
     @BindView(R.id.container)
     LinearLayout mContainer;
+    @BindView(R.id.service_qa)
+    View mServiceQA;//问答
 
-    private View mFindView;
-    private View mActivitiesView;
-    private View mRouteView;
-    private View mScienceView;
-    private View mPeripheryView;
-    private View mSelectedTabView;
+    private View mFindView;//发现
+    private View mActivitiesView;//活动
+    private View mRouteView;//路线
+    private View mScienceView;//人气景点
+    private View mPeripheryView;//世园美食
+    private View mSelectedTabView;//
 
     private List<ExpoActivityInfo> mListTopLine;
     private String mOutsideFoodConfig;
@@ -120,12 +126,12 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     private Location mLocation;
     private List<Circum> mCircum;
 
-//    private long typeToilet;
-//    private long typeStation;
-//    private long typeGate;
-//    private long typeService;
-//    private long typeDeposit;
-//    private long typeMedical;
+    private long typeToilet;
+    private long typeStation;
+    private long typeGate;
+    private long typeService;
+    private long typeDeposit;
+    private long typeMedical;
 
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
         ExpoActivityInfo expoActivityInfo = (ExpoActivityInfo) obj;
@@ -157,16 +163,15 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                 topHeight = mHtTitle.getBottom() + mTabView1.getHeight() + 10;
             }
             if (mPeripheryView != null && mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
-                setSelectedTab(R.id.home__tab1__periphery);
-            } else if (mScienceView != null && mScienceView.getTop() - scrollY - 15 <= topHeight) {
-                setSelectedTab(R.id.home__tab1__science);
-            } else if (mRouteView != null && mRouteView.getTop() - scrollY - 15 <= topHeight) {
-                setSelectedTab(R.id.home__tab1__route);
-            } else if (mActivitiesView != null && mActivitiesView.getTop() - scrollY - 15 <= topHeight) {
-                setSelectedTab(R.id.home__tab1__activities);
+                setSelectedTab(R.id.home_tab1_3);
+            } else if (mPeripheryView != null && mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
+                setSelectedTab(R.id.home_tab1_4);
+            } else if (mServiceQA != null && mServiceQA.getTop() - scrollY - 15 <= topHeight) {
+                setSelectedTab(R.id.home_tab1_2);
             } else if (mFindView != null && mFindView.getTop() - scrollY - 15 <= topHeight) {
-                setSelectedTab(R.id.home__tab1__find);
+                setSelectedTab(R.id.home_tab1_1);
             }
+
         }
     };
 
@@ -217,11 +222,11 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         LocationManager.getInstance().registerLocationListener(mOnLocationChangeListener);//定位
 
         initLayout();
-        mTabView2.findViewById(R.id.home__tab1__find).setOnClickListener(this);
-        mTabView2.findViewById(R.id.home__tab1__activities).setOnClickListener(this);
-        mTabView2.findViewById(R.id.home__tab1__periphery).setOnClickListener(this);
-        mTabView2.findViewById(R.id.home__tab1__route).setOnClickListener(this);
-        mTabView2.findViewById(R.id.home__tab1__science).setOnClickListener(this);
+        mTabView2.findViewById(R.id.home_tab1_1).setOnClickListener(this);
+        mTabView2.findViewById(R.id.home_tab1_2).setOnClickListener(this);
+        mTabView2.findViewById(R.id.home_tab1_3).setOnClickListener(this);
+        mTabView2.findViewById(R.id.home_tab1_4).setOnClickListener(this);
+//        mTabView2.findViewById(R.id.home_tab1_science).setOnClickListener(this);
     }
 
     private void initLayout() {
@@ -369,7 +374,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     ImageView img = item.findViewById(R.id.img);
                     img.setImageResource(data[1]);
                     break;
-                case R.layout.layout_home_title:
+                case R.layout.layout_home_title://头部
                     tv = item.findViewById(R.id.title);
                     TextView tvMore = item.findViewById(R.id.more);
                     tv.setText((Integer) obj);
@@ -396,6 +401,13 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     if (paddingBottom != 0)
                         item.setPadding(0, 0, 0, paddingBottom);
                     break;
+                case R.layout.layout_home_route_right:
+                    tv = item.findViewById(R.id.title);
+                    img = item.findViewById(R.id.img);
+                    RouteInfo routeInfo = (RouteInfo) obj;
+                    Http.loadImage(img, routeInfo.picUrl);
+                    tv.setText(routeInfo.traitLabel);
+                    break;
                 case R.layout.layout_home_single_img:
                     img = (ImageView) item;
                     if (obj instanceof RouteInfo) {
@@ -421,11 +433,13 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                         Http.loadImage(img, info.picUrl);
                     }
                     break;
-                case R.layout.layout_home_route:
+                case R.layout.layout_home_route://推荐游园路线第一个
                     tv = item.findViewById(R.id.title);
                     img = item.findViewById(R.id.img);
+                    TextView tagText = item.findViewById(R.id.tag);
                     RouteInfo info = (RouteInfo) obj;
-                    tv.setText(LanguageUtil.chooseTest(info.caption, info.captionen) + "\n推荐最佳路线");
+                    tv.setText(LanguageUtil.chooseTest(info.caption, info.captionen));
+                    tagText.setText(info.traitLabel);
                     Http.loadImage(img, info.picUrl);
                     break;
                 case R.layout.layout_home_science:
@@ -445,6 +459,12 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     tv.setText(LanguageUtil.chooseTest(schedule.caption, schedule.captionEn));
                     bar.setMax(100);
                     bar.setProgress(schedule.percent);
+                    if (schedule.percent <= 50)
+                        bar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_bar_02cb99_ef));
+                    else if (schedule.percent <= 80)
+                        bar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_bar_ffcd00_ef));
+                    else
+                        bar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_bar_ff4848_ef));
                     img.setImageURI(Uri.parse(CommUtils.getFullUrl(schedule.pic)));
                     break;
                 case R.layout.layout_home_expo_food:
@@ -485,10 +505,24 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                 doMenuItemClick(item, (int[]) data);
             } else if ("periphery".equals(tag)) {
                 doPeripheryClick(item);
+            } else if ("bespeak".equals(tag)) {//场馆预约
+                ScheduleVenue sv = (ScheduleVenue) data;
+                StringBuilder sb = new StringBuilder(mPresenter.loadBespeakUrlInfo())
+                        .append("?time=")
+                        .append(TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd")))
+                        .append("&venid=")
+                        .append(sv.id)
+                        .append("&Uid=")
+                        .append(ExpoApp.getApplication().getUser().getUid())
+                        .append("&Ukey=")
+                        .append(ExpoApp.getApplication().getUser().getUkey())
+                        .append("&lan=")
+                        .append(LanguageUtil.chooseTest("zh", "en"));
+                WebActivity.startActivity(getContext(), sb.toString(), LanguageUtil.chooseTest(sv.caption, sv.captionEn), TITLE_COLOR_STYLE_WHITE);
             } else {
                 if (data instanceof ExpoActivityInfo) {
                     ExpoActivityInfo info = (ExpoActivityInfo) data;
-                    WebActivity.startActivity(getContext(), LanguageUtil.chooseTest(info.getLinkH5Url(), info.getLinkH5UrLen()), LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn()));
+                    WebExpoActivityActivity.startActivity(getContext(), info.getId());
                 } else if (data instanceof RouteInfo) {
                     RouteInfo info = (RouteInfo) data;
                     RouteDetailActivity.startActivity(getContext(), info.id, info.caption);
@@ -661,9 +695,8 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     }
 
     @OnClick({R.id.ar, R.id.online_expo, R.id.service_qa, R.id.home_title_text, R.id.title_home_icon,
-            R.id.title_home_msg, R.id.home__tab1__find,
-            R.id.home__tab1__activities, R.id.home__tab1__route, R.id.home__tab1__science,
-            R.id.home__tab1__periphery})
+            R.id.title_home_msg, R.id.home_tab1_1,
+            R.id.home_tab1_2, R.id.home_tab1_3, R.id.home_tab1_4})
     public void onClick(View view) {
         String url;
         switch (view.getId()) {
@@ -690,19 +723,16 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                     WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 : url, title, TITLE_COLOR_STYLE_WHITE, false);
                 }
                 break;
-            case R.id.home__tab1__find://滚动到发现
+            case R.id.home_tab1_1://滚动到游玩
                 scrollTo(mFindView);
                 break;
-            case R.id.home__tab1__activities://滚动到活动
-                scrollTo(mActivitiesView);
+            case R.id.home_tab1_2://滚动到服务
+                scrollTo(mServiceQA);
                 break;
-            case R.id.home__tab1__route://滚动到路线
-                scrollTo(mRouteView);
+            case R.id.home_tab1_3://滚动到吃&住
+                scrollTo(mPeripheryView);
                 break;
-            case R.id.home__tab1__science://滚动到景点
-                scrollTo(mScienceView);
-                break;
-            case R.id.home__tab1__periphery://滚动到周边
+            case R.id.home_tab1_4://滚动到周边
                 scrollTo(mPeripheryView);
                 break;
         }

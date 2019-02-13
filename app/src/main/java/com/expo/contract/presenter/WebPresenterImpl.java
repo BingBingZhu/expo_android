@@ -6,6 +6,7 @@ import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.expo.contract.WebContract;
 import com.expo.db.QueryParams;
+import com.expo.entity.CommonInfo;
 import com.expo.entity.Coupon;
 import com.expo.entity.Park;
 import com.expo.entity.User;

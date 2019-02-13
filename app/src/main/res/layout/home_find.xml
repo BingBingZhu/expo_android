@@ -13,55 +13,55 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_0"
             style="@style/style_home_find_item"
-            android:drawableLeft="@mipmap/ico_find_wc"
-            android:background="#FFD3F6F6"
-            android:text="找厕所" />
+            android:background="#D3F6F6"
+            android:drawableLeft="@mipmap/home_find_toilet"
+            android:text="@string/find_toilet" />
 
-        <TextView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_1"
             style="@style/style_home_find_item"
-            android:drawableLeft="@mipmap/ico_find_station"
-            android:background="#FFE2F3FB"
-            android:text="找导览车站"/>
+            android:background="#E2F3FB"
+            android:drawableLeft="@mipmap/home_find_station"
+            android:text="@string/find_station" />
 
-        <TextView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_2"
             style="@style/style_home_find_item"
-            android:drawableLeft="@mipmap/ico_find_door"
-            android:background="#FFFFDDCF"
-            android:text="找大门" />
+            android:background="#FFDDCF"
+            android:drawableLeft="@mipmap/home_find_gate"
+            android:text="@string/find_gate" />
 
-        <TextView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_3"
             style="@style/style_home_find_item"
-            android:drawableLeft="@mipmap/ico_find_service_center"
-            android:background="#FFEDF8D8"
-            android:text="找服务中心" />
+            android:background="#EDF8D8"
+            android:drawableLeft="@mipmap/home_find_service_centre"
+            android:text="@string/find_service_centre" />
 
-        <TextView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_4"
             style="@style/style_home_find_item"
-            android:drawableLeft="@mipmap/ico_find_medical"
-            android:background="#FFFFE0E0"
-            android:text="找医疗点" />
+            android:background="#FFE0E0"
+            android:drawableLeft="@mipmap/home_find_doctor"
+            android:text="@string/find_doctor_location" />
 
-        <TextView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_5"
             style="@style/style_home_find_item"
-            android:drawableLeft="@mipmap/ico_find_infant_mom"
-            android:background="#FFE1FFE1"
-            android:text="找母婴室" />
+            android:background="#E1FFE1"
+            android:drawableLeft="@mipmap/home_find_mother_baby"
+            android:text="@string/find_mother_baby_room" />
 
-        <TextView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_6"
             style="@style/style_home_find_item"
             android:layout_marginRight="@dimen/dms_20"
-            android:drawableLeft="@mipmap/ico_find_wifi"
-            android:background="#FFFEF8E8"
-            android:text="免费wifi" />
+            android:background="#FEF8E8"
+            android:drawableLeft="@mipmap/home_find_wifi"
+            android:text="@string/find_free_wifi" />
 
     </LinearLayout>
 </HorizontalScrollView>

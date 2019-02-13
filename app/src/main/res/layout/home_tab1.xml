@@ -23,28 +23,28 @@
         android:paddingBottom="@dimen/dms_18">
 
         <TextView
-            android:id="@+id/home__tab1__find"
+            android:id="@+id/home_tab1_1"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_find" />
+            android:text="@string/home_tab_play" />
 
         <TextView
-            android:id="@+id/home__tab1__activities"
+            android:id="@+id/home_tab1_2"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_activities" />
+            android:text="@string/home_tab_service" />
 
         <TextView
-            android:id="@+id/home__tab1__route"
+            android:id="@+id/home_tab1_3"
             style="@style/style_home_play_item"
-            android:text="@string/home__tab1__route" />
+            android:text="@string/home_tab_eat_live" />
 
         <TextView
-            android:id="@+id/home__tab1__science"
-            style="@style/style_home_play_item"
-            android:text="@string/find_tab_scenic" />
-
-        <TextView
-            android:id="@+id/home__tab1__periphery"
+            android:id="@+id/home_tab1_4"
             style="@style/style_home_play_item"
             android:text="@string/home_tab_periphery" />
+
+        <!--<TextView-->
+            <!--android:id="@+id/home_tab1_5"-->
+            <!--style="@style/style_home_play_item"-->
+            <!--android:text="@string/home_tab_periphery" />-->
     </LinearLayout>
 </LinearLayout>

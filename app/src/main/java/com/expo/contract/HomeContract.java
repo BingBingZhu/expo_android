@@ -7,10 +7,12 @@ import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.AppInfo;
 import com.expo.entity.Circum;
+import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.TopLineInfo;
+import com.expo.entity.Venue;
 import com.expo.entity.VrInfo;
 
 import java.util.List;
@@ -98,6 +100,9 @@ public interface HomeContract {
         public abstract long loadTypeId(String typeName);
 
         public abstract boolean checkInPark(double latitude, double longitude);
+
+        public abstract String loadBespeakUrlInfo();
+
     }
 
     interface View extends IView {

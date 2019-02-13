@@ -54,6 +54,9 @@ public class RouteInfo implements Parcelable {
     @DatabaseField(columnName = "remarken")
     @SerializedName("remarken")
     public String remarken;
+    @DatabaseField(columnName = "trait_label")
+    @SerializedName("traitlabel")
+    public String traitLabel;
     @DatabaseField(columnName = "type_id")
     @SerializedName("typeid")
     public String typeId;
@@ -101,6 +104,7 @@ public class RouteInfo implements Parcelable {
         picUrl = in.readString();
         remark = in.readString();
         remarken = in.readString();
+        traitLabel = in.readString();
         typeId = in.readString();
         updateTime = in.readString();
         voiceUrl = in.readString();
@@ -149,6 +153,7 @@ public class RouteInfo implements Parcelable {
         dest.writeString( picUrl );
         dest.writeString( remark );
         dest.writeString( remarken );
+        dest.writeString( traitLabel );
         dest.writeString( typeId );
         dest.writeString( updateTime );
         dest.writeString( voiceUrl );
