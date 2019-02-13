@@ -34,9 +34,13 @@ import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
 import com.expo.widget.AppBarView;
 import com.expo.widget.X5WebView;
+import com.google.gson.JsonObject;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +63,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     private Encyclopedias mEncyclopedias;
     private List<Encyclopedias> mRecommendEncyclopedias;
     private ShareUtil mShareUtil;
+    private ExpoActivityInfo mExpoActivityInfo;
 
     PlatformActionListener mPlatformActionListener = new PlatformActionListener() {
         @Override
@@ -266,6 +271,38 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
             runOnUiThread(() -> {
                 goBespeak();
             });
+        }
+
+        /**
+         * 获取活动信息
+         *
+         * @return
+         */
+        @JavascriptInterface
+        public void setActivatedId(String id) {
+            mExpoActivityInfo = mPresenter.getExpoActivityInfoById(id);
+        }
+
+        @JavascriptInterface
+        public String getDataById() {
+            String jsonStr = mPresenter.toJson(mExpoActivityInfo);
+            try {
+                JSONObject json = new JSONObject(jsonStr);
+                if (!StringUtils.isEmpty(mExpoActivityInfo.getLinkId())) {
+                    Venue venue = mPresenter.loadSceneByWikiId(Long.valueOf(mExpoActivityInfo.getLinkId()));
+                    if (venue != null)
+                        json.put("data_type", 1);
+                    else
+                        json.put("data_type", 0);
+                } else {
+                    json.put("data_type", 0);
+                }
+                return json.toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+
         }
     }
 }
