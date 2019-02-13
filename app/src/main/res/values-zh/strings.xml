@@ -171,6 +171,9 @@
     <string name="home_tab_food">美食</string>
     <string name="home_tab_accommodation">酒店</string>
     <string name="home_tab_periphery">周边</string>
+    <string name="home_tab_play">游玩</string>
+    <string name="home_tab_service">服务</string>
+    <string name="home_tab_eat_live">吃&#038;住</string>
 
     <string name="gps_open_title">该功能需要打开定位功能。</string>
     <string name="gps_open_content">请点击“设置”-“定位服务”打开定位功能</string>
@@ -187,6 +190,7 @@
 
     <string name="empty_content_2">暂时没有数据</string>
     <string name="empty_fresh_2">立即更新</string>
+    <string name="empty_expo_activity">没有查询到活动</string>
 
     <string name="not_input">未填写</string>
     <string name="no_more_data_available">暂无更多数据</string>
@@ -465,4 +469,12 @@
     <string name="discover_3">4月份最热植物</string>
     <string name="home__tab1__route">路线</string>
     <string name="expo_knowledge">世园知识</string>
+
+    <string name="find_toilet">找厕所</string>
+    <string name="find_station">找导览车站</string>
+    <string name="find_gate">找大门</string>
+    <string name="find_service_centre">找服务中心</string>
+    <string name="find_doctor_location">找医疗点</string>
+    <string name="find_mother_baby_room">找母婴室</string>
+    <string name="find_free_wifi">免费wifi</string>
 </resources>

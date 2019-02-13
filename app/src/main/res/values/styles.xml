@@ -254,10 +254,14 @@
         <item name="drawableTopWidth">@dimen/dms_88</item>
     </style>
 
-    <style name="style_home_find_item">
+    <style name="style_home_find_item" parent="TextSizeBlack12">
         <item name="android:layout_marginLeft">@dimen/dms_20</item>
         <item name="android:layout_height">@dimen/dms_64</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">@dimen/dms_10</item>
+        <item name="android:paddingLeft">@dimen/dms_16</item>
+        <item name="android:paddingRight">@dimen/dms_22</item>
     </style>
 
     <style name="style_home_play_item" parent="TextSize13">
@@ -265,8 +269,11 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:padding">@dimen/dms_10</item>
+        <item name="android:layout_marginLeft">@dimen/dms_30</item>
+        <item name="android:layout_marginRight">@dimen/dms_30</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/selector_33_fdb931</item>
+        <item name="android:textColor">@color/selector_33_white</item>
+        <item name="android:background">@drawable/selector_transation_fdb931_90</item>
     </style>
 
     <!-- dialog从下面进出动画 -->
@@ -321,18 +328,26 @@
     </style>
 
     <!-- java/com/google/vr/sdk/widgets/common/res/values/dimens.xml -->
-    <eat-comment/>
+    <eat-comment />
     <dimen name="button_padding">10dip</dimen>
     <!-- java/com/google/vr/sdk/widgets/common/res/values/ids.xml -->
-    <eat-comment/>
+    <eat-comment />
 
-    <item name="vrwidget_inner_view" type="id"/>
+    <item name="vrwidget_inner_view" type="id" />
     <!-- java/com/google/vr/sdk/widgets/common/res/values/styles.xml -->
-    <eat-comment/>
+    <eat-comment />
+
     <style name="ControlButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">@dimen/button_padding</item>
+    </style>
+
+    <style name="home_bespeak_progress">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:minHeight">20dip</item>
+        <item name="android:maxHeight">20dip</item>
+        <item name="android:mirrorForRtl">true</item>
     </style>
 </resources>

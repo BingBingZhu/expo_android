@@ -133,7 +133,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         QueryParams params = new QueryParams()
                 .add("eq", "type_name", "美食")
                 .add("and")
-                .add("eq", "enable", 1)
+                .add("eq", "enable", 0)
                 .add("orderBy", "recommended_idx", true)
                 .add("limit", 0, 5);
         mView.showFood(mDao.query(Encyclopedias.class, params));
@@ -347,8 +347,8 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                     count += st.personalCount;
                     usedCount += st.personalUsedCount;
                 }
-                if (usedCount == 0) usedCount = 1;
-                sv.percent = count * 100 / usedCount;
+                if (count == 0) count = 1;
+                sv.percent = usedCount * 100 / count;
             }
             data.addAll(tmp);
         } else {
@@ -479,4 +479,11 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     public void sortVenue(List<Encyclopedias> list) {
         Collections.sort(list, (o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
     }
+
+    @Override
+    public String loadBespeakUrlInfo() {
+        return mDao.unique(CommonInfo.class, new QueryParams()
+                .add("eq", "type", CommonInfo.EXPO_BESPEAK_VENUE)).getLinkUrl();
+    }
+
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ScreenUtils;
@@ -44,6 +45,13 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
     @BindView(R.id.expo_activity_recycler)
     RecyclerView mRvActivityRecycler;
 
+    @BindView(R.id.layout_empty)
+    View mEmptyView;
+    @BindView(R.id.layout_empty_img)
+    ImageView mEmptyImg;
+    @BindView(R.id.layout_empty_text)
+    TextView mEmptyText;
+
     View mSelectMonthView;
     View mSelectDateView;
     View mSelectTimeView;
@@ -73,11 +81,17 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, R.string.title_expo_activity);
+        initEmptyView();
         initMonthRecycler();
         initDateRecycler();
         initActivityRecycler();
         mTimeType = 0;
         mPresenter.loadActivityInfo(mSelectTime, mTimeType);
+    }
+
+    private void initEmptyView() {
+        Picasso.with(getContext()).load(R.mipmap.empty_img2).into(mEmptyImg);
+        mEmptyText.setText(R.string.empty_expo_activity);
     }
 
     private void initMonthRecycler() {
@@ -267,6 +281,14 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
         if (list != null)
             mActivityShowList.addAll(list);
         mActivityAdapter.notifyDataSetChanged();
+
+        if (mActivityShowList == null || mActivityShowList.size() == 0) {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mRvActivityRecycler.setVisibility(View.GONE);
+        } else {
+            mEmptyView.setVisibility(View.GONE);
+            mRvActivityRecycler.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.expand_activity_morning, R.id.expand_activity_noon, R.id.expand_activity_afternoon})

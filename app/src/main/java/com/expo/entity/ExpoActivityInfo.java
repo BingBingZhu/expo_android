@@ -96,6 +96,9 @@ public class ExpoActivityInfo {
     @DatabaseField(columnName = "remark_en")
     @SerializedName("remarken")
     private String remarkEn;
+    @DatabaseField(columnName = "slide_show")
+    @SerializedName("slideshow")
+    private String slideShow;
     @DatabaseField(columnName = "start_date")
     @SerializedName("startdate")
     private String startDate;
@@ -271,6 +274,14 @@ public class ExpoActivityInfo {
 
     public void setRemarkEn(String remarkEn) {
         this.remarkEn = remarkEn;
+    }
+
+    public String getSlideShow() {
+        return slideShow;
+    }
+
+    public void setSlideShow(String slideShow) {
+        this.slideShow = slideShow;
     }
 
     public String getStartDate() {

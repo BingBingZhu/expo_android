@@ -21,29 +21,29 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/home_tab2_play"
+            android:id="@+id/home_tab2_1"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_find" />
+            android:text="@string/home_tab_play" />
 
         <TextView
-            android:id="@+id/home_tab2_service"
+            android:id="@+id/home_tab2_2"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_activities" />
+            android:text="@string/home_tab_eat_live" />
 
         <TextView
-            android:id="@+id/home_tab2_food"
+            android:id="@+id/home_tab2_3"
             style="@style/style_home_play_item"
-            android:text="@string/home_tab_food" />
+            android:text="@string/home_tab_eat_live" />
 
         <TextView
-            android:id="@+id/home_tab2_accommodation"
-            style="@style/style_home_play_item"
-            android:text="@string/home_tab_accommodation" />
-
-        <TextView
-            android:id="@+id/home_tab2_periphery"
+            android:id="@+id/home_tab2_4"
             style="@style/style_home_play_item"
             android:text="@string/home_tab_periphery" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/home_tab2_5"-->
+        <!--style="@style/style_home_play_item"-->
+        <!--android:text="@string/home_tab_periphery" />-->
 
 
     </LinearLayout>

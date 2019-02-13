@@ -13,40 +13,55 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_0"
             style="@style/style_home_find_item"
-            android:src="@mipmap/home_find_toilet" />
+            android:background="#D3F6F6"
+            android:drawableLeft="@mipmap/home_find_toilet"
+            android:text="@string/find_toilet" />
 
-        <ImageView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_1"
             style="@style/style_home_find_item"
-            android:src="@mipmap/home_find_station" />
+            android:background="#E2F3FB"
+            android:drawableLeft="@mipmap/home_find_station"
+            android:text="@string/find_station" />
 
-        <ImageView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_2"
             style="@style/style_home_find_item"
-            android:src="@mipmap/home_find_gate" />
+            android:background="#FFDDCF"
+            android:drawableLeft="@mipmap/home_find_gate"
+            android:text="@string/find_gate" />
 
-        <ImageView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_3"
             style="@style/style_home_find_item"
-            android:src="@mipmap/home_find_service_centre" />
+            android:background="#EDF8D8"
+            android:drawableLeft="@mipmap/home_find_service_centre"
+            android:text="@string/find_service_centre" />
 
-        <ImageView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_4"
             style="@style/style_home_find_item"
-            android:src="@mipmap/home_find_service_centre" />
+            android:background="#FFE0E0"
+            android:drawableLeft="@mipmap/home_find_doctor"
+            android:text="@string/find_doctor_location" />
 
-        <ImageView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_5"
             style="@style/style_home_find_item"
-            android:src="@mipmap/home_find_service_centre" />
+            android:background="#E1FFE1"
+            android:drawableLeft="@mipmap/home_find_mother_baby"
+            android:text="@string/find_mother_baby_room" />
 
-        <ImageView
+        <com.hedan.textdrawablelibrary.TextViewDrawable
             android:id="@+id/home_find_6"
             style="@style/style_home_find_item"
-            android:src="@mipmap/home_find_service_centre" />
+            android:layout_marginRight="@dimen/dms_20"
+            android:background="#FEF8E8"
+            android:drawableLeft="@mipmap/home_find_wifi"
+            android:text="@string/find_free_wifi" />
 
     </LinearLayout>
 </HorizontalScrollView>
