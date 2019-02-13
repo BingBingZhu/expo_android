@@ -54,13 +54,13 @@ public class VenuesType implements Parcelable {
     private String picMarkUrl;          // 地图图标 ,
     @DatabaseField(columnName = "show_in_map")
     @SerializedName("showinmap")
-    private String showInMap;
+    private String showInMap;  // 是否出现在地图里 1 是 0 否 ,
     @DatabaseField(columnName = "show_in_scenicspot")
     @SerializedName("showinscenicspot")
-    private String showInScenicspot;
+    private String showInScenicspot;   // 是否出现在景点里 1 是 0 否 ,
     @DatabaseField(columnName = "show_in_wiki")
     @SerializedName("showinwiki")
-    private String showInWiki;
+    private String showInWiki;  // 是否出现在百科里 1 是 0 否 ,
 
     private Bitmap lstBitmap;
     private Bitmap markBitmap;
