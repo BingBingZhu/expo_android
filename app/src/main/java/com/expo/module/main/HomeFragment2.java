@@ -295,10 +295,9 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         List<Object> foods = mPresenter.loadExpoFoods();
         if (foods != null && !foods.isEmpty()) {
             mPeripheryView = mGridLayoutFactory.getView(configs.get(7), foods);
-            padding = getResources().getDimensionPixelSize(R.dimen.dms_8);
-            int paddingTop = getResources().getDimensionPixelSize(R.dimen.dms_14);
-            paddingV = getResources().getDimensionPixelSize(R.dimen.dms_10);
-            mPeripheryView.setPadding(padding, paddingTop, padding, paddingV);
+            padding = getResources().getDimensionPixelSize(R.dimen.dms_18);
+            paddingV = getResources().getDimensionPixelSize(R.dimen.dms_14);
+            mPeripheryView.setPadding(padding, paddingV, padding, paddingV);
             ((ViewGroup.MarginLayoutParams) mPeripheryView.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(mPeripheryView);
         }
@@ -771,13 +770,17 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     public void setOutsideFoods(List<Circum> circums) {
         this.mCircum = circums;
         if (circums != null && mLocation != null) {
-            View view = mGridLayoutFactory.getView(mOutsideFoodConfig, circums);
+            View view = new View(getContext());
+            view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1));
+            view.setBackgroundColor(getResources().getColor(R.color.color_EEE));
+            mContainer.addView(view, 17);
+            view = mGridLayoutFactory.getView(mOutsideFoodConfig, circums);
             view.setBackgroundResource(R.color.white);
             int padding = getResources().getDimensionPixelSize(R.dimen.dms_16);
             int paddingV = getResources().getDimensionPixelSize(R.dimen.dms_25);
             view.setPadding(padding, padding, padding, paddingV);
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = 1;
-            mContainer.addView(view, 17);
+            mContainer.addView(view, 18);
         }
     }
 
