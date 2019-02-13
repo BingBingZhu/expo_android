@@ -229,7 +229,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         if (configs == null || configs.isEmpty()) return;
         mGridLayoutFactory = new GridLayoutFactory(getContext(), bindViewListener);
         mGridLayoutFactory.setOnItemClickListener(itemClickListener);
-        int marginTop = getResources().getDimensionPixelSize(R.dimen.dms_30);
+        int marginTop = getResources().getDimensionPixelSize(R.dimen.dms_4);
         int padding, paddingV;
         int padding20 = getResources().getDimensionPixelSize(R.dimen.dms_20);
         View view;
