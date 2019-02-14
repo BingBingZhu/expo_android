@@ -59,7 +59,6 @@ public class HomePresenterImpl extends HomeContract.Presenter {
 
     @Override
     public void setTopLine() {
-//        mView.showTopLine(mDao.query(TopLineInfo.class, null));
 
         long time = TimeUtils.getNowMills();
         QueryParams params = new QueryParams()
@@ -72,111 +71,6 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("eq", "is_recommended", 1);
         mView.showTopLine(mDao.query(ExpoActivityInfo.class, params));
     }
-
-    @Override
-    public void setVenue() {
-        QueryParams params = new QueryParams()
-                .add("eq", "enable", 1)
-                .add("and")
-                .add("eq", "recommend", 1)
-                .add("and")
-                .add("eq", "type_name", "场馆")
-                .add("orderBy", "idx", true);
-        mView.showVenue(mDao.query(Encyclopedias.class, params));
-    }
-
-    @Override
-    public void setHotActivity() {
-        long time = TimeUtils.getNowMills();
-        QueryParams params = new QueryParams()
-                .add("gt", "start_time", time)
-                .add("and")
-                .add("eq", "enablestate", 1)
-                .add("and")
-                .add("eq", "is_recommended", 1)
-                .add("limit", 0, 4)
-                .add("orderBy", "recommended_idx", "true");
-        mView.showActivity(mDao.query(ExpoActivityInfo.class, params));
-    }
-
-    @Override
-    public void setRecommendRoute() {
-        QueryParams params = new QueryParams()
-                .add("eq", "enable", "1")
-                .add("and")
-                .add("eq", "type_id", "1")
-                .add("limit", 0, 5);
-        mView.showRoute(mDao.query(RouteInfo.class, params));
-    }
-
-    @Override
-    public void setRankingScenic() {
-        QueryParams params = new QueryParams()
-                .add("eq", "recommend", "1")
-                .add("and")
-                .add("eq", "type_name", "景点")
-                .add("and")
-                .add("eq", "enable", 1)
-                .add("orderBy", "recommended_idx", true)
-                .add("limit", 0, 2);
-        mView.showRankingScenic(mDao.query(Encyclopedias.class, params));
-    }
-
-    @Override
-    public void setVr() {
-        mView.showVr(mDao.query(VrInfo.class, new QueryParams()
-                .add("eq", "is_recommended", 1)
-                .add("orderBy", "recommended_idx", true)
-                .add("limit", 0, 2)));
-    }
-
-    @Override
-    public void setFood() {
-        QueryParams params = new QueryParams()
-                .add("eq", "type_name", "美食")
-                .add("and")
-                .add("eq", "enable", 0)
-                .add("orderBy", "recommended_idx", true)
-                .add("limit", 0, 5);
-        mView.showFood(mDao.query(Encyclopedias.class, params));
-    }
-
-    @Override
-    public void setHotel() {
-        QueryParams params = new QueryParams()
-                .add("eq", "type_name", "酒店")
-                .add("and")
-                .add("eq", "enable", 1)
-                .add("orderBy", "recommended_idx", true)
-                .add("limit", 0, 3);
-        mView.showHotel(mDao.query(Encyclopedias.class, params));
-    }
-
-//    @Override
-//    public void setExhibit() {
-//        //从数据库获取
-//        QueryParams params = new QueryParams()
-//                .add( "eq", "enable", 1 )
-//                .add( "and" )
-//                .add( "eq", "recommend", 1 )
-//                .add( "and" )
-//                .add( "eq", "type_name", "展览" )
-//                .add( "orderBy", "idx", true );
-//        mView.showExhibit( mDao.query( Encyclopedias.class, params ) );
-//    }
-
-//    @Override
-//    public void setExhibitGarden() {
-//        //从数据库获取
-//        QueryParams params = new QueryParams()
-//                .add( "eq", "enable", 1 )
-//                .add( "and" )
-//                .add( "eq", "recommend", 1 )
-//                .add( "and" )
-//                .add( "eq", "type_name", "展园" )
-//                .add( "orderBy", "idx", true );
-//        mView.showExhibitGarden( mDao.query( Encyclopedias.class, params ) );
-//    }
 
     public void startHeartService(Context context) {
         HeartBeatService.startService(context);
@@ -450,19 +344,6 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     }
 
     @Override
-    public long loadTypeId(String typeName) {
-        if (!TextUtils.isEmpty(typeName)) {
-            VenuesType type = mDao.unique(VenuesType.class, new QueryParams()
-                    .add("like", "type_name", "%" + typeName + "%")
-                    .add("or")
-                    .add("like", "type_name_en", "%" + typeName + "%"));
-            if (type != null)
-                return type.getId();
-        }
-        return 0;
-    }
-
-    @Override
     public boolean checkInPark(double latitude, double longitude) {
         Park park = mDao.unique(Park.class, null);
         if (park == null) return false;
@@ -470,21 +351,6 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         return MapUtils.ptInPolygon(latitude, longitude, bounds);
     }
 
-    @Override
-    public Float getDistance(long id, LatLng latLng) {
-        QueryParams queryParams = new QueryParams()
-                .add("eq", "wiki_id", id);
-        List<Venue> venues = mDao.query(Venue.class, queryParams);
-        if (venues == null || venues.size() == 0) return 999999F;
-        Venue venue = venues.get(0);
-        Float distance = AMapUtils.calculateLineDistance(latLng, new LatLng(venue.getLat(), venue.getLng()));
-        return distance;
-    }
-
-    @Override
-    public void sortVenue(List<Encyclopedias> list) {
-        Collections.sort(list, (o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
-    }
 
     @Override
     public String loadBespeakUrlInfo() {

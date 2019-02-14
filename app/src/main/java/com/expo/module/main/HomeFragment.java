@@ -1,6 +1,5 @@
 package com.expo.module.main;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
@@ -36,8 +35,6 @@ import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
 import com.expo.entity.ScheduleVenue;
-import com.expo.entity.TopLineInfo;
-import com.expo.entity.Venue;
 import com.expo.entity.VrInfo;
 import com.expo.map.LocationManager;
 import com.expo.module.activity.ExpoActivityActivity;
@@ -88,7 +85,7 @@ import static com.expo.base.BaseActivity.TITLE_COLOR_STYLE_WHITE;
 /*
  * 首页
  */
-public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implements HomeContract.View, View.OnClickListener {
+public class HomeFragment extends BaseFragment<HomeContract.Presenter> implements HomeContract.View, View.OnClickListener {
 
     @BindView(R.id.home_scroll)
     MyScrollView mSvScroll;
@@ -189,7 +186,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
 
     @Override
     public int getContentView() {
-        return R.layout.fragment_home2;
+        return R.layout.fragment_home;
     }
 
     @Override
@@ -203,13 +200,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         mPresenter.checkUpdate();
         mPresenter.setMessageCount();
         mPresenter.setTopLine();
-//        mPresenter.setVenue();
-//        mPresenter.setHotActivity();
-//        mPresenter.setRecommendRoute();
-//        mPresenter.setRankingScenic();
-//        mPresenter.setVr();
-//        mPresenter.setFood();
-//        mPresenter.setHotel();
+        mPresenter.appRun("");
         mPresenter.startHeartService(getContext());
 
         LocationManager.getInstance().registerLocationListener(mOnLocationChangeListener);//定位
@@ -387,10 +378,8 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                         tvMore.setText(content);
                     }
-//                    if (tvMore.getVisibility() == View.VISIBLE) {
                     tvMore.setTag(tag);
                     tvMore.setOnClickListener(moreClickListener);
-//                    }
                     if (paddingBottom != 0)
                         item.setPadding(0, 0, 0, paddingBottom);
                     break;
@@ -730,41 +719,6 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     }
 
     @Override
-    public void showVenue(List<Encyclopedias> list) {
-
-    }
-
-    @Override
-    public void showActivity(List<ExpoActivityInfo> list) {
-
-    }
-
-    @Override
-    public void showRoute(List<RouteInfo> list) {
-
-    }
-
-    @Override
-    public void showRankingScenic(List<Encyclopedias> list) {
-
-    }
-
-    @Override
-    public void showVr(List<VrInfo> list) {
-
-    }
-
-    @Override
-    public void showFood(List<Encyclopedias> list) {
-
-    }
-
-    @Override
-    public void showHotel(List<Encyclopedias> list) {
-
-    }
-
-    @Override
     public void setOutsideFoods(List<Circum> circums) {
         this.mCircum = circums;
         if (circums != null && mLocation != null) {
@@ -780,14 +734,6 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = 1;
             mContainer.addView(view, 18);
         }
-    }
-
-    public void sort(List<Encyclopedias> list, LatLng latLng) {
-        for (int i = 0; list != null && i < list.size(); i++) {
-            Encyclopedias venue = list.get(i);
-            venue.setDistance(mPresenter.getDistance(venue.id, latLng));
-        }
-        mPresenter.sortVenue(list);
     }
 
     @Override
@@ -809,49 +755,6 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         if (empty) view.setVisibility(View.GONE);
         else view.setVisibility(View.VISIBLE);
         return empty;
-    }
-
-    // 推荐场馆
-    private void addVenueView(int position, int width, int height) {
-
-    }
-
-    // 热门活动
-    private void addHotActivityFirst() {
-
-    }
-
-    private void addHotActivity(int position) {
-
-    }
-
-    // 推荐游园路线
-    private void addRoute1() {
-
-    }
-
-    private void addRoute2() {
-
-    }
-
-    // 推荐游园路线
-    private void addRouteBottom(int position) {
-
-    }
-
-    // 世园美食
-    private void addFood(int position) {
-
-    }
-
-    // 世园美食
-    private void addVr(int position) {
-
-    }
-
-    // 世园会三大特色酒店
-    private void addHotelView(int position) {
-
     }
 
     @Override

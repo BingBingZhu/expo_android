@@ -29,33 +29,11 @@ public interface HomeContract {
 
         public abstract void setTopLine();
 
-        public abstract void setVenue();
-
-//        public abstract void setExhibit();
-
-//        public abstract void setExhibitGarden();
-
-        public abstract void setHotActivity();
-
-        public abstract void setRecommendRoute();
-
-        public abstract void setRankingScenic();
-
-        public abstract void setVr();
-
-        public abstract void setFood();
-
-        public abstract void setHotel();
-
         public abstract void startHeartService(Context context);
 
         public abstract void stopHeartService(Context context);
 
         public abstract String loadCommonInfo(String type);
-
-        public abstract Float getDistance(long id, LatLng latLng);
-
-        public abstract void sortVenue(List<Encyclopedias> list);
 
         public abstract void appRun(String jgId);
 
@@ -96,9 +74,6 @@ public interface HomeContract {
         //发现数据
         public abstract List<Object> loadDiscover();
 
-        //根据类型名找对应id
-        public abstract long loadTypeId(String typeName);
-
         public abstract boolean checkInPark(double latitude, double longitude);
 
         public abstract String loadBespeakUrlInfo();
@@ -108,25 +83,7 @@ public interface HomeContract {
     interface View extends IView {
         void showTopLine(List<ExpoActivityInfo> list);
 
-        void showVenue(List<Encyclopedias> list);
-
-//        void showExhibit(List<Encyclopedias> list);
-
-//        void showExhibitGarden(List<Encyclopedias> list);
-
         void appUpdate(AppInfo appInfo);
-
-        void showActivity(List<ExpoActivityInfo> list);
-
-        void showRoute(List<RouteInfo> list);
-
-        void showRankingScenic(List<Encyclopedias> list);
-
-        void showVr(List<VrInfo> data);
-
-        void showFood(List<Encyclopedias> list);
-
-        void showHotel(List<Encyclopedias> list);
 
         void setOutsideFoods(List<Circum> circums);
     }
