@@ -126,13 +126,6 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
     private Location mLocation;
     private List<Circum> mCircum;
 
-    private long typeToilet;
-    private long typeStation;
-    private long typeGate;
-    private long typeService;
-    private long typeDeposit;
-    private long typeMedical;
-
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
         ExpoActivityInfo expoActivityInfo = (ExpoActivityInfo) obj;
 //        WebActivity.startActivity(getContext(),
@@ -647,45 +640,21 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
         }
         switch (v.getId()) {
             case R.id.home_find_0://卫生间
-//                if (typeToilet == 0) {
-//                    typeToilet = mPresenter.loadTypeId("\u536b\u751f\u95f4");
-//                }
-//                if (typeToilet != 0)
                 goMapNavigation("\u536b\u751f\u95f4");
                 break;
             case R.id.home_find_1://览车
-//                if (typeStation == 0) {
-//                    typeStation = mPresenter.loadTypeId("\u8f66\u7ad9");
-//                }
-//                if (typeStation != 0)
                 goMapNavigation("\u89c8\u8f66");
                 break;
             case R.id.home_find_2://大门
-//                if (typeGate == 0) {
-//                    typeGate = mPresenter.loadTypeId("\u5927\u95e8");
-//                }
-//                if (typeGate != 0)
                 goMapNavigation("\u5927\u95e8");
                 break;
             case R.id.home_find_3://服务
-//                if (typeDeposit == 0) {
-//                    typeDeposit = mPresenter.loadTypeId("\u670d\u52a1");
-//                }
-//                if (typeDeposit != 0)
                 goMapNavigation("\u670d\u52a1");
                 break;
             case R.id.home_find_4://医疗
-//                if (typeService == 0) {
-//                    typeService = mPresenter.loadTypeId("\u533b\u7597");
-//                }
-//                if (typeService != 0)
                 goMapNavigation("\u533b\u7597");
                 break;
             case R.id.home_find_5://母婴
-//                if (typeMedical == 0) {
-//                    typeMedical = mPresenter.loadTypeId("\u6bcd\u5a74");
-//                }
-//                if (typeMedical != 0)
                 goMapNavigation("\u6bcd\u5a74");
                 break;
             case R.id.home_find_6:
@@ -708,7 +677,6 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
                 break;
             case R.id.home_title_text://搜索框
                 EncyclopediaSearchActivity.startActivity(getContext());
-//                VenueSearchActivity.startActivity(getContext());
                 break;
             case R.id.ar://AR
                 ArActivity.lunchPhotograph(getContext(), mPresenter.loadCommonInfo(CommonInfo.EXPO_AR_DOWNLOAD_PAGE));
