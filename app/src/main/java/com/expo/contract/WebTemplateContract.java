@@ -37,6 +37,8 @@ public interface WebTemplateContract {
 
         public abstract ExpoActivityInfo getExpoActivityInfoById(String id);
 
+        public abstract Venue loadSceneById(long id);
+
     }
 
     interface View extends IView {

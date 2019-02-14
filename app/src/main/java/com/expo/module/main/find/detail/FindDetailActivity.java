@@ -96,17 +96,22 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecycler.setLayoutManager(manager);
         new PagerSnapHelper().attachToRecyclerView(mRecycler);
-        if (mFind.type == 1)
+        if (mFind.type == 1) {
+            showLoadingView();
             mRecycler.setAdapter(mAdapter = new CommonAdapter(this, R.layout.item_find_detail_video, mList) {
                 @Override
                 protected void convert(ViewHolder holder, Object o, int position) {
                     mVideo = ((VideoView) holder.getView(R.id.item_find_video));
                     mVideoImg = ((ImageView) holder.getView(R.id.item_find_video_img));
                     mVideoControl = ((ImageView) holder.getView(R.id.item_find_video_control));
-                    mVideo.setVideoURI( Uri.parse( CommUtils.getFullUrl( mFind.url1 ) ) );
+                    mVideo.setVideoURI(Uri.parse(CommUtils.getFullUrl(mFind.url1)));
                     holder.setOnClickListener(R.id.item_find_video, v -> videoChangeState());
                     holder.setOnClickListener(R.id.item_find_video_control, v -> videoStart());
                     mVideo.setOnCompletionListener(mp -> videoComplete());
+                    mVideo.setOnInfoListener((mp, what, extra) -> {
+                        hideLoadingView();
+                        return false;
+                    });
                     mTvPosition.setVisibility(View.VISIBLE);
 
                     new Thread(() -> {
@@ -122,7 +127,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
                 }
 
             });
-        else {
+        } else {
             mTvPosition.setText("1/" + mList.size());
             mRecycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
@@ -229,7 +234,7 @@ public class FindDetailActivity extends BaseActivity<FindDetailContract.Presente
 
     @Override
     public void addEnjoyRes(boolean isSelf) {
-        if (isSelf){
+        if (isSelf) {
             ToastHelper.showShort("自己不能点赞哦");
             return;
         }

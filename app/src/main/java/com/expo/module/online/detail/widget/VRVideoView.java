@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
 import com.expo.entity.VrInfo;
+import com.expo.module.online.detail.VRDetailActivity;
 import com.expo.network.Http;
 import com.expo.utils.CommUtils;
 import com.google.vr.sdk.widgets.common.FullScreenDialog;
@@ -138,6 +139,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
                 mSeekBar.setMax((int) mVrVideoView.getDuration());
                 mPlayTotalTime.setText(TimeUtils.millis2String((int) mVrVideoView.getDuration(), new SimpleDateFormat("mm:ss")));
                 mVrVideoView.fullScreenDialog.setTotalTime(TimeUtils.millis2String((int) mVrVideoView.getDuration(), new SimpleDateFormat("mm:ss")));
+                ((VRDetailActivity) mContext).hideLoadingView();
             }
 
             /**
@@ -188,7 +190,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
                 return urlArray[1];
             } else if (urlArray.length == 3) {
                 return urlArray[2];
-            }else{
+            } else {
                 return urlArray[0];
             }
         } else {
@@ -231,6 +233,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
 
             mPlay.setSelected(true);
             mVrVideoView.fullScreenDialog.playVideo(true);
+            ((VRDetailActivity) mContext).showLoadingView();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -60,6 +60,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     private String mUrl;
     private long id;
     private Venue mVenue;
+    private Venue mNaviVenue;
     private Encyclopedias mEncyclopedias;
     private List<Encyclopedias> mRecommendEncyclopedias;
     private ShareUtil mShareUtil;
@@ -289,8 +290,8 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
             try {
                 JSONObject json = new JSONObject(jsonStr);
                 if (!StringUtils.isEmpty(mExpoActivityInfo.getLinkId())) {
-                    Venue venue = mPresenter.loadSceneByWikiId(Long.valueOf(mExpoActivityInfo.getLinkId()));
-                    if (venue != null)
+                    mNaviVenue = mPresenter.loadSceneById(Long.valueOf(mExpoActivityInfo.getLinkId()));
+                    if (mNaviVenue != null)
                         json.put("data_type", 1);
                     else
                         json.put("data_type", 0);
@@ -303,6 +304,14 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
                 return null;
             }
 
+        }
+
+        @JavascriptInterface
+        public void gotoDataLocation() {
+            runOnUiThread(() -> {
+                if (mNaviVenue != null)
+                    PlayMapActivity.startActivity(getContext(), mNaviVenue, 1);
+            });
         }
     }
 }

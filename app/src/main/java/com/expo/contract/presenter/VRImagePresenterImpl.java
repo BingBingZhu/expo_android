@@ -23,6 +23,7 @@ public class VRImagePresenterImpl extends VRImageContract.Presenter {
     public void loadVrRecommend(Long id) {
         // list改为从数据库中查找
         QueryParams params = new QueryParams()
+                .add("eq", "is_recommended", 1)
                 .add("orderBy", "recommended_idx", true);
         List<VrInfo> list = mDao.query(VrInfo.class, params);
         if (list == null) return;
