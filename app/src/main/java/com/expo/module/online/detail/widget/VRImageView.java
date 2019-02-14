@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.entity.VrInfo;
+import com.expo.module.online.detail.VRDetailActivity;
 import com.expo.module.online.detail.VRImageActivity;
 import com.expo.network.Http;
 import com.expo.utils.CommUtils;
@@ -37,7 +38,6 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
 
     private VrPanoramaView mPanoramaView;
     public ImageView mFullScreen;
-    ImageTask mImageTask;
 
     VrInfo mVrInfo;
 
@@ -88,18 +88,16 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
     }
 
     public void setVrInfo(VrInfo vrInfo) {
+        if(mVrInfo == vrInfo) return;
         mVrInfo = vrInfo;
         String url = getImageString(vrInfo);
-        if (!getImage(url)) {
+        if (!getImage(CommUtils.getPanoramaFullUrl(url))) {
             new ImageTask().execute(CommUtils.getPanoramaFullUrl(url));
+            ((VRImageActivity) mContext).showLoadingView();
         }
     }
 
     public void onDestroy() {
-        if (mImageTask != null && !mImageTask.isCancelled()) {//销毁任务
-            mImageTask.cancel(true);
-            mImageTask = null;
-        }
         mPanoramaView.pauseRendering();
         mPanoramaView.shutdown();
         ((FrameLayout) mView.getParent()).removeView(mView);
@@ -160,6 +158,7 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
+            ((VRImageActivity) mContext).hideLoadingView();
             if (bitmap != null) {
                 ImageUtils.save(bitmap, Constants.Config.ROOT_PATH + File.separator + Constants.Config.TEMP_PATH + MD5Util.getMD5String(url), Bitmap.CompressFormat.JPEG);
                 if (!StringUtils.equals(url, CommUtils.getPanoramaFullUrl(getImageString(mVrInfo))))

@@ -12,9 +12,9 @@
 
     <ImageView
         android:id="@+id/find_detail_close"
-        android:layout_width="@dimen/dms_36"
-        android:layout_height="@dimen/dms_30"
-        android:layout_margin="@dimen/dms_30"
+        android:layout_width="@dimen/dms_96"
+        android:layout_height="@dimen/dms_90"
+        android:paddingRight="@dimen/dms_30"
         android:src="@mipmap/ico_white_back" />
 
     <LinearLayout

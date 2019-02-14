@@ -97,7 +97,7 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
     }
 
     @OnClick(R.id.title_back)
-    public void onClick(View v){
+    public void onClick(View v) {
         finish();
     }
 
