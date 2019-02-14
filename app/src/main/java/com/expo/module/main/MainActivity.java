@@ -169,6 +169,10 @@ public class MainActivity extends BaseActivity {
         mTabHostView.postDelayed(() -> ((ScenicFragment) getFragment(1)).onClickMap(null), 300);
     }
 
+    public void goCollege() {
+        mTabHostView.setCurrentTabByTag("college");
+    }
+
     private Fragment getFragment(int tabId) {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         for (Fragment fragment : fragments) {

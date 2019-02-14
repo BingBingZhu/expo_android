@@ -555,9 +555,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             } else if ("scenic".equals(tag)) {
                 ((MainActivity) getContext()).goScenicAndShowTab(getString(R.string.find_tab_scenic));
             } else if ("play".equals(tag)) {
-                WebActivity.startActivity(getContext(),
-                        mPresenter.loadCommonInfo(CommonInfo.PORTAL_WEBSITE_INTEGRATION),
-                        getString(R.string.home_func_item_microcosmic));
+                ((MainActivity) getActivity()).goCollege();
             } else if ("bespeak".equals(tag)) {
                 lunchVenueBespeak();
             } else if ("expo_foods".equals(tag)) {
