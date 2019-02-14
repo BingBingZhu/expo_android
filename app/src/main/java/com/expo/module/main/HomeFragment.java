@@ -104,13 +104,14 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     @BindView(R.id.container)
     LinearLayout mContainer;
     @BindView(R.id.service_qa)
-    View mServiceQA;//问答
+    View mServiceQA;//服务
 
-    private View mFindView;//发现
+    private View mFindView;//游玩
     private View mActivitiesView;//活动
     private View mRouteView;//路线
     private View mScienceView;//人气景点
-    private View mPeripheryView;//世园美食
+    private View mEatAndHotelView;//吃&住
+    private View mPeripheryView;//周边
     private View mSelectedTabView;//
 
     private List<ExpoActivityInfo> mListTopLine;
@@ -150,9 +151,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             }
             //tab字颜色
             if (topHeight == 0) {
-                topHeight = mHtTitle.getBottom() + mTabView1.getHeight() + 10;
+                topHeight = mHtTitle.getBottom() + mTabView1.getHeight();
             }
-            if (mPeripheryView != null && mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
+            if (mEatAndHotelView != null && mEatAndHotelView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home_tab1_3);
             } else if (mPeripheryView != null && mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home_tab1_4);
@@ -161,7 +162,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             } else if (mFindView != null && mFindView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home_tab1_1);
             }
-
         }
     };
 
@@ -283,12 +283,12 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         //世园美食
         List<Object> foods = mPresenter.loadExpoFoods();
         if (foods != null && !foods.isEmpty()) {
-            mPeripheryView = mGridLayoutFactory.getView(configs.get(7), foods);
+            mEatAndHotelView = mGridLayoutFactory.getView(configs.get(7), foods);
             padding = getResources().getDimensionPixelSize(R.dimen.dms_18);
             paddingV = getResources().getDimensionPixelSize(R.dimen.dms_14);
-            mPeripheryView.setPadding(padding, paddingV, padding, paddingV);
-            ((ViewGroup.MarginLayoutParams) mPeripheryView.getLayoutParams()).topMargin = marginTop;
-            mContainer.addView(mPeripheryView);
+            mEatAndHotelView.setPadding(padding, paddingV, padding, paddingV);
+            ((ViewGroup.MarginLayoutParams) mEatAndHotelView.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(mEatAndHotelView);
         }
         //周边美食
         mOutsideFoodConfig = configs.get(8);
@@ -304,10 +304,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         //延庆体验
         List<Object> data = mPresenter.loadNearbyExperience();
         if (data != null && !data.isEmpty()) {
-            view = mGridLayoutFactory.getView(configs.get(10), data);
-            view.setPadding(padding20, padding20, padding20, padding20);
-            ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
-            mContainer.addView(view);
+            mPeripheryView = mGridLayoutFactory.getView(configs.get(10), data);
+            mPeripheryView.setPadding(padding20, padding20, padding20, padding20);
+            ((ViewGroup.MarginLayoutParams) mPeripheryView.getLayoutParams()).topMargin = marginTop;
+            mContainer.addView(mPeripheryView);
         }
         TextView end = new TextView(getContext());
         end.setText(R.string.list_end);
@@ -698,7 +698,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 scrollTo(mServiceQA);
                 break;
             case R.id.home_tab1_3://滚动到吃&住
-                scrollTo(mPeripheryView);
+                scrollTo(mEatAndHotelView);
                 break;
             case R.id.home_tab1_4://滚动到周边
                 scrollTo(mPeripheryView);
@@ -712,7 +712,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     }
 
     private void scrollTo(View view) {
-        int h = view.getTop() - topHeight;
+        int h = view.getTop() - topHeight + 10;
         mSvScroll.smoothScrollTo(0, h);
     }
 
