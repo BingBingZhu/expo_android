@@ -35,7 +35,7 @@ public interface HomeContract {
 
         public abstract String loadCommonInfo(String type);
 
-        public abstract void appRun(String jgId);
+        public abstract void appRun();
 
         public abstract void checkUpdate();
 

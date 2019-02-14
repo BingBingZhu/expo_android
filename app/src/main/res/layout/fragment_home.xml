@@ -29,13 +29,15 @@
                 android:id="@+id/home_ad"
                 layout="@layout/home_ad" />
 
-            <ImageView
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dms_24"
-                android:adjustViewBounds="true"
-                android:background="@color/white"
-                android:src="@mipmap/home_find" />
+                android:layout_gravity="center"
+                android:text="@string/quick_search"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_32"
+                android:textColor="@color/black_333333"/>
 
             <include layout="@layout/home_find" />
 
@@ -75,20 +77,22 @@
             <ImageView
                 android:id="@+id/online_expo"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dms_206"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dms_30"
                 android:layout_marginTop="@dimen/dms_30"
                 android:layout_marginRight="@dimen/dms_30"
+                android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/daren1" />
 
             <ImageView
                 android:id="@+id/ar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dms_206"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dms_30"
                 android:layout_marginTop="@dimen/dms_30"
                 android:layout_marginRight="@dimen/dms_30"
+                android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/daren2" />
 

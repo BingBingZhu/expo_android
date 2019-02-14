@@ -67,12 +67,4 @@ public class MD5Util {
         }
         return stringbuffer.toString();
     }
-
-    public static void main(String[] args) throws IOException {
-//        String filePath = "C:\\Users\\user4\\Downloads\\首页_slices (9)\\mipmap-xxhdpi\\banner1.png";
-//        long fileBegin = System.currentTimeMillis();
-//        System.out.println("文件加密结果为：" + getFileMD5String(new File(filePath)));
-//        long fileEnd = System.currentTimeMillis();
-//        System.out.println("文件加密耗时:" + ((fileEnd - fileBegin)) + "ms");
-    }
 }

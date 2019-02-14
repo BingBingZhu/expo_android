@@ -62,8 +62,6 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
                 } else {
                     ExpoApp.getApplication().setUser(user);
                     MainActivity.startActivity(this);
-                    JPushInterface.getRegistrationID( ExpoApp.getApplication() );
-//                    mPresenter.appRun(user.getUid(), user.getUkey());
                 }
                 finish();
             }

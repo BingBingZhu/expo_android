@@ -3,8 +3,6 @@ package com.expo.contract.presenter;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.amap.api.maps.AMapUtils;
-import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
@@ -18,12 +16,8 @@ import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Message;
 import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
-import com.expo.entity.Schedule;
 import com.expo.entity.ScheduleTimeInfo;
 import com.expo.entity.ScheduleVenue;
-import com.expo.entity.TopLineInfo;
-import com.expo.entity.Venue;
-import com.expo.entity.VenuesType;
 import com.expo.entity.VrInfo;
 import com.expo.map.MapUtils;
 import com.expo.module.heart.HeartBeatService;
@@ -40,10 +34,10 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 
@@ -91,16 +85,19 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     }
 
     @Override
-    public void appRun(String jgId) {
-        Map<String, Object> params = Http.getBaseParams();
-        params.put("jgid", jgId);
-        Observable<BaseResponse> observable = Http.getServer().userlogAppRun(Http.buildRequestBody(params));
-        Http.request(new ResponseCallback<BaseResponse>() {
-            @Override
-            protected void onResponse(BaseResponse rsp) {
-            }
+    public void appRun() {
+        String jpushId = JPushInterface.getRegistrationID(mView.getContext());
+        if (!TextUtils.isEmpty(jpushId)) {
+            Map<String, Object> params = Http.getBaseParams();
+            params.put("jgid", jpushId);
+            Observable<BaseResponse> observable = Http.getServer().userlogAppRun(Http.buildRequestBody(params));
+            Http.request(new ResponseCallback<BaseResponse>() {
+                @Override
+                protected void onResponse(BaseResponse rsp) {
+                }
 
-        }, observable);
+            }, observable);
+        }
     }
 
     @Override
@@ -154,7 +151,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         if (tmp == null || tmp.size() == 0) return null;
         ArrayList data = new ArrayList();
         data.add(R.string.hot_activity);
-        data.add(R.mipmap.hot_activity_0);
+        data.add(R.mipmap.hot_activity_forest);
         if (tmp != null) {
             data.addAll(tmp);
         } else {
@@ -171,7 +168,8 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("eq", "enable", "1")
                 .add("and")
                 .add("eq", "type_id", "1")
-                .add("limit", 0, 5);
+                .add("limit", 0, 5)
+                .add("orderBy","sort_idx",true);
         List tmp = mDao.query(RouteInfo.class, params);
         if (tmp != null) {
             data.addAll(tmp);
@@ -256,7 +254,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         QueryParams params = new QueryParams()
                 .add("eq", "type_name", "美食")
                 .add("and")
-                .add("eq", "enable", 1)
+                .add("eq", "enable", 0)
                 .add("orderBy", "recommended_idx", true)
                 .add("limit", 0, 5);
         List tmp = mDao.query(Encyclopedias.class, params);

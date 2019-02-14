@@ -15,7 +15,6 @@
         style="@style/TextSizeWhite15"
         android:layout_alignBottom="@id/img"
         android:layout_marginLeft="@dimen/dms_16"
-        android:layout_marginBottom="@dimen/dms_16"
         android:singleLine="true"
         android:text="推荐最佳路线" />
 
@@ -25,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_above="@id/bottom"
         android:layout_marginLeft="@dimen/dms_16"
-        android:layout_marginBottom="@dimen/dms_16"
         android:ellipsize="end"
         android:singleLine="true" />
 

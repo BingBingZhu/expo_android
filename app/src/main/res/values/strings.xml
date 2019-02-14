@@ -467,7 +467,7 @@
     <string name="home__tab1__route">路线</string>
     <string name="expo_knowledge">世园知识</string>
     <string name="home_bespeak_today">当日预约</string>
-    <string name="enter">进入</string>
+    <string name="enter">Enter</string>
     <string name="look_expo_in_home">在家看世园</string>
 
     <string name="find_toilet">找厕所</string>
@@ -477,4 +477,8 @@
     <string name="find_doctor_location">找医疗点</string>
     <string name="find_mother_baby_room">找母婴室</string>
     <string name="find_free_wifi">免费wifi</string>
+    <string name="quick_search">Quick Search</string>
+    <string name="activities_forest_text1">奇幻光影森林</string>
+    <string name="activities_forest_text2">科技之光\t\t创新画卷</string>
+    <string name="expo_intr">世园会介绍</string>
 </resources>

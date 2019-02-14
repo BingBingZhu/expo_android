@@ -200,7 +200,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mPresenter.checkUpdate();
         mPresenter.setMessageCount();
         mPresenter.setTopLine();
-        mPresenter.appRun("");
+        mPresenter.appRun();
         mPresenter.startHeartService(getContext());
 
         LocationManager.getInstance().registerLocationListener(mOnLocationChangeListener);//定位
@@ -390,6 +390,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                     Http.loadImage(img, routeInfo.picUrl);
                     tv.setText(routeInfo.traitLabel);
                     break;
+                case R.layout.layout_home_activities_forest:
+                    img = item.findViewById(R.id.img);
+                    img.setImageResource((Integer) obj);
+                    break;
                 case R.layout.layout_home_single_img:
                     img = (ImageView) item;
                     if (obj instanceof RouteInfo) {
@@ -427,9 +431,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 case R.layout.layout_home_science:
                     tv = item.findViewById(R.id.title);
                     TextView describe = item.findViewById(R.id.describe);
+                    TextView traitLabel = item.findViewById(R.id.tag);
                     img = item.findViewById(R.id.img);
                     Encyclopedias encyclopedias = (Encyclopedias) obj;
                     tv.setText(LanguageUtil.chooseTest(encyclopedias.caption, encyclopedias.captionEn));
+                    traitLabel.setText(LanguageUtil.chooseTest(encyclopedias.getRecommendLang(), encyclopedias.getRecommendLangEn()));
                     describe.setText(LanguageUtil.chooseTest(encyclopedias.remark, encyclopedias.remarkEn));
                     Http.loadImage(img, encyclopedias.picUrl);
                     break;
@@ -609,6 +615,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     }
 
     private void initRecyclerTop() {
+        int widthSpec = View.MeasureSpec.makeMeasureSpec(getResources().getDisplayMetrics().widthPixels, View.MeasureSpec.EXACTLY);
+        int heightSpec = View.MeasureSpec.makeMeasureSpec(getResources().getDisplayMetrics().heightPixels, View.MeasureSpec.AT_MOST);
+        mHomeAd.measure(widthSpec, heightSpec);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mHomeAd.getLayoutParams();
+        lp.topMargin = -mHomeAd.getMeasuredHeight() / 2;
         mListTopLine = new ArrayList<>();
         mLsvScroll.setDataAdapter(mAdapterTopLine = new HomeTopLineAdapter(getContext()));
         mLsvScroll.setOnItemClickListener(mTopLineListener);
@@ -659,7 +670,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         String url;
         switch (view.getId()) {
             case R.id.title_home_icon:
-//                WebActivity.startActivity(getContext(),"","");
+                WebActivity.startActivity(getContext(), CommUtils.getFullUrl(mPresenter.loadCommonInfo(CommonInfo.EXPO_BRIEF_INTRODUCTION)), getString(R.string.expo_intr));
                 break;
             case R.id.title_home_msg:
                 MessageKindActivity.startActivity(getContext());
@@ -723,7 +734,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         this.mCircum = circums;
         if (circums != null && mLocation != null) {
             View view = new View(getContext());
-            view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1));
+            view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
             view.setBackgroundColor(getResources().getColor(R.color.color_EEE));
             mContainer.addView(view, 17);
             view = mGridLayoutFactory.getView(mOutsideFoodConfig, circums);
@@ -765,4 +776,5 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         EventBus.getDefault().unregister(this);
         LocationManager.getInstance().unregisterLocationListener(mOnLocationChangeListener);
     }
+
 }

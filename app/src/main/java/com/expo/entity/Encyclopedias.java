@@ -99,6 +99,15 @@ public class Encyclopedias implements Parcelable {
     @DatabaseField(columnName = "idx")
     @SerializedName("idx")
     public int idx;//排序
+    @DatabaseField(columnName = "trait_label")
+    @SerializedName("traitlabel")
+    public String traitLabel;
+    @DatabaseField(columnName = "recommend_lang")
+    @SerializedName("recommendlang")
+    public String recommendLang;
+    @DatabaseField(columnName = "recommend_lang_en")
+    @SerializedName("recommendlanguage")
+    public String recommendLangEn;
 
     @SerializedName("distance")
     private String distance;
@@ -158,12 +167,15 @@ public class Encyclopedias implements Parcelable {
         exhibitionEn = in.readString();
         idx = in.readInt();
         distance = in.readString();
+        traitLabel = in.readString();
+        recommendLang = in.readString();
+        recommendLangEn = in.readString();
     }
 
     public static final Creator<Encyclopedias> CREATOR = new Creator<Encyclopedias>() {
         @Override
         public Encyclopedias createFromParcel(Parcel in) {
-            return new Encyclopedias( in );
+            return new Encyclopedias(in);
         }
 
         @Override
@@ -414,6 +426,26 @@ public class Encyclopedias implements Parcelable {
         this.distance = "\u8ddd\u79bb" + distanceStr;
     }
 
+    public String getModelUrl() {
+        return modelUrl;
+    }
+
+    public void setModelUrl(String modelUrl) {
+        this.modelUrl = modelUrl;
+    }
+
+    public String getTraitLabel() {
+        return traitLabel;
+    }
+
+    public void setTraitLabel(String traitLabel) {
+        this.traitLabel = traitLabel;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
     public String getDistance() {
         return distance;
     }
@@ -423,63 +455,82 @@ public class Encyclopedias implements Parcelable {
         return 0;
     }
 
+    public String getRecommendLang() {
+        return recommendLang;
+    }
+
+    public void setRecommendLang(String recommendLang) {
+        this.recommendLang = recommendLang;
+    }
+
+    public String getRecommendLangEn() {
+        return recommendLangEn;
+    }
+
+    public void setRecommendLangEn(String recommendLangEn) {
+        this.recommendLangEn = recommendLangEn;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString( area );
-        dest.writeString( caption );
-        dest.writeString( captionEn );
+        dest.writeString(area);
+        dest.writeString(caption);
+        dest.writeString(captionEn);
         if (collectionCount == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeInt( collectionCount );
+            dest.writeByte((byte) 1);
+            dest.writeInt(collectionCount);
         }
-        dest.writeString( content );
-        dest.writeString( country );
-        dest.writeString( h5PicUrl );
+        dest.writeString(content);
+        dest.writeString(country);
+        dest.writeString(h5PicUrl);
         if (id == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeLong( id );
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
         }
-        dest.writeString( infoType );
+        dest.writeString(infoType);
         if (enable == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeInt( enable );
+            dest.writeByte((byte) 1);
+            dest.writeInt(enable);
         }
         if (recommend == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeInt( recommend );
+            dest.writeByte((byte) 1);
+            dest.writeInt(recommend);
         }
-        dest.writeString( linkH5Url );
-        dest.writeString( linkH5UrlEn );
-        dest.writeString( modelUrl );
-        dest.writeString( linkInfoUrl );
-        dest.writeString( picUrl );
-        dest.writeString( py );
-        dest.writeString( recommendedIdx );
-        dest.writeString( remark );
-        dest.writeString( remarkEn );
+        dest.writeString(linkH5Url);
+        dest.writeString(linkH5UrlEn);
+        dest.writeString(modelUrl);
+        dest.writeString(linkInfoUrl);
+        dest.writeString(picUrl);
+        dest.writeString(py);
+        dest.writeString(recommendedIdx);
+        dest.writeString(remark);
+        dest.writeString(remarkEn);
         if (typeId == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeLong( typeId );
+            dest.writeByte((byte) 1);
+            dest.writeLong(typeId);
         }
-        dest.writeString( typeName );
-        dest.writeString( typeNameEn );
-        dest.writeString( updateTime );
-        dest.writeString( voiceUrl );
-        dest.writeString( voiceUrlEn );
-        dest.writeString( estimatedTourTime );
-        dest.writeString( exhibition );
-        dest.writeString( exhibitionEn );
-        dest.writeInt( idx );
-        dest.writeString( distance );
+        dest.writeString(typeName);
+        dest.writeString(typeNameEn);
+        dest.writeString(updateTime);
+        dest.writeString(voiceUrl);
+        dest.writeString(voiceUrlEn);
+        dest.writeString(estimatedTourTime);
+        dest.writeString(exhibition);
+        dest.writeString(exhibitionEn);
+        dest.writeInt(idx);
+        dest.writeString(distance);
+        dest.writeString(traitLabel);
+        dest.writeString(recommendLang);
+        dest.writeString(recommendLangEn);
     }
 }

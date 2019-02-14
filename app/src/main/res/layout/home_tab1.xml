@@ -6,10 +6,16 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_f3f3f3"/>
+
     <TextView
         style="@style/TextSizeBlack16"
         android:layout_marginTop="@dimen/dms_30"
-        android:text="@string/everyone_playing" />
+        android:text="@string/everyone_playing"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="@dimen/dms_108"
@@ -43,8 +49,8 @@
             android:text="@string/home_tab_periphery" />
 
         <!--<TextView-->
-            <!--android:id="@+id/home_tab1_5"-->
-            <!--style="@style/style_home_play_item"-->
-            <!--android:text="@string/home_tab_periphery" />-->
+        <!--android:id="@+id/home_tab1_5"-->
+        <!--style="@style/style_home_play_item"-->
+        <!--android:text="@string/home_tab_periphery" />-->
     </LinearLayout>
 </LinearLayout>

@@ -75,6 +75,9 @@ public class RouteInfo implements Parcelable {
     @DatabaseField(columnName = "play_time")
     @SerializedName("playtime")
     public String playTime;
+    @DatabaseField(columnName = "sort_idx")
+    @SerializedName("sortidx")
+    public String sort;
 
     @DatabaseField(columnName = "hotCount", defaultValue = "0")
     public int hotCount;
@@ -112,12 +115,13 @@ public class RouteInfo implements Parcelable {
         wikiId = in.readString();
         playTime = in.readString();
         hotCount = in.readInt();
+        sort = in.readString();
     }
 
     public static final Creator<RouteInfo> CREATOR = new Creator<RouteInfo>() {
         @Override
         public RouteInfo createFromParcel(Parcel in) {
-            return new RouteInfo( in );
+            return new RouteInfo(in);
         }
 
         @Override
@@ -134,32 +138,33 @@ public class RouteInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (id == null) {
-            dest.writeByte( (byte) 0 );
+            dest.writeByte((byte) 0);
         } else {
-            dest.writeByte( (byte) 1 );
-            dest.writeLong( id );
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
         }
-        dest.writeString( caption );
-        dest.writeString( captionen );
-        dest.writeString( createTime );
-        dest.writeString( idsList );
-        dest.writeInt( enable );
-        dest.writeString( lat );
-        dest.writeString( linesList );
-        dest.writeString( linkH5Url );
-        dest.writeString( lon );
-        dest.writeString( parkId );
-        dest.writeString( parkname );
-        dest.writeString( picUrl );
-        dest.writeString( remark );
-        dest.writeString( remarken );
-        dest.writeString( traitLabel );
-        dest.writeString( typeId );
-        dest.writeString( updateTime );
-        dest.writeString( voiceUrl );
-        dest.writeString( voiceUrlEn );
-        dest.writeString( wikiId );
-        dest.writeString( playTime );
-        dest.writeInt( hotCount );
+        dest.writeString(caption);
+        dest.writeString(captionen);
+        dest.writeString(createTime);
+        dest.writeString(idsList);
+        dest.writeInt(enable);
+        dest.writeString(lat);
+        dest.writeString(linesList);
+        dest.writeString(linkH5Url);
+        dest.writeString(lon);
+        dest.writeString(parkId);
+        dest.writeString(parkname);
+        dest.writeString(picUrl);
+        dest.writeString(remark);
+        dest.writeString(remarken);
+        dest.writeString(traitLabel);
+        dest.writeString(typeId);
+        dest.writeString(updateTime);
+        dest.writeString(voiceUrl);
+        dest.writeString(voiceUrlEn);
+        dest.writeString(wikiId);
+        dest.writeString(playTime);
+        dest.writeInt(hotCount);
+        dest.writeString(sort);
     }
 }
