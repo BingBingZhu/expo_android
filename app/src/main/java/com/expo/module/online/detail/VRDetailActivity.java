@@ -95,16 +95,19 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
 
     @OnClick({R.id.vr_detail_img})
     public void changeVr(View view) {
+        mVRView.pause();
         VRImageActivity.startActivity(this, Long.valueOf(mVrInfo.getLinkPanResId()));
     }
 
     @OnClick({R.id.vr_detail_introduce})
     public void clickEncyclopedias(View view) {
+        mVRView.pause();
         WebTemplateActivity.startActivity(this, mEncyclopedias.id);
     }
 
     @OnClick(R.id.vr_detail_sendtable)
     public void clickSendtable(View view) {
+        mVRView.pause();
         WebActivity.startActivity(this, mEncyclopedias.modelUrl, "", true);
     }
 
