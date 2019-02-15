@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/dms_30">
-
+    android:background="@color/white_f5"
+    android:orientation="vertical">
+    <com.expo.widget.SwipeCardLayout
+        android:id="@+id/scl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/vr_btn"
+        android:gravity="center" />
     <TextView
-        android:id="@+id/ar_portal"
+        android:id="@+id/vr_btn"
+        android:layout_width="wrap_content"
+        style="@style/theme_btn"
+        android:paddingLeft="@dimen/dms_96"
+        android:paddingRight="@dimen/dms_96"
+        android:layout_marginBottom="@dimen/dms_10"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/vr_bottom"
+        android:text="去下载"/>
+    <LinearLayout
+        android:id="@id/vr_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@color/dialogplus_black_overlay"
-        android:paddingLeft="@dimen/dms_30"
-        android:paddingTop="@dimen/dms_50"
-        android:text="奇幻传送门"
-        android:textSize="@dimen/font_40" />
-
-    <TextView
-        android:id="@+id/ar_photograph"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dms_30"
-        android:layout_marginBottom="@dimen/dms_30"
-        android:layout_weight="1"
-        android:background="@color/dialogplus_black_overlay"
-        android:paddingLeft="@dimen/dms_30"
-        android:paddingTop="@dimen/dms_50"
-        android:text="AR乐拍"
-        android:textSize="@dimen/font_40" />
-
-    <TextView
-        android:id="@+id/ar_scan_logo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@color/dialogplus_black_overlay"
-        android:paddingLeft="@dimen/dms_30"
-        android:paddingTop="@dimen/dms_50"
-        android:text="LOGO扫一扫"
-        android:textSize="@dimen/font_40" />
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dms_30"
+            android:layout_marginBottom="@dimen/dms_18"
+            android:textSize="@dimen/dms_24"
+            android:textColor="@color/color_666"
+            android:text="广告"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ico_ar_play_bottom"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="@dimen/dms_36"
+                android:layout_marginRight="@dimen/dms_110"
+                android:textSize="@dimen/font_36"
+                android:textColor="@color/white_f5"
+                android:text="AR,新体验"/>
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="286dp"
+    android:layout_height="350dp"
+    android:paddingLeft="@dimen/dms_64"
+    android:paddingRight="@dimen/dms_64"
+    android:paddingTop="@dimen/dms_46"
+    android:paddingBottom="@dimen/dms_84"
+    android:elevation="@dimen/dms_4"
+    android:background="@drawable/bg_vr_card"
+    android:orientation="vertical">
+    <!--android:background="@drawable/bg_vr_card"-->
+    <TextView
+        android:id="@+id/vr_card_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/font_40"
+        android:textColor="@color/color_333"
+        android:text="奇幻传送门"/>
+    <TextView
+        android:id="@+id/vr_card_item_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vr_card_item_title"
+        android:layout_above="@+id/vr_card_item_img"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/color_666"
+        android:text="奇幻的传送门可以让您在任何时间，任何地点“走入”世园会，不仅身临其境的感受北京世界园艺博览会，还有奇幻的体验让您流连忘返！"/>
+    <ImageView
+        android:id="@+id/vr_card_item_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/vr_test"/>
+</RelativeLayout>
