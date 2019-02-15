@@ -295,7 +295,7 @@ public class EGLLogWrapper implements EGL11 {
     public String eglQueryString(EGLDisplay display, int name) {
         begin( "eglQueryString" );
         arg( "display", display );
-        arg( "name", name );
+        arg( "bg_vr_card", name );
         end();
         String result = mEgl10.eglQueryString( display, name );
         returns( result );

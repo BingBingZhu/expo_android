@@ -193,7 +193,7 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 					} else {
 						ivLogo.setImageBitmap(null);
 					}
-//					resId = ResHelper.getStringRes(tvName.getContext(), "ssdk_" + name);
+//					resId = ResHelper.getStringRes(tvName.getContext(), "ssdk_" + bg_vr_card);
 //					if (resId > 0) {
 //						tvName.setText(resId);
 //					} else {

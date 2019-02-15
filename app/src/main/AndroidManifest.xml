@@ -116,7 +116,7 @@
             android:name=".module.language.LanguageActivity"
             android:screenOrientation="portrait" />
 
-        <!--<activity android:name=".module.bind.BindActivity" />-->
+        <!--<activity android:bg_vr_card=".module.bind.BindActivity" />-->
 
         <activity
             android:name="com.sahooz.library.PickActivity"
@@ -335,7 +335,7 @@
         <service android:name="com.amap.api.location.APSService" />
         <!--百度语音服务-->
         <!--<service-->
-        <!--android:name="com.baidu.speech."-->
+        <!--android:bg_vr_card="com.baidu.speech."-->
         <!--android:exported="false"/>-->
 
         <provider

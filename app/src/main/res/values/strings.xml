@@ -82,8 +82,8 @@
     <string name="item_tourist_service_intro_text_5">健康的身体才能开心的游玩</string>
     <string name="item_tourist_service_intro_text_6">请您看好老人和孩子</string>
     <string name="item_tourist_service_intro_text_7">遇事礼让，文明游园</string>
-    <!--<string name="item_tourist_service_text_8">场馆预约</string>-->
-    <!--<string name="item_tourist_service_text_9">投诉受理</string>-->
+    <!--<string bg_vr_card="item_tourist_service_text_8">场馆预约</string>-->
+    <!--<string bg_vr_card="item_tourist_service_text_9">投诉受理</string>-->
 
     <string name="mine_edit_info">查看并编辑个人资料</string>
     <string name="item_mine_bespeak">我的预约</string>

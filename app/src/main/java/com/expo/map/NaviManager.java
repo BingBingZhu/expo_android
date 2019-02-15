@@ -78,11 +78,11 @@ public class NaviManager implements View.OnClickListener/*, AMapNaviListener */{
             Intent naviIntent;
             if (packageName.equals("com.baidu.BaiduMap")){
                 naviIntent = new Intent("android.intent.action.VIEW", android.net.Uri.parse(
-                        "baidumap://map/direction?origin=我的位置&destination=name:"+ name +
+                        "baidumap://map/direction?origin=我的位置&destination=bg_vr_card:"+ name +
                                 "|latlng:"+ lat +","+ lng /*+"|addr:北京市东城区东长安街"*/ +
                         "&coord_type=gcj02&mode=driving&src=com.casvd.lucaspark"));
 //                naviIntent = new Intent("android.intent.action.VIEW", android.net.Uri.parse(
-//                        "baidumap://map/direction?region="+ venue.getCity()+"&origin=我的位置&destination=name:"+ venue.getCaption()+
+//                        "baidumap://map/direction?region="+ venue.getCity()+"&origin=我的位置&destination=bg_vr_card:"+ venue.getCaption()+
 //                                "|latlng:"+ venue.getLat()+","+ venue.getLng()/*+"|addr:北京市东城区东长安街"*/ +
 //                        "&coord_type=gcj02&mode=driving&src=com.casvd.lucaspark"));
             }else{

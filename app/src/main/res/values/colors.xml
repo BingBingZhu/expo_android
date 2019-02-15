@@ -34,7 +34,7 @@
     <color name="color_ency_tab">#FFF100</color>
     <color name="color_home_route_tab">#FEDE54</color>
     <color name="color_tab_line">#00C897</color>
-    <!--<color name="color_ency_item_bg">#EFF2F4</color>-->
+    <!--<color bg_vr_card="color_ency_item_bg">#EFF2F4</color>-->
     <color name="color_999">#999</color>
     <color name="color_666">#666</color>
     <color name="color_white_50diaphaneity">#80FFFFFF</color>

@@ -12,7 +12,7 @@ public class Circum/* implements Parcelable*/ {
     @SerializedName("business_url")
     private String businessUrl	;           //string	店铺详细信息跳转链接
 
-    @SerializedName("name")
+    @SerializedName("bg_vr_card")
     private String name	;           //string	店铺名
 
     @SerializedName("branch_name")
