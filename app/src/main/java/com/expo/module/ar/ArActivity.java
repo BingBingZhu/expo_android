@@ -19,6 +19,7 @@ public class ArActivity extends BaseActivity {
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        setTitle(1, "新体验");
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.root, new ArFragment(), "ar_fragment")
                 .commit();

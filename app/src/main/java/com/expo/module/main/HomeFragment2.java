@@ -160,7 +160,7 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
             }
             //tab字颜色
             if (topHeight == 0) {
-                topHeight = mHtTitle.getBottom() + mTabView1.getHeight() + 10;
+                topHeight = mHtTitle.getBottom() + mTabView1.getHeight() + 4;
             }
             if (mPeripheryView != null && mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home_tab1_3);
@@ -653,12 +653,12 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
 //                if (typeToilet != 0)
                 goMapNavigation("\u536b\u751f\u95f4");
                 break;
-            case R.id.home_find_1://览车
+            case R.id.home_find_1://车站
 //                if (typeStation == 0) {
 //                    typeStation = mPresenter.loadTypeId("\u8f66\u7ad9");
 //                }
 //                if (typeStation != 0)
-                goMapNavigation("\u89c8\u8f66");
+                goMapNavigation("\u8f66\u7ad9");
                 break;
             case R.id.home_find_2://大门
 //                if (typeGate == 0) {
@@ -667,12 +667,12 @@ public class HomeFragment2 extends BaseFragment<HomeContract.Presenter> implemen
 //                if (typeGate != 0)
                 goMapNavigation("\u5927\u95e8");
                 break;
-            case R.id.home_find_3://服务
+            case R.id.home_find_3://服务中心
 //                if (typeDeposit == 0) {
 //                    typeDeposit = mPresenter.loadTypeId("\u670d\u52a1");
 //                }
 //                if (typeDeposit != 0)
-                goMapNavigation("\u670d\u52a1");
+                goMapNavigation("\u670d\u52a1\u4e2d\u5fc3");
                 break;
             case R.id.home_find_4://医疗
 //                if (typeService == 0) {
