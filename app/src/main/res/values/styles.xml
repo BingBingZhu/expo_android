@@ -323,6 +323,7 @@
         <item name="android:textSize">@dimen/font_22</item>
         <item name="android:drawablePadding">@dimen/dms_18</item>
         <item name="android:gravity">center</item>
+        <item name="android:visibility">gone</item>
         <item name="drawableTopHeight">@dimen/dms_42</item>
         <item name="drawableTopWidth">@dimen/dms_42</item>
     </style>

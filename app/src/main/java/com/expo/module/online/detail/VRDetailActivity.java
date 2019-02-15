@@ -12,10 +12,13 @@ import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
 import com.expo.contract.VRDetailContract;
+import com.expo.entity.Encyclopedias;
 import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.widget.VRImageView;
 import com.expo.module.online.detail.widget.VRInterfaceView;
 import com.expo.module.online.detail.widget.VRVideoView;
+import com.expo.module.webview.WebActivity;
+import com.expo.module.webview.WebTemplateActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
@@ -36,10 +39,15 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     View mVrImg;
     @BindView(R.id.vr_detail_video)
     View mVrVideo;
+    @BindView(R.id.vr_detail_introduce)
+    View mVrIntroduce;
+    @BindView(R.id.vr_detail_sendtable)
+    View mVrSendtable;
 
     VRInterfaceView mVRView;
 
     VrInfo mVrInfo;
+    Encyclopedias mEncyclopedias;
 
     @Override
     protected int getContentView() {
@@ -49,6 +57,14 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         mVrInfo = mPresenter.getVrInfo(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_ID, 0L));
+        mEncyclopedias = mPresenter.findEncyclopediaById(mVrInfo.getLinkWikiId());
+
+        if (mEncyclopedias != null) {
+            mVrIntroduce.setVisibility(View.VISIBLE);
+            if (!StringUtils.isEmpty(mEncyclopedias.modelUrl)) {
+                mVrSendtable.setVisibility(View.VISIBLE);
+            }
+        }
         getVrInfo();
     }
 
@@ -80,6 +96,16 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     @OnClick({R.id.vr_detail_img})
     public void changeVr(View view) {
         VRImageActivity.startActivity(this, Long.valueOf(mVrInfo.getLinkPanResId()));
+    }
+
+    @OnClick({R.id.vr_detail_introduce})
+    public void clickEncyclopedias(View view) {
+        WebTemplateActivity.startActivity(this, mEncyclopedias.id);
+    }
+
+    @OnClick(R.id.vr_detail_sendtable)
+    public void clickSendtable(View view) {
+        WebActivity.startActivity(this, mEncyclopedias.modelUrl, "", true);
     }
 
     @Override

@@ -38,6 +38,7 @@
     <string name="code_times_limit">今日请求次数已达上限</string>
     <string name="account_unable">此账号已被锁定，无法登录</string>
     <string name="bind_phone_need_sms">绑定手机号码需要通过短信验证</string>
+    <string name="register">注册</string>
     <string name="login">登录</string>
     <string name="logout">退出登录</string>
     <string name="kindly_reminder">温馨提示</string>
@@ -205,6 +206,7 @@
         园会将于2019年4月至10月在北京市延庆区举行，规划总面积960公顷。园区选址距离八达岭长城10公里，
         被称为“长城脚下的世园会”。</string>
     <string name="logging_in_is_an_agreement">登录即表示同意</string>
+    <string name="register_in_is_an_agreement">注册即表示同意</string>
     <string name="other_login_methods">其他登录方式</string>
     <string name="get_code">获取验证码</string>
     <string name="recommend">推荐</string>

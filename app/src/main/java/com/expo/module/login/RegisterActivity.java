@@ -13,7 +13,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.PermissionUtils;
@@ -44,7 +43,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 /*
  * 登录页
  */
-public class LoginActivity extends BaseActivity<LoginContract.Presenter> implements View.OnClickListener, LoginContract.View {
+public class RegisterActivity extends BaseActivity<LoginContract.Presenter> implements View.OnClickListener, LoginContract.View {
 
     @BindView(R.id.login_phone_number_code)
     TextView mTvPhoneCode;
@@ -58,12 +57,6 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     TextView mLoginView;
     @BindView(R.id.login_protocol_tv)
     TextView mProtocolView;    // 服务协议
-    @BindView(R.id.login_wechat)
-    ImageView mWechatView;
-    @BindView(R.id.login_qq)
-    ImageView mQQView;
-    @BindView(R.id.login_microblog)
-    ImageView mSinaView;     // 微博登录
 
     private int mDuration = 60;
     private int mSurplusDuration;
@@ -75,7 +68,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_login;
+        return R.layout.activity_register;
     }
 
     @Override
@@ -87,9 +80,6 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         mTvPhoneCode.setOnClickListener(this);
         mGetCodeView.setOnClickListener(this);
         mLoginView.setOnClickListener(this);
-        mWechatView.setOnClickListener(this);
-        mQQView.setOnClickListener(this);
-        mSinaView.setOnClickListener(this);
         mProtocolView.setOnClickListener(this);
         checkPermission();
     }
@@ -141,7 +131,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     };
 
     public static void startActivity(Context context) {
-        Intent in = new Intent(context, LoginActivity.class);
+        Intent in = new Intent(context, RegisterActivity.class);
         if (PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null) != null) {
             LanguageUtil.changeAppLanguage(context, PrefsHelper.getString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, null));
             in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -177,27 +167,15 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
                         mTvPhoneCode.getText().toString(),
                         mEtCodeView.getText().toString().trim());
                 break;
-            case R.id.login_wechat:
-                // 第三方微信登录
-                mPresenter.threeLogin(Wechat.NAME);
-                break;
-            case R.id.login_qq:
-                // 第三方QQ登录
-                mPresenter.threeLogin(QQ.NAME);
-                break;
-            case R.id.login_microblog:
-                // 新浪微博登录
-                mPresenter.threeLogin(SinaWeibo.NAME);
-                break;
             case R.id.login_protocol_tv:
                 mPresenter.loadUserProtocol();
                 break;
         }
     }
 
-    @OnClick(R.id.to_register)
+    @OnClick(R.id.to_login)
     public void clickToLogin(View view) {
-        RegisterActivity.startActivity(this);
+        LoginActivity.startActivity(this);
     }
 
     @Override
@@ -242,7 +220,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     public void verifyCodeLogin() {
         Intent intent = new Intent();
         intent.putExtra(Constants.EXTRAS.EXTRA_LOGIN_STATE, true);
-        LocalBroadcastUtil.sendBroadcast(LoginActivity.this, intent, Constants.Action.LOGIN_CHANGE_OF_STATE_ACTION);
+        LocalBroadcastUtil.sendBroadcast(RegisterActivity.this, intent, Constants.Action.LOGIN_CHANGE_OF_STATE_ACTION);
         // 登录成功
         MainActivity.startActivity(this);
         finish();
@@ -294,57 +272,57 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     private void checkPermission() {
         List<String> permissionList = new ArrayList<>();
         List<String> perNameList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             perNameList.add(getString(R.string.store_permissions));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.ACCESS_NETWORK_STATE)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.ACCESS_NETWORK_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_NETWORK_STATE);
             perNameList.add(getString(R.string.change_network_permissions));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.INTERNET)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.INTERNET);
             perNameList.add(getString(R.string.network_access_permissions));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.CAMERA)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.CAMERA);
             perNameList.add(getString(R.string.camera_permissions));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.RECORD_AUDIO)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.RECORD_AUDIO);
             perNameList.add(getString(R.string.the_recording_permissions));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.ACCESS_WIFI_STATE)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.ACCESS_WIFI_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_WIFI_STATE);
             perNameList.add(getString(R.string.get_wifi_information_permission));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.READ_PHONE_STATE);
             perNameList.add(getString(R.string.phone_privileges));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
             perNameList.add(getString(R.string.location_permissions));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.CHANGE_WIFI_STATE)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.CHANGE_WIFI_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.CHANGE_WIFI_STATE);
             perNameList.add(getString(R.string.get_wifi_state_permission));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.BLUETOOTH_ADMIN)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.BLUETOOTH_ADMIN)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.BLUETOOTH_ADMIN);
             perNameList.add(getString(R.string.bluetooth_permissions));
         }
-        if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.GET_ACCOUNTS)
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.GET_ACCOUNTS)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.GET_ACCOUNTS);
             perNameList.add(getString(R.string.address_book_permissions));

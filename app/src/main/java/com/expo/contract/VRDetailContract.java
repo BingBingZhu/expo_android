@@ -2,6 +2,7 @@ package com.expo.contract;
 
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
+import com.expo.entity.Encyclopedias;
 import com.expo.entity.VrInfo;
 
 public interface VRDetailContract {
@@ -14,6 +15,8 @@ public interface VRDetailContract {
         public abstract VrInfo getVrInfo(Long id);
 
         public abstract void setPanResViews(Long id);
+
+        public abstract Encyclopedias findEncyclopediaById(String id);
 
     }
 

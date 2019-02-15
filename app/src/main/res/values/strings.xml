@@ -38,6 +38,7 @@
     <string name="code_times_limit">今日请求次数已达上限</string>
     <string name="account_unable">此账号已被锁定，无法登录</string>
     <string name="bind_phone_need_sms">绑定手机号码需要通过短信验证</string>
+    <string name="register">register</string>
     <string name="login">login</string>
     <string name="logout">logout</string>
     <string name="kindly_reminder">温馨提示</string>
@@ -209,6 +210,7 @@
         ernational exhibition bureau, the highest level world horticultural exposition sponsored by
         the Chinese government and undertaken by Beijing is entitled "green living""Living and beautiful homeland" will be an embodiment of </string>
     <string name="logging_in_is_an_agreement">登录即表示同意</string>
+    <string name="register_in_is_an_agreement">注册即表示同意</string>
     <string name="other_login_methods">other login methods</string>
     <string name="get_code">Get Code</string>
     <string name="recommend">RECOMM</string>

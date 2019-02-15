@@ -11,6 +11,7 @@ import com.expo.base.utils.PrefsHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.LoginContract;
 import com.expo.module.login.LoginActivity;
+import com.expo.module.login.RegisterActivity;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 
@@ -87,6 +88,12 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
 
     @OnClick(R.id.languane_login)
     public void login(View view) {
+        if (mLocale == null) {
+            return;
+        }
+        LanguageUtil.changeAppLanguage(this, mLocale);
+
+        PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, mLanguage);
         LoginActivity.startActivity(this);
         finish();
     }
@@ -99,7 +106,7 @@ public class LanguageActivity extends BaseActivity<LoginContract.Presenter> {
         LanguageUtil.changeAppLanguage(this, mLocale);
 
         PrefsHelper.setString(Constants.Prefs.KEY_LANGUAGE_CHOOSE, mLanguage);
-        LoginActivity.startActivity(this);
+        RegisterActivity.startActivity(this);
         finish();
     }
 
