@@ -224,6 +224,11 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         }
     }
 
+    @Override
+    public void pause() {
+        playVideo(false);
+    }
+
     private void startPlay(String url) {
         try {
             mNoWifiLayout.setVisibility(View.GONE);

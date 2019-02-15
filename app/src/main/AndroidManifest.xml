@@ -103,7 +103,14 @@
         </activity>
 
         <activity
+            android:name=".module.login.RegisterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme" />
+
+        <activity
             android:name=".module.login.LoginActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme" />
 

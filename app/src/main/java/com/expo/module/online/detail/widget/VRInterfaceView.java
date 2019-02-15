@@ -10,6 +10,8 @@ public interface VRInterfaceView {
 
     public void setVrInfo(VrInfo vrInfo);
 
+    public void pause();
+
     public void showVrSceen();
 
     public void onDestroy();
