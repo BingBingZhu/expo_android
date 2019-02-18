@@ -68,13 +68,13 @@ public class MapUtils {
             p = points.get( (i + 1) % points.size() );
             LatLng p2 = new LatLng( p[1], p[0] );
             // 求解 y=p.y 与 p1p2 的交点
-            if (p1.longitude == p2.longitude) {                                                     // p1p2 与 y=p0.y平行
+            if (p1.longitude == p2.longitude) {                       // p1p2 与 y=p0.y平行
                 continue;
             }
-            if (lng < Math.min( p1.longitude, p2.longitude )) {                           // 交点在p1p2延长线上
+            if (lng < Math.min( p1.longitude, p2.longitude )) {       // 交点在p1p2延长线上
                 continue;
             }
-            if (lng >= Math.max( p1.longitude, p2.longitude )) {                          // 交点在p1p2延长线上
+            if (lng >= Math.max( p1.longitude, p2.longitude )) {      // 交点在p1p2延长线上
                 continue;
             }
             // 求交点的 X 坐标 --------------------------------------------------------------
@@ -93,6 +93,9 @@ public class MapUtils {
     public void settingMap(AMap.OnMapTouchListener onMapTouchListener, AMap.OnMarkerClickListener onMarkerClickListener) {
 //        map.setMaxZoomLevel( 12F );
 //        map.setMinZoomLevel( 10.5F );
+        map.showMapText(false);
+        map.setCustomMapStylePath("file:///android_asset/map/style.data");
+        map.setMapCustomEnable(true);
         map.getUiSettings().setRotateGesturesEnabled( false );
         map.getUiSettings().setTiltGesturesEnabled( false );
         map.getUiSettings().setZoomControlsEnabled( false );
@@ -122,6 +125,8 @@ public class MapUtils {
     }
 
     private LatLngBounds getBoundsBuilder(Park park) {
+        if (null == park)
+            return null;
         ArrayList<double[]> electronicFenceList = park.getElectronicFenceList();
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度
         for (double[] lngLat : electronicFenceList) {

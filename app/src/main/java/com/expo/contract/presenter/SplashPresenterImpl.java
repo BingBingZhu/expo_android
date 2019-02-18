@@ -211,6 +211,24 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         addNetworkRecord();
     }
 
+    private void addDefaultTourist(){
+        TouristType t = new TouristType();
+        t.setCaption("默认光团");
+        t.setCaptionEN("default");
+        t.setAge("10");
+        t.setIsEnable("1");
+        t.setSex("0");
+        t.setCurrPosition(100);
+        t.setModelFileSize(100L);
+        t.setDownState(DownloadManager.DOWNLOAD_FINISH);
+        t.setRemark("性格：阳光、乐天派、\n" +
+                "可信赖、充满善意。默认");
+        t.setRemarkEN("it ok");
+        t.setLocalPath(ExpoApp.getApplication().getFilesDir().getAbsolutePath() + Constants.URL.LOCAL_DEFAULT_TOUR_COPY_PATH);
+        t.setUsed(true);
+        mDao.saveOrUpdate(t);
+    }
+
     /**
      * 加载导游类型列表
      */
@@ -223,21 +241,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
             protected void onResponse(TouristTypeResp rsp) {
                 PrefsHelper.setString(Constants.Prefs.KEY_TOURIST_TYPE_UPDATE_TIME, rsp.updateTime);
                 mDao.clear(TouristType.class);
-                TouristType t = new TouristType();
-                t.setCaption("默认光团");
-                t.setCaptionEN("default");
-                t.setAge("10");
-                t.setIsEnable("1");
-                t.setSex("0");
-                t.setCurrPosition(100);
-                t.setModelFileSize(100L);
-                t.setDownState(DownloadManager.DOWNLOAD_FINISH);
-                t.setRemark("性格：阳光、乐天派、\n" +
-                        "可信赖、充满善意。默认");
-                t.setRemarkEN("it ok");
-                t.setLocalPath(ExpoApp.getApplication().getFilesDir().getAbsolutePath() + Constants.URL.LOCAL_DEFAULT_TOUR_COPY_PATH);
-                t.setUsed(true);
-                mDao.saveOrUpdate(t);
+                addDefaultTourist();
                 mDao.saveOrUpdateAll(rsp.touristTypes);
             }
 

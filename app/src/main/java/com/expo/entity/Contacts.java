@@ -17,7 +17,7 @@ public class Contacts implements Parcelable {
     public String type;
     @DatabaseField(columnName = "type_name")
     public String typeName;
-    @DatabaseField(columnName = "name")
+    @DatabaseField(columnName = "bg_vr_card")
     public String name;
     @DatabaseField(columnName = "u_id")
     public String uid;

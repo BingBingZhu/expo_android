@@ -64,7 +64,7 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(0, R.string.title_contact_appointment);
-        initTitleRightTextView(R.string.add, R.color.white, v ->
+        initTitleRightTextView(R.string.add, R.color.color_333, v ->
                 ContactsAddActivity.startActivity(ContactsActivity.this, null, R.string.title_contact_add));
         isSelect = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRA_SELECT_CONTACTS, false);
         mMaxCount = getIntent().getIntExtra(Constants.EXTRAS.EXTRA_SELECT_CONTACTS_MAX_COUNT, Integer.MAX_VALUE);
@@ -79,7 +79,7 @@ public class ContactsActivity extends BaseActivity<ContactsContract.Presenter> i
                 mSelectCount++;
             }
         }
-        setConfirmText(--mSelectCount, mMaxCount);
+        setConfirmText(mSelectCount, mMaxCount);
 
         if (isSelect) {
             mTvOk.setVisibility(View.VISIBLE);

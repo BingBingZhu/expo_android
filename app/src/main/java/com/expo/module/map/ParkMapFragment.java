@@ -193,7 +193,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         mAMap.setMaxZoomLevel(19);
         mAMap.setInfoWindowAdapter(new LBSMapAdapter(getContext(), mInfoWindowListener));
         computeMapOffset();
-        mAMap.setPointToCenter(getResources().getDisplayMetrics().widthPixels / 2 - mapOffsetX, getResources().getDisplayMetrics().heightPixels / 2 + mapOffsetY);
+        setMapCenterPoint(1);
         mPresenter.loadParkMapData(mSpotId, mVenuesTypes);
         // 地理围栏
         mGeoFenceClient = new GeoFenceClient(getContext());
@@ -208,6 +208,17 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 //        mClusterOverlay.setInfoWindowOffset(mapOffsetX, 0);
 //        mClusterOverlay.setMarkerInfoInterface(mMarkerInfoInterface);
 //        mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
+    }
+
+    /**
+     * 设置地图中心点
+     * @param xy
+     */
+    private void setMapCenterPoint(int xy){
+        if (xy == 0)
+            mAMap.setPointToCenter( mMapView.getDisplay().getWidth() /2 , getResources().getDisplayMetrics().heightPixels /2 );
+        else
+            mAMap.setPointToCenter(getResources().getDisplayMetrics().widthPixels / 2 - mapOffsetX, getResources().getDisplayMetrics().heightPixels / 2 + mapOffsetY);
     }
 
     private void computeMapOffset() {
@@ -232,6 +243,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.latched_position:     // 位置锁定
+                setMapCenterPoint(0);
                 mMapUtils.setFollow(mLatLng);
                 break;
             case R.id.select_tour_guide:      // 导游选择
@@ -873,7 +885,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 //                        drawLineToMap("1", 0);
 //                } else {
                     if (null != mFacilities) {
-                        if (isTabByCnName("\u5bfc\u89c8\u8f66")) {
+                        if (isTabByCnName("\u8f66\u7ad9")) {
                             addActualSceneMarker(mTabId, mFacilities, true);
                             drawLineToMap("2", 0);
                         } else {
@@ -984,6 +996,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        setMapCenterPoint(1);
         marker.showInfoWindow();
 //        Venue venue = (Venue) marker.getObject();
 //        // 显示marker弹窗

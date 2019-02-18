@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingTop="@dimen/dms_4">
+    android:paddingTop="@dimen/dms_10"
+    android:paddingBottom="@dimen/dms_12">
 
     <ImageView
         android:id="@+id/tab_img"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/tab_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/selector_tab_text" />
+        android:layout_marginTop="@dimen/dms_8"
+        android:textSize="@dimen/font_24"
+        android:textColor="@color/selector_tab_text"/>
 </LinearLayout>

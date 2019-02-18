@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dms_40"
-                android:paddingBottom="@dimen/dms_28"
+                android:paddingBottom="@dimen/dms_18"
                 android:paddingLeft="@dimen/dms_36"
                 android:paddingRight="@dimen/dms_36"
                 android:orientation="vertical"
@@ -37,18 +37,34 @@
                     android:textSize="@dimen/font_28"
                     android:textColor="@color/color_666"
                     android:text="当您在园区需要帮助时，我们建议您寻找到身边的工作人员！"/>
-                <TextView
-                    android:id="@+id/tourist_service_navi"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dms_6"
-                    android:drawableRight="@mipmap/ico_navi_to_service_center"
-                    android:drawablePadding="@dimen/dms_22"
-                    android:gravity="center_vertical"
                     android:layout_gravity="right"
-                    android:textColor="#1391FF"
-                    android:textSize="@dimen/font_24"
-                    android:text="为您快速导航最近的服务中心" />
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tourist_service_navi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dms_6"
+                        android:drawableRight="@mipmap/ico_navi_to_service_center"
+                        android:drawablePadding="@dimen/dms_22"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="right"
+                        android:textColor="#1391FF"
+                        android:textSize="@dimen/font_24"
+                        android:text="为您快速导航最近的服务中心" />
+                    <TextView
+                        android:id="@+id/tourist_service_call"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/dms_10"
+                        android:paddingBottom="@dimen/dms_10"
+                        android:layout_marginRight="@dimen/dms_80"
+                        android:textColor="#1391FF"
+                        android:textSize="@dimen/font_24"
+                        android:text="服务热线：010-12345678" />
+                </LinearLayout>
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"

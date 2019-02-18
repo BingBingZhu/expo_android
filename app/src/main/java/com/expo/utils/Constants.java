@@ -120,12 +120,12 @@ public interface Constants {
         public static final String ALI_BASE_URL = "http://47.95.215.6:8080/Api/";    //阿里云(识花)
         //IP
         public static final String IP = "39.105.120.171:8080";
-        //        public static final String IP = "47.92.250.179";
-//        public static final String IP = "47.92.247.143";
+//        public static final String IP = "36.112.128.48:8089";
         //自己服务器基本请求用到的URL
         public static final String BASE_URL = "http://" + IP + "/Api/";
         //自己服务器文件资源请求用到的URL
         public static final String FILE_BASE_URL = "http://39.105.120.171/res/";
+//        public static final String FILE_BASE_URL = "http://36.112.128.167:8084/res/";
         public static final String PANORAMA_BASE_URL = "http://36.112.130.38:8089";
         public static final String SCENIC_SPOTS = "GetParksList";
         public static final String ACTUAL_SCENES = "GetVenuesList";
@@ -198,6 +198,7 @@ public interface Constants {
         public static final String ACTION_LOCATION_CHANGED_IN_SCENES = "action_location_changed_in_scenes";
         public static final String ACTION_REDUCE_USER_POINTS = "action_reduce_user_points";
         public static final String ACTION_DOWNLOAD_APP_SUCCESS = "action_download_app_success";
+        public static final String ACTION_DOWNLOAD_VR_APP_SUCCESS = "action_download_vr_app_success";
     }
 
     /**

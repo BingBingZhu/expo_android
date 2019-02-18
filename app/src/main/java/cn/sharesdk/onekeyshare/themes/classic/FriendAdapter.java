@@ -114,7 +114,7 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
 		boolean hasNext = false;
 		ArrayList<Following> data = new ArrayList<Following>();
 		if ("SinaWeibo".equals(platform)) {
-			// users[id, name, description]
+			// users[id, bg_vr_card, description]
 			@SuppressWarnings("unchecked")
 			ArrayList<HashMap<String, Object>> users = (ArrayList<HashMap<String,Object>>) res.get("users");
 			for (HashMap<String, Object> user : users) {
@@ -122,7 +122,7 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
 				if (!uidMap.containsKey(uid)) {
 					Following following = new Following();
 					following.uid = uid;
-					following.screenName = String.valueOf(user.get("name"));
+					following.screenName = String.valueOf(user.get("bg_vr_card"));
 					following.description = String.valueOf(user.get("description"));
 					following.icon = String.valueOf(user.get("profile_image_url"));
 					following.atName = following.screenName;
@@ -133,11 +133,11 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
 			hasNext = (Integer) res.get("total_number") > uidMap.size();
 		} else if ("TencentWeibo".equals(platform)) {
 			hasNext = ((Integer)res.get("hasnext") == 0);
-			// info[nick, name, tweet[text]]
+			// info[nick, bg_vr_card, tweet[text]]
 			@SuppressWarnings("unchecked")
 			ArrayList<HashMap<String, Object>> infos = (ArrayList<HashMap<String,Object>>) res.get("info");
 			for (HashMap<String, Object> info : infos) {
-				String uid = String.valueOf(info.get("name"));
+				String uid = String.valueOf(info.get("bg_vr_card"));
 				if (!uidMap.containsKey(uid)) {
 					Following following = new Following();
 					following.screenName = String.valueOf(info.get("nick"));
@@ -155,7 +155,7 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
 				}
 			}
 		} else if ("Facebook".equals(platform)) {
-			// data[id, name]
+			// data[id, bg_vr_card]
 			@SuppressWarnings("unchecked")
 			ArrayList<HashMap<String, Object>> datas = (ArrayList<HashMap<String,Object>>) res.get("data");
 			for (HashMap<String, Object> d : datas) {
@@ -164,7 +164,7 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
 					Following following = new Following();
 					following.uid = uid;
 					following.atName = "[" + uid + "]";
-					following.screenName = String.valueOf(d.get("name"));
+					following.screenName = String.valueOf(d.get("bg_vr_card"));
 					@SuppressWarnings("unchecked")
 					HashMap<String, Object> picture = (HashMap<String, Object>) d.get("picture");
 					if (picture != null) {
@@ -180,7 +180,7 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
 			HashMap<String, Object> paging = (HashMap<String, Object>) res.get("paging");
 			hasNext = paging.containsKey("next");
 		} else if ("Twitter".equals(platform)) {
-			// users[screen_name, name, description]
+			// users[screen_name, bg_vr_card, description]
 			@SuppressWarnings("unchecked")
 			ArrayList<HashMap<String, Object>> users = (ArrayList<HashMap<String,Object>>) res.get("users");
 			for (HashMap<String, Object> user : users) {
@@ -189,7 +189,7 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
 					Following following = new Following();
 					following.uid = uid;
 					following.atName = uid;
-					following.screenName = String.valueOf(user.get("name"));
+					following.screenName = String.valueOf(user.get("bg_vr_card"));
 					following.description = String.valueOf(user.get("description"));
 					following.icon = String.valueOf(user.get("profile_image_url"));
 					uidMap.put(following.uid, true);

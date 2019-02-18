@@ -81,6 +81,8 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
     @Override
     public List<Encyclopedias> loadNeayByVenues(Venue as) {
         List<Venue> venues = mDao.query(Venue.class, new QueryParams()
+                .add("eq", "is_enable", 1)
+                .add("and")
                 .add("notNull", "wiki_id")
                 .add("and")
                 .add("ne", "wiki_id", ""));
@@ -124,6 +126,8 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
     @Override
     public List<Encyclopedias> loadRandomData(Long typeId, Long currId) {
         List<Encyclopedias> encyclopedias = mDao.query(Encyclopedias.class, new QueryParams()
+                .add("eq", "enable", 1)
+                .add("and")
                 .add("eq", "type_id", typeId)
                 .add("and")
                 .add("ne", "_id", currId));
@@ -168,18 +172,8 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
                     .add("gt", "end_time", time)
                     .add("and")
                     .add("eq", "link_id", venue.getId()));
-//        List<ExpoActivityInfo> recomment = mDao.query(ExpoActivityInfo.class, new QueryParams()
-//                .add("eq", "is_recommended", 1));
-//                .add("and")
-//                .add("eq", "link_id", id));
-            if (null != today && today.size() != 0) {
-                if (today == null) {
-                    jsonObject.put("today", "[]");
-                } else {
-                    jsonObject.put("today", toJson(today));
-                }
-            }
-//            jsonObject.put("recommend", toJson(recomment));
+            if (null != today && today.size() != 0)
+                jsonObject.put("today", toJson(today));
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();
