@@ -51,7 +51,7 @@ public class FindPublishAdapter extends RecyclerView.Adapter<FindPublishAdapter.
         });
         if (position == getItemCount() - 1) {
             holder.mImageClose.setVisibility(View.GONE);
-            holder.mImage.setImageResource(R.mipmap.seek_add_image);
+            holder.mImage.setImageResource(R.mipmap.find_add_image);
         } else {
             if (mImages.get(position).endsWith("mp4")) {
                 holder.mImage.setImageBitmap(ThumbnailUtils.createVideoThumbnail(mImages.get(position), MediaStore.Images.Thumbnails.MINI_KIND));

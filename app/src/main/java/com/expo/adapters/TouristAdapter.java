@@ -17,6 +17,7 @@ import com.expo.utils.LanguageUtil;
 import com.expo.widget.CompletedView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TouristAdapter extends RecyclerView.Adapter<TouristAdapter.ViewHolder> {
@@ -28,7 +29,10 @@ public class TouristAdapter extends RecyclerView.Adapter<TouristAdapter.ViewHold
 
     public TouristAdapter(Context context, List<TouristType> tourists) {
         this.mContext = context;
-        this.mTourists = tourists;
+        if (null == tourists)
+            this.mTourists = new ArrayList<>();
+        else
+            this.mTourists = tourists;
     }
 
     @NonNull

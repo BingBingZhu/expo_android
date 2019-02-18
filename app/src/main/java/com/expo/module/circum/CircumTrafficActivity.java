@@ -21,6 +21,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 周边交通
+ */
 public class CircumTrafficActivity extends BaseActivity<CircumTrafficContract.Presenter> implements CircumTrafficContract.View {
 
     @BindView(R.id.circum_traffic_parking_lot)

@@ -20,12 +20,18 @@ public class CircumTrafficPresenterImpl extends CircumTrafficContract.Presenter 
         VenuesType bus = mDao.unique(VenuesType.class, new QueryParams()
                 .add("eq", "type_name", "公交站"));
 
-        List<Venue> venuePark = mDao.query(Venue.class, new QueryParams()
-                .add("eq", "is_enable", 1).add("and")
-                .add("eq", "type", park.getId()));
-        List<Venue> venueBus = mDao.query(Venue.class, new QueryParams()
-                .add("eq", "is_enable", 1).add("and")
-                .add("eq", "type", bus.getId()));
+        List<Venue> venuePark = null;
+        List<Venue> venueBus = null;
+        if (null != park){
+            venuePark = mDao.query(Venue.class, new QueryParams()
+                    .add("eq", "is_enable", 1).add("and")
+                    .add("eq", "type", park.getId()));
+        }
+        if (null != bus) {
+            venueBus = mDao.query(Venue.class, new QueryParams()
+                    .add("eq", "is_enable", 1).add("and")
+                    .add("eq", "type", bus.getId()));
+        }
         mView.loadTrafficDataRes(venuePark, venueBus);
     }
 }

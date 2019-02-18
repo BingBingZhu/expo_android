@@ -30,6 +30,34 @@ public class Park implements Parcelable {
     @SerializedName("parkwifipsd")
     private String parkWifiPsd;
 
+    @DatabaseField(columnName = "telephone_number")
+    @SerializedName("sosnumber")
+    private String telephoneNumber;
+
+    protected Park(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        electronicFenceList = in.readString();
+        parkWifiId = in.readString();
+        parkWifiPsd = in.readString();
+        telephoneNumber = in.readString();
+    }
+
+    public static final Creator<Park> CREATOR = new Creator<Park>() {
+        @Override
+        public Park createFromParcel(Parcel in) {
+            return new Park(in);
+        }
+
+        @Override
+        public Park[] newArray(int size) {
+            return new Park[size];
+        }
+    };
+
     public Long getId() {
         return id;
     }
@@ -63,31 +91,17 @@ public class Park implements Parcelable {
         this.parkWifiPsd = parkWifiPsd;
     }
 
+    public String getTelephoneNumber() {
+        return telephoneNumber;
+    }
+
+    public void setTelephoneNumber(String telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
+    }
+
     public Park() {
     }
 
-    protected Park(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readLong();
-        }
-        electronicFenceList = in.readString();
-        parkWifiId = in.readString();
-        parkWifiPsd = in.readString();
-    }
-
-    public static final Creator<Park> CREATOR = new Creator<Park>() {
-        @Override
-        public Park createFromParcel(Parcel in) {
-            return new Park(in);
-        }
-
-        @Override
-        public Park[] newArray(int size) {
-            return new Park[size];
-        }
-    };
 
     @Override
     public int describeContents() {
@@ -95,15 +109,16 @@ public class Park implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(Parcel parcel, int i) {
         if (id == null) {
-            dest.writeByte((byte) 0);
+            parcel.writeByte((byte) 0);
         } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(id);
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(id);
         }
-        dest.writeString(electronicFenceList);
-        dest.writeString(parkWifiId);
-        dest.writeString(parkWifiPsd);
+        parcel.writeString(electronicFenceList);
+        parcel.writeString(parkWifiId);
+        parcel.writeString(parkWifiPsd);
+        parcel.writeString(telephoneNumber);
     }
 }

@@ -172,13 +172,8 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
                     .add("gt", "end_time", time)
                     .add("and")
                     .add("eq", "link_id", venue.getId()));
-//        List<ExpoActivityInfo> recomment = mDao.query(ExpoActivityInfo.class, new QueryParams()
-//                .add("eq", "is_recommended", 1));
-//                .add("and")
-//                .add("eq", "link_id", id));
             if (null != today && today.size() != 0)
                 jsonObject.put("today", toJson(today));
-//            jsonObject.put("recommend", toJson(recomment));
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();

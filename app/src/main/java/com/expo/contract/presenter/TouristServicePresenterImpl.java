@@ -1,6 +1,7 @@
 package com.expo.contract.presenter;
 
 import android.location.Location;
+import android.text.TextUtils;
 
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
@@ -35,6 +36,16 @@ public class TouristServicePresenterImpl extends TouristServiceContract.Presente
         if (park == null) return false;
         List<double[]> bounds = park.getElectronicFenceList();
         return MapUtils.ptInPolygon( location.getLatitude(), location.getLongitude(), bounds );
+    }
+
+    @Override
+    public String getParkTelePhone() {
+        Park park = mDao.unique(Park.class, new QueryParams().add("eq", "_id", 1));
+        if (null == park){
+            return "";
+        }else {
+            return TextUtils.isEmpty(park.getTelephoneNumber()) ? "" : park.getTelephoneNumber();
+        }
     }
 
 //    @Override
