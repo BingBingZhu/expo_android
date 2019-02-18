@@ -7,6 +7,8 @@ import com.expo.base.IView;
 import com.expo.entity.Venue;
 import com.expo.entity.VisitorService;
 
+import java.util.List;
+
 public interface SeekHelpContract {
     abstract class Presenter extends IPresenter<View> {
 
