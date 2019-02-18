@@ -483,4 +483,6 @@
     <string name="activities_forest_text1">奇幻光影森林</string>
     <string name="activities_forest_text2">科技之光\t\t创新画卷</string>
     <string name="expo_intr">世园会介绍</string>
+    <string name="error_video_upload_failed">视频上传失败</string>
+    <string name="error_image_upload_failed">图片上传失败</string>
 </resources>
