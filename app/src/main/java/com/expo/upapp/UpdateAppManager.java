@@ -110,9 +110,18 @@ public class UpdateAppManager {
     private TextView tvFileSize;
     private TextView tvDownload;
     private TextView tvCancel;
-    private long downloadId;
+    public static long downloadId;
     DownloadManagerUtil downloadManagerUtil;
+    public static long vrAppDownloadId;
 
+    public void addArAppDownload(String url){
+        downloadManagerUtil = new DownloadManagerUtil(mContext);
+        if (vrAppDownloadId != 0) {
+            downloadManagerUtil.clearCurrentTask(vrAppDownloadId);
+        }
+        vrAppDownloadId = downloadManagerUtil.download(url, "expo_ar",
+                getDoubleFomat(123456411224L / 1024 / 1024) + "M");
+    }
 
     /**
      * 显示提示更新对话框
@@ -146,7 +155,7 @@ public class UpdateAppManager {
 
             }else{
                 dialog.dismiss();
-                ToastHelper.showShort("已添加至下载列表");
+                ToastHelper.showLong("已添加至下载列表");
             }
         });
         if (StringUtils.equals("1", versionInfo.isforce)) {

@@ -83,12 +83,12 @@ public class SwipeCardLayout extends RelativeLayout {
 //        mDy = density * 5;
         paint = new Paint();
         paint.setColor(Color.parseColor("#FFFFFF"));
-        paint.setShadowLayer(10f, 0, 0, Color.parseColor("#D4D4D4"));
+        paint.setShadowLayer(10f, 0, 0, Color.parseColor("#40000000"));
         paint.setAntiAlias(true);
 
         paint_s = new Paint();
         paint_s.setColor(Color.parseColor("#FFFFFF"));
-        paint.setShadowLayer(10f, 0, 0, Color.parseColor("#D4D4D4"));
+        paint.setShadowLayer(10f, 0, 0, Color.parseColor("#40000000"));
         paint_s.setStyle(Paint.Style.STROKE);
         paint_s.setStrokeWidth(2);
         paint_s.setAntiAlias(true);

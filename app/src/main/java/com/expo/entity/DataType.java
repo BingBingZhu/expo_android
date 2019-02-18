@@ -17,7 +17,7 @@ public class DataType implements Parcelable {
     @DatabaseField(columnName = "type_id")
     @SerializedName("id")
     private Integer typeId;
-    @DatabaseField(columnName = "name")
+    @DatabaseField(columnName = "bg_vr_card")
     @SerializedName(value = "typename", alternate = {"caption"})
     private String name;
     @DatabaseField(columnName = "name_en")

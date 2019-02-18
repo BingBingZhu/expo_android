@@ -81,6 +81,8 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
     @Override
     public List<Encyclopedias> loadNeayByVenues(Venue as) {
         List<Venue> venues = mDao.query(Venue.class, new QueryParams()
+                .add("eq", "is_enable", 1)
+                .add("and")
                 .add("notNull", "wiki_id")
                 .add("and")
                 .add("ne", "wiki_id", ""));
@@ -124,6 +126,8 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
     @Override
     public List<Encyclopedias> loadRandomData(Long typeId, Long currId) {
         List<Encyclopedias> encyclopedias = mDao.query(Encyclopedias.class, new QueryParams()
+                .add("eq", "enable", 1)
+                .add("and")
                 .add("eq", "type_id", typeId)
                 .add("and")
                 .add("ne", "_id", currId));
@@ -153,56 +157,51 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
 
     @Override
     public String getRecommendAndTodayExpoActivitys(Long time, long id) {
-//        try {
-//            JSONObject jsonObject = new JSONObject();
-//            String url = loadCommonInfo(CommonInfo.VENUE_BESPEAK);
-//            jsonObject.put("bespeak", url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
-//                    + "&lan=" + LanguageUtil.chooseTest("zh", "en"));
-//            Venue venue = mDao.unique(Venue.class, new QueryParams().add("eq", "wiki_id", id));
-//            if (venue == null) {
-//                return jsonObject.toString();
-//            }
-//            List<ExpoActivityInfo> today = mDao.query(ExpoActivityInfo.class, new QueryParams()
-//                    .add("lt", "start_time", time)
-//                    .add("and")
-//                    .add("gt", "end_time", time)
-//                    .add("and")
-//                    .add("eq", "link_id", venue.getId()));
-////        List<ExpoActivityInfo> recomment = mDao.query(ExpoActivityInfo.class, new QueryParams()
-////                .add("eq", "is_recommended", 1));
-////                .add("and")
-////                .add("eq", "link_id", id));
-//            if (null != today && today.size() != 0)
-//                jsonObject.put("today", toJson(today));
-////            jsonObject.put("recommend", toJson(recomment));
-//            return jsonObject.toString();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return "";
-
-        List<ExpoActivityInfo> today = mDao.query(ExpoActivityInfo.class, new QueryParams()
-                .add("lt", "start_time", time)
-                .add("and")
-                .add("gt", "end_time", time));
-//                .add("and")
-//                .add("eq", "link_id", id));
-        List<ExpoActivityInfo> recomment = mDao.query(ExpoActivityInfo.class, new QueryParams()
-                .add("eq", "is_recommended", 1));
-//                .add("and")
-//                .add("eq", "link_id", id));
-        String url = loadCommonInfo(CommonInfo.VENUE_BESPEAK);
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("today", toJson(today));
-            jsonObject.put("recommend", toJson(recomment));
+            String url = loadCommonInfo(CommonInfo.VENUE_BESPEAK);
             jsonObject.put("bespeak", url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
                     + "&lan=" + LanguageUtil.chooseTest("zh", "en"));
+            Venue venue = mDao.unique(Venue.class, new QueryParams().add("eq", "wiki_id", id));
+            if (venue == null) {
+                return jsonObject.toString();
+            }
+            List<ExpoActivityInfo> today = mDao.query(ExpoActivityInfo.class, new QueryParams()
+                    .add("lt", "start_time", time)
+                    .add("and")
+                    .add("gt", "end_time", time)
+                    .add("and")
+                    .add("eq", "link_id", venue.getId()));
+            if (null != today && today.size() != 0)
+                jsonObject.put("today", toJson(today));
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return "";
+
+//        List<ExpoActivityInfo> today = mDao.query(ExpoActivityInfo.class, new QueryParams()
+//                .add("lt", "start_time", time)
+//                .add("and")
+//                .add("gt", "end_time", time));
+////                .add("and")
+////                .add("eq", "link_id", id));
+//        List<ExpoActivityInfo> recomment = mDao.query(ExpoActivityInfo.class, new QueryParams()
+//                .add("eq", "is_recommended", 1));
+////                .add("and")
+////                .add("eq", "link_id", id));
+//        String url = loadCommonInfo(CommonInfo.VENUE_BESPEAK);
+//        try {
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put("today", toJson(today));
+//            jsonObject.put("recommend", toJson(recomment));
+//            jsonObject.put("bespeak", url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
+//                    + "&lan=" + LanguageUtil.chooseTest("zh", "en"));
+//            return jsonObject.toString();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return "";
     }
 
     @Override

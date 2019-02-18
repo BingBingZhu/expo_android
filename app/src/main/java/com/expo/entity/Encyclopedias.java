@@ -87,6 +87,9 @@ public class Encyclopedias implements Parcelable {
     @DatabaseField(columnName = "voiceEurl_en")
     @SerializedName("voiceurlen")
     public String voiceUrlEn;
+    @DatabaseField(columnName = "is_share")
+    @SerializedName("isshare")
+    public String isShare;
     @DatabaseField(columnName = "estimated_tour_time")
     @SerializedName("playtime")
     public String estimatedTourTime;//预计游览时间

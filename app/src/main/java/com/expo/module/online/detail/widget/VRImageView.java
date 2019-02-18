@@ -97,6 +97,11 @@ public class VRImageView implements View.OnClickListener, VRInterfaceView {
         }
     }
 
+    @Override
+    public void pause() {
+
+    }
+
     public void onDestroy() {
         mPanoramaView.pauseRendering();
         mPanoramaView.shutdown();

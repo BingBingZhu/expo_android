@@ -149,6 +149,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoContract.Presenter> i
         }
         mSaveBtn.setTextAppearance(this, R.style.TextSizeWhite14);
         mSaveBtn.setText(R.string.save);
+        mSaveBtn.setTextColor(getResources().getColor(R.color.color_333));
         mSaveBtn.setGravity(Gravity.CENTER);
         mSaveBtn.setVisibility(isShow ? View.VISIBLE : View.GONE);
         mSaveBtn.setOnClickListener(v -> {

@@ -126,8 +126,8 @@
     <style name="TextSize16">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <!--<item name="android:layout_marginTop">@dimen/dms_40</item>-->
-        <!--<item name="android:layout_marginBottom">@dimen/dms_40</item>-->
+        <!--<item bg_vr_card="android:layout_marginTop">@dimen/dms_40</item>-->
+        <!--<item bg_vr_card="android:layout_marginBottom">@dimen/dms_40</item>-->
         <item name="android:textSize">@dimen/font_32</item>
     </style>
 
@@ -156,7 +156,7 @@
     <style name="item_mine_entry" parent="TextSizeBlack14">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <!--<item name="android:layout_weight">wrap_content</item>-->
+        <!--<item bg_vr_card="android:layout_weight">wrap_content</item>-->
         <item name="android:gravity">center_vertical</item>
         <item name="android:drawablePadding">@dimen/dms_10</item>
         <item name="android:paddingLeft">@dimen/dms_26</item>
@@ -169,7 +169,7 @@
     <style name="item_circum" parent="TextSizeBlack14">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <!--<item name="android:layout_weight">wrap_content</item>-->
+        <!--<item bg_vr_card="android:layout_weight">wrap_content</item>-->
         <item name="android:gravity">center_vertical</item>
         <item name="android:drawablePadding">@dimen/dms_24</item>
         <item name="android:paddingLeft">@dimen/dms_36</item>
@@ -226,7 +226,7 @@
 
     <style name="tab_text_appearance_vr">
         <item name="android:textSize">@dimen/font_26</item>
-        <!--<item name="android:textStyle">bold</item>-->
+        <!--<item bg_vr_card="android:textStyle">bold</item>-->
     </style>
 
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
@@ -323,6 +323,7 @@
         <item name="android:textSize">@dimen/font_22</item>
         <item name="android:drawablePadding">@dimen/dms_18</item>
         <item name="android:gravity">center</item>
+        <item name="android:visibility">gone</item>
         <item name="drawableTopHeight">@dimen/dms_42</item>
         <item name="drawableTopWidth">@dimen/dms_42</item>
     </style>

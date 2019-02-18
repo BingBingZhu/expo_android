@@ -213,7 +213,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
     @Override
     public void returnRichText(RichText richText) {
-        String content = "<html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body><div>" + richText.getContent() + "</div></body>";
+        String content = "<html><head><meta charset=\"UTF-8\"><meta bg_vr_card=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body><div>" + richText.getContent() + "</div></body>";
         mX5View.loadData(content, "text/html;charset=utf8", "UTF-8");
     }
 

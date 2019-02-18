@@ -1,6 +1,7 @@
 package com.expo.contract.presenter;
 
 import com.expo.contract.VRDetailContract;
+import com.expo.entity.Encyclopedias;
 import com.expo.entity.VrInfo;
 import com.expo.network.Http;
 import com.expo.network.ResponseCallback;
@@ -34,6 +35,11 @@ public class VRDetailPresenterImpl extends VRDetailContract.Presenter {
             }
 
         }, observable);
+    }
+
+    @Override
+    public Encyclopedias findEncyclopediaById(String id) {
+        return mDao.queryById(Encyclopedias.class, id);
     }
 
 }

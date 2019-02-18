@@ -70,7 +70,7 @@
 //                String string = s.toString();
 //                selectedCountries.clear();
 //                for (Country country : allCountries) {
-//                    if (country.name.toLowerCase().contains(string.toLowerCase()))
+//                    if (country.bg_vr_card.toLowerCase().contains(string.toLowerCase()))
 //                        selectedCountries.add(country);
 //                }
 //                adapter.update(selectedCountries);
@@ -122,7 +122,7 @@
 //            VH vh = (VH) holder;
 //            final Country country = (Country) entity;
 //            vh.ivFlag.setImageResource(country.flag);
-//            vh.tvName.setText(country.name);
+//            vh.tvName.setText(country.bg_vr_card);
 //            vh.tvCode.setText("+" + country.code);
 //            holder.itemView.setOnClickListener(v -> {
 //                Intent data = new Intent();

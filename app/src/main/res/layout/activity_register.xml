@@ -28,12 +28,12 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/to_register"
+        android:id="@+id/to_login"
         style="@style/TextSizeWhite15"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dms_56"
         android:layout_marginRight="@dimen/dms_30"
-        android:text="@string/register" />
+        android:text="@string/login" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -126,7 +126,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/dms_24"
             android:paddingBottom="@dimen/dms_24"
-            android:text="@string/login"
+            android:text="@string/register"
             android:textColor="@color/selector_login_correlation_text_color"
             android:textSize="@dimen/font_34" />
 
@@ -139,7 +139,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/logging_in_is_an_agreement"
+                android:text="@string/register_in_is_an_agreement"
                 android:textColor="@color/color_999"
                 android:textSize="@dimen/font_26" />
 
@@ -153,52 +153,6 @@
         </LinearLayout>
 
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/login_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/other_login_methods"
-            android:textColor="@color/color_666"
-            android:textSize="@dimen/font_26" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dms_40"
-            android:layout_marginTop="@dimen/dms_40"
-            android:layout_marginRight="@dimen/dms_40"
-            android:layout_marginBottom="@dimen/dms_80">
-
-            <ImageView
-                android:id="@+id/login_qq"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@mipmap/ico_qq_login" />
-
-            <ImageView
-                android:id="@+id/login_wechat"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@mipmap/ico_wechat_login" />
-
-            <ImageView
-                android:id="@+id/login_microblog"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@mipmap/ico_sina_login" />
-        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

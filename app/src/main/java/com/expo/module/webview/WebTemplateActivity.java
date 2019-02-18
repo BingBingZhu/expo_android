@@ -104,8 +104,8 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         Schedule schedule = mPresenter.loadScheduleByWikiId(id);
         loadRecommends();
         setTitle(BaseActivity.TITLE_COLOR_STYLE_WHITE, mEncyclopedias.caption);
-        initTitleRightTextView();
-
+        if (mEncyclopedias.isShare.equals("1"))
+            initTitleRightTextView();
         mX5View.setWebChromeClient(webChromeClient);
         mX5View.removeTencentAd(this);
         mX5View.addJavascriptInterface(new JsHook(), "hook");
@@ -264,7 +264,8 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
 
         @JavascriptInterface
         public String getActiveData() {
-            return mPresenter.getRecommendAndTodayExpoActivitys(TimeUtils.getNowMills(), id);
+            String json = mPresenter.getRecommendAndTodayExpoActivitys(TimeUtils.getNowMills(), id);
+            return json;
         }
 
         @JavascriptInterface

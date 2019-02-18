@@ -19,6 +19,8 @@ public interface TouristServiceContract {
 
         public abstract boolean checkInPark(Location location);
 
+        public abstract String getParkTelePhone();
+
     }
 
     interface View extends IView {

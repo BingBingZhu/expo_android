@@ -2,12 +2,14 @@ package com.expo.module.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.expo.R;
@@ -37,8 +39,11 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
 
     @BindView(R.id.recycler)
     RecyclerView mRecycler;
+    @BindView(R.id.tourist_service_call)
+    TextView mTvCall;
 
-    TouristServiceAdapter mAdapter;
+    private TouristServiceAdapter mAdapter;
+    private String mTelePhoneNum;
 
     BaseAdapterItemClickListener mListener = (view, position, o) -> {
         String title = getResources().getString(getResources().getIdentifier("item_tourist_service_text_" + position, "string", AppUtils.getAppPackageName()));
@@ -78,26 +83,36 @@ public class TouristServiceActivity extends BaseActivity<TouristServiceContract.
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(1, R.string.home_func_item_tourist_service);
         initTitleRightTextView(R.string.service_log, R.color.white, v -> ServiceHistoryActivity.startActivity(getContext()));
+        mTelePhoneNum = mPresenter.getParkTelePhone();
+        mTvCall.setText(String.format("服务热线：%s", mTelePhoneNum));
         mAdapter = new TouristServiceAdapter(this);
         mAdapter.setListener(mListener);
-
         mRecycler.setLayoutManager(new GridLayoutManager(this, 2));
         mRecycler.setNestedScrollingEnabled(false);
         mRecycler.addItemDecoration(new SpaceDecoration((int) getResources().getDimension(R.dimen.dms_30)));
         mRecycler.setAdapter(mAdapter);
     }
 
-    @OnClick(R.id.tourist_service_navi)
+    @OnClick( { R.id.tourist_service_navi, R.id.tourist_service_call } )
     public void Onclick(View v) {
-        if (null == TrackRecordService.getLocation()) {
-            ToastHelper.showShort(R.string.trying_to_locate);
-            return;
-        } else {
-            if (mPresenter.checkInPark(TrackRecordService.getLocation())) {
-                PlayMapActivity.startActivity(getContext(), "\u670d\u52a1");
-            } else {
-                ToastHelper.showShort(R.string.unable_to_provide_service);
-            }
+        switch (v.getId()){
+            case R.id.tourist_service_navi:
+                if (null == TrackRecordService.getLocation()) {
+                    ToastHelper.showShort(R.string.trying_to_locate);
+                    return;
+                } else {
+                    if (mPresenter.checkInPark(TrackRecordService.getLocation())) {
+                        PlayMapActivity.startActivity(getContext(), "\u670d\u52a1");
+                    } else {
+                        ToastHelper.showShort(R.string.unable_to_provide_service);
+                    }
+                }
+                break;
+            case R.id.tourist_service_call:
+                Intent intent = new Intent( Intent.ACTION_DIAL, Uri.parse( "tel:" + mTelePhoneNum ) );
+                intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
+                startActivity( intent );
+                break;
         }
     }
 
