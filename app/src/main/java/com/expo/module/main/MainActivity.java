@@ -22,6 +22,7 @@ import com.expo.base.BaseActivity;
 import com.expo.base.utils.PrefsHelper;
 import com.expo.module.main.find.FindFragment;
 import com.expo.module.main.scenic.ScenicFragment;
+import com.expo.services.DownloadListenerService;
 import com.expo.services.TrackRecordService;
 import com.expo.upapp.UpdateAppManager;
 import com.expo.utils.AssetCopyer;
@@ -76,7 +77,6 @@ public class MainActivity extends BaseActivity {
             mTabHostView.addTab(tabSpec, fragments[i], null);
         }
         TrackRecordService.startService(getContext());
-        LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS);
 //        StatusBarUtils.cancelStatusBarFullTransparent( MainActivity.this );//加上4.4系统会出现不能沉浸式，不要加
         new AssetCopyer(MainActivity.this).copyAssetsFile2Phone();
     }
@@ -114,38 +114,11 @@ public class MainActivity extends BaseActivity {
         context.startActivity(in);
     }
 
-
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS)) {
-                LocalBroadcastUtil.unregisterReceiver(context, receiver);
-                installApp(getContext());
-            }
-        }
-    };
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void installApp(Context context) {
-        if (!getPackageManager().canRequestPackageInstalls()) {
-            Uri packageURI = Uri.parse("package:" + getPackageName());
-            Intent in = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
-            startActivityForResult(in, Constants.RequestCode.REQ_INSTALL_PERMISS_CODE);
-            return;
-        }
-        UpdateAppManager.getInstance(context).installApp();
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constants.RequestCode.REQ_INSTALL_PERMISS_CODE) {
-            if (getPackageManager().canRequestPackageInstalls()) {
-                UpdateAppManager.getInstance(getContext()).installApp();
-            }
-        } else if (requestCode == Constants.RequestCode.REQ_TO_FIND_INFO) {
+        if (requestCode == Constants.RequestCode.REQ_TO_FIND_INFO) {
             FindFragment f = (FindFragment) getFragment(2);
             if (null != f) {
                 // 然后在碎片中调用重写的onActivityResult方法
@@ -187,7 +160,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         TrackRecordService.stopService(getContext());
-        LocalBroadcastUtil.unregisterReceiver(getContext(), receiver);
+        DownloadListenerService.stopService(getContext());
         super.onDestroy();
     }
 }

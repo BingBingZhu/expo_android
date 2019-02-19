@@ -22,9 +22,11 @@ import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.utils.ToastHelper;
 import com.expo.entity.AppInfo;
+import com.expo.services.DownloadListenerService;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.utils.LocalBroadcastUtil;
+import com.expo.widget.CustomDefaultDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,7 +53,7 @@ public class UpdateAppManager {
         return mInstance;
     }
 
-    public static UpdateAppManager getInstance(){
+    public static UpdateAppManager getInstance() {
         if (mInstance == null) {
             synchronized (UpdateAppManager.class) {
                 if (mInstance == null) {
@@ -62,11 +64,11 @@ public class UpdateAppManager {
         return mInstance;
     }
 
-    public AppInfo isHaveUpdate(String appVersionName, List<AppInfo> infos){
+    public AppInfo isHaveUpdate(String appVersionName, List<AppInfo> infos) {
         AppInfo appInfo = null;
-        for (AppInfo info : infos){
-            if (info.platformname.equals("android")){
-                if (isNewVersion(info.ver, appVersionName)){
+        for (AppInfo info : infos) {
+            if (info.platformname.equals("android")) {
+                if (isNewVersion(info.ver, appVersionName)) {
                     appInfo = info;
                 }
             }
@@ -74,21 +76,21 @@ public class UpdateAppManager {
         return appInfo;
     }
 
-    private boolean isNewVersion(String serVersion, String atVersion){
+    private boolean isNewVersion(String serVersion, String atVersion) {
         boolean isNew = false;
         if (serVersion.equals(atVersion))
             isNew = false;
-        else{
+        else {
             String[] ser = serVersion.split("\\.");
             String[] at = atVersion.split("\\.");
             int length = ser.length > at.length ? at.length : ser.length;
-            for (int i = 0; i < length; i++){
+            for (int i = 0; i < length; i++) {
                 isNew = ser[i].compareTo(at[i]) > 0 ? true : false;
-                if (isNew || ser[i].compareTo(at[i]) != 0){
+                if (isNew || ser[i].compareTo(at[i]) != 0) {
                     break;
                 }
             }
-            if (!isNew && ser.length > at.length){
+            if (!isNew && ser.length > at.length) {
                 isNew = true;
             }
         }
@@ -114,7 +116,7 @@ public class UpdateAppManager {
     DownloadManagerUtil downloadManagerUtil;
     public static long vrAppDownloadId;
 
-    public void addArAppDownload(String url){
+    public void addArAppDownload(String url) {
         downloadManagerUtil = new DownloadManagerUtil(mContext);
         if (vrAppDownloadId != 0) {
             downloadManagerUtil.clearCurrentTask(vrAppDownloadId);
@@ -128,7 +130,7 @@ public class UpdateAppManager {
      */
     public void showNoticeDialog(AppInfo versionInfo, boolean isInform) {
         downloadManagerUtil = new DownloadManagerUtil(mContext);
-        this.versionInfo = versionInfo;
+//        this.versionInfo = versionInfo;
         Dialog dialog = new Dialog(mContext, R.style.ApkDownloadDialogStyle);
         View v = LayoutInflater.from(mContext).inflate(R.layout.layout_dialog_update_version, null);
         pb = v.findViewById(R.id.ver_update_pb);
@@ -149,13 +151,12 @@ public class UpdateAppManager {
             if (downloadId != 0) {
                 downloadManagerUtil.clearCurrentTask(downloadId);
             }
-            downloadId = downloadManagerUtil.download(Constants.URL.FILE_BASE_URL+versionInfo.apkurl,
+            downloadId = downloadManagerUtil.download(Constants.URL.FILE_BASE_URL + versionInfo.apkurl,
                     AppUtils.getAppName(), getDoubleFomat((Double.valueOf(versionInfo.apkfilesize)) / 1024 / 1024) + "M");
-            if (StringUtils.equals("1", versionInfo.isforce)) {
-
-            }else{
+            if (!StringUtils.equals("1", versionInfo.isforce)) {
                 dialog.dismiss();
-                ToastHelper.showLong("已添加至下载列表");
+                DownloadListenerService.startService(mContext);
+                new CustomDefaultDialog(mContext).setContent("已添加至下载列表").setOnlyOK().show();
             }
         });
         if (StringUtils.equals("1", versionInfo.isforce)) {
@@ -164,9 +165,9 @@ public class UpdateAppManager {
         }
         tvCancel.setOnClickListener(v12 -> {
             dialog.dismiss();
-            if (isInform) {
-                LocalBroadcastUtil.sendBroadcast(mContext, null, Constants.Action.ACTION_CANCEL_UPDATE);
-            }
+//            if (isInform) {
+//                LocalBroadcastUtil.sendBroadcast(mContext, null, Constants.Action.ACTION_CANCEL_UPDATE);
+//            }
         });
         dialog.setContentView(v);
         dialog.setCanceledOnTouchOutside(false);
@@ -187,95 +188,95 @@ public class UpdateAppManager {
         return bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
-    private AppInfo versionInfo;
+//    private AppInfo versionInfo;
 
-    /**
-     * 下载新版本应用
-     */
-    private class DownloadAsyncTask extends AsyncTask<Void, Integer, Integer> {
-        @Override
-        protected void onPreExecute() {
-            Log.e(TAG, "执行至--onPreExecute");
-            FILE_NAME = FILE_PATH + versionInfo.getResUrl();
-            tvRate.setVisibility(View.VISIBLE);
-            tvDownload.setEnabled(false);
-            tvCancel.setEnabled(false);
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
-            URL url;
-            HttpURLConnection connection = null;
-            InputStream in = null;
-            FileOutputStream out = null;
-            try {
-                url = new URL(Constants.URL.FILE_BASE_URL + versionInfo.apkurl);
-                connection = (HttpURLConnection) url.openConnection();
-                in = connection.getInputStream();
-                long fileLength = connection.getContentLength();
-                File file_path = new File(FILE_PATH);
-                if (!file_path.exists()) {
-                    file_path.mkdir();
-                }
-                out = new FileOutputStream(new File(FILE_NAME));//为指定的文件路径创建文件输出流
-                byte[] buffer = new byte[1024 * 1024];
-                int len = 0;
-                int readLength = 0;
-                while ((len = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, len);  //从buffer的第0位开始读取len长度的字节到输出流
-                    readLength += len;
-                    int curProgress = (int) (((float) readLength / fileLength) * 100);
-                    Log.e(TAG, "当前下载进度：" + curProgress);
-                    publishProgress(curProgress, readLength);
-                    if (readLength >= fileLength) {
-                        break;
-                    }
-                }
-                out.flush();
-                return INSTALL_TOKEN;
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (in != null) {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (connection != null) {
-                    connection.disconnect();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            Log.e(TAG, "异步更新进度接收到的值：" + values[0]);
-            pb.setProgress(values[0]);
-            tvRate.setText(values[0] + "%");
-            tvFileSize.setText(getDoubleFomat(((double) values[1]) / 1024 / 1024) + "M" +
-                    "/" + getDoubleFomat((Double.valueOf(versionInfo.resfilesize)) / 1024 / 1024) + "M");
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            if (StringUtils.equals("1", versionInfo.isforce)) {
-                tvDownload.setEnabled(true);
-                tvCancel.setEnabled(true);
-            }
-            //安装应用
-            installApp();
-        }
-    }
+//    /**
+//     * 下载新版本应用
+//     */
+//    private class DownloadAsyncTask extends AsyncTask<Void, Integer, Integer> {
+//        @Override
+//        protected void onPreExecute() {
+//            Log.e(TAG, "执行至--onPreExecute");
+//            FILE_NAME = FILE_PATH + versionInfo.getResUrl();
+//            tvRate.setVisibility(View.VISIBLE);
+//            tvDownload.setEnabled(false);
+//            tvCancel.setEnabled(false);
+//        }
+//
+//        @Override
+//        protected Integer doInBackground(Void... params) {
+//            URL url;
+//            HttpURLConnection connection = null;
+//            InputStream in = null;
+//            FileOutputStream out = null;
+//            try {
+//                url = new URL(Constants.URL.FILE_BASE_URL + versionInfo.apkurl);
+//                connection = (HttpURLConnection) url.openConnection();
+//                in = connection.getInputStream();
+//                long fileLength = connection.getContentLength();
+//                File file_path = new File(FILE_PATH);
+//                if (!file_path.exists()) {
+//                    file_path.mkdir();
+//                }
+//                out = new FileOutputStream(new File(FILE_NAME));//为指定的文件路径创建文件输出流
+//                byte[] buffer = new byte[1024 * 1024];
+//                int len = 0;
+//                int readLength = 0;
+//                while ((len = in.read(buffer)) != -1) {
+//                    out.write(buffer, 0, len);  //从buffer的第0位开始读取len长度的字节到输出流
+//                    readLength += len;
+//                    int curProgress = (int) (((float) readLength / fileLength) * 100);
+//                    Log.e(TAG, "当前下载进度：" + curProgress);
+//                    publishProgress(curProgress, readLength);
+//                    if (readLength >= fileLength) {
+//                        break;
+//                    }
+//                }
+//                out.flush();
+//                return INSTALL_TOKEN;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            } finally {
+//                if (out != null) {
+//                    try {
+//                        out.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                if (in != null) {
+//                    try {
+//                        in.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                if (connection != null) {
+//                    connection.disconnect();
+//                }
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Integer... values) {
+//            Log.e(TAG, "异步更新进度接收到的值：" + values[0]);
+//            pb.setProgress(values[0]);
+//            tvRate.setText(values[0] + "%");
+//            tvFileSize.setText(getDoubleFomat(((double) values[1]) / 1024 / 1024) + "M" +
+//                    "/" + getDoubleFomat((Double.valueOf(versionInfo.resfilesize)) / 1024 / 1024) + "M");
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Integer integer) {
+//            if (StringUtils.equals("1", versionInfo.isforce)) {
+//                tvDownload.setEnabled(true);
+//                tvCancel.setEnabled(true);
+//            }
+//            //安装应用
+//            installApp();
+//        }
+//    }
 
     /**
      * 安装新版本应用
@@ -285,15 +286,15 @@ public class UpdateAppManager {
         if (apkFile.exists()) {
             Uri uri;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                uri = FileProvider.getUriForFile( mContext, mContext.getPackageName() + ".fileprovider", apkFile );
+                uri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".fileprovider", apkFile);
             } else {
-                uri = Uri.fromFile( apkFile );
+                uri = Uri.fromFile(apkFile);
             }
-            Intent in = new Intent( Intent.ACTION_VIEW );
-            in.setDataAndType( uri, "application/vnd.android.package-archive" );
-            in.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
-            in.addFlags( Intent.FLAG_GRANT_READ_URI_PERMISSION );
-            mContext.startActivity( in );
+            Intent in = new Intent(Intent.ACTION_VIEW);
+            in.setDataAndType(uri, "application/vnd.android.package-archive");
+            in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            in.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            mContext.startActivity(in);
         }
     }
 }

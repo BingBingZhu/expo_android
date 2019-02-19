@@ -220,7 +220,6 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
     @OnClick(R.id.setting_update)
     public void clickUpdate(MySettingView view) {
         mPresenter.checkUpdate();
-        LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS, Constants.Action.ACTION_CANCEL_UPDATE);
     }
 
     @OnClick(R.id.setting_location_pattern)
@@ -333,44 +332,8 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
                 LanguageUtil.isCN() ? commonInfo.getCaption() : commonInfo.getCaptionEn() );
     }
 
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Constants.Action.ACTION_DOWNLOAD_APP_SUCCESS)){
-                LocalBroadcastUtil.unregisterReceiver(context, receiver);
-                installApp(getContext());
-            }
-            if (intent.getAction().equals(Constants.Action.ACTION_CANCEL_UPDATE)){
-                LocalBroadcastUtil.unregisterReceiver(context, receiver);
-            }
-        }
-    };
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void installApp(Context context){
-        if(!getPackageManager().canRequestPackageInstalls()){
-            Uri packageURI = Uri.parse("package:"+getPackageName());
-            Intent in = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageURI);
-            startActivityForResult(in, Constants.RequestCode.REQ_INSTALL_PERMISS_CODE);
-            return;
-        }
-        UpdateAppManager.getInstance(context).installApp();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.RequestCode.REQ_INSTALL_PERMISS_CODE){
-            if(getPackageManager().canRequestPackageInstalls()) {
-                UpdateAppManager.getInstance(getContext()).installApp();
-            }
-        }
-    }
-
     @Override
     protected void onDestroy() {
-        LocalBroadcastUtil.unregisterReceiver(getContext(), receiver);
         super.onDestroy();
     }
 }
