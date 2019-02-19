@@ -126,7 +126,7 @@ public interface Constants {
         //自己服务器文件资源请求用到的URL
         public static final String FILE_BASE_URL = "http://" + IP + "/res/";
         //        public static final String FILE_BASE_URL = "http://36.112.128.167:8084/res/";
-        public static final String PANORAMA_BASE_URL = "http://36.112.130.38:8089";
+        public static final String PANORAMA_BASE_URL = "http://36.112.128.174:8089";
         public static final String SCENIC_SPOTS = "GetParksList";
         public static final String ACTUAL_SCENES = "GetVenuesList";
         //植物识别地址
