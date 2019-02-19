@@ -27,6 +27,7 @@ import com.expo.network.response.BaseResponse;
 import com.expo.network.response.CircumResp;
 import com.expo.network.response.VersionInfoResp;
 import com.expo.upapp.UpdateAppManager;
+import com.expo.utils.Constants;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
@@ -169,7 +170,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("and")
                 .add("eq", "type_id", "1")
                 .add("limit", 0, 5)
-                .add("orderBy","sort_idx",true);
+                .add("orderBy", "sort_idx", true);
         List tmp = mDao.query(RouteInfo.class, params);
         if (tmp != null) {
             data.addAll(tmp);
@@ -186,7 +187,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         QueryParams params = new QueryParams()
                 .add("eq", "recommend", "1")
                 .add("and")
-                .add("eq", "type_name", "景点")
+                .add("eq", "type_name", Constants.CHString.SCENIC_SPOT)
                 .add("and")
                 .add("eq", "enable", 1)
                 .add("orderBy", "recommended_idx", true)
@@ -252,7 +253,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         ArrayList data = new ArrayList();
         data.add(R.string.expo_food);
         QueryParams params = new QueryParams()
-                .add("eq", "type_name", "美食")
+                .add("eq", "type_name", Constants.CHString.RESTAURANT)
                 .add("and")
                 .add("eq", "enable", 0)
                 .add("orderBy", "recommended_idx", true)
@@ -306,7 +307,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         ArrayList data = new ArrayList();
         data.add(R.string.expo_characteristic_hotel);
         QueryParams params = new QueryParams()
-                .add("eq", "type_name", "酒店")
+                .add("eq", "type_name", Constants.CHString.HOTEL)
                 .add("and")
                 .add("eq", "enable", 1)
                 .add("orderBy", "recommended_idx", true)
