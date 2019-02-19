@@ -148,7 +148,6 @@ public interface Constants {
      * 对app中内容配置
      */
     class Config {
-
         public static final String BASE_FILE_PATH = "expo/";                          //数据存储文件夹
         public static final String IMAGE_PATH = BASE_FILE_PATH + "images/";       //图片存储文件夹
         public static final String CROP_SAVE_PATH = IMAGE_PATH + "crop/";             //图片裁剪存储文件
@@ -193,7 +192,7 @@ public interface Constants {
         public static final String LOGIN_CHANGE_OF_STATE_ACTION = "login_change_of_state_action";
         public static final String ACTION_RECEIVE_MESSAGE = "action_receive_message";
         public static final String ACTION_CHANGE_LANGUAGE = "action_change_language";
-        public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
+//        public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
         public static final String ACTION_TRACK_CHANAGE = "action_track_chanage";
         public static final String ACTION_LOCATION_CHANGED_IN_SCENES = "action_location_changed_in_scenes";
         public static final String ACTION_REDUCE_USER_POINTS = "action_reduce_user_points";
@@ -304,7 +303,7 @@ public interface Constants {
 
 
     class TimeType {
-        //        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
+//        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
 //        public static final int AFTERNOON = 14 * 3600 * 1000;//中午和下午的分割线
 //        public static final int NIGHT = 19 * 3600 * 1000;//下午和晚上的分割线
         public static final int MORNING = 12 * 3600 * 1000;//上午和中午的分割线

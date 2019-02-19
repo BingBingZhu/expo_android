@@ -1,8 +1,11 @@
 package com.expo.base;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.Gravity;
@@ -15,6 +18,8 @@ import com.expo.R;
 import com.expo.base.utils.ActivityHelper;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.PresenterFactory;
+import com.expo.upapp.UpdateAppManager;
+import com.expo.utils.Constants;
 import com.expo.widget.AppBarView;
 import com.expo.widget.RootView;
 
@@ -83,6 +88,16 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.RequestCode.REQ_INSTALL_PERMISS_CODE) {
+            if(getContext().getPackageManager().canRequestPackageInstalls()) {
+                UpdateAppManager.getInstance(getContext()).installApp();
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {
