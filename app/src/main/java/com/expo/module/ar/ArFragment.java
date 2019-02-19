@@ -58,7 +58,7 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
     @Override
     public void onStart() {
         super.onStart();
-        if (AppUtils.getAppInfo("com.casvd.expo_ar_test") == null)
+        if (AppUtils.getAppInfo("com.casvd.expo_ar") == null)
             mBtn.setText("去下载");
         else
             mBtn.setText("去体验");
@@ -153,7 +153,7 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
     }
 
     private void gotoVr() {
-        if (AppUtils.getAppInfo("com.casvd.expo_ar_test") == null) {
+        if (AppUtils.getAppInfo("com.casvd.expo_ar") == null) {
             String url = "http://p.gdown.baidu.com/1894c00d4eb74dae604ec7c747c890e68db0b29f2b380ca1c5e50b8becffc183b1bcb602b9dc0f72dfd0ee97ea8ff77b657758a79f006e8e586edd2fdbb7a467b6099baf4e7dc2cf7c099b33796ea3f798ada29019128e4c50608e8cfe328de413809f8c37646b6b92b858250c91ef3703c1a3de6af6c8132b938981d11afcc8c0d57f25f944f1318421f469426787db543214891727c2998dce6b131dedafccba57f73b964b2ce30b4a291850e8304a7a51bd4fff3459a71bbe6d8959176700";
             if (Http.getNetworkType().toLowerCase().contains("wifi")) {
                 UpdateAppManager.getInstance(getContext()).addArAppDownload(url);

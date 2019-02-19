@@ -963,6 +963,8 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 //                } else {
                 if (isTabByCnName("AR乐拍") && AppUtils.getAppInfo("com.casvd.expo_ar") == null)
                     mArDownloadView.setVisibility(View.VISIBLE);
+                else
+                    mArDownloadView.setVisibility(View.GONE);
                 if (null != mFacilities) {
                     if (isTabByCnName("\u8f66\u7ad9")) {
                         addActualSceneMarker(mTabId, mFacilities, true);
