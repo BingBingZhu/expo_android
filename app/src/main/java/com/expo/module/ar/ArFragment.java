@@ -24,6 +24,8 @@ import com.expo.base.utils.ToastHelper;
 import com.expo.contract.ArContract;
 import com.expo.entity.CommonInfo;
 import com.expo.module.webview.WebActivity;
+import com.expo.network.Http;
+import com.expo.services.DownloadListenerService;
 import com.expo.upapp.UpdateAppManager;
 import com.expo.utils.Constants;
 import com.expo.utils.LocalBroadcastUtil;
@@ -56,7 +58,7 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
     @Override
     public void onStart() {
         super.onStart();
-        if (AppUtils.getAppInfo("com.casvd.expo_ar") == null)
+        if (AppUtils.getAppInfo("com.casvd.expo_ar_test") == null)
             mBtn.setText("去下载");
         else
             mBtn.setText("去体验");
@@ -93,17 +95,11 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.RequestCode.REQ_AR && resultCode == Activity.RESULT_OK && data != null) {
             ToastHelper.showShort("完成交互获取到新的积分喽！");
-        }
-        if (requestCode == Constants.RequestCode.REQ_INSTALL_PERMISS_CODE) {
-            if(getContext().getPackageManager().canRequestPackageInstalls()) {
-                UpdateAppManager.getInstance(getContext()).installApp();
-            }
         }
     }
 
@@ -145,23 +141,9 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
         }
     }
 
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Constants.Action.ACTION_DOWNLOAD_VR_APP_SUCCESS)){
-                LocalBroadcastUtil.unregisterReceiver(context, receiver);
-                installApp(getContext());
-            }
-            if (intent.getAction().equals(Constants.Action.ACTION_CANCEL_UPDATE)){
-                LocalBroadcastUtil.unregisterReceiver(context, receiver);
-            }
-        }
-    };
-
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void installApp(Context context){
-        if(!context.getPackageManager().canRequestPackageInstalls()){
+    public void installApp(Context context) {
+        if(!context.getPackageManager().canRequestPackageInstalls()) {
             Uri packageURI = Uri.parse("package:"+ context.getPackageName());
             Intent in = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
             startActivityForResult(in, Constants.RequestCode.REQ_INSTALL_PERMISS_CODE);
@@ -171,20 +153,20 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
     }
 
     private void gotoVr() {
-        if (AppUtils.getAppInfo("com.casvd.expo_ar") == null) {
+        if (AppUtils.getAppInfo("com.casvd.expo_ar_test") == null) {
             String url = "http://p.gdown.baidu.com/1894c00d4eb74dae604ec7c747c890e68db0b29f2b380ca1c5e50b8becffc183b1bcb602b9dc0f72dfd0ee97ea8ff77b657758a79f006e8e586edd2fdbb7a467b6099baf4e7dc2cf7c099b33796ea3f798ada29019128e4c50608e8cfe328de413809f8c37646b6b92b858250c91ef3703c1a3de6af6c8132b938981d11afcc8c0d57f25f944f1318421f469426787db543214891727c2998dce6b131dedafccba57f73b964b2ce30b4a291850e8304a7a51bd4fff3459a71bbe6d8959176700";
-            if (isWifi()) {
+            if (Http.getNetworkType().toLowerCase().contains("wifi")) {
                 UpdateAppManager.getInstance(getContext()).addArAppDownload(url);
+                DownloadListenerService.startService(getContext());
                 new CustomDefaultDialog(getContext()).setContent("已添加至下载列表").setOnlyOK().show();
-                LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_DOWNLOAD_VR_APP_SUCCESS);
             } else {
                 CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
                 dialog.setContent("当前下载消耗较多数据流量，是否继续？")
                         .setOnOKClickListener(view -> {
                             UpdateAppManager.getInstance().addArAppDownload(url);
                             dialog.dismiss();
+                            DownloadListenerService.startService(getContext());
                             new CustomDefaultDialog(getContext()).setContent("已添加至下载列表").setOnlyOK().show();
-                            LocalBroadcastUtil.registerReceiver(getContext(), receiver, Constants.Action.ACTION_DOWNLOAD_VR_APP_SUCCESS);
                         }).show();
             }
 //            WebActivity.startActivity(getContext(), mPresenter.loadCommonInfo(CommonInfo.EXPO_AR_DOWNLOAD_PAGE), "Logo扫一扫");
@@ -210,17 +192,5 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
             in.setData(Uri.parse("casvd://ar.casvd.com/" + type));
             startActivityForResult(in, Constants.RequestCode.REQ_AR);
         }
-    }
-
-
-    private boolean isWifi() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
-        if (info != null
-                && info.getType() == ConnectivityManager.TYPE_WIFI) {
-            return true;
-        }
-        return false;
     }
 }

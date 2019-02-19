@@ -38,6 +38,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
+import com.blankj.utilcode.util.AppUtils;
 import com.expo.R;
 import com.expo.adapters.DownloadData;
 import com.expo.adapters.LBSMapAdapter;
@@ -61,13 +62,19 @@ import com.expo.map.ClusterClickListener;
 import com.expo.map.ClusterItem;
 import com.expo.map.MapUtils;
 import com.expo.map.NaviManager;
+import com.expo.module.ar.ArActivity;
 import com.expo.module.download.DownloadManager;
 import com.expo.module.routes.RouteDetailActivity;
 import com.expo.module.webview.WebTemplateActivity;
 import com.expo.network.Http;
+import com.expo.services.DownloadListenerService;
+import com.expo.services.TrackRecordService;
+import com.expo.upapp.UpdateAppManager;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
+import com.expo.utils.LocalBroadcastUtil;
 import com.expo.utils.media.MediaPlayUtil;
+import com.expo.widget.CustomDefaultDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 
@@ -95,12 +102,14 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     TabLayout mTabView;
     @BindView(R.id.map_view)
     TextureMapView mMapView;
-//    @BindView(R.id.park_map_menu)
+    //    @BindView(R.id.park_map_menu)
 //    ImageView mImgMenu;
     @BindView(R.id.select_tour_guide)
     SimpleDraweeView mTourGuideImg;
     @BindView(R.id.map_pattern_chanage)
     ImageView mImgChanagePattern;
+    @BindView(R.id.ar_download_view)
+    View mArDownloadView;
 
     private RecyclerView mTouristListView;
 
@@ -115,6 +124,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     private Dialog mTouristDialog;
     private Dialog mActualSceneDialog;
     private Dialog mRouteInfoDialog;
+    private Dialog mVrDialog;
     private List<TouristType> mTouristTypes;
     private List<VenuesType> mVenuesTypes;
     private List<RouteInfo> mRouteInfos;
@@ -181,8 +191,6 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false))
-            mImgChanagePattern.setVisibility(View.GONE);
         mMapView.onCreate(savedInstanceState);
         mAMap = mMapView.getMap();
         mMapUtils = new MapUtils(mAMap);
@@ -210,13 +218,21 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 //        mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false))
+            mImgChanagePattern.setVisibility(View.GONE);
+    }
+
     /**
      * 设置地图中心点
+     *
      * @param xy
      */
-    private void setMapCenterPoint(int xy){
+    private void setMapCenterPoint(int xy) {
         if (xy == 0)
-            mAMap.setPointToCenter( mMapView.getDisplay().getWidth() /2 , getResources().getDisplayMetrics().heightPixels /2 );
+            mAMap.setPointToCenter(mMapView.getDisplay().getWidth() / 2, getResources().getDisplayMetrics().heightPixels / 2);
         else
             mAMap.setPointToCenter(getResources().getDisplayMetrics().widthPixels / 2 - mapOffsetX, getResources().getDisplayMetrics().heightPixels / 2 + mapOffsetY);
     }
@@ -239,7 +255,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         return true;
     }
 
-    @OnClick({R.id.latched_position, R.id.select_tour_guide, /*R.id.park_map_menu,*/ R.id.map_pattern_chanage})
+    @OnClick({R.id.latched_position, R.id.select_tour_guide, /*R.id.park_map_menu,*/ R.id.map_pattern_chanage, R.id.ar_down_load})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.latched_position:     // 位置锁定
@@ -262,6 +278,24 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 mPattern = mPattern >= 3 ? 1 : mPattern;
                 PrefsHelper.setLong(Constants.Prefs.KEY_MAP_PATTERN, mPattern);
                 mAMap.setMapType((int) mPattern);
+                break;
+            case R.id.ar_down_load:
+                Http.getNetworkType().toLowerCase().contains("wifi");
+                String url = "http://p.gdown.baidu.com/1894c00d4eb74dae604ec7c747c890e68db0b29f2b380ca1c5e50b8becffc183b1bcb602b9dc0f72dfd0ee97ea8ff77b657758a79f006e8e586edd2fdbb7a467b6099baf4e7dc2cf7c099b33796ea3f798ada29019128e4c50608e8cfe328de413809f8c37646b6b92b858250c91ef3703c1a3de6af6c8132b938981d11afcc8c0d57f25f944f1318421f469426787db543214891727c2998dce6b131dedafccba57f73b964b2ce30b4a291850e8304a7a51bd4fff3459a71bbe6d8959176700";
+                if (Http.getNetworkType().toLowerCase().contains("wifi")) {
+                    UpdateAppManager.getInstance(getContext()).addArAppDownload(url);
+                    new CustomDefaultDialog(getContext()).setContent("已添加至下载列表").setOnlyOK().show();
+                    DownloadListenerService.startService(getContext());
+                } else {
+                    CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+                    dialog.setContent("当前下载消耗较多数据流量，是否继续？")
+                            .setOnOKClickListener(view -> {
+                                dialog.dismiss();
+                                UpdateAppManager.getInstance().addArAppDownload(url);
+                                new CustomDefaultDialog(getContext()).setContent("已添加至下载列表").setOnlyOK().show();
+                                DownloadListenerService.startService(getContext());
+                            }).show();
+                }
                 break;
         }
     }
@@ -475,6 +509,49 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         }
     };
 
+    /**
+     * AR乐拍
+     *
+     * @param venue
+     */
+    private void showArDialog(Venue venue) {
+        boolean isIn = mMapUtils.ptInPolygon(new LatLng(TrackRecordService.getLocation().getLatitude(),
+                TrackRecordService.getLocation().getLongitude()), venue.getElectronicFenceList());
+        if (null == mVrDialog)
+            mVrDialog = new Dialog(getContext(), R.style.TopActionSheetDialogStyle);
+        if (mVrDialog.isShowing())
+            return;
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_vr_dialog, null);
+        ImageView imgLock = v.findViewById(R.id.vr_dialog_lock_img);
+        ImageView imgClose = v.findViewById(R.id.vr_dialog_close);
+        TextView tv1 = v.findViewById(R.id.vr_dialog_tv_1);
+        TextView tv2 = v.findViewById(R.id.vr_dialog_tv_2);
+        TextView function = v.findViewById(R.id.vr_dialog_function);
+        if (isIn) {
+            imgLock.setImageResource(R.mipmap.ico_vr_no_lock);
+            tv1.setText("您已成功解锁该区域");
+            tv2.setText("快去体验AR照相的乐趣吧");
+            function.setText("立即拍照");
+        } else {
+            imgLock.setImageResource(R.mipmap.ico_vr_lock);
+            tv1.setText("您还没有解锁该区域");
+            tv2.setText("需前往改体验区体验");
+            function.setText("立即前往");
+        }
+        function.setOnClickListener(view -> {
+            if (isIn) {
+                ArActivity.startActivity(getContext());
+            } else {
+                PlayMapActivity.startActivity(getContext(), mAtVenue, venue, mVenuesTypes.get(mTabPosition).getMarkBitmap());
+            }
+            mVrDialog.dismiss();
+        });
+        imgClose.setOnClickListener(v1 -> mVrDialog.dismiss());
+        mVrDialog.setContentView(v);
+        ViewUtils.settingDialog(getContext(), mVrDialog);
+        mVrDialog.show();//显示对话框
+    }
+
 //    /**
 //     * 设施信息弹出框
 //     */
@@ -629,7 +706,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         this.mTouristTypes = touristTypes;
         for (TouristType touristType : mTouristTypes) {
             if (touristType.isUsed()) {
-                if (null == touristType.getPicSmallUrl() || touristType.getPicSmallUrl().isEmpty() )
+                if (null == touristType.getPicSmallUrl() || touristType.getPicSmallUrl().isEmpty())
                     mTourGuideImg.setImageResource(R.mipmap.ico_default_tour_small);
                 else
                     mTourGuideImg.setImageURI(Constants.URL.FILE_BASE_URL + touristType.getPicSmallUrl());
@@ -769,7 +846,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 for (TouristType touristType : mTouristTypes) {
                     if (touristType.getId() == mTouristTypes.get(position).getId()) {
                         touristType.setUsed(true);
-                        if (null == touristType.getPicSmallUrl() || touristType.getPicSmallUrl().isEmpty() )
+                        if (null == touristType.getPicSmallUrl() || touristType.getPicSmallUrl().isEmpty())
                             mTourGuideImg.setImageResource(R.mipmap.ico_default_tour_small);
                         else
                             mTourGuideImg.setImageURI(Constants.URL.FILE_BASE_URL + touristType.getPicSmallUrl());
@@ -884,14 +961,16 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 //                    else
 //                        drawLineToMap("1", 0);
 //                } else {
-                    if (null != mFacilities) {
-                        if (isTabByCnName("\u8f66\u7ad9")) {
-                            addActualSceneMarker(mTabId, mFacilities, true);
-                            drawLineToMap("2", 0);
-                        } else {
-                            addActualSceneMarker(mTabId, mFacilities, true);
-                        }
+                if (isTabByCnName("AR乐拍") && AppUtils.getAppInfo("com.casvd.expo_ar") == null)
+                    mArDownloadView.setVisibility(View.VISIBLE);
+                if (null != mFacilities) {
+                    if (isTabByCnName("\u8f66\u7ad9")) {
+                        addActualSceneMarker(mTabId, mFacilities, true);
+                        drawLineToMap("2", 0);
+                    } else {
+                        addActualSceneMarker(mTabId, mFacilities, true);
                     }
+                }
 //                }
             }
 
@@ -996,12 +1075,19 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        setMapCenterPoint(1);
-        marker.showInfoWindow();
+        if (isTabByCnName("AR乐拍")) {
+//            marker.hideInfoWindow();
+            marker.setInfoWindowEnable(false);
+            showArDialog((Venue) marker.getObject());
+        } else {
+            setMapCenterPoint(1);
+            marker.showInfoWindow();
+            mMapUtils.mapGoto(marker.getOptions().getPosition());
 //        Venue venue = (Venue) marker.getObject();
 //        // 显示marker弹窗
 //        showVenueDialog(venue);
-        return false;
+        }
+        return true;
     }
 
     private AMap.OnMyLocationChangeListener mLocationChangeListener = new AMap.OnMyLocationChangeListener() {

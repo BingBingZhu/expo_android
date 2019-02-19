@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_2"
+        android:background="@color/white_f5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_20"
+        android:layout_marginBottom="@dimen/dms_20"
+        android:textSize="@dimen/font_30"
+        android:textColor="@color/color_333"
+        android:text="AR乐拍"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dms_2"
+        android:layout_marginLeft="@dimen/dms_32"
+        android:layout_marginRight="@dimen/dms_32"
+        android:background="@color/white_f5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dms_44"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/font_24"
+        android:textColor="@color/color_666"
+        android:text="请下载离线包，然后选择地图表签和吉祥物拍照！
+建议在WI-FI的网络环境下下载。"/>
+    <TextView
+        android:id="@+id/ar_down_load"
+        android:layout_width="wrap_content"
+        style="@style/theme_btn"
+        android:paddingLeft="@dimen/dms_36"
+        android:paddingRight="@dimen/dms_36"
+        android:paddingTop="@dimen/dms_14"
+        android:paddingBottom="@dimen/dms_14"
+        android:layout_marginTop="@dimen/dms_50"
+        android:layout_marginBottom="@dimen/dms_50"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/vr_bottom"
+        android:textSize="@dimen/font_34"
+        android:text="去下载" />
+</LinearLayout>

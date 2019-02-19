@@ -119,13 +119,13 @@ public interface Constants {
     class URL {
         public static final String ALI_BASE_URL = "http://47.95.215.6:8080/Api/";    //阿里云(识花)
         //IP
-        public static final String IP = "39.105.120.171:8080";
-//        public static final String IP = "36.112.128.48:8089";
+//        public static final String IP = "39.105.120.171:8080";
+        public static final String IP = "36.112.128.48:8089";
         //自己服务器基本请求用到的URL
         public static final String BASE_URL = "http://" + IP + "/Api/";
         //自己服务器文件资源请求用到的URL
-        public static final String FILE_BASE_URL = "http://39.105.120.171/res/";
-//        public static final String FILE_BASE_URL = "http://36.112.128.167:8084/res/";
+//        public static final String FILE_BASE_URL = "http://39.105.120.171/res/";
+        public static final String FILE_BASE_URL = "http://36.112.128.167:8084/res/";
         public static final String PANORAMA_BASE_URL = "http://36.112.130.38:8089";
         public static final String SCENIC_SPOTS = "GetParksList";
         public static final String ACTUAL_SCENES = "GetVenuesList";
@@ -137,7 +137,7 @@ public interface Constants {
         public static final String HTML_404 = "file:///android_asset/web/404.html";
         public static final String UPPAY_APP_DOWNLOAD_URL = "http://47.92.247.143/res/static/UPPayPluginEx.apk";
         //        public static final String MAP_TILES_BASE_URL = FILE_BASE_URL + "titlemap/tiles/%d/%d_%d.png";
-        public static final String MAP_TILES_BASE_URL = "http://39.105.120.171/res/titlemap/tiles/%d/%d_%d.png";
+        public static final String MAP_TILES_BASE_URL = FILE_BASE_URL + "titlemap/tiles/%d/%d_%d.png";
         public static final String REGISTER_TICKET = "http://47.92.129.164:8890/ticketAppUser/appUserToOffWebUser";
 
         public static final String ASSETS_DEFAULT_TOUR_FILE_NAME = "defaulttour.zip";
@@ -148,7 +148,6 @@ public interface Constants {
      * 对app中内容配置
      */
     class Config {
-
         public static final String BASE_FILE_PATH = "expo/";                          //数据存储文件夹
         public static final String IMAGE_PATH = BASE_FILE_PATH + "images/";       //图片存储文件夹
         public static final String CROP_SAVE_PATH = IMAGE_PATH + "crop/";             //图片裁剪存储文件
@@ -193,7 +192,7 @@ public interface Constants {
         public static final String LOGIN_CHANGE_OF_STATE_ACTION = "login_change_of_state_action";
         public static final String ACTION_RECEIVE_MESSAGE = "action_receive_message";
         public static final String ACTION_CHANGE_LANGUAGE = "action_change_language";
-        public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
+//        public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
         public static final String ACTION_TRACK_CHANAGE = "action_track_chanage";
         public static final String ACTION_LOCATION_CHANGED_IN_SCENES = "action_location_changed_in_scenes";
         public static final String ACTION_REDUCE_USER_POINTS = "action_reduce_user_points";
