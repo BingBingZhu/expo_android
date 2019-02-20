@@ -31,9 +31,16 @@
                 android:layout_height="@dimen/dms_128"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:padding="@dimen/dms_28"
                 android:background="@mipmap/vr_btn_bg"
+                android:padding="@dimen/dms_28"
                 android:src="@mipmap/vr_eye" />
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dms_28"
+                android:src="@mipmap/ico_white_back" />
 
         </RelativeLayout>
 

@@ -5,16 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.expo.R;
 import com.expo.base.BaseActivity;
+import com.expo.base.utils.StatusBarUtils;
 import com.expo.contract.VRDetailContract;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.VrInfo;
-import com.expo.module.online.detail.widget.VRImageView;
 import com.expo.module.online.detail.widget.VRInterfaceView;
 import com.expo.module.online.detail.widget.VRVideoView;
 import com.expo.module.webview.WebActivity;
@@ -43,6 +44,8 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
     View mVrIntroduce;
     @BindView(R.id.vr_detail_sendtable)
     View mVrSendtable;
+    @BindView(R.id.back)
+    View mBackView;
 
     VRInterfaceView mVRView;
 
@@ -56,6 +59,7 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        ((ViewGroup.MarginLayoutParams) mBackView.getLayoutParams()).topMargin = StatusBarUtils.getStatusBarHeight(getContext());
         mVrInfo = mPresenter.getVrInfo(getIntent().getLongExtra(Constants.EXTRAS.EXTRA_ID, 0L));
         mEncyclopedias = mPresenter.findEncyclopediaById(mVrInfo.getLinkWikiId());
 
@@ -105,10 +109,17 @@ public class VRDetailActivity extends BaseActivity<VRDetailContract.Presenter> i
         WebTemplateActivity.startActivity(this, mEncyclopedias.id);
     }
 
-    @OnClick(R.id.vr_detail_sendtable)
+    @OnClick({R.id.vr_detail_sendtable, R.id.back})
     public void clickSendtable(View view) {
-        mVRView.pause();
-        WebActivity.startActivity(this, mEncyclopedias.modelUrl, "", true);
+        switch (view.getId()) {
+            case R.id.vr_detail_sendtable:
+                mVRView.pause();
+                WebActivity.startActivity(this, mEncyclopedias.modelUrl, "", true);
+                break;
+            case R.id.back:
+                onBackPressed();
+                break;
+        }
     }
 
     @Override

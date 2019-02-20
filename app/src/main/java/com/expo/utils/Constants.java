@@ -126,7 +126,7 @@ public interface Constants {
         //自己服务器文件资源请求用到的URL
         public static final String FILE_BASE_URL = "http://" + IP + "/res/";
         //        public static final String FILE_BASE_URL = "http://36.112.128.167:8084/res/";
-        public static final String PANORAMA_BASE_URL = "http://36.112.130.38:8089";
+        public static final String PANORAMA_BASE_URL = "http://36.112.128.174:8089";
         public static final String SCENIC_SPOTS = "GetParksList";
         public static final String ACTUAL_SCENES = "GetVenuesList";
         //植物识别地址
@@ -192,7 +192,7 @@ public interface Constants {
         public static final String LOGIN_CHANGE_OF_STATE_ACTION = "login_change_of_state_action";
         public static final String ACTION_RECEIVE_MESSAGE = "action_receive_message";
         public static final String ACTION_CHANGE_LANGUAGE = "action_change_language";
-//        public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
+        //        public static final String ACTION_CANCEL_UPDATE = "action_cancel_update";
         public static final String ACTION_TRACK_CHANAGE = "action_track_chanage";
         public static final String ACTION_LOCATION_CHANGED_IN_SCENES = "action_location_changed_in_scenes";
         public static final String ACTION_REDUCE_USER_POINTS = "action_reduce_user_points";
@@ -303,7 +303,7 @@ public interface Constants {
 
 
     class TimeType {
-//        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
+        //        public static final int MORNING = 11 * 3600 * 1000;//上午和中午的分割线
 //        public static final int AFTERNOON = 14 * 3600 * 1000;//中午和下午的分割线
 //        public static final int NIGHT = 19 * 3600 * 1000;//下午和晚上的分割线
         public static final int MORNING = 12 * 3600 * 1000;//上午和中午的分割线
@@ -314,5 +314,11 @@ public interface Constants {
         public static final String VR_TYPE_VIDEO = "0";//视频
         public static final String VR_TYPE_IMG = "1";//图片
         public static final String VR_TYPE_VR = "2";//vr
+    }
+
+    class CHString {
+        public static final String RESTAURANT = "\u9910\u5385";//餐厅
+        public static final String HOTEL = "\u9152\u5e97";//酒店
+        public static final String SCENIC_SPOT = "\u666f\u70b9";//景点
     }
 }

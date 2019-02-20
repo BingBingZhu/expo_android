@@ -24,6 +24,7 @@ import com.expo.R;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.ExpoApp;
+import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.HomeContract;
@@ -121,6 +122,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     boolean isLocation = false;
     boolean hasTabView2Top;
     private int topHeight = 0;
+    private int screenHeight;
     private Location mLocation;
     private List<Circum> mCircum;
 
@@ -153,10 +155,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             if (topHeight == 0) {
                 topHeight = mHtTitle.getBottom() + mTabView1.getHeight();
             }
-            if (mEatAndHotelView != null && mEatAndHotelView.getTop() - scrollY - 15 <= topHeight) {
-                setSelectedTab(R.id.home_tab1_3);
-            } else if (mPeripheryView != null && mPeripheryView.getTop() - scrollY - 15 <= topHeight) {
+            if (mPeripheryView != null && mPeripheryView.getBottom() - scrollY <= screenHeight) {
                 setSelectedTab(R.id.home_tab1_4);
+            } else if (mEatAndHotelView != null && mEatAndHotelView.getTop() - scrollY - 15 <= topHeight) {
+                setSelectedTab(R.id.home_tab1_3);
             } else if (mServiceQA != null && mServiceQA.getTop() - scrollY - 15 <= topHeight) {
                 setSelectedTab(R.id.home_tab1_2);
             } else if (mFindView != null && mFindView.getTop() - scrollY - 15 <= topHeight) {
@@ -211,6 +213,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         mTabView2.findViewById(R.id.home_tab1_3).setOnClickListener(this);
         mTabView2.findViewById(R.id.home_tab1_4).setOnClickListener(this);
 //        mTabView2.findViewById(R.id.home_tab1_science).setOnClickListener(this);
+        screenHeight = getResources().getDisplayMetrics().heightPixels;
     }
 
     private void initLayout() {
@@ -232,13 +235,16 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             mContainer.addView(view, 2);
         }
         //发现
-        List<Object> discover = mPresenter.loadDiscover();
-        if (discover != null && !discover.isEmpty()) {
-            mFindView = mGridLayoutFactory.getView(configs.get(1), discover);
-            mFindView.setPadding(padding20, padding20, padding20, padding20);
-            ((ViewGroup.MarginLayoutParams) mFindView.getLayoutParams()).topMargin = marginTop;
-            mContainer.addView(mFindView, 6);
-        }
+//        List<Object> discover = mPresenter.loadDiscover();
+//        if (discover != null && !discover.isEmpty()) {
+//            mFindView = mGridLayoutFactory.getView(configs.get(1), discover);
+//            mFindView.setPadding(padding20, padding20, padding20, padding20);
+//            ((ViewGroup.MarginLayoutParams) mFindView.getLayoutParams()).topMargin = marginTop;
+//            mContainer.addView(mFindView, 6);
+//        }
+        //发现占位-----------------------------
+        mFindView = new View(getContext());
+        mContainer.addView(mFindView, 6, new LinearLayout.LayoutParams(0, 0));
         //活动
         List<Object> activityInfos = mPresenter.loadExpoActivities();
         if (activityInfos != null && !activityInfos.isEmpty()) {
@@ -369,7 +375,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                     }
                     if ("bespeak".equals(tag)) {
                         TextView tvTime = item.findViewById(R.id.describe);
-                        tvTime.setText(new SimpleDateFormat("yyyy\u5e74MM\u6708dd\u65e5", Locale.getDefault()).format(new Date()));
+                        tvTime.setText(new SimpleDateFormat(getString(R.string.home_bespeak_title_date_format), Locale.getDefault()).format(new Date()));
                         tvTime.setVisibility(View.VISIBLE);
                         tvMore.setAutoLinkMask(Linkify.ALL);
                         tvMore.setCompoundDrawables(null, null, null, null);
@@ -377,6 +383,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                         SpannableString content = new SpannableString(getString(R.string.enter));
                         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                         tvMore.setText(content);
+                    } else if ("expo_foods".equals(tag)) {
+                        tvMore.setVisibility(View.GONE);
                     }
                     tvMore.setTag(tag);
                     tvMore.setOnClickListener(moreClickListener);
