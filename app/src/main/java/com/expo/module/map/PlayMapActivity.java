@@ -260,7 +260,8 @@ public class PlayMapActivity extends BaseActivity<PlayMapContract.Presenter> imp
         Intent in = new Intent(context, PlayMapActivity.class);
         in.putParcelableArrayListExtra(Constants.EXTRAS.EXTRA_AT_VENUE_LIST, (ArrayList<Venue>) venues);
         in.putExtra(Constants.EXTRAS.EXTRA_JSON_DATA, Http.getGsonInstance().toJson(venue));
-        in.putExtra(Constants.EXTRAS.EXTRA_BITMAP_BYTE_ARRAY, bitmapToByteArray(bitmap));
+        if(null != bitmap)
+            in.putExtra(Constants.EXTRAS.EXTRA_BITMAP_BYTE_ARRAY, bitmapToByteArray(bitmap));
         context.startActivity(in);
     }
 
