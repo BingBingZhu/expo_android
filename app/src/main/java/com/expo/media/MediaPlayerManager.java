@@ -183,6 +183,10 @@ public class MediaPlayerManager implements MediaPlayer.OnCompletionListener, Med
             while (!isExit) {
                 //设置进度条的进度
                 //得到当前音乐的播放位置
+                if (null == mMediaPlayer) {
+                    isExit = true;
+                    continue;
+                }
                 mProgress = mMediaPlayer.getCurrentPosition();
                 //让进度条每一秒向前移动
                 if (mListener != null) {
