@@ -5,6 +5,7 @@ import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Schedule;
+import com.expo.entity.ScheduleVenue;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 
@@ -39,6 +40,7 @@ public interface WebTemplateContract {
 
         public abstract Venue loadSceneById(long id);
 
+        public abstract ScheduleVenue loadScheduleVenueByWikiId(long id);
     }
 
     interface View extends IView {

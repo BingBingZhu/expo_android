@@ -11,6 +11,7 @@ import com.expo.db.QueryParams;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Schedule;
+import com.expo.entity.ScheduleVenue;
 import com.expo.entity.Venue;
 import com.expo.entity.Encyclopedias;
 import com.expo.network.Http;
@@ -212,5 +213,15 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
     @Override
     public Venue loadSceneById(long id) {
         return mDao.queryById(Venue.class, id);
+    }
+
+    @Override
+    public ScheduleVenue loadScheduleVenueByWikiId(long id) {
+        Venue venue = mDao.unique(Venue.class, new QueryParams().add("eq", "wiki_id", id));
+        if (null == venue){
+            return null;
+        }
+        ScheduleVenue scheduleVenue = mDao.unique(ScheduleVenue.class, new QueryParams().add("eq", "link_id", venue.getId()));
+        return scheduleVenue;
     }
 }
