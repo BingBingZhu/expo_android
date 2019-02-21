@@ -21,7 +21,7 @@ public class ArActivity extends BaseActivity {
     protected void onInitView(Bundle savedInstanceState) {
         setTitle(1, "新体验");
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.root, new ArFragment(), "ar_fragment")
+                .add(R.id.root, new ArFragment(getIntent().getStringExtra("intentType")), "ar_fragment")
                 .commit();
     }
 
@@ -30,8 +30,9 @@ public class ArActivity extends BaseActivity {
         return false;
     }
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context,String intentType) {
         Intent in = new Intent(context, ArActivity.class);
+        in.putExtra("intentType",intentType);
         context.startActivity(in);
     }
 
@@ -42,7 +43,8 @@ public class ArActivity extends BaseActivity {
             in.setData(Uri.parse("casvd://ar.casvd.com/2"));
             context.startActivity(in);
         } else {
-            WebActivity.startActivity(context, downloadUrl, "趣味AR体验");
+            //WebActivity.startActivity(context, downloadUrl, "趣味AR体验");
+            startActivity(context,"AR乐拍");
         }
     }
 }

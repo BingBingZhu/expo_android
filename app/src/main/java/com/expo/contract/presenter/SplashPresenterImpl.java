@@ -1,6 +1,5 @@
 package com.expo.contract.presenter;
 
-import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -16,6 +15,8 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Park;
 import com.expo.entity.PortalSite;
+import com.expo.entity.QAd;
+import com.expo.entity.QAt;
 import com.expo.entity.RouteHotInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
@@ -36,6 +37,7 @@ import com.expo.network.response.EncyclopediasResp;
 import com.expo.network.response.ExpoActivityInfoResp;
 import com.expo.network.response.ParkResp;
 import com.expo.network.response.PortalSiteResp;
+import com.expo.network.response.QAResp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
 import com.expo.network.response.ScheduleResp;
@@ -53,8 +55,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -65,6 +70,7 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
 
     private AtomicInteger loadCompleteCount;
     private boolean isRequest;
+    public static SimpleDateFormat sdf = new SimpleDateFormat( Constants.TimeFormat.TYPE_ALL, Locale.getDefault() );
 
     public SplashPresenterImpl(SplashContract.View view) {
         super(view);
@@ -147,7 +153,12 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                     if (!rsp.parkList.equals(updateTime)) {
                         loadParksList();
                     }
-                }
+                }/*if (!TextUtils.isEmpty(rsp.QAList)) {
+                    updateTime = PrefsHelper.getString(Constants.Prefs.KEY_QA_UPDATE_TIME, null);
+                    if (!rsp.QAList.equals(updateTime)) {*/
+                        loadQAsList();
+                 /*   }
+                }*/
                 if (!TextUtils.isEmpty(rsp.badge)) {
                     updateTime = PrefsHelper.getString(Constants.Prefs.KEY_BADGE_UPDATE_TIME, null);
                     if (!rsp.badge.equals(updateTime)) {
@@ -309,6 +320,34 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
                 PrefsHelper.setString(Constants.Prefs.KEY_PARK_UPDATE_TIME, rsp.updateTime);
                 mDao.clear(Park.class);
                 mDao.saveOrUpdateAll(rsp.parkList);
+            }
+
+            @Override
+            public void onComplete() {
+                notifyLoadComplete();
+            }
+        }, observable);
+        addNetworkRecord();
+    }
+
+    /**
+     * 获取问答列表
+     * @return
+     */
+    private void loadQAsList(){
+        Observable<QAResp> observable = Http.getServer().loadQAsList(Http.buildRequestBody(Http.getBaseParams()));
+        isRequest = Http.request(new ResponseCallback<QAResp>() {
+            @Override
+            protected void onResponse(QAResp rsp) {
+                PrefsHelper.setString(Constants.Prefs.KEY_QA_UPDATE_TIME, sdf.format(new Date()));
+                mDao.clear(QAd.class);
+                mDao.clear(QAt.class);
+                mDao.saveOrUpdateAll(rsp.qadlist);
+                if(rsp.qadlist.size()>0) {
+                    for (int i = 0; i < rsp.qadlist.size(); i++) {
+                        mDao.saveOrUpdateAll(rsp.qadlist.get(i).qatlist);
+                    }
+                }
             }
 
             @Override

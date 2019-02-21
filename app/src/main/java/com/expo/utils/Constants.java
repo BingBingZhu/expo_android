@@ -15,6 +15,8 @@ import com.expo.entity.FootPrint;
 import com.expo.entity.Message;
 import com.expo.entity.Park;
 import com.expo.entity.PortalSite;
+import com.expo.entity.QAd;
+import com.expo.entity.QAt;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
 import com.expo.entity.ScheduleTimeInfo;
@@ -49,6 +51,7 @@ public interface Constants {
         public static final String KEY_TOURIST_TYPE_UPDATE_TIME = "key_tourist_type_list_update_time";
         public static final String KEY_SCENIC_SPOT_TYPE_UPDATE_TIME = "key_scenic_spot_type_update_time";
         public static final String KEY_PARK_UPDATE_TIME = "key_park_update_time";
+        public static final String KEY_QA_UPDATE_TIME = "key_qa_update_time";
         public static final String KEY_BADGE_UPDATE_TIME = "key_badge_update_time";
         public static final String KEY_GUIDE_SHOWN = "key_guide_shown";
         public static final String KEY_LANGUAGE_CHOOSE = "key_language_choose";
@@ -170,7 +173,7 @@ public interface Constants {
                 Encyclopedias.class, Message.class, Subject.class, User.class, RouteInfo.class, TouristType.class, CustomRoute.class,
                 TopLineInfo.class, VenuesType.class, Park.class, Badge.class, Track.class, FootPrint.class, VisitorService.class,
                 Contacts.class, VrInfo.class, VrLableInfo.class, Tuple.class, ExpoActivityInfo.class, Schedule.class, PortalSite.class,
-                ScheduleTimeInfo.class, ScheduleVenue.class};
+                ScheduleTimeInfo.class, ScheduleVenue.class, QAd.class, QAt.class};
         //下载任务最大同时下载数量
         public static final int IMAGE_MAX_COUNT = 3;
     }

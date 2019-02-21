@@ -147,6 +147,8 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
                     mRvMonthRecycler.smoothScrollBy(ScreenUtils.getScreenWidth() * Math.max(0, position - 2) / 5 - mMonthScrollX, 0);
 
                     mPresenter.loadDate(mMonthList.get(position));
+
+                    mDateAdapter.notifyDataSetChanged();
                 });
             }
 
@@ -161,7 +163,8 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
         mRvDateRecycler.setLayoutManager(manager);
         mSelectTime = TimeUtils.string2Millis(TimeUtils.millis2String(TimeUtils.getNowMills(), new SimpleDateFormat("yyyy-MM-dd")), new SimpleDateFormat("yyyy-MM-dd"));
         if (mSelectTime < mMonthList.get(2)) {
-            mSelectTime = mMonthList.get(2);
+            //mSelectTime = mMonthList.get(2);
+            mSelectTime = 1556467200000l;//四月29号
         }
         mRvDateRecycler.setAdapter(mDateAdapter = new CommonAdapter(this, R.layout.item_expo_activity_date, mDateList) {
             @Override
@@ -173,10 +176,26 @@ public class ExpoActivityActivity extends BaseActivity<ExpoActivityContract.Pres
                     mSelectDateView = holder.itemView;
                     holder.itemView.setSelected(true);
                 } else {
-                    holder.itemView.setSelected(false);
+                    if(mSelectMonth==1554048000000l) {//四月
+                        holder.itemView.setSelected(false);
+                    }else {
+                        if(position==0){
+                            if (mSelectDateView != null)
+                                mSelectDateView.setSelected(false);
+                            mSelectTime = mDateList.get(position);
+                            mSelectDateView = holder.itemView;
+                            holder.itemView.setSelected(true);
+                        }else {
+                            holder.itemView.setSelected(false);
+                        }
+                    }
                 }
                 holder.itemView.getLayoutParams().width = ScreenUtils.getScreenWidth() / 5;
-                holder.setText(R.id.item_date_day, String.valueOf(position + 1));
+                if(mSelectMonth==1554048000000l){//四月
+                    holder.setText(R.id.item_date_day, String.valueOf(position + 29));
+                }else {
+                    holder.setText(R.id.item_date_day, String.valueOf(position + 1));
+                }
                 holder.setText(R.id.item_date_week, getResources().getString(
                         getResources().getIdentifier("expo_activity_" + TimeUtils.getUSWeek(mDateList.get(position)).toLowerCase(), "string", AppUtils.getAppPackageName())));
                 holder.itemView.setOnClickListener(v -> {

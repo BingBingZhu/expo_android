@@ -34,7 +34,7 @@
                 android:id="@+id/route_horn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/horn" />
+                android:src="@mipmap/player_playing" />
 
             <TextView
                 android:id="@+id/player_curr_time"

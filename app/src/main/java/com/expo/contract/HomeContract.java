@@ -78,6 +78,9 @@ public interface HomeContract {
 
         public abstract String loadBespeakUrlInfo();
 
+        //问答
+        public abstract List loadQA();
+
     }
 
     interface View extends IView {

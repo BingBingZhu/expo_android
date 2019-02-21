@@ -13,6 +13,7 @@ import com.expo.network.response.GetDistinguishPlantList_Rsb;
 import com.expo.network.response.PanResHotResp;
 import com.expo.network.response.ParkResp;
 import com.expo.network.response.PortalSiteResp;
+import com.expo.network.response.QAResp;
 import com.expo.network.response.RichTextRsp;
 import com.expo.network.response.RouteHotCountResp;
 import com.expo.network.response.RouteInfoResp;
@@ -254,6 +255,16 @@ public interface DataServer {
     @POST("Terminal/GetParksList")
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     Observable<ParkResp> loadParksList(@Body RequestBody requestBody);
+
+    /**
+     * 获得问答列表
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("Terminal/findQATypeList")
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<QAResp> loadQAsList(@Body RequestBody requestBody);
 
     /**
      * 心跳接口

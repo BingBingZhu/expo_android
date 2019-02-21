@@ -15,6 +15,8 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Message;
 import com.expo.entity.Park;
+import com.expo.entity.QAd;
+import com.expo.entity.QAt;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.ScheduleTimeInfo;
 import com.expo.entity.ScheduleVenue;
@@ -339,6 +341,19 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         data.add(new int[]{R.string.discover_1, R.mipmap.discover_1});
         data.add(new int[]{R.string.discover_2, R.mipmap.discover_2});
         data.add(new int[]{R.string.discover_3, R.mipmap.discover_3});
+        return data;
+    }
+
+    @Override
+    public List loadQA() {
+        ArrayList data = new ArrayList();
+        QueryParams params = new QueryParams();
+        List tmp = mDao.query(QAt.class, params);
+        if (tmp != null) {
+            data.addAll(tmp);
+        } else {
+            return null;
+        }
         return data;
     }
 

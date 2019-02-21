@@ -28,11 +28,14 @@ import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.HomeContract;
+import com.expo.entity.QAd;
+import com.expo.entity.User;
 import com.expo.entity.AppInfo;
 import com.expo.entity.Circum;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
+import com.expo.entity.QAt;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
 import com.expo.entity.ScheduleVenue;
@@ -74,6 +77,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -106,6 +110,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     LinearLayout mContainer;
     @BindView(R.id.service_qa)
     View mServiceQA;//服务
+    @BindView(R.id.home_ask_q)
+    TextView homeAskQ;
 
     private View mFindView;//游玩
     private View mActivitiesView;//活动
@@ -125,6 +131,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     private int screenHeight;
     private Location mLocation;
     private List<Circum> mCircum;
+    private List<QAt> QAlist;//问答
 
     LimitScrollerView.OnItemClickListener mTopLineListener = obj -> {
         ExpoActivityInfo expoActivityInfo = (ExpoActivityInfo) obj;
@@ -278,6 +285,12 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(view, 10);
         }
+        //问答
+        QAlist = mPresenter.loadQA();
+        if (QAlist != null && !QAlist.isEmpty()) {
+            Collections.shuffle(QAlist);//打乱list顺序
+            homeAskQ.setText(QAlist.get(0).getQuestion());
+        }
         //预约
         List<Object> bespeak = mPresenter.loadBespeak();
         if (bespeak != null && !bespeak.isEmpty()) {
@@ -384,6 +397,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                         tvMore.setText(content);
                     } else if ("expo_foods".equals(tag)) {
+                        tvMore.setVisibility(View.GONE);
+                    } else if ("hotels".equals(tag)) {
                         tvMore.setVisibility(View.GONE);
                     }
                     tvMore.setTag(tag);
@@ -596,7 +611,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 CircumHomeActivity.startActivity(getContext());
                 break;
             case 3:
-                ArActivity.startActivity(getContext());
+                ArActivity.startActivity(getContext(),"AR游园");
                 break;
             case 4:
                 ((MainActivity) getContext()).goScenicMap();
@@ -693,6 +708,12 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             case R.id.service_qa://问询咨询
                 url = mPresenter.loadCommonInfo(CommonInfo.TOURIST_SERVICE_LOST_AND_FOUND);
                 if (url != null) {
+                    url = url + "?id=" + QAlist.get(0).getId();
+                    User user = ExpoApp.getApplication().getUser();
+                    if (user != null) {
+                        url = url + "&Uid=" + user.getUid()
+                                + "&Ukey=" + user.getUkey();
+                    }
                     String title = getString(R.string.item_tourist_service_text_0);
                     WebActivity.startActivity(getContext(), TextUtils.isEmpty(url) ? Constants.URL.HTML_404 : url, title, TITLE_COLOR_STYLE_WHITE, false);
                 }

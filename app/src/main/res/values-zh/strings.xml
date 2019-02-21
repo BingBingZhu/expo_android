@@ -406,7 +406,7 @@
     <string name="show">显示</string>
     <string name="scans_scans">浏览 %d次</string>
     <string name="play_times">%s分钟</string>
-    <string name="no_fiwi_no_free">正在使用费WIFI网络，播放将产生流量费用</string>
+    <string name="no_fiwi_no_free">正在使用付费WIFI网络，播放将产生流量费用</string>
 
     <string name="expo_scene_tab_space">空间布局</string>
     <string name="expo_scene_tab_scenery">景观展示</string>
@@ -489,4 +489,8 @@
     <string name="error_video_upload_failed">视频上传失败</string>
     <string name="error_image_upload_failed">图片上传失败</string>
     <string name="home_bespeak_title_date_format">yyyy年MM月dd日</string>
+
+    <string name="extension">北京世园会展期: 2019-04-29至2019-10-17</string>
+    <string name="opening_hours">开放时间: 9:00-21:00</string>
+    <string name="load_failed">加载失败，点击重新加载</string>
 </resources>

@@ -540,7 +540,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         }
         function.setOnClickListener(view -> {
             if (isIn) {
-                ArActivity.startActivity(getContext());
+                ArActivity.startActivity(getContext(),"AR乐拍");
             } else {
                 PlayMapActivity.startActivity(getContext(), mAtVenue, venue, mVenuesTypes.get(mTabPosition).getMarkBitmap());
             }

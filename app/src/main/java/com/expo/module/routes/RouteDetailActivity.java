@@ -102,7 +102,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         @Override
         public void complete() {
             mPbProgress.setProgress(mPbProgress.getMax());
-            mBtPlayer.setImageResource(R.mipmap.horn);
+            mBtPlayer.setImageResource(R.mipmap.player_playing);
         }
 
         @Override
