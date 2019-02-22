@@ -217,11 +217,11 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
 
     @Override
     public ScheduleVenue loadScheduleVenueByWikiId(long id) {
-        Venue venue = mDao.unique(Venue.class, new QueryParams().add("eq", "wiki_id", id));
-        if (null == venue){
-            return null;
-        }
-        ScheduleVenue scheduleVenue = mDao.unique(ScheduleVenue.class, new QueryParams().add("eq", "link_id", venue.getId()));
+//        Venue venue = mDao.unique(Venue.class, new QueryParams().add("eq", "wiki_id", id));
+//        if (null == venue){
+//            return null;
+//        }
+        ScheduleVenue scheduleVenue = mDao.unique(ScheduleVenue.class, new QueryParams().add("eq", "link_id", id));
         return scheduleVenue;
     }
 }

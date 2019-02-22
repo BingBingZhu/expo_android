@@ -565,7 +565,7 @@ public interface DataServer {
     Observable<ScheduleResp> getScheduleVenList(@Body RequestBody requestBody);
 
     /**
-     * 获取全景标签资源列表
+     * 获取植物学院列表
      *
      * @param requestBody
      * @return

@@ -23,6 +23,8 @@ public interface WebContract {
 
         public abstract boolean checkInPark(Location location);
 
+        public abstract String loadPlantJson(int type);
+
 //        public abstract Venue getNearbyServiceCenter(Location location);
     }
 

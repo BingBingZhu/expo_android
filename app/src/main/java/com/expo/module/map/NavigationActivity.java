@@ -186,8 +186,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         initPoiSearch();
         mVenue = getIntent().getParcelableExtra( Constants.EXTRAS.EXTRAS );
         virtualScene = mPresenter.loadSceneById( mVenue.getId() );
-        initSlidingDrawer();
         initWebView();
+        initSlidingDrawer();
         MediaPlayerManager.getInstence().setListener( null );
     }
 
@@ -257,12 +257,14 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             updateMapStatue( false );
             //mImgNavigationShow.setVisibility( View.VISIBLE );
             //mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
+            mWebView.loadUrl( "javascript:openOrCloseVoice(0)" );
         } );
         mSlidingDrawerView.setOnDrawerOpenListener( () -> {
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true );
             updateMapStatue( true );
-            //mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
-            //mImgNavigationShow.setVisibility( View.GONE );
+//            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
+//            mImgNavigationShow.setVisibility( View.GONE );
+            mWebView.loadUrl( "javascript:openOrCloseVoice(1)" );
         } );
     }
 
@@ -693,6 +695,11 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
          */
         @JavascriptInterface
         public void canCallJS(boolean state) {
+            if (PrefsHelper.getBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false )) {
+                mWebView.loadUrl( "javascript:openOrCloseVoice(1)" );
+            }else{
+                mWebView.loadUrl( "javascript:openOrCloseVoice(0)" );
+            }
             mJsCanSend = state;
             runOnUiThread( NavigationActivity.this::startNavi );
         }

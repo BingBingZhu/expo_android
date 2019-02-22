@@ -306,7 +306,7 @@ public class PlayMapActivity extends BaseActivity<PlayMapContract.Presenter> imp
     }
 
     private Bitmap byteArrayToBitmap(byte[] b) {
-        if (b.length != 0) {
+        if (null != b && b.length != 0) {
             return BitmapFactory.decodeByteArray(b, 0, b.length);
         } else {
             return null;

@@ -405,6 +405,27 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
             return getIntent().getStringExtra(Constants.EXTRAS.EXTRA_JSON_DATA);
         }
 
+        /**
+         * 获取植物百科
+         * @param type 1 - 一带一路植物，  2 - 世界植物之最
+         * @return
+         */
+        @JavascriptInterface
+        public String getPlant(int type){
+            return mPresenter.loadPlantJson(type);
+        }
+
+        /**
+         * 植物百科进入百科详情
+         * @param id 百科id
+         */
+        @JavascriptInterface
+        public void gotoWikiInfo(int id){
+            runOnUiThread(() -> {
+                WebTemplateActivity.startActivity(getContext(), id);
+            });
+        }
+
     }
 
     private AMap.OnMyLocationChangeListener barrierLocationChangeListener = new AMap.OnMyLocationChangeListener() {
