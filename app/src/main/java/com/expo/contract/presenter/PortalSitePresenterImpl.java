@@ -21,6 +21,6 @@ public class PortalSitePresenterImpl extends PortalSiteContract.Presenter {
     @Override
     public String loadCommonUrl() {
         return mDao.unique(CommonInfo.class, new QueryParams()
-                .add("eq", "type", CommonInfo.EXPO_PLANT_WIKI)).getLinkUrl();
+                .add("eq", "type", CommonInfo.PLANTS_LIST)).getLinkUrl();
     }
 }
