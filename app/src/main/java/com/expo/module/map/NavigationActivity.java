@@ -240,28 +240,29 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private void initSlidingDrawer() {
         if (PrefsHelper.getBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false )) {
             mSlidingDrawerView.open();
+            if(null == mCameraManager){
+                mCameraManager = new CameraManager();
+                mCameraManager.setFacing( true );
+                mCameraManager.setDisplayView( mTextureView );
+            }
             mCameraManager.startPreview();
             updateMapStatue( true );
-            mImgNavigationShow.setVisibility( View.GONE );
-
+            //mImgNavigationShow.setVisibility( View.GONE );
         } else {
             updateMapStatue( false );
-            mImgNavigationShow.setVisibility( View.VISIBLE );
-
+            //mImgNavigationShow.setVisibility( View.VISIBLE );
         }
         mSlidingDrawerView.setOnDrawerCloseListener( () -> {
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false );
             updateMapStatue( false );
-            mImgNavigationShow.setVisibility( View.VISIBLE );
-            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
-            mWebView.loadUrl( "javascript:openOrCloseVoice(0)" );
+            //mImgNavigationShow.setVisibility( View.VISIBLE );
+            //mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
         } );
         mSlidingDrawerView.setOnDrawerOpenListener( () -> {
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true );
             updateMapStatue( true );
-            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
-            mImgNavigationShow.setVisibility( View.GONE );
-            mWebView.loadUrl( "javascript:openOrCloseVoice(1)" );
+            //mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
+            //mImgNavigationShow.setVisibility( View.GONE );
         } );
     }
 
@@ -312,6 +313,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         public void onMapClick(LatLng latLng) {
             if (mSlidingDrawerView.isOpened()) {
                 mCameraManager.stopPreview();
+                mCameraManager.release();
+                mCameraManager = null;
                 mSlidingDrawerView.animateClose();
             }
         }
@@ -365,9 +368,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             des.routeTime = mRouteTime;
             if (!mUseDeviceRotate) {
                 des.angle = "";
-                String jj = Http.getGsonInstance().toJson( des );
-                Log.e("------------json:  ", jj);
-                mWebView.loadUrl( String.format( Locale.getDefault(), "javascript:setMarker(1,'" + jj + "')" ) );
+                mWebView.loadUrl( String.format( Locale.getDefault(), "javascript:setMarker(1,'" + Http.getGsonInstance().toJson( des ) + "')" ) );
                 return;
             }
             //计算角度以通知HTML页面使用
@@ -381,9 +382,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 //degrees 当前方向和路的夹角
                 //azimuth 陀螺仪和正北方夹角
 //                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:getAzimuthInfo(%.2f,%.2f)", degrees, azimuth));
-                String jj = Http.getGsonInstance().toJson( des );
-                Log.e("------------json:  ", jj);
-                mWebView.loadUrl( "javascript:setMarker('1','" + jj + "')" );
+                mWebView.loadUrl( "javascript:setMarker('1','" + Http.getGsonInstance().toJson( des ) + "')" );
             }
             if (mNaviRouteOverlay == null || !mNaviRouteOverlay.isAnimating()) {
                 if (pitch < 0 && pitch > -60) {
@@ -667,8 +666,20 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 mWebView.loadUrl( "javascript:toggleImg(" + (PrefsHelper.getBoolean( Constants.Prefs.KEY_MODULE_ON_OFF, true ) ? 1 : 0) + ")" );
                 break;
             case R.id.navigation_show:
-                mCameraManager.startPreview();
-                mSlidingDrawerView.animateOpen();
+                if (mSlidingDrawerView.isOpened()) {
+                    mCameraManager.stopPreview();
+                    mCameraManager.release();
+                    mCameraManager = null;
+                    mSlidingDrawerView.animateClose();
+                }else {
+                    if(null == mCameraManager){
+                        mCameraManager = new CameraManager();
+                        mCameraManager.setFacing( true );
+                        mCameraManager.setDisplayView( mTextureView );
+                    }
+                    mCameraManager.startPreview();
+                    mSlidingDrawerView.animateOpen();
+                }
                 break;
         }
     }

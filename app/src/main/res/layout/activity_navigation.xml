@@ -63,6 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_marginRight="@dimen/dms_30"
-        android:layout_marginBottom="@dimen/dms_30"
+        android:layout_marginBottom="@dimen/dms_344"
         android:src="@mipmap/navigation_show" />
 </FrameLayout>
