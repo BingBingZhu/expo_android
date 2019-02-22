@@ -240,24 +240,29 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
     private void initSlidingDrawer() {
         if (PrefsHelper.getBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false )) {
             mSlidingDrawerView.open();
+            if(null == mCameraManager){
+                mCameraManager = new CameraManager();
+                mCameraManager.setFacing( true );
+                mCameraManager.setDisplayView( mTextureView );
+            }
             mCameraManager.startPreview();
             updateMapStatue( true );
-            mImgNavigationShow.setVisibility( View.GONE );
+            //mImgNavigationShow.setVisibility( View.GONE );
         } else {
             updateMapStatue( false );
-            mImgNavigationShow.setVisibility( View.VISIBLE );
+            //mImgNavigationShow.setVisibility( View.VISIBLE );
         }
         mSlidingDrawerView.setOnDrawerCloseListener( () -> {
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false );
             updateMapStatue( false );
-            mImgNavigationShow.setVisibility( View.VISIBLE );
-            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
+            //mImgNavigationShow.setVisibility( View.VISIBLE );
+            //mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
         } );
         mSlidingDrawerView.setOnDrawerOpenListener( () -> {
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true );
             updateMapStatue( true );
-            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
-            mImgNavigationShow.setVisibility( View.GONE );
+            //mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
+            //mImgNavigationShow.setVisibility( View.GONE );
         } );
     }
 
@@ -308,6 +313,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         public void onMapClick(LatLng latLng) {
             if (mSlidingDrawerView.isOpened()) {
                 mCameraManager.stopPreview();
+                mCameraManager.release();
+                mCameraManager = null;
                 mSlidingDrawerView.animateClose();
             }
         }
@@ -659,8 +666,20 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 mWebView.loadUrl( "javascript:toggleImg(" + (PrefsHelper.getBoolean( Constants.Prefs.KEY_MODULE_ON_OFF, true ) ? 1 : 0) + ")" );
                 break;
             case R.id.navigation_show:
-                mCameraManager.startPreview();
-                mSlidingDrawerView.animateOpen();
+                if (mSlidingDrawerView.isOpened()) {
+                    mCameraManager.stopPreview();
+                    mCameraManager.release();
+                    mCameraManager = null;
+                    mSlidingDrawerView.animateClose();
+                }else {
+                    if(null == mCameraManager){
+                        mCameraManager = new CameraManager();
+                        mCameraManager.setFacing( true );
+                        mCameraManager.setDisplayView( mTextureView );
+                    }
+                    mCameraManager.startPreview();
+                    mSlidingDrawerView.animateOpen();
+                }
                 break;
         }
     }
