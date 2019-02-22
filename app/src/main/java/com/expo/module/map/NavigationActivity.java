@@ -257,12 +257,14 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             updateMapStatue( false );
             //mImgNavigationShow.setVisibility( View.VISIBLE );
             //mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
+            mWebView.loadUrl( "javascript:openOrCloseVoice(0)" );
         } );
         mSlidingDrawerView.setOnDrawerOpenListener( () -> {
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true );
             updateMapStatue( true );
-            //mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
-            //mImgNavigationShow.setVisibility( View.GONE );
+//            mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
+//            mImgNavigationShow.setVisibility( View.GONE );
+            mWebView.loadUrl( "javascript:openOrCloseVoice(1)" );
         } );
     }
 

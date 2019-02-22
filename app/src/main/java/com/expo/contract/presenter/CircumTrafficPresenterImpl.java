@@ -41,29 +41,29 @@ public class CircumTrafficPresenterImpl extends CircumTrafficContract.Presenter 
                     .add("eq", "type", bus.getId()));
         }
 
-        List<VenuesType> venuesTypes = mDao.query(VenuesType.class, new QueryParams()
-                .add("eq", "is_enable", 1)
-                .add("and")
-                .add("eq", "show_in_map", "1")
-                .add("orderBy", "idx", true));
+//        List<VenuesType> venuesTypes = mDao.query(VenuesType.class, new QueryParams()
+//                .add("eq", "is_enable", 1)
+//                .add("and")
+//                .add("eq", "show_in_map", "1")
+//                .add("orderBy", "idx", true));
 
-        mView.loadTabRes(venuesTypes, 0);
+//        mView.loadTabRes(venuesTypes, 0);
         mView.loadTrafficDataRes(venuePark, venueBus);
-        loadSubjectImages(venuesTypes);
+//        loadSubjectImages(venuesTypes);
     }
 
-    private void loadSubjectImages(List<VenuesType> venuesTypes) {
-        for (VenuesType vt : venuesTypes) {
-            Http.loadBitmap(Constants.URL.FILE_BASE_URL + vt.getPicMarkUrl(), mOnLoadImageCompleteListener, vt);
-        }
-    }
-
-    private Http.OnLoadImageCompleteListener mOnLoadImageCompleteListener = (url, bmp, obj) -> {
-        if (!(obj instanceof VenuesType)) return;
-        VenuesType vt = (VenuesType) obj;
-        if (url.endsWith(vt.getPicMarkUrl())) {
-            vt.setMarkBitmap(bmp);
-        }
-        mView.updatePic(vt);
-    };
+//    private void loadSubjectImages(List<VenuesType> venuesTypes) {
+//        for (VenuesType vt : venuesTypes) {
+//            Http.loadBitmap(Constants.URL.FILE_BASE_URL + vt.getPicMarkUrl(), mOnLoadImageCompleteListener, vt);
+//        }
+//    }
+//
+//    private Http.OnLoadImageCompleteListener mOnLoadImageCompleteListener = (url, bmp, obj) -> {
+//        if (!(obj instanceof VenuesType)) return;
+//        VenuesType vt = (VenuesType) obj;
+//        if (url.endsWith(vt.getPicMarkUrl())) {
+//            vt.setMarkBitmap(bmp);
+//        }
+//        mView.updatePic(vt);
+//    };
 }

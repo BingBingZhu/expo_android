@@ -25,9 +25,9 @@ public interface CircumTrafficContract {
     interface View extends IView {
         void loadTrafficDataRes(List<Venue> venuePark, List<Venue> venueBus);
 
-        void loadTabRes(List<VenuesType> venuesTypes, int tabPosition);
+//        void loadTabRes(List<VenuesType> venuesTypes, int tabPosition);
 
-        void updatePic(VenuesType vt);
+//        void updatePic(VenuesType vt);
 
         void showParkScope(Park park);
     }
