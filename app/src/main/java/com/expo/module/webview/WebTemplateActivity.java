@@ -115,6 +115,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         mUrl = mUrl + (schedule == null ? "&ordertype=0" : "&ordertype=1");
         loadUrl(mUrl);
         mShareUtil = new ShareUtil();
+        mPresenter.scoreChange(Constants.ScoreType.TYPE_ENCYCLOPEDIAS, id + "");
     }
 
     public void initTitleRightTextView() {

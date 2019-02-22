@@ -86,6 +86,8 @@ public class SplashPresenterImpl extends SplashContract.Presenter {
         getScheduleDatas();
         loadPortalList();
         loadSheduleDatas();
+        mDao.clear(TouristType.class);
+        addDefaultTourist();
     }
 
     private void checkUpdateDate(RequestBody emptyBody) {

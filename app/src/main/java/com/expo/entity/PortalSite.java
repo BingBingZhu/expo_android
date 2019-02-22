@@ -11,37 +11,37 @@ import com.j256.ormlite.table.DatabaseTable;
 public class PortalSite implements Parcelable {
     @DatabaseField(columnName = "caption")
     @SerializedName("caption")
-    private String caption;//标题 ,
+    private String caption; // 标题 ,
     @DatabaseField(columnName = "caption_en")
     @SerializedName("captionen")
-    private String captionEn;//标题英文 ,
+    private String captionEn;   // 标题英文 ,
     @DatabaseField(columnName = "id", id = true)
     @SerializedName("id")
     private Integer id;
     @DatabaseField(columnName = "idx")
     @SerializedName("idx")
-    private Integer idx;//排序索引值 ,
+    private Integer idx;    // 排序索引值 ,
     @DatabaseField(columnName = "is_enable")
     @SerializedName("isenable")
-    private String enable;//是否可用 0 否 1 是 ,
+    private String enable;  // 是否可用 0 否 1 是 ,
     @DatabaseField(columnName = "link_url")
     @SerializedName("linkurl")
-    private String linkUrl;//链接页面 ,
+    private String linkUrl; // 链接页面 ,
     @DatabaseField(columnName = "link_url_en")
     @SerializedName("linkurlen")
-    private String linkUrlEn;// 链接页面英文 ,
+    private String linkUrlEn;// 链接页面英文
     @DatabaseField(columnName = "pic_url")
     @SerializedName("picurl")
-    private String picUrl;//背景图 ,
+    private String picUrl;  // 背景图 ,
     @DatabaseField(columnName = "remark")
     @SerializedName("remark")
-    private String remark;//备注内容 ,
+    private String remark;  // 备注内容 ,
     @DatabaseField(columnName = "type")
     @SerializedName("type")
-    private String type;//类别 1 植物学院 2 新闻动态 3 每周一园 4 董卿·草木卿园 5 读·植物的力量 6 听·花之声 7 百草园 8 我是园艺师 ,
+    private String type;    // 类别 1 植物学院 2 新闻动态 3 每周一园 4 董卿·草木卿园 5 读·植物的力量 6 听·花之声 7 百草园 8 我是园艺师 ,
     @DatabaseField(columnName = "type_id")
     @SerializedName("typeid")
-    private String typeId;//类别id
+    private String typeId; // 类别id
 
 
     public PortalSite() {
