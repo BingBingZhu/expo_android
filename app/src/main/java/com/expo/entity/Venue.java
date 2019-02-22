@@ -27,6 +27,9 @@ public class Venue implements Parcelable, Comparable<Venue> {
     @DatabaseField(columnName = "type")
     @SerializedName("type")
     private String type;
+    @DatabaseField(columnName = "type_name")
+    @SerializedName("typename")
+    private String typeName ;
     @DatabaseField(columnName = "remark")
     @SerializedName("remark")
     private String remark;
@@ -137,6 +140,7 @@ public class Venue implements Parcelable, Comparable<Venue> {
         parkId = in.readString();
         parkName = in.readString();
         picUrlEn = in.readString();
+        typeName = in.readString();
     }
 
     public static final Creator<Venue> CREATOR = new Creator<Venue>() {
@@ -395,6 +399,14 @@ public class Venue implements Parcelable, Comparable<Venue> {
         return new LatLng(this.getLat(), this.getLng());
     }
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -438,6 +450,7 @@ public class Venue implements Parcelable, Comparable<Venue> {
         dest.writeString(parkId);
         dest.writeString(parkName);
         dest.writeString(picUrlEn);
+        dest.writeString(typeName);
     }
 
     @Override

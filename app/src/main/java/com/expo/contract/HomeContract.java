@@ -2,21 +2,14 @@ package com.expo.contract;
 
 import android.content.Context;
 
-import com.amap.api.maps.model.LatLng;
 import com.expo.base.IPresenter;
 import com.expo.base.IView;
 import com.expo.entity.AppInfo;
 import com.expo.entity.Circum;
-import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
-import com.expo.entity.RouteInfo;
-import com.expo.entity.TopLineInfo;
-import com.expo.entity.Venue;
-import com.expo.entity.VrInfo;
 
 import java.util.List;
-import java.util.Map;
 
 public interface HomeContract {
     abstract class Presenter extends IPresenter<View> {
@@ -65,6 +58,9 @@ public interface HomeContract {
         //周边美食
         public abstract void loadOutsideFoods();
 
+        //获取离用户最近的世园餐厅
+        public abstract void loadExpoFoodsByLocation(double lat, double lng);
+
         //世园酒店
         public abstract List<Object> loadHotels();
 
@@ -78,6 +74,8 @@ public interface HomeContract {
 
         public abstract String loadBespeakUrlInfo();
 
+        //植物百科
+        public abstract List<Object> loadPlants();
     }
 
     interface View extends IView {
@@ -86,5 +84,7 @@ public interface HomeContract {
         void appUpdate(AppInfo appInfo);
 
         void setOutsideFoods(List<Circum> circums);
+
+        void setFoods(List<Encyclopedias> data);
     }
 }

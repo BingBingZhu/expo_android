@@ -18,13 +18,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
+import com.expo.base.BaseActivity;
 import com.expo.base.BaseEventMessage;
 import com.expo.base.BaseFragment;
 import com.expo.base.ExpoApp;
-import com.expo.base.utils.LogUtils;
 import com.expo.base.utils.StatusBarUtils;
 import com.expo.base.utils.ToastHelper;
 import com.expo.contract.HomeContract;
@@ -36,7 +35,6 @@ import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.Schedule;
 import com.expo.entity.ScheduleVenue;
-import com.expo.entity.VrInfo;
 import com.expo.map.LocationManager;
 import com.expo.module.activity.ExpoActivityActivity;
 import com.expo.module.ar.ArActivity;
@@ -46,7 +44,6 @@ import com.expo.module.freewifi.FreeWiFiActivity;
 import com.expo.module.heart.MessageKindActivity;
 import com.expo.module.main.adapter.HomeTopLineAdapter;
 import com.expo.module.main.encyclopedia.EncyclopediaSearchActivity;
-import com.expo.module.map.AMapServicesUtil;
 import com.expo.module.map.PlayMapActivity;
 import com.expo.module.online.OnlineExpoActivity;
 import com.expo.module.routes.RouteDetailActivity;
@@ -62,7 +59,6 @@ import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.LimitScrollerView;
 import com.expo.widget.MyScrollView;
-import com.expo.widget.StarBar;
 import com.toolsmi.gridfactory.GridLayoutFactory;
 
 import org.greenrobot.eventbus.EventBus;
@@ -182,7 +178,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             if (isLocation) return;
             isLocation = true;
             mLocation = location;
-            setOutsideFoods(mCircum);
+            if (mLocation != null) {
+                mPresenter.loadExpoFoodsByLocation(mLocation.getLatitude(), mLocation.getLongitude());
+            }
         }
     };
 
@@ -271,9 +269,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             mContainer.addView(mScienceView, 9);
         }
         //游世园
-        List<Object> vrInfo = mPresenter.loadVrInfo();
-        if (vrInfo != null && !vrInfo.isEmpty()) {
-            view = mGridLayoutFactory.getView(configs.get(5), vrInfo);
+        List<Object> plants = mPresenter.loadPlants();
+        if (plants != null && !plants.isEmpty()) {
+            view = mGridLayoutFactory.getView(configs.get(5), plants);
             view.setPadding(padding20, padding20, padding20, padding20);
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = marginTop;
             mContainer.addView(view, 10);
@@ -298,7 +296,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
         }
         //周边美食
         mOutsideFoodConfig = configs.get(8);
-        mPresenter.loadOutsideFoods();
+//        mPresenter.loadOutsideFoods();
         //酒店
         List<Object> hotels = mPresenter.loadHotels();
         if (hotels != null && !hotels.isEmpty()) {
@@ -370,7 +368,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                     tv.setText((Integer) obj);
                     int paddingBottom = 0;
                     if ("activities".equals(tag) || "discovery".equals(tag) || "routes".equals(tag)
-                            || "play".equals(tag) || "periphery".equals(tag) || "bespeak".equals(tag)) {
+                            || "plant".equals(tag) || "periphery".equals(tag) || "bespeak".equals(tag)) {
                         paddingBottom = getResources().getDimensionPixelSize(R.dimen.dms_10);
                     }
                     if ("bespeak".equals(tag)) {
@@ -407,9 +405,14 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                     if (obj instanceof RouteInfo) {
                         RouteInfo info = (RouteInfo) obj;
                         Http.loadImage(img, info.picUrl);
-                    } else if (obj instanceof VrInfo) {
-                        VrInfo info = (VrInfo) obj;
-                        Http.loadImage(img, info.getPic());
+                    }
+//                    else if (obj instanceof VrInfo) {
+//                        VrInfo info = (VrInfo) obj;
+//                        Http.loadImage(img, info.getPic());
+//                    }
+                    else if (obj instanceof Encyclopedias) {
+                        Encyclopedias info = (Encyclopedias) obj;
+                        Http.loadImage(img, info.getPicUrl());
                     } else {
                         img.setImageResource((Integer) obj);
                     }
@@ -471,17 +474,15 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                     img.setImageURI(Uri.parse(Constants.URL.FILE_BASE_URL + encyclopedias.getPicUrl()));
                     break;
                 case R.layout.layout_home_outside_foods:
-                    Circum circum = (Circum) obj;
+                    encyclopedias = (Encyclopedias) obj;
                     tv = item.findViewById(R.id.title);
-                    TextView score = item.findViewById(R.id.score);
+                    describe = item.findViewById(R.id.describe);
                     TextView distance = item.findViewById(R.id.distance);
-                    StarBar starBar = item.findViewById(R.id.rating);
                     img = item.findViewById(R.id.img);
-                    tv.setText(circum.getName());
-                    score.setText("口味：" + circum.getTaste() + "分");
-                    starBar.setStarMark(circum.getAvgRating());
-                    img.setImageURI(Uri.parse(circum.getPhotoUrls()));
-                    distance.setText(AMapServicesUtil.calculateDistance(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), new LatLng(circum.getLatitude(), circum.getLongitude())));
+                    tv.setText(LanguageUtil.chooseTest(encyclopedias.getCaption(), encyclopedias.getCaptionEn()));
+                    describe.setText(LanguageUtil.chooseTest(encyclopedias.getRemark(), encyclopedias.getRemarkEn()));
+                    img.setImageURI(Uri.parse(CommUtils.getFullUrl(encyclopedias.getPicUrl())));
+                    distance.setText(encyclopedias.getDistance());
                     break;
                 case R.layout.layout_home_hotel:
                     encyclopedias = (Encyclopedias) obj;
@@ -515,6 +516,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                         .append("&lan=")
                         .append(LanguageUtil.chooseTest("zh", "en"));
                 WebActivity.startActivity(getContext(), sb.toString(), LanguageUtil.chooseTest(sv.caption, sv.captionEn), TITLE_COLOR_STYLE_WHITE);
+            } else if ("plant".equals(tag)) {
+                Encyclopedias encyclopedias = (Encyclopedias) data;
+                WebTemplateActivity.startActivity(getContext(), mPresenter.loadCommonInfo(CommonInfo.PLANT_INFO), encyclopedias.getId());
             } else {
                 if (data instanceof ExpoActivityInfo) {
                     ExpoActivityInfo info = (ExpoActivityInfo) data;
@@ -562,8 +566,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 RoutesActivity.startActivity(getContext());
             } else if ("scenic".equals(tag)) {
                 ((MainActivity) getContext()).goScenicAndShowTab(getString(R.string.find_tab_scenic));
-            } else if ("play".equals(tag)) {
-                ((MainActivity) getActivity()).goCollege();
+            } else if ("plant".equals(tag)) {
+                WebActivity.startActivity(getContext(), mPresenter.loadCommonInfo(CommonInfo.PLANTS_LIST),
+                        getString(R.string.the_best_of_plants), BaseActivity.TITLE_COLOR_STYLE_WHITE);
             } else if ("bespeak".equals(tag)) {
                 lunchVenueBespeak();
             } else if ("expo_foods".equals(tag)) {
@@ -751,6 +756,29 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = 1;
             mContainer.addView(view, 18);
         }
+    }
+
+    @Override
+    public void setFoods(List<Encyclopedias> data) {
+//        this.mCircum = circums;
+        mContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                if (data != null) {
+                    View view = new View(getContext());
+                    view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
+                    view.setBackgroundColor(getResources().getColor(R.color.color_EEE));
+                    mContainer.addView(view, 17);
+                    view = mGridLayoutFactory.getView(mOutsideFoodConfig, data);
+                    view.setBackgroundResource(R.color.white);
+                    int padding = getResources().getDimensionPixelSize(R.dimen.dms_16);
+                    int paddingV = getResources().getDimensionPixelSize(R.dimen.dms_25);
+                    view.setPadding(padding, padding, padding, paddingV);
+                    ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = 1;
+                    mContainer.addView(view, 18);
+                }
+            }
+        });
     }
 
     @Override

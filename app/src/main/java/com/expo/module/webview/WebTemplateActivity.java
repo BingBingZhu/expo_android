@@ -92,7 +92,10 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         id = getIntent().getLongExtra(Constants.EXTRAS.EXTRA_DATA_ID, 0);
-        mUrl = mPresenter.loadCommonInfo(CommonInfo.ENCYCLOPEDIAS_DETAIL_URL);
+        mUrl = getIntent().getStringExtra(Constants.EXTRAS.EXTRA_URL);
+        if (TextUtils.isEmpty(mUrl)) {
+            mUrl = mPresenter.loadCommonInfo(CommonInfo.ENCYCLOPEDIAS_DETAIL_URL);
+        }
 //        mUrl = "http://192.168.1.13:8080/#/detail";
         mUrl += "?id=" + id + "&lan=" + LanguageUtil.chooseTest("zh", "en");
         mEncyclopedias = mPresenter.loadEncyclopediaById(id);
@@ -179,6 +182,17 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         }
         Intent in = new Intent(context, WebTemplateActivity.class);
         in.putExtra(Constants.EXTRAS.EXTRA_DATA_ID, id);
+        context.startActivity(in);
+    }
+
+    public static void startActivity(@NonNull Context context, String templateUrl, long id) {
+        if (id <= 0) {
+            ToastHelper.showShort(R.string.error_params);
+            return;
+        }
+        Intent in = new Intent(context, WebTemplateActivity.class);
+        in.putExtra(Constants.EXTRAS.EXTRA_DATA_ID, id);
+        in.putExtra(Constants.EXTRAS.EXTRA_URL, templateUrl);
         context.startActivity(in);
     }
 

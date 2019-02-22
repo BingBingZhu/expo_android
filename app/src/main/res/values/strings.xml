@@ -486,4 +486,6 @@
     <string name="error_video_upload_failed">视频上传失败</string>
     <string name="error_image_upload_failed">图片上传失败</string>
     <string name="home_bespeak_title_date_format">dd MM yyyy</string>
+    <string name="homt_title_plants">世界植物之最</string>
+    <string name="the_best_of_plants">世界植物之最</string>
 </resources>

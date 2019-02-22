@@ -3,6 +3,8 @@ package com.expo.contract.presenter;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.expo.R;
@@ -18,6 +20,7 @@ import com.expo.entity.Park;
 import com.expo.entity.RouteInfo;
 import com.expo.entity.ScheduleTimeInfo;
 import com.expo.entity.ScheduleVenue;
+import com.expo.entity.Venue;
 import com.expo.entity.VrInfo;
 import com.expo.map.MapUtils;
 import com.expo.module.heart.HeartBeatService;
@@ -35,6 +38,8 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -187,7 +192,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         QueryParams params = new QueryParams()
                 .add("eq", "recommend", "1")
                 .add("and")
-                .add("eq", "type_name", Constants.CHString.SCENIC_SPOT)
+                .add("like", "type_name", "%" + Constants.CHString.SCENIC_SPOT)
                 .add("and")
                 .add("eq", "enable", 1)
                 .add("orderBy", "recommended_idx", true)
@@ -265,6 +270,59 @@ public class HomePresenterImpl extends HomeContract.Presenter {
             return null;
         }
         return data;
+    }
+
+    @Override
+    public void loadExpoFoodsByLocation(double lat, double lng) {
+        new Thread(
+                () -> {
+                    List<Venue> venues = mDao.query(Venue.class, new QueryParams()
+                            .add("eq", "type_name", Constants.CHString.RESTAURANT)
+                            .add("and")
+                            .add("eq", "is_enable", 1)
+                            .add("and")
+                            .add("notNull", "wiki_id")
+                            .add("and")
+                            .add("ne", "wiki_id", ""));
+                    List<String> ids = new ArrayList<>();
+                    Map<Float, Venue> venueMap = new HashMap<>();
+                    LatLng latLng = new LatLng(lat, lng);
+                    for (Venue venue : venues) {
+                        Float distance = AMapUtils.calculateLineDistance(latLng, new LatLng(venue.getLat(), venue.getLng()));
+                        venueMap.put(distance, venue);
+                    }
+                    List<Encyclopedias> tmp = null;
+                    if (!venueMap.isEmpty()) {
+                        Map<String, Float> distances = new HashMap<>();
+                        if (venueMap.size() > 2) {
+                            List<Float> sortKeys = new ArrayList<>(venueMap.keySet());
+                            Collections.sort(sortKeys);
+                            int i = 0;
+                            do {
+                                String wikiId = venueMap.get(sortKeys.get(i)).getWikiId();
+                                if (!TextUtils.isEmpty(wikiId)) {
+                                    ids.add(wikiId);
+                                    distances.put(wikiId, sortKeys.get(i));
+                                }
+                                i++;
+                            } while (i <= venueMap.size() && ids.size() < 3);
+                        } else {
+                            for (Venue venue : venueMap.values()) {
+                                ids.add(venue.getWikiId());
+                            }
+                        }
+                        tmp = mDao.query(Encyclopedias.class, new QueryParams().add("in", "_id", ids));
+                        for (Encyclopedias e : tmp) {
+                            String key = String.valueOf(e.getId());
+                            if (distances.containsKey(key))
+                                e.setDistance(distances.get(key));
+                        }
+                    }
+                    if (tmp != null) {
+                        mView.setFoods(tmp);
+                    }
+                }
+        ).start();
     }
 
     @Override
@@ -355,6 +413,27 @@ public class HomePresenterImpl extends HomeContract.Presenter {
     public String loadBespeakUrlInfo() {
         return mDao.unique(CommonInfo.class, new QueryParams()
                 .add("eq", "type", CommonInfo.EXPO_BESPEAK_VENUE)).getLinkUrl();
+    }
+
+    @Override
+    public List<Object> loadPlants() {
+        ArrayList data = new ArrayList();
+        data.add(R.string.homt_title_plants);
+        QueryParams params = new QueryParams()
+                .add("eq", "recommend", "1")
+                .add("and")
+                .add("like", "type_name", "%" + Constants.CHString.PLANTS)
+                .add("and")
+                .add("eq", "enable", 1)
+                .add("orderBy", "recommended_idx", true)
+                .add("limit", 0, 2);
+        List tmp = mDao.query(Encyclopedias.class, params);
+        if (tmp != null) {
+            data.addAll(tmp);
+        } else {
+            return null;
+        }
+        return data;
     }
 
 }
