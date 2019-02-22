@@ -15,6 +15,9 @@ public interface PortalSiteContract {
         }
 
         public abstract void loadPortalSites();
+
+        public abstract String loadCommonUrl();
+
     }
 
     interface View extends IView {

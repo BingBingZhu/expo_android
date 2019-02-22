@@ -76,6 +76,9 @@ public interface HomeContract {
 
         //植物百科
         public abstract List<Object> loadPlants();
+        //问答
+        public abstract List loadQA();
+
     }
 
     interface View extends IView {

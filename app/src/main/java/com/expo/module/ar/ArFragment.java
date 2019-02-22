@@ -38,12 +38,20 @@ import java.util.Queue;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+@SuppressLint("ValidFragment")
 public class ArFragment extends BaseFragment<ArContract.Presenter> implements ArContract.View {
 
     @BindView(R.id.scl_layout)
     SwipeCardLayout mSwipeCardLayout;
     @BindView(R.id.vr_btn)
     TextView mBtn;
+
+    private String intentType;
+
+    public ArFragment(String intentType) {
+        super();
+        this.intentType = intentType;
+    }
 
     @Override
     public int getContentView() {
@@ -111,9 +119,15 @@ public class ArFragment extends BaseFragment<ArContract.Presenter> implements Ar
                 "行走在世园会，找到北京世园会的吉祥物们，可以和他们一起合影留念，非常有趣哦！");
         CardEntity cardEntity3 = new CardEntity(R.mipmap.vr_test, "LOGO扫一扫",
                 "找到带有2019北京世界园艺博览会的图标，开这个功能对准logo，有趣的体验在等着你哦！");
-        data.add(cardEntity1);
-        data.add(cardEntity2);
-        data.add(cardEntity3);
+        if(intentType.equals("AR乐拍")){
+            data.add(cardEntity2);
+            data.add(cardEntity1);
+            data.add(cardEntity3);
+        }else {//AR游园
+            data.add(cardEntity1);
+            data.add(cardEntity2);
+            data.add(cardEntity3);
+        }
         return data;
     }
 

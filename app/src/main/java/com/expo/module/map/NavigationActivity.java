@@ -186,8 +186,8 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         initPoiSearch();
         mVenue = getIntent().getParcelableExtra( Constants.EXTRAS.EXTRAS );
         virtualScene = mPresenter.loadSceneById( mVenue.getId() );
-        initSlidingDrawer();
         initWebView();
+        initSlidingDrawer();
         MediaPlayerManager.getInstence().setListener( null );
     }
 
@@ -243,21 +243,25 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             mCameraManager.startPreview();
             updateMapStatue( true );
             mImgNavigationShow.setVisibility( View.GONE );
+
         } else {
             updateMapStatue( false );
             mImgNavigationShow.setVisibility( View.VISIBLE );
+
         }
         mSlidingDrawerView.setOnDrawerCloseListener( () -> {
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false );
             updateMapStatue( false );
             mImgNavigationShow.setVisibility( View.VISIBLE );
             mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_in_bottom ) );
+            mWebView.loadUrl( "javascript:openOrCloseVoice(0)" );
         } );
         mSlidingDrawerView.setOnDrawerOpenListener( () -> {
             PrefsHelper.setBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, true );
             updateMapStatue( true );
             mImgNavigationShow.startAnimation( AnimationUtils.loadAnimation( getContext(), R.anim.slide_out_bottom ) );
             mImgNavigationShow.setVisibility( View.GONE );
+            mWebView.loadUrl( "javascript:openOrCloseVoice(1)" );
         } );
     }
 
@@ -361,7 +365,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
             des.routeTime = mRouteTime;
             if (!mUseDeviceRotate) {
                 des.angle = "";
-                mWebView.loadUrl( String.format( Locale.getDefault(), "javascript:setMarker(1,'" + Http.getGsonInstance().toJson( des ) + "')" ) );
+                String jj = Http.getGsonInstance().toJson( des );
+                Log.e("------------json:  ", jj);
+                mWebView.loadUrl( String.format( Locale.getDefault(), "javascript:setMarker(1,'" + jj + "')" ) );
                 return;
             }
             //计算角度以通知HTML页面使用
@@ -375,7 +381,9 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
                 //degrees 当前方向和路的夹角
                 //azimuth 陀螺仪和正北方夹角
 //                mWebView.loadUrl(String.format(Locale.getDefault(), "javascript:getAzimuthInfo(%.2f,%.2f)", degrees, azimuth));
-                mWebView.loadUrl( "javascript:setMarker('1','" + Http.getGsonInstance().toJson( des ) + "')" );
+                String jj = Http.getGsonInstance().toJson( des );
+                Log.e("------------json:  ", jj);
+                mWebView.loadUrl( "javascript:setMarker('1','" + jj + "')" );
             }
             if (mNaviRouteOverlay == null || !mNaviRouteOverlay.isAnimating()) {
                 if (pitch < 0 && pitch > -60) {
@@ -674,6 +682,11 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
          */
         @JavascriptInterface
         public void canCallJS(boolean state) {
+            if (PrefsHelper.getBoolean( Constants.Prefs.KEY_IS_OPEN_SLIDINGDRAWER, false )) {
+                mWebView.loadUrl( "javascript:openOrCloseVoice(1)" );
+            }else{
+                mWebView.loadUrl( "javascript:openOrCloseVoice(0)" );
+            }
             mJsCanSend = state;
             runOnUiThread( NavigationActivity.this::startNavi );
         }

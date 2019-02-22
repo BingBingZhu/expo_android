@@ -36,6 +36,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
     private ImageView mFullScreen;
     View mNoWifiLayout;
     TextView mNoWifiPlay;
+    TextView mNoWifiTips;
 
     boolean mIsPlay;
     VrInfo mVrInfo;
@@ -60,6 +61,7 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
         mSeekBar = mView.findViewById(R.id.seek_bar);
         mNoWifiLayout = mView.findViewById(R.id.no_wifi_layout);
         mNoWifiPlay = mView.findViewById(R.id.no_wifi_play);
+        mNoWifiTips = mView.findViewById(R.id.no_wifi_tips);
 
         /**设置加载设置**/
         VrVideoView.Options options = new VrVideoView.Options();
@@ -127,6 +129,9 @@ public class VRVideoView implements View.OnClickListener, SeekBar.OnSeekBarChang
             @Override
             public void onLoadError(String errorMessage) {
                 super.onLoadError(errorMessage);
+                mNoWifiLayout.setVisibility(View.VISIBLE);
+                mNoWifiTips.setText(R.string.load_failed);
+                mNoWifiPlay.setText("");
             }
 
             /**

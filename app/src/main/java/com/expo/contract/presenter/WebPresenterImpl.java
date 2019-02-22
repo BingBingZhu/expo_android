@@ -8,6 +8,7 @@ import com.expo.contract.WebContract;
 import com.expo.db.QueryParams;
 import com.expo.entity.CommonInfo;
 import com.expo.entity.Coupon;
+import com.expo.entity.Encyclopedias;
 import com.expo.entity.Park;
 import com.expo.entity.User;
 import com.expo.entity.Venue;
@@ -102,6 +103,14 @@ public class WebPresenterImpl extends WebContract.Presenter {
         if (park == null) return false;
         List<double[]> bounds = park.getElectronicFenceList();
         return MapUtils.ptInPolygon( location.getLatitude(), location.getLongitude(), bounds );
+    }
+
+    @Override
+    public String loadPlantJson(int type) {
+        String whereString = type == 1 ? "一带一路" : "植物之最";
+        List<Encyclopedias> list = mDao.query(Encyclopedias.class, new QueryParams()
+                .add("like", "type_name", "%"+whereString+"%"));
+        return Http.getGsonInstance().toJson(list);
     }
 
 //    @Override

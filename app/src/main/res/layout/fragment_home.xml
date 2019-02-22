@@ -18,12 +18,41 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/home_map_img"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@mipmap/home_banner" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/home_map_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/home_banner" />
+                <TextView
+                    android:id="@+id/tv_home_extension"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:text="@string/extension"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_28"
+                    android:textColor="@color/black_333333"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv_home_extension"
+                    android:layout_marginTop="@dimen/dms_220"
+                    android:layout_gravity="center"
+                    android:text="@string/opening_hours"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_24"
+                    android:textColor="@color/black_333333"/>
+            </RelativeLayout>
 
             <include
                 android:id="@+id/home_ad"

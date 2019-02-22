@@ -63,7 +63,12 @@ public class PortalSiteFragment extends BaseFragment<PortalSiteContract.Presente
         @Override
         public void onClick(View v) {
             PortalSite portalSite = (PortalSite) v.getTag();
-            WebActivity.startActivity(getContext(), portalSite.getLinkUrl(), LanguageUtil.chooseTest(portalSite.getCaption(), portalSite.getCaptionEn()));
+            String url = portalSite.getLinkUrl();
+            if (portalSite.getCaption().indexOf("一带一路") >= 0)
+                url = mPresenter.loadCommonUrl() + "?type=1";
+            if (portalSite.getCaption().indexOf("植物之最") >= 0)
+                url = mPresenter.loadCommonUrl() + "?type=2";
+            WebActivity.startActivity(getContext(), url, LanguageUtil.chooseTest(portalSite.getCaption(), portalSite.getCaptionEn()));
         }
     };
 

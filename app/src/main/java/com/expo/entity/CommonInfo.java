@@ -31,6 +31,7 @@ public class CommonInfo implements Parcelable {
     public static final String EXPO_AR_DOWNLOAD_PAGE = "15";// 世园会简介
     public static final String EXPO_ACTIVITY_DETAIL_INFOFORMATION = "19";// 世园活动
     public static final String EXPO_BESPEAK_VENUE = "20";// 设施场馆的预约
+//    public static final String EXPO_PLANT_WIKI = "21";// 植物百科
     public static final String PLANTS_LIST= "21";// 设施场馆的预约
     public static final String PLANT_INFO = "22";// 设施场馆的预约
 

@@ -16,9 +16,11 @@ import com.expo.base.utils.LogUtils;
 import com.expo.contract.VRImageContract;
 import com.expo.entity.VrInfo;
 import com.expo.module.online.detail.widget.VRImageView;
+import com.expo.network.Http;
 import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
+import com.expo.utils.ShareUtil;
 import com.expo.widget.AppBarView;
 import com.expo.widget.decorations.SpaceDecoration;
 import com.squareup.picasso.Picasso;
@@ -44,6 +46,7 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
     CommonAdapter mAdapter;
 
     List<VrInfo> mData;
+    int selectPosition = 0;
     View mSelectView;
 
     VRImageView mVRView;
@@ -70,6 +73,7 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
                 holder.itemView.setOnClickListener(v -> {
                     if (mSelectView != null)
                         mSelectView.setSelected(false);
+                    selectPosition = position;
                     mSelectView = v;
                     mSelectView.setSelected(true);
                     mVRView.setVrInfo(mData.get(position));
@@ -126,14 +130,19 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
         mAppBarView.setRightView(shareView);
         shareView.setImageResource(R.mipmap.share_icon);
         shareView.setOnClickListener(v -> {
-//            ShareUtil.showShare(VRImageActivity.this,
-//                    LanguageUtil.chooseTest(mEncyclopedias.caption, mEncyclopedias.captionEn),
-//                    LanguageUtil.chooseTest(mEncyclopedias.remark, mEncyclopedias.remarkEn),
-//                    CommUtils.getFullUrl(mEncyclopedias.picUrl),
-//                    mUrl + "&data_type=0",
-//                    mPlatformActionListener);
+            ShareUtil.showShare(getContext(), null, null, CommUtils.getPanoramaFullUrl(getImageString(mData.get(selectPosition))), null, null);
             LogUtils.d("Tag", "share");
         });
+    }
+
+    private String getImageString(VrInfo vrInfo) {
+        String[] urlArray = vrInfo.getUrlArray();
+        String networkType = Http.getNetworkType().toLowerCase();
+        if (!networkType.contains("wifi") && urlArray.length >= 2) {
+            return urlArray[1];
+        } else {
+            return urlArray[0];
+        }
     }
 
     @Override
@@ -144,7 +153,7 @@ public class VRImageActivity extends BaseActivity<VRImageContract.Presenter> imp
         mAdapter.notifyDataSetChanged();
 
         mFrame.addView(mVRView.getVrVideoView());
-        mVRView.setVrInfo(list.get(0));
+        mVRView.setVrInfo(list.get(selectPosition));
         mVRView.mFullScreen.setVisibility(View.GONE);
         mTvShow.setSelected(true);
         mRvRecycler.setVisibility(View.VISIBLE);

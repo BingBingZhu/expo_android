@@ -122,11 +122,16 @@
         imgShow:true,
         timer:'',
         interval:'',
+        voiceUpDown:0,
       },
       mounted:function () {
         // var vConsole = new VConsole();
+        var $this = this;
         this.register();
         this.jscall();
+        window.openOrCloseVoice = function (num) {
+            $this.voiceUpDown = num;
+        }
         // this.nearWiki();
         // this.setMarker();
       },
@@ -195,7 +200,7 @@
           start = new Date().getTime();
 
           this.imgsrc = rootPath+'.gif';
-          this.clickState ? '' : this.audiosrc = wav;
+          if(this.voiceUpDown) this.clickState ? '' : this.audiosrc = wav;
           console.log('路径：'+rootPath);
 
           var audio = new Audio(wav);

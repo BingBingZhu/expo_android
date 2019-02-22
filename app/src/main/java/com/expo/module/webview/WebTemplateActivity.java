@@ -23,6 +23,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.Encyclopedias;
 import com.expo.entity.ExpoActivityInfo;
 import com.expo.entity.Schedule;
+import com.expo.entity.ScheduleVenue;
 import com.expo.entity.Venue;
 import com.expo.module.map.NavigationActivity;
 import com.expo.module.map.ParkMapActivity;
@@ -42,6 +43,7 @@ import com.tencent.smtt.sdk.WebView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -116,6 +118,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         mUrl = mUrl + (schedule == null ? "&ordertype=0" : "&ordertype=1");
         loadUrl(mUrl);
         mShareUtil = new ShareUtil();
+        mPresenter.scoreChange(Constants.ScoreType.TYPE_ENCYCLOPEDIAS, id + "");
     }
 
     public void initTitleRightTextView() {
@@ -233,13 +236,23 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
     }
 
     private void goBespeak() {
-        String url = mPresenter.loadCommonInfo(CommonInfo.VENUE_BESPEAK);
-//        url = "http://192.168.1.13:8888/";
-        WebActivity.startActivity(this, TextUtils.isEmpty(url) ? Constants.URL.HTML_404 :
-                url + "?Uid=" + ExpoApp.getApplication().getUser().getUid() + "&Ukey=" + ExpoApp.getApplication().getUser().getUkey()
-                        + "&lan=" + LanguageUtil.chooseTest("zh", "en"), getString(R.string.home_func_item_appointment), BaseActivity.TITLE_COLOR_STYLE_WHITE);
+        ScheduleVenue sv = mPresenter.loadScheduleVenueByWikiId(id);
+        if (null == sv){
+            return;
+        }
+        StringBuilder sb = new StringBuilder(mPresenter.loadCommonInfo(CommonInfo.EXPO_BESPEAK_VENUE))
+                .append("?time=")
+                .append(TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd")))
+                .append("&venid=")
+                .append(sv.id)
+                .append("&Uid=")
+                .append(ExpoApp.getApplication().getUser().getUid())
+                .append("&Ukey=")
+                .append(ExpoApp.getApplication().getUser().getUkey())
+                .append("&lan=")
+                .append(LanguageUtil.chooseTest("zh", "en"));
+        WebActivity.startActivity(getContext(), sb.toString(), LanguageUtil.chooseTest(sv.caption, sv.captionEn), TITLE_COLOR_STYLE_WHITE);
         finish();
-
     }
 
     /**
