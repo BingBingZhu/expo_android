@@ -30,7 +30,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/dms_200"
         android:layout_toRightOf="@id/home_ask_title"
-        android:maxLines="2"
+        android:maxLines="1"
         android:ellipsize="end"
         android:text="如何进行场馆预约？"
         android:textColor="@color/gray_a6"

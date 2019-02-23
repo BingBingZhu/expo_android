@@ -210,19 +210,13 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(GEOFENCE_BROADCAST_ACTION);
         getContext().registerReceiver(mGeoFenceReceiver, filter);
+        LocalBroadcastUtil.registerReceiver(getContext(), mGeoFenceReceiver, Constants.Action.ACTION_MAP_ON_OFF);
 //        mClusterOverlay = new ClusterOverlay(mAMap, null,
 //                SizeUtils.dp2px(50),
 //                getContext());
 //        mClusterOverlay.setInfoWindowOffset(mapOffsetX, 0);
 //        mClusterOverlay.setMarkerInfoInterface(mMarkerInfoInterface);
 //        mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false))
-            mImgChanagePattern.setVisibility(View.GONE);
     }
 
     /**
@@ -646,7 +640,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     }
 
     private void stopPlay(int type, long id, ImageView imgView) {
-        if (lastType == type && lastId == id) {
+        if (lastType == type && lastId == id && null != imgView) {
             imgView.setImageResource(R.mipmap.ico_audio_play);
             return;
         }
@@ -748,9 +742,21 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 } else if (status == GEOFENCE_OUT && customId.equals(EXPO_PARK)) {
                     mIsInPark = false;
                 }
+            }else if (intent.getAction().equals(Constants.Action.ACTION_MAP_ON_OFF)){
+                if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false))
+                    mImgChanagePattern.setVisibility(View.GONE);
+                else
+                    mImgChanagePattern.setVisibility(View.VISIBLE);
             }
         }
     };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false))
+            mImgChanagePattern.setVisibility(View.GONE);
+    }
 
     /**
      * 路线
@@ -859,8 +865,18 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 DownloadData info = downloadDataList.get(position);
                 if (info.getStatus() == DownloadManager.DOWNLOAD_IDLE || info.getStatus() == DownloadManager.DOWNLOAD_STOPPED
                         || info.getStatus() == DownloadManager.DOWNLOAD_ERROR) {
-                    //开始下载
-                    mPresenter.startDownloadTask(info);
+                    if (!Http.getNetworkType().toLowerCase().contains("wifi")) {
+                        CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+                        dialog.setContent("下载需要流量"+Math.round(tourist.getModelFileSize() / tourist.getModelFileSize())+"M，是否继续？")
+                                .setOkText("下载")
+                                .setCancelText("取消")
+                                .setOnOKClickListener(view -> {
+                                    //开始下载
+                                    mPresenter.startDownloadTask(info);
+                                    dialog.dismiss();
+                                })
+                                .show();
+                    }
                 } else if (info.getStatus() == DownloadManager.DOWNLOAD_WAITING || info.getStatus() == DownloadManager.DOWNLOAD_STARTED) {
                     //停止下载
                     mPresenter.stopDownloadTask(info);
@@ -1084,7 +1100,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         } else {
             setMapCenterPoint(1);
             marker.showInfoWindow();
-            mMapUtils.mapGoto(marker.getOptions().getPosition());
+            mMapUtils.mapGotoAndZoom(marker.getOptions().getPosition(), 17);
 //        Venue venue = (Venue) marker.getObject();
 //        // 显示marker弹窗
 //        showVenueDialog(venue);

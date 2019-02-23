@@ -133,8 +133,9 @@
     <string name="title_message_system_ac">系统消息</string>
     <string name="title_message_tourist_ac">游客服务</string>
     <string name="title_message_appointment_ac">预约提醒</string>
+    <string name="title_message_activity_ac">活动消息</string>
     <string name="title_routest_ac">游览路线</string>
-    <string name="title_home">北京世界园艺博览会</string>
+    <string name="title_home">请输入景点名称</string>
     <string name="title_contact_appointment">预约联系人</string>
     <string name="title_contact_add">添加联系人</string>
     <string name="title_contact_edit">编辑联系人</string>
@@ -157,7 +158,7 @@
 
     <string name="home_func_item_navigation">导航导览</string>
     <string name="home_func_item_wifi">免费WIFI</string>
-    <string name="home_func_item_tickets">园区购票</string>
+    <string name="home_func_item_tickets">购票</string>
     <string name="home_func_item_appointment">场馆预约</string>
     <string name="home_func_item_tourist_service">游客服务</string>
     <string name="home_func_item_line">游览路线</string>
@@ -186,7 +187,6 @@
     <string name="message_kind_system_content">接收到的系统消息</string>
     <string name="message_kind_appointment_title">预约提醒</string>
     <string name="message_kind_appointment_content">预约通知消息</string>
-    <string name="message_kind_tourist_title">游客服务反馈</string>
     <string name="message_kind_tourist_content">游客提交服务后的反馈信息</string>
 
     <string name="empty_content_2">暂时没有数据</string>
@@ -378,7 +378,7 @@
     <string name="expected_travel_time">预计游玩时间：%s分钟</string>
     <string name="my_tourist_service">我的游客服务</string>
     <string name="i_found">我的发现</string>
-    <string name="no_service_agencies">抱歉暂时没有可提供服务的机构！</string>
+    <string name="no_service_agencies">抱歉暂时没有您想要找的设施数据！</string>
     <string name="beijing_world_expo_2019">2019北京世园会</string>
     <string name="please_enter_the_correct_identification_number">请输入正确的证件号码</string>
     <string name="not_import">未填写</string>
@@ -493,4 +493,6 @@
     <string name="extension">北京世园会展期: 2019-04-29至2019-10-17</string>
     <string name="opening_hours">开放时间: 9:00-21:00</string>
     <string name="load_failed">加载失败，点击重新加载</string>
+    <string name="message_kind_activity_title">活动消息</string>
+    <string name="message_kind_activity_content">活动通知消息</string>
 </resources>

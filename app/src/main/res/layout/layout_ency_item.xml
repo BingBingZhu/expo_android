@@ -4,21 +4,19 @@
     android:id="@+id/ency_item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/dms_26"
-    android:paddingRight="@dimen/dms_26"
+    android:padding="@dimen/dms_28"
     android:background="@android:color/white"
     android:orientation="horizontal">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/ency_item_img"
-        android:layout_width="@dimen/dms_230"
-        android:layout_height="@dimen/dms_170"
+        android:layout_width="@dimen/dms_200"
+        android:layout_height="@dimen/dms_200"
         android:layout_marginTop="@dimen/dms_20"
         android:layout_marginBottom="@dimen/dms_20"
         android:layout_marginRight="@dimen/dms_40"
         app:fadeDuration="300"
         app:failureImageScaleType="centerCrop"
-        app:placeholderImage="@mipmap/ico_ency_def"
-        app:roundedCornerRadius="@dimen/dms_10"/>
+        app:placeholderImage="@mipmap/ico_ency_def"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

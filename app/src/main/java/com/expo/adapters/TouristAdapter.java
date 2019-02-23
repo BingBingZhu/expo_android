@@ -62,7 +62,7 @@ public class TouristAdapter extends RecyclerView.Adapter<TouristAdapter.ViewHold
         switch (tourist.getDownState()) {
             case DownloadManager.DOWNLOAD_IDLE:
                 downState = "下载";
-                holder.tvFileSize.setText(Math.round(tourist.getModelFileSize() / 1048576) + "M");
+                holder.tvFileSize.setText(Math.round(tourist.getModelFileSize() / tourist.getModelFileSize()) + "M");
                 holder.tvFileSize.setVisibility(View.VISIBLE);
                 holder.completedView.setVisibility(View.GONE);
                 break;

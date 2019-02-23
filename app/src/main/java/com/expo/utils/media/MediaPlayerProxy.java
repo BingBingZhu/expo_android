@@ -2,6 +2,7 @@ package com.expo.utils.media;
 
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
 
 import java.io.File;
@@ -195,6 +196,12 @@ public class MediaPlayerProxy {
                         if (firstData) {
                             firstData = false;
                             String str = new String(remote_reply, "utf-8");
+                            if (str.indexOf("404 Not Found") >= 0) {
+                                Log.e("---------", "资源无法找到");
+                                if (mOnCaChedProgressUpdateListener != null){
+                                    mOnCaChedProgressUpdateListener.notFoundResource();
+                                }
+                            }
                             Pattern pattern = Pattern.compile("Content-Length:\\s*(\\d+)");
                             Matcher matcher = pattern.matcher(str);
                             if (matcher.find()) {
@@ -292,6 +299,7 @@ public class MediaPlayerProxy {
 
     public interface OnCaChedProgressUpdateListener {
         void updateCachedProgress(int progress);
+        void notFoundResource();
     }
 
     public void setOnCaChedProgressUpdateListener(OnCaChedProgressUpdateListener listener) {

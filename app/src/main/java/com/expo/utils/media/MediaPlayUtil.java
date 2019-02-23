@@ -110,8 +110,16 @@ public class MediaPlayUtil {
         } else {
             try {
                 mediaPlayerHttpProxy = new MediaPlayerProxy( url, true );
-                mediaPlayerHttpProxy.setOnCaChedProgressUpdateListener(progress -> {
-                    // 播放进度
+                mediaPlayerHttpProxy.setOnCaChedProgressUpdateListener(new MediaPlayerProxy.OnCaChedProgressUpdateListener() {
+                    @Override
+                    public void updateCachedProgress(int progress) {
+                        // 播放进度
+                    }
+
+                    @Override
+                    public void notFoundResource() {
+                        // 资源未找到
+                    }
                 });
                 String localProxyUrl = mediaPlayerHttpProxy.getLocalURLAndSetRemotSocketAddr(Constants.URL.FILE_BASE_URL + url);
                 mediaPlayerHttpProxy.startProxy();

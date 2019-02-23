@@ -8,7 +8,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "encyclopedias")
-public class Encyclopedias implements Parcelable {
+public class Encyclopedias implements Parcelable, Comparable<Encyclopedias> {
     @DatabaseField(columnName = "area")
     @SerializedName("area")
     private String area;
@@ -114,6 +114,8 @@ public class Encyclopedias implements Parcelable {
 
     @SerializedName("distance")
     private String distance;
+    @SerializedName("distance_float")
+    private float distanceFloat;
 
     public Encyclopedias() {
     }
@@ -419,6 +421,14 @@ public class Encyclopedias implements Parcelable {
         this.idx = idx;
     }
 
+    public float getDistanceFloat() {
+        return distanceFloat;
+    }
+
+    public void setDistanceFloat(float distanceFloat) {
+        this.distanceFloat = distanceFloat;
+    }
+
     public void setDistance(float distance) {
         String distanceStr = "";
         if (distance > 1000) {
@@ -535,5 +545,10 @@ public class Encyclopedias implements Parcelable {
         dest.writeString(traitLabel);
         dest.writeString(recommendLang);
         dest.writeString(recommendLangEn);
+    }
+
+    @Override
+    public int compareTo(Encyclopedias encyclopedias) {
+        return (int) ((this.getDistanceFloat() - encyclopedias.getDistanceFloat())*100);
     }
 }

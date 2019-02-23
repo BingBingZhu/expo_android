@@ -30,15 +30,15 @@ public class MessageKindPresenterImpl extends MessageKindContract.Presenter {
             for (int i = 0; i < list.size(); i++) {
                 sum += 1 << Integer.valueOf(list.get(i).getType().replace(" ", ""));
             }
-        for (int i = 0; i < 6; i++) {
-            if (i != 1 /*&& i != 4*/ && i != 5) continue;
+        for (int i = 0; i < 7; i++) {
+            if (i != 1 && i != 6 && i != 5) continue;
             if ((sum & (1 << i)) == 0) {
                 list.add(getDefaultMessage(i));
             }
         }
-        Collections.sort(list, (o1, o2) -> o1.getType().compareTo(o2.getType()));
-        list.add(list.get(0));
-        list.remove(0);
+//        Collections.sort(list, (o1, o2) -> o1.getType().compareTo(o2.getType()));
+//        list.add(list.get(0));
+//        list.remove(0);
         mView.freshMessageList(list);
     }
 
@@ -55,8 +55,8 @@ public class MessageKindPresenterImpl extends MessageKindContract.Presenter {
             case 1:
                 initMessage(message, R.string.message_kind_system_title, R.string.message_kind_system_content);
                 break;
-            case 4:
-                initMessage(message, R.string.message_kind_tourist_title, R.string.message_kind_tourist_content);
+            case 6:
+                initMessage(message, R.string.message_kind_activity_title, R.string.message_kind_activity_content);
                 break;
             case 5:
                 initMessage(message, R.string.message_kind_appointment_title, R.string.message_kind_appointment_content);
