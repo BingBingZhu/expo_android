@@ -62,6 +62,7 @@ import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.LimitScrollerView;
 import com.expo.widget.MyScrollView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.toolsmi.gridfactory.GridLayoutFactory;
 
 import org.greenrobot.eventbus.EventBus;
@@ -438,11 +439,13 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                     if (obj instanceof ExpoActivityInfo) {
                         ExpoActivityInfo info = (ExpoActivityInfo) obj;
                         tv.setText(LanguageUtil.chooseTest(info.getCaption(), info.getCaptionEn()));
-                        Http.loadImage(img, info.getPicUrl());
+                        ((SimpleDraweeView) img).setAspectRatio(1.22f);
+                        img.setImageURI(Uri.parse(CommUtils.getFullUrl(info.getPicUrl())));
                     } else if (obj instanceof RouteInfo) {
                         RouteInfo info = (RouteInfo) obj;
                         tv.setText(LanguageUtil.chooseTest(info.caption, info.captionen));
-                        Http.loadImage(img, info.picUrl);
+                        ((SimpleDraweeView) img).setAspectRatio(1.74f);
+                        img.setImageURI(Uri.parse(CommUtils.getFullUrl(info.picUrl)));
                     }
                     break;
                 case R.layout.layout_home_route://推荐游园路线第一个
@@ -616,7 +619,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
                 CircumHomeActivity.startActivity(getContext());
                 break;
             case 3:
-                ArActivity.startActivity(getContext(),"AR游园");
+                ArActivity.startActivity(getContext(), "AR游园");
                 break;
             case 4:
                 ((MainActivity) getContext()).goScenicMap();
