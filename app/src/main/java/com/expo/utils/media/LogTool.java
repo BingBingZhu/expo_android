@@ -12,7 +12,7 @@ import java.io.StringWriter;
  * @author Administrator
  */
 public class LogTool {
-    static String tag = "mylog";
+    static String tag = "========voice";
     /**
      * **
      * 打印一个对象

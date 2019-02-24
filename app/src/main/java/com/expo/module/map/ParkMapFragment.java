@@ -110,9 +110,14 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     ImageView mImgChanagePattern;
     @BindView(R.id.ar_download_view)
     View mArDownloadView;
+    @BindView(R.id.voice_play_root)
+    View mVoicePlayView;
+    @BindView(R.id.voice_play_img)
+    ImageView mVoicePlayImage;
+    @BindView(R.id.voice_play_text)
+    TextView mVoicePlayText;
 
     private RecyclerView mTouristListView;
-
     private AMap mAMap;
     private GeoFenceClient mGeoFenceClient;
     private List<Venue> mFacilities;
@@ -122,8 +127,6 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     private MapUtils mMapUtils;
     private LatLng mLatLng;
     private Dialog mTouristDialog;
-    private Dialog mActualSceneDialog;
-    private Dialog mRouteInfoDialog;
     private Dialog mVrDialog;
     private List<TouristType> mTouristTypes;
     private List<VenuesType> mVenuesTypes;
@@ -135,11 +138,6 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     private List<Venue> mAtVenue;   // 当前tab下的场馆
     private boolean mIsInPark;
     private long mPattern = 1;
-    private int playState;     // 音频播放状态
-    private final static int TYPE_ROUTE = 1;    // 音频播放类型
-    private final static int TYPE_VENUE = 2;    // 音频播放类型
-    private int lastType;
-    private long lastId;
     private String mPlayUrl;
     private long mSpotId;
     private int mapOffsetX, mapOffsetY;
@@ -210,19 +208,16 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(GEOFENCE_BROADCAST_ACTION);
         getContext().registerReceiver(mGeoFenceReceiver, filter);
+        LocalBroadcastUtil.registerReceiver(getContext(), mGeoFenceReceiver, Constants.Action.ACTION_MAP_ON_OFF);
+        // 设置音频播放
+        MediaPlayUtil.getInstence().initMediaPlayer(getContext());
+        MediaPlayUtil.getInstence().setOnVoicePlayListener(voicePlayLis);
 //        mClusterOverlay = new ClusterOverlay(mAMap, null,
 //                SizeUtils.dp2px(50),
 //                getContext());
 //        mClusterOverlay.setInfoWindowOffset(mapOffsetX, 0);
 //        mClusterOverlay.setMarkerInfoInterface(mMarkerInfoInterface);
 //        mClusterOverlay.setOnClusterClickListener(mClusterClickListener);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false))
-            mImgChanagePattern.setVisibility(View.GONE);
     }
 
     /**
@@ -255,7 +250,8 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         return true;
     }
 
-    @OnClick({R.id.latched_position, R.id.select_tour_guide, /*R.id.park_map_menu,*/ R.id.map_pattern_chanage, R.id.ar_down_load})
+    @OnClick({R.id.latched_position, R.id.select_tour_guide, /*R.id.park_map_menu,*/
+            R.id.map_pattern_chanage, R.id.ar_down_load, R.id.voice_play_close})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.latched_position:     // 位置锁定
@@ -266,20 +262,15 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 showTouristTypeDialog();
                 break;
 //            case R.id.park_map_menu:      // 菜单按钮
-//                if (isTabByCnName("\u8def\u7ebf")) {
-//                    showLinePopup(mRouteInfos);
-//                } else {
-//                    showPointPopup();
-//                }
+//                showPointPopup();
 //                break;
-            case R.id.map_pattern_chanage:
-                // 地图模切换
+            case R.id.map_pattern_chanage:  // 地图模切换
                 mPattern++;
                 mPattern = mPattern >= 3 ? 1 : mPattern;
                 PrefsHelper.setLong(Constants.Prefs.KEY_MAP_PATTERN, mPattern);
                 mAMap.setMapType((int) mPattern);
                 break;
-            case R.id.ar_down_load:
+            case R.id.ar_down_load:     // AR app下载
                 Http.getNetworkType().toLowerCase().contains("wifi");
                 String url = "http://p.gdown.baidu.com/1894c00d4eb74dae604ec7c747c890e68db0b29f2b380ca1c5e50b8becffc183b1bcb602b9dc0f72dfd0ee97ea8ff77b657758a79f006e8e586edd2fdbb7a467b6099baf4e7dc2cf7c099b33796ea3f798ada29019128e4c50608e8cfe328de413809f8c37646b6b92b858250c91ef3703c1a3de6af6c8132b938981d11afcc8c0d57f25f944f1318421f469426787db543214891727c2998dce6b131dedafccba57f73b964b2ce30b4a291850e8304a7a51bd4fff3459a71bbe6d8959176700";
                 if (Http.getNetworkType().toLowerCase().contains("wifi")) {
@@ -297,43 +288,11 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                             }).show();
                 }
                 break;
+            case R.id.voice_play_close:     // 关闭音频播放
+                stopPlay();
+                break;
         }
     }
-
-//    private void showLinePopup(List<RouteInfo> routeInfos) {
-//        List<RouteInfo> atRouteInfos = new ArrayList<>();
-//        for (RouteInfo routeInfo : routeInfos) {
-//            if (routeInfo.typeId.equals("1"))
-//                atRouteInfos.add(routeInfo);
-//        }
-////        mImgMenu.setSelected(true);
-//        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_park_menu, null);
-//        RecyclerView recyclerView = contentView.findViewById(R.id.popup_recycler_view);
-//        if (mCustomRoutes.size() > 1) {
-//            RouteInfo routeInfo = new RouteInfo();
-//            routeInfo.caption = getString(R.string.my_route);
-//            routeInfo.voiceUrlEn = "";
-//            routeInfo.voiceUrl = "";
-//            routeInfo.typeId = atRouteInfos.get(0).typeId;
-//            int duration = 0;
-//            for (CustomRoute cr : mCustomRoutes) {
-//                duration += cr.getDuration();
-//            }
-//            routeInfo.playTime = String.valueOf((duration / 60));
-//            atRouteInfos.add(0, routeInfo);
-//        }
-//        ParkRouteAdapter parkRouteAdapter = new ParkRouteAdapter(getContext(), atRouteInfos, mVenuesTypes.get(mTabPosition));
-//        recyclerView.setAdapter(parkRouteAdapter);
-//        parkRouteAdapter.setOnItemClickListener(v -> {
-//            RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
-//            int position = holder.getAdapterPosition();
-//            if (mCustomRoutes.size() > 1 && position == 0)
-//                drawCustomRoute();
-//            else
-//                showRouteInfoDialog(atRouteInfos.get(position));
-//        });
-//        setPopup(contentView);
-//    }
 
     /**
      * 获得当前tab的中文名称
@@ -471,27 +430,6 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         }
 
         @Override
-        public void onPlayVoice(Venue venue) {
-            Encyclopedias wiki = mPresenter.getEncy(venue.getWikiId());
-            if (null == wiki) {
-                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
-                return;
-            }
-            String voiceUrl = LanguageUtil.chooseTest(wiki.getVoiceUrl(),
-                    wiki.getVoiceUrlEn().isEmpty() ? wiki.getVoiceUrl() : wiki.getVoiceUrlEn());
-            if (voiceUrl.isEmpty()) {
-                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
-                return;
-            }
-            play(voiceUrl, TYPE_VENUE, venue.getId(), null);
-        }
-
-        @Override
-        public void onStopPlay(Venue venue) {
-            stopPlay(TYPE_VENUE, venue.getId(), null);
-        }
-
-        @Override
         public void onSetPic(Venue venue, SimpleDraweeView simpleDraweeView) {
             if (isTabByCnName("\u7f8e\u98df")) {
                 simpleDraweeView.setImageResource(R.mipmap.ico_food_def_img);
@@ -507,7 +445,63 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 simpleDraweeView.setImageURI(Constants.URL.FILE_BASE_URL + wiki.getPicUrl());
             }
         }
+
+        @Override
+        public void onPlayVoice(Venue venue) {
+            Encyclopedias wiki = mPresenter.getEncy(venue.getWikiId());
+            if (null == wiki) {
+                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
+                return;
+            }
+            String voiceUrl = LanguageUtil.chooseTest(wiki.getVoiceUrl(),
+                    wiki.getVoiceUrlEn().isEmpty() ? wiki.getVoiceUrl() : wiki.getVoiceUrlEn());
+            if (voiceUrl.isEmpty()) {
+                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
+                return;
+            }
+            play(voiceUrl, LanguageUtil.chooseTest(wiki.getCaption(), wiki.getCaptionEn()));
+        }
+
+        @Override
+        public void onStopPlay(Venue venue) {
+            stopPlay();
+        }
     };
+
+//    =========================音频播放相关 start===========================================================================
+    private MediaPlayUtil.VoicePlayListener voicePlayLis = new MediaPlayUtil.VoicePlayListener() {
+        @Override
+        public void playOver() {
+            mVoicePlayText.setText("播放完毕！");
+        }
+
+        @Override
+        public void playStart() {
+            // 缓冲完毕，开始播放，设置播放图标
+            mVoicePlayImage.setImageResource(R.mipmap.ico_audio_play);  // 图标白色，暂无图
+        }
+
+        @Override
+        public void playError() {
+            // 播放错误，资源未找到
+            mVoicePlayText.setText("资源不存在！");
+        }
+    };
+
+    private void play(String url, String encyName) {
+        mVoicePlayText.setText("正在为你播放“"+ encyName +"”语音导游");
+        mVoicePlayView.setVisibility(View.VISIBLE);
+        mPlayUrl = url;
+        MediaPlayUtil.getInstence().startPlay(url);
+        mVoicePlayImage.setImageResource(R.mipmap.ico_audio_play);  //此处加载中图片 暂无图
+    }
+
+    private void stopPlay() {
+        mVoicePlayView.setVisibility(View.GONE);
+        MediaPlayUtil.getInstence().stopMusic();
+//        MediaPlayUtil.getInstence().initMediaPlayer(getContext());
+    }
+//    =========================音频播放相关  end===========================================================================
 
     /**
      * AR乐拍
@@ -551,155 +545,6 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         ViewUtils.settingDialog(getContext(), mVrDialog);
         mVrDialog.show();//显示对话框
     }
-
-//    /**
-//     * 设施信息弹出框
-//     */
-//    private void showVenueDialog(Venue venue) {
-//        if (null == venue) {
-//            return;
-//        }
-//        mMapUtils.mapGoto(venue.getLat(), venue.getLng());
-//        boolean isInVenue = mPresenter.checkInVenue(mLatLng, venue);
-//        mActualSceneDialog = new Dialog(getContext(), R.style.TopActionSheetDialogStyle);
-//        if (mActualSceneDialog.isShowing())
-//            return;
-//        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_map_window_item/*layout_as_dialog*/, null);
-//        TextView voiceRoot = v.findViewById(R.id.park_mark_dialog_voice_img);
-//        ImageView imgVoice = /*v.findViewById(R.id.park_mark_dialog_voice_img)*/null;   // 音频图片
-////        TextView appointmentTime = v.findViewById(R.id.park_mark_dialog_appointment_time);  // 预约时间
-//        SimpleDraweeView pic = v.findViewById(R.id.park_mark_dialog_pic);
-//        TextView asName = v.findViewById(R.id.park_mark_dialog_name);
-//        TextView asHint = v.findViewById(R.id.park_mark_dialog_hint);   // 场馆人多提示
-//        TextView asInfo = v.findViewById(R.id.park_mark_dialog_info);
-//        ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
-//        ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
-//        stopPlay(TYPE_VENUE, venue.getId(), imgVoice);
-//        asName.setText(LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption()));
-//        if (isTabByCnName("\u7f8e\u98df")) {
-//            pic.setImageResource(R.mipmap.ico_food_def_img);
-//        } else if (isTabByCnName("\u536b\u751f\u95f4")) {
-//            pic.setImageResource(R.mipmap.ico_toilet_def_img);
-//        } else if (isTabByCnName("\u5bfc\u89c8\u8f66")) {
-//            pic.setImageResource(R.mipmap.ico_car_def_img);
-//        } else if (isTabByCnName("\u6cbb\u5b89\u4ead")) {
-//            pic.setImageResource(R.mipmap.ico_public_security_def_img);
-//        }
-//        Encyclopedias wiki = mPresenter.getEncy(venue.getWikiId());
-//        if (wiki != null) {
-//            pic.setImageURI(Constants.URL.FILE_BASE_URL + wiki.getPicUrl());
-//        }
-//        voiceRoot.setOnClickListener(v14 -> {
-//            if (null == wiki) {
-//                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
-//                return;
-//            }
-//            String voiceUrl = LanguageUtil.chooseTest(wiki.getVoiceUrl(),
-//                    wiki.getVoiceUrlEn().isEmpty() ? wiki.getVoiceUrl() : wiki.getVoiceUrlEn());
-//            if (voiceUrl.isEmpty()) {
-//                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
-//                return;
-//            }
-//            play(voiceUrl, TYPE_VENUE, venue.getId(), imgVoice);
-//        });
-//        asInfo.setOnClickListener(v12 -> {
-//            if (null == wiki) {
-//                ToastHelper.showShort(R.string.no_details_are_available);
-//                return;
-//            }
-//            WebTemplateActivity.startActivity(getContext(), wiki.getId());
-//            mActualSceneDialog.dismiss();
-//        });
-//        asLine.setOnClickListener(v13 -> {
-//            mActualSceneDialog.dismiss();
-//            if (mIsInPark) {
-//                if (!isInVenue) {
-//                    boolean haveSelected = false;
-//                    for (TouristType type : mTouristTypes) {
-//                        if (type.isUsed()) {
-//                            haveSelected = true;
-//                        }
-//                    }
-//                    if (haveSelected) {
-//                        NavigationActivity.startActivity(getContext(), venue);
-//                    } else {
-//                        ToastHelper.showLong(R.string.please_select_tourist);
-//                        showTouristTypeDialog();
-//                    }
-//                } else {
-//                    ToastHelper.showLong(String.format(getString(R.string.no_navigation_required),
-//                            LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption())));
-//                }
-//            } else
-//                NaviManager.getInstance(getContext()).showSelectorNavi(venue);
-//        });
-//        dialogClose.setOnClickListener(v1 -> mActualSceneDialog.dismiss());
-//        mActualSceneDialog.setContentView(v);
-//        ViewUtils.settingDialog(getContext(), mActualSceneDialog);
-//        mActualSceneDialog.show();//显示对话框
-//    }
-
-    private void play(String url, int lastType, long lastId, ImageView imgView) {
-        this.lastType = lastType;
-        this.lastId = lastId;
-        MediaPlayUtil.getInstence().startPlay(url, imgView);
-    }
-
-    private void stopPlay(int type, long id, ImageView imgView) {
-        if (lastType == type && lastId == id) {
-            imgView.setImageResource(R.mipmap.ico_audio_play);
-            return;
-        }
-        MediaPlayUtil.getInstence().stopMusic();
-        MediaPlayUtil.getInstence().initMediaPlayer(getContext());
-    }
-
-//    /**
-//     * 路线信息弹出框
-//     */
-//    private void showRouteInfoDialog(RouteInfo routeInfo) {
-//        if (null == routeInfo) {
-//            return;
-//        }
-//        mRouteInfoDialog = new Dialog(getContext(), R.style.TopActionSheetDialogStyle);
-//        if (mRouteInfoDialog.isShowing())
-//            return;
-//        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_as_dialog, null);
-//        View voiceRoot = v.findViewById(R.id.park_mark_dialog_voice_root);
-//        ImageView imgVoice = v.findViewById(R.id.park_mark_dialog_voice_img);   // 音频图片
-//        TextView appointmentTime = v.findViewById(R.id.park_mark_dialog_appointment_time);  // 预约时间
-//        SimpleDraweeView pic = v.findViewById(R.id.park_mark_dialog_pic);
-//        TextView asName = v.findViewById(R.id.park_mark_dialog_name);
-//        TextView asHint = v.findViewById(R.id.park_mark_dialog_hint);   // 场馆人多提示
-//        ImageView asInfo = v.findViewById(R.id.park_mark_dialog_info);
-//        ImageView asLine = v.findViewById(R.id.park_mark_dialog_line);
-//        ImageView dialogClose = v.findViewById(R.id.park_mark_dialog_close);
-//        stopPlay(TYPE_ROUTE, routeInfo.id, imgVoice);
-//        pic.setImageURI(Constants.URL.FILE_BASE_URL + routeInfo.picUrl);
-//        asName.setText(LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
-//        voiceRoot.setOnClickListener(v14 -> {
-//            String voiceUrl = LanguageUtil.chooseTest(routeInfo.voiceUrl,
-//                    routeInfo.voiceUrlEn.isEmpty() ? routeInfo.voiceUrl : routeInfo.voiceUrlEn);
-//            if (voiceUrl.isEmpty()) {
-//                ToastHelper.showShort(R.string.there_is_no_audio_at_this_scenic_spot);
-//                return;
-//            }
-//            play(voiceUrl, TYPE_ROUTE, routeInfo.id, imgVoice);
-//        });
-//        asInfo.setOnClickListener(v12 -> {
-//            RouteDetailActivity.startActivity(getContext(), routeInfo.id, LanguageUtil.chooseTest(routeInfo.caption, routeInfo.captionen));
-//            mRouteInfoDialog.dismiss();
-//        });
-//        asLine.setOnClickListener(v13 -> {
-//            drawLineFacilityToMap(routeInfo);
-//            drawLine(routeInfo);
-//            mRouteInfoDialog.dismiss();
-//        });
-//        dialogClose.setOnClickListener(v1 -> mRouteInfoDialog.dismiss());
-//        mRouteInfoDialog.setContentView(v);
-//        ViewUtils.settingDialog(getContext(), mRouteInfoDialog);
-//        mRouteInfoDialog.show();//显示对话框
-//    }
 
     @Override
     public void loadTouristTypeRes(List<TouristType> touristTypes) {
@@ -748,9 +593,21 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 } else if (status == GEOFENCE_OUT && customId.equals(EXPO_PARK)) {
                     mIsInPark = false;
                 }
+            }else if (intent.getAction().equals(Constants.Action.ACTION_MAP_ON_OFF)){
+                if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false))
+                    mImgChanagePattern.setVisibility(View.GONE);
+                else
+                    mImgChanagePattern.setVisibility(View.VISIBLE);
             }
         }
     };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false))
+            mImgChanagePattern.setVisibility(View.GONE);
+    }
 
     /**
      * 路线
@@ -762,40 +619,10 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         this.mRouteInfos = routeInfos;
     }
 
-    @Override
-    public void loadCustomRoute(List<CustomRoute> customRoutes) {
-        mCustomRoutes = customRoutes;
-    }
-
-//    private void drawCustomRoute() {
-//        clearMap();
-//        for (CustomRoute cr : mCustomRoutes) {
-//            polylines.add(mAMap.addPolyline(new PolylineOptions().addAll(cr.getPoints()).zIndex(10).width(10).
-//                    color(getResources().getColor(R.color.orange_ff7342))));
-//        }
-//        for (Venue venue : mFacilities) {
-//            if (venue.isSelected()) {
-//                Marker marker = mAMap.addMarker(new MarkerOptions()
-//                        .setInfoWindowOffset(mapOffsetX, 0)
-//                        .icon(mMapUtils.setMarkerIconDrawable(getContext(), getMarkerBitmap(venue),
-//                                LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption())))
-//                        .anchor(0.5F, 0.90F).position(venue.getLatLng()));
-//                marker.setObject(venue);
-//                markers.add(marker);
-//            }
-//        }
+//    @Override
+//    public void loadCustomRoute(List<CustomRoute> customRoutes) {
+//        mCustomRoutes = customRoutes;
 //    }
-
-    private Bitmap getMarkerBitmap(Venue v) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.test_1);
-        for (VenuesType vt : mVenuesTypes) {
-            if (v.getType() == vt.getId()) {
-                bitmap = vt.getMarkBitmap();
-                break;
-            }
-        }
-        return bitmap;
-    }
 
     @Override
     public void updateItemProgress(DownloadData info) {
@@ -821,8 +648,6 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         }
         return null;
     }
-
-    private TouristType mTouristType;
 
     /**
      * 导游类型弹窗
@@ -859,8 +684,18 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 DownloadData info = downloadDataList.get(position);
                 if (info.getStatus() == DownloadManager.DOWNLOAD_IDLE || info.getStatus() == DownloadManager.DOWNLOAD_STOPPED
                         || info.getStatus() == DownloadManager.DOWNLOAD_ERROR) {
-                    //开始下载
-                    mPresenter.startDownloadTask(info);
+                    if (!Http.getNetworkType().toLowerCase().contains("wifi")) {
+                        CustomDefaultDialog dialog = new CustomDefaultDialog(getContext());
+                        dialog.setContent("下载需要流量"+Math.round(tourist.getModelFileSize() / tourist.getModelFileSize())+"M，是否继续？")
+                                .setOkText("下载")
+                                .setCancelText("取消")
+                                .setOnOKClickListener(view -> {
+                                    //开始下载
+                                    mPresenter.startDownloadTask(info);
+                                    dialog.dismiss();
+                                })
+                                .show();
+                    }
                 } else if (info.getStatus() == DownloadManager.DOWNLOAD_WAITING || info.getStatus() == DownloadManager.DOWNLOAD_STARTED) {
                     //停止下载
                     mPresenter.stopDownloadTask(info);
@@ -901,7 +736,6 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         } else {
             mAtVenue.addAll(facilities);
         }
-//        mClusterOverlay.clearClusterItem();
         clearMap();
         for (Venue as : mAtVenue) {
             if (as.getLat() == 0)
@@ -909,13 +743,6 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
             LatLng latLng = new LatLng(as.getLat(), as.getLng());
             VenuesType vt = mVenuesTypes.get(mTabPosition);
 
-//            if (mTabPosition == 0) {
-//                RegionItem regionItem = new RegionItem(latLng,
-//                        LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption()));
-//                regionItem.venuesType = vt;
-//                regionItem.actualScene = as;
-//                mClusterOverlay.addClusterItem(regionItem);
-//            } else {
             Marker marker = mAMap.addMarker(new MarkerOptions().setInfoWindowOffset(mapOffsetX, 0)
                     .icon(mMapUtils.setMarkerIconDrawable(getContext(), vt.getMarkBitmap(),
                             LanguageUtil.chooseTest(as.getCaption(), as.getEnCaption())))
@@ -953,27 +780,19 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
                 }
                 mOldTabPosition = mTabPosition;
                 clearMap();
-//                mClusterOverlay.clearClusterItem();
                 mTabId = ParkMapFragment.this.mVenuesTypes.get(mTabPosition).getId();
-//                if (isTabByCnName("\u8def\u7ebf")) {
-//                    if (mCustomRoutes.size() > 1)
-//                        drawCustomRoute();
-//                    else
-//                        drawLineToMap("1", 0);
-//                } else {
                 if (isTabByCnName("AR乐拍") && AppUtils.getAppInfo("com.casvd.expo_ar") == null)
                     mArDownloadView.setVisibility(View.VISIBLE);
                 else
                     mArDownloadView.setVisibility(View.GONE);
                 if (null != mFacilities) {
-                    if (isTabByCnName("\u8f66\u7ad9")) {
+                    if (isTabByCnName("\u7535\u74f6\u8f66\u7ad9")) {
                         addActualSceneMarker(mTabId, mFacilities, true);
                         drawLineToMap("2", 0);
                     } else {
                         addActualSceneMarker(mTabId, mFacilities, true);
                     }
                 }
-//                }
             }
 
             @Override
@@ -1078,16 +897,12 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     @Override
     public boolean onMarkerClick(Marker marker) {
         if (isTabByCnName("AR乐拍")) {
-//            marker.hideInfoWindow();
             marker.setInfoWindowEnable(false);
             showArDialog((Venue) marker.getObject());
         } else {
             setMapCenterPoint(1);
             marker.showInfoWindow();
-            mMapUtils.mapGoto(marker.getOptions().getPosition());
-//        Venue venue = (Venue) marker.getObject();
-//        // 显示marker弹窗
-//        showVenueDialog(venue);
+            mMapUtils.mapGotoAndZoom(marker.getOptions().getPosition(), 17);
         }
         return true;
     }

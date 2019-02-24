@@ -173,7 +173,7 @@ public class NavigationActivity extends BaseActivity<NavigationContract.Presente
         mMapView.onCreate( savedInstanceState );
         //地图中心点
         mCenterX = getResources().getDisplayMetrics().widthPixels / 2;
-        mCenterY = (int) (getResources().getDisplayMetrics().heightPixels * 0.95f);
+        mCenterY = (int) (getResources().getDisplayMetrics().heightPixels * 0.87f);
         //头像
         mPhotoSize = getResources().getDimensionPixelSize( R.dimen.dms_54 );
         int previewHeight = computePreviewHeight();

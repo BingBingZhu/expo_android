@@ -97,15 +97,12 @@ public class TouristServiceSecondActivity extends BaseActivity<SeekHelpContract.
                         .setOkText("是")
                         .setOkTextColor(R.color.green_02cd9b)
                         .setCancelText("否")
-                        .setOnCancelClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                VisitorService visitorService = initSubmitData();
-                                if (visitorService != null) {
-                                    mPresenter.addVisitorService(visitorService);
-                                }
-                                dialog.dismiss();
+                        .setOnOKClickListener(v -> {
+                            VisitorService visitorService = initSubmitData();
+                            if (visitorService != null) {
+                                mPresenter.addVisitorService(visitorService);
                             }
+                            dialog.dismiss();
                         }).show();
             } else {
                 ToastHelper.showShort(R.string.unable_to_provide_service);

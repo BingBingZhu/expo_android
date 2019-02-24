@@ -50,8 +50,8 @@ public class CommUtils {
     public static void setImgPic(Context context, String url, ImageView view) {
         Picasso.with(context)
                 .load(getFullUrl(url))
-                .placeholder(R.drawable.image_default)
-                .error(R.drawable.image_default)
+                .placeholder(R.mipmap.ico_ency_def)
+                .error(R.mipmap.ico_ency_def)
                 .into(view);
     }
 

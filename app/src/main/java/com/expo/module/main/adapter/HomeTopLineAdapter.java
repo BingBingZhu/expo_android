@@ -35,7 +35,7 @@ public class HomeTopLineAdapter implements LimitScrollerView.LimitScrollAdapter 
         ExpoActivityInfo topLineInfo = mData.get(index);
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.item_home_ad, null, false);
         TextView text = (TextView) itemView.findViewById(R.id.text);
-        text.setText(LanguageUtil.chooseTest(topLineInfo.getRemark(), topLineInfo.getRemarkEn()));
+        text.setText(String.format("当前正在举行“%s”活动", LanguageUtil.chooseTest(topLineInfo.getCaption(), topLineInfo.getCaptionEn())));
         itemView.setTag(topLineInfo);
         return itemView;
     }
