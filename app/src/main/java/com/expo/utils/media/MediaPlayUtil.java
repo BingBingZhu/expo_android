@@ -2,12 +2,13 @@ package com.expo.utils.media;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.ImageView;
 
-import com.expo.R;
 import com.expo.utils.Constants;
+
+import java.io.IOException;
 
 public class MediaPlayUtil {
 
@@ -59,7 +60,14 @@ public class MediaPlayUtil {
                 if (null != voicePlayListener){
                     voicePlayListener.playStart();
                 }
-//            refreshPlayDegreeTask();
+                refreshPlayDegreeTask();
+            }
+        });
+        mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+                Log.i("========voice==util====", i+"    "+i1);
+                return false;
             }
         });
     }
@@ -76,54 +84,69 @@ public class MediaPlayUtil {
         this.voicePlayListener = voicePlayListener;
     }
 
-//    private void refreshPlayDegreeTask() {
-//        refreshPlayDegreeHandler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                updatePlayingTime();
-//            }
-//        }, 1000);
-//    }
-//
-//    private void updatePlayingTime() {
-//        try {
-//            int poistion = mediaPlayer.getCurrentPosition();
-//            currMusicProgress = (int) (Common.div(poistion, mediaPlayer.getDuration(), 5) * 100);
-//            if (currMusicProgress <= 100) {
-//                refreshPlayDegreeTask();
-//            }
-//        } catch (Exception e) {
-//            LogTool.ex(e);
+    private void refreshPlayDegreeTask() {
+        refreshPlayDegreeHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updatePlayingTime();
+            }
+        }, 1000);
+    }
+
+    private void updatePlayingTime() {
+        try {
+            int poistion = mediaPlayer.getCurrentPosition();
+            currMusicProgress = (int) (Common.div(poistion, mediaPlayer.getDuration(), 5) * 100);
+            if (currMusicProgress <= 100) {
+                refreshPlayDegreeTask();
+            }
+        } catch (Exception e) {
+            LogTool.ex(e);
+        }
+    }
+
+    // 暂用网络播放的播放和停止方法
+    public void startPlay(String url) {
+        try {
+            Uri uri = Uri.parse(Constants.URL.FILE_BASE_URL + url);
+            mediaPlayer.setDataSource(mContext, uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopMusic() {
+        mediaPlayer.pause();
+        mediaPlayer.stop();
+    }
+
+//    /**
+//     * 开始播放
+//     * @param url
+//     */
+//    public void startPlay(String url) {
+//        switch (currentState) {
+//            case STATE_NORMAL:
+//                playMusic(url);
+//                break;
+//            case STATE_PLAY:
+//                Log.i("========voice==util====", "startPlay---stopMusic");
+//                stopMusic();
+//                break;
 //        }
 //    }
-
-    /**
-     * 开始播放
-     * @param url
-     */
-    public void startPlay(String url) {
-        switch (currentState) {
-            case STATE_NORMAL:
-                playMusic(url);
-                break;
-            case STATE_PLAY:
-                Log.i("========voice==util====", "startPlay---stopMusic");
-                stopMusic();
-                break;
-        }
-    }
-
-    /**
-     * 停止播放
-     */
-    public void stopMusic() {
-        Log.i("========voice==util====", "stopMusic");
-        if (null != mediaPlayer) {
-            currentState = STATE_NORMAL;
-            mediaPlayer.pause();
-            mediaPlayer.stop();
-        }
-    }
+//
+//    /**
+//     * 停止播放
+//     */
+//    public void stopMusic() {
+//        Log.i("========voice==util====", "stopMusic");
+//        if (null != mediaPlayer) {
+//            currentState = STATE_NORMAL;
+//            mediaPlayer.pause();
+//            mediaPlayer.stop();
+//        }
+//    }
 
     private void playMusic(String url) {
         Log.i("========voice==util====", "playMusic");
