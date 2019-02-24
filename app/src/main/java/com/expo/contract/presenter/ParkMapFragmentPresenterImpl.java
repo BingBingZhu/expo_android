@@ -45,7 +45,8 @@ public class ParkMapFragmentPresenterImpl extends ParkMapFragmentContract.Presen
                                 mView.showParkScope(park);
                             });
                 }
-                List<RouteInfo> routeInfos = mDao.query(RouteInfo.class, new QueryParams().add("eq", "enable", 1));
+                List<RouteInfo> routeInfos = mDao.query(RouteInfo.class, new QueryParams()
+                        .add("eq", "enable", 1));
                 List<Venue> facilities = mDao.query(Venue.class, new QueryParams()
                         .add("eq", "is_enable", 1));
                 if (null == facilities || facilities.isEmpty()) {
@@ -69,7 +70,7 @@ public class ParkMapFragmentPresenterImpl extends ParkMapFragmentContract.Presen
                 List<TouristType> touristTypes = mDao.query(TouristType.class, new QueryParams().add("eq", "is_enable", 1));
                 int tabPosition = 0;
                 Venue as = mDao.queryById(Venue.class, asId);
-                List<CustomRoute> customRoutes = mDao.query(CustomRoute.class, new QueryParams());
+//                List<CustomRoute> customRoutes = mDao.query(CustomRoute.class, new QueryParams());
                 if (asId != 0 && null != as) {
                     for (int i = 0; i < venuesTypes.size(); i++) {
                         if (venuesTypes.get(i).getId() == as.getType()) {
@@ -81,7 +82,7 @@ public class ParkMapFragmentPresenterImpl extends ParkMapFragmentContract.Presen
                 List<VenuesType> finalVenuesTypes = venuesTypes;
                 new Handler(Looper.getMainLooper())
                         .post(() -> {
-                            mView.loadCustomRoute(customRoutes);
+//                            mView.loadCustomRoute(customRoutes);
                             mView.loadTabRes(finalVenuesTypes, finalTabPosition);
                             mView.loadFacilityRes(facilities, as);
                             mView.loadTouristTypeRes(touristTypes);

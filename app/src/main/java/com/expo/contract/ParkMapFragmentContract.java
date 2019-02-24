@@ -61,7 +61,7 @@ public interface ParkMapFragmentContract {
         void showParkScope(Park park);
 
         void loadRoute(List<RouteInfo> routeInfos);
-
-        void loadCustomRoute(List<CustomRoute> customRoutes);
+//
+//        void loadCustomRoute(List<CustomRoute> customRoutes);
     }
 }

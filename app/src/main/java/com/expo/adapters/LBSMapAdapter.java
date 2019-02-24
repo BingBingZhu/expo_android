@@ -53,10 +53,11 @@ public final class LBSMapAdapter implements AMap.InfoWindowAdapter {
         } else {
             return null;
         }
-        mListener.onStopPlay(venue);
+//        mListener.onStopPlay(venue);
         asName.setText(LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption()));
         mListener.onSetPic(venue, pic);
         voiceRoot.setOnClickListener(v14 -> {
+//            mListener.onStopPlay(venue);
             mListener.onPlayVoice(venue);
         });
         asInfo.setOnClickListener(v12 -> {

@@ -91,7 +91,7 @@ import static com.amap.api.fence.GeoFenceClient.GEOFENCE_IN;
 import static com.amap.api.fence.GeoFenceClient.GEOFENCE_OUT;
 
 /*
- * 导游导览
+ * 导游导览 无用文件 暂留
  */
 public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> implements
         ParkMapContract.View, AMap.OnMapTouchListener, AMap.OnMarkerClickListener {
@@ -470,7 +470,7 @@ public class ParkMapActivity extends BaseActivity<ParkMapContract.Presenter> imp
     private void play(String url, int lastType, long lastId, ImageView imgView) {
         this.lastType = lastType;
         this.lastId = lastId;
-        MediaPlayUtil.getInstence().startPlay(url, imgView);
+//        MediaPlayUtil.getInstence().startPlay(url, imgView);
     }
 
     private void stopPlay(int type, long id, ImageView imgView) {

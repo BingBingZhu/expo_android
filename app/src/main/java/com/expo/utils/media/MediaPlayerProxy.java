@@ -107,7 +107,7 @@ public class MediaPlayerProxy {
                     }).start();
                     localProxyUrl = url.replace(remoteHost + ":" + originalURI.getPort(), LOCAL_IP_ADDRESS + ":" + local_ip_port);
                     remoteHostAndPort = remoteHost + ":" + originalURI.getPort();
-                } else {//URL不带Port
+                } else {    //URL不带Port
                     if (!TextUtils.isEmpty(remoteHost)) {
                         new Thread(new Runnable() {
                             @Override
@@ -141,11 +141,11 @@ public class MediaPlayerProxy {
                 //把request中的本地ip改为远程ip
                 trueSocketRequestInfoStr = trueSocketRequestInfoStr.replace(LOCAL_IP_ADDRESS + ":" + local_ip_port, remoteHostAndPort);
                 this.trueSocketRequestInfoStr = trueSocketRequestInfoStr;
-                //如果用户拖动了进度条，因为拖动了滚动条还有Range则表示本地歌曲还未缓存完，不再保存
-                if (trueSocketRequestInfoStr.contains("Range")) {
-                    LogTool.s("=Range=");
-                    writeFile = false;
-                }
+//                //如果用户拖动了进度条，因为拖动了滚动条还有Range则表示本地歌曲还未缓存完，不再保存
+//                if (trueSocketRequestInfoStr.contains("Range")) {
+//                    LogTool.s("=Range=");
+//                    writeFile = false;
+//                }
                 break;
             }
         }
