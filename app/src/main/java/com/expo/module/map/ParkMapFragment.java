@@ -77,7 +77,10 @@ import com.expo.utils.media.MediaPlayUtil;
 import com.expo.widget.CustomDefaultDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
+import com.musicplayerproxy.Player;
+import com.musicplayerproxy.PreLoad;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -138,7 +141,7 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     private List<Venue> mAtVenue;   // 当前tab下的场馆
     private boolean mIsInPark;
     private long mPattern = 1;
-    private String mPlayUrl;
+    private String mPlayUrl = "";
     private long mSpotId;
     private int mapOffsetX, mapOffsetY;
 
@@ -210,8 +213,9 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         getContext().registerReceiver(mGeoFenceReceiver, filter);
         LocalBroadcastUtil.registerReceiver(getContext(), mGeoFenceReceiver, Constants.Action.ACTION_MAP_ON_OFF);
         // 设置音频播放
-        MediaPlayUtil.getInstence().initMediaPlayer(getContext());
-        MediaPlayUtil.getInstence().setOnVoicePlayListener(voicePlayLis);
+//        MediaPlayUtil.getInstence().initMediaPlayer(getContext());
+//        MediaPlayUtil.getInstence().setOnVoicePlayListener(voicePlayLis);
+
 //        mClusterOverlay = new ClusterOverlay(mAMap, null,
 //                SizeUtils.dp2px(50),
 //                getContext());
@@ -469,10 +473,11 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
     };
 
 //    =========================音频播放相关 start===========================================================================
-    private MediaPlayUtil.VoicePlayListener voicePlayLis = new MediaPlayUtil.VoicePlayListener() {
+    private Player.VoicePlayListener voicePlayLis = new Player.VoicePlayListener() {
         @Override
         public void playOver() {
             mVoicePlayText.setText("播放完毕！");
+            stopPlay();
         }
 
         @Override
@@ -484,21 +489,67 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         @Override
         public void playError() {
             // 播放错误，资源未找到
-            mVoicePlayText.setText("资源不存在！");
+            mVoicePlayText.setText("播放错误");
+            stopPlay();
         }
     };
 
+    private Player player;
+    private boolean isPlayOver;
+
     private void play(String url, String encyName) {
+        if (mPlayUrl.equals(url) && !isPlayOver)
+            return;
+        if (player != null){
+            player.pause();
+            player.stop();
+        }
+        player = new Player();
+        player.setOnVoicePlayListener(voicePlayLis);
         mVoicePlayText.setText("正在为你播放“"+ encyName +"”语音导游");
         mVoicePlayView.setVisibility(View.VISIBLE);
+        url = Constants.URL.FILE_BASE_URL+url;
         mPlayUrl = url;
-        MediaPlayUtil.getInstence().startPlay(url);
+//        MediaPlayUtil.getInstence().startPlay(url);
+        final String urlEn = urlEncode(url);
+        player.playUrl(url);
+        isPlayOver = false;
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                PreLoad load = new PreLoad(urlEn);
+//                load.download(300*1000);
+//            }
+//        }).start();
+
         mVoicePlayImage.setImageResource(R.mipmap.ico_audio_play);  //此处加载中图片 暂无图
     }
 
+    /**
+     * URL编码
+     *
+     * @param url
+     * @return
+     */
+    public static String urlEncode(String url) {
+        try {
+            url = java.net.URLEncoder.encode(url, "UTF-8");
+            url = url.replaceAll("%2F", "/");
+            url = url.replaceAll("%3A", ":");
+            url = url.replaceAll("\\+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
     private void stopPlay() {
+        isPlayOver = true;
         mVoicePlayView.setVisibility(View.GONE);
-        MediaPlayUtil.getInstence().stopMusic();
+//        MediaPlayUtil.getInstence().stopMusic();
+        player.pause();
+        player.stop();
+        player = null;
 //        MediaPlayUtil.getInstence().initMediaPlayer(getContext());
     }
 //    =========================音频播放相关  end===========================================================================
@@ -919,6 +970,10 @@ public class ParkMapFragment extends BaseFragment<ParkMapFragmentContract.Presen
         getContext().unregisterReceiver(mGeoFenceReceiver);
         if (mMapView != null)
             mMapView.onDestroy();
+        if (null != player){
+            player.pause();
+            player.stop();
+        }
         super.onDestroy();
     }
 }

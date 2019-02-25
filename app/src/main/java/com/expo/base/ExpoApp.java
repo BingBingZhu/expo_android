@@ -10,6 +10,7 @@ import com.expo.map.LocationManager;
 import com.expo.utils.Constants;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mob.MobSDK;
+import com.musicplayerproxy.utils.LogcatHelper;
 import com.tencent.smtt.sdk.QbSdk;
 
 public class ExpoApp extends BaseApplication {
@@ -25,6 +26,7 @@ public class ExpoApp extends BaseApplication {
         LogUtils.DEBUG = true;
         //数据库
         DBUtil.init( getApplicationContext(), Constants.Config.DB_CLASSES );
+        LogcatHelper.getInstance(this).start();
         MobSDK.init( this );
         initX5WebView();
         Fresco.initialize( this );
