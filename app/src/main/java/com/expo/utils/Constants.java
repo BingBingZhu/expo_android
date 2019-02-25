@@ -202,6 +202,7 @@ public interface Constants {
         public static final String ACTION_REDUCE_USER_POINTS = "action_reduce_user_points";
         public static final String ACTION_DOWNLOAD_APP_SUCCESS = "action_download_app_success";
         public static final String ACTION_DOWNLOAD_VR_APP_SUCCESS = "action_download_vr_app_success";
+        public static final String ACTION_MAP_ON_OFF = "action_map_on_off";
     }
 
     /**

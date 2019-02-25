@@ -23,6 +23,7 @@ import com.expo.entity.CommonInfo;
 import com.expo.entity.Message;
 import com.expo.entity.User;
 import com.expo.module.heart.adapter.MessageAdapter;
+import com.expo.module.heart.message.MessageTypeActivity;
 import com.expo.module.heart.message.MessageTypeAppointment;
 import com.expo.module.heart.message.MessageType;
 import com.expo.module.heart.message.MessageTypeSystem;
@@ -114,6 +115,8 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
             mMessageType = new MessageTypeTourist();
         } else if (StringUtils.equals("5", type)) {
             mMessageType = new MessageTypeAppointment();
+        } else if (StringUtils.equals("6", type)) {
+            mMessageType = new MessageTypeActivity();
         }
     }
 
@@ -126,7 +129,7 @@ public class MessagesActivity extends BaseActivity<MessagesContract.Presenter>
         else if (type.equals("4")) {
             v = (int) getResources().getDimension(R.dimen.dms_30);
             mSwipeMenuRecyclerView.addItemDecoration(new SpaceDecoration(leftRight, v, leftRight, v, 0));
-        } else if (type.equals("5")) {
+        } else if (type.equals("5") || type.equals("6")) {
             v = (int) getResources().getDimension(R.dimen.dms_16);
             mSwipeMenuRecyclerView.setBackgroundResource(R.color.colorAccent);
             topLine.setVisibility(View.GONE);

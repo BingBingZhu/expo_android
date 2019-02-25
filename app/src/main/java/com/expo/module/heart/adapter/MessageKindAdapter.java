@@ -69,6 +69,8 @@ public class MessageKindAdapter extends RecyclerView.Adapter<MessageKindAdapter.
             return R.mipmap.msg_laba;
         else if (StringUtils.equals("5", type))
             return R.mipmap.msg_xitongtuisong;
+        else if (StringUtils.equals("6", type))
+            return R.mipmap.msg_activity;
         else
             return R.mipmap.msg_biaoqian;
     }
@@ -77,12 +79,12 @@ public class MessageKindAdapter extends RecyclerView.Adapter<MessageKindAdapter.
         switch (type){
             case "1":
                 return mContext.getString(R.string.system_messages);
-            case "3":
-                return mContext.getString(R.string.active_message);
-            case "4":
-                return mContext.getString(R.string.feedback_on_tourist_service);
+//            case "4":
+//                return mContext.getString(R.string.feedback_on_tourist_service);
             case "5":
                 return mContext.getString(R.string.to_make_an_appointment_to_remind);
+            case "6":
+                return mContext.getString(R.string.active_message);
         }
         return mContext.getString(R.string.system_messages);
     }

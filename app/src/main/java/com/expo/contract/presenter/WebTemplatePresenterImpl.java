@@ -117,8 +117,10 @@ public class WebTemplatePresenterImpl extends WebTemplateContract.Presenter {
             }
             List<Encyclopedias> encyclopedias = mDao.query(Encyclopedias.class, new QueryParams().add("in", "_id", ids));
             for (Encyclopedias e : encyclopedias) {
+                e.setDistanceFloat(distances.get(String.valueOf(e.getId())));
                 e.setDistance(distances.get(String.valueOf(e.getId())));
             }
+            Collections.sort(encyclopedias);
             return encyclopedias;
         }
         return null;

@@ -17,6 +17,7 @@ import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
@@ -225,6 +226,21 @@ public class MapUtils {
         if (null == latLng || latLng.latitude == 0)
             return;
         CameraUpdate cameraUpdate = CameraUpdateFactory.changeLatLng( latLng );
+        map.animateCamera( cameraUpdate );
+    }
+
+    /**
+     * 地图可视区域转变到指定中心点
+     *
+     * @param latLng
+     */
+    public void mapGotoAndZoom(LatLng latLng, float zoom) {
+        if (null == latLng || latLng.latitude == 0)
+            return;
+//        CameraUpdate cameraUpdate = CameraUpdateFactory.changeLatLng( latLng );
+//        CameraUpdateFactory.zoomTo(zoom);
+        CameraPosition cameraPosition = new CameraPosition(latLng, zoom, 0, 0);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         map.animateCamera( cameraUpdate );
     }
 

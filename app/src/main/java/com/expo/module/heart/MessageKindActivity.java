@@ -110,11 +110,7 @@ public class MessageKindActivity extends BaseActivity<MessageKindContract.Presen
     @Override
     public void onItemClick(View itemView, int position) {
         Message message = mAdapter.mData.get(position);
-        if (!StringUtils.equals("3", message.getType())) {
-            MessagesActivity.startActivity(this, mAdapter.mData.get(position).getType());
-        } else {
-
-        }
+        MessagesActivity.startActivity(this, mAdapter.mData.get(position).getType());
     }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {

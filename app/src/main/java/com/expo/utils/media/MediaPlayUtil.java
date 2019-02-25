@@ -2,11 +2,13 @@ package com.expo.utils.media;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
-import android.widget.ImageView;
+import android.util.Log;
 
-import com.expo.R;
 import com.expo.utils.Constants;
+
+import java.io.IOException;
 
 public class MediaPlayUtil {
 
@@ -19,7 +21,7 @@ public class MediaPlayUtil {
     public MediaPlayerProxy mediaPlayerHttpProxy;//当前播放器的在线播放代理（用于边播边存等处理）
 
     private Handler refreshPlayDegreeHandler = new Handler();
-    private int currentState;
+    private int currentState = STATE_NORMAL;
     private int currMusicProgress;
 
     private static MediaPlayUtil mMediaPlayUtil;
@@ -38,17 +40,48 @@ public class MediaPlayUtil {
      * 初始化播放器
      */
     public void initMediaPlayer(Context context) {
+        Log.i("========voice==util====", "init");
         mContext = context;
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setVolume(1, 1);
         mediaPlayer.reset();
         mediaPlayer.setOnCompletionListener(mediaPlayer -> {
+            Log.i("========voice==util====", "结束");
             // 播放结束
+            if (null != voicePlayListener){
+                voicePlayListener.playOver();
+            }
         });
-        mediaPlayer.setOnPreparedListener(mp -> {
-            mediaPlayer.start();
-            refreshPlayDegreeTask();
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                Log.i("========voice==util====", "播放");
+                mediaPlayer.start();
+                if (null != voicePlayListener){
+                    voicePlayListener.playStart();
+                }
+                refreshPlayDegreeTask();
+            }
         });
+        mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+                Log.i("========voice==util====", i+"    "+i1);
+                return false;
+            }
+        });
+    }
+
+    private VoicePlayListener voicePlayListener;
+
+    public interface VoicePlayListener{
+        void playOver();
+        void playStart();
+        void playError();
+    }
+
+    public void setOnVoicePlayListener(VoicePlayListener voicePlayListener){
+        this.voicePlayListener = voicePlayListener;
     }
 
     private void refreshPlayDegreeTask() {
@@ -72,49 +105,79 @@ public class MediaPlayUtil {
         }
     }
 
-    /**
-     * 开始播放
-     * @param url
-     */
-    public void startPlay(String url, ImageView imgView) {
-        switch (currentState) {
-            case STATE_NORMAL:
-                playMusic(url);
-                if (null != imgView)
-                    imgView.setImageResource(R.mipmap.ico_audio_play);
-                break;
-            case STATE_PLAY:
-                stopMusic();
-                if (null != imgView)
-                    imgView.setImageResource(R.mipmap.ico_audio_pause);
-                break;
+    // 暂用网络播放的播放和停止方法
+    public void startPlay(String url) {
+        try {
+            Uri uri = Uri.parse(Constants.URL.FILE_BASE_URL + url);
+            mediaPlayer.setDataSource(mContext, uri);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    /**
-     * 停止播放
-     */
     public void stopMusic() {
-        if (null != mediaPlayer) {
-            currentState = STATE_NORMAL;
-            mediaPlayer.pause();
-//            mediaPlayer.stop();
-        }
+        mediaPlayer.pause();
+        mediaPlayer.stop();
     }
+
+//    /**
+//     * 开始播放
+//     * @param url
+//     */
+//    public void startPlay(String url) {
+//        switch (currentState) {
+//            case STATE_NORMAL:
+//                playMusic(url);
+//                break;
+//            case STATE_PLAY:
+//                Log.i("========voice==util====", "startPlay---stopMusic");
+//                stopMusic();
+//                break;
+//        }
+//    }
+//
+//    /**
+//     * 停止播放
+//     */
+//    public void stopMusic() {
+//        Log.i("========voice==util====", "stopMusic");
+//        if (null != mediaPlayer) {
+//            currentState = STATE_NORMAL;
+//            mediaPlayer.pause();
+//            mediaPlayer.stop();
+//        }
+//    }
 
     private void playMusic(String url) {
+        Log.i("========voice==util====", "playMusic");
         currentState = STATE_PLAY;
         if (mediaPlayer != null && mediaPlayer.getCurrentPosition() > 0) {
+            Log.i("========voice==util====", "if");
             mediaPlayerHttpProxy = null;
             mediaPlayer.start();
         } else {
+            Log.i("========voice==util====", "else");
             try {
                 mediaPlayerHttpProxy = new MediaPlayerProxy( url, true );
-                mediaPlayerHttpProxy.setOnCaChedProgressUpdateListener(progress -> {
-                    // 播放进度
+                mediaPlayerHttpProxy.setOnCaChedProgressUpdateListener(new MediaPlayerProxy.OnCaChedProgressUpdateListener() {
+                    @Override
+                    public void updateCachedProgress(int progress) {
+                        // 播放进度
+                    }
+
+                    @Override
+                    public void notFoundResource() {
+                        Log.i("========voice==util====", "资源未找到");
+                        // 资源未找到
+                        if (null != voicePlayListener){
+                            voicePlayListener.playError();
+                        }
+                    }
                 });
+                Log.i("========voice==util====", "url:  "+Constants.URL.FILE_BASE_URL + url);
                 String localProxyUrl = mediaPlayerHttpProxy.getLocalURLAndSetRemotSocketAddr(Constants.URL.FILE_BASE_URL + url);
                 mediaPlayerHttpProxy.startProxy();
+                Log.i("========voice==util====", "DataSource url:  "+localProxyUrl);
                 mediaPlayer.setDataSource(localProxyUrl);
                 mediaPlayer.prepareAsync();
             } catch (Exception e) {

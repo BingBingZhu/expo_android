@@ -2,6 +2,7 @@ package com.expo.utils.media;
 
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
 
 import java.io.File;
@@ -106,7 +107,7 @@ public class MediaPlayerProxy {
                     }).start();
                     localProxyUrl = url.replace(remoteHost + ":" + originalURI.getPort(), LOCAL_IP_ADDRESS + ":" + local_ip_port);
                     remoteHostAndPort = remoteHost + ":" + originalURI.getPort();
-                } else {//URL不带Port
+                } else {    //URL不带Port
                     if (!TextUtils.isEmpty(remoteHost)) {
                         new Thread(new Runnable() {
                             @Override
@@ -140,11 +141,11 @@ public class MediaPlayerProxy {
                 //把request中的本地ip改为远程ip
                 trueSocketRequestInfoStr = trueSocketRequestInfoStr.replace(LOCAL_IP_ADDRESS + ":" + local_ip_port, remoteHostAndPort);
                 this.trueSocketRequestInfoStr = trueSocketRequestInfoStr;
-                //如果用户拖动了进度条，因为拖动了滚动条还有Range则表示本地歌曲还未缓存完，不再保存
-                if (trueSocketRequestInfoStr.contains("Range")) {
-                    LogTool.s("=Range=");
-                    writeFile = false;
-                }
+//                //如果用户拖动了进度条，因为拖动了滚动条还有Range则表示本地歌曲还未缓存完，不再保存
+//                if (trueSocketRequestInfoStr.contains("Range")) {
+//                    LogTool.s("=Range=");
+//                    writeFile = false;
+//                }
                 break;
             }
         }
@@ -195,6 +196,12 @@ public class MediaPlayerProxy {
                         if (firstData) {
                             firstData = false;
                             String str = new String(remote_reply, "utf-8");
+                            if (str.indexOf("404 Not Found") >= 0) {
+                                Log.e("---------", "资源无法找到");
+                                if (mOnCaChedProgressUpdateListener != null){
+                                    mOnCaChedProgressUpdateListener.notFoundResource();
+                                }
+                            }
                             Pattern pattern = Pattern.compile("Content-Length:\\s*(\\d+)");
                             Matcher matcher = pattern.matcher(str);
                             if (matcher.find()) {
@@ -292,6 +299,7 @@ public class MediaPlayerProxy {
 
     public interface OnCaChedProgressUpdateListener {
         void updateCachedProgress(int progress);
+        void notFoundResource();
     }
 
     public void setOnCaChedProgressUpdateListener(OnCaChedProgressUpdateListener listener) {

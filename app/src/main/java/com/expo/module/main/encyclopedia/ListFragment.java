@@ -17,6 +17,7 @@ import com.expo.entity.Encyclopedias;
 import com.expo.entity.VrInfo;
 import com.expo.widget.decorations.RecycleViewDivider;
 import com.expo.widget.SimpleRecyclerView;
+import com.expo.widget.decorations.SpaceDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +55,10 @@ public class ListFragment extends BaseFragment<ListContract.Presenter> implement
         mEncyclopediasList = new ArrayList<>();
         adapter = new EncyAndSceneListAdapter(getContext(), mEncyclopediasList);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addItemDecoration(new RecycleViewDivider(
-                getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor(R.color.white_f5)));
+        int vSpace = (int) getResources().getDimension(R.dimen.dms_20);
+        mRecyclerView.addItemDecoration(new SpaceDecoration(vSpace));
+//        mRecyclerView.addItemDecoration(new RecycleViewDivider(
+//                getContext(), LinearLayoutManager.VERTICAL, 2, getResources().getColor(R.color.white_f5)));
         mPresenter.loadEncyByType(mTab.getId(), page);
         initLoadMore();
     }

@@ -53,6 +53,40 @@
             android:visibility="gone"
             layout="@layout/layout_ar_download" />
 
+        <FrameLayout
+            android:id="@+id/voice_play_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingLeft="@dimen/dms_30"
+            android:paddingRight="@dimen/dms_20"
+            android:background="@color/black_translucent_50"
+            android:layout_alignParentBottom="true">
+            <ImageView
+                android:id="@+id/voice_play_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ico_audio_play"/>
+            <TextView
+                android:id="@+id/voice_play_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_26"
+                android:text="正在为你播放“**景点”语音导游"/>
+            <TextView
+                android:id="@+id/voice_play_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dms_10"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_30"
+                android:text="X"/>
+        </FrameLayout>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/select_tour_guide"
             android:layout_width="@dimen/dms_106"

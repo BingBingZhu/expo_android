@@ -281,6 +281,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
         PrefsHelper.setBoolean(Constants.Prefs.KEY_MAP_ON_OFF, !PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false));
         // 设置图片
         imgMapON_OFF.setImageResource(PrefsHelper.getBoolean(Constants.Prefs.KEY_MAP_ON_OFF, false) ? R.mipmap.ico_on : R.mipmap.ico_off );
+        LocalBroadcastUtil.sendBroadcast(getContext(), null, Constants.Action.ACTION_MAP_ON_OFF);
     }
 
     @OnClick(R.id.setting_track_on_off)
