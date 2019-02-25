@@ -323,6 +323,7 @@ public interface Constants {
 
     class CHString {
         public static final String RESTAURANT = "\u9910\u5385";//餐厅
+        public static final String FOODS = "\u7f8e\u98df";//餐厅
         public static final String HOTEL = "\u9152\u5e97";//酒店
         public static final String SCENIC_SPOT = "\u5c55\u56ed";//展园
         public static final String PLANTS = "\u4e4b\u6700";//之最

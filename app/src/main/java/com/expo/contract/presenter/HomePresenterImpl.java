@@ -260,7 +260,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
         ArrayList data = new ArrayList();
         data.add(R.string.expo_food);
         QueryParams params = new QueryParams()
-                .add("eq", "type_name", Constants.CHString.RESTAURANT)
+                .add("eq", "type_name", Constants.CHString.FOODS)
                 .add("and")
                 .add("eq", "enable", 0)
                 .add("orderBy", "recommended_idx", true)
