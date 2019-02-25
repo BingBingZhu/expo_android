@@ -671,8 +671,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
             case R.id.home_find_0://卫生间
                 goMapNavigation("\u536b\u751f\u95f4");
                 break;
-            case R.id.home_find_1://览车
-                goMapNavigation("\u89c8\u8f66");
+            case R.id.home_find_1://车站
+                goMapNavigation("\u8f66\u7ad9");
                 break;
             case R.id.home_find_2://大门
                 goMapNavigation("\u5927\u95e8");

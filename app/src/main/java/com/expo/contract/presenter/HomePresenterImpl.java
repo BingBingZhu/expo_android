@@ -176,8 +176,8 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("eq", "enable", "1")
                 .add("and")
                 .add("eq", "type_id", "1")
-                .add("limit", 0, 5)
-                .add("orderBy", "sort_idx", true);
+                .add("orderBy", "sort_idx", true)
+                .add("limit", 0, 5);
         List tmp = mDao.query(RouteInfo.class, params);
         if (tmp != null) {
             data.addAll(tmp);
@@ -197,6 +197,7 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                 .add("like", "type_name", "%" + Constants.CHString.SCENIC_SPOT)
                 .add("and")
                 .add("eq", "enable", 1)
+                .add("orderBy", "recommended_idx", true)
                 .add("orderBy", "recommended_idx", true)
                 .add("limit", 0, 2);
         List tmp = mDao.query(Encyclopedias.class, params);
@@ -295,10 +296,10 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                     }
                     List<Encyclopedias> tmp = null;
                     if (!venueMap.isEmpty()) {
+                        List<Float> sortKeys = new ArrayList<>(venueMap.keySet());
+                        Collections.sort(sortKeys);
                         Map<String, Float> distances = new HashMap<>();
                         if (venueMap.size() > 2) {
-                            List<Float> sortKeys = new ArrayList<>(venueMap.keySet());
-                            Collections.sort(sortKeys);
                             int i = 0;
                             do {
                                 String wikiId = venueMap.get(sortKeys.get(i)).getWikiId();
@@ -307,10 +308,14 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                                     distances.put(wikiId, sortKeys.get(i));
                                 }
                                 i++;
-                            } while (i <= venueMap.size() && ids.size() < 3);
+                            } while (i <= venueMap.size() && ids.size() < 2);
                         } else {
-                            for (Venue venue : venueMap.values()) {
-                                ids.add(venue.getWikiId());
+                            for (int i=0;i<venueMap.size();i++) {
+                                String wikiId = venueMap.get(sortKeys.get(i)).getWikiId();
+                                if (!TextUtils.isEmpty(wikiId)) {
+                                    ids.add(wikiId);
+                                    distances.put(wikiId, sortKeys.get(i));
+                                }
                             }
                         }
                         tmp = mDao.query(Encyclopedias.class, new QueryParams().add("in", "_id", ids));

@@ -27,11 +27,10 @@ import com.expo.utils.CommUtils;
 import com.expo.utils.Constants;
 import com.expo.utils.LanguageUtil;
 import com.expo.widget.decorations.SpaceDecoration;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
-
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,23 +180,11 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         mRvRecycler.setAdapter(mAdapter = new CommonAdapter<Venue>(this, R.layout.item_route_detail, mList) {
             @Override
             protected void convert(ViewHolder holder, Venue venue, int position) {
-                int picRes = 0;
-                if (venue.getType() == 25 || venue.getType() == 26) {//场馆、景点
+                if (venue.getTypeName().contains(Constants.CHString.SCENIC_SPOT) || venue.getTypeName().contains(Constants.CHString.SCENIC_VENUE)) {//场馆、景点
                     mPresenter.loadRemarkFormEncyclopedia(venue);
                     ((SimpleDraweeView) holder.getView(R.id.item_route_img)).setImageURI(CommUtils.getFullUrl(venue.getPicUrl()));
-                } else if (venue.getType() == 27) {//美食
-                    picRes = R.mipmap.ico_car_def_img;
-                } else if (venue.getType() == 28) {//卫生间
-                    picRes = R.mipmap.ico_toilet_def_img;
-                } else if (venue.getType() == 30) {//治安
-                    picRes = R.mipmap.ico_public_security_def_img;
-                } else if (venue.getType() == 31) {//服务中心
-                    picRes = R.mipmap.ico_car_def_img;
-                } else if (venue.getType() == 32) {//导览车
-                    picRes = R.mipmap.ico_car_def_img;
-                }
-                if (picRes != 0) {
-                    ((SimpleDraweeView) holder.getView(R.id.item_route_img)).setImageResource(picRes);
+                } else {
+                    ((SimpleDraweeView) holder.getView(R.id.item_route_img)).setImageResource(R.mipmap.ico_car_def_img);
                 }
                 holder.setText(R.id.item_route_name, LanguageUtil.chooseTest(venue.getCaption(), venue.getEnCaption()));
                 holder.setText(R.id.item_route_info, LanguageUtil.chooseTest(venue.getRemark(), venue.getEnRemark()));
@@ -210,7 +197,7 @@ public class RouteDetailActivity extends BaseActivity<RouteDetailContract.Presen
         @Override
         public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
             Venue venue = (Venue) mAdapter.getDatas().get(position);
-            if ((venue.getType() == 25 || venue.getType() == 26) && !TextUtils.isEmpty(venue.getWikiId()) && venue.getWikiId().matches(Constants.Exps.NUMBER)) {
+            if ((venue.getTypeName().contains(Constants.CHString.SCENIC_SPOT) || venue.getTypeName().contains(Constants.CHString.SCENIC_VENUE)) && !TextUtils.isEmpty(venue.getWikiId()) && venue.getWikiId().matches(Constants.Exps.NUMBER)) {
                 WebTemplateActivity.startActivity(getContext(), Long.parseLong(venue.getWikiId()));
             } else {
                 ToastHelper.showShort(R.string.no_introduction);

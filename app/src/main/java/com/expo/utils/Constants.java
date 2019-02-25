@@ -122,14 +122,14 @@ public interface Constants {
     class URL {
         public static final String ALI_BASE_URL = "http://47.95.215.6:8080/Api/";    // 阿里云(识花)
         //IP
-        public static final String IP = "39.105.120.171";
-//              public static final String IP = "36.112.128.48";
+//        public static final String IP = "39.105.120.171";
+              public static final String IP = "36.112.128.48";
         //自己服务器基本请求用到的URL
-        public static final String BASE_URL = "http://" + IP + ":8080/Api/";
-//              public static final String BASE_URL = "http://" + IP + ":8089/Api/";
+//        public static final String BASE_URL = "http://" + IP + ":8080/Api/";
+              public static final String BASE_URL = "http://" + IP + ":8089/Api/";
         //自己服务器文件资源请求用到的URL
-        public static final String FILE_BASE_URL = "http://" + IP + "/res/";
-//              public static final String FILE_BASE_URL = "http://36.112.128.167:8084/res/";
+//        public static final String FILE_BASE_URL = "http://" + IP + "/res/";
+              public static final String FILE_BASE_URL = "http://36.112.128.167:8084/res/";
         public static final String PANORAMA_BASE_URL = "http://36.112.128.174:8089";
         public static final String SCENIC_SPOTS = "GetParksList";
         public static final String ACTUAL_SCENES = "GetVenuesList";
@@ -142,7 +142,7 @@ public interface Constants {
         public static final String UPPAY_APP_DOWNLOAD_URL = "http://47.92.247.143/res/static/UPPayPluginEx.apk";
         //        public static final String MAP_TILES_BASE_URL = FILE_BASE_URL + "titlemap/tiles/%d/%d_%d.png";
         public static final String MAP_TILES_BASE_URL = FILE_BASE_URL + "titlemap/tiles/%d/%d_%d.png";
-        public static final String REGISTER_TICKET = "http://47.92.129.164:8890/ticketAppUser/appUserToOffWebUser";
+        public static final String REGISTER_TICKET = "http://36.112.128.80:8890/ticketAppUser/appUserToOffWebUser";
 
         public static final String ASSETS_DEFAULT_TOUR_FILE_NAME = "defaulttour.zip";
         public static final String LOCAL_DEFAULT_TOUR_COPY_PATH = File.separator + ASSETS_DEFAULT_TOUR_FILE_NAME;
@@ -323,9 +323,11 @@ public interface Constants {
 
     class CHString {
         public static final String RESTAURANT = "\u9910\u5385";//餐厅
-        public static final String FOODS = "\u7f8e\u98df";//餐厅
+        public static final String FOODS = "\u7f8e\u98df";//美食
         public static final String HOTEL = "\u9152\u5e97";//酒店
         public static final String SCENIC_SPOT = "\u5c55\u56ed";//展园
+        public static final String SCENIC_VENUE = "\u573a\u9986";//场馆
         public static final String PLANTS = "\u4e4b\u6700";//之最
+        public static final String TOILET = "\u536b\u751f\u95f4";//卫生间
     }
 }
