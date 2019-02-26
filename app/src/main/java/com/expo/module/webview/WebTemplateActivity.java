@@ -116,6 +116,7 @@ public class WebTemplateActivity extends BaseActivity<WebTemplateContract.Presen
         mX5View.addJavascriptInterface(new JsHook(), "hook");
         mUrl = mUrl + (mVenue == null ? "&data_type=0" : "&data_type=1");
         mUrl = mUrl + (schedule == null ? "&ordertype=0" : "&ordertype=1");
+        mUrl = mUrl + "&modelpicurl=" + mEncyclopedias.modelPicUrl;
         loadUrl(mUrl);
         mShareUtil = new ShareUtil();
         mPresenter.scoreChange(Constants.ScoreType.TYPE_ENCYCLOPEDIAS, id + "");

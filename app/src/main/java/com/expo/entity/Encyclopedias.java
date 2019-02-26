@@ -111,6 +111,9 @@ public class Encyclopedias implements Parcelable, Comparable<Encyclopedias> {
     @DatabaseField(columnName = "recommend_lang_en")
     @SerializedName("recommendlanguage")
     public String recommendLangEn;
+    @DatabaseField(columnName = "model_pic_url")
+    @SerializedName("modelpicurl")
+    public String modelPicUrl;
 
     @SerializedName("distance")
     private String distance;
@@ -175,6 +178,7 @@ public class Encyclopedias implements Parcelable, Comparable<Encyclopedias> {
         traitLabel = in.readString();
         recommendLang = in.readString();
         recommendLangEn = in.readString();
+        modelPicUrl = in.readString();
     }
 
     public static final Creator<Encyclopedias> CREATOR = new Creator<Encyclopedias>() {
@@ -463,6 +467,14 @@ public class Encyclopedias implements Parcelable, Comparable<Encyclopedias> {
         return distance;
     }
 
+    public String getModelPicUrl() {
+        return modelPicUrl;
+    }
+
+    public void setModelPicUrl(String modelPicUrl) {
+        this.modelPicUrl = modelPicUrl;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -545,6 +557,7 @@ public class Encyclopedias implements Parcelable, Comparable<Encyclopedias> {
         dest.writeString(traitLabel);
         dest.writeString(recommendLang);
         dest.writeString(recommendLangEn);
+        dest.writeString(modelPicUrl);
     }
 
     @Override
