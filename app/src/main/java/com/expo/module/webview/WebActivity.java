@@ -507,6 +507,12 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     }
 
     @Override
+    public void finish() {
+        mX5View.loadUrl("");
+        super.finish();
+    }
+
+    @Override
     protected void onDestroy() {
         LocationManager.getInstance().unregisterLocationListener(barrierLocationChangeListener);
         mHandler.removeCallbacksAndMessages(null);
