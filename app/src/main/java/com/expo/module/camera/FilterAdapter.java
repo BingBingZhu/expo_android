@@ -1,10 +1,7 @@
 package com.expo.module.camera;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;

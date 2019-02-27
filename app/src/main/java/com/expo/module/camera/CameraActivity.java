@@ -140,7 +140,7 @@ public class CameraActivity extends BaseActivity {
     public void cameraOk(View view) {
         if(mCarmer.getOutFilePath().endsWith(".jpg") || mCarmer.getOutFilePath().endsWith(".png")){
             cameraFinish2();
-        }else {
+        }else{
             cameraFinish();
         }
     }

@@ -12,7 +12,6 @@
         android:scaleType="centerCrop"
         app:borderRadius="@dimen/dms_10"
         app:type="round"/>
-
     <TextView
         android:id="@+id/item_seek_help_tv"
         android:layout_width="wrap_content"

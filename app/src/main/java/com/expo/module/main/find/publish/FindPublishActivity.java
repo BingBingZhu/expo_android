@@ -412,7 +412,6 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         for (int i = 0; i < mImageList.size(); i++) {
             find.setUrl(i, mImageList.get(i));
         }
-
         return find;
     }
 

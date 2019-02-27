@@ -196,5 +196,4 @@ dependencies {
     implementation 'cn.jiguang.sdk:jcore:1.2.5'  // 此处以JCore 1.2.5 版本为例。
     //滤镜
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
-
 }

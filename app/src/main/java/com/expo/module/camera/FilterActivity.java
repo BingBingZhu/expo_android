@@ -213,7 +213,7 @@ public class FilterActivity extends BaseActivity {
                 }
                 gpuImage = new GPUImage(FilterActivity.this);
                 gpuImage.setImage(bitmap);
-                gpuImage.setFilter(new GPUImageSketchFilter());//素描
+                gpuImage.setFilter(new GPUImageSketchFilter());//素描x效果
                 bitmap = gpuImage.getBitmapWithFilterApplied();
                 mImagesList.add(bitmap);
                 mImagesTitleList.add("灰白");

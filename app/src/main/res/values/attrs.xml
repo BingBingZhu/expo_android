@@ -148,6 +148,7 @@
         <attr format="reference" name="starFill"/>
     </declare-styleable>
 
+    <!--圆角-->
     <declare-styleable name="RoundImageView">
         <attr name="type" />
         <attr name="scale" />

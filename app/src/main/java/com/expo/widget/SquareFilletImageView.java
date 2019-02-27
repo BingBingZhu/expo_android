@@ -19,6 +19,7 @@ import android.util.TypedValue;
 
 import com.expo.R;
 
+//正方形--圆角
 public class SquareFilletImageView extends AppCompatImageView {
     public static final int TYPE_CIRCLE = 0;
     public static final int TYPE_ROUND = 1;
