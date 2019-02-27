@@ -223,6 +223,9 @@
             android:name=".module.camera.CameraActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".module.camera.FilterActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.donkingliang.imageselector.ImageSelectorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"

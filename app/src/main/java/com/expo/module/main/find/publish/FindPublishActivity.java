@@ -49,6 +49,10 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnItemClickListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +133,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         setTitle(1, R.string.publish);
         initRecyclerView();
         initWorkAdapter();
@@ -379,6 +384,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
     protected void onDestroy() {
         LocationManager.getInstance().unregisterLocationListener(mLocationChangeListener);
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private Find getFindPublish() {
@@ -408,6 +414,17 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
         }
 
         return find;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(String imageUrl){
+        if ((!imageUrl.endsWith(".mp4") || (imageUrl.endsWith(".mp4") && mImageList.size() == 0)) && mImageList.size() < 9) {
+            mCameraPosition = mCameraPosition | 1 << mImageList.size();
+            mImageList.add(imageUrl);
+            mAdapter.refresh(mImageList);
+        } else {
+            ToastHelper.showShort(R.string.img_limit);
+        }
     }
 
 }

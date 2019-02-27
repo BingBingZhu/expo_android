@@ -290,9 +290,11 @@ public class HomePresenterImpl extends HomeContract.Presenter {
                     List<String> ids = new ArrayList<>();
                     Map<Float, Venue> venueMap = new HashMap<>();
                     LatLng latLng = new LatLng(lat, lng);
-                    for (Venue venue : venues) {
-                        Float distance = AMapUtils.calculateLineDistance(latLng, new LatLng(venue.getLat(), venue.getLng()));
-                        venueMap.put(distance, venue);
+                    if(null!=venues) {
+                        for (Venue venue : venues) {
+                            Float distance = AMapUtils.calculateLineDistance(latLng, new LatLng(venue.getLat(), venue.getLng()));
+                            venueMap.put(distance, venue);
+                        }
                     }
                     List<Encyclopedias> tmp = null;
                     if (!venueMap.isEmpty()) {

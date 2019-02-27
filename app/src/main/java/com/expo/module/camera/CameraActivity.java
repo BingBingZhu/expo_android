@@ -138,7 +138,11 @@ public class CameraActivity extends BaseActivity {
 
     @OnClick(R.id.camera_ok)
     public void cameraOk(View view) {
-        cameraFinish();
+        if(mCarmer.getOutFilePath().endsWith(".jpg") || mCarmer.getOutFilePath().endsWith(".png")){
+            cameraFinish2();
+        }else {
+            cameraFinish();
+        }
     }
 
     @OnClick(R.id.carmer_switch)
@@ -154,6 +158,13 @@ public class CameraActivity extends BaseActivity {
         intent.putExtra(Constants.EXTRAS.EXTRAS, mCarmer.getOutFilePath());
         setResult(RESULT_OK, intent);
 //        ToastHelper.showLong("保存的位置是" + mCarmer.getOutFilePath());
+        finish();
+    }
+
+    public synchronized void cameraFinish2() {
+        if (mIsFinish) return;
+        mIsFinish = true;
+        FilterActivity.startActivity(this,mCarmer.getOutFilePath());
         finish();
     }
 
