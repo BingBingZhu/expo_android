@@ -279,7 +279,7 @@ public class TouristServiceSubmitActivity extends BaseActivity<SeekHelpContract.
                     ToastHelper.showShort( getString( R.string.max_images, 3 ) );
                     break;
                 }
-                startActivityForResult( new Intent( TouristServiceSubmitActivity.this, CameraActivity.class ), Constants.RequestCode.REQ_TO_CAMERA );
+                startActivityForResult( new Intent( TouristServiceSubmitActivity.this, CameraActivity.class ).putExtra("PreviousType","TouristServiceSubmitActivity"), Constants.RequestCode.REQ_TO_CAMERA );
                 break;
             case R.id.image_album:
                 goImageSelector();

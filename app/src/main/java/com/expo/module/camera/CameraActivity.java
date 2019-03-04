@@ -138,9 +138,13 @@ public class CameraActivity extends BaseActivity {
 
     @OnClick(R.id.camera_ok)
     public void cameraOk(View view) {
-        if(mCarmer.getOutFilePath().endsWith(".jpg") || mCarmer.getOutFilePath().endsWith(".png")){
-            cameraFinish2();
-        }else{
+        if(getIntent().getStringExtra("PreviousType").equals("FindPublishActivity")){
+            if(mCarmer.getOutFilePath().endsWith(".jpg") || mCarmer.getOutFilePath().endsWith(".png")){
+                cameraFinish2();
+            }else{
+                cameraFinish();
+            }
+        }else {
             cameraFinish();
         }
     }
