@@ -268,7 +268,7 @@ public class FindPublishActivity extends BaseActivity<FindPublishContract.Presen
                     ToastHelper.showShort(R.string.img_limit);
                     break;
                 }
-                startActivityForResult(new Intent(FindPublishActivity.this, CameraActivity.class).putExtra("PreviousType","FindPublishActivity"), Constants.RequestCode.REQ_TO_CAMERA);
+                startActivityForResult(new Intent(FindPublishActivity.this, CameraActivity.class ).putExtra("PreviousType","FindPublishActivity"), Constants.RequestCode.REQ_TO_CAMERA);
                 break;
             case R.id.image_album:
                 dialog.dismiss();
